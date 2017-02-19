@@ -1,5 +1,6 @@
 package io.github.thatsmusic99;
 
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -14,6 +15,8 @@ public class HeadsPlus extends JavaPlugin {
 		HeadsPlus instance = null;
 		return instance;
 	}
+	FileConfiguration config;
+	File cfile;
 	
 	@Override
 	public void onEnable() {
@@ -21,32 +24,19 @@ public class HeadsPlus extends JavaPlugin {
 		getCommand("head").setExecutor(new Head());
 		getCommand("headsplus").setExecutor(new HeadsPlusCommand());
 		getServer().getPluginManager().registerEvents(new HeadInteractEvent(), this);
-		this.createConfig();
-		getConfig().addDefault("blacklist", "[]");
-		getConfig().set("blacklist", Arrays.asList());
-		getConfig().addDefault("blacklistOn", true);
+		setupConfig();
 		log.info("[HeadsPlus] HeadsPlus has been enabled.");
     }
 	@Override
 	public void onDisable() {
 		log.info("[HeadsPlus] HeadsPlus has been disabled.");
 	}
-	private void createConfig() {
-	    try {
-	        if (!getDataFolder().exists()) {
-	            getDataFolder().mkdirs();
-	        }
-	        File file = new File(getDataFolder(), "config.yml");
-	        if (!file.exists()) {
-	            log.info("[HeadsPlus] Config.yml not found, creating!");
-	            saveDefaultConfig();
-	        } else {
-	            log.info("[HeadsPlus] Config.yml found, loading!");
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-
-	    }
-
+	private void setupConfig() {
+		config = getConfig();
+		config.options().copyDefaults();
+		saveConfig();
+		cfile = new File(getDataFolder(), "config.yml");
+		return;
+		
 	}
 }

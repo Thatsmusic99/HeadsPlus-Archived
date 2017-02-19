@@ -4,7 +4,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.logging.Logger;
 
 public class HeadsPlus extends JavaPlugin {	
@@ -24,19 +23,14 @@ public class HeadsPlus extends JavaPlugin {
 		getCommand("head").setExecutor(new Head());
 		getCommand("headsplus").setExecutor(new HeadsPlusCommand());
 		getServer().getPluginManager().registerEvents(new HeadInteractEvent(), this);
-		setupConfig();
 		log.info("[HeadsPlus] HeadsPlus has been enabled.");
     }
 	@Override
 	public void onDisable() {
 		log.info("[HeadsPlus] HeadsPlus has been disabled.");
 	}
-	private void setupConfig() {
-		config = getConfig();
-		config.options().copyDefaults();
-		saveConfig();
-		cfile = new File(getDataFolder(), "config.yml");
-		return;
-		
-	}
+	
+
+
+	
 }

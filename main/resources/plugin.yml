@@ -1,6 +1,6 @@
 main: io.github.thatsmusic99.HeadsPlus
 name: HeadsPlus
-version: 0.2.2
+version: 0.2.3
 description: Spawns in heads with extra features.
 author: Thatsmusic99
 commands:
@@ -15,4 +15,3 @@ commands:
         aliases: [hp]
         permission: headsplus.maincommand
         permission-message: You do not have access to this command.
-        

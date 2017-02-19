@@ -11,39 +11,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 
 public class Head implements CommandExecutor {
-
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-// Old code
-/*	if (args.length < 1 && cmd.getName().equalsIgnoreCase("head")) {
-			sender.sendMessage(ChatColor.DARK_RED + "Usage:" + ChatColor.RED + "/head [Username]");
-		    return false;
-		} else if (!args[0].matches("^[A-Za-z0-9_]+$") && cmd.getName().equalsIgnoreCase("head")) {
-		    sender.sendMessage(ChatColor.DARK_RED + "Error:" + ChatColor.RED + "Usernames can only be alphanumberic!");
-		    return false;
-		} else if (!(sender instanceof Player) && cmd.getName().equalsIgnoreCase("head")) {
-			sender.sendMessage("You have to be a player to run this command!");
-			return false;
-		} else if (args.length > 1 && cmd.getName().equalsIgnoreCase("head")) {
-			sender.sendMessage(ChatColor.RED + "Too many arguments!");
-			sender.sendMessage(ChatColor.DARK_RED + "Usage:" + ChatColor.RED + "/head [IGN]");
-			return false;
-	    } else if (cmd.getName().equalsIgnoreCase("head") && args.length == 1) {
-	    	Player player = (Player) sender;
-	    	@SuppressWarnings("deprecation")
-			ItemStack skull = new ItemStack(397, 1, (short) 3);
-	    	SkullMeta meta = (SkullMeta) skull.getItemMeta();
-	    	meta.setOwner(args[1]);
-	    	meta.setDisplayName(args[1] + "'s skull");
-	    	skull.setItemMeta(meta);
-	    	player.getInventory().addItem(skull);
-	    	return true;
-	    } else {
-	    	return false;
-	    }
-	    
-	    God, I look back at the code and see how many darn bugs there are... Below is the newer, more efficient code.
-		
-		*/
+	
+    
     // Does the command equal "/head"?
 	if (cmd.getName().equalsIgnoreCase("head")) {
 		// Is a player sending it?

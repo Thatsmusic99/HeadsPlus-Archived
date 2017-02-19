@@ -41,14 +41,15 @@ public class HeadsPlus extends JavaPlugin {
 				log.info("[HeadsPlus] Data folder wasn't found, created!");
 			}
 			File config = new File(getDataFolder(), "config.yml");
+			String[] list = {};
             if (!(config.exists())) {
             	log.info("[HeadsPlus] Config wasn't found, created!");
-            	this.getConfig().addDefault("blacklist", true);
+            	this.getConfig().addDefault("blacklist", list);
             	this.getConfig().options().copyDefaults(true);
             	this.saveConfig();
             } else {
             	log.info("[HeadsPlus] Config found! Loading...");
-            	this.getConfig().addDefault("blacklist", true);
+            	this.getConfig().addDefault("blacklist", list);
             	this.getConfig().options().copyDefaults(true);
             	this.saveConfig();
             }

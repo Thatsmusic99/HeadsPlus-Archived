@@ -34,12 +34,12 @@ public class HeadsPlusCommand implements CommandExecutor {
 					sender.sendMessage(ChatColor.DARK_BLUE + "==============================");
 			    
 				}
-			    if (args.length == 1) {
+	/*		    if (args.length == 1) {
 			    	if (args[0].equals("reload")) {
 			    		if (sender.hasPermission("headsplus.maincommand.reload")) {
-			    			try {
-			    		        sender.sendMessage(ChatColor.BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.BLUE + "] " + ChatColor.GRAY + "Reloading config...");
-			    		        FileConfiguration config = HeadsPlus.instance().getConfig();
+		    			try {
+		    		        sender.sendMessage(ChatColor.BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.BLUE + "] " + ChatColor.GRAY + "Reloading config...");
+		    		        FileConfiguration config = HeadsPlus.instance().getConfig();
 			    		        if (config != null) {
 			    		        	HeadsPlus.instance().reloadConfig();
 			    		        	HeadsPlus.log.info("Config loaded successfully!");
@@ -74,8 +74,8 @@ public class HeadsPlusCommand implements CommandExecutor {
 			    			catch (Exception e) {
 			    				HeadsPlus.log.severe("Config failed to reload!");
 			    				sender.sendMessage(ChatColor.DARK_RED + "[" + ChatColor.RED + "HeadsPlus" + ChatColor.DARK_RED + "] " + ChatColor.RED + "Config has failed to reload. Try again, if problem consists contact Thatsmusic99.");
-			    				e.printStackTrace();
-			    			}
+			    				e.printStackTrace(); 
+			    			} */
 			    		    
 			    		}
 			    	}
@@ -86,9 +86,9 @@ public class HeadsPlusCommand implements CommandExecutor {
 							sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.GRAY + args[0] + " has been added to the blacklist!");
 						}
 			    	}
-			    }
-			}
-		    }
+			    
+			
+		    
 		return false;
 		}
 

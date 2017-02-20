@@ -42,8 +42,8 @@ public class Head implements CommandExecutor {
 			
 			if ((args.length == 1) && (args[0].matches("^[A-Za-z0-9_]+$")) && (3 < args[0].length() << 16)) {
 				List<String> blacklist = (List<String>)HeadsPlus.getInstance().getConfig().getStringList("blacklist");
-				
-				if (!(blacklist.contains(args[0]))) {
+				String head = args[0].toLowerCase();
+				if (!(blacklist.contains(head))) {
 					if (((Player) sender).getInventory().firstEmpty() == -1) {
 						sender.sendMessage(ChatColor.RED + "Your inventory is full!");
 					} else {
@@ -57,7 +57,7 @@ public class Head implements CommandExecutor {
 				        return true;
 					}
 				    
-				} else if (blacklist.contains(args[0])) {
+				} else if (blacklist.contains(head)) {
 					sender.sendMessage(ChatColor.RED + "That head is blacklisted and cannot be used!");
 					return false;
 				}

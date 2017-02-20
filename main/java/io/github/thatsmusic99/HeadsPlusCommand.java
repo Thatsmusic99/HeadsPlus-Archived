@@ -64,11 +64,11 @@ public class HeadsPlusCommand implements CommandExecutor {
 					           sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Config wasn't found, now created." );
 					       }
 					       List<String> blacklist = (List<String>)HeadsPlus.getInstance().getConfig().getStringList("blacklist");
-					       
-					       if (blacklist.contains(args[1])) {
+					       String aHead = args[1].toLowerCase();
+					       if (blacklist.contains(aHead)) {
 						       sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "This head is already added!");
 					       } else {
-					    	   blacklist.add(args[1]);
+					    	   blacklist.add(aHead);
 						       HeadsPlus.getInstance().getConfig().set("blacklist", blacklist);
 						       HeadsPlus.getInstance().getConfig().options().copyDefaults(true);
 						       HeadsPlus.getInstance().saveConfig();
@@ -76,8 +76,55 @@ public class HeadsPlusCommand implements CommandExecutor {
 					       }
 				       } catch (Exception e) {
 					       HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to add head!");
+					       e.printStackTrace();
 				       }
-			   }
+			  } else if ((args.length == 1) && (args[0].equalsIgnoreCase("blacklistadd"))) {
+				  if (sender.hasPermission("headsplus.maincommand.blacklist.add")) {
+					  sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/headsplus blacklistadd [IGN]");
+				  }
+			  } else if ((args.length > 2) && (args[0].equalsIgnoreCase("blacklistadd"))) {
+				  if (sender.hasPermission("headsplus.maincommand.blacklist.add")) {
+					  sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/headsplus blacklistadd [IGN]");
+					  sender.sendMessage(ChatColor.RED + "Too many arguments!");
+				  }
+			  }
+		}
+			  if ((args.length == 2) && (args[0].equalsIgnoreCase("blacklistdel"))) {
+				  if (sender.hasPermission("headsplus.maincommand.blacklist.delete")) {
+					  try {
+					       File config = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
+					       if  (!(config.exists())) {
+					           HeadsPlus.getInstance().log.info("[HeadsPlus] Config not found, creating!");
+					           HeadsPlus.getInstance().saveDefaultConfig();
+					           sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Config wasn't found, now created." );
+					       }
+					       try {
+					           List<String> blacklist = (List<String>)HeadsPlus.getInstance().getConfig().getStringList("blacklist");
+					           String rHead = args[1].toLowerCase();
+					           if (blacklist.contains(rHead)) {
+						           blacklist.remove(rHead);
+						           HeadsPlus.getInstance().getConfig().set("blacklist", blacklist);
+						           HeadsPlus.getInstance().getConfig().options().copyDefaults(true);
+						           HeadsPlus.getInstance().saveConfig();
+						           sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + args[1] + " has been removed from the blacklist!");
+					           } else {
+					    	       sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "This head is not on the blacklist!");
+					       }} catch (Exception e) {
+					    	   HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove head!");
+					    	   e.printStackTrace();
+					       }
+					       
+				       } catch (Exception e) {
+					       HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove head!");
+					       e.printStackTrace();
+				       }
+				  }
+			  } else if ((args.length == 1) && (args[0].equalsIgnoreCase("blacklistdel"))) {
+				  if (sender.hasPermission("headsplus.maincommand.blacklist.delete")) {
+					  sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/heads [IGN]");
+				  }
+			  }
+				
 			   
 			    
 			    
@@ -88,7 +135,7 @@ public class HeadsPlusCommand implements CommandExecutor {
 
 			}
 	
-	}
+	 
 		return false;
 	
 

@@ -132,12 +132,12 @@ public class HeadsPlusCommand implements CommandExecutor {
 							  HeadsPlus.getInstance().getConfig().set("blacklistOn", false);
 							  HeadsPlus.getInstance().getConfig().options().copyDefaults(true);
 					          HeadsPlus.getInstance().saveConfig();
-							  sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.AQUA + "Blacklist disabled, use /headsplus blacklist to re-enable!");
+							  sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Blacklist disabled, use /headsplus blacklist to re-enable!");
 						  } else if (!(blacklistToggle)) {
 							  HeadsPlus.getInstance().getConfig().set("blacklistOn", true);
 							  HeadsPlus.getInstance().getConfig().options().copyDefaults(true);
 							  HeadsPlus.getInstance().saveConfig();
-							  sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.AQUA + "Blacklist enabled, use /headsplus blacklist to disable!");
+							  sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Blacklist enabled, use /headsplus blacklist to disable!");
 						  }
 					  } catch (Exception e) {
 						  HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to toggle blacklist!");
@@ -150,15 +150,23 @@ public class HeadsPlusCommand implements CommandExecutor {
 				  if (sender.hasPermission("headsplus.maincommand.blacklist.toggle")) {
 					  try {
 						  if (args[1].equalsIgnoreCase("on")) {
-							  HeadsPlus.getInstance().getConfig().set("blacklistOn", true);
-							  HeadsPlus.getInstance().getConfig().options().copyDefaults(true);
-							  HeadsPlus.getInstance().saveConfig();
-							  sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.AQUA + "Blacklist enabled!");
+							  if (HeadsPlus.getInstance().getConfig().getBoolean("blacklistOn")) {
+							      HeadsPlus.getInstance().getConfig().set("blacklistOn", true);
+							      HeadsPlus.getInstance().getConfig().options().copyDefaults(true);
+							      HeadsPlus.getInstance().saveConfig();
+							  } else {
+								  sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Blacklist is already disabled!");
+							  }
+							      sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Blacklist enabled!");
 						  } else if (args[1].equalsIgnoreCase("off")) {
-							  HeadsPlus.getInstance().getConfig().set("blacklistOn", false);
-							  HeadsPlus.getInstance().getConfig().options().copyDefaults(true);
-					          HeadsPlus.getInstance().saveConfig();
-							  sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.AQUA + "Blacklist disabled!");
+							  if (!(HeadsPlus.getInstance().getConfig().getBoolean("blacklistOn"))) {
+								  sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Blacklist is already enabled.");
+							  } else {
+							      HeadsPlus.getInstance().getConfig().set("blacklistOn", false);
+							      HeadsPlus.getInstance().getConfig().options().copyDefaults(true);
+					              HeadsPlus.getInstance().saveConfig();
+							      sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Blacklist disabled!");
+							  }
 						  } else {
 							  sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/headsplus blacklist [On|Off]");
 						  }
@@ -174,10 +182,8 @@ public class HeadsPlusCommand implements CommandExecutor {
 			  }
 			  
 			  if ((args.length == 1) && (args[0].equalsIgnoreCase("info"))) {
-				  @SuppressWarnings("static-access")
-				String version = new HeadsPlus().getInstance().version;
-				  @SuppressWarnings("static-access")
-				String author = new HeadsPlus().getInstance().author;
+				  String version = HeadsPlus.getInstance().version;
+				  String author = HeadsPlus.getInstance().author;
 				  sender.sendMessage(ChatColor.DARK_BLUE + "===============" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "===============");
 				  sender.sendMessage(ChatColor.DARK_AQUA + "Version: " + ChatColor.GRAY + version);
 				  sender.sendMessage(ChatColor.DARK_AQUA + "Author: " + ChatColor.GRAY + author);

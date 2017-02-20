@@ -31,7 +31,7 @@ public final class HeadInteractEvent implements Listener {
 			    if (TimesSent < 1) {
 			    	Pattern mhf = Pattern.compile("MHF_");
 			    	Matcher match = mhf.matcher(owner);
-			    	if (match.find()) {
+			    	if (match.find() && !(match.matches())) {
 			    		String newMatch = owner.replace("MHF_", "");
 			    		player.sendMessage(ChatColor.YELLOW + "That is a " + ChatColor.GREEN + newMatch + ChatColor.YELLOW + "'s head.");
 			    		TimesSent++;

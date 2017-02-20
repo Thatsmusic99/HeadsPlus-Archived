@@ -42,16 +42,21 @@ public class Head implements CommandExecutor {
 			}
 			
 			if ((args.length == 1) && (args[0].matches("^[A-Za-z0-9_]+$")) && (3 < args[0].length() << 16)) {
-				List<String> blacklist = HeadsPlus.instance().getConfig().getStringList("blacklist");
+				List<String> blacklist = (List<String>)HeadsPlus.getInstance().getConfig().getStringList("blacklist");
 				if (!(blacklist.contains(args[0]))) {
-				    Player player = (Player) sender;
-		            ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
-			        SkullMeta meta = (SkullMeta) skull.getItemMeta();
-		            meta.setOwner(args[0]);
-				    meta.setDisplayName(args[0] + "'s head");
-				    skull.setItemMeta(meta);
-				    player.getInventory().addItem(skull);
-				    return true;
+					if (((Player) sender).getInventory().firstEmpty() == -1) {
+						sender.sendMessage(ChatColor.RED + "Your inventory is full!");
+					} else {
+						Player player = (Player) sender;
+		                ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+			            SkullMeta meta = (SkullMeta) skull.getItemMeta();
+		                meta.setOwner(args[0]);
+				        meta.setDisplayName(args[0] + "'s head");
+				        skull.setItemMeta(meta);
+				        player.getInventory().addItem(skull);
+				        return true;
+					}
+				    
 				} else if (blacklist.contains(args[0])) {
 					sender.sendMessage(ChatColor.RED + "That head is blacklisted and cannot be used!");
 					return false;

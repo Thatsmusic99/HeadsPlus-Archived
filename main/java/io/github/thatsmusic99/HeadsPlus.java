@@ -9,17 +9,15 @@ import java.util.logging.Logger;
 public class HeadsPlus extends JavaPlugin {	
 	public Logger log = Logger.getLogger("Minecraft");
 	public boolean blacklistOn = this.getConfig().getBoolean("blacklistOn");
-	public static HeadsPlus instance() {
+	private static HeadsPlus instance;
 		
-		HeadsPlus instance = null;
-		return instance;
-	}
 	FileConfiguration config;
 	File cfile;
 	
 	@Override
 	public void onEnable() {
 		try { 
+			instance = this;
 			configLoad();
 		    getCommand("head").setExecutor(new Head());
 		    getCommand("headsplus").setExecutor(new HeadsPlusCommand());
@@ -59,6 +57,9 @@ public class HeadsPlus extends JavaPlugin {
 			e.printStackTrace();
 		}
 	   
+	}
+	public static HeadsPlus getInstance() {
+		return instance;
 	}
 
 	

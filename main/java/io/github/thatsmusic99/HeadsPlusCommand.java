@@ -1,5 +1,7 @@
 package io.github.thatsmusic99;
 
+import java.io.File;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -29,7 +31,27 @@ public class HeadsPlusCommand implements CommandExecutor {
 					}
 					sender.sendMessage(ChatColor.DARK_BLUE + "==============================");
 			    
-				}
+			   } 
+			   if ((args.length == 1) && (args[0].equalsIgnoreCase("reload"))) {
+				       sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Reloading config...");
+				       try {
+					       File config = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
+					       if  (!(config.exists())) {
+						       HeadsPlus.getInstance().log.info("[HeadsPlus] Config not found, creating!");
+						       HeadsPlus.getInstance().saveDefaultConfig();
+						   
+					       } else {
+						       HeadsPlus.getInstance().log.info("[HeadsPlus] Found config, loading!");
+						       HeadsPlus.getInstance().reloadConfig();
+						       HeadsPlus.getInstance().log.info("[HeadsPlus] Config reloaded!");
+						       sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Reloaded config!");
+					      }  
+				       } catch (Exception e) {
+					       HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to reload config!");
+					       e.printStackTrace();
+				   }
+			   }
+			   
 			    
 			    
 			

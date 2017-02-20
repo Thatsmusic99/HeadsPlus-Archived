@@ -1,6 +1,7 @@
 package io.github.thatsmusic99;
 
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -8,8 +9,10 @@ import java.util.logging.Logger;
 
 public class HeadsPlus extends JavaPlugin {	
 	public Logger log = Logger.getLogger("Minecraft");
-	public boolean blacklistOn = this.getConfig().getBoolean("blacklistOn");
 	private static HeadsPlus instance;
+	public PluginDescriptionFile pluginYml = getDescription();
+	public String author = pluginYml.getAuthors().toString();
+	public String version = pluginYml.getVersion();
 		
 	FileConfiguration config;
 	File cfile;
@@ -43,11 +46,13 @@ public class HeadsPlus extends JavaPlugin {
             if (!(config.exists())) {
             	log.info("[HeadsPlus] Config wasn't found, created!");
             	this.getConfig().addDefault("blacklist", list);
+            	this.getConfig().addDefault("blacklistOn", true);
             	this.getConfig().options().copyDefaults(true);
             	this.saveConfig();
             } else {
             	log.info("[HeadsPlus] Config found! Loading...");
             	this.getConfig().addDefault("blacklist", list);
+            	this.getConfig().addDefault("blacklistOn", true);
             	this.getConfig().options().copyDefaults(true);
             	this.saveConfig();
             }
@@ -61,6 +66,7 @@ public class HeadsPlus extends JavaPlugin {
 	public static HeadsPlus getInstance() {
 		return instance;
 	}
+	
 
 	
 }

@@ -1,6 +1,6 @@
 main: io.github.thatsmusic99.HeadsPlus
 name: HeadsPlus
-version: 0.2.5
+version: 0.3
 description: Spawns in heads with extra features.
 author: Thatsmusic99
 commands:

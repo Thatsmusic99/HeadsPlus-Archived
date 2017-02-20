@@ -6,7 +6,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.List;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -43,6 +42,7 @@ public class Head implements CommandExecutor {
 			
 			if ((args.length == 1) && (args[0].matches("^[A-Za-z0-9_]+$")) && (3 < args[0].length() << 16)) {
 				List<String> blacklist = (List<String>)HeadsPlus.getInstance().getConfig().getStringList("blacklist");
+				
 				if (!(blacklist.contains(args[0]))) {
 					if (((Player) sender).getInventory().firstEmpty() == -1) {
 						sender.sendMessage(ChatColor.RED + "Your inventory is full!");

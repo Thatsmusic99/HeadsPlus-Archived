@@ -2,7 +2,6 @@ package io.github.thatsmusic99;
 
 import java.io.File;
 import java.util.List;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -65,10 +64,11 @@ public class HeadsPlusCommand implements CommandExecutor {
 					           sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Config wasn't found, now created." );
 					       }
 					       List<String> blacklist = (List<String>)HeadsPlus.getInstance().getConfig().getStringList("blacklist");
+					       
 					       if (blacklist.contains(args[1])) {
 						       sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "This head is already added!");
 					       } else {
-						       blacklist.add(args[1]);
+					    	   blacklist.add(args[1]);
 						       HeadsPlus.getInstance().getConfig().set("blacklist", blacklist);
 						       HeadsPlus.getInstance().getConfig().options().copyDefaults(true);
 						       HeadsPlus.getInstance().saveConfig();

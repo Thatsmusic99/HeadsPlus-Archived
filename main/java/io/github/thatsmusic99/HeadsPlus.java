@@ -53,6 +53,7 @@ public class HeadsPlus extends JavaPlugin {
             	log.info("[HeadsPlus] Config found! Loading...");
             	this.getConfig().addDefault("blacklist", list);
             	this.getConfig().addDefault("blacklistOn", true);
+            	this.getConfig().addDefault("playerDeathHead", 100);
             	this.getConfig().options().copyDefaults(true);
             	this.saveConfig();
             }

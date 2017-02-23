@@ -4,6 +4,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import io.github.thatsmusic99.events.EntityDeathEvent;
+import io.github.thatsmusic99.events.HeadInteractEvent;
+
 import java.io.File;
 import java.util.logging.Logger;
 
@@ -25,6 +28,7 @@ public class HeadsPlus extends JavaPlugin {
 		    getCommand("head").setExecutor(new Head());
 		    getCommand("headsplus").setExecutor(new HeadsPlusCommand());
 		    getServer().getPluginManager().registerEvents(new HeadInteractEvent(), this);
+		    getServer().getPluginManager().registerEvents(new EntityDeathEvent(), this);
 		    log.info("[HeadsPlus] HeadsPlus has been enabled.");
 		} catch (Exception e) {
 			log.severe("[HeadsPlus] Error enabling HeadsPlus!");
@@ -54,6 +58,8 @@ public class HeadsPlus extends JavaPlugin {
             	this.getConfig().addDefault("blacklist", list);
             	this.getConfig().addDefault("blacklistOn", true);
             	this.getConfig().addDefault("playerDeathHead", 100);
+            	this.getConfig().addDefault("zombieHeadC", 75);
+            	this.getConfig().addDefault("zombieHead", "MHF_Zombie");
             	this.getConfig().options().copyDefaults(true);
             	this.saveConfig();
             }
@@ -66,6 +72,7 @@ public class HeadsPlus extends JavaPlugin {
 	}
 	public static HeadsPlus getInstance() {
 		return instance;
+		
 	}
 	
 

@@ -1,4 +1,5 @@
-package io.github.thatsmusic99;
+package io.github.thatsmusic99.events;
+
 
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;

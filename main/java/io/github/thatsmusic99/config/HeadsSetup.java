@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
-import io.github.thatsmusic99.HeadsPlus;
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 
 public class HeadsSetup {
 	File dataFolder = HeadsPlus.getInstance().getDataFolder();

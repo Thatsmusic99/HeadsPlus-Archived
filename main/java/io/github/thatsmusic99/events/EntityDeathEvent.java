@@ -12,7 +12,7 @@ import org.bukkit.event.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import io.github.thatsmusic99.HeadsPlus;
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 
 public class EntityDeathEvent implements Listener {
 

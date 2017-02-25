@@ -1,4 +1,4 @@
-package io.github.thatsmusic99.events;
+package io.github.thatsmusic99.headsplus.events;
 
 
 import org.bukkit.event.Listener;

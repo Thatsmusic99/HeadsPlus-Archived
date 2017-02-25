@@ -1,0 +1,12 @@
+# HeadsPlus main config
+# Plugin by Thatsmusic99
+# DISCLAIMER: If you refuse to listen to the config instructions provided, it is very likely that you will break the plugin. I am not responsible for you breaking this plugin, it is still being built, and I am introducing patches to avoid it from breaking. However if you do find any config issue, send me your config and stack trace. Thanks.
+
+# Turns the blacklist on and off.
+# In short, allows players to spawn in blacklisted heads when this option is on.
+blacklistOn: true
+
+# Blacklist list.
+# List of heads that are blacklisted. In the listing function, not all heads are listed (up to 10 pages and 100 heads).
+# Remember: Alphanumeric names only! A patch to stop these from being accepted by the config will be added.
+blacklist: []

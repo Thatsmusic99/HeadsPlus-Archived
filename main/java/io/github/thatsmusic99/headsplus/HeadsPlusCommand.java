@@ -1,4 +1,4 @@
-package io.github.thatsmusic99;
+package io.github.thatsmusic99.headsplus;
 
 import java.io.File;
 import java.util.List;
@@ -6,8 +6,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-
-import io.github.thatsmusic99.headsplus.HeadsPlus;
 
 public class HeadsPlusCommand implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

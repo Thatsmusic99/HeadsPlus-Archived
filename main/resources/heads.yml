@@ -1,0 +1,13 @@
+# HeadsPlus Head config
+# Plugin by Thatsmusic99
+
+# Chances of player's heads spawning in when killed.
+# Use 0 or -1 to disable.
+playerDeathHead: 100
+
+# Chances of a zombie's head being spawned in when killed.
+zombieHeadC: 75
+
+# Head used when a zombie dies.
+zombieHead: MHF_Zombie
+

@@ -1,4 +1,4 @@
-package io.github.thatsmusic99.events;
+package io.github.thatsmusic99.headsplus.events;
 
 
 import java.util.List;
@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.config.HeadsSetup;
 
 public class EntityDeathEvent implements Listener {
 
@@ -47,7 +48,7 @@ public class EntityDeathEvent implements Listener {
 	       if (zChance <= zHead) {
             	ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
             	SkullMeta meta = (SkullMeta) skull.getItemMeta();
-            	meta.setOwner(HeadsPlus.getInstance().getConfig().getString("zombieHead"));
+            	meta.setOwner(HeadsSetup.getInstance().getHeadsConfig().getString("zombieHead"));
             	meta.setDisplayName("Zombie Head");
             	skull.setItemMeta(meta);
             	((List<ItemStack>) e.getDrops).add(skull);

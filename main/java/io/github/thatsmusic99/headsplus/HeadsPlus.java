@@ -107,6 +107,7 @@ public class HeadsPlus extends JavaPlugin {
 	}
 	// TODO need to grab those config things and shove them into a file of their own.
     // TODO fix config loading.
+	// TODO Add crafting recipe? :)
 
 	
 

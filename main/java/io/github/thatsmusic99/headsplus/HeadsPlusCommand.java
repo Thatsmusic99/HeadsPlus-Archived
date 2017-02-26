@@ -6,6 +6,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 public class HeadsPlusCommand implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -39,11 +41,11 @@ public class HeadsPlusCommand implements CommandExecutor {
 					       File config = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
 					       if  (!(config.exists())) {
 						       HeadsPlus.getInstance().log.info("[HeadsPlus] Config not found, creating!");
-						       HeadsPlus.getInstance().saveDefaultConfig();
+						       HeadsPlus.getInstance().
 						   
 					       } else {
 						       HeadsPlus.getInstance().log.info("[HeadsPlus] Found config, loading!");
-						       HeadsPlus.getInstance().reloadConfig();
+						       HeadsPlus.getInstance().reloadMainConfig();
 						       HeadsPlus.getInstance().log.info("[HeadsPlus] Config reloaded!");
 						       sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Reloaded config!");
 					      }  
@@ -203,4 +205,22 @@ public class HeadsPlusCommand implements CommandExecutor {
 	
 
 	}	
+	private static FileConfiguration mConfig;
+	private static File mConfigF;
+	private static File dataFolder = HeadsPlus.getInstance().getDataFolder();
+	
+	private static FileConfiguration mConfig() {
+		return mConfig;
+	}
+	public void reloadMainConfig() {
+		if (!(dataFolder.exists())) {
+			dataFolder.mkdirs();
+		}
+		if (mConfigF == null || mConfig == null) {
+			File mConfigF = new File(dataFolder, "config.yml");
+			mConfig = YamlConfiguration.loadConfiguration(mConfigF);
+		} else {
+		    mConfig = YamlConfiguration.loadConfiguration(mConfigF);
+		}
+	}
 }

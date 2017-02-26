@@ -5,9 +5,11 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import io.github.thatsmusic99.headsplus.config.mainConfig;
+import io.github.thatsmusic99.headsplus.crafting.ZombieRecipe;
+import io.github.thatsmusic99.headsplus.events.HeadInteractEvent;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
@@ -25,8 +27,9 @@ public class HeadsPlus extends JavaPlugin {
 	public void onEnable() {
 		try { 
 			instance = this;
-			mainConfig.getInstance().setupMConfig();
-			
+			setupMConfig();
+			getServer().addRecipe(ZombieRecipe.getInstance().zombieRecipe);
+			getServer().getPluginManager().registerEvents(new HeadInteractEvent(), this);
 		    this.getCommand("headsplus").setExecutor(new HeadsPlusCommand());
 		    this.getCommand("head").setExecutor(new Head());
 		    log.info("[HeadsPlus] HeadsPlus has been enabled.");
@@ -44,28 +47,31 @@ public class HeadsPlus extends JavaPlugin {
 		return instance;
 		
 	}
-/*	private static FileConfiguration mConfig;
-	private static File dataFolder = HeadsPlus.getInstance().getDataFolder();
+	
+	
+	// Main config
+	
+	private static FileConfiguration mConfig;
 	private static File mConfigF;
 	
-	private static FileConfiguration mConfig() {
+	public static FileConfiguration mConfig() {
 		return mConfig;
 	}
 	
 	public void setupMConfig() {
-		reloadMainConfig();
-		loadMainConfig();
-		saveMainConfig();
-		reloadMainConfig();
+		try {
+		    reloadMainConfig();
+		    loadMainConfig();
+		    saveMainConfig();
+		    reloadMainConfig();
+		} catch (Exception e) {
+			HeadsPlus.getInstance().log.severe("[HeadsPlus] Something went wrong enabling the config!");
+			e.printStackTrace();
+		}
 	}
 	
-	private static void loadMainConfig() {
+	private void loadMainConfig() {
 		
-		String header = "HeadsPlus by Thatsmusic99, source code to not be duplicated in any form./n";
-		header = header.concat("Disclaimer: I am not responsible for any bugs that are introduced if you do not follow the config instructions.\n");
-		header = header.concat("Available options:\n");
-		header = header.concat(" - blacklist: [] - The main blacklist function for /head, NOT CUSTOM RECIPES./n");
-		header = header.concat(" - blacklistOn: true - Turns the blacklist for /head on and off.");
 		String[] blacklist = {};
 		mConfig().addDefault("blacklist", Arrays.asList(blacklist));
 		mConfig().addDefault("blacklistOn", true);
@@ -73,14 +79,22 @@ public class HeadsPlus extends JavaPlugin {
 		saveMainConfig();		
 		
 	}
-	public static void reloadMainConfig() {
-		if (mConfigF == null) {
-			@SuppressWarnings("unused")
-			File mConfigF = new File(dataFolder, "config.yml");
+	public void reloadMainConfig() {
+		if (!(getDataFolder().exists())) {
+			getDataFolder().mkdirs();
 		}
-		mConfig = YamlConfiguration.loadConfiguration(mConfigF);
+		mConfigF = new File(getDataFolder(), "config.yml");
+		if (!(mConfigF.exists())) {
+			try {
+			    mConfigF.createNewFile();
+			} catch (IOException ex) {
+				log.severe("[HeadsPlus] Failed to create main config!");
+				ex.printStackTrace();
+			}
+	    mConfig = YamlConfiguration.loadConfiguration(mConfigF);
+		}
 	}
-	public static void saveMainConfig() {
+	public void saveMainConfig() {
 	    if (mConfig == null || mConfigF == null) {
 		    return;
 	    }
@@ -91,7 +105,12 @@ public class HeadsPlus extends JavaPlugin {
 	    	e.printStackTrace();
 	    }
 	}
-*/	
+	
+	
+	
+
+
+
 
 	// TODO need to grab those config things and shove them into a file of their own.
     // TODO fix config loading.

@@ -1,50 +1,17 @@
-package io.github.thatsmusic99.headsplus;
+package io.github.thatsmusic99.headsplus.config;
 
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.java.JavaPlugin;
-
-import io.github.thatsmusic99.headsplus.config.mainConfig;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.logging.Logger;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
-public class HeadsPlus extends JavaPlugin {	
-	public Logger log = Logger.getLogger("Minecraft");
-	private static HeadsPlus instance;
-	public PluginDescriptionFile pluginYml = getDescription();
-	public String author = pluginYml.getAuthors().toString();
-	public String version = pluginYml.getVersion();
-		
-	FileConfiguration config;
-	File cfile;
+import io.github.thatsmusic99.headsplus.HeadsPlus;
+
+public class mainConfig {
 	
-	@Override
-	public void onEnable() {
-		try { 
-			instance = this;
-			mainConfig.getInstance().setupMConfig();
-			
-		    this.getCommand("headsplus").setExecutor(new HeadsPlusCommand());
-		    this.getCommand("head").setExecutor(new Head());
-		    log.info("[HeadsPlus] HeadsPlus has been enabled.");
-		} catch (Exception e) {
-			log.severe("[HeadsPlus] Error enabling HeadsPlus!");
-			e.printStackTrace();
-		}
-    }
-	@Override
-	public void onDisable() {
-		log.info("[HeadsPlus] HeadsPlus has been disabled.");
-	}
-	
-	public static HeadsPlus getInstance() {
-		return instance;
-		
-	}
-/*	private static FileConfiguration mConfig;
+	private static mainConfig instance;
+	private static FileConfiguration mConfig;
 	private static File dataFolder = HeadsPlus.getInstance().getDataFolder();
 	private static File mConfigF;
 	
@@ -74,6 +41,9 @@ public class HeadsPlus extends JavaPlugin {
 		
 	}
 	public static void reloadMainConfig() {
+		if (!(dataFolder.exists())) {
+			dataFolder.mkdirs();
+		}
 		if (mConfigF == null) {
 			@SuppressWarnings("unused")
 			File mConfigF = new File(dataFolder, "config.yml");
@@ -91,13 +61,8 @@ public class HeadsPlus extends JavaPlugin {
 	    	e.printStackTrace();
 	    }
 	}
-*/	
+	public static mainConfig getInstance() {
+		return instance;
+	}
 
-	// TODO need to grab those config things and shove them into a file of their own.
-    // TODO fix config loading.
-	// TODO Add crafting recipe? :)
-
-	
-
-	
 }

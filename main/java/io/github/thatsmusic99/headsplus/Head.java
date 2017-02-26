@@ -42,8 +42,10 @@ public class Head implements CommandExecutor {
 			}
 			
 			if ((args.length == 1) && (args[0].matches("^[A-Za-z0-9_]+$")) && (3 < args[0].length() << 16)) {
-				List<String> blacklist = (List<String>)HeadsPlus.getInstance().getConfig().getStringList("blacklist");
-				Boolean blacklistOn = HeadsPlus.getInstance().getConfig().getBoolean("blacklistOn");
+				@SuppressWarnings("static-access")
+				List<String> blacklist = (List<String>)HeadsPlus.getInstance().mConfig().getStringList("blacklist");
+				@SuppressWarnings("static-access")
+				Boolean blacklistOn = HeadsPlus.getInstance().mConfig().getBoolean("blacklistOn");
 				String head = args[0].toLowerCase();
 				if (!(blacklist.contains(head))) {
 					if (((Player) sender).getInventory().firstEmpty() == -1) {

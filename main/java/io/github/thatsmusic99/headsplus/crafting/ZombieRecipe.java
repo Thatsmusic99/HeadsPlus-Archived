@@ -6,6 +6,9 @@ import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.SkullMeta;
 
 public class ZombieRecipe {
+	
+	private static ZombieRecipe instance;
+
 	public ItemStack head; {
 		ItemStack zHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 		SkullMeta zMeta = (SkullMeta) zHead.getItemMeta();
@@ -15,8 +18,10 @@ public class ZombieRecipe {
 		
 	}
     @SuppressWarnings("deprecation")
-	ShapelessRecipe recipe = new ShapelessRecipe(head)
+	public ShapelessRecipe zombieRecipe = new ShapelessRecipe(head)
              .addIngredient(Material.ROTTEN_FLESH)
              .addIngredient(Material.SKULL_ITEM, 1);
-    
+    public static ZombieRecipe getInstance() {
+    	return instance;
+    }
 }

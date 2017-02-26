@@ -10,6 +10,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 public class HeadsPlusCommand implements CommandExecutor {
+	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("headsplus")) {
 			if (sender.hasPermission("headsplus.maincommand")) {
@@ -38,14 +39,15 @@ public class HeadsPlusCommand implements CommandExecutor {
 				   if (sender.hasPermission("headsplus.maincommand.reload")) {
 				       sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Reloading config...");
 				       try {
-					       File config = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
-					       if  (!(config.exists())) {
+				    	   File mConfigF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
+					       mConfig = YamlConfiguration.loadConfiguration(mConfigF);
+					       if  (!(mConfigF.exists())) {
 						       HeadsPlus.getInstance().log.info("[HeadsPlus] Config not found, creating!");
-						       HeadsPlus.getInstance().
-						   
+						       saveMainConfig();
+						       reloadMainConfig();				   
 					       } else {
 						       HeadsPlus.getInstance().log.info("[HeadsPlus] Found config, loading!");
-						       HeadsPlus.getInstance().reloadMainConfig();
+						       reloadMainConfig();
 						       HeadsPlus.getInstance().log.info("[HeadsPlus] Config reloaded!");
 						       sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Reloaded config!");
 					      }  
@@ -59,21 +61,24 @@ public class HeadsPlusCommand implements CommandExecutor {
 			   if ((args.length == 2) && (args[0].equalsIgnoreCase("blacklistadd"))) {
 				   if (sender.hasPermission("headsplus.maincommand.blacklist.add")) {
 				       try {
-					       File config = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
-					       if  (!(config.exists())) {
+				    	   File mConfigF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
+					       mConfig = YamlConfiguration.loadConfiguration(mConfigF);
+					       if  (!(mConfigF.exists())) {
 					           HeadsPlus.getInstance().log.info("[HeadsPlus] Config not found, creating!");
-					           HeadsPlus.getInstance().saveDefaultConfig();
+					           saveMainConfig();
+						       reloadMainConfig();
 					           sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Config wasn't found, now created." );
 					       }
-					       List<String> blacklist = (List<String>)HeadsPlus.getInstance().getConfig().getStringList("blacklist");
+					       List<String> blacklist = (List<String>)mConfig().getStringList("blacklist");
 					       String aHead = args[1].toLowerCase();
 					       if (blacklist.contains(aHead)) {
 						       sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "This head is already added!");
 					       } else {
 					    	   blacklist.add(aHead);
-						       HeadsPlus.getInstance().getConfig().set("blacklist", blacklist);
-						       HeadsPlus.getInstance().getConfig().options().copyDefaults(true);
-						       HeadsPlus.getInstance().saveConfig();
+						       mConfig().set("blacklist", blacklist);
+						       mConfig().options().copyDefaults(true);
+						       saveMainConfig();
+						       reloadMainConfig();
 						       sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + args[1] + " has been added to the blacklist!");
 					       }
 				       } catch (Exception e) {
@@ -94,20 +99,22 @@ public class HeadsPlusCommand implements CommandExecutor {
 			  if ((args.length == 2) && (args[0].equalsIgnoreCase("blacklistdel"))) {
 				  if (sender.hasPermission("headsplus.maincommand.blacklist.delete")) {
 					  try {
-					       File config = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
-					       if  (!(config.exists())) {
+						  File mConfigF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
+					       mConfig = YamlConfiguration.loadConfiguration(mConfigF);
+					       if  (!(mConfigF.exists())) {
 					           HeadsPlus.getInstance().log.info("[HeadsPlus] Config not found, creating!");
-					           HeadsPlus.getInstance().saveDefaultConfig();
+					           reloadMainConfig();
+					           saveMainConfig();
 					           sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Config wasn't found, now created." );
 					       }
 					       try {
-					           List<String> blacklist = (List<String>)HeadsPlus.getInstance().getConfig().getStringList("blacklist");
+					           List<String> blacklist = (List<String>)mConfig().getStringList("blacklist");
 					           String rHead = args[1].toLowerCase();
 					           if (blacklist.contains(rHead)) {
 						           blacklist.remove(rHead);
-						           HeadsPlus.getInstance().getConfig().set("blacklist", blacklist);
-						           HeadsPlus.getInstance().getConfig().options().copyDefaults(true);
-						           HeadsPlus.getInstance().saveConfig();
+						           mConfig().set("blacklist", blacklist);
+						           mConfig().options().copyDefaults(true);
+						           saveMainConfig();
 						           sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + args[1] + " has been removed from the blacklist!");
 					           } else {
 					    	       sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "This head is not on the blacklist!");
@@ -129,16 +136,16 @@ public class HeadsPlusCommand implements CommandExecutor {
 			  if ((args.length == 1) && (args[0].equalsIgnoreCase("blacklist"))) {
 				  if (sender.hasPermission("headsplus.maincommand.blacklist.toggle")) {
 					  try {
-						  Boolean blacklistToggle = HeadsPlus.getInstance().getConfig().getBoolean("blacklistOn");
+						  Boolean blacklistToggle = mConfig().getBoolean("blacklistOn");
 						  if (blacklistToggle) {
-							  HeadsPlus.getInstance().getConfig().set("blacklistOn", false);
-							  HeadsPlus.getInstance().getConfig().options().copyDefaults(true);
-					          HeadsPlus.getInstance().saveConfig();
+							  mConfig().set("blacklistOn", false);
+							  mConfig().options().copyDefaults(true);
+					          saveMainConfig();
 							  sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Blacklist disabled, use /headsplus blacklist to re-enable!");
 						  } else if (!(blacklistToggle)) {
-							  HeadsPlus.getInstance().getConfig().set("blacklistOn", true);
-							  HeadsPlus.getInstance().getConfig().options().copyDefaults(true);
-							  HeadsPlus.getInstance().saveConfig();
+							  mConfig().set("blacklistOn", true);
+							  mConfig().options().copyDefaults(true);
+							  saveMainConfig();
 							  sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Blacklist enabled, use /headsplus blacklist to disable!");
 						  }
 					  } catch (Exception e) {
@@ -152,21 +159,21 @@ public class HeadsPlusCommand implements CommandExecutor {
 				  if (sender.hasPermission("headsplus.maincommand.blacklist.toggle")) {
 					  try {
 						  if (args[1].equalsIgnoreCase("on")) {
-							  if (HeadsPlus.getInstance().getConfig().getBoolean("blacklistOn")) {
-							      HeadsPlus.getInstance().getConfig().set("blacklistOn", true);
-							      HeadsPlus.getInstance().getConfig().options().copyDefaults(true);
-							      HeadsPlus.getInstance().saveConfig();
+							  if (mConfig().getBoolean("blacklistOn")) {
+							      mConfig().set("blacklistOn", true);
+							      mConfig().options().copyDefaults(true);
+							      saveMainConfig();
 							  } else {
 								  sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Blacklist is already disabled!");
 							  }
 							      sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Blacklist enabled!");
 						  } else if (args[1].equalsIgnoreCase("off")) {
-							  if (!(HeadsPlus.getInstance().getConfig().getBoolean("blacklistOn"))) {
+							  if (!(mConfig().getBoolean("blacklistOn"))) {
 								  sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Blacklist is already enabled.");
 							  } else {
-							      HeadsPlus.getInstance().getConfig().set("blacklistOn", false);
-							      HeadsPlus.getInstance().getConfig().options().copyDefaults(true);
-					              HeadsPlus.getInstance().saveConfig();
+							      mConfig().set("blacklistOn", false);
+							      mConfig().options().copyDefaults(true);
+					              saveMainConfig();
 							      sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Blacklist disabled!");
 							  }
 						  } else {
@@ -222,5 +229,16 @@ public class HeadsPlusCommand implements CommandExecutor {
 		} else {
 		    mConfig = YamlConfiguration.loadConfiguration(mConfigF);
 		}
+	}
+	public void saveMainConfig() {
+	    if (mConfig == null || mConfigF == null) {
+		    return;
+	    }
+	    try {
+	    	mConfig.save(mConfigF);
+	    } catch (Exception e) {
+	    	HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to save config.");
+	    	e.printStackTrace();
+	    }
 	}
 }

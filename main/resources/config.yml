@@ -1,0 +1,12 @@
+# HeadsPlus
+# Plugin by Thatsmusic99
+# Disclaimer: Any options added that are not followed by the config instructions will break the plugin. Patches are being introduced to stop this from happening, however please do not post a fake error because of it. Any config-related errors will require you to include your config.
+# If all is clear, I will fix it.
+# Otherwise, you will be ignored by me on Spigot.
+# Thanks in advance, and thank you for using HeadsPlus. ~
+
+# Turns blacklist on and off (boolean)
+blacklistOn: true
+
+# List of blacklisted heads (list)
+blacklist: []

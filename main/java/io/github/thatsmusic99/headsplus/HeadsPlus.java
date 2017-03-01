@@ -1,16 +1,17 @@
 package io.github.thatsmusic99.headsplus;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import io.github.thatsmusic99.headsplus.crafting.ZombieRecipe;
 import io.github.thatsmusic99.headsplus.events.HeadInteractEvent;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.logging.Logger;
 
 public class HeadsPlus extends JavaPlugin {	
@@ -19,16 +20,16 @@ public class HeadsPlus extends JavaPlugin {
 	public PluginDescriptionFile pluginYml = getDescription();
 	public String author = pluginYml.getAuthors().toString();
 	public String version = pluginYml.getVersion();
+	
+    FileConfiguration config;
+	File configF;
 		
-	FileConfiguration config;
-	File cfile;
 	
 	@Override
 	public void onEnable() {
 		try { 
 			instance = this;
-			setupMConfig();
-			getServer().addRecipe(ZombieRecipe.getInstance().zombieRecipe);
+			setUpMConfig();
 			getServer().getPluginManager().registerEvents(new HeadInteractEvent(), this);
 		    this.getCommand("headsplus").setExecutor(new HeadsPlusCommand());
 		    this.getCommand("head").setExecutor(new Head());
@@ -49,61 +50,34 @@ public class HeadsPlus extends JavaPlugin {
 	}
 	
 	
-	// Main config
-	
-	private static FileConfiguration mConfig;
-	private static File mConfigF;
-	
-	public static FileConfiguration mConfig() {
-		return mConfig;
+	public void setUpMConfig() {
+		config = getConfig();
+		config.options().copyDefaults(true);
+		saveConfig();
+		configF = new File(getDataFolder(), "config.yml");
 	}
 	
-	public void setupMConfig() {
-		try {
-		    reloadMainConfig();
-		    loadMainConfig();
-		    saveMainConfig();
-		    reloadMainConfig();
-		} catch (Exception e) {
-			HeadsPlus.getInstance().log.severe("[HeadsPlus] Something went wrong enabling the config!");
-			e.printStackTrace();
-		}
-	}
+
 	
-	private void loadMainConfig() {
+
+	
+	
+
+	@SuppressWarnings("deprecation")
+	public void addRecipes() {
+		ItemStack zHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+		SkullMeta zMeta = (SkullMeta) zHead.getItemMeta();
+		zMeta.setOwner("MHF_Zombie");
+		zMeta.setDisplayName("Zombie Head");
+		zHead.setItemMeta(zMeta);
 		
-		String[] blacklist = {};
-		mConfig().addDefault("blacklist", Arrays.asList(blacklist));
-		mConfig().addDefault("blacklistOn", true);
-		mConfig().options().copyDefaults(true);
-		saveMainConfig();		
 		
-	}
-	public void reloadMainConfig() {
-		if (!(getDataFolder().exists())) {
-			getDataFolder().mkdirs();
-		}
-		mConfigF = new File(getDataFolder(), "config.yml");
-		if (!(mConfigF.exists())) {
-			try {
-			    mConfigF.createNewFile();
-			} catch (IOException ex) {
-				log.severe("[HeadsPlus] Failed to create main config!");
-				ex.printStackTrace();
-			}
-	    mConfig = YamlConfiguration.loadConfiguration(mConfigF);
-		}
-	}
-	public void saveMainConfig() {
-	    if (mConfig == null || mConfigF == null) {
-		    return;
-	    }
-	    try {
-	    	mConfig.save(mConfigF);
-	    } catch (Exception e) {
-	    	HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to save config.");
-	    	e.printStackTrace();
-	    }
+		ShapelessRecipe zombieRecipe = new ShapelessRecipe(zHead)
+	             .addIngredient(Material.ROTTEN_FLESH)
+	             .addIngredient(Material.SKULL_ITEM, 1);
+		
+		Bukkit.addRecipe(zombieRecipe);
+		
 	}
 	
 	

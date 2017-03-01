@@ -12,6 +12,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 public class HeadsPlusCommand implements CommandExecutor {
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		FileConfiguration config = HeadsPlus.getInstance().getConfig();
+		File configF = HeadsPlus.getInstance().configF;
 		if (cmd.getName().equalsIgnoreCase("headsplus")) {
 			if (sender.hasPermission("headsplus.maincommand")) {
 			    if (args.length == 0) {
@@ -39,15 +41,13 @@ public class HeadsPlusCommand implements CommandExecutor {
 				   if (sender.hasPermission("headsplus.maincommand.reload")) {
 				       sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Reloading config...");
 				       try {
-				    	   File mConfigF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
-					       mConfig = YamlConfiguration.loadConfiguration(mConfigF);
-					       if  (!(mConfigF.exists())) {
+
+					       if  (!(configF.exists())) {
 						       HeadsPlus.getInstance().log.info("[HeadsPlus] Config not found, creating!");
-						       saveMainConfig();
-						       reloadMainConfig();				   
+						       HeadsPlus.getInstance().saveConfig();				   
 					       } else {
 						       HeadsPlus.getInstance().log.info("[HeadsPlus] Found config, loading!");
-						       reloadMainConfig();
+						       HeadsPlus.getInstance().reloadConfig();
 						       HeadsPlus.getInstance().log.info("[HeadsPlus] Config reloaded!");
 						       sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Reloaded config!");
 					      }  
@@ -61,15 +61,15 @@ public class HeadsPlusCommand implements CommandExecutor {
 			   if ((args.length == 2) && (args[0].equalsIgnoreCase("blacklistadd"))) {
 				   if (sender.hasPermission("headsplus.maincommand.blacklist.add")) {
 				       try {
-				    	   File mConfigF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
-					       mConfig = YamlConfiguration.loadConfiguration(mConfigF);
-					       if  (!(mConfigF.exists())) {
+
+					       if  (!(configF.exists())) {
 					           HeadsPlus.getInstance().log.info("[HeadsPlus] Config not found, creating!");
-					           saveMainConfig();
-						       reloadMainConfig();
+					           config.options().copyDefaults(true);
+                               HeadsPlus.getInstance().saveConfig();
+                               File cfile = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
 					           sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Config wasn't found, now created." );
 					       }
-					       List<String> blacklist = (List<String>)mConfig().getStringList("blacklist");
+					       List<String> blacklist = config.getStringList("blacklist");
 					       String aHead = args[1].toLowerCase();
 					       if (blacklist.contains(aHead)) {
 						       sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "This head is already added!");
@@ -212,33 +212,5 @@ public class HeadsPlusCommand implements CommandExecutor {
 	
 
 	}	
-	private static FileConfiguration mConfig;
-	private static File mConfigF;
-	private static File dataFolder = HeadsPlus.getInstance().getDataFolder();
-	
-	private static FileConfiguration mConfig() {
-		return mConfig;
-	}
-	public void reloadMainConfig() {
-		if (!(dataFolder.exists())) {
-			dataFolder.mkdirs();
-		}
-		if (mConfigF == null || mConfig == null) {
-			File mConfigF = new File(dataFolder, "config.yml");
-			mConfig = YamlConfiguration.loadConfiguration(mConfigF);
-		} else {
-		    mConfig = YamlConfiguration.loadConfiguration(mConfigF);
-		}
-	}
-	public void saveMainConfig() {
-	    if (mConfig == null || mConfigF == null) {
-		    return;
-	    }
-	    try {
-	    	mConfig.save(mConfigF);
-	    } catch (Exception e) {
-	    	HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to save config.");
-	    	e.printStackTrace();
-	    }
-	}
+
 }

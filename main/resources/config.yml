@@ -5,8 +5,8 @@
 # Otherwise, you will be ignored by me on Spigot.
 # Thanks in advance, and thank you for using HeadsPlus. ~
 
-# Turns blacklist on and off (boolean)
+
 blacklistOn: true
 
-# List of blacklisted heads (list)
+
 blacklist: []

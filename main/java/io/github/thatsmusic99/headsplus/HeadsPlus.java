@@ -23,7 +23,7 @@ public class HeadsPlus extends JavaPlugin {
 	public String author = pluginYml.getAuthors().toString();
 	public String version = pluginYml.getVersion();
 	
-    public FileConfiguration config;
+    public static FileConfiguration config;
 	public File configF;
 		
 	
@@ -45,26 +45,17 @@ public class HeadsPlus extends JavaPlugin {
 	public void onDisable() {
 		log.info("[HeadsPlus] HeadsPlus has been disabled.");
 	}
-	
 	public static HeadsPlus getInstance() {
 		return instance;
 		
 	}
-	
-	
 	public void setUpMConfig() {
 		config = getConfig();
 		config.options().copyDefaults(true);
 		saveConfig();
 		configF = new File(getDataFolder(), "config.yml");
+		
 	}
-	
-
-	
-
-	
-	
-
 	@SuppressWarnings("deprecation")
 	public void addRecipes() {
 		ItemStack zHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
@@ -81,6 +72,7 @@ public class HeadsPlus extends JavaPlugin {
 		Bukkit.addRecipe(zombieRecipe);
 		
 	}
+
 	
 	
 	

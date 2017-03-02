@@ -7,6 +7,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.ChatColor;
@@ -46,8 +47,14 @@ public class Head implements CommandExecutor {
 			    }
 			
 			    if ((args.length == 1) && (args[0].matches("^[A-Za-z0-9_]+$")) && (3 < args[0].length() << 16)) {
-				    List<String> blacklist = (List<String>)HeadsPlus.getInstance().config.getStringList("blacklist");
-				    Boolean blacklistOn = HeadsPlus.getInstance().config.getBoolean("blacklistOn");
+				    HeadsPlus.getInstance();
+					// List<String> blacklist = (List<String>)HeadsPlus.config.getStringList("blacklist");
+                    List<String> blacklist = new ArrayList<>();
+                    for (String str : HeadsPlus.getInstance().getConfig().getStringList("blacklist")) {
+                    	blacklist.add(str.toLowerCase());
+                    }
+				    HeadsPlus.getInstance();
+					Boolean blacklistOn = HeadsPlus.config.getBoolean("blacklistOn");
 				    String head = args[0].toLowerCase();
 				    if (!(blacklist.contains(head))) {
 					    if (((Player) sender).getInventory().firstEmpty() == -1) {

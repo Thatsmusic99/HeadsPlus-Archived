@@ -9,6 +9,8 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import io.github.thatsmusic99.headsplus.commands.Head;
+import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.events.HeadInteractEvent;
 
 import java.io.File;
@@ -21,8 +23,8 @@ public class HeadsPlus extends JavaPlugin {
 	public String author = pluginYml.getAuthors().toString();
 	public String version = pluginYml.getVersion();
 	
-    FileConfiguration config;
-	File configF;
+    public FileConfiguration config;
+	public File configF;
 		
 	
 	@Override

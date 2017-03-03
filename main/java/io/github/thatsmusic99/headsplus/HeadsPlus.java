@@ -86,6 +86,16 @@ public class HeadsPlus extends JavaPlugin {
 					e.printStackTrace();
 				}
 			}
+			if (!configF.exists()) {
+				try {
+					configF.createNewFile();
+				} catch (IOException e) {
+					log.severe("[HeadsPlus] Couldn't create config!");
+					e.printStackTrace();
+				}
+			}
+			config.options().copyDefaults(true);
+			saveConfig();
 		/*	headsF = new File(getDataFolder(), "heads.yml");
 			if (!headsF.exists()) {
 				try {

@@ -7,12 +7,12 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import io.github.thatsmusic99.headsplus.commands.Head;
 import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
+import io.github.thatsmusic99.headsplus.events.DeathEvents;
 import io.github.thatsmusic99.headsplus.events.HeadInteractEvent;
 
 import java.io.File;
@@ -28,16 +28,16 @@ public class HeadsPlus extends JavaPlugin {
 	
     public static FileConfiguration config;
 	public File configF;
-	public static FileConfiguration heads;
-	public File headsF;
+
 		
 	
 	@Override
 	public void onEnable() {
 		try { 
 			instance = this;
-			setUpMConfig(null);
+			setUpMConfig();
 			getServer().getPluginManager().registerEvents(new HeadInteractEvent(), this);
+			getServer().getPluginManager().registerEvents(new DeathEvents(), this);
 		    this.getCommand("headsplus").setExecutor(new HeadsPlusCommand());
 		    this.getCommand("head").setExecutor(new Head());
 		    log.info("[HeadsPlus] HeadsPlus has been enabled.");
@@ -74,19 +74,19 @@ public class HeadsPlus extends JavaPlugin {
 		
 	}
 
-	public void setUpMConfig(Plugin p) {
-			configF = new File(p.getDataFolder(), "config.yml");
-			config = p.getConfig();
-			if(!p.getDataFolder().exists()) {
+	public void setUpMConfig() {
+			configF = new File(getDataFolder(), "config.yml");
+			config = getConfig();
+			if(!getDataFolder().exists()) {
 				try {
-					p.getDataFolder().createNewFile();
+					getDataFolder().createNewFile();
 				}
 				catch (IOException e) {
 					log.severe("[HeadsPlus] Couldn't create data folder!");
 					e.printStackTrace();
 				}
 			}
-			headsF = new File(p.getDataFolder(), "heads.yml");
+		/*	headsF = new File(getDataFolder(), "heads.yml");
 			if (!headsF.exists()) {
 				try {
 				    headsF.createNewFile();
@@ -95,18 +95,16 @@ public class HeadsPlus extends JavaPlugin {
 					e.printStackTrace();
 				}
 			}
-		}
+		*/} 
     public void reloadMConfig() {
     	config = YamlConfiguration.loadConfiguration(configF);
     }
-	public void reloadHConfig() {
-		heads = YamlConfiguration.loadConfiguration(headsF);
-	}
 
-	public FileConfiguration getHConfig() {
+
+/*	public FileConfiguration getHConfig() {
 		return heads;
 	}
-
+*/
 
 
 

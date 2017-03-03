@@ -19,12 +19,13 @@ public class DeathEvents implements Listener {
 	public void onEntityDeath(EntityDeathEvent e) {
 		if (e.getEntity() instanceof Zombie) {
 			Random zRand = new Random();
-			int ZDC1 = HeadsPlus.getInstance().getHConfig().getInt("zombieHeadC");
+			int ZDC1 = HeadsPlus.getInstance().getConfig().getInt("zombieHeadC");
 			int ZDC2 = zRand.nextInt(100) + 1;
-			if (ZDC2 >= ZDC1) {
+			if (ZDC2 <= ZDC1) {
 				ItemStack zHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 				SkullMeta zHeadM = (SkullMeta) zHead.getItemMeta();
-				zHeadM.setOwner(HeadsPlus.getInstance().getHConfig().getString("zombieHeadN"));
+				zHeadM.setOwner(HeadsPlus.getInstance().getConfig().getString("zombieHeadN"));
+				zHeadM.setDisplayName("Zombie Head");
 				zHeadM.addEnchant(Enchantment.LUCK, 1, true);
 				zHeadM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 				zHead.setItemMeta(zHeadM);

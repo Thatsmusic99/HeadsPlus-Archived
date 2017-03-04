@@ -8,12 +8,16 @@
 
 blacklistOn: true
 blacklist: []
+version: 1
 
-zombieHeadN: MHF_Zombie
+zombieHeadN: 'MHF_Zombie'
 zombieHeadC: 75
+zombieHeaDN: '&a&lZombie &7&lHead'
 
-skeletonHeadN: MHF_Skeleton
+skeletonHeadN: 'MHF_Skeleton'
 skeletonHeadC: 75
+skeletonHeadDN: '&8&lSkeleton &7&lHead'
 
-blazeHeadN: MHF_Blaze
+blazeHeadN: 'MHF_Blaze'
 blazeHeadC: 10
+blazeHeadDN: '&6&lBlaze &7&lHead'

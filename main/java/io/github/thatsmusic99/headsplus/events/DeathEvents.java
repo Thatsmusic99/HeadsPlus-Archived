@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus.events;
 
 import java.util.Random;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
@@ -25,7 +26,7 @@ public class DeathEvents implements Listener {
 				ItemStack zHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 				SkullMeta zHeadM = (SkullMeta) zHead.getItemMeta();
 				zHeadM.setOwner(HeadsPlus.getInstance().getConfig().getString("zombieHeadN"));
-				zHeadM.setDisplayName("Zombie Head");
+				zHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().getConfig().getString("zombieHeadDN")));
 			    zHeadM.addEnchant(Enchantment.LUCK, 1, true);
 				zHeadM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 				zHead.setItemMeta(zHeadM);
@@ -41,13 +42,28 @@ public class DeathEvents implements Listener {
 				ItemStack sHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 				SkullMeta sHeadM = (SkullMeta) sHead.getItemMeta();
 				sHeadM.setOwner(HeadsPlus.getInstance().getConfig().getString("skeletonHeadN"));
-				sHeadM.setDisplayName("Skeleton Head");
-			    sHeadM.addEnchant(Enchantment.LUCK, 1, true);
+				sHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().getConfig().getString("skeletonHeadDN")));			    
+				sHeadM.addEnchant(Enchantment.LUCK, 1, true);
 				sHeadM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 				sHead.setItemMeta(sHeadM);
 				e.getDrops().add(sHead);
 			}
 		} 
+		if (e.getEntity() instanceof Blaze) {
+			Random bRand = new Random();
+			int BDC1 = HeadsPlus.getInstance().getConfig().getInt("blazeHeadC");
+			int BDC2 = bRand.nextInt(100) + 1;
+			if (BDC2 <= BDC1) {
+				ItemStack bHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+				SkullMeta bHeadM = (SkullMeta) bHead.getItemMeta();
+				bHeadM.setOwner(HeadsPlus.getInstance().getConfig().getString("blazeHeadN"));
+				bHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().getConfig().getString("blazeHeadDN")));
+			    bHeadM.addEnchant(Enchantment.LUCK, 1, true);
+				bHeadM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		        bHead.setItemMeta(bHeadM);
+				e.getDrops().add(bHead);
+			}
+		}
 	} 
 
 }

@@ -9,5 +9,11 @@
 blacklistOn: true
 blacklist: []
 
-zombieHeadN: "MHF_Zombie"
-zombieHeadC: 100
+zombieHeadN: MHF_Zombie
+zombieHeadC: 75
+
+skeletonHeadN: MHF_Skeleton
+skeletonHeadC: 75
+
+blazeHeadN: MHF_Blaze
+blazeHeadC: 10

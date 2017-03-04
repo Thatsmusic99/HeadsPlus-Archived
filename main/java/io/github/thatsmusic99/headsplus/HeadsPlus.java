@@ -96,7 +96,7 @@ public class HeadsPlus extends JavaPlugin {
 			}
 			config.options().copyDefaults(true);
 			saveConfig();
-		/*	headsF = new File(getDataFolder(), "heads.yml");
+	/*		headsF = new File(getDataFolder(), "heads.yml");
 			if (!headsF.exists()) {
 				try {
 				    headsF.createNewFile();
@@ -104,8 +104,8 @@ public class HeadsPlus extends JavaPlugin {
 					log.severe("[HeadsPlus] Couldn't create heads config!");
 					e.printStackTrace();
 				}
-			}
-		*/} 
+			*/}
+		 
     public void reloadMConfig() {
     	config = YamlConfiguration.loadConfiguration(configF);
     }

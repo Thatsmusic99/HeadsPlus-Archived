@@ -26,13 +26,28 @@ public class DeathEvents implements Listener {
 				SkullMeta zHeadM = (SkullMeta) zHead.getItemMeta();
 				zHeadM.setOwner(HeadsPlus.getInstance().getConfig().getString("zombieHeadN"));
 				zHeadM.setDisplayName("Zombie Head");
-				zHeadM.addEnchant(Enchantment.LUCK, 1, true);
+			    zHeadM.addEnchant(Enchantment.LUCK, 1, true);
 				zHeadM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 				zHead.setItemMeta(zHeadM);
 				e.getDrops().add(zHead);
 			}
 			
 		}
-	}
+		if (e.getEntity() instanceof Skeleton) {
+			Random sRand = new Random();
+			int SDC1 = HeadsPlus.getInstance().getConfig().getInt("skeletonHeadC");
+			int SDC2 = sRand.nextInt(100) + 1;
+			if (SDC2 <= SDC1) {
+				ItemStack sHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+				SkullMeta sHeadM = (SkullMeta) sHead.getItemMeta();
+				sHeadM.setOwner(HeadsPlus.getInstance().getConfig().getString("skeletonHeadN"));
+				sHeadM.setDisplayName("Skeleton Head");
+			    sHeadM.addEnchant(Enchantment.LUCK, 1, true);
+				sHeadM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+				sHead.setItemMeta(sHeadM);
+				e.getDrops().add(sHead);
+			}
+		} 
+	} 
 
 }

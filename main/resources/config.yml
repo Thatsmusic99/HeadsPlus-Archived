@@ -10,22 +10,22 @@ blacklistOn: true
 blacklist: []
 version: 1
 
-zombieHeadN: 'MHF_Zombie'
+zombieHeadN: MHF_Zombie
 zombieHeadC: 25
-zombieHeaDN: 'Zombie Head'
+zombieHeadDN: 'Zombie Head'
 
-skeletonHeadN: 'MHF_Skeleton'
+skeletonHeadN: MHF_Skeleton
 skeletonHeadC: 25
 skeletonHeadDN: 'Skeleton Head'
 
-blazeHeadN: 'MHF_Blaze'
+blazeHeadN: MHF_Blaze
 blazeHeadC: 10
 blazeHeadDN: 'Blaze Head'
 
-cavespiderHeadN: 'MHF_Cavespider'
+cavespiderHeadN: MHF_Cavespider
 cavespiderHeadC: 25
 cavespiderHeadDN: 'Cave Spider Head'
 
-chickenHeadN: 'MHF_Chicken'
+chickenHeadN: MHF_Chicken
 chickenHeadC: 10
 chickenHeadDN: 'Chicken Head'

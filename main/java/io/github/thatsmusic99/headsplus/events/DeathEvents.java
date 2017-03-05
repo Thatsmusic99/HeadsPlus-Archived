@@ -64,6 +64,36 @@ public class DeathEvents implements Listener {
 				e.getDrops().add(bHead);
 			}
 		}
+		if (e.getEntity() instanceof CaveSpider) {
+			Random csRand = new Random();
+			int CSDC1 = HeadsPlus.getInstance().getConfig().getInt("cavespiderHeadC");
+			int CSDC2 = csRand.nextInt(100) + 1;
+			if (CSDC2 <= CSDC1) {
+				ItemStack csHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+				SkullMeta csHeadM = (SkullMeta) csHead.getItemMeta();
+				csHeadM.setOwner(HeadsPlus.getInstance().getConfig().getString("cavespiderHeadN"));
+				csHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().getConfig().getString("cavespiderHeadDN")));
+			    csHeadM.addEnchant(Enchantment.LUCK, 1, true);
+				csHeadM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		        csHead.setItemMeta(csHeadM);
+				e.getDrops().add(csHead);
+			}
+		}
+		if (e.getEntity() instanceof Chicken) {
+			Random cRand = new Random();
+			int CDC1 = HeadsPlus.getInstance().getConfig().getInt("cavespiderHeadC");
+			int CDC2 = cRand.nextInt(100) + 1;
+			if (CDC2 <= CDC1) {
+				ItemStack cHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+				SkullMeta cHeadM = (SkullMeta) cHead.getItemMeta();
+				cHeadM.setOwner(HeadsPlus.getInstance().getConfig().getString("cavespiderHeadN"));
+				cHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().getConfig().getString("cavespiderHeadDN")));
+			    cHeadM.addEnchant(Enchantment.LUCK, 1, true);
+				cHeadM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		        cHead.setItemMeta(cHeadM);
+				e.getDrops().add(cHead);
+			}
+		}
 	} 
 
 }

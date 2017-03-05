@@ -40,7 +40,6 @@ public class HeadsPlus extends JavaPlugin {
 		try { 
 			instance = this;
 			setUpMConfig();
-			setupMessages();
 			getServer().getPluginManager().registerEvents(new HeadInteractEvent(), this);
 			getServer().getPluginManager().registerEvents(new DeathEvents(), this);
 		    this.getCommand("headsplus").setExecutor(new HeadsPlusCommand());
@@ -110,26 +109,8 @@ public class HeadsPlus extends JavaPlugin {
     public void reloadMConfig() {
     	config = YamlConfiguration.loadConfiguration(configF);
     }
-    public void setupMessages() {
-		if (!getDataFolder().exists()) {
-			getDataFolder().mkdirs();
-		}
-		messagesF = new File(getDataFolder(), "messages.yml");
-		if (!messagesF.exists()) {
-			try {
-			    messagesF.createNewFile();
-			} catch (IOException e) {
-				log.severe("[HeadsPlus] Could not create messages.yml!");
-			}
-		}
-		messages = YamlConfiguration.loadConfiguration(messagesF);
-	}
-	public FileConfiguration getMessages() {
-		return messages;
-	}
-	public void reloadMessages() {
-		messages = YamlConfiguration.loadConfiguration(messagesF);
-	}
+    
+	
 
 
 /*	public FileConfiguration getHConfig() {

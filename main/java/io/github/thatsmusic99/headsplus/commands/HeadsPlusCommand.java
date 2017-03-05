@@ -15,9 +15,10 @@ public class HeadsPlusCommand implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		FileConfiguration config = HeadsPlus.getInstance().getConfig();
 		File configF = HeadsPlus.getInstance().configF;
-		String prefix = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().getMessages().getString("prefix"));
+		
 		if (cmd.getName().equalsIgnoreCase("headsplus")) {
 			if (sender.hasPermission("headsplus.maincommand")) {
+				String prefix = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().getConfig().getString("prefix"));
 			    if (args.length == 0) {
 				    sender.sendMessage(ChatColor.DARK_BLUE + "===============" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "===============");
 				    if (sender.hasPermission("headsplus.maincommand.reload")) {
@@ -39,8 +40,9 @@ public class HeadsPlusCommand implements CommandExecutor {
 					sender.sendMessage(ChatColor.DARK_BLUE + "========================================");
 			    
 			   } 
-			   if ((args.length == 1) && (args[0].equalsIgnoreCase("reload"))) { // TODO Add messages.yml
+			   if ((args.length == 1) && (args[0].equalsIgnoreCase("reload"))) { 
 				   if (sender.hasPermission("headsplus.maincommand.reload")) {
+					   
 				       sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Reloading config...");
 				       try {
 
@@ -57,7 +59,7 @@ public class HeadsPlusCommand implements CommandExecutor {
 				       } catch (Exception e) {
 					       HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to reload config - if this problem consists, contact Thatsmusic99!");
 					       e.printStackTrace();
-					       sender.sendMessage(ChatColor.DARK_RED + "[" + ChatColor.RED + "HeadsPlus" + ChatColor.DARK_RED + "] " + "Failed to reload config.");
+					       sender.sendMessage(prefix + " "+ ChatColor.RED + "Failed to reload config.");
 				       }
 				   }
 			   }
@@ -71,19 +73,19 @@ public class HeadsPlusCommand implements CommandExecutor {
                                HeadsPlus.getInstance().saveConfig();
                                @SuppressWarnings("unused")
 							File cfile = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
-					           sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Config wasn't found, now created." );
+					           sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Config wasn't found, now created." );
 					       }
 					       List<String> blacklist = config.getStringList("blacklist");
 					       String aHead = args[1].toLowerCase();
 					       if (blacklist.contains(aHead)) {
-						       sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "This head is already added!");
+						       sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "This head is already added!");
 					       } else {
 					    	   blacklist.add(aHead);
 						       config.set("blacklist", blacklist);
 						       config.options().copyDefaults(true);
 						       HeadsPlus.getInstance().saveConfig();
 						       
-						       sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + args[1] + " has been added to the blacklist!");
+						       sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + args[1] + " has been added to the blacklist!");
 					       }
 				       } catch (Exception e) {
 					       HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to add head!");
@@ -109,7 +111,7 @@ public class HeadsPlusCommand implements CommandExecutor {
 					       if  (!(cfile.exists())) {
 					           HeadsPlus.getInstance().log.info("[HeadsPlus] Config not found, creating!");
 					           
-					           sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Config wasn't found, now created." );
+					           sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Config wasn't found, now created." );
 					       }
 					       try {
 					           List<String> blacklist = (List<String>)config.getStringList("blacklist");

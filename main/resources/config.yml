@@ -5,11 +5,11 @@
 # Otherwise, you will be ignored by me on Spigot.
 # Thanks in advance, and thank you for using HeadsPlus. ~
 
-
+# Test
 blacklistOn: true
 blacklist: []
 version: 1
-
+# Test 2
 zombieHeadN: MHF_Zombie
 zombieHeadC: 25
 zombieHeadDN: 'Zombie Head'
@@ -29,3 +29,9 @@ cavespiderHeadDN: 'Cave Spider Head'
 chickenHeadN: MHF_Chicken
 chickenHeadC: 10
 chickenHeadDN: 'Chicken Head'
+
+prefix: '&1[&6HeadsPlus&1]'
+reload-message: '&3Config reloaded!'
+reload-fail-message: '&cConfig failed to reload!'
+head-interact-message: '&3That is &b%p&3's head!'
+head-mhf-interact-message: '&3That is a &b%p&3's head!'

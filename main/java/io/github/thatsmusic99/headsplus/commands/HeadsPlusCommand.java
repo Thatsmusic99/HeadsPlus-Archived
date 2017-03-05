@@ -15,6 +15,7 @@ public class HeadsPlusCommand implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		FileConfiguration config = HeadsPlus.getInstance().getConfig();
 		File configF = HeadsPlus.getInstance().configF;
+		String prefix = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().getMessages().getString("prefix"));
 		if (cmd.getName().equalsIgnoreCase("headsplus")) {
 			if (sender.hasPermission("headsplus.maincommand")) {
 			    if (args.length == 0) {
@@ -38,19 +39,20 @@ public class HeadsPlusCommand implements CommandExecutor {
 					sender.sendMessage(ChatColor.DARK_BLUE + "========================================");
 			    
 			   } 
-			   if ((args.length == 1) && (args[0].equalsIgnoreCase("reload"))) {
+			   if ((args.length == 1) && (args[0].equalsIgnoreCase("reload"))) { // TODO Add messages.yml
 				   if (sender.hasPermission("headsplus.maincommand.reload")) {
-				       sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Reloading config...");
+				       sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Reloading config...");
 				       try {
 
 					       if  (!(configF.exists())) {
 						       HeadsPlus.getInstance().log.info("[HeadsPlus] Config not found, creating!");
-						       HeadsPlus.getInstance().saveConfig();				   
+						       HeadsPlus.getInstance().saveConfig();
+						       
 					       } else {
 						       HeadsPlus.getInstance().log.info("[HeadsPlus] Found config, loading!");
 						       HeadsPlus.getInstance().reloadConfig();
 						       HeadsPlus.getInstance().log.info("[HeadsPlus] Config reloaded!");
-						       sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Reloaded config!");
+						       sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Reloaded config!");
 					      }  
 				       } catch (Exception e) {
 					       HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to reload config - if this problem consists, contact Thatsmusic99!");

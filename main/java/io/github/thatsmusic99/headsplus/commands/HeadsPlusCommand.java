@@ -121,9 +121,9 @@ public class HeadsPlusCommand implements CommandExecutor {
 						           config.set("blacklist", blacklist);
 						           config.options().copyDefaults(true);
 						           HeadsPlus.getInstance().saveConfig();
-						           sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + args[1] + " has been removed from the blacklist!");
+						           sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + args[1] + " has been removed from the blacklist!");
 					           } else {
-					    	       sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "This head is not on the blacklist!");
+					    	       sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "This head is not on the blacklist!");
 					       }} catch (Exception e) {
 					    	   HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove head!");
 					    	   e.printStackTrace();
@@ -157,7 +157,7 @@ public class HeadsPlusCommand implements CommandExecutor {
 					  } catch (Exception e) {
 						  HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to toggle blacklist!");
 						  e.printStackTrace();
-						  sender.sendMessage(ChatColor.DARK_RED + "[" + ChatColor.RED + "HeadsPlus" + ChatColor.DARK_RED + "] " + ChatColor.RED + "Failed to toggle blacklist.");
+						  sender.sendMessage(prefix + " " + ChatColor.RED + "Failed to toggle blacklist.");
 					  }
 				  }
 			  }
@@ -170,17 +170,17 @@ public class HeadsPlusCommand implements CommandExecutor {
 							      config.options().copyDefaults(true);
 							      HeadsPlus.getInstance().saveConfig();
 							  } else {
-								  sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Blacklist is already disabled!");
+								  sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Blacklist is already disabled!");
 							  }
-							      sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Blacklist enabled!");
+							      sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Blacklist enabled!");
 						  } else if (args[1].equalsIgnoreCase("off")) {
 							  if (!(config.getBoolean("blacklistOn"))) {
-								  sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Blacklist is already enabled.");
+								  sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Blacklist is already enabled.");
 							  } else {
 							      config.set("blacklistOn", false);
 							      config.options().copyDefaults(true);
 					              HeadsPlus.getInstance().saveConfig();
-							      sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Blacklist disabled!");
+							      sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Blacklist disabled!");
 							  }
 						  } else {
 							  sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/headsplus blacklist [On|Off]");
@@ -188,7 +188,7 @@ public class HeadsPlusCommand implements CommandExecutor {
 					  } catch (Exception e) {
 						  HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to toggle blacklist!");
 						  e.printStackTrace();
-						  sender.sendMessage(ChatColor.DARK_RED + "[" + ChatColor.RED + "HeadsPlus" + ChatColor.DARK_RED + "] " + ChatColor.RED + "Failed to toggle blacklist.");
+						  sender.sendMessage(prefix + " " + ChatColor.RED + "Failed to toggle blacklist.");
 					  }
 				  }
 			  }
@@ -197,11 +197,33 @@ public class HeadsPlusCommand implements CommandExecutor {
 			  }
 			  
 			  if ((args.length == 1) && (args[0].equalsIgnoreCase("info"))) {
-				  String version = HeadsPlus.getInstance().version;
-				  String author = HeadsPlus.getInstance().author;
-				  sender.sendMessage(ChatColor.DARK_BLUE + "===============" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "===============");
-				  sender.sendMessage(ChatColor.DARK_AQUA + "Version: " + ChatColor.GRAY + version);
-				  sender.sendMessage(ChatColor.DARK_AQUA + "Author: " + ChatColor.GRAY + author);
+				  if (sender.hasPermission("headsplus.maincommand.info")) {
+				      String version = HeadsPlus.getInstance().version;
+				      String author = HeadsPlus.getInstance().author;
+				      sender.sendMessage(ChatColor.DARK_BLUE + "===============" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "===============");
+				      sender.sendMessage(ChatColor.DARK_AQUA + "Version: " + ChatColor.GRAY + version);
+				      sender.sendMessage(ChatColor.DARK_AQUA + "Author: " + ChatColor.GRAY + author);
+				  }
+			  }
+			  if ((args.length == 1) && (args[0].equalsIgnoreCase("blacklistl"))) {
+				  int heads = 1;
+				  List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("blacklist");
+				  int bls = bl.size();
+				  while (bls > 10) {
+					  heads++;
+					  bls = bls - 10;
+				  }
+				  sender.sendMessage(ChatColor.DARK_BLUE + "============" + ChatColor.GRAY + "Blacklist: 1/" + heads + ChatColor.DARK_BLUE + "==========" );
+				  int TimesSent = 0;
+				  for (String key : bl) {
+					  if (TimesSent <= 10) {
+					      sender.sendMessage(ChatColor.GRAY + key);
+					      TimesSent++;
+					  } else {
+						  TimesSent = 0;
+					  }
+				  }
+				  
 			  }
 			   
 			    

@@ -40,6 +40,7 @@ public class HeadsPlus extends JavaPlugin {
 		try { 
 			instance = this;
 			setUpMConfig();
+			HeadsPlusConfig.msgEnable();
 			getServer().getPluginManager().registerEvents(new HeadInteractEvent(), this);
 			getServer().getPluginManager().registerEvents(new DeathEvents(), this);
 		    this.getCommand("headsplus").setExecutor(new HeadsPlusCommand());
@@ -121,7 +122,6 @@ public class HeadsPlus extends JavaPlugin {
 
 
 	// TODO need to grab those config things and shove them into a file of their own.
-    // TODO fix config loading.
 	// TODO Add crafting recipe? :)
 
 	

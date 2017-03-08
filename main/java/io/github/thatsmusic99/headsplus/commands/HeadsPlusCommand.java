@@ -206,62 +206,53 @@ public class HeadsPlusCommand implements CommandExecutor {
 				  }
 			  }
 			  if ((args.length == 1) && (args[0].equalsIgnoreCase("blacklistl"))) {
-				  int heads = 1;
-				  List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("blacklist");
-				  int bls = bl.size();
-				  while (bls > 10) {
-					  heads++;
-					  bls = bls - 10;
+				  if (sender.hasPermission("headsplus.maincommand.blacklist.list")) {
+				      int heads = 1;
+				      List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("blacklist");
+				      int bls = bl.size();
+				      while (bls > 10) {
+					      heads++;
+					      bls = bls - 10;
+				      }
+				      sender.sendMessage(ChatColor.DARK_BLUE + "============" + ChatColor.GRAY + "Blacklist: 1/" + heads + ChatColor.DARK_BLUE + "==========" );
+				      int TimesSent = 0;
+				      for (String key : bl) {
+					      if (TimesSent <= 7) {
+					    	  if (bl != null) {
+					              sender.sendMessage(ChatColor.GRAY + key);
+					              TimesSent++;
+						      }
+					      } else {
+						      TimesSent = 0;
+						      return true;
+					      }
+				     }
 				  }
-				  sender.sendMessage(ChatColor.DARK_BLUE + "============" + ChatColor.GRAY + "Blacklist: 1/" + heads + ChatColor.DARK_BLUE + "==========" );
-				  int TimesSent = 0;
-				  for (String key : bl) {
-					  if (TimesSent <= 7) {
-						  if (bl != null) {
-					          sender.sendMessage(ChatColor.GRAY + key);
-					          TimesSent++;
-						  }
-					  } else {
-						  TimesSent = 0;
-						  return true;
-					  }
-				  }
-				  
 			  }
 			  if ((args.length == 2) && (args[0].equalsIgnoreCase("blacklistl"))) {
-				  int heads = 1;
-				  List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("blacklist");
-				  int bls = bl.size();
-				  while (bls > 8) {
-					  heads++;
-					  bls = bls - 8;
-				  }
-				  sender.sendMessage(ChatColor.DARK_BLUE + "==========" + ChatColor.GRAY + "Blacklist: " + args[1] + "/" + heads + ChatColor.DARK_BLUE + "===========");
-				  Integer minL = (Integer.valueOf(args[1]) - 1) * 8; // if args[1] is 1, it turns into 0. That is the minimum.
-				  Integer maxL = (Integer.valueOf(args[1]) * 8) - 1; // if args[1] is 1, it turns to 8 and then 7. That is the maximum.
-				  if (maxL > bl.size()) {
-					  maxL = bl.size() - 1;
-				  }
+				  if (sender.hasPermission("headsplus.maincommand.blacklist.list")) {
+				      int heads = 1;
+				      List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("blacklist");
+				      int bls = bl.size();
+				      while (bls > 8) {
+					      heads++;
+					      bls = bls - 8;
+				      }
+				      sender.sendMessage(ChatColor.DARK_BLUE + "==========" + ChatColor.GRAY + "Blacklist: " + args[1] + "/" + heads + ChatColor.DARK_BLUE + "===========");
+				      Integer minL = (Integer.valueOf(args[1]) - 1) * 8; // if args[1] is 1, it turns into 0. That is the minimum.
+				      Integer maxL = (Integer.valueOf(args[1]) * 8) - 1; // if args[1] is 1, it turns to 8 and then 7. That is the maximum.
+				      if (maxL > bl.size()) {
+					      maxL = bl.size() - 1;
+				      }
 				  
-				  List<String> blist = bl.subList(minL, maxL);
-				  for (String key : blist) {
-					  sender.sendMessage(ChatColor.GRAY + key);
-				  }
+				      List<String> blist = bl.subList(minL, maxL);
+				      for (String key : blist) {
+					      sender.sendMessage(ChatColor.GRAY + key);
+				      }
+			      }
 			  }
-			   
-			    
-			    
-			
-		    
-	
 		}
-
 			}
-	
-	 
-		return false;
-	
-
+	return false;
 	}	
-
 }

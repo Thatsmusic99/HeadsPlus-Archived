@@ -8,7 +8,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public class HeadsPlusConfig {
 	private static FileConfiguration messages;
-	private static File messagesF;
+	public static File messagesF;
 	
 	public static FileConfiguration getMessages() {
 		return messages;

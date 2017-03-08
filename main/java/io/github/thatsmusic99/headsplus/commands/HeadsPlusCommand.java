@@ -7,20 +7,26 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.HeadsPlusConfig;
 
 public class HeadsPlusCommand implements CommandExecutor {
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		FileConfiguration config = HeadsPlus.getInstance().getConfig();
 		File configF = HeadsPlus.getInstance().configF;
+		@SuppressWarnings("unused")
+		FileConfiguration messages = HeadsPlusConfig.getMessages();
+		File messagesF = HeadsPlusConfig.messagesF;
 		
 		if (cmd.getName().equalsIgnoreCase("headsplus")) {
 			if (sender.hasPermission("headsplus.maincommand")) {
-				String prefix = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().getConfig().getString("prefix"));
+				String prefix = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("prefix"));
 			    if (args.length == 0) {
-				    sender.sendMessage(ChatColor.DARK_BLUE + "===============" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "===============");
+			    	
+				    sender.sendMessage(ChatColor.DARK_BLUE + "===============" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_GRAY + ChatColor.DARK_BLUE + "===============");
 				    if (sender.hasPermission("headsplus.maincommand.reload")) {
 					    sender.sendMessage(ChatColor.GRAY + "/headsplus reload - " + ChatColor.DARK_AQUA + "Reloads the config.");
 				    }
@@ -29,7 +35,6 @@ public class HeadsPlusCommand implements CommandExecutor {
 					}
 					if (sender.hasPermission("headsplus.maincommand.blacklist.delete")) {
 						sender.sendMessage(ChatColor.GRAY + "/headsplus blacklistdel <IGN> - " + ChatColor.DARK_AQUA + "Removes head from the blacklist.");
-						
 					}
 					if (sender.hasPermission("headsplus.maincommand.blacklist.toggle")) {
 						sender.sendMessage(ChatColor.GRAY + "/headsplus blacklist <On|Off> - " + ChatColor.DARK_AQUA + "Turns the blacklist on/off.");
@@ -37,12 +42,15 @@ public class HeadsPlusCommand implements CommandExecutor {
 					if (sender.hasPermission("headsplus.maincommand.info")) {
 						sender.sendMessage(ChatColor.GRAY + "/headsplus info - " + ChatColor.DARK_AQUA + "Gets plugin info.");
 					}
+					if (sender.hasPermission("headsplus.head")) {
+						sender.sendMessage(ChatColor.GRAY + "/head <IGN> - " + ChatColor.DARK_AQUA + "Spawns in a head.");
+					}
 					sender.sendMessage(ChatColor.DARK_BLUE + "========================================");
 			    
 			   } 
 			   if ((args.length == 1) && (args[0].equalsIgnoreCase("reload"))) { 
 				   if (sender.hasPermission("headsplus.maincommand.reload")) {
-					   
+					   String reloadM = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("reloadMessage"));
 				       sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Reloading config...");
 				       try {
 
@@ -54,8 +62,16 @@ public class HeadsPlusCommand implements CommandExecutor {
 						       HeadsPlus.getInstance().log.info("[HeadsPlus] Found config, loading!");
 						       HeadsPlus.getInstance().reloadConfig();
 						       HeadsPlus.getInstance().log.info("[HeadsPlus] Config reloaded!");
-						       sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Reloaded config!");
 					      }  
+					      if (!(messagesF.exists())) {
+					    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Messages not found, creating!");
+					    	  HeadsPlusConfig.reloadMessages();
+					    	  messages = YamlConfiguration.loadConfiguration(messagesF);
+					      } else {
+					    	  HeadsPlusConfig.reloadMessages();
+					    	  sender.sendMessage((prefix.replaceAll("'", "" ) + " " + (reloadM.replaceAll("'", ""))));
+					      }
+					      
 				       } catch (Exception e) {
 					       HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to reload config - if this problem consists, contact Thatsmusic99!");
 					       e.printStackTrace();

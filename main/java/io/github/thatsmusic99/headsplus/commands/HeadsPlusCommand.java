@@ -216,7 +216,7 @@ public class HeadsPlusCommand implements CommandExecutor {
 				  sender.sendMessage(ChatColor.DARK_BLUE + "============" + ChatColor.GRAY + "Blacklist: 1/" + heads + ChatColor.DARK_BLUE + "==========" );
 				  int TimesSent = 0;
 				  for (String key : bl) {
-					  if (TimesSent <= 9) {
+					  if (TimesSent <= 7) {
 						  if (bl != null) {
 					          sender.sendMessage(ChatColor.GRAY + key);
 					          TimesSent++;
@@ -232,16 +232,17 @@ public class HeadsPlusCommand implements CommandExecutor {
 				  int heads = 1;
 				  List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("blacklist");
 				  int bls = bl.size();
-				  while (bls > 10) {
+				  while (bls > 8) {
 					  heads++;
-					  bls = bls - 10;
+					  bls = bls - 8;
 				  }
 				  sender.sendMessage(ChatColor.DARK_BLUE + "==========" + ChatColor.GRAY + "Blacklist: " + args[1] + "/" + heads + ChatColor.DARK_BLUE + "===========");
-				  Integer minL = (Integer.valueOf(args[1]) - 1) * 10; // if args[1] is 1, it turns into 0. That is the minimum.
-				  Integer maxL = (Integer.valueOf(args[1]) * 10) - 1; // if args[1] is 1, it turns to 10 and then 9. That is the maximum.
-				  if (maxL > bls) {
-					  maxL = bls - 1;
+				  Integer minL = (Integer.valueOf(args[1]) - 1) * 8; // if args[1] is 1, it turns into 0. That is the minimum.
+				  Integer maxL = (Integer.valueOf(args[1]) * 8) - 1; // if args[1] is 1, it turns to 8 and then 7. That is the maximum.
+				  if (maxL > bl.size()) {
+					  maxL = bl.size() - 1;
 				  }
+				  
 				  List<String> blist = bl.subList(minL, maxL);
 				  for (String key : blist) {
 					  sender.sendMessage(ChatColor.GRAY + key);

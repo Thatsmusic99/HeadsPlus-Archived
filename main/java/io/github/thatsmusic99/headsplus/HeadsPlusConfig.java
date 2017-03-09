@@ -22,6 +22,7 @@ public class HeadsPlusConfig {
 		getMessages().options().header("HeadsPlus by Thatsmusic99");
 		getMessages().addDefault("prefix", "&1[&6HeadsPlus&1]");
 		getMessages().addDefault("reloadMessage", "&3Config has reloaded!");
+		getMessages().addDefault("head-interact-message", "&3That is &b%p&3''s head!");
 		getMessages().options().copyDefaults(true);
 		saveMessages();
 	}

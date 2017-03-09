@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.HeadsPlusConfig;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,19 +32,28 @@ public final class HeadInteractEvent implements Listener {
 			    Skull skull = (Skull) block;
 			    @SuppressWarnings("deprecation")
 			    String owner = skull.getOwner();
+			    String playerName = player.toString();
 			    if (TimesSent < 1) {
 			    	Pattern mhf = Pattern.compile("MHF_");
 			    	Matcher match = mhf.matcher(owner);
 			    	if (match.find() && !(match.matches())) {
 			    		String newMatch = owner.replace("MHF_", "");
-			    		String iMessage1 = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().getConfig().getString("head-mhf-interact-message"));
+			    		String iMessage1 = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("head-mhf-interact-message"));
 			    		String iMessage2 = iMessage1.replaceAll("%p", newMatch);
-			    		player.sendMessage(iMessage2);
+			    		String iMessage3 = iMessage2.replaceAll("''", "'");
+			    		String iMessage4 = iMessage3.replaceAll("^'", "");
+			    		String iMessage5 = iMessage4.replaceAll("'$", "");
+			    		String iMessage6 = iMessage5.replaceAll("%m", playerName);
+			    		player.sendMessage(iMessage6);
 			    		TimesSent++;
 			    	} else {
 			            String iMessage1 = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().getConfig().getString("head-interact-message"));
 			            String iMessage2 = iMessage1.replaceAll("%p", owner);
-			            player.sendMessage(iMessage2);
+			    		String iMessage3 = iMessage2.replaceAll("''", "'");
+			    		String iMessage4 = iMessage3.replaceAll("^'", "");
+			    		String iMessage5 = iMessage4.replaceAll("'$", "");
+			    		String iMessage6 = iMessage5.replaceAll("%m", playerName);
+			            player.sendMessage(iMessage6);
 			            TimesSent++;
 			    	}
 			 } else {
@@ -51,5 +61,6 @@ public final class HeadInteractEvent implements Listener {
 			 }
 		}
 		}
-	}	
+	}
+	
 }

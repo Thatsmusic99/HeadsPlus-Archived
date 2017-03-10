@@ -41,6 +41,7 @@ public class HeadsPlus extends JavaPlugin {
 			instance = this;
 			setUpMConfig();
 			HeadsPlusConfig.msgEnable();
+			HeadsPlusConfigHeads.headsEnable();
 			getServer().getPluginManager().registerEvents(new HeadInteractEvent(), this);
 			getServer().getPluginManager().registerEvents(new DeathEvents(), this);
 		    this.getCommand("headsplus").setExecutor(new HeadsPlusCommand());

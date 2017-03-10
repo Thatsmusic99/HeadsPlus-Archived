@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.HeadsPlusConfig;
 
 import java.util.regex.Matcher;
@@ -47,7 +46,7 @@ public final class HeadInteractEvent implements Listener {
 			    		player.sendMessage(iMessage6);
 			    		TimesSent++;
 			    	} else {
-			            String iMessage1 = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().getConfig().getString("head-interact-message"));
+			            String iMessage1 = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("head-interact-message"));
 			            String iMessage2 = iMessage1.replaceAll("%p", owner);
 			    		String iMessage3 = iMessage2.replaceAll("''", "'");
 			    		String iMessage4 = iMessage3.replaceAll("^'", "");

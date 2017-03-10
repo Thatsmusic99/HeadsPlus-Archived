@@ -1,18 +1,14 @@
 package io.github.thatsmusic99.headsplus;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapelessRecipe;
-import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import io.github.thatsmusic99.headsplus.commands.Head;
 import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
+import io.github.thatsmusic99.headsplus.crafting.RecipeListeners;
 import io.github.thatsmusic99.headsplus.events.DeathEvents;
 import io.github.thatsmusic99.headsplus.events.HeadInteractEvent;
 
@@ -42,6 +38,7 @@ public class HeadsPlus extends JavaPlugin {
 			setUpMConfig();
 			HeadsPlusConfig.msgEnable();
 			HeadsPlusConfigHeads.headsEnable();
+			RecipeListeners.addRecipes();
 			getServer().getPluginManager().registerEvents(new HeadInteractEvent(), this);
 			getServer().getPluginManager().registerEvents(new DeathEvents(), this);
 		    this.getCommand("headsplus").setExecutor(new HeadsPlusCommand());
@@ -61,7 +58,7 @@ public class HeadsPlus extends JavaPlugin {
 		
 	}
 
-	@SuppressWarnings("deprecation")
+/*	@SuppressWarnings("deprecation")
 	public void addRecipes() {
 		ItemStack zHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 		SkullMeta zMeta = (SkullMeta) zHead.getItemMeta();
@@ -72,13 +69,13 @@ public class HeadsPlus extends JavaPlugin {
 		
 		ShapelessRecipe zombieRecipe = new ShapelessRecipe(zHead)
 	             .addIngredient(Material.ROTTEN_FLESH)
-	             .addIngredient(Material.SKULL_ITEM, 1);
+	             .addIngredient(Material.SKULL_ITEM, 0);
 		
-		Bukkit.addRecipe(zombieRecipe);
+		getServer().addRecipe(zombieRecipe);
 
 		
 		
-	}
+	} */
 
 	public void setUpMConfig() {
 			configF = new File(getDataFolder(), "config.yml");

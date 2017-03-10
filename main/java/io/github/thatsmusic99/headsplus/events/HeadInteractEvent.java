@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.HeadsPlusConfig;
 
 import java.util.regex.Matcher;
@@ -38,21 +39,17 @@ public final class HeadInteractEvent implements Listener {
 			    	if (match.find() && !(match.matches())) {
 			    		String newMatch = owner.replace("MHF_", "");
 			    		String iMessage1 = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("head-mhf-interact-message"));
-			    		String iMessage2 = iMessage1.replaceAll("%p", newMatch);
-			    		String iMessage3 = iMessage2.replaceAll("''", "'");
-			    		String iMessage4 = iMessage3.replaceAll("^'", "");
-			    		String iMessage5 = iMessage4.replaceAll("'$", "");
-			    		String iMessage6 = iMessage5.replaceAll("%m", playerName);
-			    		player.sendMessage(iMessage6);
+			    		HeadsPlus.getInstance().translateMessages(iMessage1);
+			    		iMessage1 = iMessage1.replaceAll("%p", newMatch);
+			    		iMessage1 = iMessage1.replaceAll("%m", playerName);
+			    		player.sendMessage(iMessage1);
 			    		TimesSent++;
 			    	} else {
 			            String iMessage1 = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("head-interact-message"));
-			            String iMessage2 = iMessage1.replaceAll("%p", owner);
-			    		String iMessage3 = iMessage2.replaceAll("''", "'");
-			    		String iMessage4 = iMessage3.replaceAll("^'", "");
-			    		String iMessage5 = iMessage4.replaceAll("'$", "");
-			    		String iMessage6 = iMessage5.replaceAll("%m", playerName);
-			            player.sendMessage(iMessage6);
+			            HeadsPlus.getInstance().translateMessages(iMessage1);
+			            iMessage1 = iMessage1.replaceAll("%p", owner);
+			    		iMessage1 = iMessage1.replaceAll("%m", playerName);
+			            player.sendMessage(iMessage1);
 			            TimesSent++;
 			    	}
 			 } else {

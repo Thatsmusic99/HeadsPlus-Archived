@@ -108,7 +108,11 @@ public class HeadsPlus extends JavaPlugin {
     public void reloadMConfig() {
     	config = YamlConfiguration.loadConfiguration(configF);
     }
-    
+    public void translateMessages(String s) {
+    	s = s.replaceAll("''", "'");
+		s = s.replaceAll("^'", "");
+		s = s.replaceAll("'$", "");
+    }
 	
 
 

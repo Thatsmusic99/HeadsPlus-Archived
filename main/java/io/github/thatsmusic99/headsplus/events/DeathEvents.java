@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.HeadsPlusConfigHeads;
 
 public class DeathEvents implements Listener {
 	@EventHandler
@@ -25,8 +26,8 @@ public class DeathEvents implements Listener {
 			if (ZDC2 <= ZDC1) {
 				ItemStack zHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 				SkullMeta zHeadM = (SkullMeta) zHead.getItemMeta();
-				zHeadM.setOwner(HeadsPlus.getInstance().getConfig().getString("zombieHeadN"));
-				zHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().getConfig().getString("zombieHeadDN")));
+				zHeadM.setOwner(HeadsPlusConfigHeads.getHeads().getString("zombieHeadN"));
+				zHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("zombieHeadDN")));
 			    zHeadM.addEnchant(Enchantment.LUCK, 1, true);
 				zHeadM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 				zHead.setItemMeta(zHeadM);
@@ -41,8 +42,8 @@ public class DeathEvents implements Listener {
 			if (SDC2 <= SDC1) {
 				ItemStack sHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 				SkullMeta sHeadM = (SkullMeta) sHead.getItemMeta();
-				sHeadM.setOwner(HeadsPlus.getInstance().getConfig().getString("skeletonHeadN"));
-				sHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().getConfig().getString("skeletonHeadDN")));			    
+				sHeadM.setOwner(HeadsPlusConfigHeads.getHeads().getString("skeletonHeadN"));
+				sHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("skeletonHeadDN")));			    
 				sHeadM.addEnchant(Enchantment.LUCK, 1, true);
 				sHeadM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 				sHead.setItemMeta(sHeadM);
@@ -56,8 +57,8 @@ public class DeathEvents implements Listener {
 			if (BDC2 <= BDC1) {
 				ItemStack bHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 				SkullMeta bHeadM = (SkullMeta) bHead.getItemMeta();
-				bHeadM.setOwner(HeadsPlus.getInstance().getConfig().getString("blazeHeadN"));
-				bHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().getConfig().getString("blazeHeadDN")));
+				bHeadM.setOwner(HeadsPlusConfigHeads.getHeads().getString("blazeHeadN"));
+				bHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("blazeHeadDN")));
 			    bHeadM.addEnchant(Enchantment.LUCK, 1, true);
 				bHeadM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		        bHead.setItemMeta(bHeadM);
@@ -71,8 +72,8 @@ public class DeathEvents implements Listener {
 			if (CSDC2 <= CSDC1) {
 				ItemStack csHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 				SkullMeta csHeadM = (SkullMeta) csHead.getItemMeta();
-				csHeadM.setOwner(HeadsPlus.getInstance().getConfig().getString("cavespiderHeadN"));
-				csHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().getConfig().getString("cavespiderHeadDN")));
+				csHeadM.setOwner(HeadsPlusConfigHeads.getHeads().getString("cavespiderHeadN"));
+				csHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("cavespiderHeadDN")));
 			    csHeadM.addEnchant(Enchantment.LUCK, 1, true);
 				csHeadM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		        csHead.setItemMeta(csHeadM);
@@ -86,8 +87,8 @@ public class DeathEvents implements Listener {
 			if (CDC2 <= CDC1) {
 				ItemStack cHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 				SkullMeta cHeadM = (SkullMeta) cHead.getItemMeta();
-				cHeadM.setOwner(HeadsPlus.getInstance().getConfig().getString("cavespiderHeadN"));
-				cHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().getConfig().getString("cavespiderHeadDN")));
+				cHeadM.setOwner(HeadsPlusConfigHeads.getHeads().getString("cavespiderHeadN"));
+				cHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("cavespiderHeadDN")));
 			    cHeadM.addEnchant(Enchantment.LUCK, 1, true);
 				cHeadM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		        cHead.setItemMeta(cHeadM);

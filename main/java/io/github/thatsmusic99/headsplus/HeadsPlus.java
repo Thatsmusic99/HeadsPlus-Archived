@@ -4,6 +4,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import io.github.thatsmusic99.headsplus.commands.Head;
@@ -12,6 +13,7 @@ import io.github.thatsmusic99.headsplus.crafting.RecipeListeners;
 import io.github.thatsmusic99.headsplus.events.DeathEvents;
 import io.github.thatsmusic99.headsplus.events.HeadInteractEvent;
 
+import net.milkbowl.vault.economy.Economy;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -22,6 +24,8 @@ public class HeadsPlus extends JavaPlugin {
 	public PluginDescriptionFile pluginYml = getDescription();
 	public String author = pluginYml.getAuthors().toString();
 	public String version = pluginYml.getVersion();
+	
+	private static Economy econ;
 	
     public static FileConfiguration config;
 	public File configF;
@@ -38,9 +42,16 @@ public class HeadsPlus extends JavaPlugin {
 			setUpMConfig();
 			HeadsPlusConfig.msgEnable();
 			HeadsPlusConfigHeads.headsEnable();
-			RecipeListeners.addRecipes();
+			if (getConfig().getBoolean("craftHeads")) {
+			    RecipeListeners.addRecipes();
+			}
+			if (!(econ()) && (getConfig().getBoolean("sellHeads"))) {
+				log.warning("[HeadsPlus] Vault not found! Heads cannot be sold.");
+			}
 			getServer().getPluginManager().registerEvents(new HeadInteractEvent(), this);
-			getServer().getPluginManager().registerEvents(new DeathEvents(), this);
+			if (getConfig().getBoolean("dropHeads")) {
+			    getServer().getPluginManager().registerEvents(new DeathEvents(), this);
+		    }
 		    this.getCommand("headsplus").setExecutor(new HeadsPlusCommand());
 		    this.getCommand("head").setExecutor(new Head());
 		    log.info("[HeadsPlus] HeadsPlus has been enabled.");
@@ -113,7 +124,17 @@ public class HeadsPlus extends JavaPlugin {
 		s = s.replaceAll("^'", "");
 		s = s.replaceAll("'$", "");
     }
-	
+	private boolean econ() {
+		if (getServer().getPluginManager().getPlugin("Vault") == null) {
+			return false;
+		}
+		RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+        econ = rsp.getProvider();
+        return econ != null;
+	}
 
 
 /*	public FileConfiguration getHConfig() {

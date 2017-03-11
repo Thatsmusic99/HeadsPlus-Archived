@@ -9,4 +9,7 @@
 
 blacklistOn: true
 blacklist: []
+sellHeads: true
+dropHeads: true
+craftHeads: true
 version: 1

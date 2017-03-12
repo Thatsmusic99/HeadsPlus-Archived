@@ -39,14 +39,14 @@ public final class HeadInteractEvent implements Listener {
 			    	if (match.find() && !(match.matches())) {
 			    		String newMatch = owner.replace("MHF_", "");
 			    		String iMessage1 = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("head-mhf-interact-message"));
-			    		HeadsPlus.getInstance().translateMessages(iMessage1);
+			    		iMessage1 = HeadsPlus.getInstance().translateMessages(iMessage1);
 			    		iMessage1 = iMessage1.replaceAll("%p", newMatch);
 			    		iMessage1 = iMessage1.replaceAll("%m", playerName);
 			    		player.sendMessage(iMessage1);
 			    		TimesSent++;
 			    	} else {
 			            String iMessage1 = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("head-interact-message"));
-			            HeadsPlus.getInstance().translateMessages(iMessage1);
+			            iMessage1 = HeadsPlus.getInstance().translateMessages(iMessage1);
 			            iMessage1 = iMessage1.replaceAll("%p", owner);
 			    		iMessage1 = iMessage1.replaceAll("%m", playerName);
 			            player.sendMessage(iMessage1);

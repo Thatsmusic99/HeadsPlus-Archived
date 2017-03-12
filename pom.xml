@@ -23,11 +23,21 @@
         <type>jar</type>
         <scope>provided</scope>
     </dependency>
+    <dependency>
+        <groupId>net.milkbowl.vault</groupId>
+        <artifactId>VaultAPI</artifactId>
+        <version>1.6</version>
+        <scope>provided</scope>
+    </dependency>
 </dependencies>  
 <repositories>
    <repository>
      <id>bukkit-repo</id>
      <url>http://repo.bukkit.org/content/groups/public/</url>
+   </repository>
+   <repository>
+     <id>vault-repo</id>
+     <url>http://nexus.hc.to/content/repositories/pub_releases</url>
    </repository>
 </repositories>
 </project>

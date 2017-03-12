@@ -53,6 +53,7 @@ public class HeadsPlus extends JavaPlugin {
 			    getServer().getPluginManager().registerEvents(new DeathEvents(), this);
 		    }
 		    this.getCommand("headsplus").setExecutor(new HeadsPlusCommand());
+		    this.getCommand("hp").setExecutor(new HeadsPlusCommand());
 		    this.getCommand("head").setExecutor(new Head());
 		    log.info("[HeadsPlus] HeadsPlus has been enabled.");
 		} catch (Exception e) {
@@ -119,10 +120,11 @@ public class HeadsPlus extends JavaPlugin {
     public void reloadMConfig() {
     	config = YamlConfiguration.loadConfiguration(configF);
     }
-    public void translateMessages(String s) {
+    public String translateMessages(String s) {
     	s = s.replaceAll("''", "'");
 		s = s.replaceAll("^'", "");
 		s = s.replaceAll("'$", "");
+		return s;
     }
 	private boolean econ() {
 		if (getServer().getPluginManager().getPlugin("Vault") == null) {

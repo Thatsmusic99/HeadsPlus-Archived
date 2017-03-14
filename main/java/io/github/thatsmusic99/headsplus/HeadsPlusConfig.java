@@ -21,8 +21,10 @@ public class HeadsPlusConfig {
 	private static void loadMessages() {
 		getMessages().options().header("HeadsPlus by Thatsmusic99");
 		getMessages().addDefault("prefix", "&1[&6HeadsPlus&1]");
+		getMessages().addDefault("reloadingMessage", "&3Reloading config...");
 		getMessages().addDefault("reloadMessage", "&3Config has reloaded!");
 		getMessages().addDefault("head-interact-message", "&3That is &b%p&3''s head!");
+		getMessages().addDefault("head-mhf-interact-message", "&3That is a &b%p''s head!");
 		getMessages().options().copyDefaults(true);
 		saveMessages();
 	}

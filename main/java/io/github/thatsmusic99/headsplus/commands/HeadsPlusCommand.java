@@ -51,8 +51,11 @@ public class HeadsPlusCommand implements CommandExecutor {
 			   if ((args.length == 1) && (args[0].equalsIgnoreCase("reload"))) { 
 				   if (sender.hasPermission("headsplus.maincommand.reload")) {
 					   String reloadM = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("reloadMessage"));
+					   String reloadingM = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("reloadingMessage"));
+					   prefix = HeadsPlus.getInstance().translateMessages(prefix);
 					   reloadM = HeadsPlus.getInstance().translateMessages(reloadM);
-				       sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Reloading config...");
+					   reloadingM = HeadsPlus.getInstance().translateMessages(reloadingM);
+				       sender.sendMessage(prefix + " " + reloadingM);
 				       try {
 
 					       if  (!(configF.exists())) {
@@ -70,7 +73,7 @@ public class HeadsPlusCommand implements CommandExecutor {
 					    	  messages = YamlConfiguration.loadConfiguration(messagesF);
 					      } else {
 					    	  HeadsPlusConfig.reloadMessages();
-					    	  sender.sendMessage((prefix.replaceAll("'", "" ) + " " + (reloadM.replaceAll("'", ""))));
+					    	  sender.sendMessage(prefix + " " + reloadM);
 					      }
 					      
 				       } catch (Exception e) {

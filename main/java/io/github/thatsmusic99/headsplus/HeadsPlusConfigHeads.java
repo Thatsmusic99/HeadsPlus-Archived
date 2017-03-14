@@ -23,6 +23,7 @@ public class HeadsPlusConfigHeads {
 		getHeads().addDefault("zombieHeadN", "MHF_Zombie");
 		getHeads().addDefault("zombieHeadC", "25");
 		getHeads().addDefault("zombieHeadDN", "Zombie Head");
+		getHeads().addDefault("zombieHeadP", 50.00);
 		getHeads().addDefault("skeletonHeadN", "MHF_Skeleton");
 		getHeads().addDefault("skeletonHeadC", "25");
 		getHeads().addDefault("skeletonHeadDN", "Skeleton Head");

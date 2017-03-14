@@ -28,7 +28,7 @@ public class DeathEvents implements Listener {
 				SkullMeta zHeadM = (SkullMeta) zHead.getItemMeta();
 				zHeadM.setOwner(HeadsPlusConfigHeads.getHeads().getString("zombieHeadN"));
 				zHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("zombieHeadDN")));
-			    zHeadM.addEnchant(Enchantment.LUCK, 1, true);
+			    zHeadM.addEnchant(Enchantment.DURABILITY, 1, true);
 				zHeadM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 				zHead.setItemMeta(zHeadM);
 				e.getDrops().add(zHead);
@@ -44,7 +44,7 @@ public class DeathEvents implements Listener {
 				SkullMeta sHeadM = (SkullMeta) sHead.getItemMeta();
 				sHeadM.setOwner(HeadsPlusConfigHeads.getHeads().getString("skeletonHeadN"));
 				sHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("skeletonHeadDN")));			    
-				sHeadM.addEnchant(Enchantment.LUCK, 1, true);
+				sHeadM.addEnchant(Enchantment.DURABILITY, 1, true);
 				sHeadM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 				sHead.setItemMeta(sHeadM);
 				e.getDrops().add(sHead);
@@ -59,7 +59,7 @@ public class DeathEvents implements Listener {
 				SkullMeta bHeadM = (SkullMeta) bHead.getItemMeta();
 				bHeadM.setOwner(HeadsPlusConfigHeads.getHeads().getString("blazeHeadN"));
 				bHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("blazeHeadDN")));
-			    bHeadM.addEnchant(Enchantment.LUCK, 1, true);
+			    bHeadM.addEnchant(Enchantment.DURABILITY, 1, true);
 				bHeadM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		        bHead.setItemMeta(bHeadM);
 				e.getDrops().add(bHead);
@@ -74,7 +74,7 @@ public class DeathEvents implements Listener {
 				SkullMeta csHeadM = (SkullMeta) csHead.getItemMeta();
 				csHeadM.setOwner(HeadsPlusConfigHeads.getHeads().getString("cavespiderHeadN"));
 				csHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("cavespiderHeadDN")));
-			    csHeadM.addEnchant(Enchantment.LUCK, 1, true);
+			    csHeadM.addEnchant(Enchantment.DURABILITY, 1, true);
 				csHeadM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		        csHead.setItemMeta(csHeadM);
 				e.getDrops().add(csHead);
@@ -89,7 +89,7 @@ public class DeathEvents implements Listener {
 				SkullMeta cHeadM = (SkullMeta) cHead.getItemMeta();
 				cHeadM.setOwner(HeadsPlusConfigHeads.getHeads().getString("cavespiderHeadN"));
 				cHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("cavespiderHeadDN")));
-			    cHeadM.addEnchant(Enchantment.LUCK, 1, true);
+			    cHeadM.addEnchant(Enchantment.DURABILITY, 1, true);
 				cHeadM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		        cHead.setItemMeta(cHeadM);
 				e.getDrops().add(cHead);

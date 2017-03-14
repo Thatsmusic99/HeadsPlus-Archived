@@ -50,8 +50,8 @@ public class HeadsPlusCommand implements CommandExecutor {
 			   } 
 			   if ((args.length == 1) && (args[0].equalsIgnoreCase("reload"))) { 
 				   if (sender.hasPermission("headsplus.maincommand.reload")) {
-					   String reloadM = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("reloadMessage"));
-					   String reloadingM = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("reloadingMessage"));
+					   String reloadM = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("reload-message"));
+					   String reloadingM = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("reloading-message"));
 					   prefix = HeadsPlus.getInstance().translateMessages(prefix);
 					   reloadM = HeadsPlus.getInstance().translateMessages(reloadM);
 					   reloadingM = HeadsPlus.getInstance().translateMessages(reloadingM);

@@ -1,6 +1,6 @@
 main: io.github.thatsmusic99.headsplus.HeadsPlus
 name: HeadsPlus
-version: 0.6
+version: 0.6.1
 description: Spawns in heads with extra features.
 author: Thatsmusic99
 commands:
@@ -8,10 +8,12 @@ commands:
         description: Spawns in a head.
         default: true
         permission: headsplus.head
-        permission-message: You do not have access to this command.
     headsplus:
         description: Displays the help menu.
         default: true
         aliases: [hp]
         permission: headsplus.maincommand
-        permission-message: You do not have access to this command.
+    sellhead:
+        description: Sells a head in a player's inventory.
+        default: true    
+        permission: headsplus.sellhead

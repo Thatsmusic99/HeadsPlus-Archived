@@ -13,7 +13,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.HeadsPlusConfigHeads;
 
 public class DeathEvents implements Listener {
@@ -21,7 +20,7 @@ public class DeathEvents implements Listener {
 	public void onEntityDeath(EntityDeathEvent e) {
 		if (e.getEntity() instanceof Zombie) {
 			Random zRand = new Random();
-			int ZDC1 = HeadsPlus.getInstance().getConfig().getInt("zombieHeadC");
+			int ZDC1 = HeadsPlusConfigHeads.getHeads().getInt("zombieHeadC");
 			int ZDC2 = zRand.nextInt(100) + 1;
 			if (ZDC2 <= ZDC1) {
 				ItemStack zHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
@@ -37,7 +36,7 @@ public class DeathEvents implements Listener {
 		}
 		if (e.getEntity() instanceof Skeleton) {
 			Random sRand = new Random();
-			int SDC1 = HeadsPlus.getInstance().getConfig().getInt("skeletonHeadC");
+			int SDC1 = HeadsPlusConfigHeads.getHeads().getInt("skeletonHeadC");
 			int SDC2 = sRand.nextInt(100) + 1;
 			if (SDC2 <= SDC1) {
 				ItemStack sHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
@@ -52,7 +51,7 @@ public class DeathEvents implements Listener {
 		} 
 		if (e.getEntity() instanceof Blaze) {
 			Random bRand = new Random();
-			int BDC1 = HeadsPlus.getInstance().getConfig().getInt("blazeHeadC");
+			int BDC1 = HeadsPlusConfigHeads.getHeads().getInt("blazeHeadC");
 			int BDC2 = bRand.nextInt(100) + 1;
 			if (BDC2 <= BDC1) {
 				ItemStack bHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
@@ -67,7 +66,7 @@ public class DeathEvents implements Listener {
 		}
 		if (e.getEntity() instanceof CaveSpider) {
 			Random csRand = new Random();
-			int CSDC1 = HeadsPlus.getInstance().getConfig().getInt("cavespiderHeadC");
+			int CSDC1 = HeadsPlusConfigHeads.getHeads().getInt("cavespiderHeadC");
 			int CSDC2 = csRand.nextInt(100) + 1;
 			if (CSDC2 <= CSDC1) {
 				ItemStack csHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
@@ -82,7 +81,7 @@ public class DeathEvents implements Listener {
 		}
 		if (e.getEntity() instanceof Chicken) {
 			Random cRand = new Random();
-			int CDC1 = HeadsPlus.getInstance().getConfig().getInt("cavespiderHeadC");
+			int CDC1 = HeadsPlusConfigHeads.getHeads().getInt("cavespiderHeadC");
 			int CDC2 = cRand.nextInt(100) + 1;
 			if (CDC2 <= CDC1) {
 				ItemStack cHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);

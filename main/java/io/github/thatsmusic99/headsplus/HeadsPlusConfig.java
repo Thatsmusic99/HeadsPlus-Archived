@@ -26,6 +26,8 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("head-interact-message", "&3That is &b%p&3''s head!");
 		getMessages().addDefault("head-mhf-interact-message", "&3That is a &b%p''s head!");
 		getMessages().addDefault("sell-success", "&3Head sold successfully!");
+		getMessages().addDefault("sell-fail", "&cCouldn't sell head!");
+		getMessages().addDefault("false-head", "&cThis head cannot be sold!");
 		getMessages().options().copyDefaults(true);
 		saveMessages();
 	}

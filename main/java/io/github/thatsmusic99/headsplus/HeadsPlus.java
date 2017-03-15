@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import io.github.thatsmusic99.headsplus.commands.Head;
 import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
+import io.github.thatsmusic99.headsplus.commands.SellHead;
 import io.github.thatsmusic99.headsplus.crafting.RecipeListeners;
 import io.github.thatsmusic99.headsplus.events.DeathEvents;
 import io.github.thatsmusic99.headsplus.events.HeadInteractEvent;
@@ -47,6 +48,8 @@ public class HeadsPlus extends JavaPlugin {
 			}
 			if (!(econ()) && (getConfig().getBoolean("sellHeads"))) {
 				log.warning("[HeadsPlus] Vault not found! Heads cannot be sold.");
+			} else if ((econ()) && (getConfig().getBoolean("sellHeads"))) {
+				this.getCommand("sellhead").setExecutor(new SellHead());
 			}
 			getServer().getPluginManager().registerEvents(new HeadInteractEvent(), this);
 			if (getConfig().getBoolean("dropHeads")) {

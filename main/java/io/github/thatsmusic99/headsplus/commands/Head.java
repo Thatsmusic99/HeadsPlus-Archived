@@ -62,7 +62,7 @@ public class Head implements CommandExecutor {
 						        sender.sendMessage(ChatColor.RED + "Your inventory is full!");
 					        } else {
 						        Player player = (Player) sender;
-		                        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+		                        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 			                    SkullMeta meta = (SkullMeta) skull.getItemMeta();
 		                        meta.setOwner(args[0]);
 				                meta.setDisplayName(args[0] + "'s head");
@@ -79,7 +79,7 @@ public class Head implements CommandExecutor {
 						        sender.sendMessage(ChatColor.RED + "Your inventory is full!");
 					        } else {
 						        Player player = (Player) sender;
-		                        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+		                        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 			                    SkullMeta meta = (SkullMeta) skull.getItemMeta();
 		                        meta.setOwner(args[0]);
 				                meta.setDisplayName(args[0] + "'s head");

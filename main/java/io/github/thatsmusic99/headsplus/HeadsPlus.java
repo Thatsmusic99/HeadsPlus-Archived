@@ -15,6 +15,7 @@ import io.github.thatsmusic99.headsplus.events.DeathEvents;
 import io.github.thatsmusic99.headsplus.events.HeadInteractEvent;
 
 import net.milkbowl.vault.economy.Economy;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -52,9 +53,9 @@ public class HeadsPlus extends JavaPlugin {
 				this.getCommand("sellhead").setExecutor(new SellHead());
 			}
 			getServer().getPluginManager().registerEvents(new HeadInteractEvent(), this);
-			if (getConfig().getBoolean("dropHeads")) {
-			    getServer().getPluginManager().registerEvents(new DeathEvents(), this);
-		    }
+			//if (getConfig().getBoolean("dropHeads")) {
+			getServer().getPluginManager().registerEvents(new DeathEvents(), this);
+		    //}
 		    this.getCommand("headsplus").setExecutor(new HeadsPlusCommand());
 		    this.getCommand("hp").setExecutor(new HeadsPlusCommand());
 		    this.getCommand("head").setExecutor(new Head());

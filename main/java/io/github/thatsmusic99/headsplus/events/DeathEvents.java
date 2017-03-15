@@ -16,6 +16,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import io.github.thatsmusic99.headsplus.HeadsPlusConfigHeads;
 
 public class DeathEvents implements Listener {
+
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent e) {
 		if (e.getEntity() instanceof Zombie) {
@@ -27,10 +28,9 @@ public class DeathEvents implements Listener {
 				SkullMeta zHeadM = (SkullMeta) zHead.getItemMeta();
 				zHeadM.setOwner(HeadsPlusConfigHeads.getHeads().getString("zombieHeadN"));
 				zHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("zombieHeadDN")));
-			    zHeadM.addEnchant(Enchantment.DURABILITY, 1, true);
-				zHeadM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 				zHead.setItemMeta(zHeadM);
 				e.getDrops().add(zHead);
+				
 			}
 			
 		}

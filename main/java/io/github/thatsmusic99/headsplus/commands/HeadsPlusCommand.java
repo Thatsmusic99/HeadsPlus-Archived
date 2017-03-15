@@ -11,6 +11,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.HeadsPlusConfig;
+import io.github.thatsmusic99.headsplus.HeadsPlusConfigHeads;
 
 public class HeadsPlusCommand implements CommandExecutor {
 	
@@ -20,6 +21,9 @@ public class HeadsPlusCommand implements CommandExecutor {
 		@SuppressWarnings("unused")
 		FileConfiguration messages = HeadsPlusConfig.getMessages();
 		File messagesF = HeadsPlusConfig.messagesF;
+		
+		FileConfiguration heads = HeadsPlusConfigHeads.getHeads();
+		File headsF = HeadsPlusConfigHeads.headsF;
 		
 		if ((cmd.getName().equalsIgnoreCase("headsplus")) || (cmd.getName().equalsIgnoreCase("hp"))) {
 			if (sender.hasPermission("headsplus.maincommand")) {
@@ -71,6 +75,13 @@ public class HeadsPlusCommand implements CommandExecutor {
 					    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Messages not found, creating!");
 					    	  HeadsPlusConfig.reloadMessages();
 					    	  messages = YamlConfiguration.loadConfiguration(messagesF);
+					      } else {
+					    	  HeadsPlusConfig.reloadMessages();
+					      }
+					      if (!(headsF.exists())) {
+					    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Heads not found, creating!");
+					    	  HeadsPlusConfigHeads.reloadHeads();
+					    	  heads = YamlConfiguration.loadConfiguration(headsF);
 					      } else {
 					    	  HeadsPlusConfig.reloadMessages();
 					    	  sender.sendMessage(prefix + " " + reloadM);
@@ -236,11 +247,12 @@ public class HeadsPlusCommand implements CommandExecutor {
 			  }
 			  if ((args.length == 1) && (args[0].equalsIgnoreCase("blacklistl"))) {
 				  if (sender.hasPermission("headsplus.maincommand.blacklist.list")) {
-				      int heads = 1;
+				      @SuppressWarnings("unused")
+					int headsN = 1;
 				      List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("blacklist");
 				      int bls = bl.size();
 				      while (bls > 10) {
-					      heads++;
+					      headsN++;
 					      bls = bls - 10;
 				      }
 				      sender.sendMessage(ChatColor.DARK_BLUE + "============" + ChatColor.GRAY + "Blacklist: 1/" + heads + ChatColor.DARK_BLUE + "==========" );
@@ -261,11 +273,12 @@ public class HeadsPlusCommand implements CommandExecutor {
 			  if ((args.length == 2) && (args[0].equalsIgnoreCase("blacklistl"))) {
 				  if (sender.hasPermission("headsplus.maincommand.blacklist.list")) {
 					  if (args[1].matches("^[0-9]+$")) {
-				          int heads = 1;
+				          @SuppressWarnings("unused")
+						int headsN = 1;
 				          List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("blacklist");
 				          int bls = bl.size();
 				          while (bls > 8) {
-					          heads++;
+					          headsN++;
 					          bls = bls - 8;
 				          }
 				          sender.sendMessage(ChatColor.DARK_BLUE + "==========" + ChatColor.GRAY + "Blacklist: " + args[1] + "/" + heads + ChatColor.DARK_BLUE + "===========");

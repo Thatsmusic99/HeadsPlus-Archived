@@ -22,12 +22,12 @@ import net.milkbowl.vault.economy.EconomyResponse;
 public class SellHead implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (sender instanceof Player) {
-		    Inventory inv = ((Player) sender).getInventory();
-		    if (inv.contains(Material.SKULL_ITEM)) {
+		    ItemStack inv = ((Player) sender).getInventory().getItemInMainHand();
+		    if (inv.equals(Material.SKULL_ITEM)) {
 		    	ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 		    	SkullMeta skullM = (SkullMeta) skull.getItemMeta();
 		    	String owner = skullM.getOwner();
-		    	if (skull.containsEnchantment(Enchantment.DURABILITY)) {
+		    	if (skull.containsEnchantment(Enchantment.DURABILITY)) { // TODO FIX
 		    		Economy econ = null;
 		    		
 		    		if (owner == HeadsPlusConfigHeads.getHeads().getString("zombieHeadN")) {
@@ -40,7 +40,7 @@ public class SellHead implements CommandExecutor {
 						String fail = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-fail"));
 						fail = ChatColor.translateAlternateColorCodes('&', fail);
 						if (zr.transactionSuccess()) {
-							inv.remove(skull);
+							((Player) sender).getInventory().remove(skull);
 							sender.sendMessage(success);
 						} else {
 							sender.sendMessage(fail + ": " + zr.errorMessage);

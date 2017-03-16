@@ -13,7 +13,9 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.HeadsPlusConfigHeads;
+import simple.brainsynder.nbt.ItemNBT;
 
 public class DeathEvents implements Listener {
 
@@ -46,6 +48,10 @@ public class DeathEvents implements Listener {
 				sHeadM.addEnchant(Enchantment.DURABILITY, 1, true);
 				sHeadM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 				sHead.setItemMeta(sHeadM);
+				if (HeadsPlus.getInstance().sellable) {
+					ItemNBT skullnbt = ItemNBT.getItemNBT(sHead);
+					skullnbt.setBoolean("sellable-head", true);
+				}
 				e.getDrops().add(sHead);
 			}
 		} 

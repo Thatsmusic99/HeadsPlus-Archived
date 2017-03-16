@@ -26,7 +26,7 @@ public class HeadsPlus extends JavaPlugin {
 	public PluginDescriptionFile pluginYml = getDescription();
 	public String author = pluginYml.getAuthors().toString();
 	public String version = pluginYml.getVersion();
-	
+	public boolean sellable;
 	private static Economy econ;
 	
     public static FileConfiguration config;
@@ -49,8 +49,16 @@ public class HeadsPlus extends JavaPlugin {
 			}
 			if (!(econ()) && (getConfig().getBoolean("sellHeads"))) {
 				log.warning("[HeadsPlus] Vault not found! Heads cannot be sold.");
+				sellable = false;
 			} else if ((econ()) && (getConfig().getBoolean("sellHeads"))) {
-				this.getCommand("sellhead").setExecutor(new SellHead());
+				if (this.getServer().getPluginManager().getPlugin("SimpleAPI") == null) {
+					log.warning("[HeadsPlus] SimpleAPI not found! Heads cannot be sold.");
+					sellable = false;
+				} else {
+					this.getCommand("sellhead").setExecutor(new SellHead());
+					sellable = true;
+				}
+				
 			}
 			getServer().getPluginManager().registerEvents(new HeadInteractEvent(), this);
 			//if (getConfig().getBoolean("dropHeads")) {

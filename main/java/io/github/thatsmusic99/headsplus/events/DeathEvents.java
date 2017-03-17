@@ -1,15 +1,16 @@
 package io.github.thatsmusic99.headsplus.events;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -18,6 +19,8 @@ import io.github.thatsmusic99.headsplus.HeadsPlusConfigHeads;
 import simple.brainsynder.nbt.ItemNBT;
 
 public class DeathEvents implements Listener {
+	
+	List<EntityType> ableEntities = new ArrayList<>(Arrays.asList(EntityType.BAT, EntityType.BLAZE, EntityType.CAVE_SPIDER, EntityType.CHICKEN, EntityType.COW, EntityType.CREEPER, EntityType.DONKEY, EntityType.ELDER_GUARDIAN, EntityType.ENDER_DRAGON, EntityType.ENDERMAN, EntityType.ENDERMITE, EntityType.EVOKER, EntityType.GHAST, EntityType.GUARDIAN, EntityType.HORSE, EntityType.HUSK ));
 
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent e) {
@@ -44,9 +47,7 @@ public class DeathEvents implements Listener {
 				ItemStack sHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 				SkullMeta sHeadM = (SkullMeta) sHead.getItemMeta();
 				sHeadM.setOwner(HeadsPlusConfigHeads.getHeads().getString("skeletonHeadN"));
-				sHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("skeletonHeadDN")));			    
-				sHeadM.addEnchant(Enchantment.DURABILITY, 1, true);
-				sHeadM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+				sHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("skeletonHeadDN")));			
 				sHead.setItemMeta(sHeadM);
 				if (HeadsPlus.getInstance().sellable) {
 					ItemNBT skullnbt = ItemNBT.getItemNBT(sHead);
@@ -64,13 +65,15 @@ public class DeathEvents implements Listener {
 				SkullMeta bHeadM = (SkullMeta) bHead.getItemMeta();
 				bHeadM.setOwner(HeadsPlusConfigHeads.getHeads().getString("blazeHeadN"));
 				bHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("blazeHeadDN")));
-			    bHeadM.addEnchant(Enchantment.DURABILITY, 1, true);
-				bHeadM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+				if (HeadsPlus.getInstance().sellable) {
+					ItemNBT skullnbt = ItemNBT.getItemNBT(bHead);
+					skullnbt.setBoolean("sellable-head", true);
+				}
 		        bHead.setItemMeta(bHeadM);
 				e.getDrops().add(bHead);
 			}
 		}
-		if (e.getEntity() instanceof CaveSpider) {
+		/*if (e.getEntity() instanceof CaveSpider) {
 			Random csRand = new Random();
 			int CSDC1 = HeadsPlusConfigHeads.getHeads().getInt("cavespiderHeadC");
 			int CSDC2 = csRand.nextInt(100) + 1;
@@ -79,27 +82,48 @@ public class DeathEvents implements Listener {
 				SkullMeta csHeadM = (SkullMeta) csHead.getItemMeta();
 				csHeadM.setOwner(HeadsPlusConfigHeads.getHeads().getString("cavespiderHeadN"));
 				csHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("cavespiderHeadDN")));
-			    csHeadM.addEnchant(Enchantment.DURABILITY, 1, true);
-				csHeadM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+				if (HeadsPlus.getInstance().sellable) {
+					ItemNBT skullnbt = ItemNBT.getItemNBT(csHead);
+					skullnbt.setBoolean("sellable-head", true);
+				}
 		        csHead.setItemMeta(csHeadM);
 				e.getDrops().add(csHead);
-			}
-		}
-		if (e.getEntity() instanceof Chicken) {
+			} 
+		}*/
+		/*if (e.getEntity() instanceof Chicken) {
 			Random cRand = new Random();
-			int CDC1 = HeadsPlusConfigHeads.getHeads().getInt("cavespiderHeadC");
+			int CDC1 = HeadsPlusConfigHeads.getHeads().getInt("chickenHeadC");
 			int CDC2 = cRand.nextInt(100) + 1;
 			if (CDC2 <= CDC1) {
 				ItemStack cHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 				SkullMeta cHeadM = (SkullMeta) cHead.getItemMeta();
-				cHeadM.setOwner(HeadsPlusConfigHeads.getHeads().getString("cavespiderHeadN"));
-				cHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("cavespiderHeadDN")));
-			    cHeadM.addEnchant(Enchantment.DURABILITY, 1, true);
-				cHeadM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+				cHeadM.setOwner(HeadsPlusConfigHeads.getHeads().getString("chickenHeadN"));
+				cHeadM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("chickenHeadDN")));
+				if (HeadsPlus.getInstance().sellable) {
+					ItemNBT skullnbt = ItemNBT.getItemNBT(cHead);
+					skullnbt.setBoolean("sellable-head", true);
+				}
 		        cHead.setItemMeta(cHeadM);
 				e.getDrops().add(cHead);
 			}
+		} */
+		String entity = e.getEntityType().toString().toLowerCase();
+		Random rand = new Random();
+		int chance1 = HeadsPlusConfigHeads.getHeads().getInt(entity + "HeadC");
+		int chance2 = rand.nextInt(100) + 1;
+		if (chance2 <= chance1) {
+			ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+			SkullMeta headM = (SkullMeta) head.getItemMeta();
+			headM.setOwner(HeadsPlusConfigHeads.getHeads().getString(entity + "HeadN"));
+			headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString(entity + "HeadDN")));
+			if (HeadsPlus.getInstance().sellable) {
+				ItemNBT skullnbt = ItemNBT.getItemNBT(head);
+				skullnbt.setBoolean("sellable-head", true);
+			}
+			head.setItemMeta(headM);
+			e.getDrops().add(head);
 		}
+		
+		
 	} 
-
 }

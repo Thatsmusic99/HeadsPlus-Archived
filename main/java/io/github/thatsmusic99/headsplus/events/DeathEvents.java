@@ -11,6 +11,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -24,7 +25,7 @@ public class DeathEvents implements Listener {
 
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent e) {
-		if (e.getEntity() instanceof Zombie) {
+	/*	if (e.getEntity() instanceof Zombie) {
 			Random zRand = new Random();
 			int ZDC1 = HeadsPlusConfigHeads.getHeads().getInt("zombieHeadC");
 			int ZDC2 = zRand.nextInt(100) + 1;
@@ -38,7 +39,7 @@ public class DeathEvents implements Listener {
 				
 			}
 			
-		}
+		} 
 		if (e.getEntity() instanceof Skeleton) {
 			Random sRand = new Random();
 			int SDC1 = HeadsPlusConfigHeads.getHeads().getInt("skeletonHeadC");
@@ -72,7 +73,7 @@ public class DeathEvents implements Listener {
 		        bHead.setItemMeta(bHeadM);
 				e.getDrops().add(bHead);
 			}
-		}
+		} */
 		/*if (e.getEntity() instanceof CaveSpider) {
 			Random csRand = new Random();
 			int CSDC1 = HeadsPlusConfigHeads.getHeads().getInt("cavespiderHeadC");
@@ -107,23 +108,43 @@ public class DeathEvents implements Listener {
 				e.getDrops().add(cHead);
 			}
 		} */
-		String entity = e.getEntityType().toString().toLowerCase();
+		if (ableEntities.contains(e.getEntityType())) {
+		    String entity = e.getEntityType().toString().toLowerCase();
+		    Random rand = new Random();
+		    int chance1 = HeadsPlusConfigHeads.getHeads().getInt(entity + "HeadC");
+		    int chance2 = rand.nextInt(100) + 1;
+		    if (chance2 <= chance1) {
+			    ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+			    SkullMeta headM = (SkullMeta) head.getItemMeta();
+			    headM.setOwner(HeadsPlusConfigHeads.getHeads().getString(entity + "HeadN"));
+			    headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString(entity + "HeadDN")));
+			    if (HeadsPlus.getInstance().sellable) {
+				    ItemNBT skullnbt = ItemNBT.getItemNBT(head);
+				    skullnbt.setBoolean("sellable-head", true);
+			    }
+			   head.setItemMeta(headM);
+			   e.getDrops().add(head);
+		    }
+		}
+		
+		
+	} 
+	@EventHandler
+	public void onPlayerDeath(PlayerDeathEvent ep) {
 		Random rand = new Random();
-		int chance1 = HeadsPlusConfigHeads.getHeads().getInt(entity + "HeadC");
+		int chance1 = HeadsPlusConfigHeads.getHeads().getInt("playerHeadC");
 		int chance2 = rand.nextInt(100) + 1;
 		if (chance2 <= chance1) {
 			ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 			SkullMeta headM = (SkullMeta) head.getItemMeta();
-			headM.setOwner(HeadsPlusConfigHeads.getHeads().getString(entity + "HeadN"));
-			headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString(entity + "HeadDN")));
+			headM.setOwner(ep.getEntity().getName());
+			headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("playerHeadDN").replaceAll("%d", ep.getEntity().getName())));
 			if (HeadsPlus.getInstance().sellable) {
 				ItemNBT skullnbt = ItemNBT.getItemNBT(head);
 				skullnbt.setBoolean("sellable-head", true);
 			}
 			head.setItemMeta(headM);
-			e.getDrops().add(head);
+			ep.getDrops().add(head);
 		}
-		
-		
-	} 
+	}
 }

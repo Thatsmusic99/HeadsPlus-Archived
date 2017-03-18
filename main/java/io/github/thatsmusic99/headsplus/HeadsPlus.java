@@ -29,6 +29,8 @@ public class HeadsPlus extends JavaPlugin {
 	public boolean sellable;
 	private static Economy econ;
 	
+	NBTCompound sellableHead = new NBTCompound();
+	
     public static FileConfiguration config;
 	public File configF;
 	FileConfiguration messages;
@@ -48,11 +50,11 @@ public class HeadsPlus extends JavaPlugin {
 			    RecipeListeners.addRecipes();
 			}
 			if (!(econ()) && (getConfig().getBoolean("sellHeads"))) {
-				log.warning("[HeadsPlus] Vault not found! Heads cannot be sold. If you don't have SimpleAPI either, install both plugins.");
+				log.warning("[HeadsPlus] Vault not found! Heads cannot be sold. If you don't have PowerNBT either, install both plugins.");
 				sellable = false;
 			} else if ((econ()) && (getConfig().getBoolean("sellHeads"))) {
-				if (this.getServer().getPluginManager().getPlugin("SimpleAPI") == null) {
-					log.warning("[HeadsPlus] SimpleAPI not found! Heads cannot be sold.");
+				if (this.getServer().getPluginManager().getPlugin("PowerNBT") == null) {
+					log.warning("[HeadsPlus] PowerNBT not found! Heads cannot be sold.");
 					sellable = false;
 				} else {
 					this.getCommand("sellhead").setExecutor(new SellHead());

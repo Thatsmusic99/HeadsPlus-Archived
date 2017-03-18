@@ -48,7 +48,7 @@ public class HeadsPlus extends JavaPlugin {
 			    RecipeListeners.addRecipes();
 			}
 			if (!(econ()) && (getConfig().getBoolean("sellHeads"))) {
-				log.warning("[HeadsPlus] Vault not found! Heads cannot be sold.");
+				log.warning("[HeadsPlus] Vault not found! Heads cannot be sold. If you don't have SimpleAPI either, install both plugins.");
 				sellable = false;
 			} else if ((econ()) && (getConfig().getBoolean("sellHeads"))) {
 				if (this.getServer().getPluginManager().getPlugin("SimpleAPI") == null) {
@@ -61,9 +61,9 @@ public class HeadsPlus extends JavaPlugin {
 				
 			}
 			getServer().getPluginManager().registerEvents(new HeadInteractEvent(), this);
-			//if (getConfig().getBoolean("dropHeads")) {
-			getServer().getPluginManager().registerEvents(new DeathEvents(), this);
-		    //}
+			if (getConfig().getBoolean("dropHeads")) {
+			    getServer().getPluginManager().registerEvents(new DeathEvents(), this);
+		    }
 		    this.getCommand("headsplus").setExecutor(new HeadsPlusCommand());
 		    this.getCommand("hp").setExecutor(new HeadsPlusCommand());
 		    this.getCommand("head").setExecutor(new Head());

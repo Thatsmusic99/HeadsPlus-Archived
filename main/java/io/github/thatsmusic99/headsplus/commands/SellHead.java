@@ -16,6 +16,7 @@ import io.github.thatsmusic99.headsplus.HeadsPlusConfigHeads;
 
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
+import simple.brainsynder.nbt.ItemNBT;
 
 public class SellHead implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -25,9 +26,9 @@ public class SellHead implements CommandExecutor {
 		    	ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 		    	SkullMeta skullM = (SkullMeta) skull.getItemMeta();
 		    	String owner = skullM.getOwner();
-		    	if (skull.containsEnchantment(Enchantment.DURABILITY)) { // TODO FIX
+		    	ItemNBT skullnbt = ItemNBT.getItemNBT(skull);
+		    	if (skullnbt.getBoolean("sellable-head") == true) {
 		    		Economy econ = null;
-		    		
 		    		if (owner == HeadsPlusConfigHeads.getHeads().getString("zombieHeadN")) {
 		    			Double price = HeadsPlusConfigHeads.getHeads().getDouble("zombieHeadP");
 		    			String senderName = sender.getName();

@@ -1,9 +1,13 @@
 package io.github.thatsmusic99.headsplus.crafting;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -11,8 +15,12 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 
 public class RecipeListeners {
 	
+	public static List<ShapelessRecipe> recipes = new ArrayList<>();
+	
 	@SuppressWarnings("deprecation")
 	public static void addRecipes() {
+		
+		
 		ItemStack zHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 		SkullMeta zMeta = (SkullMeta) zHead.getItemMeta();
 		zMeta.setOwner("MHF_Zombie");
@@ -27,6 +35,7 @@ public class RecipeListeners {
 	             .addIngredient(Material.SKULL_ITEM, 0);
 		
 		HeadsPlus.getInstance().getServer().addRecipe(zombieRecipe);
+		recipes.add(zombieRecipe);
 		
 		ItemStack bHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 		SkullMeta bMeta = (SkullMeta) bHead.getItemMeta();
@@ -41,6 +50,7 @@ public class RecipeListeners {
 				.addIngredient(Material.SKULL_ITEM, 0);
 
 		HeadsPlus.getInstance().getServer().addRecipe(blazeRecipe);
+		recipes.add(blazeRecipe);
 		
 		ItemStack csHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 		SkullMeta csMeta = (SkullMeta) csHead.getItemMeta();
@@ -50,11 +60,13 @@ public class RecipeListeners {
 		csMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		csHead.setItemMeta(csMeta);
 		
+		
 		ShapelessRecipe cavespiderRecipe = new ShapelessRecipe(csHead)
 				.addIngredient(Material.FERMENTED_SPIDER_EYE)
 				.addIngredient(Material.SKULL_ITEM, 0);
 		
 		HeadsPlus.getInstance().getServer().addRecipe(cavespiderRecipe);
+		recipes.add(cavespiderRecipe);
 	}
 	
 

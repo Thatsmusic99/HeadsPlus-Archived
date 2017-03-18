@@ -36,6 +36,13 @@ public class HeadsPlusConfigHeads {
 		getHeads().addDefault("chickenHeadN", "MHF_Chicken");
 		getHeads().addDefault("chickenHeadC", 25);
 		getHeads().addDefault("chickenHeadDN", "Chicken Head");
+		getHeads().addDefault("batHeadN", "");
+		getHeads().addDefault("batHeadC", 0);
+		getHeads().addDefault("batHeadDN", "Bat Head");
+		getHeads().addDefault("cowHeadN", "MHF_Cow");
+		getHeads().addDefault("cowHeadC", 25);
+		getHeads().addDefault("cowHeadDN", "Cow Head");
+		getHeads().addDefault("creeperHeadN", "MHF_Creeper");
 		getHeads().options().copyDefaults(true);
 		saveHeads();
 	}

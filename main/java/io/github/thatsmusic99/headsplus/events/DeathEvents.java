@@ -109,7 +109,7 @@ public class DeathEvents implements Listener {
 			}
 		} */
 		if (ableEntities.contains(e.getEntityType())) {
-		    String entity = e.getEntityType().toString().toLowerCase();
+		    String entity = e.getEntityType().toString().toLowerCase().replaceAll("_", "");
 		    Random rand = new Random();
 		    int chance1 = HeadsPlusConfigHeads.getHeads().getInt(entity + "HeadC");
 		    int chance2 = rand.nextInt(100) + 1;

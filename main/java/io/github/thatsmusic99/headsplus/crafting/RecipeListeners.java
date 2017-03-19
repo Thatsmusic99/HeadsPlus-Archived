@@ -7,8 +7,8 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
@@ -20,15 +20,14 @@ public class RecipeListeners {
 	@SuppressWarnings("deprecation")
 	public static void addRecipes() {
 		
-		
 		ItemStack zHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 		SkullMeta zMeta = (SkullMeta) zHead.getItemMeta();
 		zMeta.setOwner("MHF_Zombie");
 		zMeta.setDisplayName("Zombie Head");
 		zMeta.addEnchant(Enchantment.LUCK, 1, true);
 		zMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		makeSell(zMeta);
 		zHead.setItemMeta(zMeta);
-		
 		
 		ShapelessRecipe zombieRecipe = new ShapelessRecipe(zHead)
 	             .addIngredient(Material.ROTTEN_FLESH)
@@ -43,7 +42,9 @@ public class RecipeListeners {
 		bMeta.setDisplayName("Blaze Head");
 		bMeta.addEnchant(Enchantment.DURABILITY, 1, true);
 		bMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		makeSell(bMeta);
 		bHead.setItemMeta(bMeta);
+		
 		
 		ShapelessRecipe blazeRecipe = new ShapelessRecipe(bHead)
 				.addIngredient(Material.BLAZE_POWDER)
@@ -56,10 +57,8 @@ public class RecipeListeners {
 		SkullMeta csMeta = (SkullMeta) csHead.getItemMeta();
 		csMeta.setOwner("MHF_CaveSpider");
 		csMeta.setDisplayName("Cave Spider");
-		csMeta.addEnchant(Enchantment.DURABILITY, 1, true);
-		csMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		makeSell(csMeta);
 		csHead.setItemMeta(csMeta);
-		
 		
 		ShapelessRecipe cavespiderRecipe = new ShapelessRecipe(csHead)
 				.addIngredient(Material.FERMENTED_SPIDER_EYE)
@@ -67,6 +66,13 @@ public class RecipeListeners {
 		
 		HeadsPlus.getInstance().getServer().addRecipe(cavespiderRecipe);
 		recipes.add(cavespiderRecipe);
+	}
+	public static void makeSell(ItemMeta m) {
+		if (HeadsPlus.getInstance().sellable) {
+			List<String> lore = new ArrayList<String>();
+			lore.add(" ");
+			m.setLore(lore);
+		}
 	}
 	
 

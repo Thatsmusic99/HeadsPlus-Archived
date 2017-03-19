@@ -65,15 +65,10 @@ public class Head implements CommandExecutor {
 					        } else {
 						        Player player = (Player) sender;
 		                        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-		                        if (HeadsPlus.getInstance().sellable) {
-		                        	ItemNBT skullnbt = ItemNBT.getItemNBT(skull);
-		                        	skullnbt.setBoolean("sellable-head", false);
-		                        }
 			                    SkullMeta meta = (SkullMeta) skull.getItemMeta();
 		                        meta.setOwner(args[0]);
 				                meta.setDisplayName(args[0] + "'s head");
 				                skull.setItemMeta(meta);
-				                
 				                player.getInventory().addItem(skull);
 				                return true;
 				        	}

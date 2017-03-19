@@ -5,7 +5,6 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -16,7 +15,6 @@ import io.github.thatsmusic99.headsplus.HeadsPlusConfigHeads;
 
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
-import simple.brainsynder.nbt.ItemNBT;
 
 public class SellHead implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -26,8 +24,7 @@ public class SellHead implements CommandExecutor {
 		    	ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 		    	SkullMeta skullM = (SkullMeta) skull.getItemMeta();
 		    	String owner = skullM.getOwner();
-		    	ItemNBT skullnbt = ItemNBT.getItemNBT(skull);
-		    	if (skullnbt.getBoolean("sellable-head") == true) {
+		    	if (skullM.getLore().get(0) == " ") {
 		    		Economy econ = null;
 		    		if (owner == HeadsPlusConfigHeads.getHeads().getString("zombieHeadN")) {
 		    			Double price = HeadsPlusConfigHeads.getHeads().getDouble("zombieHeadP");

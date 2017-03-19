@@ -27,11 +27,10 @@ public class SellHead implements CommandExecutor {
 		    
 		    if (((Player) sender).getInventory().getItemInMainHand().getType() == Material.SKULL_ITEM) {
 		    	
-		    	ItemStack skull = new ItemStack(Material.SKULL_ITEM);
-		        SkullMeta skullM = (SkullMeta) invi.getItemMeta();
+		    	SkullMeta skullM = (SkullMeta) invi.getItemMeta();
 		        String owner = skullM.getOwner();
 		    	if ((skullM.getLore() != null) && (skullM.getLore().get(0) == " ")) {
-		    		Economy econ = null;
+		    		Economy econ = HeadsPlus.getInstance().econ;
 		    		List<String> mHeads = HeadsPlusConfigHeads.mHeads;
 		    		List<String> uHeads = HeadsPlusConfigHeads.uHeads; 
 		    		for (String key : mHeads) {
@@ -39,14 +38,17 @@ public class SellHead implements CommandExecutor {
 		    			if (owner.matches(HeadsPlusConfigHeads.getHeads().getString(key + "HeadN"))) {
 		    				String senderName = sender.getName();
 		    				Double price = HeadsPlusConfigHeads.getHeads().getDouble(key + "HeadP");
-		    				@SuppressWarnings({ "deprecation", "null" })
+		    				if (invi.getAmount() > 0) {
+								price = price * invi.getAmount();
+							}
+		    				@SuppressWarnings({ "deprecation" })
 							EconomyResponse zr = econ.depositPlayer(senderName, price);
 		    				String success = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-success"));
 							success = ChatColor.translateAlternateColorCodes('&', success);
 							String fail = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-fail"));
 							fail = ChatColor.translateAlternateColorCodes('&', fail);
 							if (zr.transactionSuccess()) {
-								((Player) sender).getInventory().remove(skull);
+								((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
 								sender.sendMessage(success);
 							} else {
 								sender.sendMessage(fail + ": " + zr.errorMessage);
@@ -55,41 +57,47 @@ public class SellHead implements CommandExecutor {
 		    			} else if ((owner.matches("MHF_Golem")) && (key.equalsIgnoreCase("irongolem"))) {
 		    				Double price = HeadsPlusConfigHeads.getHeads().getDouble("irongolemHeadP");
 		    				String senderName = sender.getName();
-		    				@SuppressWarnings({ "deprecation", "null" })
+		    				if (invi.getAmount() > 0) {
+								price = price * invi.getAmount();
+							}
+		    				@SuppressWarnings({ "deprecation" })
 							EconomyResponse zr = econ.depositPlayer(senderName, price);
 		    				String success = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-success"));
 							success = ChatColor.translateAlternateColorCodes('&', success);
 							String fail = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-fail"));
 							fail = ChatColor.translateAlternateColorCodes('&', fail);
 							if (zr.transactionSuccess()) {
-								((Player) sender).getInventory().remove(skull);
+								((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
 								sender.sendMessage(success);
 							} else {
 								sender.sendMessage(fail + ": " + zr.errorMessage);
-								sender.sendMessage(key);
+								
 								
 							}
-		    			}
+		    			} 
 		    		}
 		    		for (String key : uHeads) {
 		    			if (owner.matches(HeadsPlusConfigHeads.getHeads().getString(key + "HeadN"))) {
 		    				String senderName = sender.getName();
 		    				Double price = HeadsPlusConfigHeads.getHeads().getDouble(key + "HeadP");
-		    				@SuppressWarnings({ "deprecation", "null" })
+							if (invi.getAmount() > 0) {
+								price = price * invi.getAmount();
+							}
+		    				@SuppressWarnings({ "deprecation" })
 							EconomyResponse zr = econ.depositPlayer(senderName, price);
 		    				String success = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-success"));
 							success = ChatColor.translateAlternateColorCodes('&', success);
 							String fail = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-fail"));
 							fail = ChatColor.translateAlternateColorCodes('&', fail);
 							if (zr.transactionSuccess()) {
-								((Player) sender).getInventory().remove(skull);
+								((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
 								sender.sendMessage(success);
 							} else {
 								sender.sendMessage(fail + ": " + zr.errorMessage);
 							}
 		    				
 		    			} else {
-		    				sender.sendMessage("You failure.");
+		    				
 		    			}
 		    		}
 		    	} else {
@@ -100,8 +108,7 @@ public class SellHead implements CommandExecutor {
 		    	
 		    } /*else {
 		    	sender.sendMessage("Pong"); // TODO Add incorrect item message
-		    	sender.sendMessage(invi.toString());
-		    	sender.sendMessage(skull.toString());
+		    	
 		    } */
 		
 		} else {

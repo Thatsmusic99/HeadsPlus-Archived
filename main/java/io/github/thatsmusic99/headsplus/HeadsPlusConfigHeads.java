@@ -60,10 +60,10 @@ public class HeadsPlusConfigHeads {
     	
     	for (String key : mHeads) {
     		if (key != "irongolem") {
-    		    getHeads().addDefault(key + "HeadN", "MHF_" + key);
+    			String str = key.substring(0, 1).toUpperCase();
+    		    String str2 = key.substring(1, key.length());
+    		    getHeads().addDefault(key + "HeadN", "MHF_" + str + str2);
     		    getHeads().addDefault(key + "HeadC", 25);
-    		    String str = key.substring(0, 1).toUpperCase();
-    		    String str2 = key.substring(1);
     		    getHeads().addDefault(key + "HeadDN", str + str2 + " Head");
     		    getHeads().addDefault(key + "HeadP", 10.00);
     		} else {

@@ -27,7 +27,7 @@ public class HeadsPlus extends JavaPlugin {
 	public String author = pluginYml.getAuthors().toString();
 	public String version = pluginYml.getVersion();
 	public boolean sellable;
-	private static Economy econ;
+	public Economy econ;
 	
     public static FileConfiguration config;
 	public File configF;

@@ -17,8 +17,6 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.HeadsPlusConfigHeads;
-import me.dpohvar.powernbt.api.NBTCompound;
-import simple.brainsynder.nbt.ItemNBT;
 
 public class DeathEvents implements Listener {
 	
@@ -120,8 +118,9 @@ public class DeathEvents implements Listener {
 			    headM.setOwner(HeadsPlusConfigHeads.getHeads().getString(entity + "HeadN"));
 			    headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString(entity + "HeadDN")));
 			    if (HeadsPlus.getInstance().sellable) {
-				    ItemNBT skullnbt = ItemNBT.getItemNBT(head);
-				    skullnbt.setBoolean("sellable-head", true);
+			    	List<String> lore = new ArrayList<String>();
+					lore.add(" ");
+					headM.setLore(lore);
 			    }
 			   head.setItemMeta(headM);
 			   e.getDrops().add(head);
@@ -141,9 +140,9 @@ public class DeathEvents implements Listener {
 			headM.setOwner(ep.getEntity().getName());
 			headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("playerHeadDN").replaceAll("%d", ep.getEntity().getName())));
 			if (HeadsPlus.getInstance().sellable) {
-				NBTCompound headC = HeadsPlus.getInstance().nbtman.read(head);
-				headC.put("sellable-head", true);
-				HeadsPlus.getInstance().nbtman.write(head, headC);
+				List<String> lore = new ArrayList<String>();
+				lore.add(" ");
+				headM.setLore(lore);
 			}
 			head.setItemMeta(headM);
 			ep.getDrops().add(head);

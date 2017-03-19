@@ -7,6 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
@@ -19,9 +20,10 @@ import net.milkbowl.vault.economy.EconomyResponse;
 public class SellHead implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (sender instanceof Player) {
-		    ItemStack inv = ((Player) sender).getInventory().getItemInMainHand();
-		    if (inv.equals(Material.SKULL_ITEM)) {
-		    	ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+			PlayerInventory inv = ((Player) sender).getInventory();
+		    ItemStack invi = inv.getItemInMainHand();
+		    if (invi.equals(Material.SKULL_ITEM)) {
+		    	ItemStack skull = new ItemStack(Material.SKULL_ITEM, (byte) 3);
 		    	SkullMeta skullM = (SkullMeta) skull.getItemMeta();
 		    	String owner = skullM.getOwner();
 		    	if (skullM.getLore().get(0) == " ") {
@@ -41,13 +43,18 @@ public class SellHead implements CommandExecutor {
 						} else {
 							sender.sendMessage(fail + ": " + zr.errorMessage);
 						}
-		    		}
+		    		} else {
+		    		    sender.sendMessage("Ping"); // TODO Add undefined message.
+		    	    }
 		    	} else {
 		    		String falseHead = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("false-head"));
 		    		falseHead = ChatColor.translateAlternateColorCodes('&', falseHead);
 		    		sender.sendMessage(falseHead);
-		    	}
+		    	} 
 		    	
+		    } else {
+		    	sender.sendMessage("Pong"); // TODO Add incorrect item message
+		    	sender.sendMessage(invi.toString());
 		    }
 		
 		} else {

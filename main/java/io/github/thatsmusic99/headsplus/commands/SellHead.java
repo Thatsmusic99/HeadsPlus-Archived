@@ -22,12 +22,13 @@ public class SellHead implements CommandExecutor {
 		if (sender instanceof Player) {
 			PlayerInventory inv = ((Player) sender).getInventory();
 		    ItemStack invi = inv.getItemInMainHand();
-		    ItemStack skull = new ItemStack(Material.SKULL_ITEM, (short) 3);
-		    if (skull.isSimilar(invi)) {
+		    
+		    if (((Player) sender).getInventory().getItemInMainHand().getType() == Material.SKULL_ITEM) {
 		    	
-		    	SkullMeta skullM = (SkullMeta) skull.getItemMeta();
-		    	String owner = skullM.getOwner();
-		    	if (skullM.getLore().get(0) == " " && skullM.getLore() != null) {
+		    	ItemStack skull = new ItemStack(Material.SKULL_ITEM);
+		        SkullMeta skullM = (SkullMeta) invi.getItemMeta();
+		        String owner = skullM.getOwner();
+		    	if (skullM.getLore() != null && skullM.getLore().get(0) == " ") {
 		    		Economy econ = null;
 		    		if (owner == HeadsPlusConfigHeads.getHeads().getString("zombieHeadN")) {
 		    			Double price = HeadsPlusConfigHeads.getHeads().getDouble("zombieHeadP");
@@ -53,10 +54,11 @@ public class SellHead implements CommandExecutor {
 		    		sender.sendMessage(falseHead);
 		    	} 
 		    	
-		    } else {
+		    } /*else {
 		    	sender.sendMessage("Pong"); // TODO Add incorrect item message
 		    	sender.sendMessage(invi.toString());
-		    }
+		    	sender.sendMessage(skull.toString());
+		    } */
 		
 		} else {
 			sender.sendMessage("[HeadsPlus] You must be a player to send this command!");

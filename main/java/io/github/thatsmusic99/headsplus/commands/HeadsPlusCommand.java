@@ -75,6 +75,7 @@ public class HeadsPlusCommand implements CommandExecutor {
 					    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Messages not found, creating!");
 					    	  HeadsPlusConfig.reloadMessages();
 					    	  messages = YamlConfiguration.loadConfiguration(messagesF);
+					    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Messages created!");
 					      } else {
 					    	  HeadsPlusConfig.reloadMessages();
 					      }
@@ -83,7 +84,7 @@ public class HeadsPlusCommand implements CommandExecutor {
 					    	  HeadsPlusConfigHeads.reloadHeads();
 					    	  heads = YamlConfiguration.loadConfiguration(headsF);
 					      } else {
-					    	  HeadsPlusConfig.reloadMessages();
+					    	  HeadsPlusConfigHeads.reloadHeads();
 					    	  sender.sendMessage(prefix + " " + reloadM);
 					      }
 					      

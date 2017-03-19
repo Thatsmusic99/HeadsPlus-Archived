@@ -33,8 +33,11 @@ public class HeadsPlusConfigHeads {
 	public static void reloadHeads() {
 		if (headsF == null) {
 			headsF = new File(HeadsPlus.getInstance().getDataFolder(), "heads.yml");
+		    getHeads().options().copyDefaults(true);
+		    saveHeads(); // TODO Fix
 		}
 		heads = YamlConfiguration.loadConfiguration(headsF);
+		
 	}
     public static void saveHeads() {
     	if (heads == null || headsF == null) {

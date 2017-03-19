@@ -22,11 +22,12 @@ public class SellHead implements CommandExecutor {
 		if (sender instanceof Player) {
 			PlayerInventory inv = ((Player) sender).getInventory();
 		    ItemStack invi = inv.getItemInMainHand();
-		    if (invi.equals(Material.SKULL_ITEM)) {
-		    	ItemStack skull = new ItemStack(Material.SKULL_ITEM, (byte) 3);
+		    ItemStack skull = new ItemStack(Material.SKULL_ITEM, (short) 3);
+		    if (skull.isSimilar(invi)) {
+		    	
 		    	SkullMeta skullM = (SkullMeta) skull.getItemMeta();
 		    	String owner = skullM.getOwner();
-		    	if (skullM.getLore().get(0) == " ") {
+		    	if (skullM.getLore().get(0) == " " && skullM.getLore() != null) {
 		    		Economy econ = null;
 		    		if (owner == HeadsPlusConfigHeads.getHeads().getString("zombieHeadN")) {
 		    			Double price = HeadsPlusConfigHeads.getHeads().getDouble("zombieHeadP");

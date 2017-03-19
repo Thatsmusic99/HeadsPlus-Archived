@@ -20,7 +20,7 @@ public class RecipeListeners {
 	@SuppressWarnings("deprecation")
 	public static void addRecipes() {
 		
-		ItemStack zHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+		ItemStack zHead = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 		SkullMeta zMeta = (SkullMeta) zHead.getItemMeta();
 		zMeta.setOwner("MHF_Zombie");
 		zMeta.setDisplayName("Zombie Head");
@@ -36,7 +36,7 @@ public class RecipeListeners {
 		HeadsPlus.getInstance().getServer().addRecipe(zombieRecipe);
 		recipes.add(zombieRecipe);
 		
-		ItemStack bHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+		ItemStack bHead = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 		SkullMeta bMeta = (SkullMeta) bHead.getItemMeta();
 		bMeta.setOwner("MHF_Blaze");
 		bMeta.setDisplayName("Blaze Head");
@@ -53,7 +53,7 @@ public class RecipeListeners {
 		HeadsPlus.getInstance().getServer().addRecipe(blazeRecipe);
 		recipes.add(blazeRecipe);
 		
-		ItemStack csHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+		ItemStack csHead = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 		SkullMeta csMeta = (SkullMeta) csHead.getItemMeta();
 		csMeta.setOwner("MHF_CaveSpider");
 		csMeta.setDisplayName("Cave Spider");

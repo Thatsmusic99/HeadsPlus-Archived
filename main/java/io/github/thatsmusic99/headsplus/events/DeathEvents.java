@@ -113,7 +113,7 @@ public class DeathEvents implements Listener {
 		    int chance1 = HeadsPlusConfigHeads.getHeads().getInt(entity + "HeadC");
 		    int chance2 = rand.nextInt(100) + 1;
 		    if (chance2 <= chance1) {
-			    ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+			    ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 			    SkullMeta headM = (SkullMeta) head.getItemMeta();
 			    headM.setOwner(HeadsPlusConfigHeads.getHeads().getString(entity + "HeadN"));
 			    headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString(entity + "HeadDN")));
@@ -135,7 +135,7 @@ public class DeathEvents implements Listener {
 		int chance1 = HeadsPlusConfigHeads.getHeads().getInt("playerHeadC");
 		int chance2 = rand.nextInt(100) + 1;
 		if (chance2 <= chance1) {
-			ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+			ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 			SkullMeta headM = (SkullMeta) head.getItemMeta();
 			headM.setOwner(ep.getEntity().getName());
 			headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("playerHeadDN").replaceAll("%d", ep.getEntity().getName())));

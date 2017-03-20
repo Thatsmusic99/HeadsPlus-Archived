@@ -36,6 +36,8 @@ public class HeadsPlusConfig {
 			messagesF = new File(HeadsPlus.getInstance().getDataFolder(), "messages.yml");
 		}
 		messages = YamlConfiguration.loadConfiguration(messagesF);
+		loadMessages();
+		saveMessages();
 	}
     public static void saveMessages() {
     	if (messages == null || messagesF == null) {

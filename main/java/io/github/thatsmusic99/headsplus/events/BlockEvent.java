@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
-public class BlockEvents implements Listener {
+public class BlockEvent implements Listener { // BlockEvents, according to Eclipse, doesn't exist.
 	
 	ArrayList<String[]> skullList;
 	HashMap<Location, SkullMeta> skullmap = new HashMap<Location, SkullMeta>();

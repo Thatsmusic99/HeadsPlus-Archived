@@ -24,16 +24,17 @@ public class HeadsPlusConfigHeads {
 	}
 	
 	private static void loadHeads() {
-		heads = YamlConfiguration.loadConfiguration(headsF);
-		getHeads().options().header("HeadsPlus by Thatsmusic99 - config wiki: https://github.com/Thatsmusic99/HeadsPlus/wiki/Configuration");
+		getHeads().options().header("HeadsPlus by Thatsmusic99 - Config wiki: https://github.com/Thatsmusic99/HeadsPlus/wiki/Configuration");
 		addMHFHeads();
 		addUndefinedHeads();
+		getHeads().options().copyDefaults(true);
 		saveHeads();
 	}
 	public static void reloadHeads() {
 		if (headsF == null) {
 			headsF = new File(HeadsPlus.getInstance().getDataFolder(), "heads.yml");
-			loadHeads();
+		    getHeads().options().copyDefaults(true);
+		    saveHeads(); // TODO Fix
 		}
 		heads = YamlConfiguration.loadConfiguration(headsF);
 		
@@ -50,7 +51,7 @@ public class HeadsPlusConfigHeads {
     	}
     }
     public static void addUndefinedHeads() {
-    	heads = YamlConfiguration.loadConfiguration(headsF);
+    	
     	for (String key : uHeads) {
     		getHeads().addDefault(key + "HeadN", "");
     		getHeads().addDefault(key + "HeadC", 0);
@@ -59,7 +60,7 @@ public class HeadsPlusConfigHeads {
     	}
     }
     public static void addMHFHeads() {
-    	heads = YamlConfiguration.loadConfiguration(headsF);
+    	
     	for (String key : mHeads) {
     		if (key != "irongolem") {
     			String str = key.substring(0, 1).toUpperCase();

@@ -1,4 +1,4 @@
-package io.github.thatsmusic99.headsplus;
+package io.github.thatsmusic99.headsplus.config;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 
 public class HeadsPlusConfigHeads {
 	public static List<String> mHeads = new ArrayList<>(Arrays.asList("blaze", "cavespider", "chicken", "cow", "creeper", "enderman", "ghast", "guardian", "irongolem", "mushroomcow", "pig", "sheep", "skeleton", "slime", "spider", "squid", "villager", "witch", "zombie"));

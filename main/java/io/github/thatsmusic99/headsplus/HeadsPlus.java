@@ -2,7 +2,6 @@ package io.github.thatsmusic99.headsplus;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -11,8 +10,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import io.github.thatsmusic99.headsplus.commands.Head;
 import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.commands.SellHead;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.crafting.RecipeListeners;
-import io.github.thatsmusic99.headsplus.events.BlockEvent;
 import io.github.thatsmusic99.headsplus.events.DeathEvents;
 import io.github.thatsmusic99.headsplus.events.HeadInteractEvent;
 

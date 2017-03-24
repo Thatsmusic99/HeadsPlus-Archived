@@ -1,10 +1,12 @@
-package io.github.thatsmusic99.headsplus;
+package io.github.thatsmusic99.headsplus.config;
 
 import java.io.File;
 import java.io.IOException;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 
 public class HeadsPlusConfig {
 	private static FileConfiguration messages;

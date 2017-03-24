@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -29,6 +30,7 @@ public class HeadsPlus extends JavaPlugin {
 	public String version = pluginYml.getVersion();
 	public boolean sellable;
 	public Economy econ;
+	public Boolean sellableHead;
 	
     public static FileConfiguration config;
 	public File configF;
@@ -61,7 +63,7 @@ public class HeadsPlus extends JavaPlugin {
 			if (getConfig().getBoolean("dropHeads")) {
 			    getServer().getPluginManager().registerEvents(new DeathEvents(), this);
 		    }
-			getServer().getPluginManager().registerEvents(new BlockEvent(), this);
+			// getServer().getPluginManager().registerEvents(new BlockEvent(), this);
 		    this.getCommand("headsplus").setExecutor(new HeadsPlusCommand());
 		    this.getCommand("hp").setExecutor(new HeadsPlusCommand());
 		    this.getCommand("head").setExecutor(new Head());

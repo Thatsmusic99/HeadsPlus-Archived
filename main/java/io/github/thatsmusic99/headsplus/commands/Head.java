@@ -83,7 +83,6 @@ public class Head implements CommandExecutor {
 			                    SkullMeta meta = (SkullMeta) skull.getItemMeta();
 		                        meta.setOwner(args[0]);
 				                meta.setDisplayName(args[0] + "'s head");
-				                
 				                skull.setItemMeta(meta);
 				                player.getInventory().addItem(skull);
 				                return true;

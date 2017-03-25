@@ -10,8 +10,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.HeadsPlusConfig;
-import io.github.thatsmusic99.headsplus.HeadsPlusConfigHeads;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 
 public class HeadsPlusCommand implements CommandExecutor {
 	

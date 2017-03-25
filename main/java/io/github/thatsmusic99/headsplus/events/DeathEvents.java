@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.HeadsPlusConfigHeads;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 
 public class DeathEvents implements Listener {
 	

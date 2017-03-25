@@ -10,8 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.HeadsPlusConfig;
-
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

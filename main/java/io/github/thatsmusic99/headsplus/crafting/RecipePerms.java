@@ -1,24 +1,26 @@
 package io.github.thatsmusic99.headsplus.crafting;
 
-import java.util.List;
-
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.CraftItemEvent;
-import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class RecipePerms implements Listener {
 	
 	@EventHandler
-	public void onCraft(CraftItemEvent e) {
-		List<ShapelessRecipe> recipes = RecipeListeners.recipes;
-		if (recipes.contains(e.getRecipe())) {
-			if (e.getWhoClicked().hasPermission("headsplus.craft")) {
-				return;
-			} else {
-				e.setCancelled(true);
-			}
+	public void onCraft(InventoryClickEvent e) {
+		Player player = (Player) e.getWhoClicked();
+		if (player.hasPermission("headsplus.craft")) {
+			return;
 		}
+		if(e.getSlot() == 0){
+            if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
+                player.sendMessage(ChatColor.RED + "You do not have permission to craft these heads!");
+                e.setCancelled(true);
+            }   
+        }
 	}
 
 }

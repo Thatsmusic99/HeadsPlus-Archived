@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Random;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -123,7 +125,11 @@ public class DeathEvents implements Listener {
 					headM.setLore(lore);
 			    }
 			   head.setItemMeta(headM);
-			   e.getDrops().add(head);
+			   Location entityLoc = e.getEntity().getLocation();
+               double entityLocY = entityLoc.getY() + 1;
+               entityLoc.setY(entityLocY);
+               World world = e.getEntity().getWorld();
+               world.dropItem(entityLoc, head);
 		    }
 		}
 		
@@ -145,7 +151,11 @@ public class DeathEvents implements Listener {
 				headM.setLore(lore);
 			}
 			head.setItemMeta(headM);
-			ep.getDrops().add(head);
+			Location entityLoc = ep.getEntity().getLocation();
+            double entityLocY = entityLoc.getY() + 1;
+            entityLoc.setY(entityLocY);
+            World world = ep.getEntity().getWorld();
+            world.dropItem(entityLoc, head);
 		}
 	}
 }

@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.commands;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -11,7 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 
@@ -61,13 +64,17 @@ public class Head implements CommandExecutor {
 					        if (((Player) sender).getInventory().firstEmpty() == -1) {
 						        sender.sendMessage(ChatColor.RED + "Your inventory is full!");
 					        } else {
-						        Player player = (Player) sender;
-		                        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+						        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 			                    SkullMeta meta = (SkullMeta) skull.getItemMeta();
 		                        meta.setOwner(args[0]);
 				                meta.setDisplayName(args[0] + "'s head");
 				                skull.setItemMeta(meta);
-				                player.getInventory().addItem(skull);
+				                Location playerLoc = ((Player) sender).getLocation();
+				                double playerLocY = playerLoc.getY() + 1;
+				                playerLoc.setY(playerLocY);
+				                World world = ((Player) sender).getWorld();
+				                world.dropItem(playerLoc, skull).setPickupDelay(0);
+				                // player.getInventory().addItem(skull);
 				                return true;
 				        	}
 				    
@@ -78,13 +85,19 @@ public class Head implements CommandExecutor {
 					        if (((Player) sender).getInventory().firstEmpty() == -1) {
 						        sender.sendMessage(ChatColor.RED + "Your inventory is full!");
 					        } else {
-						        Player player = (Player) sender;
-		                        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+						        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 			                    SkullMeta meta = (SkullMeta) skull.getItemMeta();
 		                        meta.setOwner(args[0]);
+		                        while (meta.getOwner() != args[0]) {
+		                        	meta.setOwner(args[0]);
+		                        }
 				                meta.setDisplayName(args[0] + "'s head");
 				                skull.setItemMeta(meta);
-				                player.getInventory().addItem(skull);
+				                Location playerLoc = ((Player) sender).getLocation();
+				                double playerLocY = playerLoc.getY() + 1;
+				                playerLoc.setY(playerLocY);
+				                World world = ((Player) sender).getWorld();
+				                world.dropItem(playerLoc, skull).setPickupDelay(0);;
 				                return true;
 				    	    }
 				       }

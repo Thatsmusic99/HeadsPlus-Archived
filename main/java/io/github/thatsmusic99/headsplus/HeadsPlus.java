@@ -13,6 +13,7 @@ import io.github.thatsmusic99.headsplus.commands.SellHead;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.crafting.RecipeListeners;
+import io.github.thatsmusic99.headsplus.crafting.RecipePerms;
 import io.github.thatsmusic99.headsplus.events.DeathEvents;
 import io.github.thatsmusic99.headsplus.events.HeadInteractEvent;
 
@@ -49,15 +50,18 @@ public class HeadsPlus extends JavaPlugin {
 			HeadsPlusConfigHeads.headsEnable();
 			if (getConfig().getBoolean("craftHeads")) {
 			    RecipeListeners.addRecipes();
+			    getServer().getPluginManager().registerEvents(new RecipePerms(), this);
 			}
 			if (!(econ()) && (getConfig().getBoolean("sellHeads"))) {
 				log.warning("[HeadsPlus] Vault not found! Heads cannot be sold.");
 				sellable = false;
 			} else if ((econ()) && !(getConfig().getBoolean("sellHeads"))) {
 				sellable = false;
-			} else {
+			} else if ((econ()) && (getConfig().getBoolean("sellHeads"))){
 				this.getCommand("sellhead").setExecutor(new SellHead());
 				sellable = true;
+			} else if (!(econ() && !(getConfig().getBoolean("sellHeads")))) {
+				sellable = false;
 			}
 			getServer().getPluginManager().registerEvents(new HeadInteractEvent(), this);
 			if (getConfig().getBoolean("dropHeads")) {

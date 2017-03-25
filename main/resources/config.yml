@@ -5,11 +5,9 @@
 # Otherwise, you will be ignored by me on Spigot.
 # Thanks in advance, and thank you for using HeadsPlus. ~
 
-# Test
-
 blacklistOn: true
-blacklist: []
 sellHeads: true
 dropHeads: true
 craftHeads: true
 version: 1
+blacklist: []

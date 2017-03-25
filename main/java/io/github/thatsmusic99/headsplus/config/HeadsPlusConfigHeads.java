@@ -17,6 +17,8 @@ public class HeadsPlusConfigHeads {
 	private static FileConfiguration heads;
 	public static File headsF;
 	
+	public static FileConfiguration config = HeadsPlus.getInstance().getConfig();
+	
 	public static FileConfiguration getHeads() {
 		return heads;
 	}
@@ -71,11 +73,13 @@ public class HeadsPlusConfigHeads {
     		    getHeads().addDefault(key + "HeadC", 25);
     		    getHeads().addDefault(key + "HeadDN", str + str2 + " Head");
     		    getHeads().addDefault(key + "HeadP", 10.00);
+    		    config.getStringList("blacklist").add(getHeads().getString(key + "HeadN"));
     		} else {
     			getHeads().addDefault("irongolemHeadN", "MHF_Golem");
     			getHeads().addDefault("irongolemHeadC", 25);
     			getHeads().addDefault("irongolemHeadDN", "Iron Golem Head");
     			getHeads().addDefault("irongolemHeadP", 10.00);
+    			config.getStringList("blacklist").add(getHeads().getString("irongolemHeadN"));
     		}
     	}
     }

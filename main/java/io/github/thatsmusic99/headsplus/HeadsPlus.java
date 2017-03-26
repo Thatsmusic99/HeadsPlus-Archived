@@ -17,7 +17,7 @@ import io.github.thatsmusic99.headsplus.crafting.RecipeListeners;
 import io.github.thatsmusic99.headsplus.crafting.RecipePerms;
 import io.github.thatsmusic99.headsplus.events.DeathEvents;
 import io.github.thatsmusic99.headsplus.events.HeadInteractEvent;
-
+import io.github.thatsmusic99.headsplus.events.QuitJoinEvents;
 import net.milkbowl.vault.economy.Economy;
 
 import java.io.File;
@@ -69,6 +69,7 @@ public class HeadsPlus extends JavaPlugin {
 			if (getConfig().getBoolean("dropHeads")) {
 			    getServer().getPluginManager().registerEvents(new DeathEvents(), this);
 		    }
+			getServer().getPluginManager().registerEvents(new QuitJoinEvents(), this);
 			// getServer().getPluginManager().registerEvents(new BlockEvent(), this);
 		    this.getCommand("headsplus").setExecutor(new HeadsPlusCommand());
 		    this.getCommand("hp").setExecutor(new HeadsPlusCommand());

@@ -97,7 +97,7 @@ public class Head implements CommandExecutor {
 				                double playerLocY = playerLoc.getY() + 1;
 				                playerLoc.setY(playerLocY);
 				                World world = ((Player) sender).getWorld();
-				                world.dropItem(playerLoc, skull).setPickupDelay(0);;
+				                world.dropItem(playerLoc, skull).setPickupDelay(0);
 				                return true;
 				    	    }
 				       }

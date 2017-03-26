@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -19,9 +20,11 @@ public class HeadsPlusDataFile {
 		return data;
 	}
 	public static void loadHPData() {
-		getHPData().createSection("SkullData");
+		reloadHPData();
+		getHPData().options().copyDefaults(true);
 		saveHPData();
 	}
+	// Unused
 	public static void writeToData(UUID id, ItemStack item, SkullMeta skull) {
 		if (data == null || dataF == null) {
 			saveHPData();
@@ -48,6 +51,13 @@ public class HeadsPlusDataFile {
 	public static SkullMeta getMetaFromData(UUID id, SkullMeta skull) {
 		ConfigurationSection uuid = getHPData().getConfigurationSection(id.toString());
 		return (SkullMeta) uuid.get("SkullMeta");
+	}
+	public static void reloadHPData() {
+		if (dataF == null) {
+			dataF = new File(HeadsPlus.getInstance().getDataFolder(), "data.yml");
+		}
+		data = YamlConfiguration.loadConfiguration(dataF);
+		saveHPData();
 	}
 
 }

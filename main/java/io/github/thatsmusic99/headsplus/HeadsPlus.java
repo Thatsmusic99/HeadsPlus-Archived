@@ -82,6 +82,8 @@ public class HeadsPlus extends JavaPlugin {
     }
 	@Override
 	public void onDisable() {
+		QuitJoinEvents.num = 0;
+		QuitJoinEvents.num2 = 0;
 		log.info("[HeadsPlus] HeadsPlus has been disabled.");
 	}
 	public static HeadsPlus getInstance() {

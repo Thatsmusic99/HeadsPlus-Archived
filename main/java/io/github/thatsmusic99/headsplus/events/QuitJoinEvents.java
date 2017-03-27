@@ -1,5 +1,6 @@
 package io.github.thatsmusic99.headsplus.events;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
@@ -18,9 +19,8 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusDataFile;
 
 public class QuitJoinEvents implements Listener {
 	
-	int num;
-	int num2;
-	
+	public static int num;
+	public static int num2;
 	private static ConfigurationSection data = HeadsPlusDataFile.getHPData();
 	
 	@EventHandler
@@ -80,6 +80,10 @@ public class QuitJoinEvents implements Listener {
 					ConfigurationSection loc = worldCS.getConfigurationSection(String.valueOf(skullx) + "," + String.valueOf(skully) + "," + String.valueOf(skullz));
 					if (loc.getConfigurationSection("SkullMeta") != null) {
 						skull.setItemMeta((SkullMeta) loc.getConfigurationSection("SkullMeta"));
+						if (e.getPlayer().getGameMode() == GameMode.SURVIVAL) {
+				            e.getBlock().getDrops().clear();
+				            e.getBlock().getDrops().add(skull);
+			            }
 					}
 				}
 			} else {
@@ -115,9 +119,12 @@ public class QuitJoinEvents implements Listener {
     	        	loc.addDefault("SkullMeta", skullM.toString());
     	        } 
             }
+            
         
             HeadsPlusDataFile.getHPData().options().copyDefaults(true);
             HeadsPlusDataFile.saveHPData();
-		}
-	}
+		}else {
+		e.getPlayer().sendMessage(e.getBlock().getType().toString());
+	    }
+	} 
 }

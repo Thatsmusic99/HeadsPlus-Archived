@@ -1,9 +1,12 @@
 package io.github.thatsmusic99.headsplus.events;
 
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
@@ -17,6 +20,7 @@ public class QuitJoinEvents implements Listener {
 	
 	int num;
 	int num2;
+	
 	private static ConfigurationSection data = HeadsPlusDataFile.getHPData();
 	
 	@EventHandler
@@ -61,6 +65,59 @@ public class QuitJoinEvents implements Listener {
 					skull.setItemMeta(skullM);
 			    }   
 		    }
+		}
+	}
+	public void onBlockBreak(BlockBreakEvent e) {
+		if (e.getBlock().getType() == Material.SKULL) {
+			ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+			World world = e.getBlock().getWorld();
+			int skullx = e.getBlock().getX();
+			int skully = e.getBlock().getY();
+			int skullz = e.getBlock().getZ();
+			if (data.getConfigurationSection(world.toString()) !=  null) {
+				ConfigurationSection worldCS = data.getConfigurationSection(world.toString());
+				if (worldCS.getConfigurationSection(String.valueOf(skullx) + "," + String.valueOf(skully) + "," + String.valueOf(skullz)) != null) {
+					ConfigurationSection loc = worldCS.getConfigurationSection(String.valueOf(skullx) + "," + String.valueOf(skully) + "," + String.valueOf(skullz));
+					if (loc.getConfigurationSection("SkullMeta") != null) {
+						skull.setItemMeta((SkullMeta) loc.getConfigurationSection("SkullMeta"));
+					}
+				}
+			} else {
+				return;
+			}
+		}
+	}
+	public void onBlockPlace(BlockPlaceEvent e) {
+		if (e.getBlock().getType() == Material.SKULL) {
+			ItemStack skull = e.getItemInHand();
+			SkullMeta skullM = (SkullMeta) skull.getItemMeta();
+			World world = e.getBlockPlaced().getWorld();
+			int skullx = e.getBlockPlaced().getX();
+			int skully = e.getBlockPlaced().getY();
+			int skullz = e.getBlockPlaced().getZ();
+			if (data.getConfigurationSection(world.toString()) == null) {
+			    data.createSection(world.toString());
+			}
+			ConfigurationSection worldCS = data.getConfigurationSection(world.toString());
+            if (worldCS.getConfigurationSection(String.valueOf(skullx) + "," + String.valueOf(skully) + "," + String.valueOf(skullz)) != null) {
+    	        ConfigurationSection loc = data.getConfigurationSection(String.valueOf(skullx) + String.valueOf(skully) + String.valueOf(skullz));
+    	        if (loc.getString("SkullMeta") != null) {
+    	        	loc.set("SkullMeta", skullM.toString());
+    	        } else {
+    	        	loc.addDefault("SkullMeta", skullM.toString());
+    	        }
+            } else {
+            	worldCS.createSection(String.valueOf(skullx) + String.valueOf(skully) + String.valueOf(skullz));
+            	ConfigurationSection loc = data.getConfigurationSection(String.valueOf(skullx) + String.valueOf(skully) + String.valueOf(skullz));
+            	if (loc.getString("SkullMeta") != null) {
+    	        	loc.set("SkullMeta", skullM.toString());
+    	        } else {
+    	        	loc.addDefault("SkullMeta", skullM.toString());
+    	        } 
+            }
+        
+            HeadsPlusDataFile.getHPData().options().copyDefaults(true);
+            HeadsPlusDataFile.saveHPData();
 		}
 	}
 }

@@ -1,13 +1,9 @@
 package io.github.thatsmusic99.headsplus.events;
 
-import org.bukkit.GameMode;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
@@ -33,16 +29,13 @@ public class QuitJoinEvents implements Listener {
 					if (skull != null) {
 				        if (skull.getType() == Material.SKULL_ITEM) {
 					        num++;
-					        if (data.getConfigurationSection(e.getPlayer().getUniqueId().toString()) == null) {
-				                data.createSection(e.getPlayer().getUniqueId().toString());
-					        }
-				            ConfigurationSection uuid = data.getConfigurationSection(e.getPlayer().getUniqueId().toString());
-				            if (uuid.get("SkullMeta" + num) != null) {
-				    	        data.getConfigurationSection(e.getPlayer().getUniqueId().toString()).set("SkullMeta" + num, skull.getItemMeta().toString()); 
+				            String uuid = e.getPlayer().getUniqueId().toString();
+				            SkullMeta skullM = (SkullMeta) skull.getItemMeta();
+				            if (data.getString(uuid + ".SkullMeta" + num) == null) {
+				            	data.addDefault(uuid + ".SkullMeta" + num, skullM.toString());
 				            } else {
-				        	    data.getConfigurationSection(e.getPlayer().getUniqueId().toString()).addDefault("SkullMeta" + num, skull.getItemMeta().toString()); 
+				            	data.set(uuid + ".SkullMeta" + num, skullM.toString());
 				            }
-				        
 				            HeadsPlusDataFile.getHPData().options().copyDefaults(true);
 				            HeadsPlusDataFile.saveHPData();
 			            }   
@@ -60,77 +53,12 @@ public class QuitJoinEvents implements Listener {
 			for (ItemStack skull : skulls) {
 				if (skull.equals(Material.SKULL_ITEM)) {
 					num2++;
-					ConfigurationSection uuid = data.getConfigurationSection(e.getPlayer().getUniqueId().toString());
-					SkullMeta skullM = (SkullMeta) uuid.get("SkullMeta" + num2);
+					String uuid = e.getPlayer().getUniqueId().toString();
+					SkullMeta skullM = (SkullMeta) data.get(uuid + ".SkullMeta" + num);
 					skull.setItemMeta(skullM);
 			    }   
 		    }
 		}
 	}
-	public void onBlockBreak(BlockBreakEvent e) {
-		if (e.getBlock().getType() == Material.SKULL) {
-			ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
-			World world = e.getBlock().getWorld();
-			int skullx = e.getBlock().getX();
-			int skully = e.getBlock().getY();
-			int skullz = e.getBlock().getZ();
-			if (data.getConfigurationSection(world.getName()) !=  null) {
-				ConfigurationSection worldCS = data.getConfigurationSection(world.getName());
-				if (worldCS.getConfigurationSection(String.valueOf(skullx) + "," + String.valueOf(skully) + "," + String.valueOf(skullz)) != null) {
-					ConfigurationSection loc = worldCS.getConfigurationSection(String.valueOf(skullx) + "," + String.valueOf(skully) + "," + String.valueOf(skullz));
-					if (loc.getConfigurationSection("SkullMeta") != null) {
-						skull.setItemMeta((SkullMeta) loc.getConfigurationSection("SkullMeta"));
-						if (e.getPlayer().getGameMode() == GameMode.SURVIVAL) {
-				            e.getBlock().getDrops().clear();
-				            e.getBlock().getDrops().add(skull);
-			            }
-					}
-				}
-			} else {
-				return;
-			}
-		} else {
-			e.getPlayer().sendMessage(e.getBlock().toString());
-		}
-	}
-	public void onBlockPlace(BlockPlaceEvent e) {
-		try {
-		if (e.getBlock().getType() == Material.SKULL) {
-			ItemStack skull = e.getItemInHand();
-			SkullMeta skullM = (SkullMeta) skull.getItemMeta();
-			World world = e.getBlockPlaced().getWorld();
-			int skullx = e.getBlockPlaced().getX();
-			int skully = e.getBlockPlaced().getY();
-			int skullz = e.getBlockPlaced().getZ();
-			if (data.getConfigurationSection(world.getName()) == null) {
-			    data.createSection(world.getName());
-			} else {
-				e.getPlayer().sendMessage("Pong");
-			}
-			ConfigurationSection worldCS = data.getConfigurationSection(world.getName());
-            if (worldCS.getConfigurationSection(String.valueOf(skullx) + "," + String.valueOf(skully) + "," + String.valueOf(skullz)) != null) {
-    	        ConfigurationSection loc = data.getConfigurationSection(String.valueOf(skullx) + String.valueOf(skully) + String.valueOf(skullz));
-    	        if (loc.getString("SkullMeta") != null) {
-    	        	loc.set("SkullMeta", skullM.toString());
-    	        } else {
-    	        	loc.addDefault("SkullMeta", skullM.toString());
-    	        }
-            } else {
-            	worldCS.createSection(String.valueOf(skullx) + String.valueOf(skully) + String.valueOf(skullz));
-            	ConfigurationSection loc = data.getConfigurationSection(String.valueOf(skullx) + String.valueOf(skully) + String.valueOf(skullz));
-            	if (loc.getString("SkullMeta") != null) {
-    	        	loc.set("SkullMeta", skullM.toString());
-    	        } else {
-    	        	loc.addDefault("SkullMeta", skullM.toString());
-    	        } 
-            }
-            HeadsPlusDataFile.getHPData().options().copyDefaults(true);
-            HeadsPlusDataFile.saveHPData();
-		} else {
-			e.getPlayer().sendMessage(e.getBlock().toString());
-		}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	} 
+	
 }

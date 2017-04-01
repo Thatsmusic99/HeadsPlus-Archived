@@ -22,6 +22,7 @@ import net.milkbowl.vault.economy.EconomyResponse;
 public class SellHead implements CommandExecutor {
 	
 	static String lore;
+	static String lore2;
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (sender instanceof Player) {
@@ -33,7 +34,8 @@ public class SellHead implements CommandExecutor {
 		    	SkullMeta skullM = (SkullMeta) invi.getItemMeta();
 		        String owner = skullM.getOwner();
 		        lore = skullM.getLore().get(0);
-		    	if ((skullM.getLore() != null) && (lore == ChatColor.translateAlternateColorCodes('&', "&6"))) {
+		        lore2 = skullM.getLore().get(1);
+		    	if ((skullM.getLore() != null) && (lore == ("" + ChatColor.GOLD + ChatColor.BOLD + "This head can be sold!")) && (lore2 == ("" + ChatColor.GOLD + "Do /sellhead to sell!"))) {
 		    		Economy econ = HeadsPlus.getInstance().econ;
 		    		List<String> mHeads = HeadsPlusConfigHeads.mHeads;
 		    		List<String> uHeads = HeadsPlusConfigHeads.uHeads; 
@@ -109,6 +111,9 @@ public class SellHead implements CommandExecutor {
 		    		falseHead = ChatColor.translateAlternateColorCodes('&', falseHead);
 		    		sender.sendMessage(falseHead);
 		    		sender.sendMessage(lore);
+		    		sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&lThis head can be sold!"));
+		    		sender.sendMessage(lore2);
+		    		sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Do /sellhead to sell!"));
 		    	} 
 		    	
 		    } /*else {

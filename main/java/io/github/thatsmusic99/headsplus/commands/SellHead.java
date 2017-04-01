@@ -28,13 +28,12 @@ public class SellHead implements CommandExecutor {
 			PlayerInventory inv = ((Player) sender).getInventory();
 		    ItemStack invi = inv.getItemInMainHand();
 		    
-		    if (((Player) sender).getInventory().getItemInMainHand().getType() == Material.SKULL_ITEM) {
+		    if ((((Player) sender).getInventory().getItemInMainHand().getType() == Material.SKULL_ITEM) && (sender.hasPermission("headsplus.sellhead"))) {
 		    	
 		    	SkullMeta skullM = (SkullMeta) invi.getItemMeta();
 		        String owner = skullM.getOwner();
 		        lore = skullM.getLore().get(0);
-		        ChatColor character = ChatColor.getByChar(lore);
-		    	if ((skullM.getLore() != null) && (character.toString() == "&6")) {
+		    	if ((skullM.getLore() != null) && (lore == ChatColor.translateAlternateColorCodes('&', "&6"))) {
 		    		Economy econ = HeadsPlus.getInstance().econ;
 		    		List<String> mHeads = HeadsPlusConfigHeads.mHeads;
 		    		List<String> uHeads = HeadsPlusConfigHeads.uHeads; 

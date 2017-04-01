@@ -1,7 +1,6 @@
 package io.github.thatsmusic99.headsplus.commands;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;

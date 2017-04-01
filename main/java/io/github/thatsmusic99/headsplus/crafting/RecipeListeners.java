@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
@@ -69,9 +70,10 @@ public class RecipeListeners {
 		recipes.add(cavespiderRecipe);
 	}
 	public static void makeSell(ItemMeta m) {
-		if (HeadsPlus.getInstance().sellable) {
+		if ((HeadsPlus.getInstance().sellable)) {
 			List<String> lore = new ArrayList<String>();
-			lore.add(ChatColor.translateAlternateColorCodes('&', "&6"));
+			lore.add(ChatColor.translateAlternateColorCodes('&', "&6&lThis head can be sold!"));
+			lore.add(ChatColor.translateAlternateColorCodes('&', "&6Do /sellhead to sell!"));
 			m.setLore(lore);
 		}
 	}

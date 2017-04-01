@@ -3,6 +3,7 @@ package io.github.thatsmusic99.headsplus.crafting;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -70,7 +71,7 @@ public class RecipeListeners {
 	public static void makeSell(ItemMeta m) {
 		if (HeadsPlus.getInstance().sellable) {
 			List<String> lore = new ArrayList<String>();
-			lore.add(" ");
+			lore.add(ChatColor.translateAlternateColorCodes('&', "&6"));
 			m.setLore(lore);
 		}
 	}

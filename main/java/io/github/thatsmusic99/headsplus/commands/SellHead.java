@@ -20,6 +20,9 @@ import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 
 public class SellHead implements CommandExecutor {
+	
+	static String lore;
+	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (sender instanceof Player) {
 			PlayerInventory inv = ((Player) sender).getInventory();
@@ -29,7 +32,9 @@ public class SellHead implements CommandExecutor {
 		    	
 		    	SkullMeta skullM = (SkullMeta) invi.getItemMeta();
 		        String owner = skullM.getOwner();
-		    	if ((skullM.getLore() != null) && (skullM.getLore().get(0) == " ")) {
+		        lore = skullM.getLore().get(0);
+		        ChatColor character = ChatColor.getByChar(lore);
+		    	if ((skullM.getLore() != null) && (character.toString() == "&6")) {
 		    		Economy econ = HeadsPlus.getInstance().econ;
 		    		List<String> mHeads = HeadsPlusConfigHeads.mHeads;
 		    		List<String> uHeads = HeadsPlusConfigHeads.uHeads; 
@@ -104,6 +109,7 @@ public class SellHead implements CommandExecutor {
 		    		String falseHead = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("false-head"));
 		    		falseHead = ChatColor.translateAlternateColorCodes('&', falseHead);
 		    		sender.sendMessage(falseHead);
+		    		sender.sendMessage(lore);
 		    	} 
 		    	
 		    } /*else {

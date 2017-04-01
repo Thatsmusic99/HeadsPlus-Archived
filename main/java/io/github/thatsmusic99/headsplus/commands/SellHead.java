@@ -33,9 +33,11 @@ public class SellHead implements CommandExecutor {
 		    	
 		    	SkullMeta skullM = (SkullMeta) invi.getItemMeta();
 		        String owner = skullM.getOwner();
-		        lore = skullM.getLore().get(0);
-		        lore2 = skullM.getLore().get(1);
-		    	if ((skullM.getLore() != null) && (lore == ("" + ChatColor.GOLD + ChatColor.BOLD + "This head can be sold!")) && (lore2 == ("" + ChatColor.GOLD + "Do /sellhead to sell!"))) {
+		        if (skullM.getLore() != null) {
+		            lore = skullM.getLore().get(0);
+		            lore2 = skullM.getLore().get(1);
+		        }
+		    	if ((lore == ("" + ChatColor.GOLD + ChatColor.BOLD + "This head can be sold!")) && (lore2 == ("" + ChatColor.GOLD + "Do /sellhead to sell!"))) {
 		    		Economy econ = HeadsPlus.getInstance().econ;
 		    		List<String> mHeads = HeadsPlusConfigHeads.mHeads;
 		    		List<String> uHeads = HeadsPlusConfigHeads.uHeads; 

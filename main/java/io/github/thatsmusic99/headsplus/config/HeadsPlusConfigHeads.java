@@ -55,7 +55,6 @@ public class HeadsPlusConfigHeads {
     	}
     }
     public static void addUndefinedHeads() {
-    	
     	for (String key : uHeads) {
     		getHeads().addDefault(key + "HeadN", "");
     		getHeads().addDefault(key + "HeadC", 0);
@@ -94,6 +93,11 @@ public class HeadsPlusConfigHeads {
     		    }
     		}
     	}
+    }
+    public void addPlayerHeads() {
+    	getHeads().addDefault("playerHeadC", 100);
+    	getHeads().addDefault("playerHeadDN", "%d's head");
+    	getHeads().addDefault("playerHeadP", 10.00);
     }
 
 

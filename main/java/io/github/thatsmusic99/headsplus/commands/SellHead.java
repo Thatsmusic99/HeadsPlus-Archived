@@ -79,8 +79,6 @@ public class SellHead implements CommandExecutor {
 								sender.sendMessage(success);
 							} else {
 								sender.sendMessage(fail + ": " + zr.errorMessage);
-								
-								
 							}
 		    			} 
 		    		}
@@ -105,7 +103,24 @@ public class SellHead implements CommandExecutor {
 							}
 		    				
 		    			} else {
-		    				
+			    				Double price = HeadsPlusConfigHeads.getHeads().getDouble("playerHeadP");
+			    				String senderName = sender.getName();
+			    				if (invi.getAmount() > 0) {
+			    					price = price * invi.getAmount();
+			    				}
+			    				@SuppressWarnings("deprecation")
+								EconomyResponse zr = econ.depositPlayer(senderName, price);
+			    				String success = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-success"));
+			    				success = ChatColor.translateAlternateColorCodes('&', success);
+			    				String fail = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-fail"));
+								fail = ChatColor.translateAlternateColorCodes('&', fail);
+								if (zr.transactionSuccess()) {
+									((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+									sender.sendMessage(success);
+								} else {
+									sender.sendMessage(fail + ": " + zr.errorMessage);
+								}
+			    			
 		    			}
 		    		}
 		    	} else {
@@ -118,10 +133,13 @@ public class SellHead implements CommandExecutor {
 		    		sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Do /sellhead to sell!"));
 		    	} 
 		    	
-		    } /*else {
-		    	sender.sendMessage("Pong"); // TODO Add incorrect item message
+		    } else {
+		    	String falseItem = HeadsPlusConfig.getMessages().getString("false-item");
+		    	falseItem = HeadsPlus.getInstance().translateMessages(falseItem);
+		    	falseItem = ChatColor.translateAlternateColorCodes('&', falseItem);
+		    	sender.sendMessage(falseItem); // TODO Add incorrect item message
 		    	
-		    } */
+		    } 
 		
 		} else {
 			sender.sendMessage("[HeadsPlus] You must be a player to send this command!");

@@ -30,6 +30,7 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("sell-success", "&3Head sold successfully!");
 		getMessages().addDefault("sell-fail", "&cCouldn't sell head!");
 		getMessages().addDefault("false-head", "&cThis head cannot be sold!");
+		getMessages().addDefault("false-item", "&cThis is not a head!");
 		getMessages().options().copyDefaults(true);
 		saveMessages();
 	}

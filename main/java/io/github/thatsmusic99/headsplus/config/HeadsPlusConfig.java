@@ -28,13 +28,15 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("head-interact-message", "&3That is &b%p&3''s &3head!");
 		getMessages().addDefault("head-mhf-interact-message", "&3That is a &b%p&3''s &3head!");
 		getMessages().addDefault("sell-success", "&3Head sold successfully!");
-		getMessages().addDefault("sell-fail", "&cCouldn't sell head!");
+		getMessages().addDefault("sell-fail", "&cCouldn''t sell head!");
 		getMessages().addDefault("false-head", "&cThis head cannot be sold!");
 		getMessages().addDefault("false-item", "&cThis is not a head!");
 		getMessages().addDefault("blacklist-head", "&cThis head is blacklisted and cannot be sold!");
 		getMessages().addDefault("full-inv", "&cYour inventory is full!");
 		getMessages().addDefault("alpha-names", "&cThis command only handles alphanumeric names!");
 		getMessages().addDefault("too-many-args", "&cToo many arguments!");
+		getMessages().addDefault("head-too-long", "&cIGN is too long to be valid! Please use an IGN between 3 and 16 characters.");
+		getMessages().addDefault("too-short-head", "&cIGN is too short to be valid! Please use an IGN between 3 and 16 characters.");
 		getMessages().options().copyDefaults(true);
 		saveMessages();
 	}

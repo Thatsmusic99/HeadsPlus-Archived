@@ -33,20 +33,20 @@ public class Head implements CommandExecutor {
 			        }
 			// Checks if the arguments used include A-Z, a-z and 0-9 letters, as well as more than one of them.
 		        	if ((args.length == 1) && !(args[0].matches("^[A-Za-z0-9_]+$"))) {
-			         	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("alpha-names")));
+			         	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("alpha-names"))));
 				        return false;
 			        }
 			        if (args.length > 1) {
-			        	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("too-many-args")));
+			        	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("too-many-args"))));
 				        sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/head [IGN]");
 				        return false;
 			        }
 		    	    if (args[0].length() > 16) {
-			    	    sender.sendMessage(ChatColor.DARK_RED + "IGN is too long to be valid! Please use an IGN between 3 and 16 characters.");
+		    	    	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("head-too-long"))));
 			    	    return false;
 			        }
 			        if (args[0].length() < 3) {
-				        sender.sendMessage(ChatColor.DARK_RED + "IGN is too short to be valid! Please use an IGN between 3 and 16 characters.");
+			        	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("head-too-short"))));
 				        return false;
 			        }
 			
@@ -62,7 +62,7 @@ public class Head implements CommandExecutor {
 				        String head = args[0].toLowerCase();
 				        if (!(blacklist.contains(head))) {
 					        if (((Player) sender).getInventory().firstEmpty() == -1) {
-					        	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("full-inv")));
+					        	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("full-inv"))));
 					        } else {
 						        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 			                    SkullMeta meta = (SkullMeta) skull.getItemMeta();
@@ -79,11 +79,11 @@ public class Head implements CommandExecutor {
 				        	}
 				    
 				        } else if ((blacklist.contains(head)) && (blacklistOn)) {
-					        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("blacklist-head")));
+				        	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("blacklist-head"))));
 					        return false;
 				        } else if ((blacklist.contains(head)) && !(blacklistOn)) {
 					        if (((Player) sender).getInventory().firstEmpty() == -1) {
-						        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("full-inv")));
+					        	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("full-inv"))));;
 					        } else {
 						        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 			                    SkullMeta meta = (SkullMeta) skull.getItemMeta();

@@ -31,13 +31,14 @@ public class HeadsPlusConfigHeads {
 		getHeads().options().header("HeadsPlus by Thatsmusic99 - Config wiki: https://github.com/Thatsmusic99/HeadsPlus/wiki/Configuration");
 		addMHFHeads();
 		addUndefinedHeads();
+		addPlayerHeads();
 		getHeads().options().copyDefaults(true);
 		saveHeads();
 	}
 	public static void reloadHeads() {
 		if (headsF == null) {
 			headsF = new File(HeadsPlus.getInstance().getDataFolder(), "heads.yml");
-		     // TODO Fix
+		     // TODO This was broken?
 		}
 		heads = YamlConfiguration.loadConfiguration(headsF);
 		loadHeads();
@@ -94,7 +95,7 @@ public class HeadsPlusConfigHeads {
     		}
     	}
     }
-    public void addPlayerHeads() {
+    public static void addPlayerHeads() {
     	getHeads().addDefault("playerHeadC", 100);
     	getHeads().addDefault("playerHeadDN", "%d's head");
     	getHeads().addDefault("playerHeadP", 10.00);

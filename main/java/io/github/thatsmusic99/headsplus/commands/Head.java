@@ -6,6 +6,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,11 +33,11 @@ public class Head implements CommandExecutor {
 			        }
 			// Checks if the arguments used include A-Z, a-z and 0-9 letters, as well as more than one of them.
 		        	if ((args.length == 1) && !(args[0].matches("^[A-Za-z0-9_]+$"))) {
-			         	sender.sendMessage(ChatColor.DARK_RED + "Error: " + ChatColor.RED + "This command only handles alphanumeric usernames!");
+			         	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("alpha-names")));
 				        return false;
 			        }
 			        if (args.length > 1) {
-				        sender.sendMessage(ChatColor.DARK_RED + "Too many arguments!");
+			        	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("too-many-args")));
 				        sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/head [IGN]");
 				        return false;
 			        }
@@ -61,7 +62,7 @@ public class Head implements CommandExecutor {
 				        String head = args[0].toLowerCase();
 				        if (!(blacklist.contains(head))) {
 					        if (((Player) sender).getInventory().firstEmpty() == -1) {
-						        sender.sendMessage(ChatColor.RED + "Your inventory is full!");
+					        	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("full-inv")));
 					        } else {
 						        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 			                    SkullMeta meta = (SkullMeta) skull.getItemMeta();
@@ -78,11 +79,11 @@ public class Head implements CommandExecutor {
 				        	}
 				    
 				        } else if ((blacklist.contains(head)) && (blacklistOn)) {
-					        sender.sendMessage(ChatColor.RED + "That head is blacklisted and cannot be used!");
+					        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("blacklist-head")));
 					        return false;
 				        } else if ((blacklist.contains(head)) && !(blacklistOn)) {
 					        if (((Player) sender).getInventory().firstEmpty() == -1) {
-						        sender.sendMessage(ChatColor.RED + "Your inventory is full!");
+						        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("full-inv")));
 					        } else {
 						        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 			                    SkullMeta meta = (SkullMeta) skull.getItemMeta();

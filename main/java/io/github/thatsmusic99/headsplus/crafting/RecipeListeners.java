@@ -14,6 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 
 public class RecipeListeners {
 	
@@ -24,10 +25,8 @@ public class RecipeListeners {
 		
 		ItemStack zHead = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 		SkullMeta zMeta = (SkullMeta) zHead.getItemMeta();
-		zMeta.setOwner("MHF_Zombie");
-		zMeta.setDisplayName("Zombie Head");
-		zMeta.addEnchant(Enchantment.LUCK, 1, true);
-		zMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		zMeta.setOwner(HeadsPlusConfigHeads.getHeads().getString("zombieHeadN"));
+		zMeta.setDisplayName(HeadsPlusConfigHeads.getHeads().getString("zombieHeadDN"));
 		makeSell(zMeta);
 		zHead.setItemMeta(zMeta);
 		
@@ -40,10 +39,8 @@ public class RecipeListeners {
 		
 		ItemStack bHead = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 		SkullMeta bMeta = (SkullMeta) bHead.getItemMeta();
-		bMeta.setOwner("MHF_Blaze");
-		bMeta.setDisplayName("Blaze Head");
-		bMeta.addEnchant(Enchantment.DURABILITY, 1, true);
-		bMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		bMeta.setOwner(HeadsPlusConfigHeads.getHeads().getString("blazeHeadN"));
+		bMeta.setDisplayName(HeadsPlusConfigHeads.getHeads().getString("blazeHeadN"));
 		makeSell(bMeta);
 		bHead.setItemMeta(bMeta);
 		
@@ -77,6 +74,4 @@ public class RecipeListeners {
 			m.setLore(lore);
 		}
 	}
-	
-
 }

@@ -40,6 +40,8 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("too-short-head", "&cIGN is too short to be valid! Please use an IGN between 3 and 16 characters.");
 		getMessages().addDefault("invalid-pg-no", "&cInvalid page number!");
 		getMessages().addDefault("invalid-input-int", "&cYou can only use integers in this command!");
+		getMessages().addDefault("purged-data", "&3Data has been purged.");
+		getMessages().addDefault("purge-fail", "&cFailed to purge data.");
 		getMessages().options().copyDefaults(true);
 		saveMessages();
 	}

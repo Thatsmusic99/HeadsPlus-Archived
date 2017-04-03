@@ -322,6 +322,15 @@ public class HeadsPlusCommand implements CommandExecutor {
 				  }
 			  }
 			  }
+			  if ((args.length == 1) && (args[0].equalsIgnoreCase("purgedata"))) {
+				  try {
+				      dataF.delete();
+				      HeadsPlusDataFile.reloadHPData();
+				      sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("purged-data"))));
+				  } catch (Exception e) {
+					  sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages("purge-fail")));
+				  }
+			  }
 		}
 			}
 	return false;

@@ -38,6 +38,7 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("too-many-args", "&cToo many arguments!");
 		getMessages().addDefault("head-too-long", "&cIGN is too long to be valid! Please use an IGN between 3 and 16 characters.");
 		getMessages().addDefault("too-short-head", "&cIGN is too short to be valid! Please use an IGN between 3 and 16 characters.");
+		getMessages().addDefault("invalid-pg-no", "&cInvalid page number!");
 		getMessages().options().copyDefaults(true);
 		saveMessages();
 	}

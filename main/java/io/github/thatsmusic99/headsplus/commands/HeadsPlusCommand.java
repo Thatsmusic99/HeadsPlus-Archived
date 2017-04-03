@@ -22,6 +22,7 @@ public class HeadsPlusCommand implements CommandExecutor {
 		FileConfiguration messages = HeadsPlusConfig.getMessages();
 		File messagesF = HeadsPlusConfig.messagesF;
 		
+		@SuppressWarnings("unused")
 		FileConfiguration heads = HeadsPlusConfigHeads.getHeads();
 		File headsF = HeadsPlusConfigHeads.headsF;
 		
@@ -48,6 +49,9 @@ public class HeadsPlusCommand implements CommandExecutor {
 					}
 					if (sender.hasPermission("headsplus.head")) {
 						sender.sendMessage(ChatColor.GRAY + "/head <IGN> - " + ChatColor.DARK_AQUA + "Spawns in a head.");
+					}
+					if (sender.hasPermission("headsplus.maincommand.blacklist.list")) {
+						sender.sendMessage(ChatColor.GRAY + "/headsplus blacklistl [Page no.] - " + ChatColor.DARK_AQUA + "Lists blacklisted heads.");
 					}
 					sender.sendMessage(ChatColor.DARK_BLUE + "========================================");
 			    
@@ -250,15 +254,14 @@ public class HeadsPlusCommand implements CommandExecutor {
 			  }
 			  if ((args.length == 1) && (args[0].equalsIgnoreCase("blacklistl"))) {
 				  if (sender.hasPermission("headsplus.maincommand.blacklist.list")) {
-				      @SuppressWarnings("unused")
-					int headsN = 1;
+				      int headsN = 1;
 				      List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("blacklist");
 				      int bls = bl.size();
 				      while (bls > 10) {
 					      headsN++;
 					      bls = bls - 10;
 				      }
-				      sender.sendMessage(ChatColor.DARK_BLUE + "============" + ChatColor.GRAY + "Blacklist: 1/" + heads + ChatColor.DARK_BLUE + "==========" );
+				      sender.sendMessage(ChatColor.DARK_BLUE + "============" + ChatColor.GRAY + "Blacklist: 1/" + headsN + ChatColor.DARK_BLUE + "==========" );
 				      int TimesSent = 0;
 				      for (String key : bl) {
 					      if (TimesSent <= 7) {
@@ -276,25 +279,28 @@ public class HeadsPlusCommand implements CommandExecutor {
 			  if ((args.length == 2) && (args[0].equalsIgnoreCase("blacklistl"))) {
 				  if (sender.hasPermission("headsplus.maincommand.blacklist.list")) {
 					  if (args[1].matches("^[0-9]+$")) {
-				          @SuppressWarnings("unused")
-						int headsN = 1;
+				          int headsN = 1;
 				          List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("blacklist");
 				          int bls = bl.size();
 				          while (bls > 8) {
 					          headsN++;
 					          bls = bls - 8;
 				          }
-				          sender.sendMessage(ChatColor.DARK_BLUE + "==========" + ChatColor.GRAY + "Blacklist: " + args[1] + "/" + heads + ChatColor.DARK_BLUE + "===========");
-				          Integer minL = (Integer.valueOf(args[1]) - 1) * 8; // if args[1] is 1, it turns into 0. That is the minimum.
-				          Integer maxL = (Integer.valueOf(args[1]) * 8) - 1; // if args[1] is 1, it turns to 8 and then 7. That is the maximum.
-				          if (maxL > bl.size()) {
-					          maxL = bl.size() - 1;
-				          }
+				          if (Integer.parseInt(args[1]) <= headsN) {
+				              sender.sendMessage(ChatColor.DARK_BLUE + "==========" + ChatColor.GRAY + "Blacklist: " + args[1] + "/" + headsN + ChatColor.DARK_BLUE + "===========");
+				              Integer minL = (Integer.valueOf(args[1]) - 1) * 8; // if args[1] is 1, it turns into 0. That is the minimum.
+				              Integer maxL = (Integer.valueOf(args[1]) * 8) - 1; // if args[1] is 1, it turns to 8 and then 7. That is the maximum.
+				              if (maxL > bl.size()) {
+					              maxL = bl.size() - 1;
+				              }
 				  
-				          List<String> blist = bl.subList(minL, maxL);
-				          for (String key : blist) {
-					          sender.sendMessage(ChatColor.GRAY + key);
-				      } 
+				              List<String> blist = bl.subList(minL, maxL);
+				              for (String key : blist) {
+					              sender.sendMessage(ChatColor.GRAY + key);
+				              }
+				         } else {
+				        	 sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("invalid-pg-no"))));
+				         }
 			      } else {
 				    	  sender.sendMessage(prefix + " " + ChatColor.RED + "Only use integers in this command!");
 				    	  

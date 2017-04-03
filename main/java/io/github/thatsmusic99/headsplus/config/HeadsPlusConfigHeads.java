@@ -73,25 +73,13 @@ public class HeadsPlusConfigHeads {
     		    getHeads().addDefault(key + "HeadC", 25);
     		    getHeads().addDefault(key + "HeadDN", str + str2 + " Head");
     		    getHeads().addDefault(key + "HeadP", 10.00);
-    		    List<String> list = config.getStringList("blacklist");
-    		    if (!list.contains(getHeads().getString(key + "HeadN"))) {
-    		        list.add(getHeads().getString(key + "HeadN"));
-    		        config.set("blacklist", list);
-    		        config.options().copyDefaults(true);
-			        HeadsPlus.getInstance().saveConfig();
-    		    }
+    		    
     		} else {
     			getHeads().addDefault("irongolemHeadN", "MHF_Golem");
     			getHeads().addDefault("irongolemHeadC", 25);
     			getHeads().addDefault("irongolemHeadDN", "Iron Golem Head");
     			getHeads().addDefault("irongolemHeadP", 10.00);
-    		    List<String> list = config.getStringList("blacklist");
-    		    if (!list.contains(getHeads().getString("irongolemHeadN"))) {
-    		        list.add(getHeads().getString("irongolemHeadN"));
-    		        config.set("blacklist", list);
-    		        config.options().copyDefaults(true);
-			        HeadsPlus.getInstance().saveConfig();
-    		    }
+    		    
     		}
     	}
     }

@@ -102,7 +102,7 @@ public class SellHead implements CommandExecutor {
 								sender.sendMessage(fail + ": " + zr.errorMessage);
 							}
 		    				
-		    			} else {
+		    			} else if ((!uHeads.contains(key)) && (!mHeads.contains(key))) {
 			    				Double price = HeadsPlusConfigHeads.getHeads().getDouble("playerHeadP");
 			    				String senderName = sender.getName();
 			    				if (invi.getAmount() > 0) {

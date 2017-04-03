@@ -38,7 +38,6 @@ public class HeadsPlusConfigHeads {
 	public static void reloadHeads() {
 		if (headsF == null) {
 			headsF = new File(HeadsPlus.getInstance().getDataFolder(), "heads.yml");
-		     // TODO This was broken?
 		}
 		heads = YamlConfiguration.loadConfiguration(headsF);
 		loadHeads();

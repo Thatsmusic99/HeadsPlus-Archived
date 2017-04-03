@@ -89,6 +89,8 @@ public class HeadsPlusCommand implements CommandExecutor {
 					    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Heads not found, creating!");
 					    	  HeadsPlusConfigHeads.reloadHeads();
 					    	  heads = YamlConfiguration.loadConfiguration(headsF);
+					    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Heads created!");
+					    	  sender.sendMessage(prefix + " " + reloadM);
 					      } else {
 					    	  HeadsPlusConfigHeads.reloadHeads();
 					    	  sender.sendMessage(prefix + " " + reloadM);
@@ -172,7 +174,6 @@ public class HeadsPlusCommand implements CommandExecutor {
 					    	      HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove head!");
 					    	      e.printStackTrace();
 					          }
-					      
 				       } catch (Exception e) {
 					       HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove head!");
 					       e.printStackTrace();
@@ -304,8 +305,7 @@ public class HeadsPlusCommand implements CommandExecutor {
 						      }
 						  }
 			      } else {
-				    	  sender.sendMessage(prefix + " " + ChatColor.RED + "Only use integers in this command!");
-				    	  
+				    	  sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("invalid-input-int"))));	  
 				  }
 			  }
 			  }

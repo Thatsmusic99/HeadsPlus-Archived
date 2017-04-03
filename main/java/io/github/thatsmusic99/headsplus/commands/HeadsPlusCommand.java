@@ -293,10 +293,11 @@ public class HeadsPlusCommand implements CommandExecutor {
 							  pages++;
 							  bls = bls - 8;
 						  }
-						  sender.sendMessage(ChatColor.DARK_BLUE + "==========" + ChatColor.GRAY + "Blacklist: " + page + "/" + pages + ChatColor.DARK_BLUE + "===========");
-						  if (page > pages) {
+						  
+						  if ((page > pages) || (0 >= page)) {
 							  sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("invalid-pg-no"))));
 						  } else {
+							  sender.sendMessage(ChatColor.DARK_BLUE + "==========" + ChatColor.GRAY + "Blacklist: " + page + "/" + pages + ChatColor.DARK_BLUE + "===========");
 					          List<String> blsl = bl.subList(sIndex, eIndex);
 						      for (String key : blsl) {
 						          sender.sendMessage(ChatColor.GRAY + key);

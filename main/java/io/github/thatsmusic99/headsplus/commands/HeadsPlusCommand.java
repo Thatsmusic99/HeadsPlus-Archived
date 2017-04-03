@@ -12,6 +12,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusDataFile;
 
 public class HeadsPlusCommand implements CommandExecutor {
 	
@@ -25,6 +26,10 @@ public class HeadsPlusCommand implements CommandExecutor {
 		@SuppressWarnings("unused")
 		FileConfiguration heads = HeadsPlusConfigHeads.getHeads();
 		File headsF = HeadsPlusConfigHeads.headsF;
+		
+		@SuppressWarnings("unused")
+		FileConfiguration data = HeadsPlusDataFile.getHPData();
+		File dataF = HeadsPlusDataFile.dataF;
 		
 		if ((cmd.getName().equalsIgnoreCase("headsplus")) || (cmd.getName().equalsIgnoreCase("hp"))) {
 			if (sender.hasPermission("headsplus.maincommand")) {
@@ -90,9 +95,17 @@ public class HeadsPlusCommand implements CommandExecutor {
 					    	  HeadsPlusConfigHeads.reloadHeads();
 					    	  heads = YamlConfiguration.loadConfiguration(headsF);
 					    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Heads created!");
-					    	  sender.sendMessage(prefix + " " + reloadM);
 					      } else {
 					    	  HeadsPlusConfigHeads.reloadHeads();
+					      }
+					      if (!(dataF.exists())) {
+					    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Data not found, creating!");
+					    	  HeadsPlusDataFile.reloadHPData();
+					    	  data = YamlConfiguration.loadConfiguration(dataF);
+					    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Data created!");
+					    	  sender.sendMessage(prefix + " " + reloadM);
+					      } else {
+					    	  HeadsPlusDataFile.reloadHPData();
 					    	  sender.sendMessage(prefix + " " + reloadM);
 					      }
 					      

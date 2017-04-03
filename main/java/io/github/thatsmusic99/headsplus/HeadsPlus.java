@@ -91,26 +91,6 @@ public class HeadsPlus extends JavaPlugin {
 		return instance;
 		
 	}
-
-/*	@SuppressWarnings("deprecation")
-	public void addRecipes() {
-		ItemStack zHead = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
-		SkullMeta zMeta = (SkullMeta) zHead.getItemMeta();
-		zMeta.setOwner("MHF_Zombie");
-		zMeta.setDisplayName("Zombie Head");
-		zHead.setItemMeta(zMeta);
-		
-		
-		ShapelessRecipe zombieRecipe = new ShapelessRecipe(zHead)
-	             .addIngredient(Material.ROTTEN_FLESH)
-	             .addIngredient(Material.SKULL_ITEM, 0);
-		
-		getServer().addRecipe(zombieRecipe);
-
-		
-		
-	} */
-
 	public void setUpMConfig() {
 			configF = new File(getDataFolder(), "config.yml");
 			config = getConfig();
@@ -129,15 +109,7 @@ public class HeadsPlus extends JavaPlugin {
 			}
 			config.options().copyDefaults(true);
 			saveConfig();
-	/*		headsF = new File(getDataFolder(), "heads.yml");
-			if (!headsF.exists()) {
-				try {
-				    headsF.createNewFile();
-				} catch (IOException e) {
-					log.severe("[HeadsPlus] Couldn't create heads config!");
-					e.printStackTrace();
-				}
-			*/}
+			}
 		 
     public void reloadMConfig() {
     	config = YamlConfiguration.loadConfiguration(configF);
@@ -159,19 +131,4 @@ public class HeadsPlus extends JavaPlugin {
         econ = rsp.getProvider();
         return econ != null;
 	}
-
-
-/*	public FileConfiguration getHConfig() {
-		return heads;
-	}
-*/
-
-
-
-	// TODO need to grab those config things and shove them into a file of their own.
-	// TODO Add crafting recipe? :)
-
-	
-
-	
 }

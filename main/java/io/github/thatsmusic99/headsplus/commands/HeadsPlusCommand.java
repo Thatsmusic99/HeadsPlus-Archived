@@ -56,9 +56,11 @@ public class HeadsPlusCommand implements CommandExecutor {
 				   if (sender.hasPermission("headsplus.maincommand.reload")) {
 					   String reloadM = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("reload-message"));
 					   String reloadingM = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("reloading-message"));
+					   String reloadF = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("reload-fail"));
 					   prefix = HeadsPlus.getInstance().translateMessages(prefix);
 					   reloadM = HeadsPlus.getInstance().translateMessages(reloadM);
 					   reloadingM = HeadsPlus.getInstance().translateMessages(reloadingM);
+					   reloadF = HeadsPlus.getInstance().translateMessages(reloadF);
 				       sender.sendMessage(prefix + " " + reloadingM);
 				       try {
 
@@ -91,7 +93,7 @@ public class HeadsPlusCommand implements CommandExecutor {
 				       } catch (Exception e) {
 					       HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to reload config - if this problem consists, contact Thatsmusic99!");
 					       e.printStackTrace();
-					       sender.sendMessage(prefix + " "+ ChatColor.RED + "Failed to reload config.");
+					       sender.sendMessage(prefix + " "+ reloadF);
 				       }
 				   }
 			   }

@@ -116,9 +116,15 @@ public class HeadsPlus extends JavaPlugin {
     	config = YamlConfiguration.loadConfiguration(configF);
     }
     public String translateMessages(String s) {
-    	s = s.replaceAll("''", "'");
-		s = s.replaceAll("^'", "");
-		s = s.replaceAll("'$", "");
+    	if (s.contains("''")) {
+    	    s = s.replaceAll("''", "'");
+    	}
+    	if (s.contains("^'")) {
+		    s = s.replaceAll("^'", "");
+    	}
+    	if (s.contains("'$")) {
+    		s = s.replaceAll("'$", "");
+    	}
 		return s;
     }
 	private boolean econ() {

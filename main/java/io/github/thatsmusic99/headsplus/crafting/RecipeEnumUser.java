@@ -26,7 +26,7 @@ public class RecipeEnumUser {
 		for (RecipeEnums key : RecipeEnums.values()) {
 			ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 			SkullMeta im = (SkullMeta) i.getItemMeta();
-			im.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfigHeads.getHeads().getString(key + "HeadDN"))));
+			im.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfigHeads.getHeads().getString(key.toString().toLowerCase() + "HeadDN"))));
 			im.setOwner(HeadsPlusConfigHeads.getHeads().getString(key.str + "HeadN"));
 			RecipeListeners.makeSell(im);
 			i.setItemMeta(im);
@@ -55,7 +55,7 @@ public class RecipeEnumUser {
 		for (String key : uHeads) {
 			ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 			SkullMeta im = (SkullMeta) i.getItemMeta();
-			im.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfigHeads.getHeads().getString(key + "HeadDN"))));
+			im.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfigHeads.getHeads().getString(key.toString().toLowerCase() + "HeadDN"))));
 			if (!HeadsPlusConfigHeads.getHeads().getString(key + "HeadN").equals("")) {
 			    im.setOwner(HeadsPlusConfigHeads.getHeads().getString(key + "HeadN"));
 			}

@@ -32,6 +32,7 @@ public class HeadsPlusCommand implements CommandExecutor {
 		FileConfiguration data = HeadsPlusDataFile.getHPData();
 		File dataF = HeadsPlusDataFile.dataF;
 		
+		@SuppressWarnings("unused")
 		FileConfiguration crafting = HeadsPlusCrafting.getCrafting();
 		File craftingF = HeadsPlusCrafting.craftingF;
 		

@@ -30,10 +30,11 @@ public class HeadsPlusCrafting {
 	}
 	
 	private static void loadCrafting() {
-		getCrafting().options().header("HeadsPlus by Thatsmusic99");
+		getCrafting().options().header("HeadsPlus by Thatsmusic99 - due to the way Bukkit works, this config can only be reloaded on restart.");
 		addIngredients();
 	}
 	public static void addIngredients() {
+		Bukkit.resetRecipes();
 		RecipeEnumUser.addEnumToConfig();
 		getCrafting().options().copyDefaults(true);
 		saveCrafting();
@@ -42,7 +43,6 @@ public class HeadsPlusCrafting {
 		if (craftingF == null) {
 			craftingF = new File(HeadsPlus.getInstance().getDataFolder(), "crafting.yml");
 		}
-		Bukkit.resetRecipes();
 		crafting = YamlConfiguration.loadConfiguration(craftingF);
 		loadCrafting();
 		saveCrafting();

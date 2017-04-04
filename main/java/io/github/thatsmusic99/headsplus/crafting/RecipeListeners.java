@@ -5,9 +5,6 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -16,7 +13,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 
-public class RecipeListeners {
+public class RecipeListeners { // Unused
 	
 	public static List<ShapelessRecipe> recipes = new ArrayList<>();
 	

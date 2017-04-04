@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -41,6 +42,7 @@ public class HeadsPlusCrafting {
 		if (craftingF == null) {
 			craftingF = new File(HeadsPlus.getInstance().getDataFolder(), "crafting.yml");
 		}
+		Bukkit.resetRecipes();
 		crafting = YamlConfiguration.loadConfiguration(craftingF);
 		loadCrafting();
 		saveCrafting();

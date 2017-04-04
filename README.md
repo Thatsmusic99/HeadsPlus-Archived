@@ -1,9 +1,10 @@
 # HeadsPlus
-The following is a Minecraft heads plugin. The planned functions are as followed:
+The following is a Minecraft heads plugin, designed to work with Spigot 1.11.2. The plugin provides:
 
-- Spawn in a head as a plugin like this would (DONE)
-- Add a blacklist which stops players from spawning in certain heads (DONE)
-- Give mobs and players to drop their head on death event.
-- Sends a player a message when a certain head is clicked (DONE)
-
-There are many more, however I'm still threading the plugin together piece by piece.
+- /head command to spawn in heads (of course).
+- Customisable messages
+- Sellable and safe heads
+- Customisable crafting for heads
+- Mobs having the ability to drop heads on their death
+- Receiving a message when a head is clicked
+- Much, much more!

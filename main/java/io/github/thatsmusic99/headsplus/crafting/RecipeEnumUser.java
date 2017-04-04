@@ -17,6 +17,7 @@ public class RecipeEnumUser {
 	
 	private static FileConfiguration crafting = HeadsPlusCrafting.getCrafting();
 	static RecipeEnums enums;
+	private static List<String> uHeads = HeadsPlusConfigHeads.uHeads;
 	
 	public static void addEnumToConfig() {
 		for (RecipeEnums key : RecipeEnums.values()) {
@@ -32,6 +33,9 @@ public class RecipeEnumUser {
 			List<String> ingrs = new ArrayList<>();
 			ingrs.add(key.mat.toString());
 			crafting.addDefault(key.str + "I", ingrs);
+		}
+		for (String key : uHeads) {
+			// TODO finish.
 		}
 	}
 

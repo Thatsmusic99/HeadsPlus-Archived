@@ -34,6 +34,8 @@ public class HeadsPlusCrafting {
 	}
 	public static void addIngredients() {
 		RecipeEnumUser.addEnumToConfig();
+		getCrafting().options().copyDefaults(true);
+		saveCrafting();
 	}
 	public static void reloadCrafting() {
 		if (craftingF == null) {

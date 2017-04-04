@@ -18,6 +18,7 @@ public class RecipeEnumUser {
 	static RecipeEnums enums;
 	private static List<String> uHeads = HeadsPlusConfigHeads.uHeads;
 	
+	@SuppressWarnings("deprecation")
 	public static void addEnumToConfig() {
 		for (RecipeEnums key : RecipeEnums.values()) {
 			ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
@@ -32,11 +33,13 @@ public class RecipeEnumUser {
 				ingrs.add(key.mat.toString());
 				crafting.addDefault(key.str + "I", ingrs);
 				recipe.addIngredient(key.mat);
+				recipe.addIngredient(Material.SKULL_ITEM, (byte) 0);
 				
 			} else {
 				ingrs = crafting.getStringList(key.str + "I");
 				for (String key2 : ingrs) {
 					recipe.addIngredient(Material.getMaterial(key2));
+					recipe.addIngredient(Material.SKULL_ITEM, (byte) 0);
 				}
 			}
 			
@@ -57,11 +60,13 @@ public class RecipeEnumUser {
 			if (crafting.getStringList(key + "I") == null) {
 				ingrs.add(key.toString());
 				crafting.addDefault(key + "I", ingrs);
+				recipe.addIngredient(Material.SKULL_ITEM, (byte) 0);
 				
 			} else {
 				ingrs = crafting.getStringList(key + "I");
 				for (String key2 : ingrs) {
 					recipe.addIngredient(Material.getMaterial(key2));
+					recipe.addIngredient(Material.SKULL_ITEM, (byte) 0);
 				}
 			}
 			Bukkit.addRecipe(recipe);

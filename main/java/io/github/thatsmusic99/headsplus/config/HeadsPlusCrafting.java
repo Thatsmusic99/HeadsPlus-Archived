@@ -2,24 +2,18 @@ package io.github.thatsmusic99.headsplus.config;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.inventory.ItemStack;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.crafting.RecipeEnumUser;
 
 public class HeadsPlusCrafting {
 	
 	private static List<String> mHeads = HeadsPlusConfigHeads.mHeads;
 	private static List<String> uHeads = HeadsPlusConfigHeads.uHeads;
-	
-	private static List<ItemStack> blazeI = new ArrayList<>();
-	private static List<ItemStack> zombieI = new ArrayList<>();
-	private static List<ItemStack> skeleI = new ArrayList<>();
 	
 	private static FileConfiguration crafting;
 	public static File craftingF;
@@ -36,17 +30,10 @@ public class HeadsPlusCrafting {
 	
 	private static void loadCrafting() {
 		getCrafting().options().header("HeadsPlus by Thatsmusic99");
-		getCrafting().addDefault("blazeI", blazeI);
-		getCrafting().addDefault("zombieI", zombieI);
-		getCrafting().addDefault("skeleI", skeleI);
+		addIngredients();
 	}
 	public static void addIngredients() {
-		ItemStack blazeIt = new ItemStack(Material.BLAZE_POWDER);
-		blazeI.add(blazeIt);
-		ItemStack zombieIt = new ItemStack(Material.ROTTEN_FLESH);
-		zombieI.add(zombieIt);
-		ItemStack skeleIt = new ItemStack(Material.BONE);
-		skeleI.add(skeleIt);
+		RecipeEnumUser.addEnumToConfig();
 	}
 	public static void reloadCrafting() {
 		if (craftingF == null) {

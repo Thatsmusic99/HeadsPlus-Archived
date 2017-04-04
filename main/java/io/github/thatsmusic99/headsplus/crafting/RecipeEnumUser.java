@@ -34,13 +34,16 @@ public class RecipeEnumUser {
 				crafting.addDefault(key.str + "I", ingrs);
 				recipe.addIngredient(key.mat);
 				recipe.addIngredient(Material.SKULL_ITEM, (byte) 0);
+				crafting.options().copyDefaults(true);
+				HeadsPlusCrafting.saveCrafting();
 				
 			} else {
 				ingrs = crafting.getStringList(key.str + "I");
 				for (String key2 : ingrs) {
 					recipe.addIngredient(Material.getMaterial(key2));
-					recipe.addIngredient(Material.SKULL_ITEM, (byte) 0);
+					
 				}
+				recipe.addIngredient(Material.SKULL_ITEM, (byte) 0);
 			}
 			
 			Bukkit.addRecipe(recipe);
@@ -58,19 +61,23 @@ public class RecipeEnumUser {
 			ShapelessRecipe recipe = new ShapelessRecipe(i);
 			List<String> ingrs = new ArrayList<>();
 			if (crafting.getStringList(key + "I") == null) {
-				ingrs.add(key.toString());
 				crafting.addDefault(key + "I", ingrs);
 				recipe.addIngredient(Material.SKULL_ITEM, (byte) 0);
+				crafting.options().copyDefaults(true);
+				HeadsPlusCrafting.saveCrafting();
 				
 			} else {
 				ingrs = crafting.getStringList(key + "I");
 				for (String key2 : ingrs) {
-					recipe.addIngredient(Material.getMaterial(key2));
+					if ((!key2.equals("")) || !(key2 == null)) {
+					    recipe.addIngredient(Material.getMaterial(key2));
+					}
 					recipe.addIngredient(Material.SKULL_ITEM, (byte) 0);
 				}
 			}
-			Bukkit.addRecipe(recipe);
-			
+			if (recipe.getIngredientList().size() > 0) {
+			    Bukkit.addRecipe(recipe);
+			}
 		}
 	}
 

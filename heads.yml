@@ -160,5 +160,5 @@ witherskeletonHeadC: 0
 witherskeletonHeadDN: ''
 witherskeletonHeadP: 0.0
 playerHeadC: 100
-playerHeadDN: '%d''s head'
+playerHeadDN: '&b&l%d''s &7&lhead'
 playerHeadP: 10.0

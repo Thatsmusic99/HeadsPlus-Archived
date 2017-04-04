@@ -9,7 +9,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.SkullMeta;
-
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusCrafting;
 
@@ -27,15 +26,44 @@ public class RecipeEnumUser {
 			im.setOwner(HeadsPlusConfigHeads.getHeads().getString(key.str + "HeadN"));
 			RecipeListeners.makeSell(im);
 			i.setItemMeta(im);
-			ShapelessRecipe recipe = new ShapelessRecipe(i)
-					.addIngredient(key.mat);
-			Bukkit.addRecipe(recipe);
+			ShapelessRecipe recipe = new ShapelessRecipe(i);
 			List<String> ingrs = new ArrayList<>();
-			ingrs.add(key.mat.toString());
-			crafting.addDefault(key.str + "I", ingrs);
+			if (crafting.getStringList(key.str + "I") == null) {
+				ingrs.add(key.mat.toString());
+				crafting.addDefault(key.str + "I", ingrs);
+				recipe.addIngredient(key.mat);
+				
+			} else {
+				ingrs = crafting.getStringList(key.str + "I");
+				for (String key2 : ingrs) {
+					recipe.addIngredient(Material.getMaterial(key2));
+				}
+			}
+			
+			Bukkit.addRecipe(recipe);
+			
 		}
 		for (String key : uHeads) {
-			// TODO finish.
+			ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+			SkullMeta im = (SkullMeta) i.getItemMeta();
+			im.setDisplayName(HeadsPlusConfigHeads.getHeads().getString(key + "HeadDN"));
+			im.setOwner(HeadsPlusConfigHeads.getHeads().getString(key + "HeadN"));
+			RecipeListeners.makeSell(im);
+			i.setItemMeta(im);
+			ShapelessRecipe recipe = new ShapelessRecipe(i);
+			List<String> ingrs = new ArrayList<>();
+			if (crafting.getStringList(key + "I") == null) {
+				ingrs.add(key.toString());
+				crafting.addDefault(key + "I", ingrs);
+				
+			} else {
+				ingrs = crafting.getStringList(key + "I");
+				for (String key2 : ingrs) {
+					recipe.addIngredient(Material.getMaterial(key2));
+				}
+			}
+			Bukkit.addRecipe(recipe);
+			
 		}
 	}
 

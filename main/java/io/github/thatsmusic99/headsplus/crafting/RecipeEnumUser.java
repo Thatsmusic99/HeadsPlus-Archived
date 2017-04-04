@@ -47,7 +47,9 @@ public class RecipeEnumUser {
 			ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 			SkullMeta im = (SkullMeta) i.getItemMeta();
 			im.setDisplayName(HeadsPlusConfigHeads.getHeads().getString(key + "HeadDN"));
-			im.setOwner(HeadsPlusConfigHeads.getHeads().getString(key + "HeadN"));
+			if (!HeadsPlusConfigHeads.getHeads().getString(key + "HeadN").equals("")) {
+			    im.setOwner(HeadsPlusConfigHeads.getHeads().getString(key + "HeadN"));
+			}
 			RecipeListeners.makeSell(im);
 			i.setItemMeta(im);
 			ShapelessRecipe recipe = new ShapelessRecipe(i);

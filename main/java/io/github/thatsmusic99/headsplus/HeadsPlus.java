@@ -12,6 +12,7 @@ import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.commands.SellHead;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusCrafting;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusDataFile;
 import io.github.thatsmusic99.headsplus.crafting.RecipeListeners;
 import io.github.thatsmusic99.headsplus.crafting.RecipePerms;
@@ -52,7 +53,7 @@ public class HeadsPlus extends JavaPlugin {
 			HeadsPlusConfigHeads.headsEnable();
 			HeadsPlusDataFile.loadHPData();
 			if (getConfig().getBoolean("craftHeads")) {
-			    RecipeListeners.addRecipes();
+			    HeadsPlusCrafting.craftingEnable();
 			    getServer().getPluginManager().registerEvents(new RecipePerms(), this);
 			}
 			if (!(econ()) && (getConfig().getBoolean("sellHeads"))) {

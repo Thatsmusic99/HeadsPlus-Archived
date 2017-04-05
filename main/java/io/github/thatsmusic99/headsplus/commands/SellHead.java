@@ -127,17 +127,13 @@ public class SellHead implements CommandExecutor {
 		    		String falseHead = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("false-head"));
 		    		falseHead = ChatColor.translateAlternateColorCodes('&', falseHead);
 		    		sender.sendMessage(falseHead);
-		    		sender.sendMessage(lore);
-		    		sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&lThis head can be sold!"));
-		    		sender.sendMessage(lore2);
-		    		sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Do /sellhead to sell!"));
 		    	} 
 		    	
 		    } else {
 		    	String falseItem = HeadsPlusConfig.getMessages().getString("false-item");
 		    	falseItem = HeadsPlus.getInstance().translateMessages(falseItem);
 		    	falseItem = ChatColor.translateAlternateColorCodes('&', falseItem);
-		    	sender.sendMessage(falseItem); // TODO Add incorrect item message
+		    	sender.sendMessage(falseItem);
 		    	
 		    } 
 		

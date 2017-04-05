@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusCrafting;
 
@@ -19,7 +20,7 @@ public class RecipeEnumUser {
 	private static FileConfiguration crafting = HeadsPlusCrafting.getCrafting();
 	private static FileConfiguration heads = HeadsPlusConfigHeads.getHeads();
 	static RecipeEnums enums;
-	private static List<String> uHeads = HeadsPlusConfigHeads.uHeads;
+    static RecipeUndefinedEnums uEnums;
 	
 	@SuppressWarnings("deprecation")
 	public static void addEnumToConfig() {
@@ -32,8 +33,8 @@ public class RecipeEnumUser {
 			i.setItemMeta(im);
 			ShapelessRecipe recipe = new ShapelessRecipe(i);
 			List<String> ingrs = new ArrayList<>();
-			if (crafting.getStringList(key + "I") != null) {
-				ingrs = crafting.getStringList(key + "I");
+			if (crafting.getStringList(key.str + "I") != null) {
+				ingrs = crafting.getStringList(key.str + "I");
 				for (String key2 : ingrs) {
 					recipe.addIngredient(Material.getMaterial(key2));
 				}
@@ -44,9 +45,39 @@ public class RecipeEnumUser {
 			    recipe.addIngredient(key.mat);
 			    recipe.addIngredient(Material.SKULL_ITEM);
 			}
-			Bukkit.addRecipe(recipe);
+			if (ingrs.size() > 0) {
+				Bukkit.addRecipe(recipe);
+			}
+			
 			
 		}
+		for (RecipeUndefinedEnums key : RecipeUndefinedEnums.values()) {
+			ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+			SkullMeta im = (SkullMeta) i.getItemMeta();
+		    if (!(heads.getString(key.str + "HeadDN").equals("")) && !(heads.getString(key.str + "HeadN").equals(""))) {
+		    	im.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(heads.getString(key.str + "HeadDN"))));
+		    	im.setOwner(heads.getString(key.str + "N"));
+		    	RecipeListeners.makeSell(im);
+		    	i.setItemMeta(im);
+		    	ShapelessRecipe recipe = new ShapelessRecipe(i);
+		    	List<String> ingrs = new ArrayList<>();
+		    	if (crafting.getStringList(key.str + "I") != null) {
+		    		ingrs = crafting.getStringList(key.str + "I");
+		    		for (String key2 : ingrs) {
+		    			recipe.addIngredient(Material.getMaterial(key2));
+		    		}
+		    		if (ingrs.size() > 0) {
+		    			recipe.addIngredient(Material.SKULL_ITEM, (byte) 0);
+		    		}
+		    	} else {
+		    		crafting.addDefault(key.str + "I", ingrs);
+		    	}
+		    	if (ingrs.size() > 0) {
+		    		Bukkit.addRecipe(recipe);
+		    	}
+		    }
+    	}
 	}
+	
 
 }

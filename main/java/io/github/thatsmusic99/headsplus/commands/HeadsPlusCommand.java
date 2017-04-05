@@ -95,10 +95,6 @@ public class HeadsPlusCommand implements CommandExecutor {
 			   if ((args.length == 2) && (args[0].equalsIgnoreCase("blacklist"))) {
 				   BlacklistToggle.toggle(sender, args[1]);
 			   }
-			   if (((args.length > 2) || (args.length == 2 && (!(args[1].equalsIgnoreCase("off")) || !(args[1].equalsIgnoreCase("on"))))) && (args[0].equalsIgnoreCase("blacklist"))) {
-				   sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/headsplus blacklist [On|Off]");
-			   }
-			   
 			   if ((args.length >= 1) && (args[0].equalsIgnoreCase("info"))) {
 				   Info.info(sender);
 			   }

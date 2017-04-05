@@ -37,26 +37,26 @@ public class BlacklistToggle {
 	public static void toggle(CommandSender sender, String str) {
 		if (sender.hasPermission("headsplus.maincommand.blacklist.toggle")) {
 			try {
-			   	if (str.equalsIgnoreCase("off")) {
-			 		if (config.getBoolean("blacklistOn")) {
+			   	if (str.equalsIgnoreCase("on")) {
+			 		if (!config.getBoolean("blacklistOn")) {
 					    config.set("blacklistOn", true);
 					    config.options().copyDefaults(true);
 					    HeadsPlus.getInstance().saveConfig();
 					    sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Blacklist enabled!");
 				    } else {
-						sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Blacklist is already disabled!");
+						sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Blacklist is already enabled!");
 					}
 					       
-			    } else if (str.equalsIgnoreCase("on")) {
-					if (!(config.getBoolean("blacklistOn"))) {
+			    } else if (str.equalsIgnoreCase("off")) {
+					if (config.getBoolean("blacklistOn")) {
 						config.set("blacklistOn", false);
 					    config.options().copyDefaults(true);
 			            HeadsPlus.getInstance().saveConfig();
 					    sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Blacklist disabled!");
 					} else {
-						sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Blacklist is already enabled!");
+						sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Blacklist is already disabled!");
 					}
-				} else if (!(str.equalsIgnoreCase("on") || !(str.equalsIgnoreCase("off")))) {
+				} else if (!(str.equalsIgnoreCase("on") && !(str.equalsIgnoreCase("off")))) {
 				 	sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/headsplus blacklist [On|Off]");
 				}
 		    } catch (Exception e) {

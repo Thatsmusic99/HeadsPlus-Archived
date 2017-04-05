@@ -16,8 +16,23 @@ public class HelpMenu {
 	    		headPerms.add(key.str);
 	    	}
 	    }
-		sender.sendMessage(ChatColor.DARK_BLUE + "===============" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_GRAY + ChatColor.DARK_BLUE + "===============");
-		if (sender.hasPermission("headsplus.maincommand.reload")) {
+	    int pageNo = 1;
+	    int hpp = headPerms.size();
+	    while (hpp > 8) {
+	    	pageNo++;
+	    	hpp = hpp - 8;
+	    }
+		sender.sendMessage(ChatColor.DARK_BLUE + "===============" + ChatColor.GOLD + " HeadsPlus " + ChatColor.GRAY + "1/" + String.valueOf(pageNo) + " " + ChatColor.DARK_BLUE + "===============");
+		int TimesSent = 0;
+		for (String key2 : headPerms) {
+			if (TimesSent <= 7) {
+				if (headPerms != null) {
+					PermissionEnums pe = PermissionEnums.valueOf(key2);
+					sender.sendMessage(ChatColor.GRAY + pe.cmd + " - " + ChatColor.DARK_AQUA + pe.dsc);
+				}
+			}
+		}
+		/*if (sender.hasPermission("headsplus.maincommand.reload")) {
 			sender.sendMessage(ChatColor.GRAY + "/headsplus reload - " + ChatColor.DARK_AQUA + "Reloads the config.");
 		}
 	    if (sender.hasPermission("headsplus.maincommand.blacklist.add")) {
@@ -42,7 +57,7 @@ public class HelpMenu {
 			sender.sendMessage(ChatColor.GRAY + "/headsplus purgedata - " + ChatColor.DARK_AQUA + "Purges data.yml.");
 		}
 		sender.sendMessage(ChatColor.DARK_BLUE + "========================================");
-	    
+	    */
 	    } 
 	}
 }

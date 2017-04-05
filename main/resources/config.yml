@@ -9,5 +9,6 @@ blacklistOn: true
 sellHeads: true
 dropHeads: true
 craftHeads: true
+autoReloadOnEnable: true
 version: 1
 blacklist: []

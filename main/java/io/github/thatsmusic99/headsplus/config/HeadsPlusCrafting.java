@@ -34,6 +34,8 @@ public class HeadsPlusCrafting {
 		addIngredients();
 	}
 	public static void addIngredients() {
+		Bukkit.resetRecipes();
+		getCrafting().options().copyDefaults(true);
 		RecipeEnumUser.addEnumToConfig();
 		getCrafting().options().copyDefaults(true);
 		saveCrafting();

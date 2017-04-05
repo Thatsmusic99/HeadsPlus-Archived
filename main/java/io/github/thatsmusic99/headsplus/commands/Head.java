@@ -88,9 +88,6 @@ public class Head implements CommandExecutor {
 						        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 			                    SkullMeta meta = (SkullMeta) skull.getItemMeta();
 		                        meta.setOwner(args[0]);
-		                        while (meta.getOwner() != args[0]) {
-		                        	meta.setOwner(args[0]);
-		                        }
 				                meta.setDisplayName(args[0] + "'s head");
 				                skull.setItemMeta(meta);
 				                Location playerLoc = ((Player) sender).getLocation();

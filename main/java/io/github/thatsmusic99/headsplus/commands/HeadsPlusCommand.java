@@ -2,6 +2,8 @@ package io.github.thatsmusic99.headsplus.commands;
 
 import java.io.File;
 import java.util.List;
+
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -111,13 +113,15 @@ public class HeadsPlusCommand implements CommandExecutor {
 					      } else {
 					    	  HeadsPlusDataFile.reloadHPData();
 					      }
-					      if (!(configF.exists())) {
+					      if (!(craftingF.exists())) {
 					    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting not found, creating!");
+					    	  Bukkit.resetRecipes();
 					    	  HeadsPlusCrafting.reloadCrafting();
 					    	  crafting = YamlConfiguration.loadConfiguration(craftingF);
 					    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting created!");
 					    	  sender.sendMessage(prefix + " " + reloadM);
 					      } else {
+					    	  Bukkit.resetRecipes();
 					    	  HeadsPlusCrafting.reloadCrafting();
 					    	  sender.sendMessage(prefix + " " + reloadM);
 					      }

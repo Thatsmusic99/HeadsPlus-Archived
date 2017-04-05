@@ -65,6 +65,9 @@ public class HeadsPlusCommand implements CommandExecutor {
 					if (sender.hasPermission("headsplus.maincommand.blacklist.list")) {
 						sender.sendMessage(ChatColor.GRAY + "/headsplus blacklistl [Page no.] - " + ChatColor.DARK_AQUA + "Lists blacklisted heads.");
 					}
+					if (sender.hasPermission("headsplus.maincommand.purgedata")) {
+						sender.sendMessage(ChatColor.GRAY + "/headsplus purgedata - " + ChatColor.DARK_AQUA + "Purges data.yml.");
+					}
 					sender.sendMessage(ChatColor.DARK_BLUE + "========================================");
 			    
 			   } 
@@ -340,12 +343,14 @@ public class HeadsPlusCommand implements CommandExecutor {
 			  }
 			  }
 			  if ((args.length == 1) && (args[0].equalsIgnoreCase("purgedata"))) {
-				  try {
-				      dataF.delete();
-				      HeadsPlusDataFile.reloadHPData();
-				      sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("purged-data"))));
-				  } catch (Exception e) {
-					  sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages("purge-fail")));
+				  if (sender.hasPermission("headsplus.maincommand.purgedata")) {
+				      try {
+				          dataF.delete();
+				          HeadsPlusDataFile.reloadHPData();
+				          sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("purged-data"))));
+				      } catch (Exception e) {
+					      sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages("purge-fail")));
+				      }
 				  }
 			  }
 		}

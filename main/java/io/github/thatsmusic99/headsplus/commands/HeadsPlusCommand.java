@@ -3,15 +3,14 @@ package io.github.thatsmusic99.headsplus.commands;
 import java.io.File;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistAdd;
+import io.github.thatsmusic99.headsplus.commands.maincommand.MCReload;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusCrafting;
@@ -21,28 +20,21 @@ public class HeadsPlusCommand implements CommandExecutor {
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		FileConfiguration config = HeadsPlus.getInstance().getConfig();
-		File configF = HeadsPlus.getInstance().configF;
-		@SuppressWarnings("unused")
-		FileConfiguration messages = HeadsPlusConfig.getMessages();
-		File messagesF = HeadsPlusConfig.messagesF;
-		
-		@SuppressWarnings("unused")
-		FileConfiguration heads = HeadsPlusConfigHeads.getHeads();
-		File headsF = HeadsPlusConfigHeads.headsF;
-		
-		@SuppressWarnings("unused")
-		FileConfiguration data = HeadsPlusDataFile.getHPData();
+		HeadsPlus.getInstance();
+		HeadsPlusConfig.getMessages();
+		HeadsPlusConfigHeads.getHeads();
+		HeadsPlusDataFile.getHPData();
 		File dataF = HeadsPlusDataFile.dataF;
 		
-		@SuppressWarnings("unused")
-		FileConfiguration crafting = HeadsPlusCrafting.getCrafting();
-		File craftingF = HeadsPlusCrafting.craftingF;
-		
+		HeadsPlusCrafting.getCrafting();
 		if ((cmd.getName().equalsIgnoreCase("headsplus")) || (cmd.getName().equalsIgnoreCase("hp"))) {
 			if (sender.hasPermission("headsplus.maincommand")) {
 				String prefix = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("prefix"));
 			    if (args.length == 0) {
-			    	
+			    	if (sender.hasPermission("headsplus.maincommand.reload")) {
+			    	}
+			    	if (sender.hasPermission("headsplus.maincommand.blacklist.add")) {
+			    	}
 				    sender.sendMessage(ChatColor.DARK_BLUE + "===============" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_GRAY + ChatColor.DARK_BLUE + "===============");
 				    if (sender.hasPermission("headsplus.maincommand.reload")) {
 					    sender.sendMessage(ChatColor.GRAY + "/headsplus reload - " + ChatColor.DARK_AQUA + "Reloads the config.");
@@ -71,118 +63,27 @@ public class HeadsPlusCommand implements CommandExecutor {
 					sender.sendMessage(ChatColor.DARK_BLUE + "========================================");
 			    
 			   } 
+			    
 			   if ((args.length == 1) && (args[0].equalsIgnoreCase("reload"))) { 
-				   if (sender.hasPermission("headsplus.maincommand.reload")) {
-					   String reloadM = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("reload-message"));
-					   String reloadingM = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("reloading-message"));
-					   String reloadF = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("reload-fail"));
-					   prefix = HeadsPlus.getInstance().translateMessages(prefix);
-					   reloadM = HeadsPlus.getInstance().translateMessages(reloadM);
-					   reloadingM = HeadsPlus.getInstance().translateMessages(reloadingM);
-					   reloadF = HeadsPlus.getInstance().translateMessages(reloadF);
-				       sender.sendMessage(prefix + " " + reloadingM);
-				       try {
-
-					       if  (!(configF.exists())) {
-						       HeadsPlus.getInstance().log.info("[HeadsPlus] Config not found, creating!");
-						       HeadsPlus.getInstance().saveConfig();
-						       
-					       } else {
-						       HeadsPlus.getInstance().log.info("[HeadsPlus] Found config, loading!");
-						       HeadsPlus.getInstance().reloadConfig();
-						       HeadsPlus.getInstance().log.info("[HeadsPlus] Config reloaded!");
-					      }  
-					      if (!(messagesF.exists())) {
-					    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Messages not found, creating!");
-					    	  HeadsPlusConfig.reloadMessages();
-					    	  messages = YamlConfiguration.loadConfiguration(messagesF);
-					    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Messages created!");
-					      } else {
-					    	  HeadsPlusConfig.reloadMessages();
-					      }
-					      if (!(headsF.exists())) {
-					    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Heads not found, creating!");
-					    	  HeadsPlusConfigHeads.reloadHeads();
-					    	  heads = YamlConfiguration.loadConfiguration(headsF);
-					    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Heads created!");
-					      } else {
-					    	  HeadsPlusConfigHeads.reloadHeads();
-					      }
-					      if (!(dataF.exists())) {
-					    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Data not found, creating!");
-					    	  HeadsPlusDataFile.reloadHPData();
-					    	  data = YamlConfiguration.loadConfiguration(dataF);
-					    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Data created!");
-					      } else {
-					    	  HeadsPlusDataFile.reloadHPData();
-					      }
-					      if (!(craftingF.exists())) {
-					    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting not found, creating!");
-					    	  Bukkit.resetRecipes();
-					    	  HeadsPlusCrafting.reloadCrafting();
-					    	  crafting = YamlConfiguration.loadConfiguration(craftingF);
-					    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting created!");
-					    	  sender.sendMessage(prefix + " " + reloadM);
-					      } else {
-					    	  Bukkit.resetRecipes();
-					    	  HeadsPlusCrafting.reloadCrafting();
-					    	  sender.sendMessage(prefix + " " + reloadM);
-					      }
-					      
-				       } catch (Exception e) {
-					       HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to reload config - if this problem consists, contact Thatsmusic99!");
-					       e.printStackTrace();
-					       sender.sendMessage(prefix + " "+ reloadF);
-				       }
+				   MCReload.reload(sender);
+			   }   
+			   if ((args.length == 2) && (args[0].equalsIgnoreCase("blacklistadd"))) {
+				   BlacklistAdd.blacklistAdd(sender, args[1]);
+			   } else if ((args.length == 1) && (args[0].equalsIgnoreCase("blacklistadd"))) {
+				   if (sender.hasPermission("headsplus.maincommand.blacklist.add")) {
+					   sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/headsplus blacklistadd [IGN]");
+				   }
+			   } else if ((args.length > 2) && (args[0].equalsIgnoreCase("blacklistadd"))) {
+				   if (sender.hasPermission("headsplus.maincommand.blacklist.add")) {
+					   sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/headsplus blacklistadd [IGN]");
+					   sender.sendMessage(ChatColor.RED + "Too many arguments!");
 				   }
 			   }
-			   if ((args.length == 2) && (args[0].equalsIgnoreCase("blacklistadd"))) {
-				   if (sender.hasPermission("headsplus.maincommand.blacklist.add")) {
-					   if (args[1].matches("^[A-Za-z0-9_]+$")) {
-				           try {
-
-					           if  (!(configF.exists())) {
-					               HeadsPlus.getInstance().log.info("[HeadsPlus] Config not found, creating!");
-					               config.options().copyDefaults(true);
-                                   HeadsPlus.getInstance().saveConfig();
-                                   @SuppressWarnings("unused")
-							        File cfile = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
-					               sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Config wasn't found, now created." );
-					           }
-					           List<String> blacklist = config.getStringList("blacklist");
-					           String aHead = args[1].toLowerCase();
-					           if (blacklist.contains(aHead)) {
-						           sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "This head is already added!");
-					           } else {
-					    	       blacklist.add(aHead);
-						           config.set("blacklist", blacklist);
-						           config.options().copyDefaults(true);
-						           HeadsPlus.getInstance().saveConfig();
-						       
-						           sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + args[1] + " has been added to the blacklist!");
-					          }
-				           } catch (Exception e) {
-					          HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to add head!");
-					          e.printStackTrace();
-				           }
-					   } else {
-						   sender.sendMessage(prefix + " " + ChatColor.RED + "Use alphanumeric names only!");
-					   }
-			  } else if ((args.length == 1) && (args[0].equalsIgnoreCase("blacklistadd"))) {
-				  if (sender.hasPermission("headsplus.maincommand.blacklist.add")) {
-					  sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/headsplus blacklistadd [IGN]");
-				  }
-			  } else if ((args.length > 2) && (args[0].equalsIgnoreCase("blacklistadd"))) {
-				  if (sender.hasPermission("headsplus.maincommand.blacklist.add")) {
-					  sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/headsplus blacklistadd [IGN]");
-					  sender.sendMessage(ChatColor.RED + "Too many arguments!");
-				  }
-			  }
-		}
-			  if ((args.length == 2) && (args[0].equalsIgnoreCase("blacklistdel"))) {
-				  if (sender.hasPermission("headsplus.maincommand.blacklist.delete")) {
-					  if (args[1].matches("^[A-Za-z0-9_]+$")) {
-					      try {
+		      
+			   if ((args.length == 2) && (args[0].equalsIgnoreCase("blacklistdel"))) {
+			 	  if (sender.hasPermission("headsplus.maincommand.blacklist.delete")) {
+				  	  if (args[1].matches("^[A-Za-z0-9_]+$")) {
+				          try {
 				              config.options().copyDefaults(true);
                               HeadsPlus.getInstance().saveConfig();
                               File cfile = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
@@ -295,7 +196,7 @@ public class HeadsPlusCommand implements CommandExecutor {
 					      headsN++;
 					      bls = bls - 8;
 				      }
-				      sender.sendMessage(ChatColor.DARK_BLUE + "============" + ChatColor.GRAY + "Blacklist: 1/" + headsN + ChatColor.DARK_BLUE + "==========" );
+				      sender.sendMessage(ChatColor.DARK_BLUE + "============" + ChatColor.GOLD + "Blacklist: " + ChatColor.GRAY + "1/" + headsN + ChatColor.DARK_BLUE + "==========" );
 				      int TimesSent = 0;
 				      for (String key : bl) {
 					      if (TimesSent <= 7) {
@@ -331,7 +232,7 @@ public class HeadsPlusCommand implements CommandExecutor {
 						  if ((page > pages) || (0 >= page)) {
 							  sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("invalid-pg-no"))));
 						  } else {
-							  sender.sendMessage(ChatColor.DARK_BLUE + "==========" + ChatColor.GRAY + "Blacklist: " + page + "/" + pages + ChatColor.DARK_BLUE + "===========");
+							  sender.sendMessage(ChatColor.DARK_BLUE + "==========" + ChatColor.GOLD + "Blacklist: " + ChatColor.GRAY + page + "/" + pages + ChatColor.DARK_BLUE + "===========");
 					          List<String> blsl = bl.subList(sIndex, eIndex);
 						      for (String key : blsl) {
 						          sender.sendMessage(ChatColor.GRAY + key);

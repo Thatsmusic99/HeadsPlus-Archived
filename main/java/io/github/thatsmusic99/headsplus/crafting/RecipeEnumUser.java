@@ -11,13 +11,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusCrafting;
 
 public class RecipeEnumUser {
 	
 	private static FileConfiguration crafting = HeadsPlusCrafting.getCrafting();
+	private static FileConfiguration heads = HeadsPlusConfigHeads.getHeads();
 	static RecipeEnums enums;
 	private static List<String> uHeads = HeadsPlusConfigHeads.uHeads;
 	
@@ -26,61 +26,26 @@ public class RecipeEnumUser {
 		for (RecipeEnums key : RecipeEnums.values()) {
 			ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 			SkullMeta im = (SkullMeta) i.getItemMeta();
-			im.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfigHeads.getHeads().getString(key.toString().toLowerCase() + "HeadDN"))));
-			im.setOwner(HeadsPlusConfigHeads.getHeads().getString(key.str + "HeadN"));
+			im.setDisplayName(ChatColor.translateAlternateColorCodes('&', heads.getString(key.str + "HeadDN")));
+			im.setOwner(heads.getString(key.str + "HeadN"));
 			RecipeListeners.makeSell(im);
 			i.setItemMeta(im);
 			ShapelessRecipe recipe = new ShapelessRecipe(i);
 			List<String> ingrs = new ArrayList<>();
-			if (crafting.getStringList(key.str + "I") == null) {
-				ingrs.add(key.mat.toString());
-				crafting.addDefault(key.str + "I", ingrs);
-				recipe.addIngredient(key.mat);
-				recipe.addIngredient(Material.SKULL_ITEM, (byte) 0);
-				crafting.options().copyDefaults(true);
-				HeadsPlusCrafting.saveCrafting();
-				
-			} else {
-				ingrs = crafting.getStringList(key.str + "I");
-				for (String key2 : ingrs) {
-					recipe.addIngredient(Material.getMaterial(key2));
-					
-				}
-				recipe.addIngredient(Material.SKULL_ITEM, (byte) 0);
-			}
-			
-			Bukkit.addRecipe(recipe);
-			
-		}
-		for (String key : uHeads) {
-			ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
-			SkullMeta im = (SkullMeta) i.getItemMeta();
-			im.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfigHeads.getHeads().getString(key.toString().toLowerCase() + "HeadDN"))));
-			if (!HeadsPlusConfigHeads.getHeads().getString(key + "HeadN").equals("")) {
-			    im.setOwner(HeadsPlusConfigHeads.getHeads().getString(key + "HeadN"));
-			}
-			RecipeListeners.makeSell(im);
-			i.setItemMeta(im);
-			ShapelessRecipe recipe = new ShapelessRecipe(i);
-			List<String> ingrs = new ArrayList<>();
-			if (crafting.getStringList(key + "I") == null) {
-				crafting.addDefault(key + "I", ingrs);
-				recipe.addIngredient(Material.SKULL_ITEM, (byte) 0);
-				crafting.options().copyDefaults(true);
-				HeadsPlusCrafting.saveCrafting();
-				
-			} else {
+			if (crafting.getStringList(key + "I") != null) {
 				ingrs = crafting.getStringList(key + "I");
 				for (String key2 : ingrs) {
-					if ((!key2.equals("")) || !(key2 == null)) {
-					    recipe.addIngredient(Material.getMaterial(key2));
-					}
-					recipe.addIngredient(Material.SKULL_ITEM, (byte) 0);
+					recipe.addIngredient(Material.getMaterial(key2));
 				}
+				recipe.addIngredient(Material.SKULL_ITEM, (byte) 0);
+			} else {
+				ingrs.add(key.mat.toString());
+			    crafting.addDefault(key.str + "I", ingrs);
+			    recipe.addIngredient(key.mat);
+			    recipe.addIngredient(Material.SKULL_ITEM);
 			}
-			if (recipe.getIngredientList().size() > 0) {
-			    Bukkit.addRecipe(recipe);
-			}
+			Bukkit.addRecipe(recipe);
+			
 		}
 	}
 

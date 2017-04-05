@@ -32,7 +32,7 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("sell-fail", "&cCouldn''t sell head!");
 		getMessages().addDefault("false-head", "&cThis head cannot be sold!");
 		getMessages().addDefault("false-item", "&cThis is not a head!");
-		getMessages().addDefault("blacklist-head", "&cThis head is blacklisted and cannot be sold!");
+		getMessages().addDefault("blacklist-head", "&cThis head is blacklisted and cannot be used!");
 		getMessages().addDefault("full-inv", "&cYour inventory is full!");
 		getMessages().addDefault("alpha-names", "&cThis command only handles alphanumeric names!");
 		getMessages().addDefault("too-many-args", "&cToo many arguments!");

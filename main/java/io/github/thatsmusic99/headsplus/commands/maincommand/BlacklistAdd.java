@@ -12,8 +12,8 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class BlacklistAdd {
 	
-	private static FileConfiguration config;
-	private static File configF;
+	private static FileConfiguration config = HeadsPlus.getInstance().getConfig();
+	private static File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
 
 	public static void blacklistAdd(CommandSender sender, String name) {
 		String prefix = HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("prefix")));

@@ -15,23 +15,23 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusDataFile;
 
 public class MCReload {
 	
-	private static File configF;
+	private static File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
 	
 	@SuppressWarnings("unused")
 	private static FileConfiguration messages;
-	private static File messagesF;
+	private static File messagesF = new File(HeadsPlus.getInstance().getDataFolder(), "messages.yml");;
 	
 	@SuppressWarnings("unused")
 	private static FileConfiguration heads;
-	private static File headsF;
+	private static File headsF = new File(HeadsPlus.getInstance().getDataFolder(), "heads.yml");;
 	
 	@SuppressWarnings("unused")
 	private static FileConfiguration data;
-	private static File dataF;
+	private static File dataF = new File(HeadsPlus.getInstance().getDataFolder(), "data.yml");;
 	
 	@SuppressWarnings("unused")
 	private static FileConfiguration crafting;
-	private static File craftingF;
+	private static File craftingF = new File(HeadsPlus.getInstance().getDataFolder(), "crafting.yml");;
 	
 	public static void reload(CommandSender sender) {
 		if (sender.hasPermission("headsplus.maincommand.reload")) {

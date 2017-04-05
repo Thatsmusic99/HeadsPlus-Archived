@@ -11,7 +11,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusDataFile;
 
 public class PurgeData {
 	
-	private static File dataF;
+	private static File dataF = new File(HeadsPlus.getInstance().getDataFolder(), "data.yml");
 	static String prefix = HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("prefix")));
 	
 	public static void purgeData(CommandSender sender) {

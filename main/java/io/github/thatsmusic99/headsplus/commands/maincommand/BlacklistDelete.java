@@ -12,9 +12,9 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class BlacklistDelete {
 	
-	private static FileConfiguration config;
+	private static FileConfiguration config = HeadsPlus.getInstance().getConfig();
 	@SuppressWarnings("unused")
-	private static File configF;
+	private static File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
 
 	public static void blacklistDel(CommandSender sender, String name) {
 		if (sender.hasPermission("headsplus.maincommand.blacklist.delete")) {

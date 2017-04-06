@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 
 public class HelpMenu {
 	
-	public void helpNoArgs(CommandSender sender) {
+	public static void helpNoArgs(CommandSender sender) {
 	if (sender.hasPermission("headsplus.maincommand")) {
 		List<String> headPerms = new ArrayList<>();
 	    for (PermissionEnums key : PermissionEnums.values()) {

@@ -10,6 +10,7 @@ import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistAdd;
 import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistDelete;
 import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistList;
 import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistToggle;
+import io.github.thatsmusic99.headsplus.commands.maincommand.HelpMenu;
 import io.github.thatsmusic99.headsplus.commands.maincommand.Info;
 import io.github.thatsmusic99.headsplus.commands.maincommand.MCReload;
 import io.github.thatsmusic99.headsplus.commands.maincommand.PurgeData;
@@ -28,40 +29,9 @@ public class HeadsPlusCommand implements CommandExecutor {
 		HeadsPlusCrafting.getCrafting();
 		if ((cmd.getName().equalsIgnoreCase("headsplus")) || (cmd.getName().equalsIgnoreCase("hp"))) {
 			if (sender.hasPermission("headsplus.maincommand")) {
-				ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("prefix"));
-			    if (args.length == 0) {
-			    	if (sender.hasPermission("headsplus.maincommand.reload")) {
-			    	}
-			    	if (sender.hasPermission("headsplus.maincommand.blacklist.add")) {
-			    	}
-				    sender.sendMessage(ChatColor.DARK_BLUE + "===============" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_GRAY + ChatColor.DARK_BLUE + "===============");
-				    if (sender.hasPermission("headsplus.maincommand.reload")) {
-					    sender.sendMessage(ChatColor.GRAY + "/headsplus reload - " + ChatColor.DARK_AQUA + "Reloads the config.");
-				    }
-					if (sender.hasPermission("headsplus.maincommand.blacklist.add")) {
-						sender.sendMessage(ChatColor.GRAY + "/headsplus blacklistadd <IGN> - " + ChatColor.DARK_AQUA + "Adds a head to the blacklist.");
-					}
-					if (sender.hasPermission("headsplus.maincommand.blacklist.delete")) {
-						sender.sendMessage(ChatColor.GRAY + "/headsplus blacklistdel <IGN> - " + ChatColor.DARK_AQUA + "Removes head from the blacklist.");
-					}
-					if (sender.hasPermission("headsplus.maincommand.blacklist.toggle")) {
-						sender.sendMessage(ChatColor.GRAY + "/headsplus blacklist <On|Off> - " + ChatColor.DARK_AQUA + "Turns the blacklist on/off.");
-					}
-					if (sender.hasPermission("headsplus.maincommand.info")) {
-						sender.sendMessage(ChatColor.GRAY + "/headsplus info - " + ChatColor.DARK_AQUA + "Gets plugin info.");
-					}
-					if (sender.hasPermission("headsplus.head")) {
-						sender.sendMessage(ChatColor.GRAY + "/head <IGN> - " + ChatColor.DARK_AQUA + "Spawns in a head.");
-					}
-					if (sender.hasPermission("headsplus.maincommand.blacklist.list")) {
-						sender.sendMessage(ChatColor.GRAY + "/headsplus blacklistl [Page no.] - " + ChatColor.DARK_AQUA + "Lists blacklisted heads.");
-					}
-					if (sender.hasPermission("headsplus.maincommand.purgedata")) {
-						sender.sendMessage(ChatColor.GRAY + "/headsplus purgedata - " + ChatColor.DARK_AQUA + "Purges data.yml.");
-					}
-					sender.sendMessage(ChatColor.DARK_BLUE + "========================================");
-			    
-			   } 
+			   if ((args.length == 0)) {
+				   HelpMenu.helpNoArgs(sender);
+			   }
 			    
 			   if ((args.length == 1) && (args[0].equalsIgnoreCase("reload"))) { 
 				   MCReload.reload(sender);

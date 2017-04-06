@@ -10,10 +10,10 @@ public class HelpMenu {
 	
 	public static void helpNoArgs(CommandSender sender) {
 	if (sender.hasPermission("headsplus.maincommand")) {
-		List<String> headPerms = new ArrayList<>();
+		List<PermissionEnums> headPerms = new ArrayList<>();
 	    for (PermissionEnums key : PermissionEnums.values()) {
 	    	if (sender.hasPermission(key.str)) {
-	    		headPerms.add(key.str);
+	    		headPerms.add(key);
 	    	}
 	    }
 	    int pageNo = 1;
@@ -24,11 +24,12 @@ public class HelpMenu {
 	    }
 		sender.sendMessage(ChatColor.DARK_BLUE + "===============" + ChatColor.GOLD + " HeadsPlus " + ChatColor.GRAY + "1/" + String.valueOf(pageNo) + " " + ChatColor.DARK_BLUE + "===============");
 		int TimesSent = 0;
-		for (String key2 : headPerms) {
+		for (PermissionEnums key2 : headPerms) {
 			if (TimesSent <= 7) {
 				if (headPerms != null) {
-					PermissionEnums pe = PermissionEnums.valueOf(key2);
+					PermissionEnums pe = key2;
 					sender.sendMessage(ChatColor.GRAY + pe.cmd + " - " + ChatColor.DARK_AQUA + pe.dsc);
+					TimesSent++;
 				}
 			}
 		}

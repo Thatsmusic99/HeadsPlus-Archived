@@ -7,6 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class HelpMenu {
@@ -38,6 +39,8 @@ public class HelpMenu {
 				}
 			}
 		}
+	    } else {
+	    	sender.sendMessage(HeadsPlusCommand.noPerms);
 	    } 
 	}
 	public static void helpNo(CommandSender sender, String str) {
@@ -73,6 +76,8 @@ public class HelpMenu {
 				    }
 				}
 			}
-		}
+		} else {
+	    	sender.sendMessage(HeadsPlusCommand.noPerms);
+	    }
 	}
 }

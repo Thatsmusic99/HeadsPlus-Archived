@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 
 public class Info {
 	
@@ -14,7 +15,8 @@ public class Info {
 		       sender.sendMessage(ChatColor.DARK_BLUE + "===============" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "===============");
 		       sender.sendMessage(ChatColor.DARK_AQUA + "Version: " + ChatColor.GRAY + version);
 		       sender.sendMessage(ChatColor.DARK_AQUA + "Author: " + ChatColor.GRAY + author);
-		   }
+		} else {
+	    	sender.sendMessage(HeadsPlusCommand.noPerms);
+	    }
 	}
-
 }

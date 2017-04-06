@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusDataFile;
 
@@ -23,6 +24,8 @@ public class PurgeData {
 	        } catch (Exception e) {
 		        sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages("purge-fail")));
 	        }
+	    } else {
+	    	sender.sendMessage(HeadsPlusCommand.noPerms);
 	    }
 	}
 

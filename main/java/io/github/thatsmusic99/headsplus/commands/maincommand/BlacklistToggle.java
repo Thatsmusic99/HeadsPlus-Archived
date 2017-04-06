@@ -5,6 +5,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class BlacklistToggle {
@@ -32,6 +33,8 @@ public class BlacklistToggle {
 				  e.printStackTrace();
 				  sender.sendMessage(prefix + " " + ChatColor.RED + "Failed to toggle blacklist.");
 			  }
+		  } else {
+		      sender.sendMessage(HeadsPlusCommand.noPerms);
 		  }
 	}
 	public static void toggle(CommandSender sender, String str) {
@@ -64,6 +67,8 @@ public class BlacklistToggle {
 				e.printStackTrace();
 			    sender.sendMessage(prefix + " " + ChatColor.RED + "Failed to toggle blacklist.");
 		    }
-		}
+		} else {
+	    	sender.sendMessage(HeadsPlusCommand.noPerms);
+	    }
 	}
 }

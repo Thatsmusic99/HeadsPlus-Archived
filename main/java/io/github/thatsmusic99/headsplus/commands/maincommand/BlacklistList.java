@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class BlacklistList {
@@ -34,7 +35,9 @@ public class BlacklistList {
 				       return;
 			       }
 		      }
-		  }
+	    } else {
+	    	sender.sendMessage(HeadsPlusCommand.noPerms);
+	    }
 	}
 	public static void blacklistList(CommandSender sender, String i) {
 		if (sender.hasPermission("headsplus.maincommand.blacklist.list")) {
@@ -66,7 +69,9 @@ public class BlacklistList {
 	       } else {
 		       sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("invalid-input-int"))));	  
 		   }
-	}
+	} else {
+    	sender.sendMessage(HeadsPlusCommand.noPerms);
+    }
 	}
 
 }

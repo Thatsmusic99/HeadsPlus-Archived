@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusCrafting;
@@ -96,6 +97,8 @@ public class MCReload {
 			       e.printStackTrace();
 			       sender.sendMessage(prefix + " "+ reloadF);
 		       }
+		   } else {
+		       sender.sendMessage(HeadsPlusCommand.noPerms);
 		   }
 	   }
 	

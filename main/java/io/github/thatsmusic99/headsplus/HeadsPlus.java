@@ -42,8 +42,6 @@ public class HeadsPlus extends JavaPlugin {
 	File messagesF;
 	Plugin p;
 
-		
-	
 	@Override
 	public void onEnable() {
 		try { 
@@ -72,7 +70,6 @@ public class HeadsPlus extends JavaPlugin {
 			    getServer().getPluginManager().registerEvents(new DeathEvents(), this);
 		    }
 			getServer().getPluginManager().registerEvents(new QuitJoinEvents(), this);
-			// getServer().getPluginManager().registerEvents(new BlockEvent(), this);
 			if (getConfig().getBoolean("autoReloadOnFirstJoin")) {
 				getServer().getPluginManager().registerEvents(new JoinEvent(), this);
 			}

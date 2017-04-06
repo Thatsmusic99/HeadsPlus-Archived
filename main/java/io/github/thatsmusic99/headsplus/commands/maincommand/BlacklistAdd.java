@@ -29,7 +29,6 @@ public class BlacklistAdd {
                         HeadsPlus.getInstance().saveConfig();
                         @SuppressWarnings("unused")
 					        File cfile = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
-			               sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Config wasn't found, now created." );
 			           }
 			           List<String> blacklist = config.getStringList("blacklist");
 			           String aHead = name.toLowerCase();

@@ -42,6 +42,7 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("invalid-input-int", "&cYou can only use integers in this command!");
 		getMessages().addDefault("purged-data", "&3Data has been purged.");
 		getMessages().addDefault("purge-fail", "&cFailed to purge data.");
+		getMessages().addDefault("no-perm", "&cYou do not have permission to use this command.");
 		getMessages().options().copyDefaults(true);
 		saveMessages();
 	}

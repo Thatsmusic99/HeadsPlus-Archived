@@ -130,10 +130,15 @@ public class SellHead implements CommandExecutor {
 		    	} 
 		    	
 		    } else {
-		    	String falseItem = HeadsPlusConfig.getMessages().getString("false-item");
+		    	if (!sender.hasPermission("headsplus.sellhead")) {
+		    		sender.sendMessage(HeadsPlusCommand.noPerms);
+		    	} else {
+		    		String falseItem = HeadsPlusConfig.getMessages().getString("false-item");
 		    	falseItem = HeadsPlus.getInstance().translateMessages(falseItem);
 		    	falseItem = ChatColor.translateAlternateColorCodes('&', falseItem);
 		    	sender.sendMessage(falseItem);
+		    	}
+		    	
 		    	
 		    } 
 		

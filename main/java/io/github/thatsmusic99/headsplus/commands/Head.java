@@ -101,11 +101,12 @@ public class Head implements CommandExecutor {
 		          }
 				
 		        } else {
-		    	    sender.sendMessage(ChatColor.RED + "You must be a player to run this command!");
+		    	    sender.sendMessage(HeadsPlusCommand.noPerms);
 			        return false;
 		       }
 	        } else {
-		       return false;
+	            sender.sendMessage(ChatColor.RED + "You must be a player to run this command!");
+		        return false;
 	        }
 	    }
 	

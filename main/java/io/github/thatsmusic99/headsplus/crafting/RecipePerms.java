@@ -17,7 +17,7 @@ public class RecipePerms implements Listener {
 	public void onCraft(InventoryClickEvent e) {
 		Player player = (Player) e.getWhoClicked();
 		List<String> worlds = HeadsPlus.getInstance().getConfig().getStringList("blacklistw");
-		if (!worlds.contains(player.getWorld().getName())) {
+		if ((!worlds.contains(player.getWorld().getName())) || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn")) {
 		    if ((player.hasPermission("headsplus.craft"))) {
 		    	return;
 	    	}

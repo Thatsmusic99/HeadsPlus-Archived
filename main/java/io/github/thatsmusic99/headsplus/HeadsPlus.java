@@ -73,7 +73,7 @@ public class HeadsPlus extends JavaPlugin {
 		    }
 			getServer().getPluginManager().registerEvents(new QuitJoinEvents(), this);
 			// getServer().getPluginManager().registerEvents(new BlockEvent(), this);
-			if (getConfig().getBoolean("autoReloadOnJoin")) {
+			if (getConfig().getBoolean("autoReloadOnFirstJoin")) {
 				getServer().getPluginManager().registerEvents(new JoinEvent(), this);
 			}
 		    this.getCommand("headsplus").setExecutor(new HeadsPlusCommand());

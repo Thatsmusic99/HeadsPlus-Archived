@@ -6,8 +6,10 @@
 # Thanks in advance, and thank you for using HeadsPlus. ~
 
 blacklistOn: true
+blacklistwOn: true
 sellHeads: true
 dropHeads: true
 craftHeads: false
 autoReloadOnFirstJoin: true
+blacklistw: []
 blacklist: []

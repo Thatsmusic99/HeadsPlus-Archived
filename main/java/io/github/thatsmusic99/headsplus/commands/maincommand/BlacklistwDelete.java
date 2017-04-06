@@ -11,14 +11,14 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
-public class BlacklistDelete {
+public class BlacklistwDelete {
 	
 	private static FileConfiguration config = HeadsPlus.getInstance().getConfig();
 	@SuppressWarnings("unused")
 	private static File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
 
 	public static void blacklistDel(CommandSender sender, String world) {
-		if (sender.hasPermission("headsplus.maincommand.blacklist.delete")) {
+		if (sender.hasPermission("headsplus.maincommand.blacklistw.delete")) {
 			String prefix = HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("prefix")));
 		  	if (world.matches("^[A-Za-z0-9_]+$")) {
 		        try {
@@ -32,22 +32,22 @@ public class BlacklistDelete {
 			          }
 			          try {
 			              List<String> blacklist = (List<String>)config.getStringList("blacklistw");
-			              String rWorld = world.toLowerCase();
-			              if (blacklist.contains(rWorld)) {
-				              blacklist.remove(rWorld);
+			              String rHead = world.toLowerCase();
+			              if (blacklist.contains(rHead)) {
+				              blacklist.remove(rHead);
 				              config.set("blacklistw", blacklist);
 				              config.options().copyDefaults(true);
 				              HeadsPlus.getInstance().saveConfig();
 				              sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + world + " has been removed from the blacklist!");
 			              } else {
-			    	          sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "This head is not on the blacklist!");
+			    	          sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "This world is not on the blacklist!");
 			          
                     }} catch (Exception e) {
-			    	      HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove head!");
+			    	      HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove world!");
 			    	      e.printStackTrace();
 			          }
 		       } catch (Exception e) {
-			       HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove head!");
+			       HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove world!");
 			       e.printStackTrace();
 		       }
 		  } else {

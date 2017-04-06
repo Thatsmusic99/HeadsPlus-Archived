@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class BlacklistAdd {
@@ -47,8 +48,10 @@ public class BlacklistAdd {
 			          e.printStackTrace();
 		           }
 			   } else {
-				   sender.sendMessage(prefix + " " + ChatColor.RED + "Use alphanumeric names only!");
+				   sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("alpha-names"))));
 			   }
+	} else {
+		sender.sendMessage(HeadsPlusCommand.noPerms);
 	}
 
 	}

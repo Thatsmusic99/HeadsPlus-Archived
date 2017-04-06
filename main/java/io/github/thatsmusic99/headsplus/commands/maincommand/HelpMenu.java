@@ -6,7 +6,12 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
+import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
+
 public class HelpMenu {
+	
+	static String prefix = HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("prefix")));
 	
 	public static void helpNoArgs(CommandSender sender) {
 	if (sender.hasPermission("headsplus.maincommand")) {
@@ -33,32 +38,41 @@ public class HelpMenu {
 				}
 			}
 		}
-		/*if (sender.hasPermission("headsplus.maincommand.reload")) {
-			sender.sendMessage(ChatColor.GRAY + "/headsplus reload - " + ChatColor.DARK_AQUA + "Reloads the config.");
-		}
-	    if (sender.hasPermission("headsplus.maincommand.blacklist.add")) {
-			sender.sendMessage(ChatColor.GRAY + "/headsplus blacklistadd <IGN> - " + ChatColor.DARK_AQUA + "Adds a head to the blacklist.");
-		}
-		if (sender.hasPermission("headsplus.maincommand.blacklist.delete")) {
-			sender.sendMessage(ChatColor.GRAY + "/headsplus blacklistdel <IGN> - " + ChatColor.DARK_AQUA + "Removes head from the blacklist.");
-		}
-		if (sender.hasPermission("headsplus.maincommand.blacklist.toggle")) {
-			sender.sendMessage(ChatColor.GRAY + "/headsplus blacklist <On|Off> - " + ChatColor.DARK_AQUA + "Turns the blacklist on/off.");
-		}
-		if (sender.hasPermission("headsplus.maincommand.info")) {
-			sender.sendMessage(ChatColor.GRAY + "/headsplus info - " + ChatColor.DARK_AQUA + "Gets plugin info.");
-		}
-		if (sender.hasPermission("headsplus.head")) {
-			sender.sendMessage(ChatColor.GRAY + "/head <IGN> - " + ChatColor.DARK_AQUA + "Spawns in a head.");
-		}
-		if (sender.hasPermission("headsplus.maincommand.blacklist.list")) {
-			sender.sendMessage(ChatColor.GRAY + "/headsplus blacklistl [Page no.] - " + ChatColor.DARK_AQUA + "Lists blacklisted heads.");
-		}
-		if (sender.hasPermission("headsplus.maincommand.purgedata")) {
-			sender.sendMessage(ChatColor.GRAY + "/headsplus purgedata - " + ChatColor.DARK_AQUA + "Purges data.yml.");
-		}
-		sender.sendMessage(ChatColor.DARK_BLUE + "========================================");
-	    */
 	    } 
+	}
+	public static void helpNo(CommandSender sender, String str) {
+		if (sender.hasPermission("headsplus.maincommand")) {
+			if (str.matches("^[0-9]+$")) {
+				List<PermissionEnums> headPerms = new ArrayList<>();
+				for (PermissionEnums key : PermissionEnums.values()) {
+					if (sender.hasPermission(key.str)) {
+						headPerms.add(key);
+					}
+				}
+				int pages = 1;
+				int hps = headPerms.size();
+				while (hps > 8) {
+					pages++;
+					hps = hps - 8;
+				}
+				int entries = 8;
+				int page = Integer.parseInt(str);
+				int sIndex = (page - 1) * entries;
+				int eIndex = entries + sIndex;
+				if (eIndex > headPerms.size()) {
+					eIndex = headPerms.size();
+				}
+				
+				if ((page > pages) || (0 >= page)) {
+					sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("invalid-pg-no"))));
+				} else {
+					sender.sendMessage(ChatColor.DARK_BLUE + "===============" + ChatColor.GOLD + " HeadsPlus " + ChatColor.GRAY + String.valueOf(page) + "/" + String.valueOf(pages) + " " + ChatColor.DARK_BLUE + "===============");
+					List<PermissionEnums> hppsl = headPerms.subList(sIndex, eIndex);
+				    for (PermissionEnums key : hppsl) {
+				        sender.sendMessage(ChatColor.GRAY + key.cmd + " - " + ChatColor.DARK_AQUA + key.dsc);
+				    }
+				}
+			}
+		}
 	}
 }

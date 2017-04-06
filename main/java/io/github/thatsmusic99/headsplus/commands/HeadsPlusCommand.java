@@ -25,7 +25,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusDataFile;
 
 public class HeadsPlusCommand implements CommandExecutor {
 	
-	public static String noPerms = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("no-perms")));
+	public static String noPerms = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("no-perm")));
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		List<String> validCmds = new ArrayList<>(Arrays.asList("reload", "blacklistadd", "blacklistdel", "blacklist", "info", "blacklistl", "purgedata", "help", "blacklistw", "blacklistwadd", "blacklistwdel", "blacklistwl", "blacklistwt"));

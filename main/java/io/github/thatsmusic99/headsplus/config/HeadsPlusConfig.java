@@ -43,6 +43,7 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("purged-data", "&3Data has been purged.");
 		getMessages().addDefault("purge-fail", "&cFailed to purge data.");
 		getMessages().addDefault("no-perm", "&cYou do not have permission to use this command.");
+		getMessages().addDefault("head-a-add", "&3This head is already added!");
 		getMessages().options().copyDefaults(true);
 		saveMessages();
 	}

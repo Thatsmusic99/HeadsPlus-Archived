@@ -16,6 +16,7 @@ import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistList;
 import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistToggle;
 import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistwAdd;
 import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistwDelete;
+import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistwList;
 import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistwToggle;
 import io.github.thatsmusic99.headsplus.commands.maincommand.HelpMenu;
 import io.github.thatsmusic99.headsplus.commands.maincommand.Info;
@@ -162,6 +163,20 @@ public class HeadsPlusCommand implements CommandExecutor {
 			   }
 			   if ((args.length >= 2) && (args[0].equalsIgnoreCase("blacklistw"))) {
 				   BlacklistwToggle.toggleWorld(sender, args[1]);
+			   }
+			   if ((args.length == 1) && (args[0].equalsIgnoreCase("blacklistwl"))) {
+				   BlacklistwList.blacklistwListNoArgs(sender);
+			   }
+			   if ((args.length == 2) && (args[0].equalsIgnoreCase("blacklistwl"))) {
+				   BlacklistwList.blacklistwList(sender, args[1]);
+			   }
+			   if ((args.length > 2) && (args[0].equalsIgnoreCase("blacklistwl"))) {
+				   if (sender.hasPermission("headsplus.maincommand.blacklistw.list")) {
+				       sender.sendMessage(tooManyArgs);
+				       sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/hp blacklistwl [Page no.]");
+				   } else {
+					   sender.sendMessage(noPerms);
+				   }
 			   }
 			   }
 		}

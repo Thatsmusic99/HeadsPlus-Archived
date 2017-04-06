@@ -9,20 +9,20 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
-public class BlacklistList {
+public class BlacklistwList {
 	
-	static String prefix = HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("prefix")));
+static String prefix = HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("prefix")));
 	
-	public static void blacklistListNoArgs(CommandSender sender) {
-		if (sender.hasPermission("headsplus.maincommand.blacklist.list")) {
-		       int headsN = 1;
-		       List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("blacklist");
+	public static void blacklistwListNoArgs(CommandSender sender) {
+		if (sender.hasPermission("headsplus.maincommand.blacklistw.list")) {
+		       int worldsN = 1;
+		       List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("blacklistw");
 		       int bls = bl.size();
 		       while (bls > 8) {
-			       headsN++;
+			       worldsN++;
 			       bls = bls - 8;
 		       }
-		       sender.sendMessage(ChatColor.DARK_BLUE + "============ " + ChatColor.GOLD + "Blacklist: " + ChatColor.GRAY + "1/" + headsN + ChatColor.DARK_BLUE + " ==========" );
+		       sender.sendMessage(ChatColor.DARK_BLUE + "============ " + ChatColor.GOLD + "World Blacklist: " + ChatColor.GRAY + "1/" + worldsN + ChatColor.DARK_BLUE + " ==========" );
 		       int TimesSent = 0;
 		       for (String key : bl) {
 			       if (TimesSent <= 7) {
@@ -39,10 +39,10 @@ public class BlacklistList {
 	    	sender.sendMessage(HeadsPlusCommand.noPerms);
 	    }
 	}
-	public static void blacklistList(CommandSender sender, String i) {
-		if (sender.hasPermission("headsplus.maincommand.blacklist.list")) {
+	public static void blacklistwList(CommandSender sender, String i) {
+		if (sender.hasPermission("headsplus.maincommand.blacklistw.list")) {
 			   if (i.matches("^[0-9]+$")) {
-				   List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("blacklist");
+				   List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("blacklistw");
 				   int entries = 8;
 				   int page = Integer.parseInt(i);
 				   int sIndex = (page - 1) * entries;
@@ -60,7 +60,7 @@ public class BlacklistList {
 				   if ((page > pages) || (0 >= page)) {
 					   sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("invalid-pg-no"))));
 				   } else {
-					   sender.sendMessage(ChatColor.DARK_BLUE + "========== " + ChatColor.GOLD + "Blacklist: " + ChatColor.GRAY + page + "/" + pages + ChatColor.DARK_BLUE + " ===========");
+					   sender.sendMessage(ChatColor.DARK_BLUE + "========== " + ChatColor.GOLD + "World Blacklist: " + ChatColor.GRAY + page + "/" + pages + ChatColor.DARK_BLUE + " ===========");
 			           List<String> blsl = bl.subList(sIndex, eIndex);
 				       for (String key : blsl) {
 				           sender.sendMessage(ChatColor.GRAY + key);

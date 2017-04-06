@@ -1,32 +1,33 @@
 package io.github.thatsmusic99.headsplus.crafting;
 
+import java.util.List;
+
 import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusDataFile;
+
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 
 public class RecipePerms implements Listener {
-	
-	private static FileConfiguration data = HeadsPlusDataFile.getHPData();
 	
 	@EventHandler
 	public void onCraft(InventoryClickEvent e) {
 		Player player = (Player) e.getWhoClicked();
-		if (data.get(player.getWorld().getName()) != null) {
-		    if ((player.hasPermission("headsplus.craft")) && ((player.getGameMode().equals(GameMode.SURVIVAL)  || player.getGameMode().equals(GameMode.ADVENTURE)) && (GameMode.valueOf((String) data.get(player.getWorld().getName()))).equals(GameMode.SURVIVAL))) {
+		List<String> worlds = HeadsPlus.getInstance().getConfig().getStringList("blacklistw");
+		if (!worlds.contains(player.getWorld().getName())) {
+		    if ((player.hasPermission("headsplus.craft"))) {
 		    	return;
 	    	}
-	    	if(e.getSlot() == 0){
-                if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
-                    player.sendMessage(ChatColor.RED + "You can not craft heads!");
-                    e.setCancelled(true);
-                }   
-           }
-	   }
+		}
+	    if(e.getSlot() == 0){
+            if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
+                player.sendMessage(ChatColor.RED + "You can not craft heads!");
+                e.setCancelled(true);
+            }   
+           
+	    }
 	}
 }

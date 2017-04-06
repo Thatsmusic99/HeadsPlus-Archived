@@ -16,6 +16,7 @@ import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistList;
 import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistToggle;
 import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistwAdd;
 import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistwDelete;
+import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistwToggle;
 import io.github.thatsmusic99.headsplus.commands.maincommand.HelpMenu;
 import io.github.thatsmusic99.headsplus.commands.maincommand.Info;
 import io.github.thatsmusic99.headsplus.commands.maincommand.MCReload;
@@ -96,7 +97,7 @@ public class HeadsPlusCommand implements CommandExecutor {
 			   }
 			   if ((args.length == 2) && (args[0].equalsIgnoreCase("blacklistl"))) {
 				   BlacklistList.blacklistList(sender, args[1]);
-			  }
+			   }
 			   if ((args.length > 2) && (args[0].equalsIgnoreCase("blacklistl"))) {
 				   if (sender.hasPermission("headsplus.maincommand.blacklist.list")) {
 				       sender.sendMessage(tooManyArgs);
@@ -105,58 +106,64 @@ public class HeadsPlusCommand implements CommandExecutor {
 					   sender.sendMessage(noPerms);
 				   }
 			   }
-			  if ((args.length >= 1) && (args[0].equalsIgnoreCase("purgedata"))) {
-				  PurgeData.purgeData(sender);
-			  }
-			  if ((args.length >= 1) && (args[0].matches("^[0-9]+$"))) {
-				  HelpMenu.helpNo(sender, args[0]);
-			  }
-			  if ((args.length == 1) && (args[0].equalsIgnoreCase("help"))) {
-				  HelpMenu.helpNoArgs(sender);
-			  }
-			  if ((args.length >= 2) && (args[0].equalsIgnoreCase("help"))) {
-				  HelpMenu.helpNo(sender, args[1]);
-			  }
-			  if ((args.length > 0) && !validCmds.contains(args[0]) && !args[0].matches("^[0-9]+$")) {
-				  HelpMenu.helpNoArgs(sender);
-			  }
-			  if ((args.length == 2) && (args[0].equalsIgnoreCase("blacklistwadd"))) {
-				  BlacklistwAdd.blacklistAdd(sender, args[1]);
-			  }
-			  if ((args.length == 1) && (args[0].equals("blacklistwadd"))) {
-				  if (sender.hasPermission("headsplus.maincommand.blacklistw.add")) {
-					  sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/hp blacklistwadd <World>");
-				  } else {
-					  sender.sendMessage(noPerms);
-				  }
-			  }
-			  if ((args.length > 2) && (args[0].equalsIgnoreCase("blacklistwadd"))) {
-				  if (sender.hasPermission("headsplus.maincommand.blacklistw.add")) {
-					  sender.sendMessage(tooManyArgs);
-					  sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/hp blacklistwadd <World>");
-				  } else {
-					  sender.sendMessage(noPerms);
-				  }
-			  }
-			  if ((args.length == 2) && (args[0].equalsIgnoreCase("blacklistwdel"))) {
-				  BlacklistwDelete.blacklistDel(sender, args[1]);
-			  }
-			  if ((args.length == 1) && (args[0].equals("blacklistwdel"))) {
-				  if (sender.hasPermission("headsplus.maincommand.blacklistw.delete")) {
-					  sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/hp blacklistwdel <World>");
-				  } else {
-					  sender.sendMessage(noPerms);
-				  }
-			  }
-			  if ((args.length > 2) && (args[0].equalsIgnoreCase("blacklistwdel"))) {
-				  if (sender.hasPermission("headsplus.maincommand.blacklistw.delete")) {
-					  sender.sendMessage(tooManyArgs);
-					  sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/hp blacklistwdel <World>");
-				  } else {
-					  sender.sendMessage(noPerms);
-				  }
-			  }
-			  }
+			   if ((args.length >= 1) && (args[0].equalsIgnoreCase("purgedata"))) {
+				   PurgeData.purgeData(sender);
+			   }
+			   if ((args.length >= 1) && (args[0].matches("^[0-9]+$"))) {
+				   HelpMenu.helpNo(sender, args[0]);
+			   }
+			   if ((args.length == 1) && (args[0].equalsIgnoreCase("help"))) {
+				   HelpMenu.helpNoArgs(sender);
+			   }
+			   if ((args.length >= 2) && (args[0].equalsIgnoreCase("help"))) {
+			 	   HelpMenu.helpNo(sender, args[1]);
+			   }
+			   if ((args.length > 0) && !validCmds.contains(args[0]) && !args[0].matches("^[0-9]+$")) {
+				   HelpMenu.helpNoArgs(sender);
+			   }
+			   if ((args.length == 2) && (args[0].equalsIgnoreCase("blacklistwadd"))) {
+				   BlacklistwAdd.blacklistAdd(sender, args[1]);
+			   }
+			   if ((args.length == 1) && (args[0].equals("blacklistwadd"))) {
+				   if (sender.hasPermission("headsplus.maincommand.blacklistw.add")) {
+					   sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/hp blacklistwadd <World>");
+				   } else {
+					   sender.sendMessage(noPerms);
+				   }
+			   }
+			   if ((args.length > 2) && (args[0].equalsIgnoreCase("blacklistwadd"))) {
+				   if (sender.hasPermission("headsplus.maincommand.blacklistw.add")) {
+					   sender.sendMessage(tooManyArgs);
+					   sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/hp blacklistwadd <World>");
+				   } else {
+					   sender.sendMessage(noPerms);
+				   }
+			   }
+			   if ((args.length == 2) && (args[0].equalsIgnoreCase("blacklistwdel"))) {
+				   BlacklistwDelete.blacklistDel(sender, args[1]);
+			   }
+			   if ((args.length == 1) && (args[0].equals("blacklistwdel"))) {
+				   if (sender.hasPermission("headsplus.maincommand.blacklistw.delete")) {
+					   sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/hp blacklistwdel <World>");
+				   } else {
+					   sender.sendMessage(noPerms);
+				   }
+			   }
+			   if ((args.length > 2) && (args[0].equalsIgnoreCase("blacklistwdel"))) {
+				   if (sender.hasPermission("headsplus.maincommand.blacklistw.delete")) {
+					   sender.sendMessage(tooManyArgs);
+					   sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/hp blacklistwdel <World>");
+				   } else {
+					   sender.sendMessage(noPerms);
+				   }
+			   }
+			   if ((args.length == 1) && (args[0].equalsIgnoreCase("blacklistw"))) {
+				   BlacklistwToggle.toggleWorldNoArgs(sender);
+			   }
+			   if ((args.length >= 2) && (args[0].equalsIgnoreCase("blacklistw"))) {
+				   BlacklistwToggle.toggleWorld(sender, args[1]);
+			   }
+			   }
 		}
 			
 	return false;

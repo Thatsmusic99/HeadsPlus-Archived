@@ -24,6 +24,7 @@ public class RecipeEnumUser {
 	
 	@SuppressWarnings("deprecation")
 	public static void addEnumToConfig() {
+		try {
 		for (RecipeEnums key : RecipeEnums.values()) {
 			ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 			SkullMeta im = (SkullMeta) i.getItemMeta();
@@ -44,6 +45,7 @@ public class RecipeEnumUser {
 			    crafting.addDefault(key.str + "I", ingrs);
 			    recipe.addIngredient(key.mat);
 			    recipe.addIngredient(Material.SKULL_ITEM);
+			    crafting.options().copyDefaults(true);
 			}
 			if (ingrs.size() > 0) {
 				Bukkit.addRecipe(recipe);
@@ -77,6 +79,9 @@ public class RecipeEnumUser {
 		    	}
 		    }
     	}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 

@@ -10,6 +10,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.crafting.RecipeEnumUser;
+import io.github.thatsmusic99.headsplus.crafting.RecipeEnums;
+import io.github.thatsmusic99.headsplus.crafting.RecipeUndefinedEnums;
 
 public class HeadsPlusCrafting {
 	
@@ -30,12 +32,10 @@ public class HeadsPlusCrafting {
 	}
 	
 	private static void loadCrafting() {
-		getCrafting().options().header("HeadsPlus by Thatsmusic99 - due to the way Bukkit works, this config can only be reloaded on restart.");
+		getCrafting().options().header("HeadsPlus by Thatsmusic99 - due to the way Bukkit works, this config can only be reloaded on restart.\nInstructions for setting up can be found at: https://github.com/Thatsmusic99/HeadsPlus/wiki");
 		addIngredients();
 	}
 	public static void addIngredients() {
-		Bukkit.resetRecipes();
-		getCrafting().options().copyDefaults(true);
 		RecipeEnumUser.addEnumToConfig();
 		getCrafting().options().copyDefaults(true);
 		saveCrafting();
@@ -45,8 +45,6 @@ public class HeadsPlusCrafting {
 			craftingF = new File(HeadsPlus.getInstance().getDataFolder(), "crafting.yml");
 		}
 		crafting = YamlConfiguration.loadConfiguration(craftingF);
-		loadCrafting();
-		saveCrafting();
 	}
 	public static void saveCrafting() {
 		if (crafting == null || craftingF == null) {
@@ -60,16 +58,16 @@ public class HeadsPlusCrafting {
 		}
 	}
 	public static void checkCrafting() {
-		for (String key : mHeads) {
-			List<String> keyl = getCrafting().getStringList(key + "I");
+		for (RecipeEnums key : RecipeEnums.values()) {
+			List<String> keyl = getCrafting().getStringList(key.str + "I");
 			if (keyl.size() > 9) {
-				getCrafting().getStringList(key + "I").clear();
+				getCrafting().getStringList(key.str + "I").clear();
 			}
 		}
-		for (String key : uHeads) {
-			List<String> keyl = getCrafting().getStringList(key + "I");
+		for (RecipeUndefinedEnums key : RecipeUndefinedEnums.values()) {
+			List<String> keyl = getCrafting().getStringList(key.str + "I");
 			if (keyl.size() > 9) {
-				getCrafting().getStringList(key + "I").clear();
+				getCrafting().getStringList(key.str + "I").clear();
 			}
 		}
 	}

@@ -1,8 +1,6 @@
 # HeadsPlus
 # Plugin by Thatsmusic99
-# Disclaimer: Any options added that are not followed by the config instructions will break the plugin. Patches are being introduced to stop this from happening, however please do not post a fake error because of it. Any config-related errors will require you to include your config.
-# If all is clear, I will fix it.
-# Otherwise, you will be ignored by me on Spigot.
+# Disclaimer: sellHeads, dropHeads, craftHeads and autoReloadOnFirstJoin will not take immediate effect when /hp reload is used. Because they are event or command related, they cannot be undone once the server starts. I will include a fix for this soon however.
 # Thanks in advance, and thank you for using HeadsPlus. ~
 
 blacklistOn: true

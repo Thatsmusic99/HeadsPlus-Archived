@@ -24,27 +24,7 @@ public class RecipeEnumUser {
 	
 	@SuppressWarnings("deprecation")
 	public static void addEnumToConfig() {
-		
-		for (RecipeEnums key : RecipeEnums.values()) {
-			ItemStack i = new ItemStack(Material.SKULL_ITEM);
-			SkullMeta sm = (SkullMeta) i.getItemMeta();
-			sm.setOwner(heads.getString(key.str + "HeadN"));
-			sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', heads.getString(key.str + "HeadDN")));
-			RecipeListeners.makeSell(sm);
-			i.setItemMeta(sm);
-			ShapelessRecipe recipe = new ShapelessRecipe(i)
-					.addIngredient(Material.SKULL_ITEM);
-			for (String key2 : crafting.getStringList(key.str + "I")) {
-				recipe.addIngredient(Material.getMaterial(key2));
-				
-			}
-			if (recipe.getIngredientList().size() > 1) {
-				Bukkit.addRecipe(recipe);
-				HeadsPlus.getInstance().log.info(recipe.getIngredientList().toString());
-			} 
-		}
-		
-		/* for (RecipeEnums key : RecipeEnums.values()) {
+		 for (RecipeEnums key : RecipeEnums.values()) {
 			ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 			SkullMeta im = (SkullMeta) i.getItemMeta();
 			im.setDisplayName(ChatColor.translateAlternateColorCodes('&', heads.getString(key.str + "HeadDN")));
@@ -61,9 +41,7 @@ public class RecipeEnumUser {
 			if (ingrs.size() > 0) {
 				Bukkit.addRecipe(recipe);
 			}
-			
-			
-		}*/
+		}
 		for (RecipeUndefinedEnums key : RecipeUndefinedEnums.values()) {
 			ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 			SkullMeta im = (SkullMeta) i.getItemMeta();

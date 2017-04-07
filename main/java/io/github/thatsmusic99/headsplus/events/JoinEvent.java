@@ -77,10 +77,12 @@ public class JoinEvent implements Listener {
 				      }
 				      if (!(dataF.exists())) {
 				    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Data not found, creating!");
+				    	  Bukkit.resetRecipes();
 				    	  HeadsPlusDataFile.reloadHPData();
 				    	  data = YamlConfiguration.loadConfiguration(dataF);
 				    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Data created!");
 				      } else {
+				    	  Bukkit.resetRecipes();
 				    	  HeadsPlusDataFile.reloadHPData();
 				      }
 				      if (!(craftingF.exists())) {

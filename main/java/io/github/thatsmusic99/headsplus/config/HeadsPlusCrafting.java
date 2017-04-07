@@ -44,6 +44,8 @@ public class HeadsPlusCrafting {
 			craftingF = new File(HeadsPlus.getInstance().getDataFolder(), "crafting.yml");
 		}
 		crafting = YamlConfiguration.loadConfiguration(craftingF);
+		loadCrafting();
+		saveCrafting();
 	}
 	public static void saveCrafting() {
 		if (crafting == null || craftingF == null) {

@@ -2,6 +2,8 @@ package io.github.thatsmusic99.headsplus.config;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -26,8 +28,8 @@ public class HeadsPlusCrafting {
 	}
 	public static void craftingEnable() {
 		reloadCrafting();
-		loadCrafting();
 		checkCrafting();
+		loadCrafting();
 		reloadCrafting();
 	}
 	
@@ -59,12 +61,14 @@ public class HeadsPlusCrafting {
 	}
 	public static void checkCrafting() {
 		for (RecipeEnums key : RecipeEnums.values()) {
+			getCrafting().addDefault(key.str + "I", new ArrayList<String>(Arrays.asList(key.mat.toString())));
 			List<String> keyl = getCrafting().getStringList(key.str + "I");
 			if (keyl.size() > 9) {
 				getCrafting().getStringList(key.str + "I").clear();
 			}
 		}
 		for (RecipeUndefinedEnums key : RecipeUndefinedEnums.values()) {
+			getCrafting().addDefault(key.str + "I", new ArrayList<String>());
 			List<String> keyl = getCrafting().getStringList(key.str + "I");
 			if (keyl.size() > 9) {
 				getCrafting().getStringList(key.str + "I").clear();

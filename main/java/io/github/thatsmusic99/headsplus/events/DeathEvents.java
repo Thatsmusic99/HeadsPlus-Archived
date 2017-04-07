@@ -68,14 +68,14 @@ public class DeathEvents implements Listener {
 			    SkullMeta headM = (SkullMeta) head.getItemMeta();
 			    headM.setOwner(ep.getEntity().getName());
 			    headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("playerHeadDN").replaceAll("%d", ep.getEntity().getName())));
-			    if (ep.getEntity().getKiller() != null) {
-		    	    if ((HeadsPlus.getInstance().sellable) && (ep.getEntity().getKiller().hasPermission("headsplus.sellhead"))) {
+			   // if (ep.getEntity().getKiller() != null) {
+		    	    if ((HeadsPlus.getInstance().sellable) /* && (ep.getEntity().getKiller().hasPermission("headsplus.sellhead")) */) {
 				        List<String> lore = new ArrayList<String>();
 				        lore.add(ChatColor.translateAlternateColorCodes('&', "&6&lThis head can be sold!"));
 				        lore.add(ChatColor.translateAlternateColorCodes('&', "&6Do /sellhead to sell!"));
 				        headM.setLore(lore);
 			        }
-			    }
+			   // }
 			    head.setItemMeta(headM);
 			    Location entityLoc = ep.getEntity().getLocation();
                 double entityLocY = entityLoc.getY() + 1;

@@ -46,6 +46,8 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("head-a-add", "&3This head is already added!");
 		getMessages().options().copyDefaults(true);
 		saveMessages();
+		
+		// TODO Finish messages.
 	}
 	public static void reloadMessages() {
 		if (messagesF == null) {

@@ -24,8 +24,27 @@ public class RecipeEnumUser {
 	
 	@SuppressWarnings("deprecation")
 	public static void addEnumToConfig() {
-		try {
+		
 		for (RecipeEnums key : RecipeEnums.values()) {
+			ItemStack i = new ItemStack(Material.SKULL_ITEM);
+			SkullMeta sm = (SkullMeta) i.getItemMeta();
+			sm.setOwner(heads.getString(key.str + "HeadN"));
+			sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', heads.getString(key.str + "HeadDN")));
+			RecipeListeners.makeSell(sm);
+			i.setItemMeta(sm);
+			ShapelessRecipe recipe = new ShapelessRecipe(i)
+					.addIngredient(Material.SKULL_ITEM);
+			for (String key2 : crafting.getStringList(key.str + "I")) {
+				recipe.addIngredient(Material.getMaterial(key2));
+				
+			}
+			if (recipe.getIngredientList().size() > 1) {
+				Bukkit.addRecipe(recipe);
+				HeadsPlus.getInstance().log.info(recipe.getIngredientList().toString());
+			} 
+		}
+		
+		/* for (RecipeEnums key : RecipeEnums.values()) {
 			ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 			SkullMeta im = (SkullMeta) i.getItemMeta();
 			im.setDisplayName(ChatColor.translateAlternateColorCodes('&', heads.getString(key.str + "HeadDN")));
@@ -34,25 +53,17 @@ public class RecipeEnumUser {
 			i.setItemMeta(im);
 			ShapelessRecipe recipe = new ShapelessRecipe(i);
 			List<String> ingrs = new ArrayList<>();
-			if (crafting.getStringList(key.str + "I") != null) {
-				ingrs = crafting.getStringList(key.str + "I");
-				for (String key2 : ingrs) {
-					recipe.addIngredient(Material.getMaterial(key2));
-				}
-				recipe.addIngredient(Material.SKULL_ITEM, (byte) 0);
-			} else {
-				ingrs.add(key.mat.toString());
-			    crafting.addDefault(key.str + "I", ingrs);
-			    recipe.addIngredient(key.mat);
-			    recipe.addIngredient(Material.SKULL_ITEM);
-			    crafting.options().copyDefaults(true);
+			for (String key2 : crafting.getStringList(key.str + "I")) {
+				recipe.addIngredient(Material.getMaterial(key2));
+				ingrs.add(key2);
 			}
+			recipe.addIngredient(Material.SKULL_ITEM, (byte) 0);
 			if (ingrs.size() > 0) {
 				Bukkit.addRecipe(recipe);
 			}
 			
 			
-		}
+		}*/
 		for (RecipeUndefinedEnums key : RecipeUndefinedEnums.values()) {
 			ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 			SkullMeta im = (SkullMeta) i.getItemMeta();
@@ -79,9 +90,6 @@ public class RecipeEnumUser {
 		    	}
 		    }
     	}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
 

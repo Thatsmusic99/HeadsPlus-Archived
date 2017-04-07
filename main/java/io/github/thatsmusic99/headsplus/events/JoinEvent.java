@@ -85,12 +85,10 @@ public class JoinEvent implements Listener {
 				      }
 				      if (!(craftingF.exists())) {
 				    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting not found, creating!");
-				    	  Bukkit.resetRecipes();
 				    	  HeadsPlusCrafting.reloadCrafting();
 				    	  crafting = YamlConfiguration.loadConfiguration(craftingF);
 				    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting created!");
 				      } else {
-				    	  Bukkit.resetRecipes();
 				    	  HeadsPlusCrafting.reloadCrafting();
 				      }
 				      reloaded = true;

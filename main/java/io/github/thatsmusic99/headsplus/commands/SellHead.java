@@ -23,6 +23,7 @@ public class SellHead implements CommandExecutor {
 	
 	static String lore;
 	static String lore2;
+	private static boolean sold;
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (sender instanceof Player) {
@@ -58,6 +59,7 @@ public class SellHead implements CommandExecutor {
 							if (zr.transactionSuccess()) {
 								((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
 								sender.sendMessage(success);
+								sold = true;
 							} else {
 								sender.sendMessage(fail + ": " + zr.errorMessage);
 							}
@@ -77,6 +79,7 @@ public class SellHead implements CommandExecutor {
 							if (zr.transactionSuccess()) {
 								((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
 								sender.sendMessage(success);
+								sold = true;
 							} else {
 								sender.sendMessage(fail + ": " + zr.errorMessage);
 							}
@@ -98,39 +101,37 @@ public class SellHead implements CommandExecutor {
 							if (zr.transactionSuccess()) {
 								((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
 								sender.sendMessage(success);
+								sold = true;
 							} else {
 								sender.sendMessage(fail + ": " + zr.errorMessage);
 							}
 		    				
-		    			} else if ((!uHeads.contains(key)) && (!mHeads.contains(key))) {
-			    				Double price = HeadsPlusConfigHeads.getHeads().getDouble("playerHeadP");
-			    				String senderName = sender.getName();
-			    				if (invi.getAmount() > 0) {
-			    					price = price * invi.getAmount();
-			    				}
-			    				@SuppressWarnings("deprecation")
-								EconomyResponse zr = econ.depositPlayer(senderName, price);
-			    				String success = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-success"));
-			    				success = ChatColor.translateAlternateColorCodes('&', success);
-			    				String fail = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-fail"));
-								fail = ChatColor.translateAlternateColorCodes('&', fail);
-								if (zr.transactionSuccess()) {
-									((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
-									sender.sendMessage(success);
-								} else {
-									sender.sendMessage(fail + ": " + zr.errorMessage);
-								}
-			    			
-		    			}
+		    			} 
 		    		}
+		    		if (!sold) {
+			    		Double price = HeadsPlusConfigHeads.getHeads().getDouble("playerHeadP");
+			    		String senderName = sender.getName();
+			    		if (invi.getAmount() > 0) {
+			    			price = price * invi.getAmount();
+			    		}
+			    		@SuppressWarnings("deprecation")
+						EconomyResponse zr = econ.depositPlayer(senderName, price);
+			    		String success = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-success"));
+			    		success = ChatColor.translateAlternateColorCodes('&', success);
+			    		String fail = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-fail"));
+						fail = ChatColor.translateAlternateColorCodes('&', fail);
+						if (zr.transactionSuccess()) {
+							((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+							sender.sendMessage(success);
+							sold = true;
+						} else {
+							sender.sendMessage(fail + ": " + zr.errorMessage);
+						}
+			    			
+		    		}
+		    	}
 		    	} else {
-		    		String falseHead = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("false-head"));
-		    		falseHead = ChatColor.translateAlternateColorCodes('&', falseHead);
-		    		sender.sendMessage(falseHead);
-		    	} 
-		    	
-		    } else {
-		    	if (!sender.hasPermission("headsplus.sellhead")) {
+		    		if (!sender.hasPermission("headsplus.sellhead")) {
 		    		sender.sendMessage(HeadsPlusCommand.noPerms);
 		    	} else {
 		    		String falseItem = HeadsPlusConfig.getMessages().getString("false-item");
@@ -138,14 +139,10 @@ public class SellHead implements CommandExecutor {
 		    	falseItem = ChatColor.translateAlternateColorCodes('&', falseItem);
 		    	sender.sendMessage(falseItem);
 		    	}
-		    	
-		    	
+		    	} 
+		    } else {
+		    	sender.sendMessage("[HeadsPlus] You must be a player to run this command!");
 		    } 
-		
-		} else {
-			sender.sendMessage("[HeadsPlus] You must be a player to send this command!");
-		}
-		return false;
+	return false;
 	}
-
 }

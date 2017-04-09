@@ -45,9 +45,13 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("no-perm", "&cYou do not have permission to use this command.");
 		getMessages().addDefault("head-a-add", "&3This head is already added!");
 		getMessages().addDefault("head-added", "&3%p has been added to the blacklist!");
-		getMessages().addDefault("head-a-removed", "&cThis head is not on the blacklist!");
-		getMessages().addDefault("head-removed", "&c%p has been removed from the blacklist!");
-		getMessages().addDefault("disabled", "This command is disabled.");
+		getMessages().addDefault("head-a-removed", "&3This head is not on the blacklist!");
+		getMessages().addDefault("head-removed", "&3%p has been removed from the blacklist!");
+		getMessages().addDefault("world-a-add", "&3This world is already added!");
+		getMessages().addDefault("world-added", "&3%w has been added to the world blacklist!");
+		getMessages().addDefault("world-a-removed", "&3This world is not on the blacklist!");
+		getMessages().addDefault("world-removed", "&3%w has been removed from the blacklist!");
+		getMessages().addDefault("disabled", "&cThis command is disabled.");
 		getMessages().options().copyDefaults(true);
 		saveMessages();
 		

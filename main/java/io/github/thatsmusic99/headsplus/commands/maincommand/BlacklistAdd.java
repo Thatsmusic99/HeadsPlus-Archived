@@ -33,14 +33,14 @@ public class BlacklistAdd {
 			           List<String> blacklist = config.getStringList("blacklist");
 			           String aHead = name.toLowerCase();
 			           if (blacklist.contains(aHead)) {
-				           sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "This head is already added!");
+				           sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("head-a-add"))));
 			           } else {
 			    	       blacklist.add(aHead);
 				           config.set("blacklist", blacklist);
 				           config.options().copyDefaults(true);
 				           HeadsPlus.getInstance().saveConfig();
 				       
-				           sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + name + " has been added to the blacklist!");
+				           sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("head-added").replaceAll("%p", name))));
 			          }
 		           } catch (Exception e) {
 			          HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to add head!");

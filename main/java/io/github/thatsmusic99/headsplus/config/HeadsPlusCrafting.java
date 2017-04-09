@@ -30,7 +30,7 @@ public class HeadsPlusCrafting {
 	}
 	
 	private static void loadCrafting() {
-		getCrafting().options().header("HeadsPlus by Thatsmusic99 - due to the way Bukkit works, this config can only be reloaded on restart.\nUpon /hp reload, this config will come up being blank. This is normal.\nInstructions for setting up can be found at: https://github.com/Thatsmusic99/HeadsPlus/wiki");
+		getCrafting().options().header("HeadsPlus by Thatsmusic99 - due to the way Bukkit works, this config can only be reloaded on restart.\nInstructions for setting up can be found at: https://github.com/Thatsmusic99/HeadsPlus/wiki");
 		RecipeEnumUser.addEnumToConfig();
 		getCrafting().options().copyDefaults(true);
 		saveCrafting();
@@ -41,6 +41,7 @@ public class HeadsPlusCrafting {
 		}
 		crafting = YamlConfiguration.loadConfiguration(craftingF);
 		loadCrafting();
+		checkCrafting();
 		saveCrafting();
 	}
 	public static void saveCrafting() {

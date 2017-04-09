@@ -17,30 +17,28 @@ public class BlacklistDelete {
 	@SuppressWarnings("unused")
 	private static File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
 
-	public static void blacklistDel(CommandSender sender, String world) {
+	public static void blacklistDel(CommandSender sender, String name) {
 		if (sender.hasPermission("headsplus.maincommand.blacklist.delete")) {
 			String prefix = HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("prefix")));
-		  	if (world.matches("^[A-Za-z0-9_]+$")) {
+		  	if (name.matches("^[A-Za-z0-9_]+$")) {
 		        try {
 		            config.options().copyDefaults(true);
                     HeadsPlus.getInstance().saveConfig();
                     File cfile = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
 			          if (!(cfile.exists())) {
 			              HeadsPlus.getInstance().log.info("[HeadsPlus] Config not found, creating!");
-			           
-			              sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Config wasn't found, now created." );
 			          }
 			          try {
-			              List<String> blacklist = (List<String>)config.getStringList("blacklistw");
-			              String rWorld = world.toLowerCase();
-			              if (blacklist.contains(rWorld)) {
-				              blacklist.remove(rWorld);
-				              config.set("blacklistw", blacklist);
+			              List<String> blacklist = (List<String>)config.getStringList("blacklist");
+			              String rHead = name.toLowerCase();
+			              if (blacklist.contains(rHead)) {
+				              blacklist.remove(rHead);
+				              config.set("blacklist", blacklist);
 				              config.options().copyDefaults(true);
 				              HeadsPlus.getInstance().saveConfig();
-				              sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + world + " has been removed from the blacklist!");
+				              sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("head-removed").replaceAll("%p", name))));
 			              } else {
-			    	          sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "This head is not on the blacklist!");
+			    	          sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("head-a-removed"))));
 			          
                     }} catch (Exception e) {
 			    	      HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove head!");

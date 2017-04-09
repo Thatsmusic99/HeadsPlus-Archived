@@ -7,6 +7,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +68,7 @@ public class Head implements CommandExecutor {
 						        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 			                    SkullMeta meta = (SkullMeta) skull.getItemMeta();
 		                        meta.setOwner(args[0]);
-				                meta.setDisplayName(args[0] + "'s head");
+				                meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("playerHeadDN").replaceAll("%d", args[0])));
 				                skull.setItemMeta(meta);
 				                Location playerLoc = ((Player) sender).getLocation();
 				                double playerLocY = playerLoc.getY() + 1;
@@ -88,7 +89,7 @@ public class Head implements CommandExecutor {
 						        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 			                    SkullMeta meta = (SkullMeta) skull.getItemMeta();
 		                        meta.setOwner(args[0]);
-				                meta.setDisplayName(args[0] + "'s head");
+				                meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("playerHeadDN").replaceAll("%d", args[0])));
 				                skull.setItemMeta(meta);
 				                Location playerLoc = ((Player) sender).getLocation();
 				                double playerLocY = playerLoc.getY() + 1;

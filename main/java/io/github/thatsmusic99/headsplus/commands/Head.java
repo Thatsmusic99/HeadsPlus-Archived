@@ -52,13 +52,12 @@ public class Head implements CommandExecutor {
 			        }
 			
 			        if ((args.length == 1) && (args[0].matches("^[A-Za-z0-9_]+$")) && (3 < args[0].length() << 16)) {
-				        HeadsPlus.getInstance();
+
 					    // List<String> blacklist = (List<String>)HeadsPlus.config.getStringList("blacklist");
                         List<String> blacklist = new ArrayList<>();
                         for (String str : HeadsPlus.getInstance().getConfig().getStringList("blacklist")) {
                     	    blacklist.add(str.toLowerCase());
                         }
-				        HeadsPlus.getInstance();
 					    Boolean blacklistOn = HeadsPlus.config.getBoolean("blacklistOn");
 				        String head = args[0].toLowerCase();
 				        if (!(blacklist.contains(head))) {
@@ -84,7 +83,7 @@ public class Head implements CommandExecutor {
 					        return false;
 				        } else if ((blacklist.contains(head)) && !(blacklistOn)) {
 					        if (((Player) sender).getInventory().firstEmpty() == -1) {
-					        	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("full-inv"))));;
+					        	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("full-inv"))));
 					        } else {
 						        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 			                    SkullMeta meta = (SkullMeta) skull.getItemMeta();

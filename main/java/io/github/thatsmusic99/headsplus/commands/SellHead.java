@@ -21,10 +21,10 @@ import net.milkbowl.vault.economy.EconomyResponse;
 
 public class SellHead implements CommandExecutor {
 	
-	static String lore;
-	static String lore2;
+	private static String lore;
+	private static String lore2;
 	private static boolean sold;
-	static String disabled = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("disabled")));
+	private static String disabled = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("disabled")));
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (sender instanceof Player) {

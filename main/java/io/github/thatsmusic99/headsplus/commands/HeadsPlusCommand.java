@@ -23,23 +23,15 @@ import io.github.thatsmusic99.headsplus.commands.maincommand.Info;
 import io.github.thatsmusic99.headsplus.commands.maincommand.MCReload;
 import io.github.thatsmusic99.headsplus.commands.maincommand.PurgeData;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusCrafting;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusDataFile;
 
 public class HeadsPlusCommand implements CommandExecutor {
 	
 	public static String noPerms = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("no-perm")));
-	public static String tooManyArgs = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("too-many-args")));
+	private static String tooManyArgs = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("too-many-args")));
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		List<String> validCmds = new ArrayList<>(Arrays.asList("reload", "blacklistadd", "blacklistdel", "blacklist", "info", "blacklistl", "purgedata", "help", "blacklistw", "blacklistwadd", "blacklistwdel", "blacklistwl", "blacklistwt"));
-		
-		HeadsPlus.getInstance();
-		HeadsPlusConfig.getMessages();
-		HeadsPlusConfigHeads.getHeads();
-		HeadsPlusDataFile.getHPData();
-		HeadsPlusCrafting.getCrafting();
+
 		if ((cmd.getName().equalsIgnoreCase("headsplus")) || (cmd.getName().equalsIgnoreCase("hp"))) {
 			if (sender.hasPermission("headsplus.maincommand")) {
 			   if ((args.length == 0)) {

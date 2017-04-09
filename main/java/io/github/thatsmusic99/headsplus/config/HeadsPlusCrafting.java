@@ -3,7 +3,7 @@ package io.github.thatsmusic99.headsplus.config;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.bukkit.configuration.file.FileConfiguration;
@@ -17,7 +17,7 @@ import io.github.thatsmusic99.headsplus.crafting.RecipeUndefinedEnums;
 public class HeadsPlusCrafting {
 	
 	private static FileConfiguration crafting;
-	public static File craftingF;
+	private static File craftingF;
 	
 	public static FileConfiguration getCrafting() {
 		return crafting;
@@ -44,7 +44,7 @@ public class HeadsPlusCrafting {
 		checkCrafting();
 		saveCrafting();
 	}
-	public static void saveCrafting() {
+	private static void saveCrafting() {
 		if (crafting == null || craftingF == null) {
 			return;
 		}
@@ -55,9 +55,9 @@ public class HeadsPlusCrafting {
 			e.printStackTrace();
 		}
 	}
-	public static void checkCrafting() {
+	private static void checkCrafting() {
 		for (RecipeEnums key : RecipeEnums.values()) {
-			getCrafting().addDefault(key.str + "I", new ArrayList<String>(Arrays.asList(key.mat.toString())));
+			getCrafting().addDefault(key.str + "I", new ArrayList<>(Collections.singletonList(key.mat.toString())));
 			List<String> keyl = getCrafting().getStringList(key.str + "I");
 			if (keyl.size() > 9) {
 				getCrafting().getStringList(key.str + "I").clear();

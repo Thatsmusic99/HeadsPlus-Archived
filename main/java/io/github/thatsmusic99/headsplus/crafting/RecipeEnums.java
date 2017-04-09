@@ -8,7 +8,7 @@ public enum RecipeEnums {
     public Material mat;
     public String str;
 	
-	private RecipeEnums(Material mat, String str) {
+	RecipeEnums(Material mat, String str) {
 		this.mat = mat;
 		this.str = str;
 	}

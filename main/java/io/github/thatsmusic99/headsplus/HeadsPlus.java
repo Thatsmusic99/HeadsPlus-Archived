@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 public class HeadsPlus extends JavaPlugin {	
 	public Logger log = Logger.getLogger("Minecraft");
 	private static HeadsPlus instance;
-	public PluginDescriptionFile pluginYml = getDescription();
+	private PluginDescriptionFile pluginYml = getDescription();
 	public String author = pluginYml.getAuthors().toString();
 	public String version = pluginYml.getVersion();
 	public boolean sellable;
@@ -37,9 +37,12 @@ public class HeadsPlus extends JavaPlugin {
 	public Boolean sellableHead;
 	
     public static FileConfiguration config;
-	public File configF;
+	private File configF;
+
+	@SuppressWarnings("unused")
 	FileConfiguration messages;
-	File messagesF;
+	@SuppressWarnings("unused")
+	private File messagesF;
 	Plugin p;
 
 	@Override
@@ -96,7 +99,7 @@ public class HeadsPlus extends JavaPlugin {
 		return instance;
 		
 	}
-	public void setUpMConfig() {
+	private void setUpMConfig() {
 			configF = new File(getDataFolder(), "config.yml");
 			config = getConfig();
 			if(!getDataFolder().exists()) {
@@ -116,7 +119,7 @@ public class HeadsPlus extends JavaPlugin {
 			saveConfig();
 			}
 		 
-    public void reloadMConfig() {
+    private void reloadMConfig() {
     	config = YamlConfiguration.loadConfiguration(configF);
     }
     public String translateMessages(String s) { 

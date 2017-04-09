@@ -19,8 +19,6 @@ public class RecipeEnumUser {
 	
 	private static FileConfiguration crafting = HeadsPlusCrafting.getCrafting();
 	private static FileConfiguration heads = HeadsPlusConfigHeads.getHeads();
-	static RecipeEnums enums;
-    static RecipeUndefinedEnums uEnums;
 	
 	@SuppressWarnings("deprecation")
 	public static void addEnumToConfig() {

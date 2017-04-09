@@ -15,7 +15,7 @@ public class HeadsPlusConfigHeads {
 	public static List<String> mHeads = new ArrayList<>(Arrays.asList("blaze", "cavespider", "chicken", "cow", "creeper", "enderman", "ghast", "guardian", "irongolem", "mushroomcow", "pig", "sheep", "skeleton", "slime", "spider", "squid", "villager", "witch", "zombie"));
 	public static List<String> uHeads = new ArrayList<>(Arrays.asList("bat", "donkey", "enderdragon", "elderguardian", "endermite", "evoker", "horse", "llama", "magmacube", "mule", "polarbear", "rabbit", "shulker", "silverfish", "skeletonhorse", "snowman", "stray", "vex", "vindicator", "wither", "witherskeleton"));
 	private static FileConfiguration heads;
-	public static File headsF;
+	private static File headsF;
 	
 	public static FileConfiguration config = HeadsPlus.getInstance().getConfig();
 	
@@ -43,7 +43,7 @@ public class HeadsPlusConfigHeads {
 		loadHeads();
 		saveHeads();
 	}
-    public static void saveHeads() {
+    private static void saveHeads() {
     	if (heads == null || headsF == null) {
     		return;
     	}
@@ -54,7 +54,7 @@ public class HeadsPlusConfigHeads {
     		e.printStackTrace();
     	}
     }
-    public static void addUndefinedHeads() {
+    private static void addUndefinedHeads() {
     	for (String key : uHeads) {
     		getHeads().addDefault(key + "HeadN", "");
     		getHeads().addDefault(key + "HeadC", 0);
@@ -62,10 +62,10 @@ public class HeadsPlusConfigHeads {
     		getHeads().addDefault(key + "HeadP", 0.00);
     	}
     }
-    public static void addMHFHeads() {
+    private static void addMHFHeads() {
     	
     	for (String key : mHeads) {
-    		if (key != "irongolem") {
+    		if (!key.equals("irongolem")) {
     			String str = key.substring(0, 1).toUpperCase();
     		    String str2 = key.substring(1, key.length());
     		    getHeads().addDefault(key + "HeadN", "MHF_" + str + str2);
@@ -82,7 +82,7 @@ public class HeadsPlusConfigHeads {
     		}
     	}
     }
-    public static void addPlayerHeads() {
+    private static void addPlayerHeads() {
     	getHeads().addDefault("playerHeadC", 100);
     	getHeads().addDefault("playerHeadDN", "%d's head");
     	getHeads().addDefault("playerHeadP", 10.00);

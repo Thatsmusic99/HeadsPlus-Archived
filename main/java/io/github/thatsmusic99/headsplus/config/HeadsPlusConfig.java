@@ -10,7 +10,7 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 
 public class HeadsPlusConfig {
 	private static FileConfiguration messages;
-	public static File messagesF;
+	private static File messagesF;
 	
 	public static FileConfiguration getMessages() {
 		return messages;
@@ -65,7 +65,7 @@ public class HeadsPlusConfig {
 		loadMessages();
 		saveMessages();
 	}
-    public static void saveMessages() {
+    private static void saveMessages() {
     	if (messages == null || messagesF == null) {
     		return;
     	}

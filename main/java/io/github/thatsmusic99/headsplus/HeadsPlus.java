@@ -55,14 +55,17 @@ public class HeadsPlus extends JavaPlugin {
 			    getServer().getPluginManager().registerEvents(new RecipePerms(), this);
 			}
 			if (!(econ()) && (getConfig().getBoolean("sellHeads"))) {
+				this.getCommand("sellhead").setExecutor(new SellHead());
 				log.warning("[HeadsPlus] Vault not found! Heads cannot be sold.");
 				sellable = false;
 			} else if ((econ()) && !(getConfig().getBoolean("sellHeads"))) {
+				this.getCommand("sellhead").setExecutor(new SellHead());
 				sellable = false;
 			} else if ((econ()) && (getConfig().getBoolean("sellHeads"))){
 				this.getCommand("sellhead").setExecutor(new SellHead());
 				sellable = true;
 			} else if (!(econ() && !(getConfig().getBoolean("sellHeads")))) {
+				this.getCommand("sellhead").setExecutor(new SellHead());
 				sellable = false;
 			}
 			getServer().getPluginManager().registerEvents(new HeadInteractEvent(), this);

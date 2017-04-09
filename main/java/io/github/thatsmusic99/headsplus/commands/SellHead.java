@@ -24,6 +24,7 @@ public class SellHead implements CommandExecutor {
 	static String lore;
 	static String lore2;
 	private static boolean sold;
+	static String disabled = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("disabled")));
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (sender instanceof Player) {
@@ -31,7 +32,7 @@ public class SellHead implements CommandExecutor {
 		    ItemStack invi = inv.getItemInMainHand();
 		    
 		    if ((((Player) sender).getInventory().getItemInMainHand().getType() == Material.SKULL_ITEM) && (sender.hasPermission("headsplus.sellhead"))) {
-		    	
+		    	if (HeadsPlus.getInstance().sellable) {
 		    	SkullMeta skullM = (SkullMeta) invi.getItemMeta();
 		        String owner = skullM.getOwner();
 		        if (skullM.getLore() != null) {
@@ -129,6 +130,9 @@ public class SellHead implements CommandExecutor {
 						}
 			    			
 		    		}
+		    	}
+		    	} else {
+		    		sender.sendMessage(disabled);
 		    	}
 		    	} else {
 		    		if (!sender.hasPermission("headsplus.sellhead")) {

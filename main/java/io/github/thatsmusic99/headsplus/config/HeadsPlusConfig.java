@@ -44,6 +44,10 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("purge-fail", "&cFailed to purge data.");
 		getMessages().addDefault("no-perm", "&cYou do not have permission to use this command.");
 		getMessages().addDefault("head-a-add", "&3This head is already added!");
+		getMessages().addDefault("head-added", "&3%p has been added to the blacklist!");
+		getMessages().addDefault("head-a-removed", "&cThis head is not on the blacklist!");
+		getMessages().addDefault("head-removed", "&c%p has been removed from the blacklist!");
+		getMessages().addDefault("disabled", "This command is disabled.");
 		getMessages().options().copyDefaults(true);
 		saveMessages();
 		

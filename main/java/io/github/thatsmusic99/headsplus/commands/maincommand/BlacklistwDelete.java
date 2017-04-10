@@ -27,8 +27,6 @@ public class BlacklistwDelete {
                     File cfile = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
 			          if (!(cfile.exists())) {
 			              HeadsPlus.getInstance().log.info("[HeadsPlus] Config not found, creating!");
-			           
-			              sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Config wasn't found, now created." );
 			          }
 			          try {
 			              List<String> blacklist = config.getStringList("blacklistw");
@@ -38,17 +36,19 @@ public class BlacklistwDelete {
 				              config.set("blacklistw", blacklist);
 				              config.options().copyDefaults(true);
 				              HeadsPlus.getInstance().saveConfig();
-				              sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + world + " has been removed from the blacklist!");
+				              sender.sendMessage(prefix + " " + HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("world-removed").replaceAll("%w", world)));
 			              } else {
-			    	          sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "This world is not on the blacklist!");
+			    	          sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("world-a-removed"))));
 			          
                     }} catch (Exception e) {
 			    	      HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove world!");
 			    	      e.printStackTrace();
+			    	      sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("blw-fail"))));
 			          }
 		       } catch (Exception e) {
 			       HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove world!");
 			       e.printStackTrace();
+			       sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("blw-fail"))));
 		       }
 		  } else {
 			  sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("alpha-names"))));

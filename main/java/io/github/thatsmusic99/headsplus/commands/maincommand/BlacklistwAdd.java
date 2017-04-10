@@ -29,7 +29,6 @@ public class BlacklistwAdd {
                           HeadsPlus.getInstance().saveConfig();
                           @SuppressWarnings("unused")
 					      File cfile = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
-			              sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Config wasn't found, now created." );
 			           }
 			           List<String> blacklist = config.getStringList("blacklistw");
 			           String aWorld = world.toLowerCase();
@@ -46,6 +45,7 @@ public class BlacklistwAdd {
 		           } catch (Exception e) {
 			          HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to add world!");
 			          e.printStackTrace();
+			          sender.sendMessage(prefix + " " +  ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("blw-fail"))));
 		           }
 			   } else {
 				   sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("alpha-names"))));

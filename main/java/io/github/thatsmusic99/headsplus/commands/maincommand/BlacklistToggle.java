@@ -21,17 +21,17 @@ public class BlacklistToggle {
 					  config.set("blacklistOn", false);
 					  config.options().copyDefaults(true);
 			          HeadsPlus.getInstance().saveConfig();
-					  sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Blacklist disabled, use /headsplus blacklist to re-enable!");
+					  sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("bl-on"))));
 				  } else if (!(blacklistToggle)) {
 					  config.set("blacklistOn", true);
 					  config.options().copyDefaults(true);
 					  HeadsPlus.getInstance().saveConfig();
-					  sender.sendMessage(ChatColor.DARK_BLUE + "[" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "] " + ChatColor.DARK_AQUA + "Blacklist enabled, use /headsplus blacklist to disable!");
+					  sender.sendMessage(prefix +  " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("bl-off"))));
 				  }
 			  } catch (Exception e) {
 				  HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to toggle blacklist!");
 				  e.printStackTrace();
-				  sender.sendMessage(prefix + " " + ChatColor.RED + "Failed to toggle blacklist.");
+				  sender.sendMessage(prefix + " " +  ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("bl-fail"))));
 			  }
 		  } else {
 		      sender.sendMessage(HeadsPlusCommand.noPerms);
@@ -45,9 +45,9 @@ public class BlacklistToggle {
 					    config.set("blacklistOn", true);
 					    config.options().copyDefaults(true);
 					    HeadsPlus.getInstance().saveConfig();
-					    sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Blacklist enabled!");
+					    sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("bl-on"))));
 				    } else {
-						sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Blacklist is already enabled!");
+						sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("bl-a-on"))));
 					}
 					       
 			    } else if (str.equalsIgnoreCase("off")) {
@@ -55,9 +55,9 @@ public class BlacklistToggle {
 						config.set("blacklistOn", false);
 					    config.options().copyDefaults(true);
 			            HeadsPlus.getInstance().saveConfig();
-					    sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Blacklist disabled!");
+					    sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("bl-off"))));
 					} else {
-						sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Blacklist is already disabled!");
+						sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("bl-a-off"))));
 					}
 				} else if (!(str.equalsIgnoreCase("on") && !(str.equalsIgnoreCase("off")))) {
 				 	sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/headsplus blacklist [On|Off]");
@@ -65,7 +65,7 @@ public class BlacklistToggle {
 		    } catch (Exception e) {
 				HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to toggle blacklist!");
 				e.printStackTrace();
-			    sender.sendMessage(prefix + " " + ChatColor.RED + "Failed to toggle blacklist.");
+			    sender.sendMessage(prefix + " " +  ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("bl-fail"))));
 		    }
 		} else {
 	    	sender.sendMessage(HeadsPlusCommand.noPerms);

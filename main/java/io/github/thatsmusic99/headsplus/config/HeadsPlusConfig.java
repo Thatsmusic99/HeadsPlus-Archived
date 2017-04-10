@@ -51,6 +51,16 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("world-added", "&3%w has been added to the world blacklist!");
 		getMessages().addDefault("world-a-removed", "&3This world is not on the blacklist!");
 		getMessages().addDefault("world-removed", "&3%w has been removed from the blacklist!");
+		getMessages().addDefault("bl-on", "&3The blacklist has been enabled!");
+		getMessages().addDefault("bl-a-on", "&3The blacklist is already enabled!");
+		getMessages().addDefault("bl-off", "&3The blacklist has been disabled!");
+		getMessages().addDefault("bl-a-off", "&3The blacklist is already disabled!");
+		getMessages().addDefault("blw-on", "&3The world blacklist has been enabled!");
+		getMessages().addDefault("blw-a-on", "&3The world blacklist is already enabled!");
+		getMessages().addDefault("blw-off", "&3The world blacklist has been disabled!");
+		getMessages().addDefault("blw-a-off", "&3The world blacklist is already disabled!");
+		getMessages().addDefault("bl-fail", "&cFailed to modify blacklist.");
+		getMessages().addDefault("blw-fail", "&cFailed to modify world blacklist.");
 		getMessages().addDefault("disabled", "&cThis command is disabled.");
 		getMessages().options().copyDefaults(true);
 		saveMessages();

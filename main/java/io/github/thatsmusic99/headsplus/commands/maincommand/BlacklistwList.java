@@ -26,13 +26,8 @@ static String prefix = HeadsPlus.getInstance().translateMessages(ChatColor.trans
 		       int TimesSent = 0;
 		       for (String key : bl) {
 			       if (TimesSent <= 7) {
-			     	   if (bl != null) {
 			               sender.sendMessage(ChatColor.GRAY + key);
 			               TimesSent++;
-				       }
-			       } else {
-				       TimesSent = 0;
-				       return;
 			       }
 		      }
 	    } else {

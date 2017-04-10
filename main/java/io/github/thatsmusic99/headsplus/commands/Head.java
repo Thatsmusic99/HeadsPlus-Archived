@@ -21,18 +21,13 @@ import org.bukkit.command.CommandExecutor;
 
 public class Head implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {   
-
-    // Does the command equal "/head"?
 	    if (cmd.getName().equalsIgnoreCase("head")) {
-	    	
-		// Is a player sending it?
 		    if (sender instanceof Player){
 		    	if (sender.hasPermission("headsplus.head")) {
 			        if (args.length == 0) {
 				        sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/head [IGN]");
 				        return false;
 			        }
-			// Checks if the arguments used include A-Z, a-z and 0-9 letters, as well as more than one of them.
 		        	if ((args.length == 1) && !(args[0].matches("^[A-Za-z0-9_]+$"))) {
 			         	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("alpha-names"))));
 				        return false;
@@ -52,8 +47,6 @@ public class Head implements CommandExecutor {
 			        }
 			
 			        if ((args.length == 1) && (args[0].matches("^[A-Za-z0-9_]+$")) && (3 < args[0].length() << 16)) {
-
-					    // List<String> blacklist = (List<String>)HeadsPlus.config.getStringList("blacklist");
                         List<String> blacklist = new ArrayList<>();
                         for (String str : HeadsPlus.getInstance().getConfig().getStringList("blacklist")) {
                     	    blacklist.add(str.toLowerCase());

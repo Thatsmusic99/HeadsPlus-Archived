@@ -6,8 +6,8 @@ public enum PermissionEnums {
 	String str;
 	String cmd;
 	String dsc;
-	
-	private PermissionEnums(String str, String cmd, String dsc) {
+
+	PermissionEnums(String str, String cmd, String dsc) {
 		this.str = str;
 		this.cmd = cmd;
 		this.dsc = dsc;

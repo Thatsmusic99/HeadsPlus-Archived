@@ -31,7 +31,7 @@ public class BlacklistwDelete {
 			              sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "Config wasn't found, now created." );
 			          }
 			          try {
-			              List<String> blacklist = (List<String>)config.getStringList("blacklistw");
+			              List<String> blacklist = config.getStringList("blacklistw");
 			              String rHead = world.toLowerCase();
 			              if (blacklist.contains(rHead)) {
 				              blacklist.remove(rHead);

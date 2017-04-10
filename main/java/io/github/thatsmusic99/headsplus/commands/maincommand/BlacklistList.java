@@ -15,26 +15,21 @@ public class BlacklistList {
 	
 	public static void blacklistListNoArgs(CommandSender sender) {
 		if (sender.hasPermission("headsplus.maincommand.blacklist.list")) {
-		       int headsN = 1;
-		       List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("blacklist");
-		       int bls = bl.size();
-		       while (bls > 8) {
-			       headsN++;
-			       bls = bls - 8;
-		       }
-		       sender.sendMessage(ChatColor.DARK_BLUE + "============ " + ChatColor.GOLD + "Blacklist: " + ChatColor.GRAY + "1/" + headsN + ChatColor.DARK_BLUE + " ==========" );
-		       int TimesSent = 0;
-		       for (String key : bl) {
-			       if (TimesSent <= 7) {
-			     	   if (bl != null) {
-			               sender.sendMessage(ChatColor.GRAY + key);
-			               TimesSent++;
-				       }
-			       } else {
-				       TimesSent = 0;
-				       return;
-			       }
-		      }
+			int headsN = 1;
+			List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("blacklist");
+			int bls = bl.size();
+			while (bls > 8) {
+				headsN++;
+				bls = bls - 8;
+			}
+			sender.sendMessage(ChatColor.DARK_BLUE + "============ " + ChatColor.GOLD + "Blacklist: " + ChatColor.GRAY + "1/" + headsN + ChatColor.DARK_BLUE + " ==========" );
+			int TimesSent = 0;
+			for (String key : bl) {
+				if (TimesSent <= 7) {
+					sender.sendMessage(ChatColor.GRAY + key);
+					TimesSent++;
+				}
+			}
 	    } else {
 	    	sender.sendMessage(HeadsPlusCommand.noPerms);
 	    }

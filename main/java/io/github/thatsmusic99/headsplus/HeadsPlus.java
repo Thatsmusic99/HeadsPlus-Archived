@@ -39,7 +39,6 @@ public class HeadsPlus extends JavaPlugin {
     public static FileConfiguration config;
 	private File configF;
 
-	@SuppressWarnings("unused")
 	FileConfiguration messages;
 	@SuppressWarnings("unused")
 	private File messagesF;
@@ -119,9 +118,7 @@ public class HeadsPlus extends JavaPlugin {
 			saveConfig();
 			}
 		 
-    private void reloadMConfig() {
-    	config = YamlConfiguration.loadConfiguration(configF);
-    }
+    
     public String translateMessages(String s) { 
     	if (s == null) return "";
     	if (s.contains("''")) {

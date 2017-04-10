@@ -34,21 +34,21 @@ public class BlacklistwAdd {
 			           List<String> blacklist = config.getStringList("blacklistw");
 			           String aWorld = world.toLowerCase();
 			           if (blacklist.contains(aWorld)) {
-				           sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + "This world is already added!");
+				           sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("world-a-add"))));
 			           } else {
 			    	       blacklist.add(aWorld);
 				           config.set("blacklistw", blacklist);
 				           config.options().copyDefaults(true);
 				           HeadsPlus.getInstance().saveConfig();
 				       
-				           sender.sendMessage(prefix + " " + ChatColor.DARK_AQUA + world + " has been added to the world blacklist!");
+				           sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("world-added").replaceAll("%w", world))));
 			          }
 		           } catch (Exception e) {
 			          HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to add world!");
 			          e.printStackTrace();
 		           }
 			   } else {
-				   sender.sendMessage(prefix + " " + ChatColor.RED + "Use alphanumeric names only!");
+				   sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("alpha-names"))));
 			   }
 	} else {
 		sender.sendMessage(HeadsPlusCommand.noPerms);

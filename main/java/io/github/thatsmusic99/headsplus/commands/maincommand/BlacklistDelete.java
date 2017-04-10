@@ -29,7 +29,7 @@ public class BlacklistDelete {
 			              HeadsPlus.getInstance().log.info("[HeadsPlus] Config not found, creating!");
 			          }
 			          try {
-			              List<String> blacklist = (List<String>)config.getStringList("blacklist");
+			              List<String> blacklist = config.getStringList("blacklist");
 			              String rHead = name.toLowerCase();
 			              if (blacklist.contains(rHead)) {
 				              blacklist.remove(rHead);

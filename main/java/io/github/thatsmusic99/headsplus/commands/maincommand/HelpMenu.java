@@ -32,11 +32,8 @@ public class HelpMenu {
 		int TimesSent = 0;
 		for (PermissionEnums key2 : headPerms) {
 			if (TimesSent <= 7) {
-				if (headPerms != null) {
-					PermissionEnums pe = key2;
-					sender.sendMessage(ChatColor.GRAY + pe.cmd + " - " + ChatColor.DARK_AQUA + pe.dsc);
-					TimesSent++;
-				}
+				sender.sendMessage(ChatColor.GRAY + key2.cmd + " - " + ChatColor.DARK_AQUA + key2.dsc);
+				TimesSent++;
 			}
 		}
 	    } else {

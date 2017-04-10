@@ -30,7 +30,7 @@ public class HeadsPlusCommand implements CommandExecutor {
 	private static String tooManyArgs = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("too-many-args")));
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		List<String> validCmds = new ArrayList<>(Arrays.asList("reload", "blacklistadd", "blacklistdel", "blacklist", "info", "blacklistl", "purgedata", "help", "blacklistw", "blacklistwadd", "blacklistwdel", "blacklistwl", "blacklistwt"));
+		List<String> validCmds = new ArrayList<>(Arrays.asList("reload", "blacklistadd", "blacklistdel", "blacklist", "info", "blacklistl", "purgedata", "help", "blacklistw", "blacklistwadd", "blacklistwdel", "blacklistwl", "blacklistw"));
 
 		if ((cmd.getName().equalsIgnoreCase("headsplus")) || (cmd.getName().equalsIgnoreCase("hp"))) {
 			if (sender.hasPermission("headsplus.maincommand")) {

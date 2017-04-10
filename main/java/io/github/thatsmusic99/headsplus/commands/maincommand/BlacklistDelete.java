@@ -43,10 +43,12 @@ public class BlacklistDelete {
                     }} catch (Exception e) {
 			    	      HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove head!");
 			    	      e.printStackTrace();
+			    	      sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("bl-fail"))));
 			          }
 		       } catch (Exception e) {
 			       HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove head!");
 			       e.printStackTrace();
+			       sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("bl-fail"))));
 		       }
 		  } else {
 			  sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("alpha-names"))));

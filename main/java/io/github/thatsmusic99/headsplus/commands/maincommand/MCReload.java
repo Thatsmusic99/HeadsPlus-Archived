@@ -93,7 +93,7 @@ public class MCReload {
 			      }
 			      
 		       } catch (Exception e) {
-			       HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to reload config - if this problem consists, contact Thatsmusic99!");
+			       HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to reload config!");
 			       e.printStackTrace();
 			       sender.sendMessage(prefix + " "+ reloadF);
 		       }

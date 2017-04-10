@@ -61,7 +61,7 @@ public class HeadsPlus extends JavaPlugin {
 				sellable = false;
 			} else if ((econ()) && !(getConfig().getBoolean("sellHeads"))) {
 				this.getCommand("sellhead").setExecutor(new SellHead());
-				sellable = false;
+				sellable = true;
 			} else if ((econ()) && (getConfig().getBoolean("sellHeads"))){
 				this.getCommand("sellhead").setExecutor(new SellHead());
 				sellable = true;

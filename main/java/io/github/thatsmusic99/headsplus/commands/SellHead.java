@@ -28,11 +28,12 @@ public class SellHead implements CommandExecutor {
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (sender instanceof Player) {
+			if (HeadsPlus.getInstance().sellable && HeadsPlus.getInstance().getConfig().getBoolean("sellHeads")) {
 			PlayerInventory inv = ((Player) sender).getInventory();
 		    ItemStack invi = inv.getItemInMainHand();
 		    
 		    if ((((Player) sender).getInventory().getItemInMainHand().getType() == Material.SKULL_ITEM) && (sender.hasPermission("headsplus.sellhead"))) {
-		    	if (HeadsPlus.getInstance().sellable) {
+		    	
 		    	SkullMeta skullM = (SkullMeta) invi.getItemMeta();
 		        String owner = skullM.getOwner();
 		        if (skullM.getLore() != null) {
@@ -130,9 +131,8 @@ public class SellHead implements CommandExecutor {
 						}
 			    			
 		    		}
-		    	}
 		    	} else {
-		    		sender.sendMessage(disabled);
+		    		sender.sendMessage(""); // TODO Add false head message.
 		    	}
 		    	} else {
 		    		if (!sender.hasPermission("headsplus.sellhead")) {
@@ -143,10 +143,14 @@ public class SellHead implements CommandExecutor {
 		    	falseItem = ChatColor.translateAlternateColorCodes('&', falseItem);
 		    	sender.sendMessage(falseItem);
 		    	}
-		    	} 
-		    } else {
+		    	}
+			    } else {
+		    		sender.sendMessage(disabled);
+		    	}  
+		    	} else {
 		    	sender.sendMessage("[HeadsPlus] You must be a player to run this command!");
-		    } 
+		        } 
+		     
 	return false;
 	}
 }

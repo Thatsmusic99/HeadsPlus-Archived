@@ -132,7 +132,7 @@ public class SellHead implements CommandExecutor {
 			    			
 		    		}
 		    	} else {
-		    		sender.sendMessage(""); // TODO Add false head message.
+		    		sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("false-head"))));
 		    	}
 		    	} else {
 		    		if (!sender.hasPermission("headsplus.sellhead")) {

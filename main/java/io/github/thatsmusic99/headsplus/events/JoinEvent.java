@@ -86,10 +86,12 @@ public class JoinEvent implements Listener {
 				    	  HeadsPlusDataFile.reloadHPData();
 				      }
 				      if (!(craftingF.exists())) {
-				    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting not found, creating!");
-				    	  HeadsPlusCrafting.reloadCrafting();
-				    	  crafting = YamlConfiguration.loadConfiguration(craftingF);
-				    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting created!");
+				    	  if (HeadsPlus.getInstance().getConfig().getBoolean("craftHeads")) {
+				    		  HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting not found, creating!");
+				    	      HeadsPlusCrafting.reloadCrafting();
+				    	      crafting = YamlConfiguration.loadConfiguration(craftingF);
+				    	      HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting created!");
+				    	  }
 				      } else {
 				    	  HeadsPlusCrafting.reloadCrafting();
 				      }

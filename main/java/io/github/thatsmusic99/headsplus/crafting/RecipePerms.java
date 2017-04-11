@@ -15,19 +15,30 @@ public class RecipePerms implements Listener {
 	
 	@EventHandler
 	public void onCraft(InventoryClickEvent e) {
-		Player player = (Player) e.getWhoClicked();
-		List<String> worlds = HeadsPlus.getInstance().getConfig().getStringList("blacklistw");
-		if ((!worlds.contains(player.getWorld().getName())) || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn") || player.hasPermission("headsplus.bypass.blacklistw")) {
-		    if ((player.hasPermission("headsplus.craft"))) {
-		    	return;
-	    	}
-		}
-	    if(e.getSlot() == 0){
-            if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
-                player.sendMessage(ChatColor.RED + "You can not craft heads!");
-                e.setCancelled(true);
-            }   
+		if (HeadsPlus.getInstance().getConfig().getBoolean("craftHeads")) {
+			Player player = (Player) e.getWhoClicked();
+		    List<String> worlds = HeadsPlus.getInstance().getConfig().getStringList("blacklistw");
+		    if ((!worlds.contains(player.getWorld().getName())) || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn") || player.hasPermission("headsplus.bypass.blacklistw")) {
+		        if ((player.hasPermission("headsplus.craft"))) {
+		        	return;
+	    	    }
+		    }
+	        if(e.getSlot() == 0){
+                if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
+                    player.sendMessage(ChatColor.RED + "You can not craft heads!");
+                    e.setCancelled(true);
+                }   
            
-	    }
+	        }
+		} else {
+			if(e.getSlot() == 0){
+                if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
+                    e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
+                    e.setCancelled(true);
+                }   
+           
+	        }
+		}
+		    
 	}
 }

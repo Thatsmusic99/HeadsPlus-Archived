@@ -80,12 +80,14 @@ public class MCReload {
 			    	  HeadsPlusDataFile.reloadHPData();
 			      }
 			      if (!(craftingF.exists())) {
-			    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting not found, creating!");
-			    	  Bukkit.resetRecipes();
-			    	  HeadsPlusCrafting.reloadCrafting();
-			    	  crafting = YamlConfiguration.loadConfiguration(craftingF);
-			    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting created!");
-			    	  sender.sendMessage(prefix + " " + reloadM);
+			    	  if (HeadsPlus.getInstance().getConfig().getBoolean("craftHeads")) {
+			    		  HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting not found, creating!");
+			    	      Bukkit.resetRecipes();
+			    	      HeadsPlusCrafting.reloadCrafting();
+			    	      crafting = YamlConfiguration.loadConfiguration(craftingF);
+			    	      HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting created!");
+			    	      sender.sendMessage(prefix + " " + reloadM);
+			    	  }
 			      } else {
 			    	  Bukkit.resetRecipes();
 			    	  HeadsPlusCrafting.reloadCrafting();

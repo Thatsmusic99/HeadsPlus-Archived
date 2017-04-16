@@ -19,7 +19,7 @@ public class BlacklistwAdd {
 	public static void blacklistAdd(CommandSender sender, String world) {
 		String prefix = HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("prefix")));
 	
-		if (sender.hasPermission("headsplus.maincommand.blacklist.add")) {
+		if (sender.hasPermission("headsplus.maincommand.blacklistw.add")) {
 			   if (world.matches("^[A-Za-z0-9_]+$")) {
 		           try {
 		        	   

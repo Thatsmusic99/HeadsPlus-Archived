@@ -90,7 +90,7 @@ public class Head implements CommandExecutor {
 				                world.dropItem(playerLoc, skull).setPickupDelay(0);
 				                return true;
 				    	    }
-				       } else if ((blacklist.contains(head)) && !(blacklistOn) && sender.hasPermission("headsplus.bypass.blacklist")) {
+				       } else if ((blacklist.contains(head)) && (blacklistOn) && sender.hasPermission("headsplus.bypass.blacklist")) {
 				    	   if (((Player) sender).getInventory().firstEmpty() == -1) {
 					        	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("full-inv"))));
 					        } else {

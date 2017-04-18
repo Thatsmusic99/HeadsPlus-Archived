@@ -71,7 +71,7 @@ public class Head implements CommandExecutor {
 				                return true;
 				        	}
 				    
-				        } else if ((blacklist.contains(head)) && (blacklistOn)) {
+				        } else if ((blacklist.contains(head)) && (blacklistOn) && !(sender.hasPermission("headsplus.bypass.blacklist"))) {
 				        	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("blacklist-head"))));
 					        return false;
 				        } else if ((blacklist.contains(head)) && !(blacklistOn)) {

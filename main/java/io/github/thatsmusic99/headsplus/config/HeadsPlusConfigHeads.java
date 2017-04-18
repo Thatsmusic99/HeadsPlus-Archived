@@ -14,6 +14,8 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 public class HeadsPlusConfigHeads {
 	public static List<String> mHeads = new ArrayList<>(Arrays.asList("blaze", "cavespider", "chicken", "cow", "creeper", "enderman", "ghast", "guardian", "irongolem", "mushroomcow", "pig", "sheep", "skeleton", "slime", "spider", "squid", "villager", "witch", "zombie"));
 	public static List<String> uHeads = new ArrayList<>(Arrays.asList("bat", "donkey", "enderdragon", "elderguardian", "endermite", "evoker", "horse", "llama", "magmacube", "mule", "polarbear", "rabbit", "shulker", "silverfish", "skeletonhorse", "snowman", "stray", "vex", "vindicator", "wither", "witherskeleton"));
+	public static List<String> eHeads = new ArrayList<>(Arrays.asList("apple", "cake", "chest", "cactus", "melon", "pumpkin"));
+	public static List<String> ieHeads = new ArrayList<>(Arrays.asList("coconutB", "coconutG", "oaklog", "present1", "present2", "tnt", "tnt2", "arrowUp", "arrowDown"));
 	private static FileConfiguration heads;
 	private static File headsF;
 	
@@ -56,10 +58,13 @@ public class HeadsPlusConfigHeads {
     }
     private static void addUndefinedHeads() {
     	for (String key : uHeads) {
+    		String str = key.substring(0, 1).toUpperCase();
+		    String str2 = key.substring(1, key.length());
     		getHeads().addDefault(key + "HeadN", "");
     		getHeads().addDefault(key + "HeadC", 0);
     		getHeads().addDefault(key + "HeadDN", "");
     		getHeads().addDefault(key + "HeadP", 0.00);
+    		getHeads().addDefault(key + "HeadEN", str + str2);
     	}
     }
     private static void addMHFHeads() {
@@ -72,13 +77,14 @@ public class HeadsPlusConfigHeads {
     		    getHeads().addDefault(key + "HeadC", 25);
     		    getHeads().addDefault(key + "HeadDN", str + str2 + " Head");
     		    getHeads().addDefault(key + "HeadP", 10.00);
+    		    getHeads().addDefault(key + "HeadEN", str + str2);
     		    
     		} else {
     			getHeads().addDefault("irongolemHeadN", "MHF_Golem");
     			getHeads().addDefault("irongolemHeadC", 25);
     			getHeads().addDefault("irongolemHeadDN", "Iron Golem Head");
     			getHeads().addDefault("irongolemHeadP", 10.00);
-    		    
+    		    getHeads().addDefault("irongolemHeadEN", "Iron Golem");
     		}
     	}
     }

@@ -15,7 +15,7 @@ public class HeadsPlusConfigHeads {
 	public static List<String> mHeads = new ArrayList<>(Arrays.asList("blaze", "cavespider", "chicken", "cow", "creeper", "enderman", "ghast", "guardian", "irongolem", "mushroomcow", "pig", "sheep", "skeleton", "slime", "spider", "squid", "villager", "witch", "zombie"));
 	public static List<String> uHeads = new ArrayList<>(Arrays.asList("bat", "donkey", "enderdragon", "elderguardian", "endermite", "evoker", "horse", "llama", "magmacube", "mule", "polarbear", "rabbit", "shulker", "silverfish", "skeletonhorse", "snowman", "stray", "vex", "vindicator", "wither", "witherskeleton"));
 	public static List<String> eHeads = new ArrayList<>(Arrays.asList("apple", "cake", "chest", "cactus", "melon", "pumpkin"));
-	public static List<String> ieHeads = new ArrayList<>(Arrays.asList("coconutB", "coconutG", "oaklog", "present1", "present2", "tnt", "tnt2", "arrowUp", "arrowDown"));
+	public static List<String> ieHeads = new ArrayList<>(Arrays.asList("coconutB", "coconutG", "oaklog", "present1", "present2", "tnt", "tnt2", "arrowUp", "arrowDown", "arrowQuestion", "arrowLeft", "arrowRight", "arrowExclamation"));
 	private static FileConfiguration heads;
 	private static File headsF;
 	
@@ -92,6 +92,38 @@ public class HeadsPlusConfigHeads {
     	getHeads().addDefault("playerHeadC", 100);
     	getHeads().addDefault("playerHeadDN", "%d's head");
     	getHeads().addDefault("playerHeadP", 10.00);
+    }
+    private static void addENHeads() {
+    	for (String key : eHeads) {
+    		String str = key.substring(0, 1).toUpperCase();
+		    String str2 = key.substring(1, key.length());
+    		getHeads().addDefault(key + "HeadEN", str + str2);
+    		getHeads().addDefault(key + "HeadN", "MHF_" + key);
+    	}
+    }
+    private static void addieHeads() {
+    	for (String key : ieHeads) {
+    		if (key.equals("coconutB")) {
+    			getHeads().addDefault("brownCoconutHeadEN", "Brown Coconut");
+    			getHeads().addDefault("brownCoconutHeadN", "MHF_CoconutB");
+    		}
+    		if (key.equals("coconutG")) {
+    			getHeads().addDefault("greenCoconutHeadEN", "Green Coconut");
+    			getHeads().addDefault("greenCoconutHeadN", "MHF_CoconutG");
+    		}
+    		if (key.equals("oaklog")) {
+    			getHeads().addDefault("oakLogHeadEN", "Oak Log");
+    			getHeads().addDefault("oakLogHeadN", "MHF_OakLog");
+    		}
+    		if (key.equals("present1")) {
+    			getHeads().addDefault("present1HeadEN", "Present");
+    			getHeads().addDefault("present1HeadN", "MHF_Present1");
+    		}
+    		if (key.equals("present2")) {
+    			getHeads().addDefault("present2HeadEN", "Present");
+    			getHeads().addDefault("present2HeadN", "MHF_Present2");
+    		}
+    	}
     }
 
 

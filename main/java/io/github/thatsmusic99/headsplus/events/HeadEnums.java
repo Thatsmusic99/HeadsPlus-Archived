@@ -1,7 +1,5 @@
 package io.github.thatsmusic99.headsplus.events;
 
-import org.bukkit.configuration.file.FileConfiguration;
-
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 
 public enum HeadEnums {

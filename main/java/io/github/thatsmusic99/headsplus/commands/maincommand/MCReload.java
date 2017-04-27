@@ -53,9 +53,6 @@ public class MCReload {
 			       } else {
 				       HeadsPlus.getInstance().log.info("[HeadsPlus] Found config, loading!");
 				       HeadsPlus.getInstance().reloadConfig();
-				       if (HeadsPlus.getInstance().getConfig().getBoolean("disableCrafting")) {
-				    	   Bukkit.resetRecipes();
-				       }
 				       HeadsPlus.getInstance().log.info("[HeadsPlus] Config reloaded!");
 			      }  
 			      if (!(messagesF.exists())) {

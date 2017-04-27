@@ -9,5 +9,6 @@ sellHeads: true
 dropHeads: true
 craftHeads: false
 autoReloadOnFirstJoin: true
+disableCrafting: false
 blacklistw: []
 blacklist: []

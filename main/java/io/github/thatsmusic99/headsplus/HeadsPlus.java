@@ -51,7 +51,7 @@ public class HeadsPlus extends JavaPlugin {
 			HeadsPlusConfig.msgEnable();
 			HeadsPlusConfigHeads.headsEnable();
 			HeadsPlusDataFile.loadHPData();
-			if (getConfig().getBoolean("craftHeads")) {
+			if (!getConfig().getBoolean("disableCrafting")) {
 			    HeadsPlusCrafting.craftingEnable();
 			    getServer().getPluginManager().registerEvents(new RecipePerms(), this);
 			}

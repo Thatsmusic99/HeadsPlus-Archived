@@ -52,10 +52,10 @@ public final class HeadInteractEvent implements Listener {
 		            player.sendMessage(iMessage1);
 		            TimesSent++;
 		            return;
-			    	}
-			 } else {
-			    TimesSent --;
-			 }
+			    } else {
+			        TimesSent --;
+			    }
+		    } 
 		}
 	}
 }

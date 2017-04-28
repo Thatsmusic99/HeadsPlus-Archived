@@ -34,6 +34,8 @@ public class HeadsPlusConfigHeads {
 		addMHFHeads();
 		addUndefinedHeads();
 		addPlayerHeads();
+		addENHeads();
+		addieHeads();
 		getHeads().options().copyDefaults(true);
 		saveHeads();
 	}

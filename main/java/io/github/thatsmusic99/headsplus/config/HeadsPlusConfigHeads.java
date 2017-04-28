@@ -123,6 +123,38 @@ public class HeadsPlusConfigHeads {
     			getHeads().addDefault("present2HeadEN", "Present");
     			getHeads().addDefault("present2HeadN", "MHF_Present2");
     		}
+    		if (key.equals("tnt")) {
+    			getHeads().addDefault("tntHeadEN", "TNT");
+    			getHeads().addDefault("tntHeadN", "MHF_TNT");
+    		}
+    		if (key.equalsIgnoreCase("tnt2")) {
+    			getHeads().addDefault("tnt2HeadEN", "TNT");
+    			getHeads().addDefault("tnt2HeadN", "MHF_TNT");
+    		}
+    		if (key.equalsIgnoreCase("arrowUp")) {
+    			getHeads().addDefault("arrowUpHeadEN", "Arrow pointing up");
+    			getHeads().addDefault("arrowUpHeadN", "MHF_ArrowUp");
+    		}
+    		if (key.equalsIgnoreCase("arrowDown")) {
+    			getHeads().addDefault("arrowDownHeadEN", "Arrow pointing down");
+    			getHeads().addDefault("arrowDownHeadN", "MHF_ArrowDown");
+    		}
+    		if (key.equalsIgnoreCase("arrowRight")) {
+    			getHeads().addDefault("arrowRightHeadEN", "Arrow pointing right");
+    			getHeads().addDefault("arrowRightHeadN", "MHF_ArrowRight");
+    		}
+    		if (key.equalsIgnoreCase("arrowLeft")) {
+    			getHeads().addDefault("arrowLeftHeadEN", "Arrow pointing left");
+    			getHeads().addDefault("arrowLeftHeadN", "MHF_ArrowLeft");
+    		}
+    		if (key.equalsIgnoreCase("arrowExclamation")) {
+    			getHeads().addDefault("exclamationHeadEN", "Exclamation");
+    			getHeads().addDefault("exclamationHeadN", "MHF_Exclamation");
+    		}
+    		if (key.equalsIgnoreCase("arrowQuestion")) {
+    			getHeads().addDefault("questionHeadEN", "Question");
+    			getHeads().addDefault("questionHeadN", "MHF_Question");
+    		}
     	}
     }
 

@@ -30,14 +30,19 @@ public class HeadsPlusConfigHeads {
 	}
 	
 	private static void loadHeads() {
-		getHeads().options().header("HeadsPlus by Thatsmusic99 - Config wiki: https://github.com/Thatsmusic99/HeadsPlus/wiki/Configuration");
-		addMHFHeads();
-		addUndefinedHeads();
-		addPlayerHeads();
-		addENHeads();
-		addieHeads();
-		getHeads().options().copyDefaults(true);
-		saveHeads();
+		try {
+			getHeads().options().header("HeadsPlus by Thatsmusic99 - Config wiki: https://github.com/Thatsmusic99/HeadsPlus/wiki/Configuration");
+		    addMHFHeads();
+		    addUndefinedHeads();
+		    addPlayerHeads();
+		    addENHeads();
+		    addieHeads();
+		    getHeads().options().copyDefaults(true);
+		    saveHeads();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	public static void reloadHeads() {
 		if (headsF == null) {

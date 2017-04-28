@@ -32,7 +32,7 @@ public final class HeadInteractEvent implements Listener {
 			    	for (HeadEnums key : HeadEnums.values()) {
 			    		if (owner.equalsIgnoreCase(key.name)) {
 			    			String iMessage1;
-				    		if (owner.startsWith("a") || owner.startsWith("e") || owner.startsWith("i") || owner.startsWith("o") || owner.startsWith("u")) {
+				    		if (key.displayname.startsWith("a") || key.displayname.startsWith("e") || key.displayname.startsWith("i") || key.displayname.startsWith("o") || key.displayname.startsWith("u") || key.displayname.startsWith("A") || key.displayname.startsWith("E") || key.displayname.startsWith("I") || key.displayname.startsWith("O") || key.displayname.startsWith("U")) {
 				    			iMessage1 = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("head-mhf-interact-message-2"));
 				    		} else {
 				    			iMessage1 = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("head-mhf-interact-message"));

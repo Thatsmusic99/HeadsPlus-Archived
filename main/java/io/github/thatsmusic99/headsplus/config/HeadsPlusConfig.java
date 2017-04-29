@@ -27,8 +27,8 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("reload-message", "&3Config has reloaded!");
 		getMessages().addDefault("reload-fail", "&cConfig failed to reload.");
 		getMessages().addDefault("head-interact-message", "&3That is &b%p&3''s &3head!");
-		getMessages().addDefault("head-mhf-interact-message", "&3That is a &b%p&3''s &3head!");
-		getMessages().addDefault("head-mhf-interact-message-2", "&3That is an &b%p''s &3head!");
+		getMessages().addDefault("head-mhf-interact-message", "&3That is a &b%p&3''s head!");
+		getMessages().addDefault("head-mhf-interact-message-2", "&3That is an &b%p&3''s &3head!");
 		getMessages().addDefault("sell-success", "&3Head sold successfully!");
 		getMessages().addDefault("sell-fail", "&cCouldn''t sell head!");
 		getMessages().addDefault("false-head", "&cThis head cannot be sold!");
@@ -63,6 +63,8 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("bl-fail", "&cFailed to modify blacklist.");
 		getMessages().addDefault("blw-fail", "&cFailed to modify world blacklist.");
 		getMessages().addDefault("disabled", "&cThis command is disabled.");
+		getMessages().addDefault("empty-bl", "&cThe blacklist is empty!");
+		getMessages().addDefault("empty-blw", "&cThe world blacklist is empty!");
 		getMessages().options().copyDefaults(true);
 		saveMessages();
 		

@@ -18,6 +18,10 @@ public class BlacklistList {
 			int headsN = 1;
 			List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("blacklist");
 			int bls = bl.size();
+			if (bls == 0) {
+				ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("empty-bl")));
+				return;
+			}
 			while (bls > 8) {
 				headsN++;
 				bls = bls - 8;

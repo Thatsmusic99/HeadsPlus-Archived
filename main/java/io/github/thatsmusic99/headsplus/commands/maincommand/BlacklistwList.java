@@ -18,8 +18,8 @@ static String prefix = HeadsPlus.getInstance().translateMessages(ChatColor.trans
 		       int worldsN = 1;
 		       List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("blacklistw");
 		       int bls = bl.size();
-		       if (bls == 0) {
-					ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("empty-blw")));
+		       if (bls < 1) {
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("empty-blw"))));
 					return;
 				}
 		       while (bls > 8) {

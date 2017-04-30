@@ -21,7 +21,6 @@ import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistwToggle;
 import io.github.thatsmusic99.headsplus.commands.maincommand.HelpMenu;
 import io.github.thatsmusic99.headsplus.commands.maincommand.Info;
 import io.github.thatsmusic99.headsplus.commands.maincommand.MCReload;
-import io.github.thatsmusic99.headsplus.commands.maincommand.PurgeData;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class HeadsPlusCommand implements CommandExecutor {
@@ -30,7 +29,7 @@ public class HeadsPlusCommand implements CommandExecutor {
 	private static String tooManyArgs = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("too-many-args")));
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		List<String> validCmds = new ArrayList<>(Arrays.asList("reload", "blacklistadd", "blacklistdel", "blacklist", "info", "blacklistl", "purgedata", "help", "blacklistw", "blacklistwadd", "blacklistwdel", "blacklistwl", "blacklistw"));
+		List<String> validCmds = new ArrayList<>(Arrays.asList("reload", "blacklistadd", "blacklistdel", "blacklist", "info", "blacklistl", "help", "blacklistw", "blacklistwadd", "blacklistwdel", "blacklistwl", "blacklistw"));
 
 		if ((cmd.getName().equalsIgnoreCase("headsplus")) || (cmd.getName().equalsIgnoreCase("hp"))) {
 			if (sender.hasPermission("headsplus.maincommand")) {
@@ -98,9 +97,6 @@ public class HeadsPlusCommand implements CommandExecutor {
 				   } else {
 					   sender.sendMessage(noPerms);
 				   }
-			   }
-			   if ((args.length >= 1) && (args[0].equalsIgnoreCase("purgedata"))) {
-				   PurgeData.purgeData(sender);
 			   }
 			   if ((args.length >= 1) && (args[0].matches("^[0-9]+$"))) {
 				   HelpMenu.helpNo(sender, args[0]);

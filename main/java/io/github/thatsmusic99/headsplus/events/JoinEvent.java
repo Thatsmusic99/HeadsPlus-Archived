@@ -2,7 +2,6 @@ package io.github.thatsmusic99.headsplus.events;
 
 import java.io.File;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -14,7 +13,6 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusCrafting;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusDataFile;
 
 public class JoinEvent implements Listener { 
 	
@@ -28,10 +26,6 @@ public class JoinEvent implements Listener {
 	@SuppressWarnings("unused")
 	private static FileConfiguration heads;
 	private static File headsF = new File(HeadsPlus.getInstance().getDataFolder(), "heads.yml");;
-	
-	@SuppressWarnings("unused")
-	private static FileConfiguration data;
-	private static File dataF = new File(HeadsPlus.getInstance().getDataFolder(), "data.yml");;
 	
 	@SuppressWarnings("unused")
 	private static FileConfiguration crafting;
@@ -74,16 +68,6 @@ public class JoinEvent implements Listener {
 				    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Heads created!");
 				      } else {
 				    	  HeadsPlusConfigHeads.reloadHeads();
-				      }
-				      if (!(dataF.exists())) {
-				    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Data not found, creating!");
-				    	  Bukkit.resetRecipes();
-				    	  HeadsPlusDataFile.reloadHPData();
-				    	  data = YamlConfiguration.loadConfiguration(dataF);
-				    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Data created!");
-				      } else {
-				    	  Bukkit.resetRecipes();
-				    	  HeadsPlusDataFile.reloadHPData();
 				      }
 				      if (!(craftingF.exists())) {
 				    	  if (HeadsPlus.getInstance().getConfig().getBoolean("craftHeads")) {

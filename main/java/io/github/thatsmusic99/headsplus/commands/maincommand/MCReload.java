@@ -12,7 +12,6 @@ import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusCrafting;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusDataFile;
 
 public class MCReload {
 	
@@ -70,14 +69,6 @@ public class MCReload {
 			    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Heads created!");
 			      } else {
 			    	  HeadsPlusConfigHeads.reloadHeads();
-			      }
-			      if (!(dataF.exists())) {
-			    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Data not found, creating!");
-			    	  HeadsPlusDataFile.reloadHPData();
-			    	  data = YamlConfiguration.loadConfiguration(dataF);
-			    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Data created!");
-			      } else {
-			    	  HeadsPlusDataFile.reloadHPData();
 			      }
 			      if (!(craftingF.exists())) {
 			    	  if (HeadsPlus.getInstance().getConfig().getBoolean("craftHeads")) {

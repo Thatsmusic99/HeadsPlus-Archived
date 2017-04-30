@@ -12,12 +12,10 @@ import io.github.thatsmusic99.headsplus.commands.SellHead;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusCrafting;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusDataFile;
 import io.github.thatsmusic99.headsplus.crafting.RecipePerms;
 import io.github.thatsmusic99.headsplus.events.DeathEvents;
 import io.github.thatsmusic99.headsplus.events.HeadInteractEvent;
 import io.github.thatsmusic99.headsplus.events.JoinEvent;
-import io.github.thatsmusic99.headsplus.events.QuitJoinEvents;
 
 import net.milkbowl.vault.economy.Economy;
 
@@ -50,7 +48,6 @@ public class HeadsPlus extends JavaPlugin {
 			setUpMConfig();
 			HeadsPlusConfig.msgEnable();
 			HeadsPlusConfigHeads.headsEnable();
-			HeadsPlusDataFile.loadHPData();
 			if (!getConfig().getBoolean("disableCrafting")) {
 			    HeadsPlusCrafting.craftingEnable();
 			    getServer().getPluginManager().registerEvents(new RecipePerms(), this);
@@ -73,7 +70,6 @@ public class HeadsPlus extends JavaPlugin {
 			if (getConfig().getBoolean("dropHeads")) {
 			    getServer().getPluginManager().registerEvents(new DeathEvents(), this);
 		    }
-			getServer().getPluginManager().registerEvents(new QuitJoinEvents(), this);
 			if (getConfig().getBoolean("autoReloadOnFirstJoin")) {
 				getServer().getPluginManager().registerEvents(new JoinEvent(), this);
 			}
@@ -89,8 +85,6 @@ public class HeadsPlus extends JavaPlugin {
     }
 	@Override
 	public void onDisable() {
-		QuitJoinEvents.num = 0;
-		QuitJoinEvents.num2 = 0;
 		log.info("[HeadsPlus] HeadsPlus has been disabled.");
 	}
 	public static HeadsPlus getInstance() {

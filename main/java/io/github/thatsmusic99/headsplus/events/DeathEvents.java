@@ -28,7 +28,7 @@ public class DeathEvents implements Listener {
 	public void onEntityDeath(EntityDeathEvent e) {
 		if (ableEntities.contains(e.getEntityType())) {
 			if (e.getEntity().getKiller() != null) {
-			    if (!HeadsPlus.getInstance().getConfig().getStringList("blacklistw").contains(e.getEntity().getWorld().getName())) {
+			    if (!HeadsPlus.getInstance().getConfig().getStringList("blacklistw").contains(e.getEntity().getWorld().getName()) || e.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn")) {
 		            String entity = e.getEntityType().toString().toLowerCase().replaceAll("_", "");
 		            Random rand = new Random();
 		            int chance1 = HeadsPlusConfigHeads.getHeads().getInt(entity + "HeadC");
@@ -58,7 +58,7 @@ public class DeathEvents implements Listener {
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent ep) {
 		if (ep.getEntity().getKiller() != null) {
-			if (!HeadsPlus.getInstance().getConfig().getStringList("blacklistw").contains(ep.getEntity().getWorld().getName()) || ep.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw")) { 
+			if (!HeadsPlus.getInstance().getConfig().getStringList("blacklistw").contains(ep.getEntity().getWorld().getName()) || ep.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn")) { 
 		        Random rand = new Random();
 		        int chance1 = HeadsPlusConfigHeads.getHeads().getInt("playerHeadC");
 		        int chance2 = rand.nextInt(100) + 1;

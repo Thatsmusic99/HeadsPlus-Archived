@@ -68,7 +68,6 @@ public class HeadsPlusConfig {
 		getMessages().options().copyDefaults(true);
 		saveMessages();
 		
-		// TODO Finish messages.
 	}
 	public static void reloadMessages() {
 		if (messagesF == null) {

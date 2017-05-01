@@ -26,11 +26,11 @@ public class BlacklistList {
 				headsN++;
 				bls = bls - 8;
 			}
-			sender.sendMessage(ChatColor.DARK_BLUE + "============ " + ChatColor.GOLD + "Blacklist: " + ChatColor.GRAY + "1/" + headsN + ChatColor.DARK_BLUE + " ==========" );
+			sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "============ " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + "Blacklist: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + "1/" + headsN + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + " ==========" );
 			int TimesSent = 0;
 			for (String key : bl) {
 				if (TimesSent <= 7) {
-					sender.sendMessage(ChatColor.GRAY + key);
+					sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + key);
 					TimesSent++;
 				}
 			}
@@ -59,7 +59,7 @@ public class BlacklistList {
 				   if ((page > pages) || (0 >= page)) {
 					   sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("invalid-pg-no"))));
 				   } else {
-					   sender.sendMessage(ChatColor.DARK_BLUE + "========== " + ChatColor.GOLD + "Blacklist: " + ChatColor.GRAY + page + "/" + pages + ChatColor.DARK_BLUE + " ===========");
+					   sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "========== " + ChatColor.GOLD + "Blacklist: " + ChatColor.GRAY + page + "/" + pages + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + " ===========");
 			           List<String> blsl = bl.subList(sIndex, eIndex);
 				       for (String key : blsl) {
 				           sender.sendMessage(ChatColor.GRAY + key);

@@ -10,5 +10,9 @@ dropHeads: true
 craftHeads: false
 autoReloadOnFirstJoin: true
 disableCrafting: false
+themeColor1: DARK_BLUE
+themeColor2: GOLD
+themeColor3: GRAY
+themeColor4: DARK_AQUA
 blacklistw: []
 blacklist: []

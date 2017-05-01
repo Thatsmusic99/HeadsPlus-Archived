@@ -28,11 +28,11 @@ public class HelpMenu {
 	    	pageNo++;
 	    	hpp = hpp - 8;
 	    }
-		sender.sendMessage(ChatColor.DARK_BLUE + "===============" + ChatColor.GOLD + " HeadsPlus " + ChatColor.GRAY + "1/" + String.valueOf(pageNo) + " " + ChatColor.DARK_BLUE + "===============");
+		sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + " HeadsPlus " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + "1/" + String.valueOf(pageNo) + " " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============");
 		int TimesSent = 0;
 		for (PermissionEnums key2 : headPerms) {
 			if (TimesSent <= 7) {
-				sender.sendMessage(ChatColor.GRAY + key2.cmd + " - " + ChatColor.DARK_AQUA + key2.dsc);
+				sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + key2.cmd + " - " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + key2.dsc);
 				TimesSent++;
 			}
 		}
@@ -66,10 +66,10 @@ public class HelpMenu {
 				if ((page > pages) || (0 >= page)) {
 					sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("invalid-pg-no"))));
 				} else {
-					sender.sendMessage(ChatColor.DARK_BLUE + "===============" + ChatColor.GOLD + " HeadsPlus " + ChatColor.GRAY + String.valueOf(page) + "/" + String.valueOf(pages) + " " + ChatColor.DARK_BLUE + "===============");
+					sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + " HeadsPlus " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + String.valueOf(page) + "/" + String.valueOf(pages) + " " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============");
 					List<PermissionEnums> hppsl = headPerms.subList(sIndex, eIndex);
 				    for (PermissionEnums key : hppsl) {
-				        sender.sendMessage(ChatColor.GRAY + key.cmd + " - " + ChatColor.DARK_AQUA + key.dsc);
+				        sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + key.cmd + " - " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + key.dsc);
 				    }
 				}
 			}

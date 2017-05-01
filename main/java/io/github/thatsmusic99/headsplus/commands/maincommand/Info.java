@@ -12,9 +12,9 @@ public class Info {
 		if (sender.hasPermission("headsplus.maincommand.info")) {
 		       String version = HeadsPlus.getInstance().version;
 		       String author = HeadsPlus.getInstance().author;
-		       sender.sendMessage(ChatColor.DARK_BLUE + "===============" + ChatColor.GOLD + "HeadsPlus" + ChatColor.DARK_BLUE + "===============");
-		       sender.sendMessage(ChatColor.DARK_AQUA + "Version: " + ChatColor.GRAY + version);
-		       sender.sendMessage(ChatColor.DARK_AQUA + "Author: " + ChatColor.GRAY + author);
+		       sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + "HeadsPlus" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============");
+		       sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "Version: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + version);
+		       sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "Author: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + author);
 		} else {
 	    	sender.sendMessage(HeadsPlusCommand.noPerms);
 	    }

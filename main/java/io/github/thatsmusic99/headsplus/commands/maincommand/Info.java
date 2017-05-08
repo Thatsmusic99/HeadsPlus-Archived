@@ -8,6 +8,8 @@ import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 
 public class Info {
 	
+	static String noPerms = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusCommand.noPerms));
+	
 	public static void info(CommandSender sender) {
 		if (sender.hasPermission("headsplus.maincommand.info")) {
 		       String version = HeadsPlus.getInstance().version;
@@ -16,7 +18,7 @@ public class Info {
 		       sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "Version: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + version);
 		       sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "Author: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + author);
 		} else {
-	    	sender.sendMessage(HeadsPlusCommand.noPerms);
+	    	sender.sendMessage(noPerms);
 	    }
 	}
 }

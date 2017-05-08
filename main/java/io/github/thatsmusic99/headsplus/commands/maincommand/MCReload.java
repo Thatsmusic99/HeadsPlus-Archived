@@ -26,10 +26,6 @@ public class MCReload {
 	private static File headsF = new File(HeadsPlus.getInstance().getDataFolder(), "heads.yml");;
 	
 	@SuppressWarnings("unused")
-	private static FileConfiguration data;
-	private static File dataF = new File(HeadsPlus.getInstance().getDataFolder(), "data.yml");;
-	
-	@SuppressWarnings("unused")
 	private static FileConfiguration crafting;
 	private static File craftingF = new File(HeadsPlus.getInstance().getDataFolder(), "crafting.yml");;
 	
@@ -38,11 +34,10 @@ public class MCReload {
 			   String reloadM = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("reload-message"));
 			   String reloadingM = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("reloading-message"));
 			   String reloadF = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("reload-fail"));
-			   String prefix = HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("prefix")));
 			   reloadM = HeadsPlus.getInstance().translateMessages(reloadM);
 			   reloadingM = HeadsPlus.getInstance().translateMessages(reloadingM);
 			   reloadF = HeadsPlus.getInstance().translateMessages(reloadF);
-		       sender.sendMessage(prefix + " " + reloadingM);
+		       sender.sendMessage(reloadingM);
 		       try {
 
 			       if  (!(configF.exists())) {
@@ -77,18 +72,18 @@ public class MCReload {
 			    	      HeadsPlusCrafting.reloadCrafting();
 			    	      crafting = YamlConfiguration.loadConfiguration(craftingF);
 			    	      HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting created!");
-			    	      sender.sendMessage(prefix + " " + reloadM);
+			    	      sender.sendMessage(reloadM);
 			    	  }
 			      } else {
 			    	  Bukkit.resetRecipes();
 			    	  HeadsPlusCrafting.reloadCrafting();
-			    	  sender.sendMessage(prefix + " " + reloadM);
+			    	  sender.sendMessage(reloadM);
 			      }
 			      
 		       } catch (Exception e) {
 			       HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to reload config!");
 			       e.printStackTrace();
-			       sender.sendMessage(prefix + " "+ reloadF);
+			       sender.sendMessage(reloadF);
 		       }
 		   } else {
 		       sender.sendMessage(HeadsPlusCommand.noPerms);

@@ -19,8 +19,7 @@ public class BlacklistDelete {
 
 	public static void blacklistDel(CommandSender sender, String name) {
 		if (sender.hasPermission("headsplus.maincommand.blacklist.delete")) {
-			String prefix = HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("prefix")));
-		  	if (name.matches("^[A-Za-z0-9_]+$")) {
+			if (name.matches("^[A-Za-z0-9_]+$")) {
 		        try {
 		            config.options().copyDefaults(true);
                     HeadsPlus.getInstance().saveConfig();
@@ -36,22 +35,22 @@ public class BlacklistDelete {
 				              config.set("blacklist", blacklist);
 				              config.options().copyDefaults(true);
 				              HeadsPlus.getInstance().saveConfig();
-				              sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("head-removed").replaceAll("%p", name))));
+				              sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("head-removed").replaceAll("%p", name))));
 			              } else {
-			    	          sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("head-a-removed"))));
+			    	          sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("head-a-removed"))));
 			          
                     }} catch (Exception e) {
 			    	      HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove head!");
 			    	      e.printStackTrace();
-			    	      sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("bl-fail"))));
+			    	      sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("bl-fail"))));
 			          }
 		       } catch (Exception e) {
 			       HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove head!");
 			       e.printStackTrace();
-			       sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("bl-fail"))));
+			       sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("bl-fail"))));
 		       }
 		  } else {
-			  sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("alpha-names"))));
+			  sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("alpha-names"))));
 		  }
 	} else {
 		sender.sendMessage(HeadsPlusCommand.noPerms);

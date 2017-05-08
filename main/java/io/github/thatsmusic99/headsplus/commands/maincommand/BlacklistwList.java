@@ -11,8 +11,6 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class BlacklistwList {
 	
-static String prefix = HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("prefix")));
-	
 	public static void blacklistwListNoArgs(CommandSender sender) {
 		if (sender.hasPermission("headsplus.maincommand.blacklistw.list")) {
 		       int worldsN = 1;
@@ -57,7 +55,7 @@ static String prefix = HeadsPlus.getInstance().translateMessages(ChatColor.trans
 				   }
 				  
 				   if ((page > pages) || (0 >= page)) {
-					   sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("invalid-pg-no"))));
+					   sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("invalid-pg-no"))));
 				   } else {
 					   sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "============ " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + "World Blacklist: "
 				   + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + page + "/" + pages
@@ -68,7 +66,7 @@ static String prefix = HeadsPlus.getInstance().translateMessages(ChatColor.trans
 				       }
 				   }
 	       } else {
-		       sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("invalid-input-int"))));	  
+		       sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("invalid-input-int"))));	  
 		   }
 	} else {
     	sender.sendMessage(HeadsPlusCommand.noPerms);

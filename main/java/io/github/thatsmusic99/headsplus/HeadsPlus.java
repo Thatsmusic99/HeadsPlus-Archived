@@ -123,6 +123,9 @@ public class HeadsPlus extends JavaPlugin {
     	if (s.contains("'$")) {
     		s = s.replaceAll("'$", "");
     	}
+    	if (s.contains("%h")) {
+    		s = s.replaceAll("%h", HeadsPlusConfig.getMessages().getString("prefix"));
+    	}
 		return s;
     }
 	private boolean econ() {

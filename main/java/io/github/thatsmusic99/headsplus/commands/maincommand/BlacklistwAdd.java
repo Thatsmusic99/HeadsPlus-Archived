@@ -17,8 +17,7 @@ public class BlacklistwAdd {
 	private static File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
 
 	public static void blacklistAdd(CommandSender sender, String world) {
-		String prefix = HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("prefix")));
-	
+		
 		if (sender.hasPermission("headsplus.maincommand.blacklistw.add")) {
 			   if (world.matches("^[A-Za-z0-9_]+$")) {
 		           try {
@@ -33,22 +32,22 @@ public class BlacklistwAdd {
 			           List<String> blacklist = config.getStringList("blacklistw");
 			           String aWorld = world.toLowerCase();
 			           if (blacklist.contains(aWorld)) {
-				           sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("world-a-add"))));
+				           sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("world-a-add"))));
 			           } else {
 			    	       blacklist.add(aWorld);
 				           config.set("blacklistw", blacklist);
 				           config.options().copyDefaults(true);
 				           HeadsPlus.getInstance().saveConfig();
 				       
-				           sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("world-added").replaceAll("%w", world))));
+				           sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("world-added").replaceAll("%w", world))));
 			          }
 		           } catch (Exception e) {
 			          HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to add world!");
 			          e.printStackTrace();
-			          sender.sendMessage(prefix + " " +  ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("blw-fail"))));
+			          sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("blw-fail"))));
 		           }
 			   } else {
-				   sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("alpha-names"))));
+				   sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("alpha-names"))));
 			   }
 	} else {
 		sender.sendMessage(HeadsPlusCommand.noPerms);

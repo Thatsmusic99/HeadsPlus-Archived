@@ -12,7 +12,6 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class HelpMenu {
 	
-	static String prefix = HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("prefix")));
 	
 	public static void helpNoArgs(CommandSender sender) {
 	if (sender.hasPermission("headsplus.maincommand")) {
@@ -64,7 +63,7 @@ public class HelpMenu {
 				}
 				
 				if ((page > pages) || (0 >= page)) {
-					sender.sendMessage(prefix + " " + ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("invalid-pg-no"))));
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("invalid-pg-no"))));
 				} else {
 					sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + " HeadsPlus " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + String.valueOf(page) + "/" + String.valueOf(pages) + " " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============");
 					List<PermissionEnums> hppsl = headPerms.subList(sIndex, eIndex);

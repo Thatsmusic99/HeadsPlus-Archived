@@ -1,5 +1,6 @@
 package io.github.thatsmusic99.headsplus;
 
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -124,7 +125,7 @@ public class HeadsPlus extends JavaPlugin {
     		s = s.replaceAll("'$", "");
     	}
     	if (s.contains("%h")) {
-    		s = s.replaceAll("%h", HeadsPlusConfig.getMessages().getString("prefix"));
+    		s = s.replaceAll("%h", ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("prefix")));
     	}
 		return s;
     }

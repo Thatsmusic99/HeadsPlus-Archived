@@ -50,8 +50,10 @@ public class SellHead implements CommandExecutor {
 		    			if (owner.matches(HeadsPlusConfigHeads.getHeads().getString(key + "HeadN"))) {
 		    				String senderName = sender.getName();
 		    				Double price = HeadsPlusConfigHeads.getHeads().getDouble(key + "HeadP");
-		    				if (invi.getAmount() > 0 && (args.length >= 1 && args[0].equalsIgnoreCase("one"))) {
-								price = price * invi.getAmount();
+		    				if (invi.getAmount() > 0 && !(args.length >= 1)) {
+		    					if (!args[0].equalsIgnoreCase("one")) {
+		    						price = price * invi.getAmount();
+		    					}
 							}
 		    				@SuppressWarnings({ "deprecation" })
 							EconomyResponse zr = econ.depositPlayer(senderName, price);

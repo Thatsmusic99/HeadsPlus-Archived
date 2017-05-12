@@ -50,11 +50,7 @@ public class SellHead implements CommandExecutor {
 		    			if (owner.matches(HeadsPlusConfigHeads.getHeads().getString(key + "HeadN"))) {
 		    				String senderName = sender.getName();
 		    				Double price = HeadsPlusConfigHeads.getHeads().getDouble(key + "HeadP");
-		    				if (invi.getAmount() > 0 && !(args.length >= 1)) {
-		    					if (!args[0].equalsIgnoreCase("one")) {
-		    						price = price * invi.getAmount();
-		    					}
-							}
+		    				if (invi.getAmount() > 0 && args.length >= 0) { if (args.length > 0) { if (!args[0].equalsIgnoreCase("one")) { price = price * invi.getAmount(); } } } 
 		    				@SuppressWarnings({ "deprecation" })
 							EconomyResponse zr = econ.depositPlayer(senderName, price);
 		    				String success = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-success").replaceAll("%b", econ.format(econ.getBalance((Player) sender))));
@@ -65,16 +61,12 @@ public class SellHead implements CommandExecutor {
 								((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
 								sender.sendMessage(success.replaceAll("%l", econ.format(zr.amount)));
 								sold = true;
-							} else {
-								sender.sendMessage(fail + ": " + zr.errorMessage);
-							}
+							} else { sender.sendMessage(fail + ": " + zr.errorMessage); }
 		    				
 		    			} else if ((owner.matches("MHF_Golem")) && (key.equalsIgnoreCase("irongolem"))) {
 		    				Double price = HeadsPlusConfigHeads.getHeads().getDouble("irongolemHeadP");
 		    				String senderName = sender.getName();
-		    				if (invi.getAmount() > 0) {
-								price = price * invi.getAmount();
-							}
+		    				if (invi.getAmount() > 0 && args.length >= 0) { if (args.length > 0) { if (!args[0].equalsIgnoreCase("one")) { price = price * invi.getAmount(); } } } 
 		    				@SuppressWarnings({ "deprecation" })
 							EconomyResponse zr = econ.depositPlayer(senderName, price);
 		    				String success = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-success"));
@@ -94,9 +86,7 @@ public class SellHead implements CommandExecutor {
 		    			if (owner.matches(HeadsPlusConfigHeads.getHeads().getString(key + "HeadN"))) {
 		    				String senderName = sender.getName();
 		    				Double price = HeadsPlusConfigHeads.getHeads().getDouble(key + "HeadP");
-							if (invi.getAmount() > 0) {
-								price = price * invi.getAmount();
-							}
+		    				if (invi.getAmount() > 0 && args.length >= 0) { if (args.length > 0) { if (!args[0].equalsIgnoreCase("one")) { price = price * invi.getAmount(); } } } 
 		    				@SuppressWarnings({ "deprecation" })
 							EconomyResponse zr = econ.depositPlayer(senderName, price);
 		    				String success = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-success"));

@@ -41,6 +41,7 @@ public class SellHead implements CommandExecutor {
 		            lore2 = skullM.getLore().get(1);
 		        }
 		    	if ((skullM.getLore() != null) && ((lore.equals("" + ChatColor.GOLD + ChatColor.BOLD + "This head can be sold!")) && (lore2.equals("" + ChatColor.GOLD + "Do /sellhead to sell!")))) {
+		  
 		    		Economy econ = HeadsPlus.getInstance().econ;
 		    		List<String> mHeads = HeadsPlusConfigHeads.mHeads;
 		    		List<String> uHeads = HeadsPlusConfigHeads.uHeads; 
@@ -49,18 +50,18 @@ public class SellHead implements CommandExecutor {
 		    			if (owner.matches(HeadsPlusConfigHeads.getHeads().getString(key + "HeadN"))) {
 		    				String senderName = sender.getName();
 		    				Double price = HeadsPlusConfigHeads.getHeads().getDouble(key + "HeadP");
-		    				if (invi.getAmount() > 0) {
+		    				if (invi.getAmount() > 0 && (args.length >= 1 && args[0].equalsIgnoreCase("one"))) {
 								price = price * invi.getAmount();
 							}
 		    				@SuppressWarnings({ "deprecation" })
 							EconomyResponse zr = econ.depositPlayer(senderName, price);
-		    				String success = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-success"));
+		    				String success = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-success").replaceAll("%b", econ.format(econ.getBalance((Player) sender))));
 							success = ChatColor.translateAlternateColorCodes('&', success);
 							String fail = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-fail"));
 							fail = ChatColor.translateAlternateColorCodes('&', fail);
 							if (zr.transactionSuccess()) {
 								((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
-								sender.sendMessage(success);
+								sender.sendMessage(success.replaceAll("%l", econ.format(zr.amount)));
 								sold = true;
 							} else {
 								sender.sendMessage(fail + ": " + zr.errorMessage);

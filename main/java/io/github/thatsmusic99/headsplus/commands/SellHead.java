@@ -53,13 +53,13 @@ public class SellHead implements CommandExecutor {
 		    				if (invi.getAmount() > 0 && args.length >= 0) { if (args.length > 0) { if (!args[0].equalsIgnoreCase("one")) { price = price * invi.getAmount(); } } } 
 		    				@SuppressWarnings({ "deprecation" })
 							EconomyResponse zr = econ.depositPlayer(senderName, price);
-		    				String success = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-success").replaceAll("%b", econ.format(econ.getBalance((Player) sender))));
+		    				String success = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-success")).replaceAll("%l", Double.toString(zr.amount)).replaceAll("%b", Double.toString(zr.balance));
 							success = ChatColor.translateAlternateColorCodes('&', success);
 							String fail = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-fail"));
 							fail = ChatColor.translateAlternateColorCodes('&', fail);
 							if (zr.transactionSuccess()) {
 								((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
-								sender.sendMessage(success.replaceAll("%l", econ.format(zr.amount)));
+								sender.sendMessage(success);
 								sold = true;
 							} else { sender.sendMessage(fail + ": " + zr.errorMessage); }
 		    				
@@ -75,7 +75,7 @@ public class SellHead implements CommandExecutor {
 							fail = ChatColor.translateAlternateColorCodes('&', fail);
 							if (zr.transactionSuccess()) {
 								((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
-								sender.sendMessage(success);
+								sender.sendMessage(success.replaceAll("%l", econ.format(zr.amount)).replaceAll("%b", econ.format(zr.balance)));
 								sold = true;
 							} else {
 								sender.sendMessage(fail + ": " + zr.errorMessage);
@@ -95,7 +95,7 @@ public class SellHead implements CommandExecutor {
 							fail = ChatColor.translateAlternateColorCodes('&', fail);
 							if (zr.transactionSuccess()) {
 								((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
-								sender.sendMessage(success);
+								sender.sendMessage(success.replaceAll("%l", econ.format(zr.amount)).replaceAll("%b", econ.format(zr.balance)));
 								sold = true;
 							} else {
 								sender.sendMessage(fail + ": " + zr.errorMessage);
@@ -106,9 +106,7 @@ public class SellHead implements CommandExecutor {
 		    		if (!sold) {
 			    		Double price = HeadsPlusConfigHeads.getHeads().getDouble("playerHeadP");
 			    		String senderName = sender.getName();
-			    		if (invi.getAmount() > 0) {
-			    			price = price * invi.getAmount();
-			    		}
+			    		if (invi.getAmount() > 0 && args.length >= 0) { if (args.length > 0) { if (!args[0].equalsIgnoreCase("one")) { price = price * invi.getAmount(); } } } 
 			    		@SuppressWarnings("deprecation")
 						EconomyResponse zr = econ.depositPlayer(senderName, price);
 			    		String success = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-success"));
@@ -117,7 +115,7 @@ public class SellHead implements CommandExecutor {
 						fail = ChatColor.translateAlternateColorCodes('&', fail);
 						if (zr.transactionSuccess()) {
 							((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
-							sender.sendMessage(success);
+							sender.sendMessage(success.replaceAll("%l", econ.format(zr.amount)).replaceAll("%b", econ.format(zr.balance)));
 							sold = true;
 						} else {
 							sender.sendMessage(fail + ": " + zr.errorMessage);

@@ -58,11 +58,17 @@ public class SellHead implements CommandExecutor {
 							String fail = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-fail"));
 							fail = ChatColor.translateAlternateColorCodes('&', fail);
 							if (zr.transactionSuccess()) {
-								if (args.length > 0) { if (args[0].equalsIgnoreCase("one")) { 
-									((Player) sender).getInventory().getItemInMainHand().setAmount(((Player) sender).getInventory().getItemInMainHand().getAmount() - 1);
-								} else {
+								if (args.length > 0) { 
+									if (args[0].equalsIgnoreCase("one")) { 
+										if (invi.getAmount() >= 2) {
+											((Player) sender).getInventory().getItemInMainHand().setAmount(((Player) sender).getInventory().getItemInMainHand().getAmount() - 1);
+									    } else {
+									        ((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+								        }
+								    } else {
 									((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
-								}} else {
+								    } 
+								}  else {
 									((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
 								}
 								sender.sendMessage(success);
@@ -80,11 +86,17 @@ public class SellHead implements CommandExecutor {
 							String fail = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-fail"));
 							fail = ChatColor.translateAlternateColorCodes('&', fail);
 							if (zr.transactionSuccess()) {
-								if (args.length > 0) { if (args[0].equalsIgnoreCase("one")) { 
-									((Player) sender).getInventory().getItemInMainHand().setAmount(((Player) sender).getInventory().getItemInMainHand().getAmount() - 1);
-								} else {
+								if (args.length > 0) { 
+									if (args[0].equalsIgnoreCase("one")) { 
+										if (invi.getAmount() >= 2) {
+											((Player) sender).getInventory().getItemInMainHand().setAmount(((Player) sender).getInventory().getItemInMainHand().getAmount() - 1);
+									    } else {
+									        ((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+								        }
+								    } else {
 									((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
-								}} else {
+								    } 
+								}  else {
 									((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
 								}
 								sender.sendMessage(success);
@@ -106,11 +118,17 @@ public class SellHead implements CommandExecutor {
 							String fail = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-fail"));
 							fail = ChatColor.translateAlternateColorCodes('&', fail);
 							if (zr.transactionSuccess()) {
-								if (args.length > 0) { if (args[0].equalsIgnoreCase("one")) { 
-									((Player) sender).getInventory().getItemInMainHand().setAmount(((Player) sender).getInventory().getItemInMainHand().getAmount() - 1);
-								} else {
+								if (args.length > 0) { 
+									if (args[0].equalsIgnoreCase("one")) { 
+										if (invi.getAmount() >= 2) {
+											((Player) sender).getInventory().getItemInMainHand().setAmount(((Player) sender).getInventory().getItemInMainHand().getAmount() - 1);
+									    } else {
+									        ((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+								        }
+								    } else {
 									((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
-								}} else {
+								    } 
+								}  else {
 									((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
 								}
 								sender.sendMessage(success);
@@ -132,11 +150,17 @@ public class SellHead implements CommandExecutor {
 			    		String fail = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-fail"));
 						fail = ChatColor.translateAlternateColorCodes('&', fail);
 						if (zr.transactionSuccess()) {
-							if (args.length > 0) { if (args[0].equalsIgnoreCase("one")) { 
-								((Player) sender).getInventory().getItemInMainHand().setAmount(((Player) sender).getInventory().getItemInMainHand().getAmount() - 1);
-							} else {
+							if (args.length > 0) { 
+								if (args[0].equalsIgnoreCase("one")) { 
+									if (invi.getAmount() >= 2) {
+										((Player) sender).getInventory().getItemInMainHand().setAmount(((Player) sender).getInventory().getItemInMainHand().getAmount() - 1);
+								    } else {
+								        ((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+							        }
+							    } else {
 								((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
-							}} else {
+							    } 
+							} else {
 								((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
 							}
 							

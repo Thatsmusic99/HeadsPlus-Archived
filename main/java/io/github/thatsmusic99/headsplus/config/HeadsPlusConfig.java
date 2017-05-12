@@ -29,7 +29,7 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("head-interact-message", "&3That is &b%p&3''s &3head!");
 		getMessages().addDefault("head-mhf-interact-message", "&3That is a &b%p&3''s head!");
 		getMessages().addDefault("head-mhf-interact-message-2", "&3That is an &b%p&3''s &3head!");
-		getMessages().addDefault("sell-success", "&3Head sold successfully!");
+		getMessages().addDefault("sell-success", "&3You successfully sold this head for %l and now have %b!");
 		getMessages().addDefault("sell-fail", "&cCouldn''t sell head!");
 		getMessages().addDefault("false-head", "&cThis head cannot be sold!");
 		getMessages().addDefault("false-item", "&cThis is not a head!");

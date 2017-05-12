@@ -69,13 +69,13 @@ public class SellHead implements CommandExecutor {
 		    				if (invi.getAmount() > 0 && args.length >= 0) { if (args.length > 0) { if (!args[0].equalsIgnoreCase("one")) { price = price * invi.getAmount(); } } } 
 		    				@SuppressWarnings({ "deprecation" })
 							EconomyResponse zr = econ.depositPlayer(senderName, price);
-		    				String success = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-success"));
+		    				String success = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-success")).replaceAll("%l", Double.toString(zr.amount)).replaceAll("%b", Double.toString(zr.balance));
 							success = ChatColor.translateAlternateColorCodes('&', success);
 							String fail = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-fail"));
 							fail = ChatColor.translateAlternateColorCodes('&', fail);
 							if (zr.transactionSuccess()) {
 								((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
-								sender.sendMessage(success.replaceAll("%l", econ.format(zr.amount)).replaceAll("%b", econ.format(zr.balance)));
+								sender.sendMessage(success);
 								sold = true;
 							} else {
 								sender.sendMessage(fail + ": " + zr.errorMessage);
@@ -89,13 +89,13 @@ public class SellHead implements CommandExecutor {
 		    				if (invi.getAmount() > 0 && args.length >= 0) { if (args.length > 0) { if (!args[0].equalsIgnoreCase("one")) { price = price * invi.getAmount(); } } } 
 		    				@SuppressWarnings({ "deprecation" })
 							EconomyResponse zr = econ.depositPlayer(senderName, price);
-		    				String success = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-success"));
+		    				String success = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-success")).replaceAll("%l", Double.toString(zr.amount)).replaceAll("%b", Double.toString(zr.balance));
 							success = ChatColor.translateAlternateColorCodes('&', success);
 							String fail = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-fail"));
 							fail = ChatColor.translateAlternateColorCodes('&', fail);
 							if (zr.transactionSuccess()) {
 								((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
-								sender.sendMessage(success.replaceAll("%l", econ.format(zr.amount)).replaceAll("%b", econ.format(zr.balance)));
+								sender.sendMessage(success);
 								sold = true;
 							} else {
 								sender.sendMessage(fail + ": " + zr.errorMessage);

@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus.commands;
 
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -30,9 +31,9 @@ public class SellHead implements CommandExecutor {
 		if (sender instanceof Player) {
 			if (HeadsPlus.getInstance().sellable && HeadsPlus.getInstance().getConfig().getBoolean("sellHeads")) {
 			PlayerInventory inv = ((Player) sender).getInventory();
-		    ItemStack invi = inv.getItemInMainHand();
+		    ItemStack invi = ((SellHead) inv).checkHand((Player) sender);
 		    
-		    if ((((Player) sender).getInventory().getItemInMainHand().getType() == Material.SKULL_ITEM) && (sender.hasPermission("headsplus.sellhead"))) {
+		    if ((((SellHead) ((Player) sender).getInventory()).checkHand((Player) sender).getType() == Material.SKULL_ITEM) && (sender.hasPermission("headsplus.sellhead"))) {
 		    	
 		    	SkullMeta skullM = (SkullMeta) invi.getItemMeta();
 		        String owner = skullM.getOwner();
@@ -61,15 +62,15 @@ public class SellHead implements CommandExecutor {
 								if (args.length > 0) { 
 									if (args[0].equalsIgnoreCase("one")) { 
 										if (invi.getAmount() >= 2) {
-											((Player) sender).getInventory().getItemInMainHand().setAmount(((Player) sender).getInventory().getItemInMainHand().getAmount() - 1);
+											((ItemStack) ((SellHead) ((Player) sender).getInventory()).checkHand((Player) sender)).setAmount(((ItemStack) ((SellHead) ((Player) sender).getInventory()).checkHand((Player) sender)).getAmount() - 1);
 									    } else {
-									        ((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+									    	((SellHead) ((Player) sender).getInventory()).setHand((Player) sender, new ItemStack(Material.AIR));
 								        }
 								    } else {
-									((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+								    	((SellHead) ((Player) sender).getInventory()).setHand((Player) sender, new ItemStack(Material.AIR));
 								    } 
-								}  else {
-									((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+								} else {
+									((SellHead) ((Player) sender).getInventory()).setHand((Player) sender, new ItemStack(Material.AIR));
 								}
 								sender.sendMessage(success);
 								sold = true;
@@ -89,15 +90,15 @@ public class SellHead implements CommandExecutor {
 								if (args.length > 0) { 
 									if (args[0].equalsIgnoreCase("one")) { 
 										if (invi.getAmount() >= 2) {
-											((Player) sender).getInventory().getItemInMainHand().setAmount(((Player) sender).getInventory().getItemInMainHand().getAmount() - 1);
+											((ItemStack) ((SellHead) ((Player) sender).getInventory()).checkHand((Player) sender)).setAmount(((ItemStack) ((SellHead) ((Player) sender).getInventory()).checkHand((Player) sender)).getAmount() - 1);
 									    } else {
-									        ((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+									    	((SellHead) ((Player) sender).getInventory()).setHand((Player) sender, new ItemStack(Material.AIR));
 								        }
 								    } else {
-									((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+								    	((SellHead) ((Player) sender).getInventory()).setHand((Player) sender, new ItemStack(Material.AIR));
 								    } 
-								}  else {
-									((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+								} else {
+									((SellHead) ((Player) sender).getInventory()).setHand((Player) sender, new ItemStack(Material.AIR));
 								}
 								sender.sendMessage(success);
 								sold = true;
@@ -121,15 +122,15 @@ public class SellHead implements CommandExecutor {
 								if (args.length > 0) { 
 									if (args[0].equalsIgnoreCase("one")) { 
 										if (invi.getAmount() >= 2) {
-											((Player) sender).getInventory().getItemInMainHand().setAmount(((Player) sender).getInventory().getItemInMainHand().getAmount() - 1);
+											((ItemStack) ((SellHead) ((Player) sender).getInventory()).checkHand((Player) sender)).setAmount(((ItemStack) ((SellHead) ((Player) sender).getInventory()).checkHand((Player) sender)).getAmount() - 1);
 									    } else {
-									        ((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+									    	((SellHead) ((Player) sender).getInventory()).setHand((Player) sender, new ItemStack(Material.AIR));
 								        }
 								    } else {
-									((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+								    	((SellHead) ((Player) sender).getInventory()).setHand((Player) sender, new ItemStack(Material.AIR));
 								    } 
-								}  else {
-									((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+								} else {
+									((SellHead) ((Player) sender).getInventory()).setHand((Player) sender, new ItemStack(Material.AIR));
 								}
 								sender.sendMessage(success);
 								sold = true;
@@ -153,15 +154,15 @@ public class SellHead implements CommandExecutor {
 							if (args.length > 0) { 
 								if (args[0].equalsIgnoreCase("one")) { 
 									if (invi.getAmount() >= 2) {
-										((Player) sender).getInventory().getItemInMainHand().setAmount(((Player) sender).getInventory().getItemInMainHand().getAmount() - 1);
+										((ItemStack) ((SellHead) ((Player) sender).getInventory()).checkHand((Player) sender)).setAmount(((ItemStack) ((SellHead) ((Player) sender).getInventory()).checkHand((Player) sender)).getAmount() - 1);
 								    } else {
-								        ((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+								    	((SellHead) ((Player) sender).getInventory()).setHand((Player) sender, new ItemStack(Material.AIR));
 							        }
 							    } else {
-								((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+							    	((SellHead) ((Player) sender).getInventory()).setHand((Player) sender, new ItemStack(Material.AIR));
 							    } 
 							} else {
-								((Player) sender).getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+								((SellHead) ((Player) sender).getInventory()).setHand((Player) sender, new ItemStack(Material.AIR));
 							}
 							
 							sender.sendMessage(success);
@@ -192,5 +193,23 @@ public class SellHead implements CommandExecutor {
 		        } 
 		     
 	return false;
+	}
+	@SuppressWarnings("deprecation")
+	public ItemStack checkHand(Player p) {
+		if (Bukkit.getVersion().contains("1.8")) {
+			ItemStack i = p.getInventory().getItemInHand();
+			return i;
+		} else {
+			ItemStack i = p.getInventory().getItemInMainHand();
+			return i;
+		}
+	}
+	@SuppressWarnings("deprecation")
+	public void setHand(Player p, ItemStack i) {
+		if (Bukkit.getVersion().contains("1.8")) {
+			p.getInventory().setItemInHand(i);
+		} else {
+			p.getInventory().setItemInMainHand(i);
+		}
 	}
 }

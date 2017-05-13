@@ -49,6 +49,7 @@ public class HeadsPlus extends JavaPlugin {
 			setUpMConfig();
 			HeadsPlusConfig.msgEnable();
 			HeadsPlusConfigHeads.headsEnable();
+			DeathEvents.createList();
 			if (!getConfig().getBoolean("disableCrafting")) {
 			    HeadsPlusCrafting.craftingEnable();
 			    getServer().getPluginManager().registerEvents(new RecipePerms(), this);

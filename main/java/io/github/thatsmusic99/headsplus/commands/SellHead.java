@@ -10,7 +10,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
@@ -30,10 +29,9 @@ public class SellHead implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (sender instanceof Player) {
 			if (HeadsPlus.getInstance().sellable && HeadsPlus.getInstance().getConfig().getBoolean("sellHeads")) {
-			PlayerInventory inv = ((Player) sender).getInventory();
-		    ItemStack invi = ((SellHead) inv).checkHand((Player) sender);
+		    ItemStack invi = checkHand((Player) sender);
 		    
-		    if ((((SellHead) ((Player) sender).getInventory()).checkHand((Player) sender).getType() == Material.SKULL_ITEM) && (sender.hasPermission("headsplus.sellhead"))) {
+		    if ((checkHand((Player) sender).getType() == Material.SKULL_ITEM) && (sender.hasPermission("headsplus.sellhead"))) {
 		    	
 		    	SkullMeta skullM = (SkullMeta) invi.getItemMeta();
 		        String owner = skullM.getOwner();
@@ -62,15 +60,15 @@ public class SellHead implements CommandExecutor {
 								if (args.length > 0) { 
 									if (args[0].equalsIgnoreCase("one")) { 
 										if (invi.getAmount() >= 2) {
-											((ItemStack) ((SellHead) ((Player) sender).getInventory()).checkHand((Player) sender)).setAmount(((ItemStack) ((SellHead) ((Player) sender).getInventory()).checkHand((Player) sender)).getAmount() - 1);
+											checkHand((Player) sender).setAmount(checkHand((Player) sender).getAmount() - 1);
 									    } else {
-									    	((SellHead) ((Player) sender).getInventory()).setHand((Player) sender, new ItemStack(Material.AIR));
+									    	setHand((Player) sender, new ItemStack(Material.AIR));
 								        }
 								    } else {
-								    	((SellHead) ((Player) sender).getInventory()).setHand((Player) sender, new ItemStack(Material.AIR));
+								    	setHand((Player) sender, new ItemStack(Material.AIR));
 								    } 
 								} else {
-									((SellHead) ((Player) sender).getInventory()).setHand((Player) sender, new ItemStack(Material.AIR));
+									setHand((Player) sender, new ItemStack(Material.AIR));
 								}
 								sender.sendMessage(success);
 								sold = true;
@@ -90,15 +88,15 @@ public class SellHead implements CommandExecutor {
 								if (args.length > 0) { 
 									if (args[0].equalsIgnoreCase("one")) { 
 										if (invi.getAmount() >= 2) {
-											((ItemStack) ((SellHead) ((Player) sender).getInventory()).checkHand((Player) sender)).setAmount(((ItemStack) ((SellHead) ((Player) sender).getInventory()).checkHand((Player) sender)).getAmount() - 1);
+											checkHand((Player) sender).setAmount(checkHand((Player) sender).getAmount() - 1);
 									    } else {
-									    	((SellHead) ((Player) sender).getInventory()).setHand((Player) sender, new ItemStack(Material.AIR));
+									    	setHand((Player) sender, new ItemStack(Material.AIR));
 								        }
 								    } else {
-								    	((SellHead) ((Player) sender).getInventory()).setHand((Player) sender, new ItemStack(Material.AIR));
+								    	setHand((Player) sender, new ItemStack(Material.AIR));
 								    } 
 								} else {
-									((SellHead) ((Player) sender).getInventory()).setHand((Player) sender, new ItemStack(Material.AIR));
+									setHand((Player) sender, new ItemStack(Material.AIR));
 								}
 								sender.sendMessage(success);
 								sold = true;
@@ -122,15 +120,15 @@ public class SellHead implements CommandExecutor {
 								if (args.length > 0) { 
 									if (args[0].equalsIgnoreCase("one")) { 
 										if (invi.getAmount() >= 2) {
-											((ItemStack) ((SellHead) ((Player) sender).getInventory()).checkHand((Player) sender)).setAmount(((ItemStack) ((SellHead) ((Player) sender).getInventory()).checkHand((Player) sender)).getAmount() - 1);
+											checkHand((Player) sender).setAmount(checkHand((Player) sender).getAmount() - 1);
 									    } else {
-									    	((SellHead) ((Player) sender).getInventory()).setHand((Player) sender, new ItemStack(Material.AIR));
+									    	setHand((Player) sender, new ItemStack(Material.AIR));
 								        }
 								    } else {
-								    	((SellHead) ((Player) sender).getInventory()).setHand((Player) sender, new ItemStack(Material.AIR));
+								    	setHand((Player) sender, new ItemStack(Material.AIR));
 								    } 
 								} else {
-									((SellHead) ((Player) sender).getInventory()).setHand((Player) sender, new ItemStack(Material.AIR));
+									setHand((Player) sender, new ItemStack(Material.AIR));
 								}
 								sender.sendMessage(success);
 								sold = true;
@@ -154,15 +152,15 @@ public class SellHead implements CommandExecutor {
 							if (args.length > 0) { 
 								if (args[0].equalsIgnoreCase("one")) { 
 									if (invi.getAmount() >= 2) {
-										((ItemStack) ((SellHead) ((Player) sender).getInventory()).checkHand((Player) sender)).setAmount(((ItemStack) ((SellHead) ((Player) sender).getInventory()).checkHand((Player) sender)).getAmount() - 1);
+										checkHand((Player) sender).setAmount(checkHand((Player) sender).getAmount() - 1);
 								    } else {
-								    	((SellHead) ((Player) sender).getInventory()).setHand((Player) sender, new ItemStack(Material.AIR));
+								    	setHand((Player) sender, new ItemStack(Material.AIR));
 							        }
 							    } else {
-							    	((SellHead) ((Player) sender).getInventory()).setHand((Player) sender, new ItemStack(Material.AIR));
+							    	setHand((Player) sender, new ItemStack(Material.AIR));
 							    } 
 							} else {
-								((SellHead) ((Player) sender).getInventory()).setHand((Player) sender, new ItemStack(Material.AIR));
+								setHand((Player) sender, new ItemStack(Material.AIR));
 							}
 							
 							sender.sendMessage(success);

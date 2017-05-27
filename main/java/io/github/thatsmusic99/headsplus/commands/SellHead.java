@@ -49,7 +49,21 @@ public class SellHead implements CommandExecutor {
 		    			if (owner.matches(HeadsPlusConfigHeads.getHeads().getString(key + "HeadN"))) {
 		    				String senderName = sender.getName();
 		    				Double price = HeadsPlusConfigHeads.getHeads().getDouble(key + "HeadP");
-		    				if (invi.getAmount() > 0 && args.length >= 0) { if (args.length > 0) { if (!args[0].equalsIgnoreCase("one")) { price = price * invi.getAmount(); } } else { price = price * invi.getAmount(); } }
+		    				if (invi.getAmount() > 0 && args.length >= 0) { 
+		    					if (args.length > 0) { 
+		    						if (!args[0].matches("^[0-9]+$")) { 
+		    							price = price * invi.getAmount(); 
+		    						} else {
+		    							if (invi.getAmount() >= Integer.parseInt(args[1]) + 1) {
+											checkHand((Player) sender).setAmount(checkHand((Player) sender).getAmount() - Integer.parseInt(args[1]));
+									    } else {
+									    	
+									    }
+		    						}
+		    					} else { 
+		    					    price = price * invi.getAmount(); 
+		    					} 
+		    				}
 		    				@SuppressWarnings({ "deprecation" })
 							EconomyResponse zr = econ.depositPlayer(senderName, price);
 		    				String success = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-success")).replaceAll("%l", Double.toString(zr.amount)).replaceAll("%b", Double.toString(zr.balance));
@@ -58,9 +72,9 @@ public class SellHead implements CommandExecutor {
 							fail = ChatColor.translateAlternateColorCodes('&', fail);
 							if (zr.transactionSuccess()) {
 								if (args.length > 0) { 
-									if (args[0].equalsIgnoreCase("one")) { 
-										if (invi.getAmount() >= 2) {
-											checkHand((Player) sender).setAmount(checkHand((Player) sender).getAmount() - 1);
+									if (args[1].matches("^[0-9]+$")) { 
+										if (invi.getAmount() >= Integer.parseInt(args[1]) + 1) {
+											checkHand((Player) sender).setAmount(checkHand((Player) sender).getAmount() - Integer.parseInt(args[1]));
 									    } else {
 									    	setHand((Player) sender, new ItemStack(Material.AIR));
 								        }

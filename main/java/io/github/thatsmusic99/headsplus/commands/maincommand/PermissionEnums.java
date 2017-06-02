@@ -9,7 +9,7 @@ public enum PermissionEnums {
 	INFO("headsplus.maincommand.info", "/hp info", "Displays plugin information."), 
 	HEAD("headsplus.head", "/head <IGN>", "Spawns in a head."), 
 	BLACKLIST_LIST("headsplus.maincommand.blacklist.list", "/hp blacklistl [Page no.]", "Lists all heads in the blacklist."), 
-	SELLHEAD("headsplus.sellhead", "/sellhead [One]", "Sells the head(s) in your hand, use 'One' parameter to only sell one."), 
+	SELLHEAD("headsplus.sellhead", "/sellhead [#]", "Sells the head(s) in your hand, use number parameter to sell a specific number."), 
 	BLACKLISTW_ADD("headsplus.maincommand.blacklistw.add", "/hp blacklistwadd <World>", "Adds a world to the crafting recipe blacklist."), 
 	BLACKLISTW_DEL("headsplus.maincommand.blacklistw.delete", "/hp blacklistwdel <World>", "Removes a world to the crafting recipe blacklist."), 
 	BLACKLISTW_TOGGLE("headsplus.maincommand.blacklistw.toggle", "/hp blacklistw [On|Off]", "Toggles the crafting recipe blacklist on/off."), 

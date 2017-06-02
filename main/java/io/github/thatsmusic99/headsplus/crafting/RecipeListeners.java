@@ -11,12 +11,10 @@ public class RecipeListeners {
 	
 	public static void makeSell(ItemMeta m) {
 		if ((HeadsPlus.getInstance().sellable)) {
-			
 			List<String> lore = new ArrayList<>();
-			lore.add("" + ChatColor.GOLD + ChatColor.BOLD + "This head can be sold!");
-			lore.add("" + ChatColor.GOLD + "Do /sellhead to sell!");
-			m.setLore(lore);
-			
+			lore.add(ChatColor.translateAlternateColorCodes('&', "&6&lThis head can be sold!"));
+	        lore.add(ChatColor.translateAlternateColorCodes('&', "&6Do /sellhead to sell!"));
+	        m.setLore(lore);
 		}
 	}
 }

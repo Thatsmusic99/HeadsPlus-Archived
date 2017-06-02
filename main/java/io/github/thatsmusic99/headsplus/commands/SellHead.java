@@ -21,8 +21,6 @@ import net.milkbowl.vault.economy.EconomyResponse;
 
 public class SellHead implements CommandExecutor {
 	
-	private static String lore;
-	private static String lore2;
 	private static boolean sold;
 	private static String disabled = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("disabled")));
 	
@@ -35,11 +33,8 @@ public class SellHead implements CommandExecutor {
 		    	
 		    	SkullMeta skullM = (SkullMeta) invi.getItemMeta();
 		        String owner = skullM.getOwner();
-		        if (skullM.getLore() != null) {
-		            lore = skullM.getLore().get(0);
-		            lore2 = skullM.getLore().get(1);
-		        }
-		    	if ((skullM.getLore() != null) && ((lore.equals("" + ChatColor.GOLD + ChatColor.BOLD + "This head can be sold!")) && (lore2.equals("" + ChatColor.GOLD + "Do /sellhead to sell!")))) {
+		   
+		    	if ((skullM.getLore() != null) && (skullM.getLore().size() == 2) && ((skullM.getLore().get(0).equals("" + ChatColor.GOLD + ChatColor.BOLD + "This head can be sold!")) && (skullM.getLore().get(1).equals("" + ChatColor.GOLD + "Do /sellhead to sell!")))) {
 		  
 		    		Economy econ = HeadsPlus.getInstance().econ;
 		    		List<String> mHeads = HeadsPlusConfigHeads.mHeads;
@@ -54,10 +49,11 @@ public class SellHead implements CommandExecutor {
 		    						if (!args[0].matches("^[0-9]+$")) { 
 		    							price = price * invi.getAmount(); 
 		    						} else {
-		    							if (invi.getAmount() >= Integer.parseInt(args[1]) + 1) {
-											checkHand((Player) sender).setAmount(checkHand((Player) sender).getAmount() - Integer.parseInt(args[1]));
+		    							if (invi.getAmount() >= Integer.parseInt(args[0])) {
+											price = price * Double.valueOf(args[0]);
 									    } else {
-									    	
+									    	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("not-enough-heads")));
+									    	return true;
 									    }
 		    						}
 		    					} else { 
@@ -72,9 +68,9 @@ public class SellHead implements CommandExecutor {
 							fail = ChatColor.translateAlternateColorCodes('&', fail);
 							if (zr.transactionSuccess()) {
 								if (args.length > 0) { 
-									if (args[1].matches("^[0-9]+$")) { 
-										if (invi.getAmount() >= Integer.parseInt(args[1]) + 1) {
-											checkHand((Player) sender).setAmount(checkHand((Player) sender).getAmount() - Integer.parseInt(args[1]));
+									if (args[0].matches("^[0-9]+$")) { 
+										if (invi.getAmount() > Integer.parseInt(args[0])) {
+											checkHand((Player) sender).setAmount(checkHand((Player) sender).getAmount() - Integer.parseInt(args[0]));
 									    } else {
 									    	setHand((Player) sender, new ItemStack(Material.AIR));
 								        }
@@ -91,8 +87,22 @@ public class SellHead implements CommandExecutor {
 		    			} else if ((owner.matches("MHF_Golem")) && (key.equalsIgnoreCase("irongolem"))) {
 		    				Double price = HeadsPlusConfigHeads.getHeads().getDouble("irongolemHeadP");
 		    				String senderName = sender.getName();
-		    				if (invi.getAmount() > 0 && args.length >= 0) { if (args.length > 0) { if (!args[0].equalsIgnoreCase("one")) { price = price * invi.getAmount(); } } else { price = price * invi.getAmount(); } }
-		    				@SuppressWarnings({ "deprecation" })
+		    				if (invi.getAmount() > 0 && args.length >= 0) { 
+		    					if (args.length > 0) { 
+		    						if (!args[0].matches("^[0-9]+$")) { 
+		    							price = price * invi.getAmount(); 
+		    						} else {
+		    							if (invi.getAmount() >= Integer.parseInt(args[0])) {
+											price = Double.valueOf(args[0]) * price;
+									    } else {
+									    	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("not-enough-heads")));
+									    	return true;
+									    }
+		    						}
+		    					} else { 
+		    					    price = price * invi.getAmount(); 
+		    					} 
+		    				}@SuppressWarnings({ "deprecation" })
 							EconomyResponse zr = econ.depositPlayer(senderName, price);
 		    				String success = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-success")).replaceAll("%l", Double.toString(zr.amount)).replaceAll("%b", Double.toString(zr.balance));
 							success = ChatColor.translateAlternateColorCodes('&', success);
@@ -100,9 +110,9 @@ public class SellHead implements CommandExecutor {
 							fail = ChatColor.translateAlternateColorCodes('&', fail);
 							if (zr.transactionSuccess()) {
 								if (args.length > 0) { 
-									if (args[0].equalsIgnoreCase("one")) { 
-										if (invi.getAmount() >= 2) {
-											checkHand((Player) sender).setAmount(checkHand((Player) sender).getAmount() - 1);
+									if (args[0].matches("^[0-9]+$")) { 
+										if (invi.getAmount() > Integer.parseInt(args[0])) {
+											checkHand((Player) sender).setAmount(checkHand((Player) sender).getAmount() - Integer.parseInt(args[0]));
 									    } else {
 									    	setHand((Player) sender, new ItemStack(Material.AIR));
 								        }
@@ -123,8 +133,22 @@ public class SellHead implements CommandExecutor {
 		    			if (owner.matches(HeadsPlusConfigHeads.getHeads().getString(key + "HeadN"))) {
 		    				String senderName = sender.getName();
 		    				Double price = HeadsPlusConfigHeads.getHeads().getDouble(key + "HeadP");
-		    				if (invi.getAmount() > 0 && args.length >= 0) { if (args.length > 0) { if (!args[0].equalsIgnoreCase("one")) { price = price * invi.getAmount(); } } else { price = price * invi.getAmount(); } }
-		    				@SuppressWarnings({ "deprecation" })
+		    				if (invi.getAmount() > 0 && args.length >= 0) { 
+		    					if (args.length > 0) { 
+		    						if (!args[0].matches("^[0-9]+$")) { 
+		    							price = price * invi.getAmount(); 
+		    						} else {
+		    							if (invi.getAmount() >= Integer.parseInt(args[0])) {
+											price = Double.valueOf(args[0]) * price;
+									    } else {
+									    	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("not-enough-heads")));
+									    	return true;
+									    }
+		    						}
+		    					} else { 
+		    					    price = price * invi.getAmount(); 
+		    					} 
+		    				}@SuppressWarnings({ "deprecation" })
 							EconomyResponse zr = econ.depositPlayer(senderName, price);
 		    				String success = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-success")).replaceAll("%l", Double.toString(zr.amount)).replaceAll("%b", Double.toString(zr.balance));
 							success = ChatColor.translateAlternateColorCodes('&', success);
@@ -132,9 +156,9 @@ public class SellHead implements CommandExecutor {
 							fail = ChatColor.translateAlternateColorCodes('&', fail);
 							if (zr.transactionSuccess()) {
 								if (args.length > 0) { 
-									if (args[0].equalsIgnoreCase("one")) { 
-										if (invi.getAmount() >= 2) {
-											checkHand((Player) sender).setAmount(checkHand((Player) sender).getAmount() - 1);
+									if (args[0].matches("^[0-9]+$")) { 
+										if (invi.getAmount() > Integer.parseInt(args[0])) {
+											checkHand((Player) sender).setAmount(checkHand((Player) sender).getAmount() - Integer.parseInt(args[0]));
 									    } else {
 									    	setHand((Player) sender, new ItemStack(Material.AIR));
 								        }
@@ -155,7 +179,22 @@ public class SellHead implements CommandExecutor {
 		    		if (!sold) {
 			    		Double price = HeadsPlusConfigHeads.getHeads().getDouble("playerHeadP");
 			    		String senderName = sender.getName();
-			    		if (invi.getAmount() > 0 && args.length >= 0) { if (args.length > 0) { if (!args[0].equalsIgnoreCase("one")) { price = price * invi.getAmount(); } } else { price = price * invi.getAmount(); } }
+			    		if (invi.getAmount() > 0 && args.length >= 0) { 
+	    					if (args.length > 0) { 
+	    						if (!args[0].matches("^[0-9]+$")) { 
+	    							price = price * invi.getAmount(); 
+	    						} else {
+	    							if (invi.getAmount() >= Integer.parseInt(args[0])) {
+										price = Double.valueOf(args[0]) * price;
+								    } else {
+								    	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("not-enough-heads")));
+								    	return true;
+								    }
+	    						}
+	    					} else { 
+	    					    price = price * invi.getAmount(); 
+	    					} 
+	    				}
 			    		@SuppressWarnings("deprecation")
 						EconomyResponse zr = econ.depositPlayer(senderName, price);
 			    		String success = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-success")).replaceAll("%l", Double.toString(zr.amount)).replaceAll("%b", Double.toString(zr.balance));
@@ -164,9 +203,9 @@ public class SellHead implements CommandExecutor {
 						fail = ChatColor.translateAlternateColorCodes('&', fail);
 						if (zr.transactionSuccess()) {
 							if (args.length > 0) { 
-								if (args[0].equalsIgnoreCase("one")) { 
-									if (invi.getAmount() >= 2) {
-										checkHand((Player) sender).setAmount(checkHand((Player) sender).getAmount() - 1);
+								if (args[1].matches("^[0-9]+$")) { 
+									if (invi.getAmount() > Integer.parseInt(args[0])) {
+										checkHand((Player) sender).setAmount(checkHand((Player) sender).getAmount() - Integer.parseInt(args[0]));
 								    } else {
 								    	setHand((Player) sender, new ItemStack(Material.AIR));
 							        }

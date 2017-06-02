@@ -41,7 +41,7 @@ public class DeathEvents implements Listener {
 			            headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString(entity + "HeadDN")));
 			            if ((HeadsPlus.getInstance().sellable) && (e.getEntity().getKiller().hasPermission("headsplus.sellhead"))) {
 			        	    List<String> lore = new ArrayList<>();
-				    	    lore.add(ChatColor.translateAlternateColorCodes('&', "&6&lThis head can be sold!"));
+			        	    lore.add(ChatColor.translateAlternateColorCodes('&', "&6&lThis head can be sold!"));
 					        lore.add(ChatColor.translateAlternateColorCodes('&', "&6Do /sellhead to sell!"));
 					        headM.setLore(lore);
 			            }

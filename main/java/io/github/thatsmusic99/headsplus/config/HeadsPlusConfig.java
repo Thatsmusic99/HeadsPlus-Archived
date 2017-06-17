@@ -31,6 +31,8 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("head-mhf-interact-message-2", "&3That is an &b%p&3''s &3head!");
 		getMessages().addDefault("sell-success", "&3You successfully sold the head(s) for &b%l &3and now have &b%b!");
 		getMessages().addDefault("not-enough-heads", "&cYou don't have enough heads!");
+		getMessages().addDefault("no-heads", "&cYou don't have any valid heads in your inventory!");
+		getMessages().addDefault("invalid-args", "&cInvalid arguments!");
 		getMessages().addDefault("sell-fail", "&cCouldn''t sell head!");
 		getMessages().addDefault("false-head", "&cThis head cannot be sold!");
 		getMessages().addDefault("false-item", "&cThis is not a head!");
@@ -41,7 +43,7 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("head-too-long", "&cIGN is too long to be valid! Please use an IGN between 3 and 16 characters.");
 		getMessages().addDefault("too-short-head", "&cIGN is too short to be valid! Please use an IGN between 3 and 16 characters.");
 		getMessages().addDefault("invalid-pg-no", "%h &cInvalid page number!");
-		getMessages().addDefault("invalid-input-int", "&h &cYou can only use integers in this command!");
+		getMessages().addDefault("invalid-input-int", "%h &cYou can only use integers in this command!");
 		getMessages().addDefault("no-perm", "&cYou do not have permission to use this command.");
 		getMessages().addDefault("head-a-add", "%h &3This head is already added!");
 		getMessages().addDefault("head-added", "%h &3%p has been added to the blacklist!");

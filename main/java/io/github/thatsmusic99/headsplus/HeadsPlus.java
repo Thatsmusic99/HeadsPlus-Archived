@@ -33,6 +33,7 @@ public class HeadsPlus extends JavaPlugin {
 	public boolean sellable;
 	public Economy econ;
 	public Boolean sellableHead;
+	public Plugin pl = this;
 	
     public static FileConfiguration config;
 	private File configF;

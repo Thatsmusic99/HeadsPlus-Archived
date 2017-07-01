@@ -37,14 +37,10 @@ public class SellHead implements CommandExecutor {
 		        String owner = skullM.getOwner();
 		        List<String> ls = new ArrayList<>();
 		        for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
-		            ls.add(ChatColor.stripColor(str));
-                }
-                List<String> lore = new ArrayList<>();
-		        for (String str : skullM.getLore()) {
-		            lore.add(ChatColor.stripColor(str));
+		            ls.add(ChatColor.translateAlternateColorCodes('&', ChatColor.stripColor(str)));
                 }
 
-		    	if ((skullM.getLore() != null) && (skullM.getLore().size() == 2) && (lore.equals(ls))) {
+		    	if ((skullM.getLore() != null) &&  (skullM.getLore().equals(ls))) {
 		  
 		    		Economy econ = HeadsPlus.getInstance().econ;
 		    		List<String> mHeads = HeadsPlusConfigHeads.mHeads;
@@ -118,50 +114,58 @@ public class SellHead implements CommandExecutor {
 		    		}
 		    		
 		    		
-		    	}
+		    	} else {
+		            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("false-head")));
+		            for (String s : skullM.getLore()) {
+		                sender.sendMessage(s);
+                    }
+                    for (String s : ls) {
+                        sender.sendMessage(s);
+                    }
+                }
 		    } else {
 		    	if (!sender.hasPermission("headsplus.sellhead")) {
 		    		sender.sendMessage(HeadsPlusCommand.noPerms);
-		    	} else if (args[0].equalsIgnoreCase("all")) {
-		    		sellAll((Player) sender, args, invi);
-		    	} else if (args[0] != null) {
-		    		boolean found = false;
-		    		
-		    		Player p = (Player) sender;
-		    		double price = 0.0;
-		    		for (ItemStack i : p.getInventory()) {
-		    			if (i != null) {
-		    				if (i.getType() == Material.SKULL_ITEM) {
-		    			        SkullMeta sm = (SkullMeta) i.getItemMeta();
-		    			    	for (String str : HeadsPlusConfigHeads.mHeads) {
-		    				    	if (sm.getOwner().equalsIgnoreCase(HeadsPlusConfigHeads.getHeads().getString(str + "HeadN"))) {
-		    				    	    found = true;
-		    				    	    price = setPrice(price, args, i, p);
-		    				    	}
-		    				    }
-		    			    	for (String str : HeadsPlusConfigHeads.uHeads) {
-		    				    	if (sm.getOwner().equalsIgnoreCase(HeadsPlusConfigHeads.getHeads().getString(str + "HeadN"))) {
-		    				    	    found = true;
-		    				    	    price = setPrice(price, args, i, p);
-		    				    	}
-		    				    }
-		    				    if (!found) {
-		    			    		if (args[0].equalsIgnoreCase("player")) {
-										price = setPrice(price, args, i, p);
-										found = true;
-									}
-		    				    }
-		    			    } 
-		    			}
-		    		}
-		    		if (price == 0) {
-		    			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("no-heads")));
-		    			return true;
-					}
-					pay(p, args, new ItemStack(Material.AIR), price);
-		    	}
-		    	
-		    	else {
+		    	} else if (args.length > 0) {
+                    if (args[0].equalsIgnoreCase("all")) {
+                        sellAll((Player) sender, args, invi);
+                    } else if (args[0] != null) {
+                        boolean found = false;
+
+                        Player p = (Player) sender;
+                        double price = 0.0;
+                        for (ItemStack i : p.getInventory()) {
+                            if (i != null) {
+                                if (i.getType() == Material.SKULL_ITEM) {
+                                    SkullMeta sm = (SkullMeta) i.getItemMeta();
+                                    for (String str : HeadsPlusConfigHeads.mHeads) {
+                                        if (sm.getOwner().equalsIgnoreCase(HeadsPlusConfigHeads.getHeads().getString(str + "HeadN"))) {
+                                            found = true;
+                                            price = setPrice(price, args, i, p);
+                                        }
+                                    }
+                                    for (String str : HeadsPlusConfigHeads.uHeads) {
+                                        if (sm.getOwner().equalsIgnoreCase(HeadsPlusConfigHeads.getHeads().getString(str + "HeadN"))) {
+                                            found = true;
+                                            price = setPrice(price, args, i, p);
+                                        }
+                                    }
+                                    if (!found) {
+                                        if (args[0].equalsIgnoreCase("player")) {
+                                            price = setPrice(price, args, i, p);
+                                            found = true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if (price == 0) {
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("no-heads")));
+                            return true;
+                        }
+                        pay(p, args, new ItemStack(Material.AIR), price);
+                    }
+                } else {
 		    		
 		    		String falseItem = HeadsPlusConfig.getMessages().getString("false-item");
 		            falseItem = HeadsPlus.getInstance().translateMessages(falseItem);
@@ -205,7 +209,11 @@ public class SellHead implements CommandExecutor {
 					if (is != null) {
 						if (is.getType() == Material.SKULL_ITEM) {
 							if (is.getItemMeta().getLore() != null) {
-								if ((is.getItemMeta().getLore().size() == 2) && ((is.getItemMeta().getLore().get(0).equals("" + ChatColor.GOLD + ChatColor.BOLD + "This head can be sold!")) && (is.getItemMeta().getLore().get(1).equals("" + ChatColor.GOLD + "Do /sellhead to sell!")))) {
+                                List<String> ls = new ArrayList<>();
+                                for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
+                                    ls.add(ChatColor.translateAlternateColorCodes('&', ChatColor.stripColor(str)));
+                                }
+								if ((is.getItemMeta().getLore().size() == 2) && ((is.getItemMeta().getLore().equals(ls)))) {
 									p.getInventory().remove(is);
 								}
 							}

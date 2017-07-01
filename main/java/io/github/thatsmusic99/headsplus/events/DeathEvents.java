@@ -39,18 +39,17 @@ public class DeathEvents implements Listener {
 			            SkullMeta headM = (SkullMeta) head.getItemMeta();
 			            headM.setOwner(HeadsPlusConfigHeads.getHeads().getString(entity + "HeadN"));
 			            headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString(entity + "HeadDN")));
-			            if ((HeadsPlus.getInstance().sellable) && (e.getEntity().getKiller().hasPermission("headsplus.sellhead"))) {
-			        	    List<String> lore = new ArrayList<>();
-			        	    lore.add(ChatColor.translateAlternateColorCodes('&', "&6&lThis head can be sold!"));
-					        lore.add(ChatColor.translateAlternateColorCodes('&', "&6Do /sellhead to sell!"));
-					        headM.setLore(lore);
-			            }
-			           head.setItemMeta(headM);
-			           Location entityLoc = e.getEntity().getLocation();
-                       double entityLocY = entityLoc.getY() + 1;
-                       entityLoc.setY(entityLocY);
-                       World world = e.getEntity().getWorld();
-                       world.dropItem(entityLoc, head);
+                        List<String> ls = new ArrayList<>();
+                        for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
+                            ls.add(ChatColor.translateAlternateColorCodes('&', str));
+                        }
+                        headM.setLore(ls);
+			            head.setItemMeta(headM);
+			            Location entityLoc = e.getEntity().getLocation();
+                        double entityLocY = entityLoc.getY() + 1;
+                        entityLoc.setY(entityLocY);
+                        World world = e.getEntity().getWorld();
+                        world.dropItem(entityLoc, head);
                    }  
 		       }
 		    }
@@ -69,10 +68,11 @@ public class DeathEvents implements Listener {
 			        headM.setOwner(ep.getEntity().getName());
 			        headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("playerHeadDN").replaceAll("%d", ep.getEntity().getName())));
 		    	    if ((HeadsPlus.getInstance().sellable)  && (ep.getEntity().getKiller().hasPermission("headsplus.sellhead"))) {
-				        List<String> lore = new ArrayList<>();
-				        lore.add(ChatColor.translateAlternateColorCodes('&', "&6&lThis head can be sold!"));
-				        lore.add(ChatColor.translateAlternateColorCodes('&', "&6Do /sellhead to sell!"));
-				        headM.setLore(lore);
+				        List<String> ls = new ArrayList<>();
+				        for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
+				            ls.add(ChatColor.translateAlternateColorCodes('&', str));
+                        }
+				        headM.setLore(ls);
 			        }
 			        head.setItemMeta(headM);
 			        Location entityLoc = ep.getEntity().getLocation();

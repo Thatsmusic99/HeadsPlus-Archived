@@ -51,7 +51,6 @@ public final class HeadInteractEvent implements Listener {
 		    		iMessage1 = iMessage1.replaceAll("%m", playerName);
 		            player.sendMessage(iMessage1);
 		            TimesSent++;
-		            return;
 			    } else {
 			        TimesSent --;
 			    }

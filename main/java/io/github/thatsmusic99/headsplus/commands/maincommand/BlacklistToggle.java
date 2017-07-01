@@ -15,13 +15,12 @@ public class BlacklistToggle {
 	public static void toggleNoArgs(CommandSender sender) {
 		if (sender.hasPermission("headsplus.maincommand.blacklist.toggle")) {
 			  try {
-				  Boolean blacklistToggle = config.getBoolean("blacklistOn");
-				  if (blacklistToggle) {
+				  if (config.getBoolean("blacklistOn")) {
 					  config.set("blacklistOn", false);
 					  config.options().copyDefaults(true);
 			          HeadsPlus.getInstance().saveConfig();
 					  sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("bl-on"))));
-				  } else if (!(blacklistToggle)) {
+				  } else if (!config.getBoolean("blacklistOn")) {
 					  config.set("blacklistOn", true);
 					  config.options().copyDefaults(true);
 					  HeadsPlus.getInstance().saveConfig();

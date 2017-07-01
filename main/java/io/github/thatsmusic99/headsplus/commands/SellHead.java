@@ -352,8 +352,8 @@ public class SellHead implements CommandExecutor {
 							SkullMeta sm = (SkullMeta) i.getItemMeta();
 							if (sm.getOwner().equalsIgnoreCase(HeadsPlusConfigHeads.getHeads().getString(s + "HeadN"))) {
 								if ((sm.getLore() != null) && (sm.getLore().size() == 2) && ((sm.getLore().get(0).equals("" + ChatColor.GOLD + ChatColor.BOLD + "This head can be sold!")) && (sm.getLore().get(1).equals("" + ChatColor.GOLD + "Do /sellhead to sell!")))) {
-							    	p = p + (i.getAmount() * HeadsPlusConfigHeads.getHeads().getDouble(s + "HeadP"));
-							    }
+									p = p + (i.getAmount() * HeadsPlusConfigHeads.getHeads().getDouble(s + "HeadP"));
+								}
 							}
 						}
 					}
@@ -362,8 +362,8 @@ public class SellHead implements CommandExecutor {
 							SkullMeta sm = (SkullMeta) i.getItemMeta();
 							if (sm.getOwner().equalsIgnoreCase(HeadsPlusConfigHeads.getHeads().getString(s + "HeadN"))) {
 								if ((sm.getLore() != null) && (sm.getLore().size() == 2) && ((sm.getLore().get(0).equals("" + ChatColor.GOLD + ChatColor.BOLD + "This head can be sold!")) && (sm.getLore().get(1).equals("" + ChatColor.GOLD + "Do /sellhead to sell!")))) {
-							    	p = p + (i.getAmount() * HeadsPlusConfigHeads.getHeads().getDouble(s + "HeadP"));
-							    }
+									p = p + (i.getAmount() * HeadsPlusConfigHeads.getHeads().getDouble(s + "HeadP"));
+								}
 							}
 						}
 					}

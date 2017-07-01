@@ -231,7 +231,11 @@ public class SellHead implements CommandExecutor {
 		    		if (is != null) {
 		    			if (is.getType() == Material.SKULL_ITEM) {
 		    				SkullMeta sm = (SkullMeta) is.getItemMeta();
-							if ((sm.getLore() != null) && (sm.getLore().size() == 2) && ((sm.getLore().get(0).equals("" + ChatColor.GOLD + ChatColor.BOLD + "This head can be sold!")) && (sm.getLore().get(1).equals("" + ChatColor.GOLD + "Do /sellhead to sell!")))) {
+                            List<String> ls = new ArrayList<>();
+                            for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
+                                ls.add(ChatColor.translateAlternateColorCodes('&', ChatColor.stripColor(str)));
+                            }
+							if ((sm.getLore() != null) && ((sm.getLore().size() == 2) && (sm.getLore().equals(ls)))) {
 								boolean found = false;
 								for (String s : HeadsPlusConfigHeads.mHeads) {
 									if (a[0].equalsIgnoreCase(s)) {
@@ -271,7 +275,11 @@ public class SellHead implements CommandExecutor {
 				if (a[0].equalsIgnoreCase("all")) {
 					if (i.getType().equals(Material.SKULL_ITEM)) {
 						SkullMeta sm = (SkullMeta) i.getItemMeta();
-						if ((sm.getLore() != null) && (sm.getLore().size() == 2) && ((sm.getLore().get(0).equals("" + ChatColor.GOLD + ChatColor.BOLD + "This head can be sold!")) && (sm.getLore().get(1).equals("" + ChatColor.GOLD + "Do /sellhead to sell!")))) {
+                        List<String> ls = new ArrayList<>();
+                        for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
+                            ls.add(ChatColor.translateAlternateColorCodes('&', ChatColor.stripColor(str)));
+                        }
+						if ((sm.getLore() != null) && (sm.getLore().size() == 2) && (sm.getLore().equals(ls))) {
 							boolean found = false;
 							for (String s : HeadsPlusConfigHeads.mHeads) {
 							    if (sm.getOwner().equals(HeadsPlusConfigHeads.getHeads().getString(s + "HeadN"))) {
@@ -299,7 +307,11 @@ public class SellHead implements CommandExecutor {
 						if (a[0].equalsIgnoreCase(s)) {
 							SkullMeta sm = (SkullMeta) i.getItemMeta();
 							if (sm.getOwner().equalsIgnoreCase(HeadsPlusConfigHeads.getHeads().getString(s + "HeadN"))) {
-								if ((sm.getLore() != null) && (sm.getLore().size() == 2) && ((sm.getLore().get(0).equals("" + ChatColor.GOLD + ChatColor.BOLD + "This head can be sold!")) && (sm.getLore().get(1).equals("" + ChatColor.GOLD + "Do /sellhead to sell!")))) {
+                                List<String> ls = new ArrayList<>();
+                                for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
+                                    ls.add(ChatColor.translateAlternateColorCodes('&', ChatColor.stripColor(str)));
+                                }
+								if ((sm.getLore() != null) && (sm.getLore().size() == 2) && (sm.getLore().equals(ls))) {
 									p = p + (i.getAmount() * HeadsPlusConfigHeads.getHeads().getDouble(s + "HeadP"));
 								}
 							}
@@ -309,7 +321,11 @@ public class SellHead implements CommandExecutor {
 						if (a[0].equalsIgnoreCase(s)) {
 							SkullMeta sm = (SkullMeta) i.getItemMeta();
 							if (sm.getOwner().equalsIgnoreCase(HeadsPlusConfigHeads.getHeads().getString(s + "HeadN"))) {
-								if ((sm.getLore() != null) && (sm.getLore().size() == 2) && ((sm.getLore().get(0).equals("" + ChatColor.GOLD + ChatColor.BOLD + "This head can be sold!")) && (sm.getLore().get(1).equals("" + ChatColor.GOLD + "Do /sellhead to sell!")))) {
+                                List<String> ls = new ArrayList<>();
+                                for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
+                                    ls.add(ChatColor.translateAlternateColorCodes('&', ChatColor.stripColor(str)));
+                                }
+								if ((sm.getLore() != null) && (sm.getLore().size() == 2) && (sm.getLore().equals(ls))) {
 									p = p + (i.getAmount() * HeadsPlusConfigHeads.getHeads().getDouble(s + "HeadP"));
 								}
 							}

@@ -1,5 +1,6 @@
 package io.github.thatsmusic99.headsplus.commands;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -34,8 +35,16 @@ public class SellHead implements CommandExecutor {
 		    	
 		    	SkullMeta skullM = (SkullMeta) invi.getItemMeta();
 		        String owner = skullM.getOwner();
-		   
-		    	if ((skullM.getLore() != null) && (skullM.getLore().size() == 2) && ((skullM.getLore().get(0).equals("" + ChatColor.GOLD + ChatColor.BOLD + "This head can be sold!")) && (skullM.getLore().get(1).equals("" + ChatColor.GOLD + "Do /sellhead to sell!")))) {
+		        List<String> ls = new ArrayList<>();
+		        for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
+		            ls.add(ChatColor.stripColor(str));
+                }
+                List<String> lore = new ArrayList<>();
+		        for (String str : skullM.getLore()) {
+		            lore.add(ChatColor.stripColor(str));
+                }
+
+		    	if ((skullM.getLore() != null) && (skullM.getLore().size() == 2) && (lore.equals(ls))) {
 		  
 		    		Economy econ = HeadsPlus.getInstance().econ;
 		    		List<String> mHeads = HeadsPlusConfigHeads.mHeads;
@@ -109,75 +118,6 @@ public class SellHead implements CommandExecutor {
 		    		}
 		    		
 		    		
-		    	} else if ((args[0].equalsIgnoreCase("all") && sender.hasPermission("headsplus.sellhead"))) {
-		    		sellAll((Player) sender, args, invi);
-		    	} else {
-		    		boolean found = false;
-		    		for (String str : HeadsPlusConfigHeads.mHeads) {
-		    			if (args[0].equalsIgnoreCase(str)) {
-		    				Player p = (Player) sender;
-		    			    for (ItemStack i : p.getInventory()) {
-		    			    	if (i != null) {
-		    			    		if (i.getType().equals(Material.SKULL_ITEM)) {
-		    					        SkullMeta sm = (SkullMeta) i.getItemMeta();
-		    					        if (sm.getOwner().equals(HeadsPlusConfigHeads.getHeads().getString(str + "HeadN"))) {
-		    					    	    found = true;
-		    					        	Double price = 0.0;
-		    					        	price = setPrice(price, args, i, p);
-		    					        	if (price == 0.0) {
-		    					    		    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("no-heads")));
-		    				    			    return true;
-		    					    	    }
-		    					    	    pay(p, args, i, price);
-		    					        }
-		    			    	    }
-		    				    }
-		    			    }
-		    			}
-		    		} if (!found) {
-		    			for (String str : HeadsPlusConfigHeads.uHeads) {
-			    			if (args[0].equalsIgnoreCase(str)) {
-			    				Player p = (Player) sender;
-			    			    for (ItemStack i : p.getInventory()) {
-			    			    	if (i != null) {
-			    			    		if (i.getType().equals(Material.SKULL_ITEM)) {
-			    					        SkullMeta sm = (SkullMeta) i.getItemMeta();
-			    					        if (sm.getOwner().equals(HeadsPlusConfigHeads.getHeads().getString(str + "HeadN"))) {
-			    					         	found = true;
-			    					        	Double price = 0.0;
-			    					        	price = setPrice(price, args, i, p);
-			    					        	if (price == 0) {
-			    					        		sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("no-heads")));
-			    				    	    		return true;
-			    					        	}
-			    					        	pay(p, args, i, price);
-			    					        }
-			    				        }
-			    			    	}
-			    			    }
-			    			}
-			    		}
-		    		} if (!found) {
-		    			if (args[0].equalsIgnoreCase("player")) {
-		    				Player p = (Player) sender;
-		    				Double price = 0.0;
-		    				for (ItemStack i : p.getInventory()) {
-		    					if (i != null) {
-		    					    if (i.getType().equals(Material.SKULL_ITEM)) {
-		    						    price = setPrice(price, args, i, p);
-	    					    	    if (price == 0) {
-	    					    	    	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("no-heads")));
-	    				    		    	return true;
-	    					    	    }
-		    				    	}
-		    					}
-		    				}
-		    				pay(p, args, invi, price);
-		    			} else {
-                           sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("false-head"))));
-						}
-		    		}
-		    		sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("false-head"))));
 		    	}
 		    } else {
 		    	if (!sender.hasPermission("headsplus.sellhead")) {

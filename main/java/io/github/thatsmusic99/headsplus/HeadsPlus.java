@@ -2,7 +2,6 @@ package io.github.thatsmusic99.headsplus;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -32,16 +31,12 @@ public class HeadsPlus extends JavaPlugin {
 	public String version = pluginYml.getVersion();
 	public boolean sellable;
 	public Economy econ;
-	public Boolean sellableHead;
-	public Plugin pl = this;
 	
     public static FileConfiguration config;
 	private File configF;
 
-	FileConfiguration messages;
 	@SuppressWarnings("unused")
 	private File messagesF;
-	Plugin p;
 
 	@Override
 	public void onEnable() {
@@ -98,9 +93,7 @@ public class HeadsPlus extends JavaPlugin {
 			configF = new File(getDataFolder(), "config.yml");
 			config = getConfig();
 			if(!getDataFolder().exists()) {
-				
 				getDataFolder().mkdirs();
-				
 			}
 			if (!configF.exists()) {
 				try {

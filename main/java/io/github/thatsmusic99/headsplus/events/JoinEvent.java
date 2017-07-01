@@ -36,12 +36,6 @@ public class JoinEvent implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent e) {
 		if (!reloaded) {
 		    if (HeadsPlus.getInstance().getConfig().getBoolean("autoReloadOnFirstJoin")) {
-		    	String reloadM = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("reload-message"));
-				   String reloadingM = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("reloading-message"));
-				   String reloadF = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("reload-fail"));
-				   reloadM = HeadsPlus.getInstance().translateMessages(reloadM);
-				   reloadingM = HeadsPlus.getInstance().translateMessages(reloadingM);
-				   reloadF = HeadsPlus.getInstance().translateMessages(reloadF);
 			       try {
 
 				       if  (!(configF.exists())) {

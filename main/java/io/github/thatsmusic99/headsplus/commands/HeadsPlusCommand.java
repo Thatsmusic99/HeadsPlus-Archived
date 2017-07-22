@@ -21,6 +21,7 @@ import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistwToggle;
 import io.github.thatsmusic99.headsplus.commands.maincommand.HelpMenu;
 import io.github.thatsmusic99.headsplus.commands.maincommand.Info;
 import io.github.thatsmusic99.headsplus.commands.maincommand.MCReload;
+import io.github.thatsmusic99.headsplus.commands.maincommand.WhitelistAdd;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class HeadsPlusCommand implements CommandExecutor {
@@ -35,8 +36,26 @@ public class HeadsPlusCommand implements CommandExecutor {
 			if (sender.hasPermission("headsplus.maincommand")) {
 			   if ((args.length == 0)) {
 				   HelpMenu.helpNoArgs(sender);
+				   return true;
 			   }
-			    
+			   if ((args.length == 1) && args[0].equalsIgnoreCase("whitelistadd")) {
+				   if (sender.hasPermission("headsplus.maincommand.whitelist.add")) {
+					   sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/headsplus whitelistadd <IGN>");
+				   } else {
+					   sender.sendMessage(noPerms);
+				   }
+			   }
+			   if ((args.length == 2) && args[0].equalsIgnoreCase("whitelistadd")) {
+				   WhitelistAdd.whitelistAdd(sender, args[1]);
+			   }
+			   if (args.length > 2 && args[0].equalsIgnoreCase("whitelistadd")) {
+				   if (sender.hasPermission("headsplus.maincommand.whitelist.add")) {
+					   sender.sendMessage(tooManyArgs);
+					   sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/headsplus whitelistadd <IGN>");
+				   } else {
+					   sender.sendMessage(noPerms);
+				   }
+			   }
 			   if ((args.length >= 1) && (args[0].equalsIgnoreCase("reload"))) { 
 				   MCReload.reload(sender);
 			   }   
@@ -45,7 +64,7 @@ public class HeadsPlusCommand implements CommandExecutor {
 			   } 
 			   else if ((args.length == 1) && (args[0].equalsIgnoreCase("blacklistadd"))) {
 				   if (sender.hasPermission("headsplus.maincommand.blacklist.add")) {
-					   sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/headsplus blacklistadd [IGN]");
+					   sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/headsplus blacklistadd <IGN>");
 				   } else {
 					   sender.sendMessage(noPerms);
 				   }
@@ -53,7 +72,7 @@ public class HeadsPlusCommand implements CommandExecutor {
 			   else if ((args.length > 2) && (args[0].equalsIgnoreCase("blacklistadd"))) {
 				   if (sender.hasPermission("headsplus.maincommand.blacklist.add")) {
 					   sender.sendMessage(tooManyArgs);
-					   sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/headsplus blacklistadd [IGN]");
+					   sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/headsplus blacklistadd <IGN>");
 				   } else {
 					   sender.sendMessage(noPerms);
 				   }
@@ -63,14 +82,14 @@ public class HeadsPlusCommand implements CommandExecutor {
 			 	  BlacklistDelete.blacklistDel(sender, args[1]);
 			   } else if ((args.length == 1) && (args[0].equalsIgnoreCase("blacklistdel"))) {
 				   if (sender.hasPermission("headsplus.maincommand.blacklist.delete")) {
-					   sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/hp blacklistdel [IGN]");
+					   sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/hp blacklistdel <IGN>");
 				   } else {
 					   sender.sendMessage(noPerms);
 				   }
 			   } else if ((args.length > 2) && (args[0].equalsIgnoreCase("blacklistdel"))) {
 				   if (sender.hasPermission("headsplus.maincommand.blacklist.delete")) {
 					   sender.sendMessage(tooManyArgs);
-					   sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/hp blacklistdel [IGN]");
+					   sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/hp blacklistdel <IGN>");
 				   } else {
 					   sender.sendMessage(noPerms);
 				   }

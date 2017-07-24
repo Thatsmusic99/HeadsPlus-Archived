@@ -23,15 +23,15 @@ public class JoinEvent implements Listener {
 	
 	@SuppressWarnings("unused")
 	private static FileConfiguration messages;
-	private static File messagesF = new File(HeadsPlus.getInstance().getDataFolder(), "messages.yml");;
+	private static File messagesF = new File(HeadsPlus.getInstance().getDataFolder(), "messages.yml");
 	
 	@SuppressWarnings("unused")
 	private static FileConfiguration heads;
-	private static File headsF = new File(HeadsPlus.getInstance().getDataFolder(), "heads.yml");;
+	private static File headsF = new File(HeadsPlus.getInstance().getDataFolder(), "heads.yml");
 	
 	@SuppressWarnings("unused")
 	private static FileConfiguration crafting;
-	private static File craftingF = new File(HeadsPlus.getInstance().getDataFolder(), "crafting.yml");;
+	private static File craftingF = new File(HeadsPlus.getInstance().getDataFolder(), "crafting.yml");
 	
 	
 	@EventHandler

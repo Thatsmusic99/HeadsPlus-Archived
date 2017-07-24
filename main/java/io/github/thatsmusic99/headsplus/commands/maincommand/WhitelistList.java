@@ -35,7 +35,7 @@ public class WhitelistList {
 	    	sender.sendMessage(HeadsPlusCommand.noPerms);
 	    }
 	}
-	public static void blacklistList(CommandSender sender, String i) {
+	public static void whitelistList(CommandSender sender, String i) {
 		if (sender.hasPermission("headsplus.maincommand.whitelist.list")) {
 			   if (i.matches("^[0-9]+$")) {
 				   List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("whitelist");

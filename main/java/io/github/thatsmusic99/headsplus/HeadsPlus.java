@@ -33,7 +33,7 @@ public class HeadsPlus extends JavaPlugin {
 	public Economy econ;
 	
     public static FileConfiguration config;
-	private File configF;
+	private static File configF;
 
 	@SuppressWarnings("unused")
 	private File messagesF;
@@ -89,22 +89,22 @@ public class HeadsPlus extends JavaPlugin {
 		return instance;
 		
 	}
-	private void setUpMConfig() {
-			configF = new File(getDataFolder(), "config.yml");
-			config = getConfig();
-			if(!getDataFolder().exists()) {
-				getDataFolder().mkdirs();
+	public static void setUpMConfig() {
+			configF = new File(instance.getDataFolder(), "config.yml");
+			config = instance.getConfig();
+			if(!instance.getDataFolder().exists()) {
+				instance.getDataFolder().mkdirs();
 			}
 			if (!configF.exists()) {
 				try {
 					configF.createNewFile();
 				} catch (IOException e) {
-					log.severe("[HeadsPlus] Couldn't create config!");
+					instance.log.severe("[HeadsPlus] Couldn't create config!");
 					e.printStackTrace();
 				}
 			}
 			config.options().copyDefaults(true);
-			saveConfig();
+			instance.saveConfig();
 			}
 		 
     

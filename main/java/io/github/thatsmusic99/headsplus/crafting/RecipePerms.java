@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 
@@ -25,18 +26,20 @@ public class RecipePerms implements Listener {
 		    }
 	        if(e.getSlot() == 0){
                 if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
-                    player.sendMessage(ChatColor.RED + "You can not craft heads!");
-                    e.setCancelled(true);
+                	if (e.getInventory().getType().equals(InventoryType.CRAFTING) || e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
+                		player.sendMessage(ChatColor.RED + "You can not craft heads!");
+                        e.setCancelled(true);
+                	}
                 }   
-           
 	        }
 		} else {
 			if(e.getSlot() == 0){
                 if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
-                    e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
-                    e.setCancelled(true);
+                	if (e.getInventory().getType().equals(InventoryType.CRAFTING) || e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
+                		e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
+                        e.setCancelled(true);
+                	}
                 }   
-           
 	        }
 		}
 		    

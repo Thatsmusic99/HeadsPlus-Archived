@@ -42,7 +42,7 @@ public class MCReload {
 
 			       if  (!(configF.exists())) {
 				       HeadsPlus.getInstance().log.info("[HeadsPlus] Config not found, creating!");
-				       HeadsPlus.getInstance().saveDefaultConfig();
+				       HeadsPlus.getInstance().saveConfig();
 			       } else {
 				       HeadsPlus.getInstance().log.info("[HeadsPlus] Found config, loading!");
 				       HeadsPlus.getInstance().reloadConfig();

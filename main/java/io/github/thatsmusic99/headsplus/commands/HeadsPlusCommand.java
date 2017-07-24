@@ -21,9 +21,6 @@ import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistwToggle;
 import io.github.thatsmusic99.headsplus.commands.maincommand.HelpMenu;
 import io.github.thatsmusic99.headsplus.commands.maincommand.Info;
 import io.github.thatsmusic99.headsplus.commands.maincommand.MCReload;
-import io.github.thatsmusic99.headsplus.commands.maincommand.WhitelistDelete;
-import io.github.thatsmusic99.headsplus.commands.maincommand.WhitelistList;
-import io.github.thatsmusic99.headsplus.commands.maincommand.WhitelistToggle;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class HeadsPlusCommand implements CommandExecutor {
@@ -55,42 +52,6 @@ public class HeadsPlusCommand implements CommandExecutor {
 						if (sender.hasPermission("headsplus.maincommand.blacklist.add")) {
 							sender.sendMessage(tooManyArgs);
 							sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/headsplus blacklistadd [IGN]");
-						} else {
-							sender.sendMessage(noPerms);
-						}
-					}
-					if ((args.length == 2) && (args[0].equalsIgnoreCase("whitelistdel"))) {
-						WhitelistDelete.whitelistDel(sender, args[1]);
-					} else if ((args.length == 1) && (args[0].equalsIgnoreCase("whitelistdel"))) {
-						if (sender.hasPermission("headsplus.maincommand.whitelist.delete")) {
-							sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/hp whitelistdel <IGN>");
-						} else {
-							sender.sendMessage(noPerms);
-						}
-					} else if ((args.length > 2) && (args[0].equalsIgnoreCase("whitelistdel"))) {
-						if (sender.hasPermission("headsplus.maincommand.whitelist.delete")) {
-							sender.sendMessage(tooManyArgs);
-							sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/hp whitelistdel <IGN>");
-						} else {
-							sender.sendMessage(noPerms);
-						}
-					}
-					if ((args.length == 1) && (args[0].equalsIgnoreCase("whitelist"))) {
-						WhitelistToggle.toggleNoArgs(sender);
-					}
-					if ((args.length >= 2) && (args[0].equalsIgnoreCase("whitelist"))) {
-						WhitelistToggle.toggle(sender, args[1]);
-					}
-					if ((args.length == 1) && (args[0].equalsIgnoreCase("whitelistl"))) {
-						WhitelistList.whitelistListNoArgs(sender);
-					}
-					if ((args.length == 2) && (args[0].equalsIgnoreCase("whitelistl"))) {
-						WhitelistList.whitelistList(sender, args[1]);
-					}
-					if ((args.length > 2) && (args[0].equalsIgnoreCase("whitelistl"))) {
-						if (sender.hasPermission("headsplus.maincommand.whitelist.list")) {
-							sender.sendMessage(tooManyArgs);
-							sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/hp whitelistl [Page no.]");
 						} else {
 							sender.sendMessage(noPerms);
 						}

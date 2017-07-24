@@ -51,64 +51,66 @@ public class Head implements CommandExecutor {
                         for (String str : HeadsPlus.getInstance().getConfig().getStringList("blacklist")) {
                     	    blacklist.add(str.toLowerCase());
                         }
-					    Boolean blacklistOn = HeadsPlus.config.getBoolean("blacklistOn");
+                        List<String> wl = new ArrayList<>();
+                        for (String str: HeadsPlus.getInstance().getConfig().getStringList("whitelist")) {
+                        	wl.add(str.toLowerCase());
+                        }
+					    boolean blacklistOn = HeadsPlus.config.getBoolean("blacklistOn");
+					    boolean wlOn = HeadsPlus.config.getBoolean("whitelistOn");
 				        String head = args[0].toLowerCase();
-				        if (!(blacklist.contains(head))) {
-					        if (((Player) sender).getInventory().firstEmpty() == -1) {
-					        	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("full-inv"))));
-					        } else {
-						        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-			                    SkullMeta meta = (SkullMeta) skull.getItemMeta();
-		                        meta.setOwner(args[0]);
-				                meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("playerHeadDN").replaceAll("%d", args[0])));
-				                skull.setItemMeta(meta);
-				                Location playerLoc = ((Player) sender).getLocation();
-				                double playerLocY = playerLoc.getY() + 1;
-				                playerLoc.setY(playerLocY);
-				                World world = ((Player) sender).getWorld();
-				                world.dropItem(playerLoc, skull).setPickupDelay(0);
-				                // player.getInventory().addItem(skull);
-				                return true;
+				        if (wlOn && blacklistOn) {
+				        	if (wl.contains(head)) {
+				        		if (!blacklist.contains(head)) {
+				        			giveHead((Player) sender, args[0]);
+				        			return true;
+				        		} else if (sender.hasPermission("headsplus.bypass.blacklist")) {
+				        			giveHead((Player) sender, args[0]);
+				        			return true;
+				        		} else {
+				        			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("blacklist-head"))));
+				        			return true;
+				        		}
+				        	} else if (sender.hasPermission("headsplus.bypass.whitelist")){
+				        		if (!blacklist.contains(head)) {
+				        			giveHead((Player) sender, args[0]);
+				        			return true;
+				        		} else if (sender.hasPermission("headsplus.bypass.blacklist")) {
+				        			giveHead((Player) sender, args[0]);
+				        			return true;
+				        		} else {
+				        			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("blacklist-head"))));
+				        			return true;
+				        		}
+				        	} else {
+				        		sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("whitelist-head"))));
+				        		return true;
 				        	}
-				    
-				        } else if ((blacklist.contains(head)) && (blacklistOn) && !(sender.hasPermission("headsplus.bypass.blacklist"))) {
-				        	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("blacklist-head"))));
-					        return false;
-				        } else if ((blacklist.contains(head)) && !(blacklistOn)) {
-					        if (((Player) sender).getInventory().firstEmpty() == -1) {
-					        	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("full-inv"))));
-					        } else {
-						        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-			                    SkullMeta meta = (SkullMeta) skull.getItemMeta();
-		                        meta.setOwner(args[0]);
-				                meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("playerHeadDN").replaceAll("%d", args[0])));
-				                skull.setItemMeta(meta);
-				                Location playerLoc = ((Player) sender).getLocation();
-				                double playerLocY = playerLoc.getY() + 1;
-				                playerLoc.setY(playerLocY);
-				                World world = ((Player) sender).getWorld();
-				                world.dropItem(playerLoc, skull).setPickupDelay(0);
-				                return true;
-				    	    }
-				       } else if ((blacklist.contains(head)) && (blacklistOn) && sender.hasPermission("headsplus.bypass.blacklist")) {
-				    	   if (((Player) sender).getInventory().firstEmpty() == -1) {
-					        	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("full-inv"))));
-					        } else {
-						        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-			                    SkullMeta meta = (SkullMeta) skull.getItemMeta();
-		                        meta.setOwner(args[0]);
-				                meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("playerHeadDN").replaceAll("%d", args[0])));
-				                skull.setItemMeta(meta);
-				                Location playerLoc = ((Player) sender).getLocation();
-				                double playerLocY = playerLoc.getY() + 1;
-				                playerLoc.setY(playerLocY);
-				                World world = ((Player) sender).getWorld();
-				                world.dropItem(playerLoc, skull).setPickupDelay(0);
-				                return true;
-				    	    }
-				       }
-		          }
-				
+				        } else if (wlOn && !blacklistOn) {
+				        	if (wl.contains(head)) {
+				        		giveHead((Player) sender, args[0]);
+				        		return true;
+				        	} else if (sender.hasPermission("headsplus.bypass.whitelist")) {
+				        		giveHead((Player) sender, args[0]);
+				        		return true;
+				        	} else {
+				        		sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("whitelist-head"))));
+				        		return true;
+				        	}
+				        } else if (blacklistOn && !wlOn) {
+				        	if (!blacklist.contains(head)) {
+				        		giveHead((Player) sender, args[0]);
+				        		return true;
+				        	} else if (sender.hasPermission("headsplus.bypass.blacklist")) {
+				        		giveHead((Player) sender, args[0]);
+				        		return true;
+				        	} else {
+				        		sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("blacklist-head"))));
+				        		return true;
+				        	}
+				        } else {
+				        	
+				        }
+		            }
 		        } else {
 		    	    sender.sendMessage(HeadsPlusCommand.noPerms);
 			        return false;
@@ -120,6 +122,18 @@ public class Head implements CommandExecutor {
 	    }
 	
 	return false;
+	}
+	private static void giveHead(Player p, String n) {
+		ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+        SkullMeta meta = (SkullMeta) skull.getItemMeta();
+        meta.setOwner(n);
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("playerHeadDN").replaceAll("%d", n)));
+        skull.setItemMeta(meta);
+        Location playerLoc = (p).getLocation();
+        double playerLocY = playerLoc.getY() + 1;
+        playerLoc.setY(playerLocY);
+        World world = (p).getWorld();
+        world.dropItem(playerLoc, skull).setPickupDelay(0);
 	}
 
 	

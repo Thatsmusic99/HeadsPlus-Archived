@@ -52,80 +52,35 @@ public class Head implements CommandExecutor {
                         for (String str : HeadsPlus.getInstance().getConfig().getStringList("blacklist")) {
                     	    bl.add(str.toLowerCase());
                         }
-                        List<String> wl = new ArrayList<>();
-                        for (String str: HeadsPlus.getInstance().getConfig().getStringList("whitelist")) {
-                        	wl.add(str.toLowerCase());
-                        }
 
 					    boolean blacklistOn = HeadsPlus.config.getBoolean("blacklistOn");
-					    boolean wlOn = HeadsPlus.config.getBoolean("whitelistOn");
 				        String head = args[0].toLowerCase();
-				        if (wlOn && blacklistOn) {
-				        	if (wl.contains(head)) {
-				        		if (!bl.contains(head)) {
-				        			giveHead((Player) sender, args[0]);
-				        			return true;
-				        		} else if (sender.hasPermission("headsplus.bypass.blacklist")) {
-				        			giveHead((Player) sender, args[0]);
-				        			return true;
-				        		} else {
-				        			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("blacklist-head"))));
-				        			return true;
-				        		}
-				        	} else if (sender.hasPermission("headsplus.bypass.whitelist")){
-				        		if (!bl.contains(head)) {
-				        			giveHead((Player) sender, args[0]);
-				        			return true;
-				        		} else if (sender.hasPermission("headsplus.bypass.blacklist")) {
-				        			giveHead((Player) sender, args[0]);
-				        			return true;
-				        		} else {
-				        			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("blacklist-head"))));
-				        			return true;
-				        		}
-				        	} else {
-				        		sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("whitelist-head"))));
-				        		return true;
-				        	}
-				        } else if (wlOn) {
-				        	if (wl.contains(head)) {
-				        		giveHead((Player) sender, args[0]);
-				        		return true;
-				        	} else if (sender.hasPermission("headsplus.bypass.whitelist")) {
-				        		giveHead((Player) sender, args[0]);
-				        		return true;
-				        	} else {
-				        		sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("whitelist-head"))));
-				        		return true;
-				        	}
-				        } else if (blacklistOn) {
+				        if (blacklistOn) {
 				        	if (!bl.contains(head)) {
-				        		giveHead((Player) sender, args[0]);
-				        		return true;
-				        	} else if (sender.hasPermission("headsplus.bypass.blacklist")) {
-				        		giveHead((Player) sender, args[0]);
-				        		return true;
-				        	} else {
-				        		sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("blacklist-head"))));
-				        		return true;
-				        	}
-				        } else {
-							giveHead((Player) sender, args[0]);
-							return true;
-				        }
-		            }
-		        } else {
-		    	    sender.sendMessage(HeadsPlusCommand.noPerms);
-			        return false;
-		       }
-	        } else {
-	            sender.sendMessage(ChatColor.RED + "You must be a player to run this command!");
-		        return false;
-	        }
-	    }
-	
-	return false;
-	}
+                                giveHead((Player) sender, args[0]);
+                                return true;
+                            } else if (sender.hasPermission("headsplus.bypass.blacklist")){
+                                giveHead((Player) sender, args[0]);
+                                return true;
+                            } else {
+                                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("blacklist-head"))));
+                                return true;
+                            }
+                        } else {
+                            giveHead((Player) sender, args[0]);
+                        }
+                    }
+                }
+            } else {
+                sender.sendMessage(HeadsPlusCommand.noPerms);
+                return false;
+            }
+        } else {
+            sender.sendMessage(ChatColor.RED + "You must be a player to run this command!");
+            return false;
+        }
+        return false;
+    }
 	private static void giveHead(Player p, String n) {
 		ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         SkullMeta meta = (SkullMeta) skull.getItemMeta();

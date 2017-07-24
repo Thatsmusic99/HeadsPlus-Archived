@@ -37,6 +37,7 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("false-head", "&cThis head cannot be sold!");
 		getMessages().addDefault("false-item", "&cThis is not a head!");
 		getMessages().addDefault("blacklist-head", "&cThis head is blacklisted and cannot be used!");
+		getMessages().addDefault("whitelist-head", "&cThis head is not whitelisted, therefore it cannot be used!");
 		getMessages().addDefault("full-inv", "&cYour inventory is full!");
 		getMessages().addDefault("alpha-names", "&cThis command only handles alphanumeric names!");
 		getMessages().addDefault("too-many-args", "&cToo many arguments!");
@@ -67,11 +68,21 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("blw-a-on", "%h &3The world blacklist is already enabled!");
 		getMessages().addDefault("blw-off", "%h &3The world blacklist has been disabled!");
 		getMessages().addDefault("blw-a-off", "%h &3The world blacklist is already disabled!");
-		getMessages().addDefault("bl-fail", "%h &cFailed to modify blacklist.");
-		getMessages().addDefault("blw-fail", "%h &cFailed to modify world blacklist.");
+		getMessages().addDefault("wl-on", "%h &3The whitelist has been enabled!");
+		getMessages().addDefault("wl-a-on", "%h &3The whitelist is already enabled!");
+		getMessages().addDefault("wl-off", "%h &3The whitelist has been disabled!");
+		getMessages().addDefault("wl-a-off", "%h &3The whitelist is already disabled!");
+		getMessages().addDefault("wlw-on", "%h &3The world whitelist has been enabled!");
+		getMessages().addDefault("wlw-a-on", "%h &3The world whitelist is already enabled!");
+		getMessages().addDefault("wlw-off", "%h &3The world whitelist has been disabled!");
+		getMessages().addDefault("wlw-a-off", "%h &3The world whitelist is already disabled!");
+		getMessages().addDefault("wl-fail", "%h &cFailed to modify whitelist.");
+		getMessages().addDefault("wlw-fail", "%h &cFailed to modify world whitelist.");
 		getMessages().addDefault("disabled", "&cThis command is disabled.");
 		getMessages().addDefault("empty-bl", "%h &cThe blacklist is empty!");
 		getMessages().addDefault("empty-blw", "%h &cThe world blacklist is empty!");
+		getMessages().addDefault("empty-wl", "%h &cThe whitelist is empty!");
+		getMessages().addDefault("empty-wlw", "%h &cThe world whitelist is empty!");
 		getMessages().options().copyDefaults(true);
 		saveMessages();
 		

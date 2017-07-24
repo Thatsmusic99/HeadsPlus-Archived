@@ -53,13 +53,18 @@ public class Head implements CommandExecutor {
                     	    bl.add(str.toLowerCase());
                         }
 
-					    boolean blacklistOn = HeadsPlus.config.getBoolean("blacklistOn");
+					    boolean blacklistOn = HeadsPlus.getInstance().getConfig().getBoolean("blacklistOn");
 				        String head = args[0].toLowerCase();
 				        if (blacklistOn) {
 				        	if (!bl.contains(head)) {
+				        		HeadsPlus.getInstance().log.info(head);
+				        		for (String s : bl) {
+				        			HeadsPlus.getInstance().log.info(s);
+				        		}
                                 giveHead((Player) sender, args[0]);
                                 return true;
                             } else if (sender.hasPermission("headsplus.bypass.blacklist")){
+                            	HeadsPlus.getInstance().log.info("Ping");
                                 giveHead((Player) sender, args[0]);
                                 return true;
                             } else {
@@ -67,6 +72,7 @@ public class Head implements CommandExecutor {
                                 return true;
                             }
                         } else {
+                        	HeadsPlus.getInstance().log.info("Pong");
                             giveHead((Player) sender, args[0]);
                         }
                     }

@@ -4,23 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import io.github.thatsmusic99.headsplus.commands.maincommand.*;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistAdd;
-import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistDelete;
-import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistList;
-import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistToggle;
-import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistwAdd;
-import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistwDelete;
-import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistwList;
-import io.github.thatsmusic99.headsplus.commands.maincommand.BlacklistwToggle;
-import io.github.thatsmusic99.headsplus.commands.maincommand.HelpMenu;
-import io.github.thatsmusic99.headsplus.commands.maincommand.Info;
-import io.github.thatsmusic99.headsplus.commands.maincommand.MCReload;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class HeadsPlusCommand implements CommandExecutor {
@@ -57,6 +47,24 @@ public class HeadsPlusCommand implements CommandExecutor {
 					   sender.sendMessage(noPerms);
 				   }
 			   }
+			if ((args.length == 2) && (args[0].equalsIgnoreCase("whitelistadd"))) {
+				WhitelistAdd.wlAdd(sender, args[1]);
+			}
+			else if ((args.length == 1) && (args[0].equalsIgnoreCase("whitelistadd"))) {
+				if (sender.hasPermission("headsplus.maincommand.whitelist.add")) {
+					sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/headsplus whitelistadd [IGN]");
+				} else {
+					sender.sendMessage(noPerms);
+				}
+			}
+			else if ((args.length > 2) && (args[0].equalsIgnoreCase("whitelistadd"))) {
+				if (sender.hasPermission("headsplus.maincommand.whitelist.add")) {
+					sender.sendMessage(tooManyArgs);
+					sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/headsplus whitelistadd [IGN]");
+				} else {
+					sender.sendMessage(noPerms);
+				}
+			}
 		      
 			   if ((args.length == 2) && (args[0].equalsIgnoreCase("blacklistdel"))) {
 			 	  BlacklistDelete.blacklistDel(sender, args[1]);

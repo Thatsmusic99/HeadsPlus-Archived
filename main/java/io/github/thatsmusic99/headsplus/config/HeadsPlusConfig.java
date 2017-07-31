@@ -37,6 +37,7 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("false-head", "&cThis head cannot be sold!");
 		getMessages().addDefault("false-item", "&cThis is not a head!");
 		getMessages().addDefault("blacklist-head", "&cThis head is blacklisted and cannot be used!");
+		getMessages().addDefault("whitelist-head", "&cThis head isn't whitelisted and therefore cannot be used!");
 		getMessages().addDefault("full-inv", "&cYour inventory is full!");
 		getMessages().addDefault("alpha-names", "&cThis command only handles alphanumeric names!");
 		getMessages().addDefault("too-many-args", "&cToo many arguments!");
@@ -49,10 +50,16 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("head-added-bl", "%h &3%p has been added to the blacklist!");
 		getMessages().addDefault("head-a-removed-bl", "%h &3This head is not on the blacklist!");
 		getMessages().addDefault("head-removed-bl", "%h &3%p has been removed from the blacklist!");
+		getMessages().addDefault("head-added-wl", "%h &3%p has been added to the whitelist!");
+		getMessages().addDefault("head-a-removed-wl", "%h &3This head is not on the whitelist!");
+		getMessages().addDefault("head-removed-wl", "%h &3%p has been removed from the whitelist!");
 		getMessages().addDefault("world-a-add", "%h &3This world is already added!");
 		getMessages().addDefault("world-added-bl", "%h &3%w has been added to the world blacklist!");
 		getMessages().addDefault("world-a-removed-bl", "%h &3This world is not on the blacklist!");
 		getMessages().addDefault("world-removed-bl", "%h &3%w has been removed from the blacklist!");
+		getMessages().addDefault("world-added-wl", "%h &3%w has been added to the world whitelist!");
+		getMessages().addDefault("world-a-removed-wl", "%h &3This world is not on the whitelist!");
+		getMessages().addDefault("world-removed-wl", "%h &3%w has been removed from the whitelist!");
 		getMessages().addDefault("bl-on", "%h &3The blacklist has been enabled!");
 		getMessages().addDefault("bl-a-on", "%h &3The blacklist is already enabled!");
 		getMessages().addDefault("bl-off", "%h &3The blacklist has been disabled!");
@@ -61,9 +68,19 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("blw-a-on", "%h &3The world blacklist is already enabled!");
 		getMessages().addDefault("blw-off", "%h &3The world blacklist has been disabled!");
 		getMessages().addDefault("blw-a-off", "%h &3The world blacklist is already disabled!");
+		getMessages().addDefault("wl-on", "%h &3The whitelist has been enabled!");
+		getMessages().addDefault("wl-a-on", "%h &3The whitelist is already enabled!");
+		getMessages().addDefault("wl-off", "%h &3The whitelist has been disabled!");
+		getMessages().addDefault("wl-a-off", "%h &3The whitelist is already disabled!");
+		getMessages().addDefault("wlw-on", "%h &3The world whitelist has been enabled!");
+		getMessages().addDefault("wlw-a-on", "%h &3The world whitelist is already enabled!");
+		getMessages().addDefault("wlw-off", "%h &3The world whitelist has been disabled!");
+		getMessages().addDefault("wlw-a-off", "%h &3The world whitelist is already disabled!");
 		getMessages().addDefault("disabled", "&cThis command is disabled.");
 		getMessages().addDefault("empty-bl", "%h &cThe blacklist is empty!");
 		getMessages().addDefault("empty-blw", "%h &cThe world blacklist is empty!");
+		getMessages().addDefault("empty-wl", "%h &cThe whitelist is empty!");
+		getMessages().addDefault("empty-wlw", "%h &cThe world whitelist is empty!");
 		getMessages().options().copyDefaults(true);
 		saveMessages();
 		

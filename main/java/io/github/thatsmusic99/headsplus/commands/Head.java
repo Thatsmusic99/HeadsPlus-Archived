@@ -57,10 +57,6 @@ public class Head implements CommandExecutor {
 				        String head = args[0].toLowerCase();
 				        if (blacklistOn) {
 				        	if (!bl.contains(head)) {
-				        		HeadsPlus.getInstance().log.info(head);
-				        		for (String s : bl) {
-				        			HeadsPlus.getInstance().log.info(s);
-				        		}
                                 giveHead((Player) sender, args[0]);
                                 return true;
                             } else if (sender.hasPermission("headsplus.bypass.blacklist")){

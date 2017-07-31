@@ -76,6 +76,8 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("wlw-a-on", "%h &3The world whitelist is already enabled!");
 		getMessages().addDefault("wlw-off", "%h &3The world whitelist has been disabled!");
 		getMessages().addDefault("wlw-a-off", "%h &3The world whitelist is already disabled!");
+		getMessages().addDefault("bl-fail", "%h &cFailed to add head to blacklist!");
+        getMessages().addDefault("wl-fail", "%h &cFailed to add head to whitelist!");
 		getMessages().addDefault("disabled", "&cThis command is disabled.");
 		getMessages().addDefault("empty-bl", "%h &cThe blacklist is empty!");
 		getMessages().addDefault("empty-blw", "%h &cThe world blacklist is empty!");

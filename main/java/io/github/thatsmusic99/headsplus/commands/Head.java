@@ -64,7 +64,6 @@ public class Head implements CommandExecutor {
                                 giveHead((Player) sender, args[0]);
                                 return true;
                             } else if (sender.hasPermission("headsplus.bypass.blacklist")){
-                            	HeadsPlus.getInstance().log.info("Ping");
                                 giveHead((Player) sender, args[0]);
                                 return true;
                             } else {
@@ -72,7 +71,6 @@ public class Head implements CommandExecutor {
                                 return true;
                             }
                         } else {
-                        	HeadsPlus.getInstance().log.info("Pong");
                             giveHead((Player) sender, args[0]);
                         }
                     }

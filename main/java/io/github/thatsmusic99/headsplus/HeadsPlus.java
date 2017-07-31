@@ -75,6 +75,7 @@ public class HeadsPlus extends JavaPlugin {
 		    this.getCommand("hp").setExecutor(new HeadsPlusCommand());
 		    this.getCommand("head").setExecutor(new Head());
 		    JoinEvent.reloaded = false;
+			Metrics metrics = new Metrics(this);
 		    log.info("[HeadsPlus] HeadsPlus has been enabled.");
 		} catch (Exception e) {
 			log.severe("[HeadsPlus] Error enabling HeadsPlus!");

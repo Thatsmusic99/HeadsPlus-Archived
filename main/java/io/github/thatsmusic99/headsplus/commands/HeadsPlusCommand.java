@@ -19,7 +19,7 @@ public class HeadsPlusCommand implements CommandExecutor {
 	private static String tooManyArgs = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("too-many-args")));
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		List<String> validCmds = new ArrayList<>(Arrays.asList("reload", "blacklistadd", "blacklistdel", "blacklist", "info", "blacklistl", "help", "blacklistw", "blacklistwadd", "blacklistwdel", "blacklistwl", "blacklistw", "whitelistadd", "whitelistdel"));
+		List<String> validCmds = new ArrayList<>(Arrays.asList("reload", "blacklistadd", "blacklistdel", "blacklist", "info", "blacklistl", "help", "blacklistw", "blacklistwadd", "blacklistwdel", "blacklistwl", "blacklistw", "whitelistadd", "whitelistdel", "whitelistl"));
 
 		if ((cmd.getName().equalsIgnoreCase("headsplus")) || (cmd.getName().equalsIgnoreCase("hp"))) {
 			   if ((args.length == 0)) {
@@ -121,6 +121,20 @@ public class HeadsPlusCommand implements CommandExecutor {
 					   sender.sendMessage(noPerms);
 				   }
 			   }
+            if ((args.length == 1) && (args[0].equalsIgnoreCase("whitelistl"))) {
+                WhitelistList.wlListNoArgs(sender);
+            }
+            if ((args.length == 2) && (args[0].equalsIgnoreCase("whitelistl"))) {
+                WhitelistList.wlList(sender, args[1]);
+            }
+            if ((args.length > 2) && (args[0].equalsIgnoreCase("whitelistl"))) {
+                if (sender.hasPermission("headsplus.maincommand.whitelist.list")) {
+                    sender.sendMessage(tooManyArgs);
+                    sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/hp whitelistl [Page no.]");
+                } else {
+                    sender.sendMessage(noPerms);
+                }
+            }
 			   if ((args.length >= 1) && (args[0].matches("^[0-9]+$"))) {
 				   HelpMenu.helpNo(sender, args[0]);
 			   }

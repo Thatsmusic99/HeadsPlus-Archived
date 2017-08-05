@@ -36,7 +36,7 @@ public class WhitelistAdd {
                         config.options().copyDefaults(true);
                         HeadsPlus.getInstance().saveConfig();
 
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("head-added").replaceAll("%p", name))));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("head-added-wl").replaceAll("%p", name))));
                     }
                 } catch (Exception e) {
                     HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to add head!");

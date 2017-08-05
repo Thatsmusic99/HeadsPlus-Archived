@@ -82,6 +82,22 @@ public class HeadsPlusCommand implements CommandExecutor {
 					   sender.sendMessage(noPerms);
 				   }
 			   }
+			if ((args.length == 2) && (args[0].equalsIgnoreCase("whitelistdel"))) {
+				WhitelistDel.whitelistDel(sender, args[1]);
+			} else if ((args.length == 1) && (args[0].equalsIgnoreCase("whitelistdel"))) {
+				if (sender.hasPermission("headsplus.maincommand.whitelist.delete")) {
+					sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/hp whitelistdel [IGN]");
+				} else {
+					sender.sendMessage(noPerms);
+				}
+			} else if ((args.length > 2) && (args[0].equalsIgnoreCase("whitelistdel"))) {
+				if (sender.hasPermission("headsplus.maincommand.whitelist.delete")) {
+					sender.sendMessage(tooManyArgs);
+					sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/hp whitelistdel [IGN]");
+				} else {
+					sender.sendMessage(noPerms);
+				}
+			}
 			   if ((args.length == 1) && (args[0].equalsIgnoreCase("blacklist"))) {
 				   BlacklistToggle.toggleNoArgs(sender);
 			   }

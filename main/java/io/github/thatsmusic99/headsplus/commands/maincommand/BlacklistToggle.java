@@ -19,12 +19,12 @@ public class BlacklistToggle {
 					  config.set("blacklistOn", false);
 					  config.options().copyDefaults(true);
 			          HeadsPlus.getInstance().saveConfig();
-					  sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("bl-on"))));
+					  sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("bl-off"))));
 				  } else if (!config.getBoolean("blacklistOn")) {
 					  config.set("blacklistOn", true);
 					  config.options().copyDefaults(true);
 					  HeadsPlus.getInstance().saveConfig();
-					  sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("bl-off"))));
+					  sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("bl-on"))));
 				  }
 			  } catch (Exception e) {
 				  HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to toggle blacklist!");

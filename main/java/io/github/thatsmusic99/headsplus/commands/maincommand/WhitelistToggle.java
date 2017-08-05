@@ -17,12 +17,12 @@ public class WhitelistToggle {
                     config.set("whitelistOn", false);
                     config.options().copyDefaults(true);
                     HeadsPlus.getInstance().saveConfig();
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("wl-on"))));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("wl-off"))));
                 } else if (!config.getBoolean("whitelistOn")) {
                     config.set("whitelistOn", true);
                     config.options().copyDefaults(true);
                     HeadsPlus.getInstance().saveConfig();
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("wl-off"))));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("wl-on"))));
                 }
             } catch (Exception e) {
                 HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to toggle whitelist!");

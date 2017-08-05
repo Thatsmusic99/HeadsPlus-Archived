@@ -19,7 +19,22 @@ public class HeadsPlusCommand implements CommandExecutor {
 	private static String tooManyArgs = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("too-many-args")));
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		List<String> validCmds = new ArrayList<>(Arrays.asList("reload", "blacklistadd", "blacklistdel", "blacklist", "info", "blacklistl", "help", "blacklistw", "blacklistwadd", "blacklistwdel", "blacklistwl", "blacklistw", "whitelistadd", "whitelistdel", "whitelistl"));
+		List<String> validCmds = new ArrayList<>(Arrays.asList("reload",
+                "blacklistadd",
+                "blacklistdel",
+                "blacklist",
+                "info",
+                "blacklistl",
+                "help",
+                "blacklistw",
+                "blacklistwadd",
+                "blacklistwdel",
+                "blacklistwl",
+                "blacklistw",
+                "whitelistadd",
+                "whitelistdel",
+                "whitelistl",
+                "whitelist"));
 
 		if ((cmd.getName().equalsIgnoreCase("headsplus")) || (cmd.getName().equalsIgnoreCase("hp"))) {
 			   if ((args.length == 0)) {
@@ -104,6 +119,12 @@ public class HeadsPlusCommand implements CommandExecutor {
 			   if ((args.length >= 2) && (args[0].equalsIgnoreCase("blacklist"))) {
 				   BlacklistToggle.toggle(sender, args[1]);
 			   }
+            if ((args.length == 1) && (args[0].equalsIgnoreCase("whitelist"))) {
+                WhitelistToggle.toggleNoArgs(sender);
+            }
+            if ((args.length >= 2) && (args[0].equalsIgnoreCase("whitelist"))) {
+                WhitelistToggle.toggle(sender, args[1]);
+            }
 			   if ((args.length >= 1) && (args[0].equalsIgnoreCase("info"))) {
 				   Info.info(sender);
 			   }

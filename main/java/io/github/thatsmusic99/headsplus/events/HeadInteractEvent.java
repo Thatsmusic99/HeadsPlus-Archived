@@ -1,6 +1,5 @@
 package io.github.thatsmusic99.headsplus.events;
 
-
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.block.BlockState;
@@ -25,8 +24,7 @@ public final class HeadInteractEvent implements Listener {
 			if (block instanceof Skull) {
 				
 			    Skull skull = (Skull) block;
-			    @SuppressWarnings("deprecation")
-			    String owner = skull.getOwner();
+			    String owner = getSkullName(skull);
 			    String playerName = player.toString();
 			    if (TimesSent < 1) {
 			    	for (HeadEnums key : HeadEnums.values()) {
@@ -57,4 +55,11 @@ public final class HeadInteractEvent implements Listener {
 		    } 
 		}
 	}
+	private static String getSkullName(Skull s) {
+	    if (HeadsPlus.getInstance().getServer().getVersion().contains("1.8")) {
+	        return s.getOwner();
+        } else {
+	        return s.getOwningPlayer().getName();
+        }
+    }
 }

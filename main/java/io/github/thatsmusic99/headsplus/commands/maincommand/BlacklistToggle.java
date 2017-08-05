@@ -57,7 +57,7 @@ public class BlacklistToggle {
 					} else {
 						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("bl-a-off"))));
 					}
-				} else if (!(str.equalsIgnoreCase("on") && !(str.equalsIgnoreCase("off")))) {
+				} else if (!(str.equalsIgnoreCase("on"))) {
 				 	sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/headsplus blacklist [On|Off]");
 				}
 		    } catch (Exception e) {

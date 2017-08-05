@@ -13,7 +13,11 @@ public enum PermissionEnums {
 	BLACKLISTW_ADD("headsplus.maincommand.blacklistw.add", "/hp blacklistwadd <World>", "Adds a world to the crafting recipe blacklist."), 
 	BLACKLISTW_DEL("headsplus.maincommand.blacklistw.delete", "/hp blacklistwdel <World>", "Removes a world to the crafting recipe blacklist."), 
 	BLACKLISTW_TOGGLE("headsplus.maincommand.blacklistw.toggle", "/hp blacklistw [On|Off]", "Toggles the crafting recipe blacklist on/off."), 
-	BLACKLISTW_LIST("headsplus.maincommand.blacklistw.list", "/hp blacklistwl", "Lists blacklisted worlds.");
+	BLACKLISTW_LIST("headsplus.maincommand.blacklistw.list", "/hp blacklistwl", "Lists blacklisted worlds."),
+	WHITELIST_ADD("headsplus.maincommand.whitelist.add", "/hp whitelistadd <IGN>", "Adds a head to the whitelist."),
+	WHITELIST_DELETE("headsplus.maincommand.whitelist.delete", "/hp blacklistdel <IGN>", "Removes a head from the whitelist."),
+	WHITELIST_TOGGLE("headsplus.maincommand.whitelist.toggle", "/hp blacklist [On|Off]", "Toggles the whitelist."),
+    WHITELIST_LIST("headsplus.maincommand.whitelist.list", "/hp whitelistl [Page no.]", "Lists all heads in the whitelist.");
 	
 	String str;
 	String cmd;

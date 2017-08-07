@@ -17,6 +17,7 @@ public class HelpMenu {
 	if (sender.hasPermission("headsplus.maincommand")) {
 		List<PermissionEnums> headPerms = new ArrayList<>();
 	    for (PermissionEnums key : PermissionEnums.values()) {
+	    	if (!key.cmd.startsWith("/hp")) continue;
 	    	if (sender.hasPermission(key.str)) {
 	    		headPerms.add(key);
 	    	}

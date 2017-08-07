@@ -1,5 +1,6 @@
 package io.github.thatsmusic99.headsplus;
 
+import io.github.thatsmusic99.headsplus.events.TabComplete;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -73,6 +74,7 @@ public class HeadsPlus extends JavaPlugin {
 			}
 		    this.getCommand("headsplus").setExecutor(new HeadsPlusCommand());
 		    this.getCommand("hp").setExecutor(new HeadsPlusCommand());
+		    this.getCommand("hp").setTabCompleter(new TabComplete());
 		    this.getCommand("head").setExecutor(new Head());
 		    JoinEvent.reloaded = false;
 			Metrics metrics = new Metrics(this);

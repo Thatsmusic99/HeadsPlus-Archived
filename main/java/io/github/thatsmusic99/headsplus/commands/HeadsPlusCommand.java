@@ -165,7 +165,7 @@ public class HeadsPlusCommand implements CommandExecutor {
 			   if ((args.length >= 2) && (args[0].equalsIgnoreCase("help"))) {
 			 	   HelpMenu.helpNo(sender, args[1]);
 			   }
-			   if ((args.length > 0) && !validCmds.contains(args[0]) && !args[0].matches("^[0-9]+$")) {
+			   if ((args.length > 0) && !validCmds.contains(args[0].toLowerCase()) && !args[0].matches("^[0-9]+$")) {
 				   HelpMenu.helpNoArgs(sender);
 			   }
 			   if ((args.length == 2) && (args[0].equalsIgnoreCase("blacklistwadd"))) {

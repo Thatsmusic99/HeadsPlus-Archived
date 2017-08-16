@@ -35,9 +35,9 @@ public class BlacklistwDelete {
 				              config.set("blacklistw", blacklist);
 				              config.options().copyDefaults(true);
 				              HeadsPlus.getInstance().saveConfig();
-				              sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("world-removed").replaceAll("%w", world))));
+				              sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("world-removed-bl").replaceAll("%w", world))));
 			              } else {
-			    	          sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("world-a-removed"))));
+			    	          sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("world-a-removed-bl"))));
 			          
                     }} catch (Exception e) {
 			    	      HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove world!");

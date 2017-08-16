@@ -39,7 +39,7 @@ public class BlacklistwAdd {
 				           config.options().copyDefaults(true);
 				           HeadsPlus.getInstance().saveConfig();
 				       
-				           sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("world-added").replaceAll("%w", world))));
+				           sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("world-added-bl").replaceAll("%w", world))));
 			          }
 		           } catch (Exception e) {
 			          HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to add world!");

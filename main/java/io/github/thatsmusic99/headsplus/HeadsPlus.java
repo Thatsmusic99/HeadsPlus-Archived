@@ -1,6 +1,6 @@
 package io.github.thatsmusic99.headsplus;
 
-import io.github.thatsmusic99.headsplus.events.TabComplete;
+import io.github.thatsmusic99.headsplus.events.*;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -14,9 +14,6 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusCrafting;
 import io.github.thatsmusic99.headsplus.crafting.RecipePerms;
-import io.github.thatsmusic99.headsplus.events.DeathEvents;
-import io.github.thatsmusic99.headsplus.events.HeadInteractEvent;
-import io.github.thatsmusic99.headsplus.events.JoinEvent;
 
 import net.milkbowl.vault.economy.Economy;
 
@@ -25,11 +22,11 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 public class HeadsPlus extends JavaPlugin {	
-	public Logger log = Logger.getLogger("Minecraft");
+	public final Logger log = Logger.getLogger("Minecraft");
 	private static HeadsPlus instance;
-	private PluginDescriptionFile pluginYml = getDescription();
-	public String author = pluginYml.getAuthors().toString();
-	public String version = pluginYml.getVersion();
+	private final PluginDescriptionFile pluginYml = getDescription();
+	public final String author = pluginYml.getAuthors().toString();
+	public final String version = pluginYml.getVersion();
 	public boolean sellable;
 	public Economy econ;
 	
@@ -53,16 +50,20 @@ public class HeadsPlus extends JavaPlugin {
 			}
 			if (!(econ()) && (getConfig().getBoolean("sellHeads"))) {
 				this.getCommand("sellhead").setExecutor(new SellHead());
+				this.getCommand("sellhead").setTabCompleter(new TabCompleteSellhead());
 				log.warning("[HeadsPlus] Vault not found! Heads cannot be sold.");
 				sellable = false;
 			} else if ((econ()) && !(getConfig().getBoolean("sellHeads"))) {
 				this.getCommand("sellhead").setExecutor(new SellHead());
+                this.getCommand("sellhead").setTabCompleter(new TabCompleteSellhead());
 				sellable = true;
 			} else if ((econ()) && (getConfig().getBoolean("sellHeads"))){
 				this.getCommand("sellhead").setExecutor(new SellHead());
+                this.getCommand("sellhead").setTabCompleter(new TabCompleteSellhead());
 				sellable = true;
 			} else if (!(econ() && !(getConfig().getBoolean("sellHeads")))) {
 				this.getCommand("sellhead").setExecutor(new SellHead());
+                this.getCommand("sellhead").setTabCompleter(new TabCompleteSellhead());
 				sellable = false;
 			}
 			getServer().getPluginManager().registerEvents(new HeadInteractEvent(), this);

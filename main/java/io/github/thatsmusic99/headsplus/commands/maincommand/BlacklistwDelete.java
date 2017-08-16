@@ -13,7 +13,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class BlacklistwDelete {
 	
-	private static FileConfiguration config = HeadsPlus.getInstance().getConfig();
+	private static final FileConfiguration config = HeadsPlus.getInstance().getConfig();
 	@SuppressWarnings("unused")
 	private static File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
 

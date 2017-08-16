@@ -10,7 +10,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class BlacklistToggle {
 	
-	private static FileConfiguration config = HeadsPlus.getInstance().getConfig();
+	private static final FileConfiguration config = HeadsPlus.getInstance().getConfig();
 	
 	public static void toggleNoArgs(CommandSender sender) {
 		if (sender.hasPermission("headsplus.maincommand.blacklist.toggle")) {

@@ -11,8 +11,8 @@ import java.io.File;
 import java.util.List;
 
 public class WhitelistAdd {
-    private static FileConfiguration config = HeadsPlus.getInstance().getConfig();
-    private static File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
+    private static final FileConfiguration config = HeadsPlus.getInstance().getConfig();
+    private static final File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
 
     public static void wlAdd(CommandSender sender, String name) {
         if (sender.hasPermission("headsplus.maincommand.whitelist.add")) {

@@ -12,8 +12,8 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class BlacklistAdd {
 	
-	private static FileConfiguration config = HeadsPlus.getInstance().getConfig();
-	private static File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
+	private static final FileConfiguration config = HeadsPlus.getInstance().getConfig();
+	private static final File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
 
 	public static void blacklistAdd(CommandSender sender, String name) {
 		if (sender.hasPermission("headsplus.maincommand.blacklist.add")) {

@@ -17,8 +17,8 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusCrafting;
 
 public class RecipeEnumUser {
 	
-	private static FileConfiguration crafting = HeadsPlusCrafting.getCrafting();
-	private static FileConfiguration heads = HeadsPlusConfigHeads.getHeads();
+	private static final FileConfiguration crafting = HeadsPlusCrafting.getCrafting();
+	private static final FileConfiguration heads = HeadsPlusConfigHeads.getHeads();
 	
 	@SuppressWarnings("deprecation")
 	public static void addEnumToConfig() {

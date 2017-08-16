@@ -24,8 +24,8 @@ public enum RecipeEnums {
     WITCH(Material.POTION, "witch"), 
     ZOMBIE(Material.ROTTEN_FLESH, "zombie");
 	
-    public Material mat;
-    public String str;
+    public final Material mat;
+    public final String str;
 	
 	RecipeEnums(Material mat, String str) {
 		this.mat = mat;

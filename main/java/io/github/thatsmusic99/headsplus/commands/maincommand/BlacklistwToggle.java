@@ -10,7 +10,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class BlacklistwToggle {
 	
-	private static FileConfiguration config = HeadsPlus.getInstance().getConfig();
+	private static final FileConfiguration config = HeadsPlus.getInstance().getConfig();
 	
 	public static void toggleWorldNoArgs(CommandSender sender) {
 		if (sender.hasPermission("headsplus.maincommand.blacklistw.toggle")) {
@@ -57,7 +57,7 @@ public class BlacklistwToggle {
 					} else {
 						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("blw-a-off"))));
 					}
-				} else if (!(str.equalsIgnoreCase("on") && !(str.equalsIgnoreCase("off")))) {
+				} else {
 				 	sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/headsplus blacklistw [On|Off]");
 				}
 		    } catch (Exception e) {

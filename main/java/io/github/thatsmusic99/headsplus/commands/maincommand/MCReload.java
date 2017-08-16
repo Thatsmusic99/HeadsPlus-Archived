@@ -15,19 +15,19 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusCrafting;
 
 public class MCReload {
 	
-	private static File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
-	
+	private static final File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
+
 	@SuppressWarnings("unused")
 	private static FileConfiguration messages;
-	private static File messagesF = new File(HeadsPlus.getInstance().getDataFolder(), "messages.yml");;
+	private static final File messagesF = new File(HeadsPlus.getInstance().getDataFolder(), "messages.yml");
 	
 	@SuppressWarnings("unused")
 	private static FileConfiguration heads;
-	private static File headsF = new File(HeadsPlus.getInstance().getDataFolder(), "heads.yml");;
+	private static final File headsF = new File(HeadsPlus.getInstance().getDataFolder(), "heads.yml");
 	
 	@SuppressWarnings("unused")
 	private static FileConfiguration crafting;
-	private static File craftingF = new File(HeadsPlus.getInstance().getDataFolder(), "crafting.yml");;
+	private static final File craftingF = new File(HeadsPlus.getInstance().getDataFolder(), "crafting.yml");
 	
 	public static void reload(CommandSender sender) {
 		if (sender.hasPermission("headsplus.maincommand.reload")) {

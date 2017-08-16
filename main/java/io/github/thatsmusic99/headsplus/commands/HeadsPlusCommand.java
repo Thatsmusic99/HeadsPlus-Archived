@@ -15,8 +15,8 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class HeadsPlusCommand implements CommandExecutor {
 	
-	public static String noPerms = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("no-perm")));
-	private static String tooManyArgs = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("too-many-args")));
+	public static final String noPerms = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("no-perm")));
+	private static final String tooManyArgs = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("too-many-args")));
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		List<String> validCmds = new ArrayList<>(Arrays.asList("reload",

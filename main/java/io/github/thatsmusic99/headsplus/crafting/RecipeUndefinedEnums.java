@@ -23,7 +23,7 @@ public enum RecipeUndefinedEnums {
 	VINDICATOR("vindicator"), 
 	WITHER("wither"), 
 	WITHERSKELETON("witherskeleton");
-	public String str;
+	public final String str;
 	
 	RecipeUndefinedEnums(String str) {
 		this.str = str;

@@ -12,7 +12,7 @@ import java.util.List;
 
 public class WhitelistDel {
 
-    private static FileConfiguration config = HeadsPlus.getInstance().getConfig();
+    private static final FileConfiguration config = HeadsPlus.getInstance().getConfig();
     @SuppressWarnings("unused")
     private static File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
 

@@ -55,6 +55,7 @@ public final class HeadInteractEvent implements Listener {
 		    } 
 		}
 	}
+	@SuppressWarnings("deprecation")
 	private static String getSkullName(Skull s) {
 	    if (HeadsPlus.getInstance().getServer().getVersion().contains("1.8")) {
 	        return s.getOwner();

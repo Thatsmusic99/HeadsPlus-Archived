@@ -149,10 +149,10 @@ polarbearHeadC: 0
 polarbearHeadDN: ''
 polarbearHeadP: 0.0
 polarbearHeadEN: Polarbear
-rabbitHeadN: ''
-rabbitHeadC: 0
-rabbitHeadDN: ''
-rabbitHeadP: 0.0
+rabbitHeadN: 'MHF_Rabbit'
+rabbitHeadC: 10
+rabbitHeadDN: '&e&lRabbit &7&lHead'
+rabbitHeadP: 10.0
 rabbitHeadEN: Rabbit
 shulkerHeadN: ''
 shulkerHeadC: 0

@@ -19,10 +19,10 @@ public enum PermissionEnums {
 	WHITELIST_TOGGLE("headsplus.maincommand.whitelist.toggle", "/hp whitelist [On|Off]", "Toggles the whitelist.", "Whitelist"),
     WHITELIST_LIST("headsplus.maincommand.whitelist.list", "/hp whitelistl [Page no.]", "Lists all heads in the whitelist.", "Whitelistl");
 	
-	public String str;
-	String cmd;
-	String dsc;
-	public String scmd;
+	public final String str;
+	final String cmd;
+	final String dsc;
+	public final String scmd;
 
 	PermissionEnums(String str, String cmd, String dsc, String scmd) {
 		this.str = str;

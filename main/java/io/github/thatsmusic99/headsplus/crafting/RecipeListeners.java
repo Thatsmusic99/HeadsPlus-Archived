@@ -7,7 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.inventory.meta.ItemMeta;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 
-public class RecipeListeners {
+class RecipeListeners {
 	
 	public static void makeSell(ItemMeta m) {
 		if ((HeadsPlus.getInstance().sellable)) {

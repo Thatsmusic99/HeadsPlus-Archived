@@ -35,9 +35,7 @@ public final class HeadInteractEvent implements Listener {
 				    		} else {
 				    			iMessage1 = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("head-mhf-interact-message"));
 				    		}
-				    		iMessage1 = HeadsPlus.getInstance().translateMessages(iMessage1);
-				    		iMessage1 = iMessage1.replaceAll("%p", key.displayname);
-				    		iMessage1 = iMessage1.replaceAll("%m", playerName);
+				    		iMessage1 = HeadsPlus.getInstance().translateMessages(iMessage1).replaceAll("%p", key.displayname).replaceAll("%m", playerName);
 				    		player.sendMessage(iMessage1);
 				    		TimesSent++;
 				    		return;

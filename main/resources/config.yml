@@ -6,6 +6,7 @@
 blacklistOn: true
 blacklistwOn: true
 whitelistOn: false
+whitelistwOn: false
 sellHeads: true
 dropHeads: true
 craftHeads: false
@@ -18,6 +19,7 @@ themeColor4: DARK_AQUA
 blacklistw: []
 blacklist: []
 whitelist: []
+whitelistw: []
 lore:
 - '&6&lThis head can be sold!'
 - '&6Do /sellhead to sell!'

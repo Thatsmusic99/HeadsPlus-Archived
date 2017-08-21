@@ -373,7 +373,6 @@ public class SellHead implements CommandExecutor {
 	}
 	private void pay(Player p, String[] a, ItemStack i, double pr) {
 		Economy econ = HeadsPlus.getInstance().econ;
-	    @SuppressWarnings("deprecation")
 		EconomyResponse zr = econ.depositPlayer(p, pr);
 	    String success = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-success")).replaceAll("%l", Double.toString(zr.amount)).replaceAll("%b", Double.toString(zr.balance));
 	    success = ChatColor.translateAlternateColorCodes('&', success);

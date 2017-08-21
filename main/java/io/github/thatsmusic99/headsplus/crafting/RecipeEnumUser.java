@@ -19,8 +19,7 @@ public class RecipeEnumUser {
 	
 	private static final FileConfiguration crafting = HeadsPlusCrafting.getCrafting();
 	private static final FileConfiguration heads = HeadsPlusConfigHeads.getHeads();
-	
-	@SuppressWarnings("deprecation")
+
 	public static void addEnumToConfig() {
 		 for (RecipeEnums key : RecipeEnums.values()) {
 			ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
@@ -35,7 +34,7 @@ public class RecipeEnumUser {
 				recipe.addIngredient(Material.getMaterial(key2));
 				ingrs.add(key2);
 			}
-			recipe.addIngredient(Material.SKULL_ITEM, (byte) 0);
+			recipe.addIngredient(Material.SKULL_ITEM/*, (byte) 0*/);
 			if (ingrs.size() > 0) {
 				Bukkit.addRecipe(recipe);
 			}
@@ -56,7 +55,7 @@ public class RecipeEnumUser {
 		    			recipe.addIngredient(Material.getMaterial(key2));
 		    		}
 		    		if (ingrs.size() > 0) {
-		    			recipe.addIngredient(Material.SKULL_ITEM, (byte) 0);
+		    			recipe.addIngredient(Material.SKULL_ITEM/*, (byte) 0*/);
 		    		}
 		    	} else {
 		    		crafting.addDefault(key.str + "I", ingrs);

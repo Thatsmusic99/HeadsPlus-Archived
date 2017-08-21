@@ -76,6 +76,20 @@ public class TabComplete implements TabCompleter {
                     return f;
                 case "whitelistl":
                     return new ArrayList<>();
+                case "whitelistw":
+                    StringUtil.copyPartialMatches(args[1], new ArrayList<>(Arrays.asList("on", "off")), f);
+                    Collections.sort(f);
+                    return f;
+                case "whitelistwadd":
+                    StringUtil.copyPartialMatches(args[1], worlds(), f);
+                    Collections.sort(f);
+                    return f;
+                case "whitelistwdel":
+                    StringUtil.copyPartialMatches(args[1], worlds(), f);
+                    Collections.sort(f);
+                    return f;
+                case "whitelistwl":
+                    return new ArrayList<>();
             }
         }
         return players();

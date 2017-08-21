@@ -34,7 +34,11 @@ public class HeadsPlusCommand implements CommandExecutor {
                 "whitelistadd",
                 "whitelistdel",
                 "whitelistl",
-                "whitelist"));
+                "whitelist",
+				"whitelistwadd",
+                "whitelistwdel",
+                "whitelistwl",
+                "whitelistw"));
 
 		if ((cmd.getName().equalsIgnoreCase("headsplus")) || (cmd.getName().equalsIgnoreCase("hp"))) {
 			   if ((args.length == 0)) {
@@ -224,6 +228,63 @@ public class HeadsPlusCommand implements CommandExecutor {
 					   sender.sendMessage(noPerms);
 				   }
 			   }
+            if ((args.length == 2) && (args[0].equalsIgnoreCase("whitelistwadd"))) {
+                WhitelistwAdd.wlAdd(sender, args[1]);
+            }
+            if ((args.length == 1) && (args[0].equals("whitelistwadd"))) {
+                if (sender.hasPermission("headsplus.maincommand.whitelistw.add")) {
+                    sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/hp whitelistwadd <World>");
+                } else {
+                    sender.sendMessage(noPerms);
+                }
+            }
+            if ((args.length > 2) && (args[0].equalsIgnoreCase("whitelistwadd"))) {
+                if (sender.hasPermission("headsplus.maincommand.whitelistw.add")) {
+                    sender.sendMessage(tooManyArgs);
+                    sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/hp whitelistwadd <World>");
+                } else {
+                    sender.sendMessage(noPerms);
+                }
+            }
+
+            if ((args.length == 2) && (args[0].equalsIgnoreCase("whitelistwdel"))) {
+                WhitelistwDelete.wlDel(sender, args[1]);
+            }
+            if ((args.length == 1) && (args[0].equals("whitelistwdel"))) {
+                if (sender.hasPermission("headsplus.maincommand.whitelistw.delete")) {
+                    sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/hp whitelistwdel <World>");
+                } else {
+                    sender.sendMessage(noPerms);
+                }
+            }
+            if ((args.length > 2) && (args[0].equalsIgnoreCase("whitelistwdel"))) {
+                if (sender.hasPermission("headsplus.maincommand.whitelistw.delete")) {
+                    sender.sendMessage(tooManyArgs);
+                    sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/hp whitelistwdel <World>");
+                } else {
+                    sender.sendMessage(noPerms);
+                }
+            }
+            if ((args.length == 1) && (args[0].equalsIgnoreCase("whitelistw"))) {
+                WhitelistwToggle.togglewlwNoArgs(sender);
+            }
+            if ((args.length >= 2) && (args[0].equalsIgnoreCase("whitelistw"))) {
+                WhitelistwToggle.toggleWorld(sender, args[1]);
+            }
+            if ((args.length == 1) && (args[0].equalsIgnoreCase("whitelistwl"))) {
+                WhitelistwList.wlwListNoArgs(sender);
+            }
+            if ((args.length == 2) && (args[0].equalsIgnoreCase("whitelistwl"))) {
+                WhitelistwList.wlwList(sender, args[1]);
+            }
+            if ((args.length > 2) && (args[0].equalsIgnoreCase("whitelistwl"))) {
+                if (sender.hasPermission("headsplus.maincommand.whitelistw.list")) {
+                    sender.sendMessage(tooManyArgs);
+                    sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/hp whitelistwl [Page no.]");
+                } else {
+                    sender.sendMessage(noPerms);
+                }
+            }
        
 	} return false;
 	}

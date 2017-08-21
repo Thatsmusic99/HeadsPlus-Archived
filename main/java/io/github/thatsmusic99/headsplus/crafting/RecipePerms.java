@@ -20,6 +20,13 @@ public class RecipePerms implements Listener {
 			Player player = (Player) e.getWhoClicked();
 		    List<String> worlds = HeadsPlus.getInstance().getConfig().getStringList("blacklistw");
 		    if ((!worlds.contains(player.getWorld().getName())) || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn") || player.hasPermission("headsplus.bypass.blacklistw")) {
+				if (HeadsPlus.getInstance().getConfig().getStringList("whitelistw").contains(player.getWorld().getName())) {
+					return;
+				} else if (player.hasPermission("headsplus.bypass.whitelistw")){
+				    return;
+                } else if (!HeadsPlus.getInstance().getConfig().getBoolean("whitelistwOn")) {
+				    return;
+                }
 		        if ((player.hasPermission("headsplus.craft"))) {
 		        	return;
 	    	    }

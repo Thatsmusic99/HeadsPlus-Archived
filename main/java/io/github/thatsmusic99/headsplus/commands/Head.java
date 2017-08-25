@@ -1,5 +1,6 @@
 package io.github.thatsmusic99.headsplus.commands;
 
+import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -12,10 +13,6 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 
@@ -141,7 +138,5 @@ public class Head implements CommandExecutor {
         World world = (p).getWorld();
         world.dropItem(playerLoc, skull).setPickupDelay(0);
 	}
-
-	
 }
 	

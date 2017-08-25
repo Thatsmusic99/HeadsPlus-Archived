@@ -19,6 +19,7 @@ public class RecipeEnumUser {
 	
 	private static final FileConfiguration crafting = HeadsPlusCrafting.getCrafting();
 	private static final FileConfiguration heads = HeadsPlusConfigHeads.getHeads();
+	public static List<ShapelessRecipe> recipes = new ArrayList<>();
 
 	public static void addEnumToConfig() {
 		 for (RecipeEnums key : RecipeEnums.values()) {
@@ -34,8 +35,9 @@ public class RecipeEnumUser {
 				recipe.addIngredient(Material.getMaterial(key2));
 				ingrs.add(key2);
 			}
-			recipe.addIngredient(Material.SKULL_ITEM/*, (byte) 0*/);
+			recipe.addIngredient(Material.SKULL_ITEM);
 			if (ingrs.size() > 0) {
+			    recipes.add(recipe);
 				Bukkit.addRecipe(recipe);
 			}
 		}
@@ -55,12 +57,13 @@ public class RecipeEnumUser {
 		    			recipe.addIngredient(Material.getMaterial(key2));
 		    		}
 		    		if (ingrs.size() > 0) {
-		    			recipe.addIngredient(Material.SKULL_ITEM/*, (byte) 0*/);
+		    			recipe.addIngredient(Material.SKULL_ITEM);
 		    		}
 		    	} else {
 		    		crafting.addDefault(key.str + "I", ingrs);
 		    	}
 		    	if (ingrs.size() > 0) {
+		    	    recipes.add(recipe);
 		    		Bukkit.addRecipe(recipe);
 		    	}
 		    }

@@ -21,15 +21,19 @@ public class RecipePerms implements Listener {
 		    List<String> worlds = HeadsPlus.getInstance().getConfig().getStringList("blacklistw");
 		    if ((!worlds.contains(player.getWorld().getName())) || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn") || player.hasPermission("headsplus.bypass.blacklistw")) {
 				if (HeadsPlus.getInstance().getConfig().getStringList("whitelistw").contains(player.getWorld().getName())) {
-					return;
+					if ((player.hasPermission("headsplus.craft"))) {
+						return;
+					}
 				} else if (player.hasPermission("headsplus.bypass.whitelistw")){
-				    return;
+                    if ((player.hasPermission("headsplus.craft"))) {
+                        return;
+                    }
                 } else if (!HeadsPlus.getInstance().getConfig().getBoolean("whitelistwOn")) {
-				    return;
+                    if ((player.hasPermission("headsplus.craft"))) {
+                        return;
+                    }
                 }
-		        if ((player.hasPermission("headsplus.craft"))) {
-		        	return;
-	    	    }
+
 		    }
 	        if(e.getSlot() == 0){
                 if(e.getCurrentItem().getType() == Material.SKULL_ITEM){

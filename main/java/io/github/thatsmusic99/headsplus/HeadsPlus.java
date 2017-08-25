@@ -2,6 +2,10 @@ package io.github.thatsmusic99.headsplus;
 
 import io.github.thatsmusic99.headsplus.events.*;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
+import org.bukkit.command.Command;
+import org.bukkit.command.PluginCommand;
+import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -19,6 +23,8 @@ import net.milkbowl.vault.economy.Economy;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 public class HeadsPlus extends JavaPlugin {	
@@ -29,6 +35,7 @@ public class HeadsPlus extends JavaPlugin {
 	public final String version = pluginYml.getVersion();
 	public boolean sellable;
 	public Economy econ;
+	public boolean drops;
 	
     public static FileConfiguration config;
 	private static File configF;
@@ -49,8 +56,8 @@ public class HeadsPlus extends JavaPlugin {
 			    getServer().getPluginManager().registerEvents(new RecipePerms(), this);
 			}
 			if (!(econ()) && (getConfig().getBoolean("sellHeads"))) {
-				this.getCommand("sellhead").setExecutor(new SellHead());
-				this.getCommand("sellhead").setTabCompleter(new TabCompleteSellhead());
+				/* this.getCommand("sellhead").setExecutor(new SellHead());
+				this.getCommand("sellhead").setTabCompleter(new TabCompleteSellhead()); */
 				log.warning("[HeadsPlus] Vault not found! Heads cannot be sold.");
 				sellable = false;
 			} else if ((econ()) && !(getConfig().getBoolean("sellHeads"))) {
@@ -128,7 +135,7 @@ public class HeadsPlus extends JavaPlugin {
     	}
 		return s;
     }
-	private boolean econ() {
+	public boolean econ() {
 		if (getServer().getPluginManager().getPlugin("Vault") == null) {
 			return false;
 		}
@@ -138,5 +145,34 @@ public class HeadsPlus extends JavaPlugin {
         }
         econ = rsp.getProvider();
         return econ != null;
+	}
+
+	// Bless
+	private static Object getPrivateField(Object object, String field)throws SecurityException,
+			NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+		Class<?> clazz = object.getClass();
+		Field objectField = clazz.getDeclaredField(field);
+		objectField.setAccessible(true);
+		Object result = objectField.get(object);
+		objectField.setAccessible(false);
+		return result;
+	}
+
+	public void unRegisterBukkitCommand(PluginCommand cmd) {
+		try {
+			Object result = getPrivateField(getServer().getPluginManager(), "commandMap");
+			SimpleCommandMap commandMap = (SimpleCommandMap) result;
+			Object map = getPrivateField(commandMap, "knownCommands");
+			@SuppressWarnings("unchecked")
+            HashMap<String, Command> knownCommands = (HashMap<String, Command>) map;
+			knownCommands.remove(cmd.getName());
+			for (String alias : cmd.getAliases()){
+				if(knownCommands.containsKey(alias) && knownCommands.get(alias).toString().contains(this.getName())){
+					knownCommands.remove(alias);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

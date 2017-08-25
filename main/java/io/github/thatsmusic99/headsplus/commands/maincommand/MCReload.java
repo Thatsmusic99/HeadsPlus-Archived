@@ -2,6 +2,9 @@ package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import java.io.File;
 
+import io.github.thatsmusic99.headsplus.commands.SellHead;
+import io.github.thatsmusic99.headsplus.crafting.RecipeEnumUser;
+import io.github.thatsmusic99.headsplus.events.DeathEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -12,6 +15,8 @@ import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusCrafting;
+import org.bukkit.event.HandlerList;
+import org.bukkit.inventory.ShapelessRecipe;
 
 public class MCReload {
 	
@@ -46,8 +51,26 @@ public class MCReload {
 			       } else {
 				       HeadsPlus.getInstance().log.info("[HeadsPlus] Found config, loading!");
 				       HeadsPlus.getInstance().reloadConfig();
-				       HeadsPlus.getInstance().log.info("[HeadsPlus] Config reloaded!");
-			      }  
+				       if (HeadsPlus.getInstance().getConfig().getBoolean("sellHeads") && HeadsPlus.getInstance().econ()) {
+                           if (!HeadsPlus.getInstance().getCommand("sellhead").isRegistered()) {
+                               HeadsPlus.getInstance().getCommand("sellhead").setExecutor(new SellHead());
+                           }
+                       } else if (!HeadsPlus.getInstance().getConfig().getBoolean("sellHeads") && HeadsPlus.getInstance().econ()) {
+				           if (HeadsPlus.getInstance().getCommand("sellhead").isRegistered()) {
+				               HeadsPlus.getInstance().unRegisterBukkitCommand(HeadsPlus.getInstance().getCommand("sellhead"));
+                           }
+                       }
+                       if (HeadsPlus.getInstance().getConfig().getBoolean("dropHeads")) {
+				           if (!HeadsPlus.getInstance().drops) {
+							   HeadsPlus.getInstance().getServer().getPluginManager().registerEvents(new DeathEvents(), HeadsPlus.getInstance());
+                           }
+                       } else {
+				       	   if (HeadsPlus.getInstance().drops) {
+                               HandlerList.unregisterAll(new DeathEvents());
+                           }
+					   }
+					   HeadsPlus.getInstance().log.info("[HeadsPlus] Config reloaded!");
+				   }
 			      if (!(messagesF.exists())) {
 			    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Messages not found, creating!");
 			    	  HeadsPlusConfig.reloadMessages();
@@ -73,8 +96,15 @@ public class MCReload {
 			    	      sender.sendMessage(reloadM);
 			    	  }
 			      } else {
-			    	  Bukkit.resetRecipes();
-			    	  HeadsPlusCrafting.craftingEnable();
+			    	  for (ShapelessRecipe sr : RecipeEnumUser.recipes) {
+			    	      if (sr == null) continue;
+			    	      while (Bukkit.recipeIterator().hasNext()) {
+			    	          if (Bukkit.recipeIterator().next().equals(sr)) {
+			    	              Bukkit.recipeIterator().remove();
+                              }
+                          }
+                      }
+                      HeadsPlusCrafting.reloadCrafting();
 			    	  sender.sendMessage(reloadM);
 			      }
 			      

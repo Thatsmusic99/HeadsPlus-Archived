@@ -52,6 +52,24 @@ public class MCReload {
 			       } else {
 				       HeadsPlus.getInstance().log.info("[HeadsPlus] Found config, loading!");
 				       HeadsPlus.getInstance().reloadConfig();
+                       if (HeadsPlus.getInstance().getConfig().getBoolean("dropHeads")) {
+				           if (!HeadsPlus.getInstance().drops) {
+							   HeadsPlus.getInstance().getServer().getPluginManager().registerEvents(new DeathEvents(), HeadsPlus.getInstance());
+                           }
+                       } else {
+				       	   if (HeadsPlus.getInstance().drops) {
+                               HandlerList.unregisterAll(new DeathEvents());
+                           }
+					   }
+					   if (HeadsPlus.getInstance().getConfig().getBoolean("autoReloadOnFirstJoin")) {
+                           if (!HeadsPlus.getInstance().arofj) {
+                               HeadsPlus.getInstance().getServer().getPluginManager().registerEvents(new JoinEvent(), HeadsPlus.getInstance());
+                           }
+					   } else {
+				           if (HeadsPlus.getInstance().arofj) {
+                               HandlerList.unregisterAll(new JoinEvent());
+                           }
+                       }
 					   HeadsPlus.getInstance().log.info("[HeadsPlus] Config reloaded!");
 				   }
 			      if (!(messagesF.exists())) {

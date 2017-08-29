@@ -36,6 +36,7 @@ public class HeadsPlus extends JavaPlugin {
 	public boolean sellable;
 	public Economy econ;
 	public boolean drops;
+	public boolean arofj;
 	
     public static FileConfiguration config;
 	private static File configF;
@@ -61,16 +62,12 @@ public class HeadsPlus extends JavaPlugin {
 				log.warning("[HeadsPlus] Vault not found! Heads cannot be sold.");
 				sellable = false;
 			} else if ((econ()) && !(getConfig().getBoolean("sellHeads"))) {
-				this.getCommand("sellhead").setExecutor(new SellHead());
-                this.getCommand("sellhead").setTabCompleter(new TabCompleteSellhead());
 				sellable = true;
 			} else if ((econ()) && (getConfig().getBoolean("sellHeads"))){
 				this.getCommand("sellhead").setExecutor(new SellHead());
                 this.getCommand("sellhead").setTabCompleter(new TabCompleteSellhead());
 				sellable = true;
 			} else if (!(econ() && !(getConfig().getBoolean("sellHeads")))) {
-				this.getCommand("sellhead").setExecutor(new SellHead());
-                this.getCommand("sellhead").setTabCompleter(new TabCompleteSellhead());
 				sellable = false;
 			}
 			getServer().getPluginManager().registerEvents(new HeadInteractEvent(), this);
@@ -78,8 +75,11 @@ public class HeadsPlus extends JavaPlugin {
 			    getServer().getPluginManager().registerEvents(new DeathEvents(), this);
 		    }
 			if (getConfig().getBoolean("autoReloadOnFirstJoin")) {
+			    arofj = true;
 				getServer().getPluginManager().registerEvents(new JoinEvent(), this);
-			}
+			} else {
+			    arofj = false;
+            }
 		    this.getCommand("headsplus").setExecutor(new HeadsPlusCommand());
 		    this.getCommand("hp").setExecutor(new HeadsPlusCommand());
 		    this.getCommand("hp").setTabCompleter(new TabComplete());
@@ -147,32 +147,5 @@ public class HeadsPlus extends JavaPlugin {
         return econ != null;
 	}
 
-	// Bless
-	private static Object getPrivateField(Object object, String field)throws SecurityException,
-			NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
-		Class<?> clazz = object.getClass();
-		Field objectField = clazz.getDeclaredField(field);
-		objectField.setAccessible(true);
-		Object result = objectField.get(object);
-		objectField.setAccessible(false);
-		return result;
-	}
 
-	public void unRegisterBukkitCommand(PluginCommand cmd) {
-		try {
-			Object result = getPrivateField(getServer().getPluginManager(), "commandMap");
-			SimpleCommandMap commandMap = (SimpleCommandMap) result;
-			Object map = getPrivateField(commandMap, "knownCommands");
-			@SuppressWarnings("unchecked")
-            HashMap<String, Command> knownCommands = (HashMap<String, Command>) map;
-			knownCommands.remove(cmd.getName());
-			for (String alias : cmd.getAliases()){
-				if(knownCommands.containsKey(alias) && knownCommands.get(alias).toString().contains(this.getName())){
-					knownCommands.remove(alias);
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 }

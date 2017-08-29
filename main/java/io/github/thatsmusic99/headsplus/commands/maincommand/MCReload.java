@@ -5,6 +5,7 @@ import java.io.File;
 import io.github.thatsmusic99.headsplus.commands.SellHead;
 import io.github.thatsmusic99.headsplus.crafting.RecipeEnumUser;
 import io.github.thatsmusic99.headsplus.events.DeathEvents;
+import io.github.thatsmusic99.headsplus.events.JoinEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -51,24 +52,6 @@ public class MCReload {
 			       } else {
 				       HeadsPlus.getInstance().log.info("[HeadsPlus] Found config, loading!");
 				       HeadsPlus.getInstance().reloadConfig();
-				       if (HeadsPlus.getInstance().getConfig().getBoolean("sellHeads") && HeadsPlus.getInstance().econ()) {
-                           if (!HeadsPlus.getInstance().getCommand("sellhead").isRegistered()) {
-                               HeadsPlus.getInstance().getCommand("sellhead").setExecutor(new SellHead());
-                           }
-                       } else if (!HeadsPlus.getInstance().getConfig().getBoolean("sellHeads") && HeadsPlus.getInstance().econ()) {
-				           if (HeadsPlus.getInstance().getCommand("sellhead").isRegistered()) {
-				               HeadsPlus.getInstance().unRegisterBukkitCommand(HeadsPlus.getInstance().getCommand("sellhead"));
-                           }
-                       }
-                       if (HeadsPlus.getInstance().getConfig().getBoolean("dropHeads")) {
-				           if (!HeadsPlus.getInstance().drops) {
-							   HeadsPlus.getInstance().getServer().getPluginManager().registerEvents(new DeathEvents(), HeadsPlus.getInstance());
-                           }
-                       } else {
-				       	   if (HeadsPlus.getInstance().drops) {
-                               HandlerList.unregisterAll(new DeathEvents());
-                           }
-					   }
 					   HeadsPlus.getInstance().log.info("[HeadsPlus] Config reloaded!");
 				   }
 			      if (!(messagesF.exists())) {
@@ -96,14 +79,6 @@ public class MCReload {
 			    	      sender.sendMessage(reloadM);
 			    	  }
 			      } else {
-			    	  for (ShapelessRecipe sr : RecipeEnumUser.recipes) {
-			    	      if (sr == null) continue;
-			    	      while (Bukkit.recipeIterator().hasNext()) {
-			    	          if (Bukkit.recipeIterator().next().equals(sr)) {
-			    	              Bukkit.recipeIterator().remove();
-                              }
-                          }
-                      }
                       HeadsPlusCrafting.reloadCrafting();
 			    	  sender.sendMessage(reloadM);
 			      }

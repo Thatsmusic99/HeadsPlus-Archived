@@ -36,6 +36,7 @@ public class JoinEvent implements Listener {
 	
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e) {
+		if (!HeadsPlus.getInstance().arofj) return;
 		if (!reloaded) {
 		    if (HeadsPlus.getInstance().getConfig().getBoolean("autoReloadOnFirstJoin")) {
 			    try {

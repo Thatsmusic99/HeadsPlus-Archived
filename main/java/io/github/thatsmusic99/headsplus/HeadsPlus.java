@@ -57,28 +57,37 @@ public class HeadsPlus extends JavaPlugin {
 			    getServer().getPluginManager().registerEvents(new RecipePerms(), this);
 			}
 			if (!(econ()) && (getConfig().getBoolean("sellHeads"))) {
-				/* this.getCommand("sellhead").setExecutor(new SellHead());
-				this.getCommand("sellhead").setTabCompleter(new TabCompleteSellhead()); */
+                this.getCommand("sellhead").setExecutor(new SellHead());
+				this.getCommand("sellhead").setTabCompleter(new TabCompleteSellhead());
 				log.warning("[HeadsPlus] Vault not found! Heads cannot be sold.");
 				sellable = false;
 			} else if ((econ()) && !(getConfig().getBoolean("sellHeads"))) {
-				sellable = true;
+				this.getCommand("sellhead").setExecutor(new SellHead());
+				this.getCommand("sellhead").setTabCompleter(new TabCompleteSellhead());
+				sellable = false;
 			} else if ((econ()) && (getConfig().getBoolean("sellHeads"))){
 				this.getCommand("sellhead").setExecutor(new SellHead());
                 this.getCommand("sellhead").setTabCompleter(new TabCompleteSellhead());
 				sellable = true;
 			} else if (!(econ() && !(getConfig().getBoolean("sellHeads")))) {
+                this.getCommand("sellhead").setExecutor(new SellHead());
+                this.getCommand("sellhead").setTabCompleter(new TabCompleteSellhead());
 				sellable = false;
 			}
 			getServer().getPluginManager().registerEvents(new HeadInteractEvent(), this);
 			if (getConfig().getBoolean("dropHeads")) {
+			    drops = true;
 			    getServer().getPluginManager().registerEvents(new DeathEvents(), this);
-		    }
+		    } else {
+			    drops = false;
+                getServer().getPluginManager().registerEvents(new DeathEvents(), this);
+            }
 			if (getConfig().getBoolean("autoReloadOnFirstJoin")) {
 			    arofj = true;
 				getServer().getPluginManager().registerEvents(new JoinEvent(), this);
 			} else {
 			    arofj = false;
+                getServer().getPluginManager().registerEvents(new JoinEvent(), this);
             }
 		    this.getCommand("headsplus").setExecutor(new HeadsPlusCommand());
 		    this.getCommand("hp").setExecutor(new HeadsPlusCommand());

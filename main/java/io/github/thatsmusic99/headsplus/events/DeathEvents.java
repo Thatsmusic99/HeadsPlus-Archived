@@ -27,6 +27,7 @@ public class DeathEvents implements Listener {
 
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent e) {
+		if (!HeadsPlus.getInstance().drops) return;
 		if (ableEntities.contains(e.getEntityType())) {
 			if (e.getEntity().getKiller() != null) {
 				if (!HeadsPlus.getInstance().getConfig().getStringList("whitelistw").contains(e.getEntity().getWorld().getName())) {
@@ -64,6 +65,7 @@ public class DeathEvents implements Listener {
 	} 
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent ep) {
+        if (!HeadsPlus.getInstance().drops) return;
 		if (ep.getEntity().getKiller() != null) {
             if (!HeadsPlus.getInstance().getConfig().getStringList("whitelistw").contains(ep.getEntity().getWorld().getName())) {
                 if (!ep.getEntity().getKiller().hasPermission("headsplus.bypass.whitelistw")) {

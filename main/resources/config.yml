@@ -1,6 +1,6 @@
 # HeadsPlus
 # Plugin by Thatsmusic99
-# Disclaimer: sellHeads, dropHeads, craftHeads and autoReloadOnFirstJoin will not take immediate effect when /hp reload is used. Because they are event or command related, they cannot be undone once the server starts. I will include a fix for this soon however.
+# Disclaimer: sellHeads and craftHeads will not take immediate effect when /hp reload is used. Because they are event or command related, they cannot be undone once the server starts. I will include a fix for this soon however.
 # Thanks in advance, and thank you for using HeadsPlus. ~
 
 blacklistOn: true

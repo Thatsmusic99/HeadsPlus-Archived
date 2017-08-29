@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import java.io.File;
 
+import io.github.thatsmusic99.headsplus.commands.Head;
 import io.github.thatsmusic99.headsplus.commands.SellHead;
 import io.github.thatsmusic99.headsplus.crafting.RecipeEnumUser;
 import io.github.thatsmusic99.headsplus.events.DeathEvents;
@@ -54,22 +55,32 @@ public class MCReload {
 				       HeadsPlus.getInstance().reloadConfig();
                        if (HeadsPlus.getInstance().getConfig().getBoolean("dropHeads")) {
 				           if (!HeadsPlus.getInstance().drops) {
-							   HeadsPlus.getInstance().getServer().getPluginManager().registerEvents(new DeathEvents(), HeadsPlus.getInstance());
+				               HeadsPlus.getInstance().drops = true;
                            }
                        } else {
 				       	   if (HeadsPlus.getInstance().drops) {
-                               HandlerList.unregisterAll(new DeathEvents());
+				       	       HeadsPlus.getInstance().drops = false;
                            }
 					   }
 					   if (HeadsPlus.getInstance().getConfig().getBoolean("autoReloadOnFirstJoin")) {
                            if (!HeadsPlus.getInstance().arofj) {
-                               HeadsPlus.getInstance().getServer().getPluginManager().registerEvents(new JoinEvent(), HeadsPlus.getInstance());
+                               HeadsPlus.getInstance().arofj = true;
                            }
 					   } else {
 				           if (HeadsPlus.getInstance().arofj) {
-                               HandlerList.unregisterAll(new JoinEvent());
+				               HeadsPlus.getInstance().arofj = false;
                            }
                        }
+                       if (HeadsPlus.getInstance().econ() && HeadsPlus.getInstance().getConfig().getBoolean("sellHeads")) {
+                           if (!HeadsPlus.getInstance().sellable) {
+                               HeadsPlus.getInstance().sellable = true;
+                           }
+                       } else if (HeadsPlus.getInstance().econ() && !HeadsPlus.getInstance().getConfig().getBoolean("sellHeads")) {
+                           if (HeadsPlus.getInstance().sellable) {
+                               HeadsPlus.getInstance().sellable = false;
+                           }
+                       }
+
 					   HeadsPlus.getInstance().log.info("[HeadsPlus] Config reloaded!");
 				   }
 			      if (!(messagesF.exists())) {

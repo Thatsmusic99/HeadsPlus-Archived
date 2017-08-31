@@ -40,8 +40,8 @@ public class DeathEvents implements Listener {
 			    if (!HeadsPlus.getInstance().getConfig().getStringList("blacklistw").contains(e.getEntity().getWorld().getName()) || e.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn")) {
 		            String entity = e.getEntityType().toString().toLowerCase().replaceAll("_", "");
 		            Random rand = new Random();
-		            int chance1 = HeadsPlusConfigHeads.getHeads().getInt(entity + "HeadC");
-		            int chance2 = rand.nextInt(100) + 1;
+		            double chance1 = HeadsPlusConfigHeads.getHeads().getDouble(entity + "HeadC");
+		            double chance2 = (double) rand.nextInt(100);
 		            if (chance2 <= chance1) {
 			            ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 			            SkullMeta headM = (SkullMeta) head.getItemMeta();
@@ -76,8 +76,8 @@ public class DeathEvents implements Listener {
             }
 			if (!HeadsPlus.getInstance().getConfig().getStringList("blacklistw").contains(ep.getEntity().getWorld().getName()) || ep.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn")) { 
 		        Random rand = new Random();
-		        int chance1 = HeadsPlusConfigHeads.getHeads().getInt("playerHeadC");
-		        int chance2 = rand.nextInt(100) + 1;
+				double chance1 = HeadsPlusConfigHeads.getHeads().getDouble("playerHeadC");
+				double chance2 = (double) rand.nextInt(100);
 		        if (chance2 <= chance1) {
 		    	    ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 			        SkullMeta headM = (SkullMeta) head.getItemMeta();

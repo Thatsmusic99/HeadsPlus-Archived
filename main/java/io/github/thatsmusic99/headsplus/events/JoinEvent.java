@@ -32,6 +32,9 @@ public class JoinEvent implements Listener {
 	@SuppressWarnings("unused")
 	private static FileConfiguration crafting;
 	private static final File craftingF = new File(HeadsPlus.getInstance().getDataFolder(), "crafting.yml");
+
+	private static FileConfiguration headsX;
+	private static final File headsXF = new File(HeadsPlus.getInstance().getDataFolder(), "headsx.yml");
 	
 	
 	@EventHandler
@@ -80,6 +83,9 @@ public class JoinEvent implements Listener {
 						    	  Bukkit.resetRecipes();
 						    	  HeadsPlusCrafting.reloadCrafting();
 						      }
+						      if (!headsXF.exists()) {
+
+                              }
 					}});
 			    	timer.setRepeats(false); // Make it so it does not repeat every 3 seconds
 			    	timer.start(); // Run the Task

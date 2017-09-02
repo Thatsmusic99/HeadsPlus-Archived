@@ -1,11 +1,9 @@
 package io.github.thatsmusic99.headsplus;
 
+import io.github.thatsmusic99.headsplus.commands.Heads;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.events.*;
 import org.bukkit.ChatColor;
-import org.bukkit.Sound;
-import org.bukkit.command.Command;
-import org.bukkit.command.PluginCommand;
-import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -23,8 +21,6 @@ import net.milkbowl.vault.economy.Economy;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.logging.Logger;
 
 public class HeadsPlus extends JavaPlugin {	
@@ -39,9 +35,8 @@ public class HeadsPlus extends JavaPlugin {
 	public boolean arofj;
 	
     public static FileConfiguration config;
-	private static File configF;
 
-	@SuppressWarnings("unused")
+    @SuppressWarnings("unused")
 	private File messagesF;
 
 	@Override
@@ -51,6 +46,7 @@ public class HeadsPlus extends JavaPlugin {
 			setUpMConfig();
 			HeadsPlusConfig.msgEnable();
 			HeadsPlusConfigHeads.headsEnable();
+			HeadsPlusConfigHeadsX.headsxEnable();
 			DeathEvents.createList();
 			if (!getConfig().getBoolean("disableCrafting")) {
 			    HeadsPlusCrafting.craftingEnable();
@@ -93,6 +89,7 @@ public class HeadsPlus extends JavaPlugin {
 		    this.getCommand("hp").setExecutor(new HeadsPlusCommand());
 		    this.getCommand("hp").setTabCompleter(new TabComplete());
 		    this.getCommand("head").setExecutor(new Head());
+		    this.getCommand("heads").setExecutor(new Heads());
 		    JoinEvent.reloaded = false;
 			Metrics metrics = new Metrics(this);
 		    log.info("[HeadsPlus] HeadsPlus has been enabled.");
@@ -110,7 +107,7 @@ public class HeadsPlus extends JavaPlugin {
 		
 	}
 	public static void setUpMConfig() {
-			configF = new File(instance.getDataFolder(), "config.yml");
+        File configF = new File(instance.getDataFolder(), "config.yml");
 			config = instance.getConfig();
 			if(!instance.getDataFolder().exists()) {
 				instance.getDataFolder().mkdirs();

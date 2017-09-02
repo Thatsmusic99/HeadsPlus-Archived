@@ -12,6 +12,7 @@ dropHeads: true
 craftHeads: false
 autoReloadOnFirstJoin: true
 disableCrafting: false
+headsDatabase: true
 themeColor1: DARK_BLUE
 themeColor2: GOLD
 themeColor3: GRAY

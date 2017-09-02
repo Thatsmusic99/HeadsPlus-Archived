@@ -5,6 +5,7 @@ import com.mojang.authlib.properties.Property;
 
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
 
+import org.apache.commons.codec.binary.Base64;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -14,6 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.UUID;
 
 public class InventoryManager {
@@ -68,8 +70,13 @@ public class InventoryManager {
             ItemStack s = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
             SkullMeta sm = (SkullMeta) s.getItemMeta();
             GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
-            // byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", HeadsPlusConfigHeadsX.getHeadsX().getString(str + ".texture")).getBytes());
-            gm.getProperties().put("textures", new Property("texture", HeadsPlusConfigHeadsX.getHeadsX().getString(str + ".texture")));
+            if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean(str + ".encode")) {
+                byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", HeadsPlusConfigHeadsX.getHeadsX().getString(str + ".texture")).getBytes());
+                gm.getProperties().put("textures", new Property("texture", Arrays.toString(encodedData)));
+            } else {
+                gm.getProperties().put("textures", new Property("texture", HeadsPlusConfigHeadsX.getHeadsX().getString(str + ".texture")));
+            }
+
             Field profileField = null;
             try {
                 profileField = sm.getClass().getDeclaredField("profile");

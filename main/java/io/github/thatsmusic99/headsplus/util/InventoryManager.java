@@ -3,13 +3,14 @@ package io.github.thatsmusic99.headsplus.util;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 
-import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.lang.reflect.Field;
@@ -20,11 +21,13 @@ public class InventoryManager {
     private static int pages;
     private static int heads;
     private static int timesSent = 0;
+    private static int cPage = 0;
 
     public static Inventory create(int slots, String name) {
         return Bukkit.createInventory(null, slots, name);
     }
     public static Inventory setupInvHeadsX() {
+        cPage = 1;
         heads = HeadsPlusConfigHeadsX.getHeadsX().getKeys(false).size();
         int h = heads;
         pages = 1;
@@ -32,18 +35,26 @@ public class InventoryManager {
             h -= 45;
             pages++;
         }
-        Inventory i = create(54, "HeadsPlus Head selector: page 1/" + pages);
+        Inventory i = create(54, "HeadsPlus Head selector: page " + cPage + "/" + pages);
         if (heads > 45) {
             loop(45, i);
         } else {
             loop(heads, i);
-            HeadsPlus.getInstance().log.info("Ping!");
         }
+        ItemStack it = new ItemStack(Material.BARRIER);
+        ItemMeta is = it.getItemMeta();
+        is.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Close Menu");
+        it.setItemMeta(is);
+        i.setItem(49, it);
         timesSent = 0;
         return i;
     }
+
     public static int getPages() {
         return pages;
+    }
+    public static int getPage() {
+        return cPage;
     }
     public static int getHeads() {
         return heads;
@@ -51,9 +62,6 @@ public class InventoryManager {
     private static void loop(int in, Inventory i) {
 
         while (timesSent < in) {
-            HeadsPlus.getInstance().log.info(String.valueOf(in));
-            HeadsPlus.getInstance().log.info(String.valueOf(timesSent));
-            HeadsPlus.getInstance().log.info("Pong!");
             if (HeadsPlusConfigHeadsX.getHeadsX().getKeys(false).size() == 0) return;
             for (String str : HeadsPlusConfigHeadsX.getHeadsX().getKeys(false)) {
 

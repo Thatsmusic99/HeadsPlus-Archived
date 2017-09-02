@@ -4,6 +4,7 @@ import java.io.File;
 
 import io.github.thatsmusic99.headsplus.commands.Head;
 import io.github.thatsmusic99.headsplus.commands.SellHead;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.crafting.RecipeEnumUser;
 import io.github.thatsmusic99.headsplus.events.DeathEvents;
 import io.github.thatsmusic99.headsplus.events.JoinEvent;
@@ -35,6 +36,9 @@ public class MCReload {
 	@SuppressWarnings("unused")
 	private static FileConfiguration crafting;
 	private static final File craftingF = new File(HeadsPlus.getInstance().getDataFolder(), "crafting.yml");
+
+	private static FileConfiguration headsX;
+	private  static final File headsXF = new File(HeadsPlus.getInstance().getDataFolder(), "headsx.yml");
 	
 	public static void reload(CommandSender sender) {
 		if (sender.hasPermission("headsplus.maincommand.reload")) {
@@ -111,6 +115,16 @@ public class MCReload {
                       HeadsPlusCrafting.reloadCrafting();
 			    	  sender.sendMessage(reloadM);
 			      }
+				   if (!headsXF.exists()) {
+					   if (HeadsPlus.getInstance().getConfig().getBoolean("headsDatabase")) {
+						   HeadsPlus.getInstance().log.info("[HeadsPlus] HeadsX not found, creating!");
+						   HeadsPlusConfigHeadsX.reloadHeadsX();
+						   headsX = YamlConfiguration.loadConfiguration(headsXF);
+						   HeadsPlus.getInstance().log.info("[HeadsPlus] HeadsX created!");
+					   }
+				   } else {
+					   HeadsPlusConfigHeadsX.reloadHeadsX();
+				   }
 			      
 		       } catch (Exception e) {
 			       HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to reload config!");

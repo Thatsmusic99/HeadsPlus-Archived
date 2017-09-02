@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -84,14 +85,21 @@ public class JoinEvent implements Listener {
 						    	  HeadsPlusCrafting.reloadCrafting();
 						      }
 						      if (!headsXF.exists()) {
-
+                                  if (HeadsPlus.getInstance().getConfig().getBoolean("headsDatabase")) {
+                                  	  HeadsPlus.getInstance().log.info("[HeadsPlus] HeadsX not found, creating!");
+                                      HeadsPlusConfigHeadsX.reloadHeadsX();
+                                      headsX = YamlConfiguration.loadConfiguration(headsXF);
+                                      HeadsPlus.getInstance().log.info("[HeadsPlus] HeadsX created!");
+								  }
+                              } else {
+							      HeadsPlusConfigHeadsX.reloadHeadsX();
                               }
 					}});
 			    	timer.setRepeats(false); // Make it so it does not repeat every 3 seconds
 			    	timer.start(); // Run the Task
 				       
 			       } catch (Exception ex) {
-				       HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to reload config.");
+				       HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to reload configs.");
 				       ex.printStackTrace();
 			       }
 		    }

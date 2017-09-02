@@ -70,6 +70,7 @@ public class HeadsPlus extends JavaPlugin {
                 this.getCommand("sellhead").setTabCompleter(new TabCompleteSellhead());
 				sellable = false;
 			}
+			getServer().getPluginManager().registerEvents(new InventoryEvent(), this);
 			getServer().getPluginManager().registerEvents(new HeadInteractEvent(), this);
 			if (getConfig().getBoolean("dropHeads")) {
 			    drops = true;

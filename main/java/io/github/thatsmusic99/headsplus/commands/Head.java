@@ -57,6 +57,10 @@ public class Head implements CommandExecutor {
 					    boolean blacklistOn = HeadsPlus.getInstance().getConfig().getBoolean("blacklistOn");
                         boolean wlOn = HeadsPlus.getInstance().getConfig().getBoolean("whitelistOn");
 				        String head = args[0].toLowerCase();
+				        if (((Player) sender).getInventory().firstEmpty() == -1) {
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("full-inv")));
+                            return true;
+                        }
 				        if (wlOn) {
                            if (blacklistOn) {
                                if (wl.contains(head)) {

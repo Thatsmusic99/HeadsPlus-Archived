@@ -24,7 +24,12 @@ public final class HeadInteractEvent implements Listener {
 			if (block instanceof Skull) {
 				
 			    Skull skull = (Skull) block;
-			    String owner = getSkullName(skull);
+			    String owner;
+			    try {
+                    owner = getSkullName(skull);
+                } catch (NullPointerException ex) {
+			        return;
+                }
 			    String playerName = player.toString();
 			    if (TimesSent < 1) {
 			    	for (HeadEnums key : HeadEnums.values()) {
@@ -55,10 +60,10 @@ public final class HeadInteractEvent implements Listener {
 	}
 	@SuppressWarnings("deprecation")
 	private static String getSkullName(Skull s) {
-	    if (HeadsPlus.getInstance().getServer().getVersion().contains("1.8")) {
-	        return s.getOwner();
-        } else {
-	        return s.getOwningPlayer().getName();
-        }
+            if (HeadsPlus.getInstance().getServer().getVersion().contains("1.8")) {
+                return s.getOwner();
+            } else {
+                return s.getOwningPlayer().getName();
+            }
     }
 }

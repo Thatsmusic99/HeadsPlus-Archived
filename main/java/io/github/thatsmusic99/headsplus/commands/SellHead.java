@@ -136,15 +136,27 @@ public class SellHead implements CommandExecutor {
                                 if (i.getType() == Material.SKULL_ITEM) {
                                     SkullMeta sm = (SkullMeta) i.getItemMeta();
                                     for (String str : HeadsPlusConfigHeads.mHeads) {
-                                        if (sm.getOwner().equalsIgnoreCase(HeadsPlusConfigHeads.getHeads().getString(str + "HeadN"))) {
-                                            found = true;
-                                            price = setPrice(price, args, i, p);
+                                        try {
+                                            if (sm.getOwner() != null) {
+                                                if (sm.getOwner().equalsIgnoreCase(HeadsPlusConfigHeads.getHeads().getString(str + "HeadN"))) {
+                                                    found = true;
+                                                    price = setPrice(price, args, i, p);
+                                                }
+                                            }
+                                        } catch (NullPointerException ex) {
+                                            //
                                         }
                                     }
                                     for (String str : HeadsPlusConfigHeads.uHeads) {
-                                        if (sm.getOwner().equalsIgnoreCase(HeadsPlusConfigHeads.getHeads().getString(str + "HeadN"))) {
-                                            found = true;
-                                            price = setPrice(price, args, i, p);
+                                        try {
+                                            if (sm.getOwner() != null) {
+                                                if (sm.getOwner().equalsIgnoreCase(HeadsPlusConfigHeads.getHeads().getString(str + "HeadN"))) {
+                                                    found = true;
+                                                    price = setPrice(price, args, i, p);
+                                                }
+                                            }
+                                        } catch (NullPointerException ex) {
+                                        //
                                         }
                                     }
                                     if (!found) {

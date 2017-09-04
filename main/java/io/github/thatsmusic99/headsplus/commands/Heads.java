@@ -12,7 +12,8 @@ public class Heads implements CommandExecutor {
     public boolean onCommand(CommandSender cs, Command cmd, String l, String[] args) {
         if (cs instanceof Player) {
             Player p = (Player) cs;
-            p.openInventory(InventoryManager.setupInvHeadsX());
+            // p.openInventory(InventoryManager.setupInvHeadsX());
+            p.openInventory(InventoryManager.changePage(true));
         }
         return true;
     }

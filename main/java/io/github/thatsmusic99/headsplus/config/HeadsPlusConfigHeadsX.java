@@ -26,6 +26,7 @@ public class HeadsPlusConfigHeadsX {
         getHeadsX().options().header("HeadsPlus by Thatsmusic99 " +
                 "\n WARNING: This is an advanced section of the plugin. If you do not know what you a doing with it, please do not use it due to risk of crashing your own and other's games. " +
                 "\n For more information visit the GitHub wiki for HeadsX.yml: ");
+
         saveHeadsX();
     }
     public static FileConfiguration getHeadsX() {

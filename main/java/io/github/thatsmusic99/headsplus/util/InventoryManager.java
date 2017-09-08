@@ -27,7 +27,7 @@ public class InventoryManager {
     public static Inventory create(int slots, String name) {
         return Bukkit.createInventory(null, slots, name);
     }
-    public static Inventory setupInvHeadsX() {
+  /*  public static Inventory setupInvHeadsX() {
         cPage = 1;
         heads = HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false).size();
         int h = heads;
@@ -56,7 +56,7 @@ public class InventoryManager {
         }
         timesSent = 0;
         return i;
-    }
+    } */
 
     public static int getPages() {
         return pages;
@@ -96,7 +96,9 @@ public class InventoryManager {
         Inventory i = create(54, "HeadsPlus Head selector: page " + cPage + "/" + pages);
         List<String> l = new ArrayList<>(HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false)).subList(si, ei);
         for (String str : l) {
-            skull(str, i);
+            if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("heads." + str + ".decode")) {
+                skull(str, i);
+            }
         }
         if (pages > cPage) {
             ItemStack item = new ItemStack(Material.ARROW);

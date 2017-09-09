@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class HeadsPlusConfigHeadsX {
 
-    private static boolean s = false;
+    public static boolean s = false;
     private static FileConfiguration headsx;
     private static File headsxf;
 
@@ -28,6 +28,7 @@ public class HeadsPlusConfigHeadsX {
         getHeadsX().options().header("HeadsPlus by Thatsmusic99 " +
                 "\n WARNING: This is an advanced section of the plugin. If you do not know what you a doing with it, please do not use it due to risk of crashing your own and other's games. " +
                 "\n For more information visit the GitHub wiki for HeadsX.yml: ");
+
         for (HeadsXEnums e : HeadsXEnums.values()) {
             getHeadsX().addDefault("heads." + e.name + ".database", true);
             getHeadsX().addDefault("heads." + e.name + ".encode", false);
@@ -43,18 +44,20 @@ public class HeadsPlusConfigHeadsX {
     public static void reloadHeadsX() {
         if (headsxf == null) {
             headsxf = new File(HeadsPlus.getInstance().getDataFolder(), "headsx.yml");
-            s = true;
         }
         headsx = YamlConfiguration.loadConfiguration(headsxf);
-        if (s) {
+        getHeadsX().addDefault("options.version", 0.1);
+        if (headsxf.length() <= 2000) {
             loadHeadsX();
         }
         saveHeadsX();
+        s = false;
     }
     public static void headsxEnable() {
         reloadHeadsX();
-        if (s) {
-            loadHeadsX();
-        }
+       // if (s) {
+      //      loadHeadsX();
+      //  }
+        s = false;
     }
 }

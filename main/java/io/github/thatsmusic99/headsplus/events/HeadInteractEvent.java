@@ -17,6 +17,7 @@ public final class HeadInteractEvent implements Listener {
 	private int TimesSent = 0;
 	@EventHandler
 	public void interact(PlayerInteractEvent event) {
+		try {
 		if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			
 		    Player player = event.getPlayer();
@@ -25,11 +26,9 @@ public final class HeadInteractEvent implements Listener {
 				
 			    Skull skull = (Skull) block;
 			    String owner;
-			    try {
+
                     owner = getSkullName(skull);
-                } catch (NullPointerException ex) {
-			        return;
-                }
+
 			    String playerName = player.toString();
 			    if (TimesSent < 1) {
 			    	for (HeadEnums key : HeadEnums.values()) {
@@ -57,6 +56,9 @@ public final class HeadInteractEvent implements Listener {
 			    }
 		    } 
 		}
+		} catch (NullPointerException ex) {
+		//
+	}
 	}
 	@SuppressWarnings("deprecation")
 	private static String getSkullName(Skull s) {

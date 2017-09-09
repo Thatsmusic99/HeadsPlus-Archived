@@ -33,6 +33,7 @@ public class HeadsPlus extends JavaPlugin {
 	public Economy econ;
 	public boolean drops;
 	public boolean arofj;
+	public boolean db;
 	
     public static FileConfiguration config;
 
@@ -86,6 +87,7 @@ public class HeadsPlus extends JavaPlugin {
 			    arofj = false;
                 getServer().getPluginManager().registerEvents(new JoinEvent(), this);
             }
+            db = getConfig().getBoolean("headsDatabase");
 		    this.getCommand("headsplus").setExecutor(new HeadsPlusCommand());
 		    this.getCommand("hp").setExecutor(new HeadsPlusCommand());
 		    this.getCommand("hp").setTabCompleter(new TabComplete());

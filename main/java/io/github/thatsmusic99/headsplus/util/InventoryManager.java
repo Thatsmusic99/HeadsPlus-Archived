@@ -75,7 +75,7 @@ public class InventoryManager {
             }
         }
     }
-    public static Inventory changePage(boolean next) {
+    public static Inventory changePage(boolean next, boolean start) {
         heads = HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false).size();
         int h = heads;
         pages = 1;
@@ -87,6 +87,9 @@ public class InventoryManager {
             cPage++;
         } else {
             cPage--;
+        }
+        if (start) {
+            cPage = 1;
         }
         int si = (cPage - 1) * 45;
         int ei = 45 + si;

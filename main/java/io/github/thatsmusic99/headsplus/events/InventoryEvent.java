@@ -28,11 +28,11 @@ public class InventoryEvent implements Listener {
                 if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Next Page")) {
                     e.setCancelled(true);
                     e.getWhoClicked().closeInventory();
-                    e.getWhoClicked().openInventory(InventoryManager.changePage(true));
+                    e.getWhoClicked().openInventory(InventoryManager.changePage(true, false));
                 } else {
                     e.setCancelled(true);
                     e.getWhoClicked().closeInventory();
-                    e.getWhoClicked().openInventory(InventoryManager.changePage(false));
+                    e.getWhoClicked().openInventory(InventoryManager.changePage(false, false));
                 }
             }
         }

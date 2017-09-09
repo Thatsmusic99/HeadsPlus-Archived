@@ -2,13 +2,8 @@ package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import java.io.File;
 
-import io.github.thatsmusic99.headsplus.commands.Head;
-import io.github.thatsmusic99.headsplus.commands.SellHead;
+import io.github.thatsmusic99.headsplus.commands.Heads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
-import io.github.thatsmusic99.headsplus.crafting.RecipeEnumUser;
-import io.github.thatsmusic99.headsplus.events.DeathEvents;
-import io.github.thatsmusic99.headsplus.events.JoinEvent;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -18,8 +13,6 @@ import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusCrafting;
-import org.bukkit.event.HandlerList;
-import org.bukkit.inventory.ShapelessRecipe;
 
 public class MCReload {
 	
@@ -84,6 +77,7 @@ public class MCReload {
                                HeadsPlus.getInstance().sellable = false;
                            }
                        }
+                       HeadsPlus.getInstance().db = HeadsPlus.getInstance().getConfig().getBoolean("headsDatabase");
 
 					   HeadsPlus.getInstance().log.info("[HeadsPlus] Config reloaded!");
 				   }

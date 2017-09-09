@@ -34,6 +34,7 @@ public class HeadsPlusConfigHeadsX {
             getHeadsX().addDefault("heads." + e.name + ".displayname", e.dn);
             getHeadsX().addDefault("heads." + e.name + ".texture", e.tex);
         }
+        getHeadsX().options().copyDefaults(true);
         saveHeadsX();
     }
     public static FileConfiguration getHeadsX() {
@@ -45,6 +46,9 @@ public class HeadsPlusConfigHeadsX {
             s = true;
         }
         headsx = YamlConfiguration.loadConfiguration(headsxf);
+        if (s) {
+            loadHeadsX();
+        }
         saveHeadsX();
     }
     public static void headsxEnable() {

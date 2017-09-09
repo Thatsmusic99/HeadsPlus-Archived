@@ -96,7 +96,7 @@ public class InventoryManager {
         Inventory i = create(54, "HeadsPlus Head selector: page " + cPage + "/" + pages);
         List<String> l = new ArrayList<>(HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false)).subList(si, ei);
         for (String str : l) {
-            if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("heads." + str + ".decode")) {
+            if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("heads." + str + ".database")) {
                 skull(str, i);
             }
         }
@@ -146,6 +146,7 @@ public class InventoryManager {
         } catch (IllegalArgumentException | IllegalAccessException e) {
             e.printStackTrace();
         }
+        sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeadsX.getHeadsX().getString("heads." + str + ".displayname")));
         s.setItemMeta(sm);
         i.setItem(timesSent, s);
         timesSent++;

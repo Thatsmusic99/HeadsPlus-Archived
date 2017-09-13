@@ -22,6 +22,10 @@ public class InventoryEvent implements Listener {
                     e.setCancelled(true);
                     return;
                 }
+                if (e.getCurrentItem().getItemMeta().getLore() != null) {
+                    Double price = Double.valueOf(e.getCurrentItem().getItemMeta().getLore().get(0).split(" ")[1]);
+                    
+                }
                 e.getWhoClicked().getInventory().addItem(e.getCurrentItem());
                 e.setCancelled(true);
             } else if (e.getCurrentItem().getType().equals(Material.ARROW)) {

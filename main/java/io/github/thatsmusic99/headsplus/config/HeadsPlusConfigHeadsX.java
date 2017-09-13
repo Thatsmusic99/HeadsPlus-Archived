@@ -35,7 +35,9 @@ public class HeadsPlusConfigHeadsX {
             getHeadsX().addDefault("heads." + e.name + ".encode", false);
             getHeadsX().addDefault("heads." + e.name + ".displayname", e.dn);
             getHeadsX().addDefault("heads." + e.name + ".texture", e.tex);
+            getHeadsX().addDefault("heads." + e.name + ".price", "default");
         }
+
         getHeadsX().options().copyDefaults(true);
         saveHeadsX();
     }
@@ -47,9 +49,15 @@ public class HeadsPlusConfigHeadsX {
             headsxf = new File(HeadsPlus.getInstance().getDataFolder(), "headsx.yml");
         }
         headsx = YamlConfiguration.loadConfiguration(headsxf);
-        getHeadsX().addDefault("options.version", 0.2);
+        getHeadsX().addDefault("options.version", 0.3);
+        getHeadsX().addDefault("options.default-price", 10.00);
         if (headsxf.length() <= 2000) {
             loadHeadsX();
+        }
+        if (getHeadsX().getDouble("options.version") < 0.3) {
+            for (String str : getHeadsX().getConfigurationSection("heads").getKeys(false)) {
+                getHeadsX().addDefault("heads." + str + ".price", "default");
+            }
         }
         saveHeadsX();
         s = false;

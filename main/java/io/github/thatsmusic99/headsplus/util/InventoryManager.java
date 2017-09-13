@@ -23,6 +23,38 @@ public class InventoryManager {
     private static int heads;
     private static int timesSent = 0;
     private static int cPage = 0;
+    private static int[] pos() {
+        int[] a = new int[28];
+        a[0] = 10;
+        a[1] = 11;
+        a[2] = 12;
+        a[3] = 13;
+        a[4] = 14;
+        a[5] = 15;
+        a[6] = 16;
+        a[7] = 19;
+        a[8] = 20;
+        a[9] = 21;
+        a[10] = 22;
+        a[11] = 23;
+        a[12] = 24;
+        a[13] = 25;
+        a[14] = 28;
+        a[15] = 29;
+        a[16] = 30;
+        a[17] = 31;
+        a[18] = 32;
+        a[19] = 33;
+        a[20] = 34;
+        a[21] = 37;
+        a[22] = 38;
+        a[23] = 39;
+        a[24] = 40;
+        a[25] = 41;
+        a[26] = 42;
+        a[27] = 43;
+        return a;
+    }
 
     public static Inventory create(int slots, String name) {
         return Bukkit.createInventory(null, slots, name);
@@ -79,8 +111,8 @@ public class InventoryManager {
         heads = HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false).size();
         int h = heads;
         pages = 1;
-        while (h > 45) {
-            h -= 45;
+        while (h > 28) {
+            h -= 28;
             pages++;
         }
         if (next) {
@@ -91,8 +123,8 @@ public class InventoryManager {
         if (start) {
             cPage = 1;
         }
-        int si = (cPage - 1) * 45;
-        int ei = 45 + si;
+        int si = (cPage - 1) * 28;
+        int ei = 28 + si;
         if (ei > HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false).size()) {
             ei = HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false).size();
         }
@@ -150,8 +182,19 @@ public class InventoryManager {
             e.printStackTrace();
         }
         sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeadsX.getHeadsX().getString("heads." + str + ".displayname")));
+        if (HeadsPlusConfigHeadsX.getHeadsX().get("heads." + str + ".price") instanceof String) {
+            if (!((String) HeadsPlusConfigHeadsX.getHeadsX().get("heads." + str + ".price")).equalsIgnoreCase("free")) {
+                List<String> price = new ArrayList<>();
+                price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + HeadsPlusConfigHeadsX.getHeadsX().get("heads." + str + ".price")));
+                sm.setLore(price);
+            }
+        } else {
+            List<String> price = new ArrayList<>();
+            price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + HeadsPlusConfigHeadsX.getHeadsX().get("heads." + str + ".price")));
+            sm.setLore(price);
+        }
         s.setItemMeta(sm);
-        i.setItem(timesSent, s);
+        i.setItem(pos()[timesSent], s);
         timesSent++;
     }
 }

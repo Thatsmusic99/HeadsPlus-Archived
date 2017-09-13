@@ -91,7 +91,6 @@ public class SellHead implements CommandExecutor {
 			    		Double price = HeadsPlusConfigHeads.getHeads().getDouble("playerHeadP");
 			    		if (invi.getAmount() > 0) {
 			    			price = setPrice(price, args, invi, (Player) sender);
-	    					
 	    				}
 						EconomyResponse zr = econ.depositPlayer((Player) sender, price);
 			    		String success = HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("sell-success")).replaceAll("%l", Double.toString(zr.amount)).replaceAll("%b", Double.toString(zr.balance));
@@ -168,7 +167,7 @@ public class SellHead implements CommandExecutor {
                                 }
                             }
                         }
-                        if (price == 0) {
+                        if (price == 0.0) {
                             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("no-heads")));
                             return true;
                         }
@@ -265,7 +264,28 @@ public class SellHead implements CommandExecutor {
 								    
 							    }
 							    if (!found && a[0].equalsIgnoreCase("player")) {
-							    	p.getInventory().remove(is);
+                                    boolean player = true;
+                                    SkullMeta sms = (SkullMeta) is.getItemMeta();
+                                    for (String s : HeadsPlusConfigHeads.uHeads) {
+                                        if (sms.getOwner().equalsIgnoreCase(HeadsPlusConfigHeads.getHeads().getString(s + "HeadN"))) {
+                                            player = false;
+                                        }
+                                    }
+                                    for (String s : HeadsPlusConfigHeads.mHeads) {
+                                        if (sms.getOwner().equalsIgnoreCase(HeadsPlusConfigHeads.getHeads().getString(s + "HeadN"))) {
+                                            player = false;
+                                        }
+                                    }
+                                    if (player) {
+
+                                        List<String> lst = new ArrayList<>();
+                                        for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
+                                            lst.add(ChatColor.translateAlternateColorCodes('&', ChatColor.stripColor(str)));
+                                        }
+                                        if ((sms.getLore() != null) && (sms.getLore().size() == 2) && (sms.getLore().equals(lst))) {
+                                            p.getInventory().remove(is);
+                                        }
+                                    }
 							    }
 							}
 		    			}
@@ -340,6 +360,30 @@ public class SellHead implements CommandExecutor {
 							}
 						}
 					}
+					if (a[0].equalsIgnoreCase("player")) {
+					    boolean player = true;
+					    SkullMeta sm = (SkullMeta) i.getItemMeta();
+					    for (String s : HeadsPlusConfigHeads.uHeads) {
+					        if (sm.getOwner().equalsIgnoreCase(HeadsPlusConfigHeads.getHeads().getString(s + "HeadN"))) {
+					            player = false;
+                            }
+                        }
+                        for (String s : HeadsPlusConfigHeads.mHeads) {
+					        if (sm.getOwner().equalsIgnoreCase(HeadsPlusConfigHeads.getHeads().getString(s + "HeadN"))) {
+					            player = false;
+                            }
+                        }
+                        if (player) {
+
+                            List<String> ls = new ArrayList<>();
+                            for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
+                                ls.add(ChatColor.translateAlternateColorCodes('&', ChatColor.stripColor(str)));
+                            }
+                            if ((sm.getLore() != null) && (sm.getLore().size() == 2) && (sm.getLore().equals(ls))) {
+                                p = p + (i.getAmount() * HeadsPlusConfigHeads.getHeads().getDouble("playerHeadP"));
+                            }
+                        }
+                    }
 				}	
 			} else {
 				if (Integer.parseInt(a[0]) <= i.getAmount()) {
@@ -363,6 +407,14 @@ public class SellHead implements CommandExecutor {
 					s = str;
 				}
 			}
+            for (String str : HeadsPlusConfigHeads.uHeads) {
+                if (sm.getOwner().equalsIgnoreCase(HeadsPlusConfigHeads.getHeads().getString(str + "HeadN"))) {
+                    s = str;
+                }
+            }
+            if (s == null) {
+			    s = "player";
+            }
 			p = HeadsPlusConfigHeads.getHeads().getDouble(s + "HeadP") * i.getAmount();
 	    }
 		return p;

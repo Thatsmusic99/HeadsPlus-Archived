@@ -155,6 +155,4 @@ public class HeadsPlus extends JavaPlugin {
         econ = rsp.getProvider();
         return econ != null;
 	}
-
-
 }

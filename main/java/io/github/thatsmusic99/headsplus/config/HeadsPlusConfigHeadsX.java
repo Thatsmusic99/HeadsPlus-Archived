@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.config;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -24,10 +25,10 @@ public class HeadsPlusConfigHeadsX {
             e.printStackTrace();
         }
     }
-    public static void loadHeadsX() {
+    private static void loadHeadsX() {
         getHeadsX().options().header("HeadsPlus by Thatsmusic99 " +
                 "\n WARNING: This is an advanced section of the plugin. If you do not know what you a doing with it, please do not use it due to risk of crashing your own and other's games. " +
-                "\n For more information visit the GitHub wiki for HeadsX.yml: ");
+                "\n For more information visit the GitHub wiki for HeadsX.yml: https://github.com/Thatsmusic99/HeadsPlus/wiki/headsx.yml");
 
         for (HeadsXEnums e : HeadsXEnums.values()) {
             getHeadsX().addDefault("heads." + e.name + ".database", true);
@@ -46,7 +47,7 @@ public class HeadsPlusConfigHeadsX {
             headsxf = new File(HeadsPlus.getInstance().getDataFolder(), "headsx.yml");
         }
         headsx = YamlConfiguration.loadConfiguration(headsxf);
-        getHeadsX().addDefault("options.version", 0.1);
+        getHeadsX().addDefault("options.version", 0.2);
         if (headsxf.length() <= 2000) {
             loadHeadsX();
         }
@@ -60,4 +61,35 @@ public class HeadsPlusConfigHeadsX {
       //  }
         s = false;
     }
+   /* public static boolean isHPXSkull(String str) {
+        return str.startsWith("HP#");
+    }
+    public static ItemStack getSkull(String s) {
+        String st = s.split("#")[1];
+        ItemStack i = new ItemStack(Material.SKULL_ITEM);
+        SkullMeta sm = (SkullMeta) i.getItemMeta();
+        GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
+        if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("heads." + st + ".encode")) {
+            byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", HeadsPlusConfigHeadsX.getHeadsX().getString(st + ".texture")).getBytes());
+            gm.getProperties().put("textures", new Property("texture", Arrays.toString(encodedData)));
+        } else {
+            gm.getProperties().put("textures", new Property("texture", HeadsPlusConfigHeadsX.getHeadsX().getString("heads." + st + ".texture")));
+        }
+
+        Field profileField = null;
+        try {
+            profileField = sm.getClass().getDeclaredField("profile");
+        } catch (NoSuchFieldException | SecurityException e) {
+            e.printStackTrace();
+        }
+        profileField.setAccessible(true);
+        try {
+            profileField.set(sm, gm);
+        } catch (IllegalArgumentException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeadsX.getHeadsX().getString("heads." + st + ".displayname")));
+        i.setItemMeta(sm);
+        return i;
+    } */
 }

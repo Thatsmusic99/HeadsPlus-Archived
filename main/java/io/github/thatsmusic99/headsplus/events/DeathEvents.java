@@ -66,40 +66,41 @@ public class DeathEvents implements Listener {
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent ep) {
         if (!HeadsPlus.getInstance().drops) return;
-		if (ep.getEntity().getKiller() != null) {
-            if (!HeadsPlus.getInstance().getConfig().getStringList("whitelistw").contains(ep.getEntity().getWorld().getName())) {
-                if (!ep.getEntity().getKiller().hasPermission("headsplus.bypass.whitelistw")) {
-                    if (HeadsPlus.getInstance().getConfig().getBoolean("whitelistwOn")) {
-                        return;
-                    }
-                }
+        if (ep.getEntity().getKiller() != null) {
+        if (!HeadsPlus.getInstance().getConfig().getStringList("whitelistw").contains(ep.getEntity().getWorld().getName())) {
+            if (!ep.getEntity().getKiller().hasPermission("headsplus.bypass.whitelistw")) {
+            if (HeadsPlus.getInstance().getConfig().getBoolean("whitelistwOn")) {
+                return;
             }
-			if (!HeadsPlus.getInstance().getConfig().getStringList("blacklistw").contains(ep.getEntity().getWorld().getName()) || ep.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn")) { 
-		        Random rand = new Random();
-				double chance1 = HeadsPlusConfigHeads.getHeads().getDouble("playerHeadC");
-				double chance2 = (double) rand.nextInt(100);
-		        if (chance2 <= chance1) {
-		    	    ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-			        SkullMeta headM = (SkullMeta) head.getItemMeta();
-			        headM.setOwner(ep.getEntity().getName());
-			        headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("playerHeadDN").replaceAll("%d", ep.getEntity().getName())));
-		    	    if ((HeadsPlus.getInstance().sellable)  && (ep.getEntity().getKiller().hasPermission("headsplus.sellhead"))) {
-				        List<String> ls = new ArrayList<>();
-				        for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
-				            ls.add(ChatColor.translateAlternateColorCodes('&', str));
-                        }
-				        headM.setLore(ls);
-			        }
-			        head.setItemMeta(headM);
-			        Location entityLoc = ep.getEntity().getLocation();
-                    double entityLocY = entityLoc.getY() + 1;
-                    entityLoc.setY(entityLocY);
-                    World world = ep.getEntity().getWorld();
-                    world.dropItem(entityLoc, head);
+             }
+        }
+        if (!HeadsPlus.getInstance().getConfig().getStringList("blacklistw").contains(ep.getEntity().getWorld().getName()) || ep.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn")) {
+            Random rand = new Random();
+            double chance1 = HeadsPlusConfigHeads.getHeads().getDouble("playerHeadC");
+            double chance2 = (double) rand.nextInt(100);
+            if (chance2 <= chance1) {
+                ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+                SkullMeta headM = (SkullMeta) head.getItemMeta();
+                headM.setOwner(ep.getEntity().getName());
+                headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("playerHeadDN").replaceAll("%d", ep.getEntity().getName())));
+                if ((HeadsPlus.getInstance().sellable) && (ep.getEntity().getKiller().hasPermission("headsplus.sellhead"))) {
+                    List<String> ls = new ArrayList<>();
+                    for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
+                        ls.add(ChatColor.translateAlternateColorCodes('&', str));
+                    }
+                    headM.setLore(ls);
                 }
-		    }    
-		}
+                head.setItemMeta(headM);
+                Location entityLoc = ep.getEntity().getLocation();
+                double entityLocY = entityLoc.getY() + 1;
+                entityLoc.setY(entityLocY);
+                World world = ep.getEntity().getWorld();
+                world.dropItem(entityLoc, head);
+            }
+        }
+    }
 	}
+
 	public static void createList() {
 		if (Bukkit.getVersion().contains("1.11.2")) {
 			ableEntities.addAll(Arrays.asList(EntityType.DONKEY, EntityType.ELDER_GUARDIAN, EntityType.EVOKER, EntityType.HUSK, EntityType.LLAMA, EntityType.MULE, EntityType.POLAR_BEAR, EntityType.SHULKER, EntityType.SKELETON_HORSE, EntityType.STRAY, EntityType.VEX, EntityType.VINDICATOR, EntityType.WITHER_SKELETON));

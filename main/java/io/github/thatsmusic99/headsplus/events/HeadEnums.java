@@ -62,6 +62,7 @@ public enum HeadEnums {
     ARROWRIGHT(HeadsPlusConfigHeads.getHeads().getString("arrowRightHeadEN"), HeadsPlusConfigHeads.getHeads().getString("arrowRightHeadN")),
     EXCLAMATION(HeadsPlusConfigHeads.getHeads().getString("exclamationHeadEN"), HeadsPlusConfigHeads.getHeads().getString("exclamationHeadN")),
     QUESTION(HeadsPlusConfigHeads.getHeads().getString("questionHeadEN"), HeadsPlusConfigHeads.getHeads().getString("questionHeadN"));
+
 	final String displayname;
 	final String name;
 	

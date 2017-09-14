@@ -17,7 +17,7 @@ public class Heads implements CommandExecutor {
             if (cs instanceof Player) {
                 if (cs.hasPermission("headsplus.heads")) {
                     Player p = (Player) cs;
-                    p.openInventory(InventoryManager.changePage(true, true));
+                    p.openInventory(InventoryManager.changePage(true, true, (Player) cs));
                 } else {
                     cs.sendMessage(HeadsPlusCommand.noPerms);
                 }

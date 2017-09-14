@@ -3,12 +3,14 @@ package io.github.thatsmusic99.headsplus.util;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
 
 import org.apache.commons.codec.binary.Base64;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -107,7 +109,7 @@ public class InventoryManager {
             }
         }
     }
-    public static Inventory changePage(boolean next, boolean start) {
+    public static Inventory changePage(boolean next, boolean start, Player p) {
         heads = HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false).size();
         int h = heads;
         pages = 1;
@@ -154,6 +156,16 @@ public class InventoryManager {
         is.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Close Menu");
         it.setItemMeta(is);
         i.setItem(49, it);
+        ItemStack is2 = new ItemStack(Material.PAPER);
+        ItemMeta im = is2.getItemMeta();
+        im.setDisplayName(ChatColor.GOLD + "[" + ChatColor.YELLOW + "" + ChatColor.BOLD + "Stats" + ChatColor.GOLD + "]");
+        List<String> lore = new ArrayList<>();
+        lore.add(ChatColor.GREEN + "Total heads: " + heads);
+        lore.add(ChatColor.GREEN + "Total pages: " + pages);
+        lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().econ.getBalance(p));
+        im.setLore(lore);
+        is2.setItemMeta(im);
+        i.setItem(4, is2);
         timesSent = 0;
         return i;
     }
@@ -184,14 +196,25 @@ public class InventoryManager {
         sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeadsX.getHeadsX().getString("heads." + str + ".displayname")));
         if (HeadsPlusConfigHeadsX.getHeadsX().get("heads." + str + ".price") instanceof String) {
             if (!((String) HeadsPlusConfigHeadsX.getHeadsX().get("heads." + str + ".price")).equalsIgnoreCase("free")) {
+                if (((String) HeadsPlusConfigHeadsX.getHeadsX().get("heads." + str + ".price")).equalsIgnoreCase("default")) {
+                    if (!HeadsPlusConfigHeadsX.getHeadsX().get("options.default-price").equals("free")) {
+                        List<String> price = new ArrayList<>();
+                        price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + HeadsPlusConfigHeadsX.getHeadsX().get("options.default-price")));
+                        sm.setLore(price);
+                    }
+                } else {
+                    List<String> price = new ArrayList<>();
+                    price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + HeadsPlusConfigHeadsX.getHeadsX().get("heads." + str + ".price")));
+                    sm.setLore(price);
+                }
+            }
+        } else {
+            if (!(((Double) HeadsPlusConfigHeadsX.getHeadsX().get("heads." + str + ".price")) == 0.0)) {
                 List<String> price = new ArrayList<>();
                 price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + HeadsPlusConfigHeadsX.getHeadsX().get("heads." + str + ".price")));
                 sm.setLore(price);
             }
-        } else {
-            List<String> price = new ArrayList<>();
-            price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + HeadsPlusConfigHeadsX.getHeadsX().get("heads." + str + ".price")));
-            sm.setLore(price);
+
         }
         s.setItemMeta(sm);
         i.setItem(pos()[timesSent], s);

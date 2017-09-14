@@ -42,9 +42,11 @@ public class DeathEvents implements Listener {
 		            Random rand = new Random();
 		            double chance1 = HeadsPlusConfigHeads.getHeads().getDouble(entity + "HeadC");
 		            double chance2 = (double) rand.nextInt(100);
+		            if (chance1 == 0.0) return;
 		            if (chance2 <= chance1) {
 			            ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 			            SkullMeta headM = (SkullMeta) head.getItemMeta();
+			            if (HeadsPlusConfigHeads.getHeads().getString(entity + "HeadN").isEmpty()) return;
 			            headM.setOwner(HeadsPlusConfigHeads.getHeads().getString(entity + "HeadN"));
 			            headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString(entity + "HeadDN")));
                         List<String> ls = new ArrayList<>();
@@ -67,17 +69,18 @@ public class DeathEvents implements Listener {
 	public void onPlayerDeath(PlayerDeathEvent ep) {
         if (!HeadsPlus.getInstance().drops) return;
         if (ep.getEntity().getKiller() != null) {
-        if (!HeadsPlus.getInstance().getConfig().getStringList("whitelistw").contains(ep.getEntity().getWorld().getName())) {
-            if (!ep.getEntity().getKiller().hasPermission("headsplus.bypass.whitelistw")) {
-            if (HeadsPlus.getInstance().getConfig().getBoolean("whitelistwOn")) {
-                return;
+            if (!HeadsPlus.getInstance().getConfig().getStringList("whitelistw").contains(ep.getEntity().getWorld().getName())) {
+                if (!ep.getEntity().getKiller().hasPermission("headsplus.bypass.whitelistw")) {
+                    if (HeadsPlus.getInstance().getConfig().getBoolean("whitelistwOn")) {
+                        return;
+                    }
+                }
             }
-             }
-        }
-        if (!HeadsPlus.getInstance().getConfig().getStringList("blacklistw").contains(ep.getEntity().getWorld().getName()) || ep.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn")) {
+            if (!HeadsPlus.getInstance().getConfig().getStringList("blacklistw").contains(ep.getEntity().getWorld().getName()) || ep.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn")) {
             Random rand = new Random();
             double chance1 = HeadsPlusConfigHeads.getHeads().getDouble("playerHeadC");
             double chance2 = (double) rand.nextInt(100);
+            if (chance1 == 0.0) return;
             if (chance2 <= chance1) {
                 ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
                 SkullMeta headM = (SkullMeta) head.getItemMeta();

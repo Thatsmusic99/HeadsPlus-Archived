@@ -58,6 +58,8 @@ public class HeadsPlusConfigHeadsX {
             for (String str : getHeadsX().getConfigurationSection("heads").getKeys(false)) {
                 getHeadsX().addDefault("heads." + str + ".price", "default");
             }
+            getHeadsX().set("options.version", 0.3);
+            getHeadsX().options().copyDefaults(true);
         }
         saveHeadsX();
         s = false;

@@ -83,6 +83,8 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("empty-blw", "%h &cThe world blacklist is empty!");
 		getMessages().addDefault("empty-wl", "%h &cThe whitelist is empty!");
 		getMessages().addDefault("empty-wlw", "%h &cThe world whitelist is empty!");
+		getMessages().addDefault("buy-success", "&3You have bought a head for &b%l &3and now have &b%b!");
+        getMessages().addDefault("buy-fail", "&cCouldn''t buy head!");
 		getMessages().options().copyDefaults(true);
 		saveMessages();
 		

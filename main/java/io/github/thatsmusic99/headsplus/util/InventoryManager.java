@@ -26,6 +26,8 @@ public class InventoryManager {
     private static int heads;
     private static int timesSent = 0;
     private static int cPage = 0;
+    private static int sections = 0;
+    private static String cSection = "menu";
     private static int[] pos() {
         int[] a = new int[28];
         a[0] = 10;
@@ -93,15 +95,11 @@ public class InventoryManager {
         return i;
     } */
 
-    public static int getPages() {
-        return pages;
-    }
-    public static int getPage() {
-        return cPage;
-    }
-    public static int getHeads() {
-        return heads;
-    }
+    public static int getPages() { return pages; }
+    public static int getPage() { return cPage; }
+    public static int getHeads() { return heads; }
+    public static String getSection() { return cSection; }
+    public static int getSections() { return sections; }
     private static void loop(int in, Inventory i) {
         if (HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false).size() == 0) return;
         while (timesSent < in) {

@@ -60,17 +60,20 @@ public class HeadsPlusConfigHeadsX {
             headsxf = new File(HeadsPlus.getInstance().getDataFolder(), "headsx.yml");
         }
         headsx = YamlConfiguration.loadConfiguration(headsxf);
-        getHeadsX().addDefault("options.version", 0.3);
+        getHeadsX().addDefault("options.version", 0.4);
         getHeadsX().addDefault("options.default-price", 10.00);
         if (headsxf.length() <= 2000) {
             loadHeadsX();
         }
-        if (getHeadsX().getDouble("options.version") < 0.3) {
+        if (getHeadsX().getDouble("options.version") < 0.4) {
             for (String str : getHeadsX().getConfigurationSection("heads").getKeys(false)) {
                 getHeadsX().addDefault("heads." + str + ".price", "default");
             }
-            getHeadsX().set("options.version", 0.3);
+            getHeadsX().set("options.version", 0.4);
             getHeadsX().options().copyDefaults(true);
+            for (HeadsXSections h : HeadsXSections.values()) {
+
+            }
         }
         saveHeadsX();
         s = false;

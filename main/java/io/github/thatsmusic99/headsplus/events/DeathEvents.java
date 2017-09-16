@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import org.bukkit.Bukkit;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -47,6 +47,23 @@ public class DeathEvents implements Listener {
 			            ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 			            SkullMeta headM = (SkullMeta) head.getItemMeta();
 			            if (HeadsPlusConfigHeads.getHeads().getString(entity + "HeadN").isEmpty()) return;
+			            if (HeadsPlusConfigHeadsX.isHPXSkull(HeadsPlusConfigHeads.getHeads().getString(entity + "HeadN")))  {
+			                ItemStack i = HeadsPlusConfigHeadsX.getSkull(HeadsPlusConfigHeads.getHeads().getString(entity + "HeadN"));
+			                SkullMeta sm = (SkullMeta) i.getItemMeta();
+			                sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString(entity + "HeadDN")));
+                            List<String> ls = new ArrayList<>();
+                            for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
+                                ls.add(ChatColor.translateAlternateColorCodes('&', str));
+                            }
+                            sm.setLore(ls);
+                            i.setItemMeta(sm);
+                            Location entityLoc = e.getEntity().getLocation();
+                            double entityLocY = entityLoc.getY() + 1;
+                            entityLoc.setY(entityLocY);
+                            World world = e.getEntity().getWorld();
+                            world.dropItem(entityLoc, i);
+                            return;
+                        }
 			            headM.setOwner(HeadsPlusConfigHeads.getHeads().getString(entity + "HeadN"));
 			            headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString(entity + "HeadDN")));
                         List<String> ls = new ArrayList<>();
@@ -105,10 +122,12 @@ public class DeathEvents implements Listener {
 	}
 
 	public static void createList() {
-		if (Bukkit.getVersion().contains("1.11.2")) {
+        String bukkitVersion = org.bukkit.Bukkit.getVersion();
+        bukkitVersion = bukkitVersion.substring(bukkitVersion.indexOf("MC: ") + 4, bukkitVersion.length() - 1);
+        if (bukkitVersion.contains("1.11")) {
 			ableEntities.addAll(Arrays.asList(EntityType.DONKEY, EntityType.ELDER_GUARDIAN, EntityType.EVOKER, EntityType.HUSK, EntityType.LLAMA, EntityType.MULE, EntityType.POLAR_BEAR, EntityType.SHULKER, EntityType.SKELETON_HORSE, EntityType.STRAY, EntityType.VEX, EntityType.VINDICATOR, EntityType.WITHER_SKELETON));
 		}
-		if (Bukkit.getVersion().contains("1.12")) {
+		if (bukkitVersion.contains("1.12")) {
 			ableEntities.addAll(Arrays.asList(EntityType.DONKEY, EntityType.ELDER_GUARDIAN, EntityType.EVOKER, EntityType.HUSK, EntityType.LLAMA, EntityType.MULE, EntityType.PARROT, EntityType.POLAR_BEAR, EntityType.SHULKER, EntityType.SKELETON_HORSE, EntityType.STRAY, EntityType.VEX, EntityType.VINDICATOR, EntityType.WITHER_SKELETON));
 		}
 	}

@@ -87,7 +87,7 @@ public class HeadsPlusConfigHeadsX {
     }
     public static ItemStack getSkull(String s) {
         String st = s.split("#")[1];
-        ItemStack i = new ItemStack(Material.SKULL_ITEM);
+        ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         SkullMeta sm = (SkullMeta) i.getItemMeta();
         GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
         if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("heads." + st + ".encode")) {
@@ -114,7 +114,7 @@ public class HeadsPlusConfigHeadsX {
         return i;
     }
     public static String getTextures(String s) {
-        String st = s.split("#")[1];
-        return HeadsPlusConfigHeadsX.getHeadsX().getString("heads." + st + ".texture");
+        String[] st = s.split("#");
+        return HeadsPlusConfigHeadsX.getHeadsX().getString("heads." + st[0] + ".texture");
     }
 }

@@ -1,12 +1,23 @@
 package io.github.thatsmusic99.headsplus.config;
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
+
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 
+import org.apache.commons.codec.binary.Base64;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.UUID;
 
 public class HeadsPlusConfigHeadsX {
 
@@ -71,7 +82,7 @@ public class HeadsPlusConfigHeadsX {
       //  }
         s = false;
     }
-   /* public static boolean isHPXSkull(String str) {
+    public static boolean isHPXSkull(String str) {
         return str.startsWith("HP#");
     }
     public static ItemStack getSkull(String s) {
@@ -101,5 +112,9 @@ public class HeadsPlusConfigHeadsX {
         sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeadsX.getHeadsX().getString("heads." + st + ".displayname")));
         i.setItemMeta(sm);
         return i;
-    } */
+    }
+    public static String getTextures(String s) {
+        String st = s.split("#")[1];
+        return HeadsPlusConfigHeadsX.getHeadsX().getString("heads." + st + ".texture");
+    }
 }

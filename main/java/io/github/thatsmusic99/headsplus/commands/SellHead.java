@@ -1,8 +1,12 @@
 package io.github.thatsmusic99.headsplus.commands;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -32,6 +36,25 @@ public class SellHead implements CommandExecutor {
 		    ItemStack invi = checkHand((Player) sender);
 		    
 		    if (args.length == 0 && (checkHand((Player) sender).getType() == Material.SKULL_ITEM) && (sender.hasPermission("headsplus.sellhead"))) {
+		    	if (((SkullMeta)invi.getItemMeta()).getOwner() == null) {
+		    	    for (String key : HeadsPlusConfigHeads.mHeads) {
+		    	        if (HeadsPlusConfigHeadsX.isHPXSkull(key)) {
+                            Field pro = ((SkullMeta) invi.getItemMeta()).getClass().getDeclaredField("profile");
+                            pro.setAccessible(true);
+                            GameProfile gm = (GameProfile) pro.get(invi.getItemMeta());
+                            for (Property p : gm.getProperties().get("textures")) {
+                                if (p.getValue().equals(HeadsPlusConfigHeadsX.getTextures(key))) {
+                                    Double price = HeadsPlusConfigHeads.getHeads().getDouble(key + "HeadP");
+                                    if (invi.getAmount() > 0) {
+                                        price *= invi.getAmount();
+                                    }
+                                    pay((Player) sender, args, invi, price);
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
 		    	
 		    	SkullMeta skullM = (SkullMeta) invi.getItemMeta();
 		        String owner = skullM.getOwner();

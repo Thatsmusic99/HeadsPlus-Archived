@@ -2,10 +2,11 @@ package io.github.thatsmusic99.headsplus.config;
 
 public enum HeadsXSections {
 
-    ALPHABET("Alphabet", "&8[&6Alphabet&8]", "HP#wood_a"),
-    ANIMALS("Animals", "&8[&aAnimals&8]", "HP#elephant"),
-    DECORATION("Decoration", "&8[&eDecoration&8]", "HP#paper_lantern"),
-    FOOD_AND_DRINK("Food-and-drink", "&8[&6Food &7and &9Drink&8]", "HP#pepsi");
+    ALPHABET("alphabet", "&8[&6Alphabet&8]", "HP#wood_a"),
+    ANIMALS("animals", "&8[&aAnimals&8]", "HP#elephant"),
+    DECORATION("decoration", "&8[&eDecoration&8]", "HP#paper_lantern"),
+    FOOD_AND_DRINK("food-and-drink", "&8[&6Food &7and &9Drink&8]", "HP#pepsi"),
+    LOGOS("logos", "&8[&cLogos&8]", "HP#youtube");
 
     String let;
     String dn;

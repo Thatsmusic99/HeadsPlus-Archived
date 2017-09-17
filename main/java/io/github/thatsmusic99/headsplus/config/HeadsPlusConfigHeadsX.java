@@ -70,10 +70,25 @@ public class HeadsPlusConfigHeadsX {
                 getHeadsX().addDefault("heads." + str + ".price", "default");
             }
             getHeadsX().set("options.version", 0.4);
-            getHeadsX().options().copyDefaults(true);
-            for (HeadsXSections h : HeadsXSections.values()) {
-
+            for (String str : getHeadsX().getConfigurationSection("heads").getKeys(false)) {
+                for (HeadsXEnums e : HeadsXEnums.values()) {
+                    if (e.name.equalsIgnoreCase(str)) {
+                        getHeadsX().addDefault("heads." + e.name + ".section", e.sec);
+                    }
+                }
             }
+            for (HeadsXSections h : HeadsXSections.values()) {
+                 getHeadsX().addDefault("sections." + h.let + ".display-name", h.dn);
+                 getHeadsX().addDefault("sections." + h.let + ".texture", h.tx);
+            }
+            if (getHeadsX().get("sections.logos.texture").equals("HP#youtube")) {
+                getHeadsX().addDefault("heads.youtube.database", true);
+                getHeadsX().addDefault("heads.youtube.encode", false);
+                getHeadsX().addDefault("heads.youtube.displayname", "&8[&cYouTube&8]");
+                getHeadsX().addDefault("heads.youtube.texture", HeadsXEnums.YOUTUBE.tex);
+                getHeadsX().addDefault("heads.youtube.price", "default");
+            }
+            getHeadsX().options().copyDefaults(true);
         }
         saveHeadsX();
         s = false;

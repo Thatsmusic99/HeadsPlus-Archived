@@ -87,11 +87,11 @@ public class InventoryEvent implements Listener {
                 if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Next Page")) {
                     e.setCancelled(true);
                     e.getWhoClicked().closeInventory();
-                    e.getWhoClicked().openInventory(InventoryManager.changePage(true, false, (Player) e.getWhoClicked()));
+                    e.getWhoClicked().openInventory(InventoryManager.changePage(true, false, (Player) e.getWhoClicked(), InventoryManager.getSection()));
                 } else {
                     e.setCancelled(true);
                     e.getWhoClicked().closeInventory();
-                    e.getWhoClicked().openInventory(InventoryManager.changePage(false, false, (Player) e.getWhoClicked()));
+                    e.getWhoClicked().openInventory(InventoryManager.changePage(false, false, (Player) e.getWhoClicked(), InventoryManager.getSection()));
                 }
             } else if (e.getCurrentItem().getType().equals(Material.PAPER)) {
                 if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("[Stats]")) {

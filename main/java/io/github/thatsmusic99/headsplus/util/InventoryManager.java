@@ -108,34 +108,47 @@ public class InventoryManager {
             }
         }
     }
-    public static Inventory changePage(boolean next, boolean start, Player p) {
-        heads = HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false).size();
-        int h = heads;
-        pages = 1;
-        while (h > 28) {
-            h -= 28;
-            pages++;
-        }
-        if (next) {
-            cPage++;
-        } else {
-            cPage--;
-        }
-        if (start) {
-            cPage = 1;
-        }
-        int si = (cPage - 1) * 28;
-        int ei = 28 + si;
-        if (ei > HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false).size()) {
-            ei = HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false).size();
-        }
-        Inventory i = create(54, "HeadsPlus Head selector: page " + cPage + "/" + pages);
-        List<String> l = new ArrayList<>(HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false)).subList(si, ei);
-        for (String str : l) {
-            if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("heads." + str + ".database")) {
-                skull(str, i);
+    public static Inventory changePage(boolean next, boolean start, Player p, String section) {
+        Inventory i;
+        sections = HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("sections").getKeys(false).size();
+        if (section.equalsIgnoreCase("menu")) {
+            int s = sections;
+            pages = 1;
+            while (s > 28) {
+                s -= 28;
+                pages++;
+            }
+            if (next) {
+                cPage++;
+            } else {
+                cPage--;
+            }
+            if (start) {
+                cPage = 1;
+            }
+            i = create(54, "HeadsPlus Head selector: page " + cPage + "/" + pages);
+            int si = (cPage - 1) * 28;
+            int ei = 28 + si;
+            if (ei > HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("sections").getKeys(false).size()) {
+                ei = HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("sections").getKeys(false).size();
+            }
+
+            List<String> l = new ArrayList<>(HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("sections").getKeys(false)).subList(si, ei);
+            for (String st : l) {
+                if (HeadsPlusConfigHeadsX.isHPXSkull(st)) {
+                    i.setItem(pos()[timesSent], HeadsPlusConfigHeadsX.getSkull(st));
+                    timesSent++;
+                } else {
+                    ItemStack is = new ItemStack(Material.SKULL_ITEM);
+                    SkullMeta sm = (SkullMeta) is.getItemMeta();
+                    sm.setOwner(st);
+                    is.setItemMeta(sm);
+                    i.setItem(pos()[timesSent], is);
+                    timesSent++;
+                }
             }
         }
+        i = create(54, "HeadsPlus Head selector: page " + cPage + "/" + pages);
         if (pages > cPage) {
             ItemStack item = new ItemStack(Material.ARROW);
             ItemMeta im = item.getItemMeta();
@@ -161,12 +174,44 @@ public class InventoryManager {
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.GREEN + "Total heads: " + heads);
         lore.add(ChatColor.GREEN + "Total pages: " + pages);
+        lore.add(ChatColor.GREEN + "Total sections: " + sections) ;
         lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().econ.getBalance(p));
+        lore.add(ChatColor.GREEN + "Current section: " + section);
         im.setLore(lore);
         is2.setItemMeta(im);
         i.setItem(4, is2);
         timesSent = 0;
         return i;
+      /*  Inventory i = create(54, "HeadsPlus Head selector: page " + cPage + "/" + pages);
+        heads = HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false).size();
+
+        int h = heads;
+        pages = 1;
+        while (h > 28) {
+            h -= 28;
+            pages++;
+        }
+        if (next) {
+            cPage++;
+        } else {
+            cPage--;
+        }
+        if (start) {
+            cPage = 1;
+        }
+        int si = (cPage - 1) * 28;
+        int ei = 28 + si;
+        if (ei > HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false).size()) {
+            ei = HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false).size();
+        }
+
+        List<String> l = new ArrayList<>(HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false)).subList(si, ei);
+        for (String str : l) {
+            if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("heads." + str + ".database")) {
+                skull(str, i);
+            }
+        }
+         */
     }
 
     private static void skull(String str, Inventory i) {

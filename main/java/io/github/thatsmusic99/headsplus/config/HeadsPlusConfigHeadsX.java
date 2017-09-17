@@ -48,6 +48,10 @@ public class HeadsPlusConfigHeadsX {
             getHeadsX().addDefault("heads." + e.name + ".texture", e.tex);
             getHeadsX().addDefault("heads." + e.name + ".price", "default");
         }
+        for (HeadsXSections h : HeadsXSections.values()) {
+            getHeadsX().addDefault("sections." + h.let + ".display-name", h.dn);
+            getHeadsX().addDefault("sections." + h.let + ".texture", h.tx);
+        }
 
         getHeadsX().options().copyDefaults(true);
         saveHeadsX();

@@ -5,6 +5,7 @@ import com.mojang.authlib.properties.Property;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 
+import io.github.thatsmusic99.headsplus.commands.Heads;
 import org.apache.commons.codec.binary.Base64;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -41,6 +42,10 @@ public class HeadsPlusConfigHeadsX {
                 "\n WARNING: This is an advanced section of the plugin. If you do not know what you a doing with it, please do not use it due to risk of crashing your own and other's games. " +
                 "\n For more information visit the GitHub wiki for HeadsX.yml: https://github.com/Thatsmusic99/HeadsPlus/wiki/headsx.yml");
 
+        for (HeadsXSections h : HeadsXSections.values()) {
+            getHeadsX().addDefault("sections." + h.let + ".display-name", h.dn);
+            getHeadsX().addDefault("sections." + h.let + ".texture", h.tx);
+        }
         for (HeadsXEnums e : HeadsXEnums.values()) {
             getHeadsX().addDefault("heads." + e.name + ".database", true);
             getHeadsX().addDefault("heads." + e.name + ".encode", false);
@@ -48,10 +53,7 @@ public class HeadsPlusConfigHeadsX {
             getHeadsX().addDefault("heads." + e.name + ".texture", e.tex);
             getHeadsX().addDefault("heads." + e.name + ".price", "default");
         }
-        for (HeadsXSections h : HeadsXSections.values()) {
-            getHeadsX().addDefault("sections." + h.let + ".display-name", h.dn);
-            getHeadsX().addDefault("sections." + h.let + ".texture", h.tx);
-        }
+
 
         getHeadsX().options().copyDefaults(true);
         saveHeadsX();

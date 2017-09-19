@@ -8,9 +8,9 @@ public enum HeadsXSections {
     FOOD_AND_DRINK("food-and-drink", "&8[&6Food &7and &9Drink&8]", "HP#pepsi"),
     LOGOS("logos", "&8[&cLogos&8]", "HP#youtube");
 
-    String let;
-    String dn;
-    String tx;
+    public String let;
+    public String dn;
+    public String tx;
 
     HeadsXSections(String l, String dn, String t) {
         this.let = l;

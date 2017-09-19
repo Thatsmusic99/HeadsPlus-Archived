@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus.events;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
+import io.github.thatsmusic99.headsplus.config.HeadsXSections;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.ChatColor;
@@ -11,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -27,6 +29,13 @@ public class InventoryEvent implements Listener {
                 e.setCancelled(true);
                 e.getWhoClicked().closeInventory();
             } else if (e.getCurrentItem().getType().equals(Material.SKULL_ITEM)) {
+                if (InventoryManager.getSection().equalsIgnoreCase("menu")) {
+                    for (HeadsXSections h : HeadsXSections.values()) {
+                        if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase(ChatColor.stripColor(h.dn))) {
+
+                        }
+                    }
+                }
                 if (e.getWhoClicked().getInventory().firstEmpty() == -1) {
                     e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("full-inv")));
                     e.setCancelled(true);
@@ -59,7 +68,9 @@ public class InventoryEvent implements Listener {
                         List<String> lore = new ArrayList<>();
                         lore.add(ChatColor.GREEN + "Total heads: " + InventoryManager.getHeads());
                         lore.add(ChatColor.GREEN + "Total pages: " + InventoryManager.getPages());
-                        lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().econ.getBalance((Player) e.getWhoClicked()));
+                        lore.add(ChatColor.GREEN + "Total sections: " + InventoryManager.getSections()) ;
+                        lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().econ.getBalance(((OfflinePlayer) e.getWhoClicked()).getPlayer()));
+                        lore.add(ChatColor.GREEN + "Current section: " + InventoryManager.getSection());
                         im.setLore(lore);
                         i.setItemMeta(im);
                         e.getInventory().setItem(4, i);

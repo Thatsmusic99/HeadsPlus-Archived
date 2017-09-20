@@ -52,6 +52,7 @@ public class HeadsPlusConfigHeadsX {
             getHeadsX().addDefault("heads." + e.name + ".displayname", e.dn);
             getHeadsX().addDefault("heads." + e.name + ".texture", e.tex);
             getHeadsX().addDefault("heads." + e.name + ".price", "default");
+            getHeadsX().addDefault("heads." + e.name + ".section", e.sec);
         }
 
 
@@ -66,16 +67,16 @@ public class HeadsPlusConfigHeadsX {
             headsxf = new File(HeadsPlus.getInstance().getDataFolder(), "headsx.yml");
         }
         headsx = YamlConfiguration.loadConfiguration(headsxf);
-        getHeadsX().addDefault("options.version", 0.4);
+        getHeadsX().addDefault("options.version", 0.5);
         getHeadsX().addDefault("options.default-price", 10.00);
         if (headsxf.length() <= 2000) {
             loadHeadsX();
         }
-        if (getHeadsX().getDouble("options.version") < 0.4) {
+        if (getHeadsX().getDouble("options.version") < 0.5) {
             for (String str : getHeadsX().getConfigurationSection("heads").getKeys(false)) {
                 getHeadsX().addDefault("heads." + str + ".price", "default");
             }
-            getHeadsX().set("options.version", 0.4);
+            getHeadsX().set("options.version", 0.5);
             for (String str : getHeadsX().getConfigurationSection("heads").getKeys(false)) {
                 for (HeadsXEnums e : HeadsXEnums.values()) {
                     if (e.name.equalsIgnoreCase(str)) {

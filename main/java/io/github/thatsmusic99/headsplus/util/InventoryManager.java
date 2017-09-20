@@ -100,6 +100,7 @@ public class InventoryManager {
     public static int getHeads() { return heads; }
     public static String getSection() { return cSection; }
     public static int getSections() { return sections; }
+    public static void setSection(String s) { cSection = s; }
     private static void loop(int in, Inventory i) {
         if (HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false).size() == 0) return;
         while (timesSent < in) {
@@ -109,7 +110,7 @@ public class InventoryManager {
         }
     }
     public static Inventory changePage(boolean next, boolean start, Player p, String section) {
-        Inventory i = null;
+        Inventory i;
         sections = HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("sections").getKeys(false).size();
         if (section.equalsIgnoreCase("menu")) {
             int s = sections;
@@ -136,8 +137,11 @@ public class InventoryManager {
             List<String> l = new ArrayList<>(HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("sections").getKeys(false)).subList(si, ei);
             for (String st : l) {
                 if (HeadsPlusConfigHeadsX.isHPXSkull(HeadsPlusConfigHeadsX.getHeadsX().getString("sections." + st + ".texture"))) {
-
-                    i.setItem(pos()[timesSent], HeadsPlusConfigHeadsX.getSkull(HeadsPlusConfigHeadsX.getHeadsX().getString("sections." + st + ".texture")));
+                    ItemStack is = HeadsPlusConfigHeadsX.getSkull(HeadsPlusConfigHeadsX.getHeadsX().getString("sections." + st + ".texture"));
+                    SkullMeta im = (SkullMeta) is.getItemMeta();
+                    im.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeadsX.getHeadsX().getString("sections." + st + ".display-name")));
+                    is.setItemMeta(im);
+                    i.setItem(pos()[timesSent], is);
                     timesSent++;
                 } else {
                     ItemStack is = new ItemStack(Material.SKULL_ITEM);
@@ -149,8 +153,13 @@ public class InventoryManager {
                 }
             }
         } else {
-            heads = HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false).size();
-
+            List<String> ls = new ArrayList<>();
+            for (String str : HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false)) {
+                if (HeadsPlusConfigHeadsX.getHeadsX().getString("heads." + str + ".section").equalsIgnoreCase(section)) {
+                    ls.add(str);
+                }
+            }
+            heads = ls.size();
             int h = heads;
             pages = 1;
             while (h > 28) {
@@ -169,12 +178,6 @@ public class InventoryManager {
             int si = (cPage - 1) * 28;
             int ei = 28 + si;
 
-            List<String> ls = new ArrayList<>();
-            for (String str : HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false)) {
-                if (HeadsPlusConfigHeadsX.getHeadsX().getString("heads." + str + ".section").equalsIgnoreCase(section)) {
-                    ls.add(str);
-                }
-            }
             if (ei > ls.size()) {
                 ei = ls.size();
             }
@@ -199,6 +202,13 @@ public class InventoryManager {
             im.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + "Back");
             item.setItemMeta(im);
             i.setItem(48, item);
+        }
+        if (!cSection.equalsIgnoreCase("menu")) {
+            ItemStack item = new ItemStack(Material.ARROW);
+            ItemMeta im = item.getItemMeta();
+            im.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + "Main Menu");
+            item.setItemMeta(im);
+            i.setItem(45, item);
         }
         ItemStack it = new ItemStack(Material.BARRIER);
         ItemMeta is = it.getItemMeta();

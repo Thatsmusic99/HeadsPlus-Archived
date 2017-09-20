@@ -31,8 +31,11 @@ public class InventoryEvent implements Listener {
             } else if (e.getCurrentItem().getType().equals(Material.SKULL_ITEM)) {
                 if (InventoryManager.getSection().equalsIgnoreCase("menu")) {
                     for (HeadsXSections h : HeadsXSections.values()) {
-                        if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase(ChatColor.stripColor(h.dn))) {
-
+                        if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', h.dn)))) {
+                            InventoryManager.setSection(h.let);
+                            e.getWhoClicked().openInventory(InventoryManager.changePage(false, true, (Player) e.getWhoClicked(), h.let));
+                            e.setCancelled(true);
+                            return;
                         }
                     }
                 }
@@ -68,7 +71,7 @@ public class InventoryEvent implements Listener {
                         List<String> lore = new ArrayList<>();
                         lore.add(ChatColor.GREEN + "Total heads: " + InventoryManager.getHeads());
                         lore.add(ChatColor.GREEN + "Total pages: " + InventoryManager.getPages());
-                        lore.add(ChatColor.GREEN + "Total sections: " + InventoryManager.getSections()) ;
+                        lore.add(ChatColor.GREEN + "Total sections: " + InventoryManager.getSections());
                         lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().econ.getBalance(((OfflinePlayer) e.getWhoClicked()).getPlayer()));
                         lore.add(ChatColor.GREEN + "Current section: " + InventoryManager.getSection());
                         im.setLore(lore);
@@ -88,7 +91,9 @@ public class InventoryEvent implements Listener {
                 List<String> lore = new ArrayList<>();
                 lore.add(ChatColor.GREEN + "Total heads: " + InventoryManager.getHeads());
                 lore.add(ChatColor.GREEN + "Total pages: " + InventoryManager.getPages());
+                lore.add(ChatColor.GREEN + "Total sections: " + InventoryManager.getSections()) ;
                 lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().econ.getBalance((Player) e.getWhoClicked()));
+                lore.add(ChatColor.GREEN + "Current section: " + InventoryManager.getSection());
                 im.setLore(lore);
                 i.setItemMeta(im);
                 e.getInventory().setItem(4, i);
@@ -99,10 +104,16 @@ public class InventoryEvent implements Listener {
                     e.setCancelled(true);
                     e.getWhoClicked().closeInventory();
                     e.getWhoClicked().openInventory(InventoryManager.changePage(true, false, (Player) e.getWhoClicked(), InventoryManager.getSection()));
-                } else {
+                } else if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Back")) {
                     e.setCancelled(true);
                     e.getWhoClicked().closeInventory();
                     e.getWhoClicked().openInventory(InventoryManager.changePage(false, false, (Player) e.getWhoClicked(), InventoryManager.getSection()));
+                } else {
+                    e.setCancelled(true);
+                    e.getWhoClicked().closeInventory();
+                    InventoryManager.setSection("Menu");
+                    e.getWhoClicked().openInventory(InventoryManager.changePage(false, true, (Player) e.getWhoClicked(), "Menu"));
+
                 }
             } else if (e.getCurrentItem().getType().equals(Material.PAPER)) {
                 if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("[Stats]")) {

@@ -25,6 +25,7 @@ public class HeadsPlusConfigHeadsX {
     public static boolean s = false;
     private static FileConfiguration headsx;
     private static File headsxf;
+    public static double cVersion = 0.6;
 
     private static void saveHeadsX() {
         if (headsx == null || headsxf == null) {
@@ -67,16 +68,16 @@ public class HeadsPlusConfigHeadsX {
             headsxf = new File(HeadsPlus.getInstance().getDataFolder(), "headsx.yml");
         }
         headsx = YamlConfiguration.loadConfiguration(headsxf);
-        getHeadsX().addDefault("options.version", 0.5);
+        getHeadsX().addDefault("options.version", cVersion);
         getHeadsX().addDefault("options.default-price", 10.00);
         if (headsxf.length() <= 2000) {
             loadHeadsX();
         }
-        if (getHeadsX().getDouble("options.version") < 0.5) {
+        if (getHeadsX().getDouble("options.version") < cVersion) {
             for (String str : getHeadsX().getConfigurationSection("heads").getKeys(false)) {
                 getHeadsX().addDefault("heads." + str + ".price", "default");
             }
-            getHeadsX().set("options.version", 0.5);
+            getHeadsX().set("options.version", cVersion);
             for (String str : getHeadsX().getConfigurationSection("heads").getKeys(false)) {
                 for (HeadsXEnums e : HeadsXEnums.values()) {
                     if (e.name.equalsIgnoreCase(str)) {
@@ -84,9 +85,21 @@ public class HeadsPlusConfigHeadsX {
                     }
                 }
             }
+            for (HeadsXEnums e : HeadsXEnums.values()) {
+                if (e.v == cVersion) {
+                    getHeadsX().addDefault("heads." + e.name + ".database", true);
+                    getHeadsX().addDefault("heads." + e.name + ".encode", false);
+                    getHeadsX().addDefault("heads." + e.name + ".displayname", e.dn);
+                    getHeadsX().addDefault("heads." + e.name + ".texture", e.tex);
+                    getHeadsX().addDefault("heads." + e.name + ".price", "default");
+                    getHeadsX().addDefault("heads." + e.name + ".section", e.sec);
+                }
+            }
             for (HeadsXSections h : HeadsXSections.values()) {
-                 getHeadsX().addDefault("sections." + h.let + ".display-name", h.dn);
-                 getHeadsX().addDefault("sections." + h.let + ".texture", h.tx);
+                if (h.d == cVersion) {
+                    getHeadsX().addDefault("sections." + h.let + ".display-name", h.dn);
+                    getHeadsX().addDefault("sections." + h.let + ".texture", h.tx);
+                }
             }
             if (getHeadsX().get("sections.logos.texture").equals("HP#youtube")) {
                 getHeadsX().addDefault("heads.youtube.database", true);

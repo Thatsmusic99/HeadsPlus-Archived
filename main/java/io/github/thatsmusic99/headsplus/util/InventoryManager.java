@@ -60,6 +60,35 @@ public class InventoryManager {
         a[27] = 43;
         return a;
     }
+    private static int[] glass() {
+        int[] a = new int[25];
+        a[0] = 0;
+        a[1] = 1;
+        a[2] = 2;
+        a[3] = 3;
+        a[4] = 5;
+        a[5] = 6;
+        a[6] = 7;
+        a[7] = 8;
+        a[8] = 9;
+        a[9] = 17;
+        a[10] = 18;
+        a[11] = 26;
+        a[12] = 27;
+        a[13] = 35;
+        a[14] = 36;
+        a[15] = 44;
+        a[16] = 45;
+        a[17] = 46;
+        a[18] = 47;
+        a[19] = 48;
+        a[20] = 49;
+        a[21] = 50;
+        a[22] = 51;
+        a[23] = 52;
+        a[24] = 53;
+        return a;
+    }
 
     public static Inventory create(int slots, String name) {
         return Bukkit.createInventory(null, slots, name);
@@ -112,6 +141,7 @@ public class InventoryManager {
     public static Inventory changePage(boolean next, boolean start, Player p, String section) {
         Inventory i;
         sections = HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("sections").getKeys(false).size();
+        heads = HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false).size();
         if (section.equalsIgnoreCase("menu")) {
             int s = sections;
             pages = 1;
@@ -188,6 +218,13 @@ public class InventoryManager {
                     skull(str, i);
                 }
             }
+        }
+        ItemStack isi = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 8);
+        ItemMeta ims = isi.getItemMeta();
+        ims.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6"));
+        isi.setItemMeta(ims);
+        for (int in : glass()) {
+            i.setItem(in, isi);
         }
         if (pages > cPage) {
             ItemStack item = new ItemStack(Material.ARROW);

@@ -119,6 +119,8 @@ public class InventoryEvent implements Listener {
                 if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("[Stats]")) {
                     e.setCancelled(true);
                 }
+            } else if (e.getCurrentItem().getType().equals(Material.STAINED_GLASS_PANE)) {
+                e.setCancelled(true);
             }
         }
     }

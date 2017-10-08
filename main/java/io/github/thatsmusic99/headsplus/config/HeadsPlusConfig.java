@@ -21,8 +21,10 @@ public class HeadsPlusConfig {
 	}
 	
 	private static void loadMessages() {
-		getMessages().options().header("HeadsPlus by Thatsmusic99");
+		getMessages().options().header("HeadsPlus by Thatsmusic99 \nPlease do NOT change pLocale! This will be used to change the plugin's language in the future!");
 		getMessages().addDefault("prefix", "&1[&6HeadsPlus&1]");
+		getMessages().addDefault("locale", "en_uk");
+		getMessages().addDefault("pLocale", "en_uk");
 		getMessages().addDefault("reloading-message", "%h &3Reloading config...");
 		getMessages().addDefault("reload-message", "%h &3Config has reloaded!");
 		getMessages().addDefault("reload-fail", "%h &cConfig failed to reload.");

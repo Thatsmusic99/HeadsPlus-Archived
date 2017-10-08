@@ -3,6 +3,7 @@ package io.github.thatsmusic99.headsplus;
 import io.github.thatsmusic99.headsplus.commands.Heads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.events.*;
+import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -49,6 +50,7 @@ public class HeadsPlus extends JavaPlugin {
 			HeadsPlusConfigHeads.headsEnable();
 			HeadsPlusConfigHeadsX.headsxEnable();
 			DeathEvents.createList();
+            LocaleManager.class.newInstance().setupLocale();
 			if (!getConfig().getBoolean("disableCrafting")) {
 			    HeadsPlusCrafting.craftingEnable();
 			    getServer().getPluginManager().registerEvents(new RecipePerms(), this);

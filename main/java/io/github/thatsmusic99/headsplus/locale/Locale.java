@@ -19,27 +19,118 @@ public interface Locale {
     // English: "That is <Player>'s head!"
 
     String getHeadMhfInteractMessage();
+
     String getHeadMhfInteractMessage2();
+
     String getSellSuccess();
+
     String getNotEnoughHeads();
+
     String getNoHeads();
+
     String getInvalidArguments();
+
     String getSellFail();
+
     String getFalseHead();
+
     String getFalseItem();
+
     String getBlacklistHead();
+
     String getWhitelistHead();
+
     String getFullInventory();
+
     String getAlphaNames();
+
     String getTooManyArguments();
+
     String getHeadTooLong();
+
     String getHeadTooShort();
+
     String getInvalidPageNumber();
+
     String getInvalidInputInteger();
+
     String getNoPermissions();
+
     String getHeadAlreadyAdded();
+
     String getHeadAddedBlacklist();
+
     String getHeadNotOnBlacklist();
+
     String getHeadRemovedBlacklist();
 
+    String getHeadAddedWhitelist();
+
+    String getHeadNotOnWhitelist();
+
+    String getHeadRemovedWhitelist();
+
+    String getWorldAlreadyAdded();
+
+    String getWorldAddedBlacklist();
+
+    String getWorldNotOnBlacklist();
+
+    String getWorldRemovedBlacklist();
+
+    String getWorldAddedWhitelist();
+
+    String getWorldNotOnWhitelist();
+
+    String getWorldRemovedWhitelist();
+
+    String getBlacklistOn();
+
+    String getBlacklistAlreadyOn();
+
+    String getBlacklistOff();
+
+    String getBlacklistAlreadyOff();
+
+    String getWBlacklistOn();
+
+    String getWBlacklistAlreadyOn();
+
+    String getWBlacklistOff();
+
+    String getWBlacklistAlreadyOff();
+
+    String getWhitelistOn();
+
+    String getWhtelistAlreadyOn();
+
+    String getWhitelistOff();
+
+    String getWhitelistAlreadyOff();
+
+    String getWWhitelistOn();
+
+    String getWWhitelistAlreadyOn();
+
+    String getWWhitelistOff();
+
+    String getWWhitelistAlreadyOff();
+
+    String getBlacklistFail();
+
+    String getWhitelistFail();
+
+    String getDisabledCommand();
+
+    String getEmptyBlacklist();
+
+    String getEmptyWBlacklist();
+
+    String getEmptyWhitelist();
+
+    String getEmptyWWhitelist();
+
+    String getBuySuccess();
+
+    String getBuyFail();
 }

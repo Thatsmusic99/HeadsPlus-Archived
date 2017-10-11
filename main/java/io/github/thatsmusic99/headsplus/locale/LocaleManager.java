@@ -3,6 +3,8 @@ package io.github.thatsmusic99.headsplus.locale;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class LocaleManager {
 
     private static LocaleManager instance;
@@ -12,7 +14,11 @@ public class LocaleManager {
         instance = this;
         try {
             try {
-                setLocale((Locale) Class.forName("io.github.thatsmusic99.headsplus.locale." + HeadsPlusConfig.getMessages().getString("locale").toLowerCase()).getClass().newInstance().newInstance());
+                try {
+                    setLocale((Locale) Class.forName("io.github.thatsmusic99.headsplus.locale." + HeadsPlusConfig.getMessages().getString("locale").toLowerCase()).getConstructor().newInstance());
+                } catch (InvocationTargetException | NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
             } catch (InstantiationException | IllegalAccessException e) {
                 HeadsPlus.getInstance().log.warning("[HeadsPlus] Failed to load the locale settings!");
                 e.printStackTrace();

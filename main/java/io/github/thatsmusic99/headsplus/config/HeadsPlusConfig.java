@@ -3,6 +3,7 @@ package io.github.thatsmusic99.headsplus.config;
 import java.io.File;
 import java.io.IOException;
 
+import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -88,7 +89,9 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("buy-success", "&3You have bought a head for &b%l &3and now have &b%b!");
         getMessages().addDefault("buy-fail", "&cCouldn''t buy head!");
         if (!getMessages().getString("locale").equalsIgnoreCase(getMessages().getString("pLocale"))) {
-
+            getMessages().set("pLocale", getMessages().getString("locale"));
+            getMessages().set("reloading-message", LocaleManager.getLocale().getReloadingMessage());
+            getMessages().set("reload-message", LocaleManager.getLocale().getReloadMessage());
         }
 		getMessages().options().copyDefaults(true);
 		saveMessages();

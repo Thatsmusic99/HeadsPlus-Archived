@@ -87,6 +87,9 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("empty-wlw", "%h &cThe world whitelist is empty!");
 		getMessages().addDefault("buy-success", "&3You have bought a head for &b%l &3and now have &b%b!");
         getMessages().addDefault("buy-fail", "&cCouldn''t buy head!");
+        if (!getMessages().getString("locale").equalsIgnoreCase(getMessages().getString("pLocale"))) {
+
+        }
 		getMessages().options().copyDefaults(true);
 		saveMessages();
 		

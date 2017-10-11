@@ -46,11 +46,12 @@ public class HeadsPlus extends JavaPlugin {
 		try { 
 			instance = this;
 			setUpMConfig();
+			LocaleManager.class.newInstance().setupLocale();
 			HeadsPlusConfig.msgEnable();
 			HeadsPlusConfigHeads.headsEnable();
 			HeadsPlusConfigHeadsX.headsxEnable();
 			DeathEvents.createList();
-            LocaleManager.class.newInstance().setupLocale();
+
 			if (!getConfig().getBoolean("disableCrafting")) {
 			    HeadsPlusCrafting.craftingEnable();
 			    getServer().getPluginManager().registerEvents(new RecipePerms(), this);

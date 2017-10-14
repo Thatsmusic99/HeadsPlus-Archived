@@ -133,4 +133,8 @@ public interface Locale {
     String getBuySuccess();
 
     String getBuyFail();
+
+    String versionWord();
+
+    String author();
 }

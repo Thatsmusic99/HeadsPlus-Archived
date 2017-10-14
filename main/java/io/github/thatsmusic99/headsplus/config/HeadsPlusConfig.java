@@ -22,7 +22,9 @@ public class HeadsPlusConfig {
 	}
 	
 	private static void loadMessages() {
+
 		getMessages().options().header("HeadsPlus by Thatsmusic99 \nPlease do NOT change pLocale! This will be used to change the plugin's language in the future!");
+
 		getMessages().addDefault("prefix", "&1[&6HeadsPlus&1]");
 		getMessages().addDefault("locale", "en_uk");
 		getMessages().addDefault("pLocale", "en_uk");
@@ -88,33 +90,72 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("empty-wlw", "%h &cThe world whitelist is empty!");
 		getMessages().addDefault("buy-success", "&3You have bought a head for &b%l &3and now have &b%b!");
         getMessages().addDefault("buy-fail", "&cCouldn''t buy head!");
+
         if (!getMessages().getString("locale").equalsIgnoreCase(getMessages().getString("pLocale"))) {
             getMessages().set("pLocale", getMessages().getString("locale"));
             getMessages().set("reloading-message", LocaleManager.getLocale().getReloadingMessage());
             getMessages().set("reload-message", LocaleManager.getLocale().getReloadMessage());
+            getMessages().set("reload-fail", LocaleManager.getLocale().getReloadFailMessage());
+            getMessages().set("head-interact-message", LocaleManager.getLocale().getHeadInteractMessage());
+            getMessages().set("head-mhf-interact-message", LocaleManager.getLocale().getHeadMhfInteractMessage());
+            getMessages().set("head-mhf-interact-message-2", LocaleManager.getLocale().getHeadMhfInteractMessage2());
+            getMessages().set("sell-success", LocaleManager.getLocale().getSellSuccess());
+            getMessages().set("not-enough-heads", LocaleManager.getLocale().getNotEnoughHeads());
+            getMessages().set("no-heads", LocaleManager.getLocale().getNoHeads());
+            getMessages().set("invalid-args", LocaleManager.getLocale().getInvalidArguments());
+            getMessages().set("sell-fail", LocaleManager.getLocale().getSellFail());
+            getMessages().set("false-head", LocaleManager.getLocale().getFalseHead());
+            getMessages().set("false-item", LocaleManager.getLocale().getFalseItem());
+            getMessages().set("blacklist-head", LocaleManager.getLocale().getBlacklistHead());
+            getMessages().set("whitelist-head", LocaleManager.getLocale().getWhitelistHead());
+            getMessages().set("full-inv", LocaleManager.getLocale().getFullInventory());
+            getMessages().set("alpha-names", LocaleManager.getLocale().getAlphaNames());
+            getMessages().set("too-many-args", LocaleManager.getLocale().getTooManyArguments());
+            getMessages().set("head-too-long", LocaleManager.getLocale().getHeadTooLong());
+            getMessages().set("too-short-head", LocaleManager.getLocale().getHeadTooShort());
+            getMessages().set("invalid-pg-no", LocaleManager.getLocale().getInvalidPageNumber());
+            getMessages().set("invalid-input-int", LocaleManager.getLocale().getInvalidInputInteger());
+            getMessages().set("no-perm", LocaleManager.getLocale().getNoPermissions());
+            getMessages().set("head-a-add", LocaleManager.getLocale().getHeadAlreadyAdded());
+            getMessages().set("head-added-bl", LocaleManager.getLocale().getHeadAddedBlacklist());
+            getMessages().set("head-a-removed-bl", LocaleManager.getLocale().getHeadNotOnBlacklist());
+            getMessages().set("head-removed-bl", LocaleManager.getLocale().getHeadRemovedBlacklist());
+            getMessages().set("head-added-wl", LocaleManager.getLocale().getHeadAddedWhitelist());
+            getMessages().set("head-a-removed-wl", LocaleManager.getLocale().getHeadNotOnWhitelist());
+            getMessages().set("head-removed-wl", LocaleManager.getLocale().getHeadRemovedWhitelist());
+            getMessages().set("world-a-added", LocaleManager.getLocale().getWorldAlreadyAdded());
+            getMessages().set("world-added-bl", LocaleManager.getLocale().getWorldAddedBlacklist());
+            getMessages().set("world-a-removed-bl", LocaleManager.getLocale().getWorldNotOnBlacklist());
         }
+
 		getMessages().options().copyDefaults(true);
 		saveMessages();
 		
 	}
 	public static void reloadMessages() {
+
 		if (messagesF == null) {
 			messagesF = new File(HeadsPlus.getInstance().getDataFolder(), "messages.yml");
 		}
+
 		messages = YamlConfiguration.loadConfiguration(messagesF);
 		loadMessages();
 		saveMessages();
+
 	}
     private static void saveMessages() {
+
     	if (messages == null || messagesF == null) {
     		return;
     	}
+
     	try {
     		messages.save(messagesF);
     	} catch (IOException e) {
     		HeadsPlus.getInstance().log.severe("[HeadsPlus] Couldn't save messages.yml!");
     		e.printStackTrace();
     	}
+
     }
 
 }

@@ -1,9 +1,11 @@
 package io.github.thatsmusic99.headsplus.commands.maincommand;
 
+import io.github.thatsmusic99.headsplus.locale.LocaleManager;
+
 public enum PermissionEnums {
 	
-	RELOAD("headsplus.maincommand.reload", "/hp reload", "Reloads configuration files.", "Reload"),
-	BLACKLIST_ADD("headsplus.maincommand.blacklist.add", "/hp blacklistadd <IGN>", "Adds a head to the blacklist.", "Blacklistadd"),
+	RELOAD("headsplus.maincommand.reload", "/hp reload", LocaleManager.getLocale().descMCReload(), "Reload"),
+	BLACKLIST_ADD("headsplus.maincommand.blacklist.add", "/hp blacklistadd <IGN>", LocaleManager.getLocale().descBlacklistAdd(), "Blacklistadd"),
 	BLACKLIST_DELETE("headsplus.maincommand.blacklist.delete", "/hp blacklistdel <IGN>", "Removes a head from the blacklist.", "Blacklistdel"),
 	BLACKLIST_TOGGLE("headsplus.maincommand.blacklist.toggle", "/hp blacklist [On|Off]", "Toggles the blacklist.", "Blacklist"),
 	INFO("headsplus.maincommand.info", "/hp info", "Displays plugin information.", "Info"),

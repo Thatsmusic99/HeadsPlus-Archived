@@ -1,6 +1,6 @@
 package io.github.thatsmusic99.headsplus.locale;
 
-public class en_uk implements Locale{
+public class en_uk implements Locale {
 
     @Override
     public String getLanguage() {
@@ -24,12 +24,12 @@ public class en_uk implements Locale{
 
     @Override
     public String getHeadInteractMessage() {
-        return null;
+        return "&3That is &b%p&3''s &3head!";
     }
 
     @Override
     public String getHeadMhfInteractMessage() {
-        return null;
+        return "&3That is a &b%p&3''s head!";
     }
 
     @Override
@@ -238,7 +238,7 @@ public class en_uk implements Locale{
     }
 
     @Override
-    public String getWhtelistAlreadyOn() {
+    public String getWhitelistAlreadyOn() {
         return null;
     }
 
@@ -279,6 +279,16 @@ public class en_uk implements Locale{
 
     @Override
     public String getWhitelistFail() {
+        return null;
+    }
+
+    @Override
+    public String getWBlacklistFail() {
+        return null;
+    }
+
+    @Override
+    public String getWWhitelistFail() {
         return null;
     }
 
@@ -334,7 +344,7 @@ public class en_uk implements Locale{
 
     @Override
     public String descBlacklistAdd() {
-        return null;
+        return "Adds a head to the blacklist.";
     }
 
     @Override
@@ -384,7 +394,7 @@ public class en_uk implements Locale{
 
     @Override
     public String descMCReload() {
-        return null;
+        return "Reloads configuration files.";
     }
 
     @Override

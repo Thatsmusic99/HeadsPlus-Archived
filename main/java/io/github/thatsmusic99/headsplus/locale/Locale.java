@@ -160,8 +160,6 @@ public interface Locale {
 
     String descBlacklistwToggle();
 
-    String descHelpMenu();
-
     String descInfo();
 
     String descMCReload();
@@ -181,5 +179,11 @@ public interface Locale {
     String descWhitelistwList();
 
     String descWhitelistwToggle();
+
+    String descHead();
+
+    String descSellhead();
+
+    String descHeads();
 
 }

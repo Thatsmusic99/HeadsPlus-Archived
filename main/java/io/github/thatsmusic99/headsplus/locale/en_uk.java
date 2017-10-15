@@ -349,47 +349,42 @@ public class en_uk implements Locale {
 
     @Override
     public String descBlacklistDelete() {
-        return null;
+        return "Removes a head from the blacklist.";
     }
 
     @Override
     public String descBlacklistList() {
-        return null;
+        return "Lists all heads in the blacklist.";
     }
 
     @Override
     public String descBlacklistToggle() {
-        return null;
+        return "Toggles the blacklist.";
     }
 
     @Override
     public String descBlacklistwAdd() {
-        return null;
+        return "Adds a world to the crafting recipe blacklist.";
     }
 
     @Override
     public String descBlacklistwDelete() {
-        return null;
+        return "Removes a world to the crafting recipe blacklist.";
     }
 
     @Override
     public String descBlacklistwList() {
-        return null;
+        return "Lists blacklisted worlds.";
     }
 
     @Override
     public String descBlacklistwToggle() {
-        return null;
-    }
-
-    @Override
-    public String descHelpMenu() {
-        return null;
+        return "Toggles the crafting recipe blacklist on/off.";
     }
 
     @Override
     public String descInfo() {
-        return null;
+        return "Displays plugin information.";
     }
 
     @Override
@@ -399,41 +394,56 @@ public class en_uk implements Locale {
 
     @Override
     public String descWhitelistAdd() {
-        return null;
+        return "Adds a head to the whitelist.";
     }
 
     @Override
     public String descWhitelistDelete() {
-        return null;
+        return "Removes a head from the whitelist.";
     }
 
     @Override
     public String descWhitelistList() {
-        return null;
+        return "Lists all heads in the whitelist.";
     }
 
     @Override
     public String descWhitelistToggle() {
-        return null;
+        return "Toggles the whitelist.";
     }
 
     @Override
     public String descWhitelistwAdd() {
-        return null;
+        return "Adds a world to the crafting recipe whitelist.";
     }
 
     @Override
     public String descWhitelistwDelete() {
-        return null;
+        return "Removes a world to the crafting recipe whitelist.";
     }
 
     @Override
     public String descWhitelistwList() {
-        return null;
+        return "Lists whitelisted worlds.";
     }
 
     @Override
     public String descWhitelistwToggle() {
-        return null;
+        return "Toggles the crafting recipe whitelist on/off.";
+    }
+
+    @Override
+    public String descHead() {
+        return "Spawns in a head.";
+    }
+
+    @Override
+    public String descSellhead() {
+        return "Sells the head(s) in your hand, use number parameter to sell a specific number, entity name to sell a specific mob's head, and all to sell every head.";
+    }
+
+    @Override
+    public String descHeads() {
+        return "Displays a selection of heads.";
     }
 }

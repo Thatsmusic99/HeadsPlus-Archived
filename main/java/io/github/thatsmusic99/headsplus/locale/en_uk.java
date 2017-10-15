@@ -34,297 +34,297 @@ public class en_uk implements Locale {
 
     @Override
     public String getHeadMhfInteractMessage2() {
-        return null;
+        return "&3That is an &b%p&3''s &3head!";
     }
 
     @Override
     public String getSellSuccess() {
-        return null;
+        return "&3You successfully sold the head(s) for &b%l &3and now have &b%b!";
     }
 
     @Override
     public String getNotEnoughHeads() {
-        return null;
+        return "&cYou don't have enough heads!";
     }
 
     @Override
     public String getNoHeads() {
-        return null;
+        return "&cYou don't have any valid heads in your inventory!";
     }
 
     @Override
     public String getInvalidArguments() {
-        return null;
+        return "&cInvalid arguments!";
     }
 
     @Override
     public String getSellFail() {
-        return null;
+        return "&cCouldn''t sell head!";
     }
 
     @Override
     public String getFalseHead() {
-        return null;
+        return "&cThis head cannot be sold!";
     }
 
     @Override
     public String getFalseItem() {
-        return null;
+        return "&cThis is not a head!";
     }
 
     @Override
     public String getBlacklistHead() {
-        return null;
+        return "&cThis head is blacklisted and cannot be used!";
     }
 
     @Override
     public String getWhitelistHead() {
-        return null;
+        return "&cThis head isn't whitelisted and therefore cannot be used!";
     }
 
     @Override
     public String getFullInventory() {
-        return null;
+        return "&cYour inventory is full!";
     }
 
     @Override
     public String getAlphaNames() {
-        return null;
+        return "&cThis command only handles alphanumeric names!";
     }
 
     @Override
     public String getTooManyArguments() {
-        return null;
+        return "&cToo many arguments!";
     }
 
     @Override
     public String getHeadTooLong() {
-        return null;
+        return "&cIGN is too long to be valid! Please use an IGN between 3 and 16 characters.";
     }
 
     @Override
     public String getHeadTooShort() {
-        return null;
+        return "&cIGN is too short to be valid! Please use an IGN between 3 and 16 characters.";
     }
 
     @Override
     public String getInvalidPageNumber() {
-        return null;
+        return "%h &cInvalid page number!";
     }
 
     @Override
     public String getInvalidInputInteger() {
-        return null;
+        return "%h &cYou can only use integers in this command!";
     }
 
     @Override
     public String getNoPermissions() {
-        return null;
+        return "&cYou do not have permission to use this command.";
     }
 
     @Override
     public String getHeadAlreadyAdded() {
-        return null;
+        return "%h &3This head is already added!";
     }
 
     @Override
     public String getHeadAddedBlacklist() {
-        return null;
+        return "%h &3%p has been added to the blacklist!";
     }
 
     @Override
     public String getHeadNotOnBlacklist() {
-        return null;
+        return "%h &3This head is not on the blacklist!";
     }
 
     @Override
     public String getHeadRemovedBlacklist() {
-        return null;
+        return "%h &3%p has been removed from the blacklist!";
     }
 
     @Override
     public String getHeadAddedWhitelist() {
-        return null;
+        return "%h &3%p has been added to the whitelist!";
     }
 
     @Override
     public String getHeadNotOnWhitelist() {
-        return null;
+        return "%h &3This head is not on the whitelist!";
     }
 
     @Override
     public String getHeadRemovedWhitelist() {
-        return null;
+        return "%h &3%p has been removed from the whitelist!";
     }
 
     @Override
     public String getWorldAlreadyAdded() {
-        return null;
+        return "%h &3This world is already added!";
     }
 
     @Override
     public String getWorldAddedBlacklist() {
-        return null;
+        return "%h &3%w has been added to the world blacklist!";
     }
 
     @Override
     public String getWorldNotOnBlacklist() {
-        return null;
+        return "%h &3This world is not on the blacklist!";
     }
 
     @Override
     public String getWorldRemovedBlacklist() {
-        return null;
+        return "%h &3%w has been removed from the blacklist!";
     }
 
     @Override
     public String getWorldAddedWhitelist() {
-        return null;
+        return "%h &3%w has been added to the world whitelist!";
     }
 
     @Override
     public String getWorldNotOnWhitelist() {
-        return null;
+        return "%h &3This world is not on the whitelist!";
     }
 
     @Override
     public String getWorldRemovedWhitelist() {
-        return null;
+        return "%h &3%w has been removed from the whitelist!";
     }
 
     @Override
     public String getBlacklistOn() {
-        return null;
+        return "%h &3The blacklist has been enabled!";
     }
 
     @Override
     public String getBlacklistAlreadyOn() {
-        return null;
+        return "%h &3The blacklist is already enabled!";
     }
 
     @Override
     public String getBlacklistOff() {
-        return null;
+        return "%h &3The blacklist has been disabled!";
     }
 
     @Override
     public String getBlacklistAlreadyOff() {
-        return null;
+        return "%h &3The blacklist is already disabled!";
     }
 
     @Override
     public String getWBlacklistOn() {
-        return null;
+        return "%h &3The world blacklist has been enabled!";
     }
 
     @Override
     public String getWBlacklistAlreadyOn() {
-        return null;
+        return "%h &3The world blacklist is already enabled!";
     }
 
     @Override
     public String getWBlacklistOff() {
-        return null;
+        return "%h &3The world blacklist has been disabled!";
     }
 
     @Override
     public String getWBlacklistAlreadyOff() {
-        return null;
+        return "%h &3The world blacklist is already disabled!";
     }
 
     @Override
     public String getWhitelistOn() {
-        return null;
+        return "%h &3The whitelist has been enabled!";
     }
 
     @Override
     public String getWhitelistAlreadyOn() {
-        return null;
+        return "%h &3The whitelist is already enabled!";
     }
 
     @Override
     public String getWhitelistOff() {
-        return null;
+        return "%h &3The whitelist has been disabled!";
     }
 
     @Override
     public String getWhitelistAlreadyOff() {
-        return null;
+        return "%h &3The whitelist is already disabled!";
     }
 
     @Override
     public String getWWhitelistOn() {
-        return null;
+        return "%h &3The world whitelist has been enabled!";
     }
 
     @Override
     public String getWWhitelistAlreadyOn() {
-        return null;
+        return "%h &3The world whitelist is already enabled!";
     }
 
     @Override
     public String getWWhitelistOff() {
-        return null;
+        return "%h &3The world whitelist has been disabled!";
     }
 
     @Override
     public String getWWhitelistAlreadyOff() {
-        return null;
+        return "%h &3The world whitelist is already disabled!";
     }
 
     @Override
     public String getBlacklistFail() {
-        return null;
+        return "%h &cFailed to add head to blacklist!";
     }
 
     @Override
     public String getWhitelistFail() {
-        return null;
+        return "%h &cFailed to add head to whitelist!";
     }
 
     @Override
     public String getWBlacklistFail() {
-        return null;
+        return "%h &cFailed to add world to blacklist!";
     }
 
     @Override
     public String getWWhitelistFail() {
-        return null;
+        return "%h &cFailed to add world to whitelist!";
     }
 
     @Override
     public String getDisabledCommand() {
-        return null;
+        return "&cThis command is disabled.";
     }
 
     @Override
     public String getEmptyBlacklist() {
-        return null;
+        return "%h &cThe blacklist is empty!";
     }
 
     @Override
     public String getEmptyWBlacklist() {
-        return null;
+        return "%h &cThe world blacklist is empty!";
     }
 
     @Override
     public String getEmptyWhitelist() {
-        return null;
+        return "%h &cThe whitelist is empty!";
     }
 
     @Override
     public String getEmptyWWhitelist() {
-        return null;
+        return "%h &cThe world whitelist is empty!";
     }
 
     @Override
     public String getBuySuccess() {
-        return null;
+        return "&3You have bought a head for &b%l &3and now have &b%b!";
     }
 
     @Override
     public String getBuyFail() {
-        return null;
+        return "&cCouldn''t buy head!";
     }
 
     @Override

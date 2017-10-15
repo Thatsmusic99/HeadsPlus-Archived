@@ -13,7 +13,7 @@ public interface Locale {
 
     String getReloadFailMessage(); // Get the failed config message.
     // This is used when the configuration fails to load.
-    // English: "Config failed to reload."
+    // English: "Config failed to reload!"
 
     String getHeadInteractMessage(); // Returns a message when a player interacts with a head.
     // English: "That is <Player>'s head!"
@@ -102,7 +102,7 @@ public interface Locale {
 
     String getWhitelistOn();
 
-    String getWhtelistAlreadyOn();
+    String getWhitelistAlreadyOn();
 
     String getWhitelistOff();
 
@@ -119,6 +119,10 @@ public interface Locale {
     String getBlacklistFail();
 
     String getWhitelistFail();
+
+    String getWBlacklistFail();
+
+    String getWWhitelistFail();
 
     String getDisabledCommand();
 
@@ -137,4 +141,45 @@ public interface Locale {
     String versionWord();
 
     String author();
+
+    String language();
+
+    String descBlacklistAdd();
+
+    String descBlacklistDelete();
+
+    String descBlacklistList();
+
+    String descBlacklistToggle();
+
+    String descBlacklistwAdd();
+
+    String descBlacklistwDelete();
+
+    String descBlacklistwList();
+
+    String descBlacklistwToggle();
+
+    String descHelpMenu();
+
+    String descInfo();
+
+    String descMCReload();
+
+    String descWhitelistAdd();
+
+    String descWhitelistDelete();
+
+    String descWhitelistList();
+
+    String descWhitelistToggle();
+
+    String descWhitelistwAdd();
+
+    String descWhitelistwDelete();
+
+    String descWhitelistwList();
+
+    String descWhitelistwToggle();
+
 }

@@ -316,4 +316,114 @@ public class en_uk implements Locale{
     public String getBuyFail() {
         return null;
     }
+
+    @Override
+    public String versionWord() {
+        return "Version: ";
+    }
+
+    @Override
+    public String author() {
+        return "Author: ";
+    }
+
+    @Override
+    public String language() {
+        return "Language: ";
+    }
+
+    @Override
+    public String descBlacklistAdd() {
+        return null;
+    }
+
+    @Override
+    public String descBlacklistDelete() {
+        return null;
+    }
+
+    @Override
+    public String descBlacklistList() {
+        return null;
+    }
+
+    @Override
+    public String descBlacklistToggle() {
+        return null;
+    }
+
+    @Override
+    public String descBlacklistwAdd() {
+        return null;
+    }
+
+    @Override
+    public String descBlacklistwDelete() {
+        return null;
+    }
+
+    @Override
+    public String descBlacklistwList() {
+        return null;
+    }
+
+    @Override
+    public String descBlacklistwToggle() {
+        return null;
+    }
+
+    @Override
+    public String descHelpMenu() {
+        return null;
+    }
+
+    @Override
+    public String descInfo() {
+        return null;
+    }
+
+    @Override
+    public String descMCReload() {
+        return null;
+    }
+
+    @Override
+    public String descWhitelistAdd() {
+        return null;
+    }
+
+    @Override
+    public String descWhitelistDelete() {
+        return null;
+    }
+
+    @Override
+    public String descWhitelistList() {
+        return null;
+    }
+
+    @Override
+    public String descWhitelistToggle() {
+        return null;
+    }
+
+    @Override
+    public String descWhitelistwAdd() {
+        return null;
+    }
+
+    @Override
+    public String descWhitelistwDelete() {
+        return null;
+    }
+
+    @Override
+    public String descWhitelistwList() {
+        return null;
+    }
+
+    @Override
+    public String descWhitelistwToggle() {
+        return null;
+    }
 }

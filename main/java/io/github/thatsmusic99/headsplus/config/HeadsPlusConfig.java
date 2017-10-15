@@ -83,6 +83,8 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("wlw-a-off", "%h &3The world whitelist is already disabled!");
 		getMessages().addDefault("bl-fail", "%h &cFailed to add head to blacklist!");
         getMessages().addDefault("wl-fail", "%h &cFailed to add head to whitelist!");
+        getMessages().addDefault("blw-fail", "%h &cFailed to add world to blacklist!");
+        getMessages().addDefault("wlw-fail", "%h &cFailed to add world to whitelist!");
 		getMessages().addDefault("disabled", "&cThis command is disabled.");
 		getMessages().addDefault("empty-bl", "%h &cThe blacklist is empty!");
 		getMessages().addDefault("empty-blw", "%h &cThe world blacklist is empty!");
@@ -126,6 +128,37 @@ public class HeadsPlusConfig {
             getMessages().set("world-a-added", LocaleManager.getLocale().getWorldAlreadyAdded());
             getMessages().set("world-added-bl", LocaleManager.getLocale().getWorldAddedBlacklist());
             getMessages().set("world-a-removed-bl", LocaleManager.getLocale().getWorldNotOnBlacklist());
+            getMessages().set("world-removed-bl", LocaleManager.getLocale().getWorldRemovedBlacklist());
+            getMessages().set("world-added-wl", LocaleManager.getLocale().getWorldAddedWhitelist());
+            getMessages().set("world-a-removed-wl", LocaleManager.getLocale().getWorldNotOnWhitelist());
+            getMessages().set("world-removed-wl", LocaleManager.getLocale().getWorldRemovedWhitelist());
+            getMessages().set("bl-on", LocaleManager.getLocale().getBlacklistOn());
+            getMessages().set("bl-a-on", LocaleManager.getLocale().getBlacklistAlreadyOn());
+            getMessages().set("bl-off", LocaleManager.getLocale().getBlacklistOff());
+            getMessages().set("bl-a-off", LocaleManager.getLocale().getBlacklistAlreadyOff());
+            getMessages().set("blw-on", LocaleManager.getLocale().getWBlacklistOn());
+            getMessages().set("blw-a-on", LocaleManager.getLocale().getWBlacklistAlreadyOn());
+            getMessages().set("blw-off", LocaleManager.getLocale().getWBlacklistOff());
+            getMessages().set("blw-a-off", LocaleManager.getLocale().getWBlacklistAlreadyOff());
+            getMessages().set("wl-on", LocaleManager.getLocale().getWhitelistOn());
+            getMessages().set("wl-a-on", LocaleManager.getLocale().getWhitelistAlreadyOn());
+            getMessages().set("wl-off", LocaleManager.getLocale().getWhitelistOff());
+            getMessages().set("wl-a-off", LocaleManager.getLocale().getWhitelistAlreadyOff());
+            getMessages().set("wlw-on", LocaleManager.getLocale().getWWhitelistOn());
+            getMessages().set("wlw-a-on", LocaleManager.getLocale().getWWhitelistAlreadyOn());
+            getMessages().set("wlw-off", LocaleManager.getLocale().getWWhitelistOff());
+            getMessages().set("wlw-a-off", LocaleManager.getLocale().getWWhitelistAlreadyOff());
+            getMessages().set("bl-fail", LocaleManager.getLocale().getBlacklistFail());
+            getMessages().set("wl-fail", LocaleManager.getLocale().getWhitelistFail());
+            getMessages().set("blw-fail", LocaleManager.getLocale().getWBlacklistFail());
+            getMessages().set("wlw-fail", LocaleManager.getLocale().getWWhitelistFail());
+            getMessages().set("disabled", LocaleManager.getLocale().getDisabledCommand());
+            getMessages().set("empty-bl", LocaleManager.getLocale().getEmptyBlacklist());
+            getMessages().set("empty-blw", LocaleManager.getLocale().getEmptyWBlacklist());
+            getMessages().set("empty-wl", LocaleManager.getLocale().getEmptyWhitelist());
+            getMessages().set("empty-wlw", LocaleManager.getLocale().getEmptyWWhitelist());
+            getMessages().set("buy-success", LocaleManager.getLocale().getBuySuccess());
+            getMessages().set("buy-fail", LocaleManager.getLocale().getBuyFail());
         }
 
 		getMessages().options().copyDefaults(true);

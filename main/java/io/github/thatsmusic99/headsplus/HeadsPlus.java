@@ -4,6 +4,7 @@ import io.github.thatsmusic99.headsplus.commands.Heads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.events.*;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -19,6 +20,8 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusCrafting;
 import io.github.thatsmusic99.headsplus.crafting.RecipePerms;
 
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,6 +38,7 @@ public class HeadsPlus extends JavaPlugin {
 	public boolean drops;
 	public boolean arofj;
 	public boolean db;
+	public static Object[] update = null;
 	
     public static FileConfiguration config;
 
@@ -103,6 +107,26 @@ public class HeadsPlus extends JavaPlugin {
 		    this.getCommand("heads").setExecutor(new Heads());
 		    JoinEvent.reloaded = false;
 			Metrics metrics = new Metrics(this);
+			if (getConfig().getBoolean("update-checker")) {
+			    new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        update = UpdateChecker.getUpdate();
+                        if (update != null) {
+                            log.info("[HeadsPlus] An update has been found!");
+                            log.info("Current version: " + getDescription().getVersion());
+                            log.info("New version: " + update[0]);
+                            if (update[1].toString().length() > 50) {
+                                update[1] = update[1].toString().subSequence(0, 50) + "... (Check Spigot for more information)";
+                            }
+                            log.info("Description: " + update[1]);
+                            log.info("Download link: https://www.spigotmc.org/resources/headsplus-1-8-x-1-12-x.40265/");
+                        } else {
+                            log.info("[HeadsPlus] Plugin is up to date!");
+                        }
+                    }
+                }.runTaskAsynchronously(this);
+            }
 		    log.info("[HeadsPlus] HeadsPlus has been enabled.");
 		} catch (Exception e) {
 			log.severe("[HeadsPlus] Error enabling HeadsPlus!");

@@ -5,7 +5,10 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
+import io.github.thatsmusic99.headsplus.locale.LocaleManager;
+import mkremins.fanciful.FancyMessage;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
@@ -40,6 +43,17 @@ public class JoinEvent implements Listener {
 	
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e) {
+		if (e.getPlayer().hasPermission("headsplus.notify")) {
+		    if (HeadsPlus.getInstance().getConfig().getBoolean("update-notify")) {
+                if (HeadsPlus.update != null) {
+                    new FancyMessage().text(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("update-found")))
+                            + "\n" + ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getCurrentVersion() + HeadsPlus.getInstance().getDescription().getVersion())
+                            + "\n" + ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getNewVersion() + HeadsPlus.update[0])
+                            + "\n" + ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getDescription() + HeadsPlus.update[1]))
+                    .tooltip(ChatColor.translateAlternateColorCodes('&',"&bClick here to go to the Spigot page.")).link("https://www.spigotmc.org/resources/headsplus-1-8-x-1-12-x.40265/updates/").send(e.getPlayer());
+                }
+            }
+        }
 		if (!HeadsPlus.getInstance().arofj) return;
 		if (!reloaded) {
 		    if (HeadsPlus.getInstance().getConfig().getBoolean("autoReloadOnFirstJoin")) {

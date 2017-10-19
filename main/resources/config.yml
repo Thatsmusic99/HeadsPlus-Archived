@@ -21,6 +21,8 @@ blacklistw: []
 blacklist: []
 whitelist: []
 whitelistw: []
+update-checker: true
+update-notify: true
 lore:
 - '&6&lThis head can be sold!'
 - '&6Do /sellhead to sell!'

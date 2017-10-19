@@ -92,6 +92,7 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("empty-wlw", "%h &cThe world whitelist is empty!");
 		getMessages().addDefault("buy-success", "&3You have bought a head for &b%l &3and now have &b%b!");
         getMessages().addDefault("buy-fail", "&cCouldn''t buy head!");
+        getMessages().addDefault("update-found", "%h &3An update has been found for HeadsPlus!");
 
         if (!getMessages().getString("locale").equalsIgnoreCase(getMessages().getString("pLocale"))) {
             getMessages().set("pLocale", getMessages().getString("locale"));

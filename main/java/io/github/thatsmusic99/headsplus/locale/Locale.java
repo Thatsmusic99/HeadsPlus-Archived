@@ -186,4 +186,12 @@ public interface Locale {
 
     String descHeads();
 
+    String getUpdateFound();
+
+    String getCurrentVersion();
+
+    String getNewVersion();
+
+    String getDescription();
+
 }

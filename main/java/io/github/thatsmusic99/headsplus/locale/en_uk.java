@@ -446,4 +446,24 @@ public class en_uk implements Locale {
     public String descHeads() {
         return "Displays a selection of heads.";
     }
+
+    @Override
+    public String getUpdateFound() {
+        return "%h &3An update has been found for HeadsPlus!";
+    }
+
+    @Override
+    public String getCurrentVersion() {
+        return "&3Current version: &7";
+    }
+
+    @Override
+    public String getNewVersion() {
+        return "&3New version: &7";
+    }
+
+    @Override
+    public String getDescription() {
+        return "&3Description: &7";
+    }
 }

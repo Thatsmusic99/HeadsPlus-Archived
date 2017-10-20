@@ -19,6 +19,10 @@ public class LocaleManager {
                 } catch (InvocationTargetException | NoSuchMethodException e) {
                     e.printStackTrace();
                 }
+                if (!locale.active()) {
+                    HeadsPlus.getInstance().log.info("[HeadsPlus] Language requested is being developed. Setting to English whilst it is.");
+                    setLocale(new en_uk());
+                }
             } catch (InstantiationException | IllegalAccessException e) {
                 HeadsPlus.getInstance().log.warning("[HeadsPlus] Failed to load the locale settings!");
                 e.printStackTrace();

@@ -2,7 +2,9 @@ package io.github.thatsmusic99.headsplus.locale;
 
 public interface Locale {
 
-    String getLanguage(); // Returns the language. This will automatically be set.
+    boolean active(); // Will be set myself.
+
+    String getLanguage(); // Returns the language (English, Deutsch, etc)
 
     String getReloadingMessage(); // Get the config reloading message.
     // English: "Reloading config..."
@@ -18,9 +20,11 @@ public interface Locale {
     String getHeadInteractMessage(); // Returns a message when a player interacts with a head.
     // English: "That is <Player>'s head!"
 
-    String getHeadMhfInteractMessage();
+    String getHeadMhfInteractMessage(); // Returns a message when a player interacts with a head (object).
+    // English: "That is a <Object>'s head!"
 
-    String getHeadMhfInteractMessage2();
+    String getHeadMhfInteractMessage2(); // Returns a message when a player interacts with a head (object).
+    // NOTE: This comes up
 
     String getSellSuccess();
 

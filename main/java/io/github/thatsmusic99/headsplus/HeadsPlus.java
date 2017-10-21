@@ -115,7 +115,7 @@ public class HeadsPlus extends JavaPlugin {
                         if (update != null) {
                             log.info("[HeadsPlus] An update has been found!");
                             log.info("Current version: " + getDescription().getVersion());
-                            log.info("New version: " + update[0]);
+                            log.info("New version: " + update[2]);
                             if (update[1].toString().length() > 50) {
                                 update[1] = update[1].toString().subSequence(0, 50) + "... (Check Spigot for more information)";
                             }

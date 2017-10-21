@@ -454,7 +454,7 @@ public class en_uk implements Locale {
 
     @Override
     public String getUpdateFound() {
-        return "%h &3An update has been found for HeadsPlus!";
+        return "%h &3An update has been found for HeadsPlus! Hover over the message for more information.";
     }
 
     @Override

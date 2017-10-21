@@ -25,7 +25,7 @@ public class HeadsPlusConfigHeadsX {
     public static boolean s = false;
     private static FileConfiguration headsx;
     private static File headsxf;
-    public static double cVersion = 0.6;
+    public static double cVersion = 0.7;
 
     private static void saveHeadsX() {
         if (headsx == null || headsxf == null) {
@@ -70,7 +70,7 @@ public class HeadsPlusConfigHeadsX {
         headsx = YamlConfiguration.loadConfiguration(headsxf);
         getHeadsX().addDefault("options.version", cVersion);
         getHeadsX().addDefault("options.default-price", 10.00);
-        if (headsxf.length() <= 2000) {
+        if (headsxf.length() <= 500) {
             loadHeadsX();
         }
         if (getHeadsX().getDouble("options.version") < cVersion) {

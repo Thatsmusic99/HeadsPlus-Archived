@@ -43,6 +43,7 @@ class UpdateChecker {
             }
             currentVersion = Double.valueOf(s[0] + "." + v.toString());
         }
+        String latestVersionString = ((JSONObject) versionsArray.get(versionsArray.size() - 1)).get("name").toString();
 
         if (lastVersion > currentVersion) {
             JSONArray updatesArray = null;
@@ -52,7 +53,7 @@ class UpdateChecker {
                 e.printStackTrace();
             }
             String updateName = ((JSONObject) updatesArray.get(updatesArray.size() - 1)).get("title").toString();
-            return new Object[]{lastVersion, updateName};
+            return new Object[]{lastVersion, updateName, latestVersionString};
         }
         return null;
     }

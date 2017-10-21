@@ -1,473 +1,476 @@
 package io.github.thatsmusic99.headsplus.locale;
 
 public class ro_ro implements Locale {
+
+    // Translated by DariusTK
+
     @Override
     public boolean active() {
-        return false;
+        return true;
     }
 
     @Override
     public String getLanguage() {
-        return null;
+        return "Romanian, Romania";
     }
 
     @Override
     public String getReloadingMessage() {
-        return null;
+        return "%h &3Reincarcare config...";
     }
 
     @Override
     public String getReloadMessage() {
-        return null;
+        return "%h &3Config reincarcat cu succes!";
     }
 
     @Override
     public String getReloadFailMessage() {
-        return null;
+        return "%h &cReincarcarea config-ului a esuat!";
     }
 
     @Override
     public String getHeadInteractMessage() {
-        return null;
+        return "&3Acesta este capul lui &b%p&3!";
     }
 
     @Override
     public String getHeadMhfInteractMessage() {
-        return null;
+        return "&3Acesta este un cap de &b%p&3!";
     }
 
     @Override
     public String getHeadMhfInteractMessage2() {
-        return null;
+        return "&3Acesta este un cap de &b%p&3!";
     }
 
     @Override
     public String getSellSuccess() {
-        return null;
+        return "&3Ai vandut cu succes acest(e) cap(ete) pentru &b%l &3iar acum ai &b%b&3!";
     }
 
     @Override
     public String getNotEnoughHeads() {
-        return null;
+        return "&cNu ai destule capete!";
     }
 
     @Override
     public String getNoHeads() {
-        return null;
+        return "&cNu ai niciun cap valid in inventarul tau!";
     }
 
     @Override
     public String getInvalidArguments() {
-        return null;
+        return "&cArgumente invalide!";
     }
 
     @Override
     public String getSellFail() {
-        return null;
+        return "&cImposibil de vandut!";
     }
 
     @Override
     public String getFalseHead() {
-        return null;
+        return "&cAcest cap nu poate fi vandut!";
     }
 
     @Override
     public String getFalseItem() {
-        return null;
+        return "&cAcesta nu este un cap!";
     }
 
     @Override
     public String getBlacklistHead() {
-        return null;
+        return "&cAcest cap este interzis si nu poate fi folosit!";
     }
 
     @Override
     public String getWhitelistHead() {
-        return null;
+        return "&cAcest cap nu este inca permis si nu poate fi folosit!";
     }
 
     @Override
     public String getFullInventory() {
-        return null;
+        return "&cInventarul tau este plin!";
     }
 
     @Override
     public String getAlphaNames() {
-        return null;
+        return "&cAceasta comanda suporta doar nume alfanumerice!";
     }
 
     @Override
     public String getTooManyArguments() {
-        return null;
+        return "&cPrea multe argumente!";
     }
 
     @Override
     public String getHeadTooLong() {
-        return null;
+        return "&cIGN-ul este prea lung pentru a fi utilizat. Foloseste un IGN intre 3 si 16 caractere!";
     }
 
     @Override
     public String getHeadTooShort() {
-        return null;
+        return "&cIGN-ul este prea scurt pentru a fi utilizat. Foloseste un IGN intre 3 si 16 caractere!";
     }
 
     @Override
     public String getInvalidPageNumber() {
-        return null;
+        return "%h &cNumarul paginii este invalid!";
     }
 
     @Override
     public String getInvalidInputInteger() {
-        return null;
+        return "%h &cPoti folosi doar numere intregi in aceasta comanda!";
     }
 
     @Override
     public String getNoPermissions() {
-        return null;
+        return "&cNu ai permisiunea de a executa aceasta comanda!";
     }
 
     @Override
     public String getHeadAlreadyAdded() {
-        return null;
+        return "%h &3Acest cap este deja adaugat!";
     }
 
     @Override
     public String getHeadAddedBlacklist() {
-        return null;
+        return "%h &3%p a fost interzis!";
     }
 
     @Override
     public String getHeadNotOnBlacklist() {
-        return null;
+        return "%h &3Acest cap nu este inca interzis!";
     }
 
     @Override
     public String getHeadRemovedBlacklist() {
-        return null;
+        return "%h &3%p nu mai este interzis!";
     }
 
     @Override
     public String getHeadAddedWhitelist() {
-        return null;
+        return "%h &3%p a fost permis!";
     }
 
     @Override
     public String getHeadNotOnWhitelist() {
-        return null;
+        return "%h &3Acest cap nu este inca permis!";
     }
 
     @Override
     public String getHeadRemovedWhitelist() {
-        return null;
+        return "%h &3%p nu mai este permis!";
     }
 
     @Override
     public String getWorldAlreadyAdded() {
-        return null;
+        return "%h &3Aceasta lume este deja adaugata!";
     }
 
     @Override
     public String getWorldAddedBlacklist() {
-        return null;
+        return "%h &3%w a fost adaugata lumilor interzise!";
     }
 
     @Override
     public String getWorldNotOnBlacklist() {
-        return null;
+        return "%h &3Aceasta lume nu este inca interzisa!";
     }
 
     @Override
     public String getWorldRemovedBlacklist() {
-        return null;
+        return "%h &3%w nu mai este o lume interzisa!";
     }
 
     @Override
     public String getWorldAddedWhitelist() {
-        return null;
+        return "%h &3%w a fost adaugata lumilor permise!";
     }
 
     @Override
     public String getWorldNotOnWhitelist() {
-        return null;
+        return "%h &3Aceasta lume nu este inca permisa!";
     }
 
     @Override
     public String getWorldRemovedWhitelist() {
-        return null;
+        return "%h &3%w nu mai este o lume permisa!";
     }
 
     @Override
     public String getBlacklistOn() {
-        return null;
+        return "%h &3Interzicerea a fost activata!";
     }
 
     @Override
     public String getBlacklistAlreadyOn() {
-        return null;
+        return "%h &3Interzicerea este deja activata!";
     }
 
     @Override
     public String getBlacklistOff() {
-        return null;
+        return "%h &3Interzicerea a fost dezactivata!";
     }
 
     @Override
     public String getBlacklistAlreadyOff() {
-        return null;
+        return "%h &3Interzicerea este deja dezactivata!";
     }
 
     @Override
     public String getWBlacklistOn() {
-        return null;
+        return "%h &3Interzicerea lumilor a fost activata!";
     }
 
     @Override
     public String getWBlacklistAlreadyOn() {
-        return null;
+        return "%h &3Interzicerea lumilor este deja activata!";
     }
 
     @Override
     public String getWBlacklistOff() {
-        return null;
+        return "%h &3Interzicerea lumilor a fost dezactivata!";
     }
 
     @Override
     public String getWBlacklistAlreadyOff() {
-        return null;
+        return "%h &3Interzicerea lumilor este deja dezactivata!";
     }
 
     @Override
     public String getWhitelistOn() {
-        return null;
+        return "%h &3Permiterea a fost activata!";
     }
 
     @Override
     public String getWhitelistAlreadyOn() {
-        return null;
+        return "%h &3Permiterea este deja activata!";
     }
 
     @Override
     public String getWhitelistOff() {
-        return null;
+        return "%h &3Permiterea a fost dezactivata!";
     }
 
     @Override
     public String getWhitelistAlreadyOff() {
-        return null;
+        return "%h &3Permiterea este deja dezactivata!";
     }
 
     @Override
     public String getWWhitelistOn() {
-        return null;
+        return "%h &3Permiterea lumilor a fost activata!";
     }
 
     @Override
     public String getWWhitelistAlreadyOn() {
-        return null;
+        return "%h &3Permiterea lumilor este deja activata!";
     }
 
     @Override
     public String getWWhitelistOff() {
-        return null;
+        return "%h &3Permiterea lumilor a fost dezactivata!";
     }
 
     @Override
     public String getWWhitelistAlreadyOff() {
-        return null;
+        return "%h &3Permiterea lumilor este deja dezactivata!";
     }
 
     @Override
     public String getBlacklistFail() {
-        return null;
+        return "%h &cInterzicerea capului a esuat!";
     }
 
     @Override
     public String getWhitelistFail() {
-        return null;
+        return "%h &cPermiterea capului a esuat!";
     }
 
     @Override
     public String getWBlacklistFail() {
-        return null;
+        return "%h &cInterzicerea lumii a esuat!";
     }
 
     @Override
     public String getWWhitelistFail() {
-        return null;
+        return "%h &cPermiterea lumii a esuat!";
     }
 
     @Override
     public String getDisabledCommand() {
-        return null;
+        return "&cAceasta comanda este dezactivata.";
     }
 
     @Override
     public String getEmptyBlacklist() {
-        return null;
+        return "%h &cLista cu capete interzise este goala!";
     }
 
     @Override
     public String getEmptyWBlacklist() {
-        return null;
+        return "%h &cLista cu lumi interzise este goala!";
     }
 
     @Override
     public String getEmptyWhitelist() {
-        return null;
+        return "%h &cLista cu capete permise este goala!";
     }
 
     @Override
     public String getEmptyWWhitelist() {
-        return null;
+        return "%h &cLista cu lumi permise este goala!";
     }
 
     @Override
     public String getBuySuccess() {
-        return null;
+        return "&3Ai cumparat cu succes acest cap pentru &b%l &3iar acum ai &b%b!";
     }
 
     @Override
     public String getBuyFail() {
-        return null;
+        return "&cImposibil de cumparat!";
     }
 
     @Override
     public String versionWord() {
-        return null;
+        return "Versiune: ";
     }
 
     @Override
     public String author() {
-        return null;
+        return "Autor: ";
     }
 
     @Override
     public String language() {
-        return null;
+        return "Limba: ";
     }
 
     @Override
     public String descBlacklistAdd() {
-        return null;
+        return "Adauga un cap pe lista celor interzise.";
     }
 
     @Override
     public String descBlacklistDelete() {
-        return null;
+        return "Sterge un cap de pe lista celor interzise.";
     }
 
     @Override
     public String descBlacklistList() {
-        return null;
+        return "Arata toate capetele interzise.";
     }
 
     @Override
     public String descBlacklistToggle() {
-        return null;
+        return "Porneste sau opreste interzicerea.";
     }
 
     @Override
     public String descBlacklistwAdd() {
-        return null;
+        return "Adauga o lume pe lista celor interzise pentru craftat.";
     }
 
     @Override
     public String descBlacklistwDelete() {
-        return null;
+        return "Sterge o lume de pe lista celor interzise pentru craftat.";
     }
 
     @Override
     public String descBlacklistwList() {
-        return null;
+        return "Arata toate lumile interzise.";
     }
 
     @Override
     public String descBlacklistwToggle() {
-        return null;
+        return "Porneste sau opreste interzicerea craftarii capetelor.";
     }
 
     @Override
     public String descInfo() {
-        return null;
+        return "Arata informatii despre plugin.";
     }
 
     @Override
     public String descMCReload() {
-        return null;
+        return "Reincarca configuratia.";
     }
 
     @Override
     public String descWhitelistAdd() {
-        return null;
+        return "Adauga un cap pe lista celor permise.";
     }
 
     @Override
     public String descWhitelistDelete() {
-        return null;
+        return "Sterge un cap de pe lista celor permise.";
     }
 
     @Override
     public String descWhitelistList() {
-        return null;
+        return "Arata toate capetele permise.";
     }
 
     @Override
     public String descWhitelistToggle() {
-        return null;
+        return "Porneste sau opreste permiterea.";
     }
 
     @Override
     public String descWhitelistwAdd() {
-        return null;
+        return "Adauga o lume pe lista celor permise pentru craftat.";
     }
 
     @Override
     public String descWhitelistwDelete() {
-        return null;
+        return "Sterge o lume de pe lista celor permise pentru craftat.";
     }
 
     @Override
     public String descWhitelistwList() {
-        return null;
+        return "Arata toate lumile permise.";
     }
 
     @Override
     public String descWhitelistwToggle() {
-        return null;
+        return "Porneste sau opreste permiterea craftarii capetelor.";
     }
 
     @Override
     public String descHead() {
-        return null;
+        return "Spawneaza un cap.";
     }
 
     @Override
     public String descSellhead() {
-        return null;
+        return "Vinde cap(etele) pe care le ai in mana, foloseste cifre pentru a vinde un anumit numar de capete, numele entitatii pentru a vinde capul unui anumit animal, si valoarea ''all'' pentru a vinde fiecare cap.";
     }
 
     @Override
     public String descHeads() {
-        return null;
+        return "Arata o selectie a capetelor.";
     }
 
     @Override
     public String getUpdateFound() {
-        return null;
+        return "%h &3Un update a fost gasit pentru HeadsPlus!";
     }
 
     @Override
     public String getCurrentVersion() {
-        return null;
+        return "&3Versiune curenta: &7";
     }
 
     @Override
     public String getNewVersion() {
-        return null;
+        return "&3Versiune noua: &7";
     }
 
     @Override
     public String getDescription() {
-        return null;
+        return "&3Descriere: &7";
     }
 }

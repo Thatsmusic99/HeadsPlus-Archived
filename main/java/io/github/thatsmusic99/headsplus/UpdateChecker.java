@@ -45,10 +45,6 @@ class UpdateChecker {
         }
         String latestVersionString = ((JSONObject) versionsArray.get(versionsArray.size() - 1)).get("name").toString();
 
-        HeadsPlus.getInstance().log.info(lastVersion.toString());
-        HeadsPlus.getInstance().log.info(currentVersion.toString());
-        HeadsPlus.getInstance().log.info(HeadsPlus.getInstance().getDescription().getVersion());
-
         if (lastVersion > currentVersion) {
             JSONArray updatesArray = null;
             try {

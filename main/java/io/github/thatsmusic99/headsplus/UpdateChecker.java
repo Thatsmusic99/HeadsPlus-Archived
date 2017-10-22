@@ -12,7 +12,7 @@ import java.net.URL;
 class UpdateChecker {
 
     private final static String versionURL = "https://api.spiget.org/v2/resources/40265/versions?size=1000";
-    private final static String descriptionURL = "https://api.spiget.org/v2/resources/25867/updates?size=1000";
+    private final static String descriptionURL = "https://api.spiget.org/v2/resources/40265/updates?size=1000";
 
     static Object[] getUpdate() {
         JSONArray versionsArray = null;
@@ -45,6 +45,9 @@ class UpdateChecker {
         }
         String latestVersionString = ((JSONObject) versionsArray.get(versionsArray.size() - 1)).get("name").toString();
 
+        HeadsPlus.getInstance().log.info(lastVersion.toString());
+        HeadsPlus.getInstance().log.info(currentVersion.toString());
+
         if (lastVersion > currentVersion) {
             JSONArray updatesArray = null;
             try {
@@ -53,8 +56,6 @@ class UpdateChecker {
                 e.printStackTrace();
             }
             String updateName = ((JSONObject) updatesArray.get(updatesArray.size() - 1)).get("title").toString();
-            HeadsPlus.getInstance().log.info(lastVersion.toString());
-            HeadsPlus.getInstance().log.info(currentVersion.toString());
             return new Object[]{lastVersion, updateName, latestVersionString};
         }
         return null;

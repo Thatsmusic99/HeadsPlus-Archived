@@ -36,7 +36,7 @@ class UpdateChecker {
         try {
             currentVersion = Double.parseDouble(HeadsPlus.getInstance().getDescription().getVersion());
         } catch (NumberFormatException e) {
-            String[] s = ((JSONObject) versionsArray.get(versionsArray.size() - 1)).get("name").toString().split("\\.");
+            String[] s = HeadsPlus.getInstance().getDescription().getVersion().split("\\.");
             StringBuilder v = new StringBuilder();
             for (int i = 1; i < s.length; i++) {
                 v.append(s[i]);
@@ -47,6 +47,7 @@ class UpdateChecker {
 
         HeadsPlus.getInstance().log.info(lastVersion.toString());
         HeadsPlus.getInstance().log.info(currentVersion.toString());
+        HeadsPlus.getInstance().log.info(HeadsPlus.getInstance().getDescription().getVersion());
 
         if (lastVersion > currentVersion) {
             JSONArray updatesArray = null;

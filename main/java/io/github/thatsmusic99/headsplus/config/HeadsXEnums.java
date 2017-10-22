@@ -175,7 +175,11 @@ public enum HeadsXEnums {
     WOOD_CURLY_BRACKET("wood_curly_bracket", "&8[&6Wooden Curly Bracket&8]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjE3NmVmMDU1ODgxNWI3ZjA1YzE1M2NmNGNkYzY5ZjliYTRiYTFjMTBlYTFhODc0OWFlYjhjMmI5NzdlIn19fQ", "alphabet", 0.5),
     WOOD_CURLY_BRACKET_2("wood_curly_bracket_2", "&8[&6Wooden Curly Bracket&8]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODNiMTNmZjhlN2EzZmFiNWZmMWU5OGU4ZmQ5MzljYzA5N2I2YjQ1Yzg1MjQwZDMyNDUwOTk0Zjc2NzE0MzlkIn19fQ", "alphabet", 0.5),
     WOOD_EQUALS_SIGN("wood_equals_sign", "&8[&6Wooden Equals Sign&8]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzg3Njg5ZjgzMzQzNmFhNzExYWJiZDQ1MTY4ODU2Nzc1YTJiMTE0NjU2Y2RmNGRjNWE2YzZmMWFmYWU1MjAifX19", "alphabet", 0.5),
-    WOOD_PLUS_SIGN("wood_plus_sign", "&8[&6Wooden Plus Sign&8]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2VkZDIwYmU5MzUyMDk0OWU2Y2U3ODlkYzRmNDNlZmFlYjI4YzcxN2VlNmJmY2JiZTAyNzgwMTQyZjcxNiJ9fX0", "alphabet", 0.5);
+    WOOD_PLUS_SIGN("wood_plus_sign", "&8[&6Wooden Plus Sign&8]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2VkZDIwYmU5MzUyMDk0OWU2Y2U3ODlkYzRmNDNlZmFlYjI4YzcxN2VlNmJmY2JiZTAyNzgwMTQyZjcxNiJ9fX0", "alphabet", 0.5),
+    JACK_O_LANTERN("jack_o_lantern", "&8[&6Jack O' Lantern&8]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDE0NGFhYzJhMmE0NTkyNzdiMjBkMGY0MmM1ZThiNWY2NjVjZGRiZWVkNmFiNmViMThmMGQ5MjJhNDZkZTM5MiJ9fX0", "halloween", 0.7),
+    PUMPKIN("pumpkin", "&8[&6Pumpkin&8]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjM5NzllOTYzOWExNGMzZDQ2Y2U0NmQ3MTRkNDIzY2IxNTkwOTE4MzlhNzYyY2Y5Mzk3MTZmMTUxMWZkMTUifX19", "halloween", 0.7),
+    GHOST_HEAD("ghost_head", "&8[&7Ghost Head&8]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjhkMjE4MzY0MDIxOGFiMzMwYWM1NmQyYWFiN2UyOWE5NzkwYTU0NWY2OTE2MTllMzg1NzhlYTRhNjlhZTBiNiJ9fX0", "halloween", 0.7),
+    DEATH("death", "&8[&7Death (itself)&8]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWRkYmQwYmI5NjIyY2UxMjRkYWJiNmJhM2JhYTlhOWVhNzE0MzBmODcwZmVjMTViM2VhODFmMTk2MWE0MTJiMiJ9fX0", "halloween", 0.7);
 
     String name;
     String dn;

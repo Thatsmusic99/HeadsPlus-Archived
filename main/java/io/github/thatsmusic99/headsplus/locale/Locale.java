@@ -24,15 +24,21 @@ public interface Locale {
     // English: "That is a <Object>'s head!"
 
     String getHeadMhfInteractMessage2(); // Returns a message when a player interacts with a head (object).
-    // NOTE: This comes up
+    // NOTE: This comes up because of how English works. If needed, it can be the same as the above message.
+    // English: "That is an <Object>'s head!"
 
-    String getSellSuccess();
+    String getSellSuccess(); // Returns a message when a player successfully sells their head.
+    // English: "You successfully sold the head(s) for %l and now have %b!"
+    // Parameters: &l - Total price head(s) were sold for.
+    // %b - The total balance of a player.
 
-    String getNotEnoughHeads();
+    String getNotEnoughHeads(); // Returns a message if a player tries to sell more heads than they have.
+    // English: "You don't have enough heads!"
 
-    String getNoHeads();
+    String getNoHeads(); // Returns a message if a player doesn't have any actual heads that can be sold in their inventory.
+    // English: "You don't have any valid heads in your inventory!"
 
-    String getInvalidArguments();
+    String getInvalidArguments(); //
 
     String getSellFail();
 

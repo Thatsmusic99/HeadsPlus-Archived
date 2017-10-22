@@ -2,473 +2,475 @@ package io.github.thatsmusic99.headsplus.locale;
 
 public class hu_hu implements Locale {
 
+    // Translated by Toldi
+
     @Override
     public boolean active() {
-        return false;
+        return true;
     }
 
     @Override
     public String getLanguage() {
-        return null;
+        return "Hungarian, HU";
     }
 
     @Override
     public String getReloadingMessage() {
-        return null;
+        return "%h &3A konfiguráció újratöltése...";
     }
 
     @Override
     public String getReloadMessage() {
-        return null;
+        return "%h &3A konfiguráció újratöltve!";
     }
 
     @Override
     public String getReloadFailMessage() {
-        return null;
+        return "%h &cA konfigot nem sikerült újratölteni!";
     }
 
     @Override
     public String getHeadInteractMessage() {
-        return null;
+        return "&3Azaz &b%p &3feje!";
     }
 
     @Override
     public String getHeadMhfInteractMessage() {
-        return null;
+        return "&3Az egy &b%p&3 feje!";
     }
 
     @Override
     public String getHeadMhfInteractMessage2() {
-        return null;
+        return "&3Ez egy &b%p &3feje!";
     }
 
     @Override
     public String getSellSuccess() {
-        return null;
+        return "&3Sikeresen eladtad a fej(ek)et &b%l &3és most már &b%b!";
     }
 
     @Override
     public String getNotEnoughHeads() {
-        return null;
+        return "&cNincs elég fejed!";
     }
 
     @Override
     public String getNoHeads() {
-        return null;
+        return "&cNincsenek érvényes fejek az eszköztáradban!";
     }
 
     @Override
     public String getInvalidArguments() {
-        return null;
+        return "&cÉrvénytelen argumentumok!";
     }
 
     @Override
     public String getSellFail() {
-        return null;
+        return "&cNem tudod eladni a fejet!";
     }
 
     @Override
     public String getFalseHead() {
-        return null;
+        return "&cEz a fej nem értékesíthető!";
     }
 
     @Override
     public String getFalseItem() {
-        return null;
+        return "&cEz nem egy fej!";
     }
 
     @Override
     public String getBlacklistHead() {
-        return null;
+        return "&cEz a fej feketelistán szerepel, és nem használható!";
     }
 
     @Override
     public String getWhitelistHead() {
-        return null;
+        return "&cEz a fej nem engedélyezett, ezért nem használható!";
     }
 
     @Override
     public String getFullInventory() {
-        return null;
+        return "&cAz eszköztárad tele van!";
     }
 
     @Override
     public String getAlphaNames() {
-        return null;
+        return "&cEz a parancs csak az alfanumerikus neveket kezeli!";
     }
 
     @Override
     public String getTooManyArguments() {
-        return null;
+        return "&cTúl sok argumentum!";
     }
 
     @Override
     public String getHeadTooLong() {
-        return null;
+        return "&cAz IGN túl hosszú ahhoz, hogy érvényes legyen! Kérjük, használjon IGN-t 3 és 16 karakter között.";
     }
 
     @Override
     public String getHeadTooShort() {
-        return null;
+        return "&cAz IGN túl rövid ahhoz, hogy érvényes legyen! Kérjük, használjon IGN-t 3 és 16 karakter között.";
     }
 
     @Override
     public String getInvalidPageNumber() {
-        return null;
+        return "%h &cÉrvénytelen oldal szám!";
     }
 
     @Override
     public String getInvalidInputInteger() {
-        return null;
+        return "%h &cEbben a parancsban csak egész számokat használhat!";
     }
 
     @Override
     public String getNoPermissions() {
-        return null;
+        return "&cNincs jogod a parancs használatára.";
     }
 
     @Override
     public String getHeadAlreadyAdded() {
-        return null;
+        return "%h &3Ez a fej már hozzá van adva!";
     }
 
     @Override
     public String getHeadAddedBlacklist() {
-        return null;
+        return "%h &3%p hozzáadva a feketelistához!";
     }
 
     @Override
     public String getHeadNotOnBlacklist() {
-        return null;
+        return "%h &3Ez a fej nem szerepel a feketelistán!";
     }
 
     @Override
     public String getHeadRemovedBlacklist() {
-        return null;
+        return "%h &3%p eltávolítva a feketelistáról!";
     }
 
     @Override
     public String getHeadAddedWhitelist() {
-        return null;
+        return "%h &3%p hozzáadva a fehérlistához!";
     }
 
     @Override
     public String getHeadNotOnWhitelist() {
-        return null;
+        return "%h &3Ez a fej nincs a fehérlistán!";
     }
 
     @Override
     public String getHeadRemovedWhitelist() {
-        return null;
+        return "%h &3%p eltávolítva a listából!";
     }
 
     @Override
     public String getWorldAlreadyAdded() {
-        return null;
+        return "%h &3Ez a világ már hozzáadva!";
     }
 
     @Override
     public String getWorldAddedBlacklist() {
-        return null;
+        return "%h &3%w hozzá lett adva a világ a feketelistájához!";
     }
 
     @Override
     public String getWorldNotOnBlacklist() {
-        return null;
+        return "%h &3Ez a világ nem szerepel a feketelistán!";
     }
 
     @Override
     public String getWorldRemovedBlacklist() {
-        return null;
+        return "%h &3%w eltávolítva a feketelistáról!";
     }
 
     @Override
     public String getWorldAddedWhitelist() {
-        return null;
+        return "%h &3%w hozzá lett adva a világ a fehérlistájához!";
     }
 
     @Override
     public String getWorldNotOnWhitelist() {
-        return null;
+        return "%h &3Ez a világ nem szerepel a fehérlistán!";
     }
 
     @Override
     public String getWorldRemovedWhitelist() {
-        return null;
+        return "%h &3%w eltávolítva a fehérlistából!";
     }
 
     @Override
     public String getBlacklistOn() {
-        return null;
+        return "%h &3A feketelista engedélyezve van!";
     }
 
     @Override
     public String getBlacklistAlreadyOn() {
-        return null;
+        return "%h &3A feketelista már engedélyezve van!";
     }
 
     @Override
     public String getBlacklistOff() {
-        return null;
+        return "%h &3A feketelista letiltva!";
     }
 
     @Override
     public String getBlacklistAlreadyOff() {
-        return null;
+        return "%h &3A feketelista már le van tiltva!";
     }
 
     @Override
     public String getWBlacklistOn() {
-        return null;
+        return "%h &3A világ feketelistája engedélyezve!";
     }
 
     @Override
     public String getWBlacklistAlreadyOn() {
-        return null;
+        return "%h &3A világ feketelistája már engedélyezve van!";
     }
 
     @Override
     public String getWBlacklistOff() {
-        return null;
+        return "%h &3A világ feketelista le van tiltva!";
     }
 
     @Override
     public String getWBlacklistAlreadyOff() {
-        return null;
+        return "%h &3A világ feketelistája már le van tiltva!";
     }
 
     @Override
     public String getWhitelistOn() {
-        return null;
+        return "%h &3A fehérlista engedélyezve!";
     }
 
     @Override
     public String getWhitelistAlreadyOn() {
-        return null;
+        return "%h &3A fehérlista már engedélyezve van!";
     }
 
     @Override
     public String getWhitelistOff() {
-        return null;
+        return "%h &3A fehérlista letiltva!";
     }
 
     @Override
     public String getWhitelistAlreadyOff() {
-        return null;
+        return "%h &3A fehérlista már le van tiltva!";
     }
 
     @Override
     public String getWWhitelistOn() {
-        return null;
+        return "%h &3A világ fehérlista engedélyezve!";
     }
 
     @Override
     public String getWWhitelistAlreadyOn() {
-        return null;
+        return "%h &3A világ fehérlista már engedélyezve!";
     }
 
     @Override
     public String getWWhitelistOff() {
-        return null;
+        return "%h &3A világ fehérlista letiltva!";
     }
 
     @Override
     public String getWWhitelistAlreadyOff() {
-        return null;
+        return "%h &3A világ fehérlista már le van tiltva!";
     }
 
     @Override
     public String getBlacklistFail() {
-        return null;
+        return "%h &cNem sikerült felvenni a fejét a feketelistára!";
     }
 
     @Override
     public String getWhitelistFail() {
-        return null;
+        return "%h &cNem sikerült felvenni a fejét a fehérlistára!";
     }
 
     @Override
     public String getWBlacklistFail() {
-        return null;
+        return "%h &cNem sikerült hozzáadni a világot a feketelistához!";
     }
 
     @Override
     public String getWWhitelistFail() {
-        return null;
+        return "%h &cNem sikerült hozzáadni a világot fehérlistához!";
     }
 
     @Override
     public String getDisabledCommand() {
-        return null;
+        return "&cEz a parancs le van tiltva.";
     }
 
     @Override
     public String getEmptyBlacklist() {
-        return null;
+        return "%h &cA feketelista üres!";
     }
 
     @Override
     public String getEmptyWBlacklist() {
-        return null;
+        return "%h &cA világ feketelista üres!";
     }
 
     @Override
     public String getEmptyWhitelist() {
-        return null;
+        return "%h &cA fehérlista üres!";
     }
 
     @Override
     public String getEmptyWWhitelist() {
-        return null;
+        return "%h &cA világ fehérlista üres!";
     }
 
     @Override
     public String getBuySuccess() {
-        return null;
+        return "&3Vettél egy fejre &b%l &3és most már &b%b!";
     }
 
     @Override
     public String getBuyFail() {
-        return null;
+        return "&cNem vásárolhatsz fejet!";
     }
 
     @Override
     public String versionWord() {
-        return null;
+        return "Verzió: ";
     }
 
     @Override
     public String author() {
-        return null;
+        return "Szerző: ";
     }
 
     @Override
     public String language() {
-        return null;
+        return "Nyelv: ";
     }
 
     @Override
     public String descBlacklistAdd() {
-        return null;
+        return "Hozzáad egy fejet a feketelistához.";
     }
 
     @Override
     public String descBlacklistDelete() {
-        return null;
+        return "Eltávolítja a fejet a feketelistáról.";
     }
 
     @Override
     public String descBlacklistList() {
-        return null;
+        return "Minden feketelistában lévő fejet felsorol.";
     }
 
     @Override
     public String descBlacklistToggle() {
-        return null;
+        return "Váltja a feketelistát.";
     }
 
     @Override
     public String descBlacklistwAdd() {
-        return null;
+        return "Hozzáad egy világot a barkács receptek fekete listájához.";
     }
 
     @Override
     public String descBlacklistwDelete() {
-        return null;
+        return "Eltávolítja a világot a barkács receptek feketelistajához.";
     }
 
     @Override
     public String descBlacklistwList() {
-        return null;
+        return "Kilistázza a feketelistában levő világokat.";
     }
 
     @Override
     public String descBlacklistwToggle() {
-        return null;
+        return "Váltja a készletkészítő feketelista be/ki kapcsolását.";
     }
 
     @Override
     public String descInfo() {
-        return null;
+        return "Megjeleníti a plugin információit.";
     }
 
     @Override
     public String descMCReload() {
-        return null;
+        return "Frissíti a konfigurációs fájlt.";
     }
 
     @Override
     public String descWhitelistAdd() {
-        return null;
+        return "Hozzáad egy fejet a fehérlistához.";
     }
 
     @Override
     public String descWhitelistDelete() {
-        return null;
+        return "Eltávolítja a fejet a fehérlistából.";
     }
 
     @Override
     public String descWhitelistList() {
-        return null;
+        return "Az összes fejet felsorolja, ami a fehérlistában van.";
     }
 
     @Override
     public String descWhitelistToggle() {
-        return null;
+        return "Váltja a fehérlistát.";
     }
 
     @Override
     public String descWhitelistwAdd() {
-        return null;
+        return "Hozzáad egy világot a barkácsoló recept fehérlistájához.";
     }
 
     @Override
     public String descWhitelistwDelete() {
-        return null;
+        return "Eltávolítja a világot a barkácsoló recept fehérlistájából.";
     }
 
     @Override
     public String descWhitelistwList() {
-        return null;
+        return "Kilistázza a fehérlistában levő világokat.";
     }
 
     @Override
     public String descWhitelistwToggle() {
-        return null;
+        return "A fehérlista engedélyezése/kikapcsolása.";
     }
 
     @Override
     public String descHead() {
-        return null;
+        return "Leidéz egy fejet.";
     }
 
     @Override
     public String descSellhead() {
-        return null;
+        return "Eladja a feje(ke)t a kezedben, használd a számparamétert, hogy adjon el egy adott számot, egy entitás nevét, hogy eladja egy adott mob fejét, és mindent eladni minden fejét.";
     }
 
     @Override
     public String descHeads() {
-        return null;
+        return "Megjeleníti a fejek kiválasztását.";
     }
 
     @Override
     public String getUpdateFound() {
-        return null;
+        return "%h &3Frissítés található a HeadsPlus pluginban! További információért vigye az egérmutatót az üzenet fölé.";
     }
 
     @Override
     public String getCurrentVersion() {
-        return null;
+        return "&3Jelenlegi verzió: &7";
     }
 
     @Override
     public String getNewVersion() {
-        return null;
+        return "&3Új verzió: &7";
     }
 
     @Override
     public String getDescription() {
-        return null;
+        return "&3Leírás: &7";
     }
 }

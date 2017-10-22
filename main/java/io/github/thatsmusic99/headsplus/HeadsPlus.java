@@ -4,7 +4,6 @@ import io.github.thatsmusic99.headsplus.commands.Heads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.events.*;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -21,10 +20,10 @@ import io.github.thatsmusic99.headsplus.crafting.RecipePerms;
 
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
 public class HeadsPlus extends JavaPlugin {	
@@ -107,6 +106,12 @@ public class HeadsPlus extends JavaPlugin {
 		    this.getCommand("heads").setExecutor(new Heads());
 		    JoinEvent.reloaded = false;
 			Metrics metrics = new Metrics(this);
+			metrics.addCustomChart(new Metrics.SimplePie("language", new Callable<String>() {
+                @Override
+                public String call() throws Exception {
+                    return LocaleManager.getLocale().getLanguage();
+                }
+            }));
 			if (getConfig().getBoolean("update-checker")) {
 			    new BukkitRunnable() {
                     @Override
@@ -141,7 +146,7 @@ public class HeadsPlus extends JavaPlugin {
 		return instance;
 		
 	}
-	public static void setUpMConfig() {
+	private static void setUpMConfig() {
         File configF = new File(instance.getDataFolder(), "config.yml");
 			config = instance.getConfig();
 			if(!instance.getDataFolder().exists()) {

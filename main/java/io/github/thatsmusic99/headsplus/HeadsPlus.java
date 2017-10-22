@@ -53,10 +53,10 @@ public class HeadsPlus extends JavaPlugin {
 			try {
                 HeadsPlusConfig.getMessages().getString("locale");
             } catch (NullPointerException ex) {
-                HeadsPlusConfig.msgEnable();
+                HeadsPlusConfig.msgEnable(true);
             }
 			LocaleManager.class.newInstance().setupLocale();
-			HeadsPlusConfig.msgEnable();
+			HeadsPlusConfig.msgEnable(false);
 			HeadsPlusConfigHeads.headsEnable();
 			HeadsPlusConfigHeadsX.headsxEnable();
 			DeathEvents.createList();

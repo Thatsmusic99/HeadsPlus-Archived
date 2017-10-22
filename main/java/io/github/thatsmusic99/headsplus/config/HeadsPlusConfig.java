@@ -16,12 +16,12 @@ public class HeadsPlusConfig {
 	public static FileConfiguration getMessages() {
 		return messages;
 	}
-	public static void msgEnable() {
-		reloadMessages();
-		loadMessages();
+	public static void msgEnable(boolean nullpoint) {
+		reloadMessages(nullpoint);
+		loadMessages(nullpoint);
 	}
 	
-	private static void loadMessages() {
+	private static void loadMessages(boolean nullpoint) {
 
 		getMessages().options().header("HeadsPlus by Thatsmusic99 \nPlease do NOT change pLocale! This will be used to change the plugin's language in the future!");
 
@@ -94,7 +94,7 @@ public class HeadsPlusConfig {
         getMessages().addDefault("buy-fail", "&cCouldn''t buy head!");
         getMessages().addDefault("update-found", "%h &3An update has been found for HeadsPlus!");
 
-        if (!getMessages().getString("locale").equalsIgnoreCase(getMessages().getString("pLocale"))) {
+        if (!getMessages().getString("locale").equalsIgnoreCase(getMessages().getString("pLocale")) && !nullpoint) {
             getMessages().set("pLocale", getMessages().getString("locale"));
             getMessages().set("reloading-message", LocaleManager.getLocale().getReloadingMessage());
             getMessages().set("reload-message", LocaleManager.getLocale().getReloadMessage());
@@ -166,14 +166,14 @@ public class HeadsPlusConfig {
 		saveMessages();
 		
 	}
-	public static void reloadMessages() {
+	public static void reloadMessages(boolean nullpoint) {
 
 		if (messagesF == null) {
 			messagesF = new File(HeadsPlus.getInstance().getDataFolder(), "messages.yml");
 		}
 
 		messages = YamlConfiguration.loadConfiguration(messagesF);
-		loadMessages();
+		loadMessages(nullpoint);
 		saveMessages();
 
 	}

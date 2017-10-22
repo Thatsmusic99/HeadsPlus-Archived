@@ -53,6 +53,8 @@ class UpdateChecker {
                 e.printStackTrace();
             }
             String updateName = ((JSONObject) updatesArray.get(updatesArray.size() - 1)).get("title").toString();
+            HeadsPlus.getInstance().log.info(lastVersion.toString());
+            HeadsPlus.getInstance().log.info(currentVersion.toString());
             return new Object[]{lastVersion, updateName, latestVersionString};
         }
         return null;

@@ -30,7 +30,6 @@ public class LocaleManager {
         } catch (ClassNotFoundException e) {
             HeadsPlus.getInstance().log.warning("[HeadsPlus] Failed to load the locale settings! This is caused by an invalid name provided. Setting locale to en_uk...");
             setLocale(new en_uk());
-            e.printStackTrace();
         }
     }
 

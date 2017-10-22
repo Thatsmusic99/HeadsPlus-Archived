@@ -71,11 +71,11 @@ public class JoinEvent implements Listener {
 						      }  
 						      if (!(messagesF.exists())) {
 						    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Messages not found, creating!");
-						    	  HeadsPlusConfig.reloadMessages();
+						    	  HeadsPlusConfig.reloadMessages(false);
 						    	  messages = YamlConfiguration.loadConfiguration(messagesF);
 						    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Messages created!");
 						      } else {
-						    	  HeadsPlusConfig.reloadMessages();
+						    	  HeadsPlusConfig.reloadMessages(false);
 						      }
 						      if (!(headsF.exists())) {
 						    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Heads not found, creating!");

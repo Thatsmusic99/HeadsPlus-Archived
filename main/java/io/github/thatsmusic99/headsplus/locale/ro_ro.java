@@ -455,6 +455,11 @@ public class ro_ro implements Locale {
     }
 
     @Override
+    public String descMyHead() {
+        return "Spawneaza capul tau."; // Self-translated
+    }
+
+    @Override
     public String getUpdateFound() {
         return "%h &3Un update a fost gasit pentru HeadsPlus! Plasati cursorul pentru mai multe informatii.";
     }

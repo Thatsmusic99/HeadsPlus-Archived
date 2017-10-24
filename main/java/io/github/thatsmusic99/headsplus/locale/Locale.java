@@ -196,6 +196,8 @@ public interface Locale {
 
     String descHeads();
 
+    String descMyHead();
+
     String getUpdateFound();
 
     String getCurrentVersion();

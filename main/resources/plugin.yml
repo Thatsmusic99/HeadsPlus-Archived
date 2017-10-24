@@ -21,3 +21,7 @@ commands:
         description: Heads GUI command.
         default: true
         permission: headsplus.heads
+    myhead:
+        description: Gets your own head.
+        default: true
+        permission: headsplus.myhead

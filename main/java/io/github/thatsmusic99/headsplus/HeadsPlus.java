@@ -1,6 +1,6 @@
 package io.github.thatsmusic99.headsplus;
 
-import io.github.thatsmusic99.headsplus.commands.Heads;
+import io.github.thatsmusic99.headsplus.commands.*;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.events.*;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
@@ -10,9 +10,6 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import io.github.thatsmusic99.headsplus.commands.Head;
-import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
-import io.github.thatsmusic99.headsplus.commands.SellHead;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusCrafting;
@@ -104,6 +101,7 @@ public class HeadsPlus extends JavaPlugin {
 		    this.getCommand("hp").setTabCompleter(new TabComplete());
 		    this.getCommand("head").setExecutor(new Head());
 		    this.getCommand("heads").setExecutor(new Heads());
+		    this.getCommand("myhead").setExecutor(new MyHead());
 		    JoinEvent.reloaded = false;
 			Metrics metrics = new Metrics(this);
 			metrics.addCustomChart(new Metrics.SimplePie("language", new Callable<String>() {

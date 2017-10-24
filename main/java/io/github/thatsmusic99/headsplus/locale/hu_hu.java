@@ -455,6 +455,11 @@ public class hu_hu implements Locale {
     }
 
     @Override
+    public String descMyHead() {
+        return "Leidéz a fejed."; // Self-translated
+    }
+
+    @Override
     public String getUpdateFound() {
         return "%h &3Frissítés található a HeadsPlus pluginban! További információért vigye az egérmutatót az üzenet fölé.";
     }

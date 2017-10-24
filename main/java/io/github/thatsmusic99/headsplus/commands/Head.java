@@ -23,24 +23,24 @@ public class Head implements CommandExecutor {
 		    	if (sender.hasPermission("headsplus.head")) {
 			        if (args.length == 0) {
 				        sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/head [IGN]");
-				        return false;
+				        return true;
 			        }
 		        	if ((args.length == 1) && !(args[0].matches("^[A-Za-z0-9_]+$"))) {
 			         	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("alpha-names"))));
-				        return false;
+				        return true;
 			        }
 			        if (args.length > 1) {
 			        	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("too-many-args"))));
 				        sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/head [IGN]");
-				        return false;
+				        return true;
 			        }
 		    	    if (args[0].length() > 16) {
 		    	    	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("head-too-long"))));
-			    	    return false;
+			    	    return true;
 			        }
 			        if (args[0].length() < 3) {
 			        	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("too-short-head"))));
-				        return false;
+				        return true;
 			        }
 			
 			        if (args[0].matches("^[A-Za-z0-9_]+$") && (3 < args[0].length() << 16)) {

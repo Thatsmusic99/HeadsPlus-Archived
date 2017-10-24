@@ -453,6 +453,11 @@ public class en_uk implements Locale {
     }
 
     @Override
+    public String descMyHead() {
+        return "Spawns in your head.";
+    }
+
+    @Override
     public String getUpdateFound() {
         return "%h &3An update has been found for HeadsPlus! Hover over the message for more information.";
     }

@@ -96,6 +96,7 @@ public class HeadsPlusConfig {
 
         if (!getMessages().getString("locale").equalsIgnoreCase(getMessages().getString("pLocale")) && !nullpoint) {
             getMessages().set("pLocale", getMessages().getString("locale"));
+            LocaleManager.getInstance().setupLocale();
             getMessages().set("reloading-message", LocaleManager.getLocale().getReloadingMessage());
             getMessages().set("reload-message", LocaleManager.getLocale().getReloadMessage());
             getMessages().set("reload-fail", LocaleManager.getLocale().getReloadFailMessage());

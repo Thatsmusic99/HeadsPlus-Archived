@@ -28,7 +28,9 @@ class UpdateChecker {
             String[] s = ((JSONObject) versionsArray.get(versionsArray.size() - 1)).get("name").toString().split("\\.");
             StringBuilder v = new StringBuilder();
             for (int i = 1; i < s.length; i++) {
-                v.append(s[i]);
+                if (s[i].matches("^[0-9]+$")) {
+                    v.append(s[i]);
+                }
             }
             lastVersion = Double.valueOf(s[0] + "." + v.toString());
         }
@@ -39,7 +41,9 @@ class UpdateChecker {
             String[] s = HeadsPlus.getInstance().getDescription().getVersion().split("\\.");
             StringBuilder v = new StringBuilder();
             for (int i = 1; i < s.length; i++) {
-                v.append(s[i]);
+                if (s[i].matches("^[0-9]+$")) {
+                    v.append(s[i]);
+                }
             }
             currentVersion = Double.valueOf(s[0] + "." + v.toString());
         }

@@ -6,8 +6,7 @@ public enum HeadsXSections {
     ANIMALS("animals", "&8[&aAnimals&8]", "HP#elephant", 0.0),
     DECORATION("decoration", "&8[&eDecoration&8]", "HP#paper_lantern", 0.0),
     FOOD_AND_DRINK("food_and_drink", "&8[&6Food &7and &9Drink&8]", "HP#pepsi", 0.0),
-    LOGOS("logos", "&8[&cLogos&8]", "HP#youtube", 0.0),
-    HALLOWEEN("halloween", "&8[&6Halloween&8]", "HP#jack_o_lantern", 0.7);
+    LOGOS("logos", "&8[&cLogos&8]", "HP#youtube", 0.0);
 
     public String let;
     public String dn;

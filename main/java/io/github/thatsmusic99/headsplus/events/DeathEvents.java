@@ -5,11 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import io.github.thatsmusic99.headsplus.api.PlayerHeadDropEvent;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -116,6 +114,7 @@ public class DeathEvents implements Listener {
                 entityLoc.setY(entityLocY);
                 World world = ep.getEntity().getWorld();
                 world.dropItem(entityLoc, head);
+                Bukkit.getServer().getPluginManager().callEvent(new PlayerHeadDropEvent(ep.getEntity(), ep.getEntity().getKiller(), head, world, entityLoc));
             }
         }
     }

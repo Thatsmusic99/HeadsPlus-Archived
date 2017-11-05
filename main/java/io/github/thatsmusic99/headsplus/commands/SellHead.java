@@ -282,7 +282,7 @@ public class SellHead implements CommandExecutor {
 	return false;
 	}
 	@SuppressWarnings("deprecation")
-	private ItemStack checkHand(Player p) {
+	public static ItemStack checkHand(Player p) {
 		if (Bukkit.getVersion().contains("1.8")) {
 			return p.getInventory().getItemInHand();
 		} else {

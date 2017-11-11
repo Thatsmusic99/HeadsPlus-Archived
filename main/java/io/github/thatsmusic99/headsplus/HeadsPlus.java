@@ -21,6 +21,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
@@ -36,7 +39,8 @@ public class HeadsPlus extends JavaPlugin {
 	public boolean arofj;
 	public boolean db;
 	public static Object[] update = null;
-	
+    private Connection connection;
+
     public static FileConfiguration config;
 
     @SuppressWarnings("unused")
@@ -191,5 +195,19 @@ public class HeadsPlus extends JavaPlugin {
         econ = rsp.getProvider();
         return econ != null;
 	}
+
+	public void openConnection() throws SQLException, ClassNotFoundException {
+        if (connection != null && !connection.isClosed()) {
+            return;
+        }
+
+        synchronized (this) {
+            if (connection != null && !connection.isClosed()) {
+                return;
+            }
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://" + this.host+ ":" + this.port + "/headsplusleaderboards", this.username, this.password);
+        }
+    }
 
 }

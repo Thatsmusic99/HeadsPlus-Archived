@@ -25,7 +25,7 @@ public class HeadsPlusConfigHeadsX {
     public static boolean s = false;
     private static FileConfiguration headsx;
     private static File headsxf;
-    public static double cVersion = 0.7;
+    public static double cVersion = 0.8;
 
     private static void saveHeadsX() {
         if (headsx == null || headsxf == null) {

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import io.github.thatsmusic99.headsplus.api.EntityHeadDropEvent;
 import io.github.thatsmusic99.headsplus.api.PlayerHeadDropEvent;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
 import org.bukkit.*;
@@ -74,8 +75,12 @@ public class DeathEvents implements Listener {
                         double entityLocY = entityLoc.getY() + 1;
                         entityLoc.setY(entityLocY);
                         World world = e.getEntity().getWorld();
-                        world.dropItem(entityLoc, head);
-                   }  
+                        EntityHeadDropEvent event = new EntityHeadDropEvent(e.getEntity().getKiller(), head, world, entityLoc, e.getEntityType());
+                        Bukkit.getServer().getPluginManager().callEvent(event);
+                        if (!event.isCancelled()) {
+                            world.dropItem(entityLoc, head);
+                        }
+                    }
 		       }
 		    }
 		}
@@ -113,8 +118,11 @@ public class DeathEvents implements Listener {
                 double entityLocY = entityLoc.getY() + 1;
                 entityLoc.setY(entityLocY);
                 World world = ep.getEntity().getWorld();
-                world.dropItem(entityLoc, head);
-                Bukkit.getServer().getPluginManager().callEvent(new PlayerHeadDropEvent(ep.getEntity(), ep.getEntity().getKiller(), head, world, entityLoc));
+                PlayerHeadDropEvent event = new PlayerHeadDropEvent(ep.getEntity(), ep.getEntity().getKiller(), head, world, entityLoc);
+                Bukkit.getServer().getPluginManager().callEvent(event);
+                if (!event.isCancelled()) {
+                    world.dropItem(entityLoc, head);
+                }
             }
         }
     }

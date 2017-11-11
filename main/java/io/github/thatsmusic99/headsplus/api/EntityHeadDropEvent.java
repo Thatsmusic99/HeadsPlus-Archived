@@ -13,15 +13,13 @@ public class EntityHeadDropEvent extends Event implements Cancellable {
 
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled;
-    private boolean isAllowed;
     private ItemStack skull;
     private Player player;
     private EntityType entityType;
     private World world;
     private Location location;
 
-    public EntityHeadDropEvent(boolean isAllowed, Player killer, ItemStack head, World world, Location location, EntityType entityType) {
-        this.isAllowed = isAllowed;
+    public EntityHeadDropEvent(Player killer, ItemStack head, World world, Location location, EntityType entityType) {
         this.player = killer;
         this.skull = head;
         this.world = world;
@@ -42,10 +40,6 @@ public class EntityHeadDropEvent extends Event implements Cancellable {
     @Override
     public HandlerList getHandlers() {
         return handlers;
-    }
-
-    public boolean isAllowed() {
-        return isAllowed;
     }
 
     public ItemStack getSkull() {

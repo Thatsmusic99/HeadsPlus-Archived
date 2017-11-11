@@ -38,9 +38,11 @@ public interface Locale {
     String getNoHeads(); // Returns a message if a player doesn't have any actual heads that can be sold in their inventory.
     // English: "You don't have any valid heads in your inventory!"
 
-    String getInvalidArguments(); //
+    String getInvalidArguments(); // Returns a message when invalid arguments are provided in a command.
+    // English: "Invalid arguments!"
 
-    String getSellFail();
+    String getSellFail(); // Returns a message when a head fails to be sold, likely due to plugin issues.
+    // English: "Couldn''t sell head!"
 
     String getFalseHead();
 

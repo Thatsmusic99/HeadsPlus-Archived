@@ -24,10 +24,12 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
-public class HeadsPlus extends JavaPlugin {	
+public class HeadsPlus extends JavaPlugin {
+
 	public final Logger log = Logger.getLogger("Minecraft");
 	private static HeadsPlus instance;
 	private final PluginDescriptionFile pluginYml = getDescription();
@@ -61,6 +63,10 @@ public class HeadsPlus extends JavaPlugin {
 			HeadsPlusConfigHeads.headsEnable();
 			HeadsPlusConfigHeadsX.headsxEnable();
 			DeathEvents.createList();
+
+		//	if (config.getBoolean("leaderboards-mysql")) {
+        //        openConnection();
+        //    }
 
 			if (!getConfig().getBoolean("disableCrafting")) {
 			    HeadsPlusCrafting.craftingEnable();
@@ -206,7 +212,9 @@ public class HeadsPlus extends JavaPlugin {
                 return;
             }
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://" + this.host+ ":" + this.port + "/headsplusleaderboards", this.username, this.password);
+            connection = DriverManager.getConnection("jdbc:mysql://" + config.getString("mysql-host")+ ":" + config.getString("mysql-port") + "/" + config.getString("mysql-port"), config.getString("mysql-username"), config.getString("mysql-password"));
+            Statement st = connection.createStatement();
+
         }
     }
 

@@ -144,6 +144,9 @@ public class InventoryManager {
         heads = HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false).size();
         if (section.equalsIgnoreCase("menu")) {
             int s = sections;
+            if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("options.advent-calender")) {
+                sections++;
+            }
             pages = 1;
             while (s > 28) {
                 s -= 28;
@@ -182,42 +185,67 @@ public class InventoryManager {
                     timesSent++;
                 }
             }
+            if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("options.advent-calender")) {
+                ItemStack is = new ItemStack(Material.SKULL_ITEM);
+                SkullMeta sm = (SkullMeta) is.getItemMeta();
+                GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
+                byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", AdventCManager.THIRD.texture).getBytes());
+                gm.getProperties().put("textures", new Property("texture", Arrays.toString(encodedData)));
+
+                Field profileField = null;
+                try {
+                    profileField = sm.getClass().getDeclaredField("profile");
+                } catch (NoSuchFieldException | SecurityException e) {
+                    e.printStackTrace();
+                }
+                profileField.setAccessible(true);
+                try {
+                    profileField.set(sm, gm);
+                } catch (IllegalArgumentException | IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+                sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4[&a&lHeadsPlus &a&lAdvent Calender!&2]"));
+                is.setItemMeta(sm);
+            }
         } else {
             List<String> ls = new ArrayList<>();
-            for (String str : HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false)) {
-                if (HeadsPlusConfigHeadsX.getHeadsX().getString("heads." + str + ".section").equalsIgnoreCase(section)) {
-                    ls.add(str);
+            if (!section.equalsIgnoreCase("advent_calender")) {
+                for (String str : HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false)) {
+                    if (HeadsPlusConfigHeadsX.getHeadsX().getString("heads." + str + ".section").equalsIgnoreCase(section)) {
+                        ls.add(str);
+                    }
+                }
+                heads = ls.size();
+                int h = heads;
+                pages = 1;
+                while (h > 28) {
+                    h -= 28;
+                    pages++;
+                }
+                if (next) {
+                    cPage++;
+                } else {
+                    cPage--;
+                }
+                if (start) {
+                    cPage = 1;
+                }
+                i = create(54, "HeadsPlus Head selector: page " + cPage + "/" + pages);
+                int si = (cPage - 1) * 28;
+                int ei = 28 + si;
+
+                if (ei > ls.size()) {
+                    ei = ls.size();
+                }
+
+                List<String> l = new ArrayList<>(ls).subList(si, ei);
+                for (String str : l) {
+                    if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("heads." + str + ".database")) {
+                        skull(str, i);
+                    }
                 }
             }
-            heads = ls.size();
-            int h = heads;
-            pages = 1;
-            while (h > 28) {
-                h -= 28;
-                pages++;
-            }
-            if (next) {
-                cPage++;
-            } else {
-                cPage--;
-            }
-            if (start) {
-                cPage = 1;
-            }
-            i = create(54, "HeadsPlus Head selector: page " + cPage + "/" + pages);
-            int si = (cPage - 1) * 28;
-            int ei = 28 + si;
 
-            if (ei > ls.size()) {
-                ei = ls.size();
-            }
-
-            List<String> l = new ArrayList<>(ls).subList(si, ei);
-            for (String str : l) {
-                if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("heads." + str + ".database")) {
-                    skull(str, i);
-                }
-            }
         }
         ItemStack isi = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 8);
         ItemMeta ims = isi.getItemMeta();
@@ -347,5 +375,34 @@ public class InventoryManager {
         s.setItemMeta(sm);
         i.setItem(pos()[timesSent], s);
         timesSent++;
+    }
+
+    private static void skullChristmas(Inventory i) {
+        for (AdventCManager acm : AdventCManager.values()) {
+            ItemStack s = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+            SkullMeta sm = (SkullMeta) s.getItemMeta();
+            GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
+            byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", acm.texture).getBytes());
+            gm.getProperties().put("textures", new Property("texture", Arrays.toString(encodedData)));
+
+
+            Field profileField = null;
+            try {
+                profileField = sm.getClass().getDeclaredField("profile");
+            } catch (NoSuchFieldException | SecurityException e) {
+                e.printStackTrace();
+            }
+            profileField.setAccessible(true);
+            try {
+                profileField.set(sm, gm);
+            } catch (IllegalArgumentException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', acm.name));
+
+            s.setItemMeta(sm);
+            i.setItem(pos()[timesSent], s);
+            timesSent++;
+        }
     }
 }

@@ -60,9 +60,11 @@ public class HeadsPlusConfigHeadsX {
         getHeadsX().options().copyDefaults(true);
         saveHeadsX();
     }
+
     public static FileConfiguration getHeadsX() {
         return headsx;
     }
+
     public static void reloadHeadsX() {
         if (headsxf == null) {
             headsxf = new File(HeadsPlus.getInstance().getDataFolder(), "headsx.yml");
@@ -70,6 +72,7 @@ public class HeadsPlusConfigHeadsX {
         headsx = YamlConfiguration.loadConfiguration(headsxf);
         getHeadsX().addDefault("options.version", cVersion);
         getHeadsX().addDefault("options.default-price", 10.00);
+        getHeadsX().addDefault("options.advent-calender", true);
         if (headsxf.length() <= 500) {
             loadHeadsX();
         }
@@ -123,6 +126,7 @@ public class HeadsPlusConfigHeadsX {
     public static boolean isHPXSkull(String str) {
         return str.startsWith("HP#");
     }
+
     public static ItemStack getSkull(String s) {
         String st = s.split("#")[1];
         ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);

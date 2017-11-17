@@ -73,6 +73,9 @@ public class HeadsPlusConfigHeadsX {
         getHeadsX().addDefault("options.version", cVersion);
         getHeadsX().addDefault("options.default-price", 10.00);
         getHeadsX().addDefault("options.advent-calender", true);
+        if (getHeadsX().getBoolean("options.advent-calender")) {
+
+        }
         if (headsxf.length() <= 500) {
             loadHeadsX();
         }

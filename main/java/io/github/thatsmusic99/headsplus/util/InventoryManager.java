@@ -139,7 +139,7 @@ public class InventoryManager {
         }
     }
     public static Inventory changePage(boolean next, boolean start, Player p, String section) {
-        Inventory i;
+        Inventory i = null;
         sections = HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("sections").getKeys(false).size();
         heads = HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false).size();
         if (section.equalsIgnoreCase("menu")) {
@@ -377,7 +377,7 @@ public class InventoryManager {
         timesSent++;
     }
 
-    private static void skullChristmas(Inventory i) {
+    private static void skullChristmas(Inventory i, Player p) {
         for (AdventCManager acm : AdventCManager.values()) {
             ItemStack s = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
             SkullMeta sm = (SkullMeta) s.getItemMeta();

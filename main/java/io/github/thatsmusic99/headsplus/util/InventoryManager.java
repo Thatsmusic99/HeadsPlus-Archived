@@ -379,30 +379,57 @@ public class InventoryManager {
 
     private static void skullChristmas(Inventory i, Player p) {
         for (AdventCManager acm : AdventCManager.values()) {
-            ItemStack s = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-            SkullMeta sm = (SkullMeta) s.getItemMeta();
-            GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
-            byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", acm.texture).getBytes());
-            gm.getProperties().put("textures", new Property("texture", Arrays.toString(encodedData)));
+            if (HeadsPlusConfigHeadsX.getHeadsX().getStringList("advent." + acm.name).contains(p.getUniqueId().toString())) {
+                ItemStack s = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+                SkullMeta sm = (SkullMeta) s.getItemMeta();
+                GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
+                byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", acm.texture).getBytes());
+                gm.getProperties().put("textures", new Property("texture", Arrays.toString(encodedData)));
 
 
-            Field profileField = null;
-            try {
-                profileField = sm.getClass().getDeclaredField("profile");
-            } catch (NoSuchFieldException | SecurityException e) {
-                e.printStackTrace();
+                Field profileField = null;
+                try {
+                    profileField = sm.getClass().getDeclaredField("profile");
+                } catch (NoSuchFieldException | SecurityException e) {
+                    e.printStackTrace();
+                }
+                profileField.setAccessible(true);
+                try {
+                    profileField.set(sm, gm);
+                } catch (IllegalArgumentException | IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+                sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', acm.name));
+
+                s.setItemMeta(sm);
+                i.setItem(pos()[timesSent], s);
+                timesSent++;
+            } else {
+                ItemStack s = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+                SkullMeta sm = (SkullMeta) s.getItemMeta();
+                GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
+                byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", acm.wTexture).getBytes());
+                gm.getProperties().put("textures", new Property("texture", Arrays.toString(encodedData)));
+
+
+                Field profileField = null;
+                try {
+                    profileField = sm.getClass().getDeclaredField("profile");
+                } catch (NoSuchFieldException | SecurityException e) {
+                    e.printStackTrace();
+                }
+                profileField.setAccessible(true);
+                try {
+                    profileField.set(sm, gm);
+                } catch (IllegalArgumentException | IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+                sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', acm.wName));
+
+                s.setItemMeta(sm);
+                i.setItem(pos()[timesSent], s);
+                timesSent++;
             }
-            profileField.setAccessible(true);
-            try {
-                profileField.set(sm, gm);
-            } catch (IllegalArgumentException | IllegalAccessException e) {
-                e.printStackTrace();
-            }
-            sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', acm.name));
-
-            s.setItemMeta(sm);
-            i.setItem(pos()[timesSent], s);
-            timesSent++;
         }
     }
 }

@@ -206,6 +206,7 @@ public class InventoryManager {
                 }
                 sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4[&a&lHeadsPlus &a&lAdvent Calender!&2]"));
                 is.setItemMeta(sm);
+                i.setItem(pos()[timesSent], is);
             }
         } else {
             List<String> ls = new ArrayList<>();

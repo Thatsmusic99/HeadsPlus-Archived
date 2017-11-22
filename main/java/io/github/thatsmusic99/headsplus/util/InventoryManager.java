@@ -189,7 +189,7 @@ public class InventoryManager {
                 ItemStack is = new ItemStack(Material.SKULL_ITEM);
                 SkullMeta sm = (SkullMeta) is.getItemMeta();
                 GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
-                byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", AdventCManager.THIRD.texture).getBytes());
+                byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", AdventCManager.FOURTH.texture).getBytes());
                 gm.getProperties().put("textures", new Property("texture", Arrays.toString(encodedData)));
 
                 Field profileField = null;
@@ -382,7 +382,7 @@ public class InventoryManager {
 
     private static void skullChristmas(Inventory i, Player p) {
         for (AdventCManager acm : AdventCManager.values()) {
-            if (HeadsPlusConfigHeadsX.getHeadsX().getStringList("advent." + acm.name).contains(p.getUniqueId().toString())) {
+            if (HeadsPlusConfigHeadsX.getHeadsX().getStringList("advent." + acm.name()).contains(p.getUniqueId().toString())) {
                 ItemStack s = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
                 SkullMeta sm = (SkullMeta) s.getItemMeta();
                 GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");

@@ -50,19 +50,35 @@ public class InventoryEvent implements Listener {
                     e.setCancelled(true);
                     return;
                 } else if (InventoryManager.getSection().equalsIgnoreCase("advent_calender")) {
-                    if (!(month == 12)) {
+                    if (!(month == 11)) { // TODO Change for testing
                         e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getChristmasDeniedMessage()));
+                        e.setCancelled(true);
+                        return;
                     }
                     for (AdventCManager acm : AdventCManager.values()) {
                         if (e.getSlot() == acm.place) {
-                            if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase(ChatColor.stripColor(acm.wName))) {
-                                
-                                e.getInventory().setItem(e.getSlot(),);
+                            if (Calendar.getInstance().get(Calendar.DAY_OF_MONTH) >= acm.date) {
+                                if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase(ChatColor.stripColor(acm.wName))) {
+                                    e.getInventory().setItem(e.getSlot(), HeadsPlusAPI.createSkull(acm.texture, acm.name));
+                                    HeadsPlusConfigHeadsX.getHeadsX().getStringList("advent." + acm.name()).add((e.getWhoClicked().getUniqueId().toString()));
+                                    e.setCancelled(true);
+                                    return;
+                                } else {
+                                    if (e.getWhoClicked().getInventory().firstEmpty() == -1) {
+                                        e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("full-inv")));
+                                        e.setCancelled(true);
+                                        return;
+                                    }
+                                    e.getWhoClicked().getInventory().addItem(e.getCurrentItem());
+                                    e.setCancelled(true);
+                                    return;
+                                }
                             } else {
-                                e.getWhoClicked().getInventory().addItem(e.getCurrentItem());
+                                e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getChristmasDeniedMessage()));
                                 e.setCancelled(true);
                                 return;
                             }
+
                         } else {
                             HeadsPlus.getInstance().log.info(String.valueOf(e.getSlot()));
                         }

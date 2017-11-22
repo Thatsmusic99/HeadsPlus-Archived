@@ -7,6 +7,7 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
 
+import org.apache.commons.codec.binary.Base64;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -14,7 +15,9 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public class HeadsPlusAPI {
 
@@ -78,6 +81,29 @@ public class HeadsPlusAPI {
             }
         }
         return false;
+    }
+
+    public static ItemStack createSkull(String texture, String displayname) {
+        ItemStack s = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+        SkullMeta sm = (SkullMeta) s.getItemMeta();
+        GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
+
+        gm.getProperties().put("textures", new Property("texture", texture));
+
+        Field profileField = null;
+        try {
+            profileField = sm.getClass().getDeclaredField("profile");
+        } catch (NoSuchFieldException | SecurityException e) {
+            e.printStackTrace();
+        }
+        profileField.setAccessible(true);
+        try {
+            profileField.set(sm, gm);
+        } catch (IllegalArgumentException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeadsX.getHeadsX().getString(displayname)));
+        return s;
     }
 
     public static String getSkullType(ItemStack is) throws NoSuchFieldException, IllegalAccessException {

@@ -189,8 +189,7 @@ public class InventoryManager {
                 ItemStack is = new ItemStack(Material.SKULL_ITEM);
                 SkullMeta sm = (SkullMeta) is.getItemMeta();
                 GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
-                byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", AdventCManager.FOURTH.texture).getBytes());
-                gm.getProperties().put("textures", new Property("texture", Arrays.toString(encodedData)));
+                gm.getProperties().put("textures", new Property("texture",  AdventCManager.FOURTH.texture));
 
                 Field profileField = null;
                 try {
@@ -204,7 +203,7 @@ public class InventoryManager {
                 } catch (IllegalArgumentException | IllegalAccessException e) {
                     e.printStackTrace();
                 }
-                sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4[&a&lHeadsPlus &a&lAdvent Calender!&2]"));
+                sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4[&a&lHeadsPlus &c&lAdvent Calender!&2]"));
                 is.setItemMeta(sm);
                 i.setItem(pos()[timesSent], is);
             }
@@ -381,14 +380,13 @@ public class InventoryManager {
         timesSent++;
     }
 
-    private static void skullChristmas(Inventory i, Player p) {
+    public static void skullChristmas(Inventory i, Player p) {
         for (AdventCManager acm : AdventCManager.values()) {
             if (HeadsPlusConfigHeadsX.getHeadsX().getStringList("advent." + acm.name()).contains(p.getUniqueId().toString())) {
                 ItemStack s = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
                 SkullMeta sm = (SkullMeta) s.getItemMeta();
                 GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
-                byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", acm.texture).getBytes());
-                gm.getProperties().put("textures", new Property("texture", Arrays.toString(encodedData)));
+                gm.getProperties().put("textures", new Property("texture", acm.texture));
 
 
                 Field profileField = null;
@@ -412,8 +410,7 @@ public class InventoryManager {
                 ItemStack s = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
                 SkullMeta sm = (SkullMeta) s.getItemMeta();
                 GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
-                byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", acm.wTexture).getBytes());
-                gm.getProperties().put("textures", new Property("texture", Arrays.toString(encodedData)));
+                gm.getProperties().put("textures", new Property("texture", acm.wTexture));
 
 
                 Field profileField = null;

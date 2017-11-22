@@ -102,7 +102,7 @@ public class HeadsPlusAPI {
         } catch (IllegalArgumentException | IllegalAccessException e) {
             e.printStackTrace();
         }
-        sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeadsX.getHeadsX().getString(displayname)));
+        sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', displayname));
         return s;
     }
 

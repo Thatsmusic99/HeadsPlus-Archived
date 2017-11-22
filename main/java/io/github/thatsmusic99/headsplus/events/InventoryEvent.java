@@ -1,5 +1,7 @@
 package io.github.thatsmusic99.headsplus.events;
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.HeadsPlusAPI;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
@@ -11,19 +13,21 @@ import io.github.thatsmusic99.headsplus.util.InventoryManager;
 
 import net.milkbowl.vault.economy.EconomyResponse;
 
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 
 public class InventoryEvent implements Listener {
@@ -31,13 +35,14 @@ public class InventoryEvent implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent e) {
         int month = Calendar.getInstance().get(Calendar.MONTH);
-        HeadsPlus.getInstance().log.info(String.valueOf(month));
         if (e.getInventory().getName().equalsIgnoreCase("HeadsPlus Head selector: page " + InventoryManager.getPage() + "/" + InventoryManager.getPages())) {
             if (e.getCurrentItem().getType().equals(Material.BARRIER)) {
                 e.setCancelled(true);
                 e.getWhoClicked().closeInventory();
             } else if (e.getCurrentItem().getType().equals(Material.SKULL_ITEM)) {
+                HeadsPlus.getInstance().log.info("Rawr!");
                 if (InventoryManager.getSection().equalsIgnoreCase("menu")) {
+                    HeadsPlus.getInstance().log.info("Hm, nah.");
                     for (HeadsXSections h : HeadsXSections.values()) {
                         if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', h.dn)))) {
                             InventoryManager.setSection(h.let);
@@ -46,24 +51,52 @@ public class InventoryEvent implements Listener {
                             return;
                         }
                     }
+                    InventoryManager.setSection("advent_calender");
                     e.getWhoClicked().openInventory(InventoryManager.changePage(false, true, (Player) e.getWhoClicked(), "advent_calender"));
                     e.setCancelled(true);
                     return;
                 } else if (InventoryManager.getSection().equalsIgnoreCase("advent_calender")) {
-                    if (!(month == 11)) { // TODO Change for testing
+                    if (!(month == 10)) { // TODO Change for testing
                         e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getChristmasDeniedMessage()));
                         e.setCancelled(true);
                         return;
                     }
                     for (AdventCManager acm : AdventCManager.values()) {
                         if (e.getSlot() == acm.place) {
-                            if (Calendar.getInstance().get(Calendar.DAY_OF_MONTH) >= acm.date) {
-                                if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase(ChatColor.stripColor(acm.wName))) {
-                                    e.getInventory().setItem(e.getSlot(), HeadsPlusAPI.createSkull(acm.texture, acm.name));
+                            HeadsPlus.getInstance().log.info("Pong!");
+                            if (Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + 1 >= acm.date) {
+                                if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', acm.wName)))) {
+                                    ItemStack s = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+                                    SkullMeta sm = (SkullMeta) s.getItemMeta();
+                                    GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
+                                    gm.getProperties().put("textures", new Property("texture", acm.texture));
+
+
+                                    Field profileField = null;
+                                    try {
+                                        profileField = sm.getClass().getDeclaredField("profile");
+                                    } catch (NoSuchFieldException | SecurityException ex) {
+                                        ex.printStackTrace();
+                                    }
+                                    profileField.setAccessible(true);
+                                    try {
+                                        profileField.set(sm, gm);
+                                    } catch (IllegalArgumentException | IllegalAccessException ex) {
+                                        ex.printStackTrace();
+                                    }
+                                    sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', acm.name));
+
+                                    s.setItemMeta(sm);
+                                    e.getClickedInventory().setItem(e.getSlot(), s);
+
                                     HeadsPlusConfigHeadsX.getHeadsX().getStringList("advent." + acm.name()).add((e.getWhoClicked().getUniqueId().toString()));
+                                    HeadsPlusConfigHeadsX.reloadHeadsX();
+                                    e.getWhoClicked().getWorld().playSound(e.getWhoClicked().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.5F);
                                     e.setCancelled(true);
                                     return;
                                 } else {
+                                    HeadsPlus.getInstance().log.info(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()));
+                                    HeadsPlus.getInstance().log.info(ChatColor.stripColor(acm.wName));
                                     if (e.getWhoClicked().getInventory().firstEmpty() == -1) {
                                         e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("full-inv")));
                                         e.setCancelled(true);
@@ -79,8 +112,6 @@ public class InventoryEvent implements Listener {
                                 return;
                             }
 
-                        } else {
-                            HeadsPlus.getInstance().log.info(String.valueOf(e.getSlot()));
                         }
                     }
                 }

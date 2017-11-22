@@ -476,4 +476,9 @@ public class en_uk implements Locale {
     public String getDescription() {
         return "&3Description: &7";
     }
+
+    @Override
+    public String getChristmasDeniedMessage() {
+        return "&cIt isn't that date yet!";
+    }
 }

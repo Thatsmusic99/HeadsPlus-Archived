@@ -139,7 +139,7 @@ public class InventoryManager {
         }
     }
     public static Inventory changePage(boolean next, boolean start, Player p, String section) {
-        Inventory i = null;
+        Inventory i;
         sections = HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("sections").getKeys(false).size();
         heads = HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false).size();
         if (section.equalsIgnoreCase("menu")) {
@@ -244,6 +244,9 @@ public class InventoryManager {
                         skull(str, i);
                     }
                 }
+            } else {
+                i = create(54, "HeadsPlus Head selector: page " + cPage + "/" + pages);
+                skullChristmas(i, p.getPlayer());
             }
 
         }

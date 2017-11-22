@@ -208,4 +208,6 @@ public interface Locale {
 
     String getDescription();
 
+    String getChristmasDeniedMessage();
+
 }

@@ -29,7 +29,7 @@ public class HeadsPlusConfigHeadsX {
     private static File headsxf;
     public static double cVersion = 0.9;
 
-    private static void saveHeadsX() {
+    public static void saveHeadsX() {
         if (headsx == null || headsxf == null) {
             return;
         }

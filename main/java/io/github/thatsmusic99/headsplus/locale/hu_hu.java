@@ -478,4 +478,9 @@ public class hu_hu implements Locale {
     public String getDescription() {
         return "&3Leírás: &7";
     }
+
+    @Override
+    public String getChristmasDeniedMessage() {
+        return "&cMég nem ez a dátum!";
+    }
 }

@@ -478,4 +478,9 @@ public class ro_ro implements Locale {
     public String getDescription() {
         return "&3Descriere: &7";
     }
+
+    @Override
+    public String getChristmasDeniedMessage() {
+        return "&cNu este inca data asta!";
+    }
 }

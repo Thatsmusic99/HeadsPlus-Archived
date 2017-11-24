@@ -30,7 +30,8 @@ public class HeadsPlusConfigHeadsX {
     public static double cVersion = 0.9;
 
     public static void saveHeadsX() {
-        if (headsx == null || headsxf == null) {
+        headsxf = new File(HeadsPlus.getInstance().getDataFolder(), "headsx.yml");
+        if (headsx == null) {
             return;
         }
         try {

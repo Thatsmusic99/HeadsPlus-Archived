@@ -189,7 +189,7 @@ public class InventoryManager {
                 ItemStack is = new ItemStack(Material.SKULL_ITEM);
                 SkullMeta sm = (SkullMeta) is.getItemMeta();
                 GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
-                gm.getProperties().put("textures", new Property("texture",  AdventCManager.FOURTH.texture));
+                gm.getProperties().put("textures", new Property("texture",  AdventCManager.FIFTH.texture));
 
                 Field profileField = null;
                 try {

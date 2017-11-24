@@ -3,7 +3,7 @@ package io.github.thatsmusic99.headsplus.events;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.api.HeadsPlusAPI;
+import io.github.thatsmusic99.headsplus.commands.Heads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.config.HeadsXSections;
@@ -18,16 +18,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.UUID;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.logging.Level;
 
 public class InventoryEvent implements Listener {
@@ -59,9 +57,13 @@ public class InventoryEvent implements Listener {
                         e.setCancelled(true);
                         return;
                     }
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                    Date d = new Date();
+                    String st = dateFormat.format(d);
+                    int day = Integer.parseInt(st.split(" ")[0].split("/")[2]);
                     for (AdventCManager acm : AdventCManager.values()) {
                         if (e.getSlot() == acm.place) {
-                            if (Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + 1 >= acm.date) {
+                            if (day >= acm.date) {
                                 if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', acm.wName)))) {
                                     ItemStack s = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
                                     SkullMeta sm = (SkullMeta) s.getItemMeta();
@@ -87,13 +89,12 @@ public class InventoryEvent implements Listener {
                                     e.getClickedInventory().setItem(e.getSlot(), s);
 
                                     HeadsPlusConfigHeadsX.getHeadsX().getStringList("advent." + acm.name()).add((e.getWhoClicked().getUniqueId().toString()));
-                                    HeadsPlusConfigHeadsX.reloadHeadsX();
+                                    HeadsPlusConfigHeadsX.saveHeadsX();
                                     e.getWhoClicked().getWorld().playSound(e.getWhoClicked().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.5F);
                                     e.setCancelled(true);
                                     return;
                                 } else {
-                                    HeadsPlus.getInstance().log.info("And I got here.");
-                                    HeadsPlus.getInstance().log.info(String.valueOf(Calendar.DAY_OF_MONTH + 1));
+                                    HeadsPlus.getInstance().log.info(String.valueOf(day));
                                     HeadsPlus.getInstance().log.info(String.valueOf(acm.date));
                                     if (e.getWhoClicked().getInventory().firstEmpty() == -1) {
                                         e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("full-inv")));
@@ -105,13 +106,16 @@ public class InventoryEvent implements Listener {
                                     return;
                                 }
                             } else {
-                                HeadsPlus.getInstance().log.info("Actually, it's here.");
-                                e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getChristmasDeniedMessage()));
+                                HeadsPlus.getInstance().log.info(String.valueOf(day));
+                                HeadsPlus.getInstance().log.info(String.valueOf(acm.date));
+                                e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("xmas-denied")));
                                 e.setCancelled(true);
                                 return;
                             }
                         }
                     }
+
+                    e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("xmas-denied")));
                     e.setCancelled(true);
                     return;
                 }

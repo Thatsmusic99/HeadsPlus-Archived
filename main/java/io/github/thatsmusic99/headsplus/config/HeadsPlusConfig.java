@@ -93,6 +93,7 @@ public class HeadsPlusConfig {
 		getMessages().addDefault("buy-success", "&3You have bought a head for &b%l &3and now have &b%b!");
         getMessages().addDefault("buy-fail", "&cCouldn''t buy head!");
         getMessages().addDefault("update-found", "%h &3An update has been found for HeadsPlus!");
+        getMessages().addDefault("xmas-denied", "&cIt isn't that date yet!");
 
         if (!getMessages().getString("locale").equalsIgnoreCase(getMessages().getString("pLocale")) && !nullpoint) {
             getMessages().set("pLocale", getMessages().getString("locale"));
@@ -161,6 +162,7 @@ public class HeadsPlusConfig {
             getMessages().set("empty-wlw", LocaleManager.getLocale().getEmptyWWhitelist());
             getMessages().set("buy-success", LocaleManager.getLocale().getBuySuccess());
             getMessages().set("buy-fail", LocaleManager.getLocale().getBuyFail());
+            getMessages().set("xmas-denied", LocaleManager.getLocale().getChristmasDeniedMessage());
         }
 
 		getMessages().options().copyDefaults(true);

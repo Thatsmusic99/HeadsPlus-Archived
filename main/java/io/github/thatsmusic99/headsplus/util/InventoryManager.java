@@ -186,23 +186,8 @@ public class InventoryManager {
                 }
             }
             if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("options.advent-calender")) {
-                ItemStack is = new ItemStack(Material.SKULL_ITEM);
+                ItemStack is = HeadsPlusConfigHeadsX.getSkull("HP#snowman_head");
                 SkullMeta sm = (SkullMeta) is.getItemMeta();
-                GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
-                gm.getProperties().put("textures", new Property("texture",  AdventCManager.FIFTH.texture));
-
-                Field profileField = null;
-                try {
-                    profileField = sm.getClass().getDeclaredField("profile");
-                } catch (NoSuchFieldException | SecurityException e) {
-                    e.printStackTrace();
-                }
-                profileField.setAccessible(true);
-                try {
-                    profileField.set(sm, gm);
-                } catch (IllegalArgumentException | IllegalAccessException e) {
-                    e.printStackTrace();
-                }
                 sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4[&a&lHeadsPlus &c&lAdvent Calender!&2]"));
                 is.setItemMeta(sm);
                 i.setItem(pos()[timesSent], is);
@@ -404,7 +389,7 @@ public class InventoryManager {
                 sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', acm.name));
 
                 s.setItemMeta(sm);
-                i.setItem(pos()[timesSent], s);
+                i.setItem(acm.place, s);
                 timesSent++;
             } else {
                 ItemStack s = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);

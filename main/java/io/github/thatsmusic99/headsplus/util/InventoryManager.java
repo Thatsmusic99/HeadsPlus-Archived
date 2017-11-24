@@ -428,7 +428,7 @@ public class InventoryManager {
                 sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', acm.wName));
 
                 s.setItemMeta(sm);
-                i.setItem(pos()[timesSent], s);
+                i.setItem(acm.place, s);
                 timesSent++;
             }
         }

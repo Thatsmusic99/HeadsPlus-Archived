@@ -19,13 +19,19 @@ public interface Locale {
 
     String getHeadInteractMessage(); // Returns a message when a player interacts with a head.
     // English: "That is <Player>'s head!"
+    // Parameters:
+    // %p - The player's head being clicked.
 
     String getHeadMhfInteractMessage(); // Returns a message when a player interacts with a head (object).
     // English: "That is a <Object>'s head!"
+    // Parameters:
+    // %p - The object being clicked.
 
     String getHeadMhfInteractMessage2(); // Returns a message when a player interacts with a head (object).
     // NOTE: This comes up because of how English works. If needed, it can be the same as the above message.
     // English: "That is an <Object>'s head!"
+    // Parameters:
+    // %p - The object being clicked.
 
     String getSellSuccess(); // Returns a message when a player successfully sells their head.
     // English: "You successfully sold the head(s) for %l and now have %b!"
@@ -44,11 +50,14 @@ public interface Locale {
     String getSellFail(); // Returns a message when a head fails to be sold, likely due to plugin issues.
     // English: "Couldn''t sell head!"
 
-    String getFalseHead();
+    String getFalseHead(); // Returns a message when a head can't be sold due to being invalid.
+    // English: "&cThis head cannot be sold!"
 
-    String getFalseItem();
+    String getFalseItem(); // Returns a message when an item that isn't a skull is found.
+    // English: "This is not a head!"
 
-    String getBlacklistHead();
+    String getBlacklistHead(); // Returns a message when a head is blacklisted and can't be used.
+    // English: "That head is blacklisted and can not be used!"
 
     String getWhitelistHead();
 

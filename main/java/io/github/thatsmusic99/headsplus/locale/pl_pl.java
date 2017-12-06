@@ -2,6 +2,8 @@ package io.github.thatsmusic99.headsplus.locale;
 
 public class pl_pl implements Locale {
 
+    // No? :(
+
     @Override
     public boolean active() {
         return false;

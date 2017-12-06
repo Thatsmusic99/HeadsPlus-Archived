@@ -92,7 +92,9 @@ public class InventoryEvent implements Listener {
                                         list.add(e.getWhoClicked().getUniqueId().toString());
                                         HeadsPlusConfigHeadsX.getHeadsX().set("advent." + acm.name(), list);
                                         HeadsPlusConfigHeadsX.saveHeadsX();
-                                        e.getWhoClicked().getWorld().playSound(e.getWhoClicked().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.5F);
+                                        if (!Bukkit.getVersion().contains("1.8")) {
+                                            e.getWhoClicked().getWorld().playSound(e.getWhoClicked().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.5F);
+                                        }
                                         e.setCancelled(true);
                                         return;
                                     } else {

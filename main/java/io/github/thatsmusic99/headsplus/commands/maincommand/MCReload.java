@@ -76,6 +76,15 @@ public class MCReload {
                                HeadsPlus.getInstance().sellable = false;
                            }
                        }
+                       if (HeadsPlus.getInstance().getConfig().getBoolean("stop-placement-of-sellable-heads")) {
+                           if (!HeadsPlus.getInstance().stopP) {
+                               HeadsPlus.getInstance().stopP = true;
+                           }
+                       } else {
+                           if (HeadsPlus.getInstance().stopP) {
+                               HeadsPlus.getInstance().stopP = false;
+                           }
+                       }
                        HeadsPlus.getInstance().db = HeadsPlus.getInstance().getConfig().getBoolean("headsDatabase");
 
 					   HeadsPlus.getInstance().log.info("[HeadsPlus] Config reloaded!");

@@ -23,12 +23,14 @@ whitelist: []
 whitelistw: []
 update-checker: true
 update-notify: true
+stop-placement-of-sellable-heads: false
 #mysql-host: localhost
 #mysql-port: 3306
 #mysql-database: db
 #mysql-username: username
 #mysql-password: password
 #leaderboards-mysql: false
+#leaderboards: true
 lore:
 - '&6&lThis head can be sold!'
 - '&6Do /sellhead to sell!'

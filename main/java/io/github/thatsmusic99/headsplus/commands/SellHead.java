@@ -152,12 +152,6 @@ public class SellHead implements CommandExecutor {
 		    		
 		    	} else {
 		            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("false-head")));
-		            for (String s : skullM.getLore()) {
-		                sender.sendMessage(s);
-                    }
-                    for (String s : ls) {
-                        sender.sendMessage(s);
-                    }
                 }
 		    } else {
 		    	if (!sender.hasPermission("headsplus.sellhead")) {

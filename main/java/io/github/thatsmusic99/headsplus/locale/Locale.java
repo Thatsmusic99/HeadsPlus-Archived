@@ -219,4 +219,6 @@ public interface Locale {
 
     String getChristmasDeniedMessage();
 
+    String getBlockPlaceDenied();
+
 }

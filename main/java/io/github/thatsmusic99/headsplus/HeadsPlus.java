@@ -1,19 +1,15 @@
 package io.github.thatsmusic99.headsplus;
 
 import io.github.thatsmusic99.headsplus.commands.*;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
+import io.github.thatsmusic99.headsplus.config.*;
 import io.github.thatsmusic99.headsplus.events.*;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusCrafting;
 import io.github.thatsmusic99.headsplus.crafting.RecipePerms;
 
 import net.milkbowl.vault.economy.Economy;
@@ -40,6 +36,8 @@ public class HeadsPlus extends JavaPlugin {
 	public boolean drops;
 	public boolean arofj;
 	public boolean db;
+	public boolean lb;
+	public boolean stopP;
 	public static Object[] update = null;
     private Connection connection;
 
@@ -106,6 +104,19 @@ public class HeadsPlus extends JavaPlugin {
 			    arofj = false;
                 getServer().getPluginManager().registerEvents(new JoinEvent(), this);
             }
+            if(getConfig().getBoolean("stop-placement-of-sellable-heads")) {
+			    stopP = true;
+			    getServer().getPluginManager().registerEvents(new PlaceEvent(), this);
+            } else {
+			    stopP = false;
+			    getServer().getPluginManager().registerEvents(new PlaceEvent(), this);
+            }
+          //  if (getConfig().getBoolean("leaderboards")) {
+			//    lb = true;
+			//    getServer().getPluginManager().registerEvents(new LBEvents(), this);
+
+			//    HeadsPlusLeaderboards.lbFileEnable();
+          //  }
             db = getConfig().getBoolean("headsDatabase");
 		    this.getCommand("headsplus").setExecutor(new HeadsPlusCommand());
 		    this.getCommand("hp").setExecutor(new HeadsPlusCommand());
@@ -113,6 +124,7 @@ public class HeadsPlus extends JavaPlugin {
 		    this.getCommand("head").setExecutor(new Head());
 		    this.getCommand("heads").setExecutor(new Heads());
 		    this.getCommand("myhead").setExecutor(new MyHead());
+		  //  this.getCommand("hplb").setExecutor(new LeaderboardsCommand());
 		    JoinEvent.reloaded = false;
 			Metrics metrics = new Metrics(this);
 			metrics.addCustomChart(new Metrics.SimplePie("language", new Callable<String>() {

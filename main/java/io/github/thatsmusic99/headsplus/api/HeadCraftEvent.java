@@ -54,4 +54,8 @@ public class HeadCraftEvent extends Event implements Cancellable {
     public ItemStack getSkull() {
         return skull;
     }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 }

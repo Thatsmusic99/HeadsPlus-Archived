@@ -69,4 +69,8 @@ public class EntityHeadDropEvent extends Event implements Cancellable {
     public Player getPlayer() {
         return player;
     }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 }

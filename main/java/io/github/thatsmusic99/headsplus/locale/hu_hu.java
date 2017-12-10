@@ -483,4 +483,9 @@ public class hu_hu implements Locale {
     public String getChristmasDeniedMessage() {
         return "&cMég nem ez a dátum!";
     }
+
+    @Override
+    public String getBlockPlaceDenied() {
+        return "Nem teheted le a fejeteket!";
+    }
 }

@@ -481,4 +481,9 @@ public class en_uk implements Locale {
     public String getChristmasDeniedMessage() {
         return "&cIt isn't that date yet!";
     }
+
+    @Override
+    public String getBlockPlaceDenied() {
+        return "&cYou can not place sellable heads!";
+    }
 }

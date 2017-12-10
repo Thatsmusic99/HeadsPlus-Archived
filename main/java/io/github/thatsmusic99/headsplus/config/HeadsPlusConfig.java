@@ -94,6 +94,7 @@ public class HeadsPlusConfig {
         getMessages().addDefault("buy-fail", "&cCouldn''t buy head!");
         getMessages().addDefault("update-found", "%h &3An update has been found for HeadsPlus!");
         getMessages().addDefault("xmas-denied", "&cIt isn't that date yet!");
+        getMessages().addDefault("block-place-denied", "&cYou can not place sellable heads!");
 
         if (!getMessages().getString("locale").equalsIgnoreCase(getMessages().getString("pLocale")) && !nullpoint) {
             getMessages().set("pLocale", getMessages().getString("locale"));
@@ -163,6 +164,7 @@ public class HeadsPlusConfig {
             getMessages().set("buy-success", LocaleManager.getLocale().getBuySuccess());
             getMessages().set("buy-fail", LocaleManager.getLocale().getBuyFail());
             getMessages().set("xmas-denied", LocaleManager.getLocale().getChristmasDeniedMessage());
+            getMessages().set("block-place-denied", LocaleManager.getLocale().getBlockPlaceDenied());
         }
 
 		getMessages().options().copyDefaults(true);

@@ -483,4 +483,9 @@ public class ro_ro implements Locale {
     public String getChristmasDeniedMessage() {
         return "&cNu este inca data asta!";
     }
+
+    @Override
+    public String getBlockPlaceDenied() {
+        return "Nu poti sa-ti asezi capete!";
+    }
 }

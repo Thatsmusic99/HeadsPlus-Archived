@@ -16,8 +16,8 @@ public class PlaceEvent implements Listener {
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent e) {
         if (HeadsPlus.getInstance().stopP) {
-            if (e.getBlock().getType() == Material.SKULL || e.getBlock().getType() == Material.SKULL_ITEM) {
-                if (e.getPlayer().hasPermission("headsplus.bypass.preventplacement")) {
+            if (e.getItemInHand().getType() == Material.SKULL || e.getItemInHand().getType() == Material.SKULL_ITEM) {
+                if (!e.getPlayer().hasPermission("headsplus.bypass.preventplacement")) {
                     if (e.getItemInHand().getItemMeta().getLore() != null) {
                         List<String> ls = new ArrayList<>();
                         for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {

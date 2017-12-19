@@ -6,6 +6,7 @@ import io.github.thatsmusic99.headsplus.events.*;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -39,7 +40,8 @@ public class HeadsPlus extends JavaPlugin {
 	public boolean lb;
 	public boolean stopP;
 	public static Object[] update = null;
-    private Connection connection;
+    public Connection connection;
+    public static boolean con = false;
 
     public static FileConfiguration config;
 
@@ -62,9 +64,9 @@ public class HeadsPlus extends JavaPlugin {
 			HeadsPlusConfigHeadsX.headsxEnable();
 			DeathEvents.createList();
 
-		//	if (config.getBoolean("leaderboards-mysql")) {
-        //        openConnection();
-        //    }
+			if (config.getBoolean("leaderboards-mysql")) {
+                openConnection();
+            }
 
 			if (!getConfig().getBoolean("disableCrafting")) {
 			    HeadsPlusCrafting.craftingEnable();
@@ -111,12 +113,12 @@ public class HeadsPlus extends JavaPlugin {
 			    stopP = false;
 			    getServer().getPluginManager().registerEvents(new PlaceEvent(), this);
             }
-          //  if (getConfig().getBoolean("leaderboards")) {
-			//    lb = true;
-			//    getServer().getPluginManager().registerEvents(new LBEvents(), this);
+            if (getConfig().getBoolean("leaderboards")) {
+			    lb = true;
+			    getServer().getPluginManager().registerEvents(new LBEvents(), this);
 
-			//    HeadsPlusLeaderboards.lbFileEnable();
-          //  }
+			    HeadsPlusLeaderboards.lbFileEnable();
+            }
             db = getConfig().getBoolean("headsDatabase");
 		    this.getCommand("headsplus").setExecutor(new HeadsPlusCommand());
 		    this.getCommand("hp").setExecutor(new HeadsPlusCommand());
@@ -124,10 +126,10 @@ public class HeadsPlus extends JavaPlugin {
 		    this.getCommand("head").setExecutor(new Head());
 		    this.getCommand("heads").setExecutor(new Heads());
 		    this.getCommand("myhead").setExecutor(new MyHead());
-		  //  this.getCommand("hplb").setExecutor(new LeaderboardsCommand());
+			this.getCommand("hplb").setExecutor(new LeaderboardsCommand());
 		    JoinEvent.reloaded = false;
 			Metrics metrics = new Metrics(this);
-			metrics.addCustomChart(new Metrics.SimplePie("language", new Callable<String>() {
+			metrics.addCustomChart(new Metrics.SimplePie("languages", new Callable<String>() {
                 @Override
                 public String call() throws Exception {
                     return LocaleManager.getLocale().getLanguage();
@@ -226,6 +228,32 @@ public class HeadsPlus extends JavaPlugin {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://" + config.getString("mysql-host")+ ":" + config.getString("mysql-port") + "/" + config.getString("mysql-port"), config.getString("mysql-username"), config.getString("mysql-password"));
             Statement st = connection.createStatement();
+            StringBuilder sb = new StringBuilder();
+            try {
+				st.executeQuery("SELECT * from headspluslb");
+			} catch (SQLException ex) {
+				sb.append("CREATE TABLE `headspluslb` (" +
+						"`id` INT NOT NULL AUTO_INCREMENT," +
+						"`uuid` VARCHAR(45)," +
+						"`total` VARCHAR(45)");
+				for (EntityType e : DeathEvents.ableEntities) {
+					sb.append(", `").append(e.name()).append("` VARCHAR(45)");
+				}
+				st.executeUpdate(sb.toString());
+				StringBuilder sb2 = new StringBuilder();
+				sb2.append("INSERT INTO `headspluslb` (uuid, total");
+				for (EntityType e : DeathEvents.ableEntities) {
+					sb2.append(", ").append(e.name());
+				}
+				sb2.append("VALUES('server-total', '0'");
+				for (EntityType ignored : DeathEvents.ableEntities) {
+					sb2.append(", 0");
+				}
+				sb2.append(")");
+				st.executeUpdate(sb2.toString());
+				con = true;
+			}
+
 
         }
     }

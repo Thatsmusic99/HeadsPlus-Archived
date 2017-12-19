@@ -1,14 +1,19 @@
 package io.github.thatsmusic99.headsplus.config;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.events.DeathEvents;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 
 public class HeadsPlusLeaderboards {
@@ -21,7 +26,6 @@ public class HeadsPlusLeaderboards {
     }
     public static void lbFileEnable() {
         reloadLeaderboards();
-        loadLeaderboards(false);
     }
 
     public static void reloadLeaderboards() {
@@ -30,9 +34,10 @@ public class HeadsPlusLeaderboards {
             lbF = new File(HeadsPlus.getInstance().getDataFolder(), "leaderboards.yml");
             n = true;
         }
-
         lb = YamlConfiguration.loadConfiguration(lbF);
-        loadLeaderboards(n);
+        if (n) {
+            loadLeaderboards();
+        }
         saveLeaderboards();
 
     }
@@ -51,13 +56,11 @@ public class HeadsPlusLeaderboards {
 
     }
 
-    private static void loadLeaderboards(boolean neww) {
+    private static void loadLeaderboards() {
         try {
             getLeaderboards().options().header("HeadsPlus by Thatsmusic99 - Config wiki: https://github.com/Thatsmusic99/HeadsPlus/wiki/Configuration");
             getLeaderboards().addDefault("server-total", 0);
-            if (neww) {
-                getLeaderboards().createSection("player-data");
-            }
+            getLeaderboards().createSection("player-data");
             getLeaderboards().options().copyDefaults(true);
             saveLeaderboards();
         } catch (Exception e) {
@@ -66,36 +69,63 @@ public class HeadsPlusLeaderboards {
     }
 
     public static void addPlayer(Player p, String section) {
-        getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + ".total", 1);
-        getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + "." + section, 1);
-        int s = getLeaderboards().getInt("server-total");
-        s++;
-        getLeaderboards().set("server-total", s);
-        getLeaderboards().options().copyDefaults(true);
-        saveLeaderboards();
+        if (HeadsPlus.con) {
+
+        } else {
+            getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + ".total", 1);
+            getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + "." + section, 1);
+            int s = getLeaderboards().getInt("server-total");
+            s++;
+            getLeaderboards().set("server-total", s);
+            getLeaderboards().options().copyDefaults(true);
+            saveLeaderboards();
+        }
     }
 
     public static void addNewPlayerValue(Player p, String section) {
-        getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + "." + section, 1);
-        int s = getLeaderboards().getInt("server-total");
-        s++;
-        getLeaderboards().set("server-total", s);
-        getLeaderboards().options().copyDefaults(true);
-        saveLeaderboards();
+        if (HeadsPlus.con) {
+
+        } else {
+            getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + "." + section, 1);
+            int s = getLeaderboards().getInt("server-total");
+            s++;
+            getLeaderboards().set("server-total", s);
+            getLeaderboards().options().copyDefaults(true);
+            saveLeaderboards();
+        }
     }
 
     public static void addOntoValue(Player p, String section) {
-        int i = getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + "." + section);
-        i++;
-        getLeaderboards().set("player-data." + p.getUniqueId().toString() + "." + section, i);
-        int is = getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + ".total");
-        is++;
-        getLeaderboards().set("player-data." + p.getUniqueId().toString() + ".total", is);
-        int s = getLeaderboards().getInt("server-total");
-        s++;
-        getLeaderboards().set("server-total", s);
-        getLeaderboards().options().copyDefaults(true);
-        saveLeaderboards();
+        if (HeadsPlus.con) {
+            try {
+                Connection c = HeadsPlus.getInstance().connection;
+                Statement s = c.createStatement();
+                ResultSet rs;
+                rs = s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='" + p.getUniqueId().toString() + "'");
+                int val = rs.getInt(section);
+                val++;
+                s.executeUpdate("UPDATE `headspluslb` SET '" + section + "'=" + val + " WHERE `uuid`='" + p.getUniqueId().toString() + "'");
+                int val2 = rs.getInt("total");
+                val2++;
+                s.executeUpdate("UPDATE `headspluslb` SET total='" + val2 + "' WHERE `uuid`='" + p.getUniqueId().toString() + "'");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            int i = getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + "." + section);
+            i++;
+            getLeaderboards().set("player-data." + p.getUniqueId().toString() + "." + section, i);
+            int is = getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + ".total");
+            is++;
+            getLeaderboards().set("player-data." + p.getUniqueId().toString() + ".total", is);
+            int s = getLeaderboards().getInt("server-total");
+            s++;
+            getLeaderboards().set("server-total", s);
+            getLeaderboards().options().copyDefaults(true);
+            saveLeaderboards();
+        }
+
     }
 
     public static LinkedHashMap<Player, Integer> getScores(String section) {
@@ -137,18 +167,53 @@ public class HeadsPlusLeaderboards {
         return sortedMap;
     }
     public static boolean addPlayerOnFileIfNotFound(Player p, String section) {
-        try {
-            if (getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + ".total") != 0) {
+        if (HeadsPlus.con) {
+            Connection c = HeadsPlus.getInstance().connection;
+            Statement s = null;
+            try {
+                s = c.createStatement();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+
+                s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='" + p.getUniqueId() + "'");
                 return true;
-            } else {
-                addPlayer(p, section);
+            } catch (SQLException ex) {
+                StringBuilder sb2 = new StringBuilder();
+                sb2.append("INSERT INTO `headspluslb` (uuid, total");
+                for (EntityType e : DeathEvents.ableEntities) {
+                    sb2.append(", ").append(e.name());
+                }
+                sb2.append("VALUES('" + p.getUniqueId().toString() + "', '0'");
+                for (EntityType ignored : DeathEvents.ableEntities) {
+                    sb2.append(", 0");
+                }
+                sb2.append(")");
+                try {
+                    s.executeUpdate(sb2.toString());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                addOntoValue(p, section);
                 return false;
             }
 
-        } catch (Exception ex) {
-            addPlayer(p, section);
-            return false;
+        } else {
+            try {
+                if (getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + ".total") != 0) {
+                    return true;
+                } else {
+                    addPlayer(p, section);
+                    return false;
+                }
+
+            } catch (Exception ex) {
+                addPlayer(p, section);
+                return false;
+            }
         }
+        return false;
     }
 
     public static boolean addSectionOnFileIfNotFound(Player p, String section) {

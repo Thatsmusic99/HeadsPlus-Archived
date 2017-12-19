@@ -226,7 +226,7 @@ public class HeadsPlus extends JavaPlugin {
                 return;
             }
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://" + config.getString("mysql-host")+ ":" + config.getString("mysql-port") + "/" + config.getString("mysql-port"), config.getString("mysql-username"), config.getString("mysql-password"));
+            connection = DriverManager.getConnection("jdbc:mysql://" + config.getString("mysql-host")+ ":" + config.getString("mysql-port") + "/" + config.getString("mysql-database"), config.getString("mysql-username"), config.getString("mysql-password"));
             Statement st = connection.createStatement();
             StringBuilder sb = new StringBuilder();
             try {
@@ -239,6 +239,8 @@ public class HeadsPlus extends JavaPlugin {
 				for (EntityType e : DeathEvents.ableEntities) {
 					sb.append(", `").append(e.name()).append("` VARCHAR(45)");
 				}
+				sb.append("PRIMARY KEY (`id`))");
+				log.info(sb.toString());
 				st.executeUpdate(sb.toString());
 				StringBuilder sb2 = new StringBuilder();
 				sb2.append("INSERT INTO `headspluslb` (uuid, total");

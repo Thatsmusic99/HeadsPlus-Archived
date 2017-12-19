@@ -185,7 +185,7 @@ public class HeadsPlusLeaderboards {
                 for (EntityType e : DeathEvents.ableEntities) {
                     sb2.append(", ").append(e.name());
                 }
-                sb2.append("VALUES('" + p.getUniqueId().toString() + "', '0'");
+                sb2.append("VALUES('").append(p.getUniqueId().toString()).append("', '0'");
                 for (EntityType ignored : DeathEvents.ableEntities) {
                     sb2.append(", 0");
                 }
@@ -213,21 +213,53 @@ public class HeadsPlusLeaderboards {
                 return false;
             }
         }
-        return false;
     }
 
     public static boolean addSectionOnFileIfNotFound(Player p, String section) {
-        try {
-            if (getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + "." + section) != 0) {
-                getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + "." + section);
+        if (HeadsPlus.con) {
+            Connection c = HeadsPlus.getInstance().connection;
+            Statement s = null;
+            try {
+                s = c.createStatement();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+
+                s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='" + p.getUniqueId() + "'");
                 return true;
-            } else {
+            } catch (SQLException ex) {
+                StringBuilder sb2 = new StringBuilder();
+                sb2.append("INSERT INTO `headspluslb` (uuid, total");
+                for (EntityType e : DeathEvents.ableEntities) {
+                    sb2.append(", ").append(e.name());
+                }
+                sb2.append("VALUES('").append(p.getUniqueId().toString()).append("', '0'");
+                for (EntityType ignored : DeathEvents.ableEntities) {
+                    sb2.append(", 0");
+                }
+                sb2.append(")");
+                try {
+                    s.executeUpdate(sb2.toString());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                addOntoValue(p, section);
+                return false;
+            }
+        } else {
+            try {
+                if (getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + "." + section) != 0) {
+                    getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + "." + section);
+                    return true;
+                } else {
+                    addNewPlayerValue(p, section);
+                    return false;
+                }
+            } catch (Exception ex) {
                 addNewPlayerValue(p, section);
                 return false;
             }
-        } catch (Exception ex) {
-            addNewPlayerValue(p, section);
-            return false;
         }
     }
 }

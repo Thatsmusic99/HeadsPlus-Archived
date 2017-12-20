@@ -134,8 +134,7 @@ public class HeadsPlusLeaderboards {
 
                 rs.next();
 
-                int val = 0;
-                val = Integer.parseInt(rs.getString(section));
+                int val = Integer.parseInt(rs.getString(section));
 
                 val++;
                 s.executeUpdate("UPDATE `headspluslb` SET `" + section + "`='" + val + "' WHERE `uuid`='" + p.getUniqueId().toString() + "'");
@@ -147,13 +146,11 @@ public class HeadsPlusLeaderboards {
                 val2++;
                 s.executeUpdate("UPDATE `headspluslb` SET total='" + val2 + "' WHERE `uuid`='" + p.getUniqueId().toString() + "'");
 
-                rs3.next();
+                ResultSet rs4 = s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='server-total'");
 
-                rs3 = s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='server-total'");
+                rs4.next();
 
-                rs3.next();
-
-                int val3 = 0;
+                int val3 = Integer.parseInt(rs4.getString(section));
                 val3++;
                 s.executeUpdate("UPDATE `headspluslb` SET `" + section + "`='" + val3 + "' WHERE `uuid`='server-total'");
 
@@ -188,22 +185,25 @@ public class HeadsPlusLeaderboards {
                 rs.next();
                 int val = Integer.parseInt(rs.getString(section));
                 val++;
-                s.executeUpdate("UPDATE `headspluslb` SET '" + section + "'=" + val + " WHERE `uuid`='" + p.getUniqueId().toString() + "'");
-                rs.next();
-                int val2 = Integer.parseInt(rs.getString("total"));
+                s.executeUpdate("UPDATE `headspluslb` SET `" + section + "`='" + val + "' WHERE `uuid`='" + p.getUniqueId().toString() + "'");
+                ResultSet rs3 = s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='" + p.getUniqueId().toString() + "'");
+                rs3.next();
+                int val2 = Integer.parseInt(rs3.getString("total"));
                 val2++;
-                s.executeUpdate("UPDATE `headspluslb` SET total='" + val2 + "' WHERE `uuid`='" + p.getUniqueId().toString() + "'");
+                s.executeUpdate("UPDATE `headspluslb` SET `total`='" + val2 + "' WHERE `uuid`='" + p.getUniqueId().toString() + "'");
                 ResultSet rs2;
                 rs2 = s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='server-total'");
                 rs2.next();
                 int val3 = Integer.parseInt(rs2.getString(section));
                 val3++;
-                s.executeUpdate("UPDATE `headspluslb` SET '" + section + "'=" + val3 + " WHERE `uuid`='server-total'");
-                rs2.next();
-                val2 = Integer.parseInt(rs2.getString("total"));
+                s.executeUpdate("UPDATE `headspluslb` SET `" + section + "`='" + val3 + "' WHERE `uuid`='server-total'");
+                ResultSet rs4 = s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='server-total'");
+                rs4.next();
+                val2 = Integer.parseInt(rs4.getString("total"));
                 val2++;
-                s.executeUpdate("UPDATE `headspluslb` SET total='" + val2 + "' WHERE `uuid`='server-total'");
+                s.executeUpdate("UPDATE `headspluslb` SET `total`='" + val2 + "' WHERE `uuid`='server-total'");
             } catch (SQLException e) {
+                e.printStackTrace();
                 try {
                     addNewPlayerValue(p, section);
                 } catch (SQLException e1) {

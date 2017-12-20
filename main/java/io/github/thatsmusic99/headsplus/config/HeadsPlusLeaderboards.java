@@ -70,7 +70,28 @@ public class HeadsPlusLeaderboards {
 
     public static void addPlayer(Player p, String section) {
         if (HeadsPlus.con) {
-
+            Connection c = HeadsPlus.getInstance().connection;
+            Statement s = null;
+            try {
+                s = c.createStatement();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            StringBuilder sb2 = new StringBuilder();
+            sb2.append("INSERT INTO `headspluslb` (uuid, total");
+            for (EntityType e : DeathEvents.ableEntities) {
+                sb2.append(", ").append(e.name());
+            }
+            sb2.append(") VALUES('").append(p.getUniqueId().toString()).append("', '0'");
+            for (EntityType ignored : DeathEvents.ableEntities) {
+                sb2.append(", 0");
+            }
+            sb2.append(")");
+            try {
+                s.executeUpdate(sb2.toString());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         } else {
             getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + ".total", 1);
             getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + "." + section, 1);
@@ -82,9 +103,71 @@ public class HeadsPlusLeaderboards {
         }
     }
 
-    public static void addNewPlayerValue(Player p, String section) {
+    public static void addNewPlayerValue(Player p, String section) throws SQLException {
         if (HeadsPlus.con) {
+            Connection c = HeadsPlus.getInstance().connection;
+            Statement s = null;
+            ResultSet rs = null;
+            try {
+                s = c.createStatement();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                rs = s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='" + p.getUniqueId().toString() + "'");
+                Integer.parseInt(rs.getString(section));
+            } catch (SQLException ex) {
+                StringBuilder sb2 = new StringBuilder();
+                sb2.append("INSERT INTO `headspluslb` (uuid, total");
+                for (EntityType e : DeathEvents.ableEntities) {
+                    sb2.append(", ").append(e.name());
+                }
+                sb2.append(") VALUES('").append(p.getUniqueId().toString()).append("', '0'");
+                for (EntityType ignored : DeathEvents.ableEntities) {
+                    sb2.append(", '0'");
+                }
+                sb2.append(");");
 
+                s.executeUpdate(sb2.toString());
+
+                rs = s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='" + p.getUniqueId().toString() + "'");
+
+                rs.next();
+
+                int val = 0;
+                val = Integer.parseInt(rs.getString(section));
+
+                val++;
+                s.executeUpdate("UPDATE `headspluslb` SET `" + section + "`='" + val + "' WHERE `uuid`='" + p.getUniqueId().toString() + "'");
+                int val2;
+                ResultSet rs3 = s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='" + p.getUniqueId().toString() + "'");
+                rs3.next();
+                val2 = Integer.parseInt(rs3.getString("total"));
+
+                val2++;
+                s.executeUpdate("UPDATE `headspluslb` SET total='" + val2 + "' WHERE `uuid`='" + p.getUniqueId().toString() + "'");
+
+                rs3.next();
+
+                rs3 = s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='server-total'");
+
+                rs3.next();
+
+                int val3 = 0;
+                val3++;
+                s.executeUpdate("UPDATE `headspluslb` SET `" + section + "`='" + val3 + "' WHERE `uuid`='server-total'");
+
+                ResultSet rs2;
+                rs2 = s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='server-total'");
+
+                rs2.next();
+
+                val2 = Integer.parseInt(rs2.getString("total"));
+
+                val2++;
+                s.executeUpdate("UPDATE `headspluslb` SET total='" + val2 + "' WHERE `uuid`='server-total'");
+
+            }
         } else {
             getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + "." + section, 1);
             int s = getLeaderboards().getInt("server-total");
@@ -102,14 +185,30 @@ public class HeadsPlusLeaderboards {
                 Statement s = c.createStatement();
                 ResultSet rs;
                 rs = s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='" + p.getUniqueId().toString() + "'");
-                int val = rs.getInt(section);
+                rs.next();
+                int val = Integer.parseInt(rs.getString(section));
                 val++;
                 s.executeUpdate("UPDATE `headspluslb` SET '" + section + "'=" + val + " WHERE `uuid`='" + p.getUniqueId().toString() + "'");
-                int val2 = rs.getInt("total");
+                rs.next();
+                int val2 = Integer.parseInt(rs.getString("total"));
                 val2++;
                 s.executeUpdate("UPDATE `headspluslb` SET total='" + val2 + "' WHERE `uuid`='" + p.getUniqueId().toString() + "'");
+                ResultSet rs2;
+                rs2 = s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='server-total'");
+                rs2.next();
+                int val3 = Integer.parseInt(rs2.getString(section));
+                val3++;
+                s.executeUpdate("UPDATE `headspluslb` SET '" + section + "'=" + val3 + " WHERE `uuid`='server-total'");
+                rs2.next();
+                val2 = Integer.parseInt(rs2.getString("total"));
+                val2++;
+                s.executeUpdate("UPDATE `headspluslb` SET total='" + val2 + "' WHERE `uuid`='server-total'");
             } catch (SQLException e) {
-                e.printStackTrace();
+                try {
+                    addNewPlayerValue(p, section);
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
             }
 
         } else {
@@ -185,7 +284,7 @@ public class HeadsPlusLeaderboards {
                 for (EntityType e : DeathEvents.ableEntities) {
                     sb2.append(", ").append(e.name());
                 }
-                sb2.append("VALUES('").append(p.getUniqueId().toString()).append("', '0'");
+                sb2.append(") VALUES('").append(p.getUniqueId().toString()).append("', '0'");
                 for (EntityType ignored : DeathEvents.ableEntities) {
                     sb2.append(", 0");
                 }
@@ -234,7 +333,7 @@ public class HeadsPlusLeaderboards {
                 for (EntityType e : DeathEvents.ableEntities) {
                     sb2.append(", ").append(e.name());
                 }
-                sb2.append("VALUES('").append(p.getUniqueId().toString()).append("', '0'");
+                sb2.append(") VALUES('").append(p.getUniqueId().toString()).append("', '0'");
                 for (EntityType ignored : DeathEvents.ableEntities) {
                     sb2.append(", 0");
                 }
@@ -257,7 +356,11 @@ public class HeadsPlusLeaderboards {
                     return false;
                 }
             } catch (Exception ex) {
-                addNewPlayerValue(p, section);
+                try {
+                    addNewPlayerValue(p, section);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 return false;
             }
         }

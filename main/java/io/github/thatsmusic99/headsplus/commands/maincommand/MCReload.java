@@ -2,16 +2,13 @@ package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import java.io.File;
 
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
+import io.github.thatsmusic99.headsplus.config.*;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusCrafting;
 
 public class MCReload {
 	
@@ -31,6 +28,9 @@ public class MCReload {
 
 	private static FileConfiguration headsX;
 	private  static final File headsXF = new File(HeadsPlus.getInstance().getDataFolder(), "headsx.yml");
+
+	private static FileConfiguration lb;
+	private static final File lbF = new File(HeadsPlus.getInstance().getDataFolder(), "leaderboards.yml");
 	
 	public static void reload(CommandSender sender) {
 		if (sender.hasPermission("headsplus.maincommand.reload")) {
@@ -85,7 +85,14 @@ public class MCReload {
                                HeadsPlus.getInstance().stopP = false;
                            }
                        }
+
+                       if (HeadsPlus.getInstance().getConfig().getBoolean("leaderboards")) {
+                           if (!HeadsPlus.getInstance().lb) {
+                           	
+						   }
+                       }
                        HeadsPlus.getInstance().db = HeadsPlus.getInstance().getConfig().getBoolean("headsDatabase");
+                       HeadsPlus.checkTheme();
 
 					   HeadsPlus.getInstance().log.info("[HeadsPlus] Config reloaded!");
 				   }
@@ -127,6 +134,16 @@ public class MCReload {
 				   } else {
 					   HeadsPlusConfigHeadsX.reloadHeadsX();
 				   }
+				   if (!lbF.exists()) {
+			           if (HeadsPlus.getInstance().getConfig().getBoolean("leaderboards") && !HeadsPlus.getInstance().getConfig().getBoolean("leaderboards-mysql")) {
+                           HeadsPlus.getInstance().log.info("[HeadsPlus] Leaderboards not found, creating!");
+                           HeadsPlusLeaderboards.reloadLeaderboards();
+                           lb = YamlConfiguration.loadConfiguration(lbF);
+                           HeadsPlus.getInstance().log.info("[HeadsPlus] Leaderboards created!");
+                       }
+                   } else {
+                       HeadsPlusLeaderboards.reloadLeaderboards();
+                   }
 			      
 		       } catch (Exception e) {
 			       HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to reload config!");

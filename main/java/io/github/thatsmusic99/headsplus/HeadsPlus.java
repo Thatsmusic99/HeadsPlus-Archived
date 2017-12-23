@@ -63,6 +63,7 @@ public class HeadsPlus extends JavaPlugin {
 			HeadsPlusConfigHeads.headsEnable();
 			HeadsPlusConfigHeadsX.headsxEnable();
 			DeathEvents.createList();
+			checkTheme();
 
 			if (config.getBoolean("leaderboards-mysql")) {
                 openConnection();
@@ -240,6 +241,7 @@ public class HeadsPlus extends JavaPlugin {
 				for (EntityType e : DeathEvents.ableEntities) {
 					sb.append(", `").append(e.name()).append("` VARCHAR(45)");
 				}
+				sb.append(", `PLAYER` VARCHAR(45)");
 				sb.append(", PRIMARY KEY (`id`))");
 				st.executeUpdate(sb.toString());
 				StringBuilder sb2 = new StringBuilder();
@@ -247,17 +249,32 @@ public class HeadsPlus extends JavaPlugin {
 				for (EntityType e : DeathEvents.ableEntities) {
 					sb2.append(", ").append(e.name());
 				}
-				sb2.append(") VALUES('server-total', '0'");
+				sb2.append(", PLAYER) VALUES('server-total', '0'");
 				for (EntityType ignored : DeathEvents.ableEntities) {
 					sb2.append(", '0'");
 				}
+				sb2.append(", '0'");
 				sb2.append(")");
 				st.executeUpdate(sb2.toString());
 				con = true;
 			}
-
-
         }
     }
 
+    public static void checkTheme() {
+	    if (!getInstance().getConfig().getString("theme").equalsIgnoreCase(getInstance().getConfig().getString("pTheme"))) {
+	        try {
+	            MenuThemes mt = MenuThemes.valueOf(getInstance().getConfig().getString("theme"));
+	            getInstance().getConfig().set("themeColor1", mt.c1);
+                getInstance().getConfig().set("themeColor2", mt.c2);
+                getInstance().getConfig().set("themeColor3", mt.c3);
+                getInstance().getConfig().set("themeColor4", mt.c4);
+                getInstance().getConfig().set("pTheme", mt.name());
+                getInstance().getConfig().options().copyDefaults(true);
+                getInstance().saveConfig();
+            } catch (Exception ex) {
+	            getInstance().log.warning("[HeadsPlus] Faulty theme was input! No theme changes will be made.");
+            }
+        }
+    }
 }

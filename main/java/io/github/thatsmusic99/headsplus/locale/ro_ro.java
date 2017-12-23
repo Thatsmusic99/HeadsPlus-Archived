@@ -488,4 +488,9 @@ public class ro_ro implements Locale {
     public String getBlockPlaceDenied() {
         return "Nu poti sa-ti asezi capete!";
     }
+
+    @Override
+    public String getNoDataRecorded() {
+        return "&cNu au fost inregistrate inca date despre clasament!";
+    }
 }

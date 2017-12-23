@@ -3,6 +3,7 @@ package io.github.thatsmusic99.headsplus.config;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.events.DeathEvents;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
@@ -10,10 +11,7 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.*;
 
 public class HeadsPlusLeaderboards {
@@ -60,7 +58,6 @@ public class HeadsPlusLeaderboards {
         try {
             getLeaderboards().options().header("HeadsPlus by Thatsmusic99 - Config wiki: https://github.com/Thatsmusic99/HeadsPlus/wiki/Configuration");
             getLeaderboards().addDefault("server-total", 0);
-            getLeaderboards().createSection("player-data");
             getLeaderboards().options().copyDefaults(true);
             saveLeaderboards();
         } catch (Exception e) {
@@ -93,8 +90,8 @@ public class HeadsPlusLeaderboards {
                 e.printStackTrace();
             }
         } else {
-            getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + ".total", 1);
-            getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + "." + section, 1);
+            getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + ".total", 0);
+            getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + "." + section, 0);
             int s = getLeaderboards().getInt("server-total");
             s++;
             getLeaderboards().set("server-total", s);
@@ -166,7 +163,7 @@ public class HeadsPlusLeaderboards {
 
             }
         } else {
-            getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + "." + section, 1);
+            getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + "." + section, 0);
             int s = getLeaderboards().getInt("server-total");
             s++;
             getLeaderboards().set("server-total", s);
@@ -203,7 +200,6 @@ public class HeadsPlusLeaderboards {
                 val2++;
                 s.executeUpdate("UPDATE `headspluslb` SET `total`='" + val2 + "' WHERE `uuid`='server-total'");
             } catch (SQLException e) {
-                e.printStackTrace();
                 try {
                     addNewPlayerValue(p, section);
                 } catch (SQLException e1) {
@@ -212,48 +208,84 @@ public class HeadsPlusLeaderboards {
             }
 
         } else {
-            int i = getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + "." + section);
-            i++;
-            getLeaderboards().set("player-data." + p.getUniqueId().toString() + "." + section, i);
-            int is = getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + ".total");
-            is++;
-            getLeaderboards().set("player-data." + p.getUniqueId().toString() + ".total", is);
-            int s = getLeaderboards().getInt("server-total");
-            s++;
-            getLeaderboards().set("server-total", s);
-            getLeaderboards().options().copyDefaults(true);
-            saveLeaderboards();
+            try {
+                int i = getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + "." + section);
+                i++;
+                getLeaderboards().set("player-data." + p.getUniqueId().toString() + "." + section, i);
+                int is = getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + ".total");
+                is++;
+                getLeaderboards().set("player-data." + p.getUniqueId().toString() + ".total", is);
+                int s = getLeaderboards().getInt("server-total");
+                s++;
+                getLeaderboards().set("server-total", s);
+                getLeaderboards().options().copyDefaults(true);
+                saveLeaderboards();
+            } catch (Exception e) {
+                try {
+                    addNewPlayerValue(p, section);
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+
         }
 
     }
 
-    public static LinkedHashMap<Player, Integer> getScores(String section) {
+    public static LinkedHashMap<OfflinePlayer, Integer> getScores(String section) throws SQLException {
+        if (HeadsPlus.con) {
+            LinkedHashMap<OfflinePlayer, Integer> hs = new LinkedHashMap<>();
+            Connection c = HeadsPlus.getInstance().connection;
+            Statement s = c.createStatement();
+            ResultSet rs = s.executeQuery("SELECT * FROM `headspluslb` ORDER BY id");
+            while (rs.next()) {
 
-        LinkedHashMap<Player, Integer> hs = new LinkedHashMap<>();
-        for (String cs : getLeaderboards().getConfigurationSection("player-data").getKeys(false)) {
-            Player p = Bukkit.getPlayer(UUID.fromString(cs));
-            int i = getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + "." + section);
-            hs.put(p, i);
+                boolean player = false;
+                UUID uuid = null;
+                OfflinePlayer name;
+                try {
+                    uuid = UUID.fromString(rs.getString("uuid"));
+                    player = true;
+                } catch (Exception ex) {
+                    //
+                }
+                if (player) {
+                    name = Bukkit.getOfflinePlayer(uuid);
+                    Statement st = c.createStatement();
+                    ResultSet rs2 = st.executeQuery("SELECT * FROM `headspluslb` WHERE `uuid`='" + name.getUniqueId().toString() + "'");
+                    rs2.next();
+                    hs.put(name, Integer.valueOf(rs2.getString(section)));
+                }
+            }
+            hs = sortHashMapByValues(hs);
+            return hs;
+        } else {
+            LinkedHashMap<OfflinePlayer, Integer> hs = new LinkedHashMap<>();
+            for (String cs : getLeaderboards().getConfigurationSection("player-data").getKeys(false)) {
+                OfflinePlayer p = Bukkit.getOfflinePlayer(UUID.fromString(cs));
+                int i = getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + "." + section);
+                hs.put(p, i);
+            }
+            hs = sortHashMapByValues(hs);
+            return hs;
         }
-        hs = sortHashMapByValues(hs);
-        return hs;
 
     }
 
-    private static LinkedHashMap<Player, Integer> sortHashMapByValues(HashMap<Player, Integer> passedMap) {
-        List<Player> mapKeys = new ArrayList<>(passedMap.keySet());
+    private static LinkedHashMap<OfflinePlayer, Integer> sortHashMapByValues(HashMap<OfflinePlayer, Integer> passedMap) {
+        List<OfflinePlayer> mapKeys = new ArrayList<>(passedMap.keySet());
         List<Integer> mapValues = new ArrayList<>(passedMap.values());
         Collections.sort(mapValues);
         Collections.reverse(mapValues);
 
-        LinkedHashMap<Player, Integer> sortedMap =
+        LinkedHashMap<OfflinePlayer, Integer> sortedMap =
                 new LinkedHashMap<>();
 
         for (int val : mapValues) {
-            Iterator<Player> keyIt = mapKeys.iterator();
+            Iterator<OfflinePlayer> keyIt = mapKeys.iterator();
 
             while (keyIt.hasNext()) {
-                Player key = keyIt.next();
+                OfflinePlayer key = keyIt.next();
                 Integer comp1 = passedMap.get(key);
 
                 if (comp1.equals(val)) {

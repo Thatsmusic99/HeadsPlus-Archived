@@ -486,6 +486,11 @@ public class hu_hu implements Locale {
 
     @Override
     public String getBlockPlaceDenied() {
-        return "Nem teheted le a fejeteket!";
+        return "&cNem teheted le a fejeteket!";
+    }
+
+    @Override
+    public String getNoDataRecorded() {
+        return "&cMég nincs értékelő adat!";
     }
 }

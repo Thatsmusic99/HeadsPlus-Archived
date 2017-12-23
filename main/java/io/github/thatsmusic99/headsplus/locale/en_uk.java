@@ -486,4 +486,9 @@ public class en_uk implements Locale {
     public String getBlockPlaceDenied() {
         return "&cYou can not place sellable heads!";
     }
+
+    @Override
+    public String getNoDataRecorded() {
+        return "&cNo leaderboard data has been recorded yet!";
+    }
 }

@@ -3,12 +3,17 @@ package io.github.thatsmusic99.headsplus.util;
 import java.util.*;
 
 public class PagedHashmaps {
+
     private LinkedHashMap<?, ?> hs;
     private int pages;
     private int contents;
     private int currentPage;
+    private int contentsPerPage;
 
     public PagedHashmaps(LinkedHashMap<?, ?> hs, int contentsPerPage) {
+        if (contentsPerPage < 1) {
+            throw new IllegalArgumentException("The provided int must be bigger than 0 for contents per page!");
+        }
         this.hs = hs;
         int pages = 1;
         int bls = hs.size();
@@ -19,6 +24,7 @@ public class PagedHashmaps {
         this.pages = pages;
         this.contents = hs.size();
         this.currentPage = 1;
+        this.contentsPerPage = contentsPerPage;
     }
 
     public int getTotalPages() {
@@ -38,9 +44,14 @@ public class PagedHashmaps {
     }
 
     public LinkedHashMap<Object, Object> getContentsInPage(int page) {
-        int sIndex = (page - 1) * getTotalContents();
-        int eIndex = getTotalContents() + sIndex;
-        if (eIndex > getHs().size()) {
+        if (page > getTotalPages()) {
+            throw new IllegalArgumentException("The provided page is an int larger than the total number of pages!");
+        } else if (page < 1) {
+            throw new IllegalArgumentException("The provided page must be bigger than 0!");
+        }
+        int sIndex = (page - 1) * getContentsPerPage(); // 0
+        int eIndex = getContentsPerPage() + sIndex; // 1
+        if (eIndex > getHs().size()) { // 1 > 2
             eIndex = getHs().size();
         }
         setPage(page);
@@ -75,5 +86,9 @@ public class PagedHashmaps {
 
     private void setPage(int page) {
         this.currentPage = page;
+    }
+
+    public int getContentsPerPage() {
+        return contentsPerPage;
     }
 }

@@ -221,4 +221,6 @@ public interface Locale {
 
     String getBlockPlaceDenied();
 
+    String getNoDataRecorded();
+
 }

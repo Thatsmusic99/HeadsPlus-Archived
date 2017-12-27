@@ -458,6 +458,11 @@ public class en_uk implements Locale {
     }
 
     @Override
+    public String descHPLeaderboards() {
+        return "Displays the heads leaderboard.";
+    }
+
+    @Override
     public String getUpdateFound() {
         return "%h &3An update has been found for HeadsPlus! Hover over the message for more information.";
     }

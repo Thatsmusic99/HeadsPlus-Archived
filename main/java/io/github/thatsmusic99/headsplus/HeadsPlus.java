@@ -4,6 +4,7 @@ import io.github.thatsmusic99.headsplus.commands.*;
 import io.github.thatsmusic99.headsplus.config.*;
 import io.github.thatsmusic99.headsplus.events.*;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.EntityType;
@@ -128,12 +129,19 @@ public class HeadsPlus extends JavaPlugin {
 		    this.getCommand("heads").setExecutor(new Heads());
 		    this.getCommand("myhead").setExecutor(new MyHead());
 			this.getCommand("hplb").setExecutor(new LeaderboardsCommand());
+			this.getCommand("hplb").setTabCompleter(new TabCompleteLB());
 		    JoinEvent.reloaded = false;
 			Metrics metrics = new Metrics(this);
 			metrics.addCustomChart(new Metrics.SimplePie("languages", new Callable<String>() {
                 @Override
                 public String call() throws Exception {
                     return LocaleManager.getLocale().getLanguage();
+                }
+            }));
+			metrics.addCustomChart(new Metrics.SimplePie("theme", new Callable<String>() {
+                @Override
+                public String call() throws Exception {
+                    return WordUtils.capitalize(getConfig().getString("pTheme").toLowerCase());
                 }
             }));
 			if (getConfig().getBoolean("update-checker")) {
@@ -264,7 +272,7 @@ public class HeadsPlus extends JavaPlugin {
     public static void checkTheme() {
 	    if (!getInstance().getConfig().getString("theme").equalsIgnoreCase(getInstance().getConfig().getString("pTheme"))) {
 	        try {
-	            MenuThemes mt = MenuThemes.valueOf(getInstance().getConfig().getString("theme"));
+	            MenuThemes mt = MenuThemes.valueOf(getInstance().getConfig().getString("theme").toUpperCase());
 	            getInstance().getConfig().set("themeColor1", mt.c1);
                 getInstance().getConfig().set("themeColor2", mt.c2);
                 getInstance().getConfig().set("themeColor3", mt.c3);

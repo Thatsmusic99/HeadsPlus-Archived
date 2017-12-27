@@ -2,20 +2,20 @@ package io.github.thatsmusic99.headsplus.api;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
-
-import org.apache.commons.codec.binary.Base64;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusLeaderboards;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.lang.reflect.Field;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -162,6 +162,12 @@ public class HeadsPlusAPI {
         return "invalid";
     }
 
+    public static int getPlayerInLeaderboards(OfflinePlayer p, String section) throws SQLException {
+        return HeadsPlusLeaderboards.getScores(section).get(p);
+    }
 
+    public static LinkedHashMap<OfflinePlayer, Integer> getScores(String section) throws SQLException {
+        return HeadsPlusLeaderboards.getScores(section);
+    }
 
 }

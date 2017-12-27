@@ -49,48 +49,12 @@ public class MCReload {
 			       } else {
 				       HeadsPlus.getInstance().log.info("[HeadsPlus] Found config, loading!");
 				       HeadsPlus.getInstance().reloadConfig();
-                       if (HeadsPlus.getInstance().getConfig().getBoolean("dropHeads")) {
-				           if (!HeadsPlus.getInstance().drops) {
-				               HeadsPlus.getInstance().drops = true;
-                           }
-                       } else {
-				       	   if (HeadsPlus.getInstance().drops) {
-				       	       HeadsPlus.getInstance().drops = false;
-                           }
-					   }
-					   if (HeadsPlus.getInstance().getConfig().getBoolean("autoReloadOnFirstJoin")) {
-                           if (!HeadsPlus.getInstance().arofj) {
-                               HeadsPlus.getInstance().arofj = true;
-                           }
-					   } else {
-				           if (HeadsPlus.getInstance().arofj) {
-				               HeadsPlus.getInstance().arofj = false;
-                           }
-                       }
-                       if (HeadsPlus.getInstance().econ() && HeadsPlus.getInstance().getConfig().getBoolean("sellHeads")) {
-                           if (!HeadsPlus.getInstance().sellable) {
-                               HeadsPlus.getInstance().sellable = true;
-                           }
-                       } else if (HeadsPlus.getInstance().econ() && !HeadsPlus.getInstance().getConfig().getBoolean("sellHeads")) {
-                           if (HeadsPlus.getInstance().sellable) {
-                               HeadsPlus.getInstance().sellable = false;
-                           }
-                       }
-                       if (HeadsPlus.getInstance().getConfig().getBoolean("stop-placement-of-sellable-heads")) {
-                           if (!HeadsPlus.getInstance().stopP) {
-                               HeadsPlus.getInstance().stopP = true;
-                           }
-                       } else {
-                           if (HeadsPlus.getInstance().stopP) {
-                               HeadsPlus.getInstance().stopP = false;
-                           }
-                       }
 
-                       if (HeadsPlus.getInstance().getConfig().getBoolean("leaderboards")) {
-                           if (!HeadsPlus.getInstance().lb) {
-                           	
-						   }
-                       }
+                       HeadsPlus.getInstance().drops = HeadsPlus.getInstance().getConfig().getBoolean("dropHeads");
+                       HeadsPlus.getInstance().arofj = HeadsPlus.getInstance().getConfig().getBoolean("autoReloadOnFirstJoin");
+                       HeadsPlus.getInstance().sellable = HeadsPlus.getInstance().econ() && HeadsPlus.getInstance().getConfig().getBoolean("sellHeads");
+                       HeadsPlus.getInstance().stopP = HeadsPlus.getInstance().getConfig().getBoolean("stop-placement-of-sellable-heads");
+                       HeadsPlus.getInstance().lb = HeadsPlus.getInstance().getConfig().getBoolean("leaderboards");
                        HeadsPlus.getInstance().db = HeadsPlus.getInstance().getConfig().getBoolean("headsDatabase");
                        HeadsPlus.checkTheme();
 

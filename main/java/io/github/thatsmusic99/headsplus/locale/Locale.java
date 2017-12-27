@@ -209,6 +209,8 @@ public interface Locale {
 
     String descMyHead();
 
+    String descHPLeaderboards();
+
     String getUpdateFound();
 
     String getCurrentVersion();

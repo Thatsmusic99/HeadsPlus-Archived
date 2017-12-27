@@ -460,6 +460,11 @@ public class ro_ro implements Locale {
     }
 
     @Override
+    public String descHPLeaderboards() {
+        return "Afiseaza tabela de clasa a capului.";
+    }
+
+    @Override
     public String getUpdateFound() {
         return "%h &3Un update a fost gasit pentru HeadsPlus! Plasati cursorul pentru mai multe informatii.";
     }

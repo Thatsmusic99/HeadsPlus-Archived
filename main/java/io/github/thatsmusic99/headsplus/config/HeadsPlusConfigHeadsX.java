@@ -5,8 +5,6 @@ import com.mojang.authlib.properties.Property;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 
-import io.github.thatsmusic99.headsplus.commands.Heads;
-import io.github.thatsmusic99.headsplus.util.AdventCManager;
 import org.apache.commons.codec.binary.Base64;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -18,7 +16,6 @@ import org.bukkit.inventory.meta.SkullMeta;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -75,12 +72,12 @@ public class HeadsPlusConfigHeadsX {
         headsx = YamlConfiguration.loadConfiguration(headsxf);
         getHeadsX().addDefault("options.version", cVersion);
         getHeadsX().addDefault("options.default-price", 10.00);
-        getHeadsX().addDefault("options.advent-calender", true);
-        if (getHeadsX().getBoolean("options.advent-calender")) {
-            for (AdventCManager acm : AdventCManager.values()) {
-                getHeadsX().addDefault("advent." + acm.name(), new ArrayList<>());
-            }
-        }
+       // getHeadsX().addDefault("options.advent-calender", true);
+       // if (getHeadsX().getBoolean("options.advent-calender")) {
+        //    for (AdventCManager acm : AdventCManager.values()) {
+        //        getHeadsX().addDefault("advent." + acm.name(), new ArrayList<>());
+        //    }
+       // }
         if (headsxf.length() <= 500) {
             loadHeadsX();
         }

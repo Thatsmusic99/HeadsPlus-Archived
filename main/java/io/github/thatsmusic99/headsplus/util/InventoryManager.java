@@ -144,9 +144,9 @@ public class InventoryManager {
         heads = HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false).size();
         if (section.equalsIgnoreCase("menu")) {
             int s = sections;
-            if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("options.advent-calender")) {
-                sections++;
-            }
+           // if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("options.advent-calender")) {
+           //     sections++;
+           // }
             pages = 1;
             while (s > 28) {
                 s -= 28;
@@ -185,16 +185,16 @@ public class InventoryManager {
                     timesSent++;
                 }
             }
-            if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("options.advent-calender")) {
-                ItemStack is = HeadsPlusConfigHeadsX.getSkull("HP#snowman_head");
-                SkullMeta sm = (SkullMeta) is.getItemMeta();
-                sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4[&a&lHeadsPlus &c&lAdvent Calender!&2]"));
-                is.setItemMeta(sm);
-                i.setItem(pos()[timesSent], is);
-            }
+          //  if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("options.advent-calender")) {
+             //   ItemStack is = HeadsPlusConfigHeadsX.getSkull("HP#snowman_head");
+             //   SkullMeta sm = (SkullMeta) is.getItemMeta();
+             //   sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4[&a&lHeadsPlus &c&lAdvent Calender!&2]"));
+             //   is.setItemMeta(sm);
+             //   i.setItem(pos()[timesSent], is);
+           // }
         } else {
             List<String> ls = new ArrayList<>();
-            if (!section.equalsIgnoreCase("advent_calender")) {
+           // if (!section.equalsIgnoreCase("advent_calender")) {
                 for (String str : HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false)) {
                     if (HeadsPlusConfigHeadsX.getHeadsX().getString("heads." + str + ".section").equalsIgnoreCase(section)) {
                         ls.add(str);
@@ -229,10 +229,10 @@ public class InventoryManager {
                         skull(str, i);
                     }
                 }
-            } else {
-                i = create(54, "HeadsPlus Head selector: page " + cPage + "/" + pages);
-                skullChristmas(i, p.getPlayer());
-            }
+           // } else {
+              //  i = create(54, "HeadsPlus Head selector: page " + cPage + "/" + pages);
+              //  skullChristmas(i, p.getPlayer());
+            //}
 
         }
         ItemStack isi = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 8);
@@ -282,36 +282,6 @@ public class InventoryManager {
         i.setItem(4, is2);
         timesSent = 0;
         return i;
-      /*  Inventory i = create(54, "HeadsPlus Head selector: page " + cPage + "/" + pages);
-        heads = HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false).size();
-
-        int h = heads;
-        pages = 1;
-        while (h > 28) {
-            h -= 28;
-            pages++;
-        }
-        if (next) {
-            cPage++;
-        } else {
-            cPage--;
-        }
-        if (start) {
-            cPage = 1;
-        }
-        int si = (cPage - 1) * 28;
-        int ei = 28 + si;
-        if (ei > HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false).size()) {
-            ei = HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false).size();
-        }
-
-        List<String> l = new ArrayList<>(HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false)).subList(si, ei);
-        for (String str : l) {
-            if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("heads." + str + ".database")) {
-                skull(str, i);
-            }
-        }
-         */
     }
 
     private static void skull(String str, Inventory i) {
@@ -365,7 +335,7 @@ public class InventoryManager {
         timesSent++;
     }
 
-    public static void skullChristmas(Inventory i, Player p) {
+  /*  public static void skullChristmas(Inventory i, Player p) {
         for (AdventCManager acm : AdventCManager.values()) {
             if (HeadsPlusConfigHeadsX.getHeadsX().getStringList("advent." + acm.name()).contains(p.getUniqueId().toString())) {
                 ItemStack s = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
@@ -417,5 +387,5 @@ public class InventoryManager {
                 timesSent++;
             }
         }
-    }
+    } */
 }

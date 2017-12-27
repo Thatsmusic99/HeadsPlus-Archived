@@ -460,6 +460,11 @@ public class hu_hu implements Locale {
     }
 
     @Override
+    public String descHPLeaderboards() {
+        return "Megjeleníti a fejlécet.";
+    }
+
+    @Override
     public String getUpdateFound() {
         return "%h &3Frissítés található a HeadsPlus pluginban! További információért vigye az egérmutatót az üzenet fölé.";
     }

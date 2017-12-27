@@ -1,13 +1,8 @@
 package io.github.thatsmusic99.headsplus.events;
 
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.config.HeadsXSections;
-import io.github.thatsmusic99.headsplus.locale.LocaleManager;
-import io.github.thatsmusic99.headsplus.util.AdventCManager;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 
 import net.milkbowl.vault.economy.EconomyResponse;
@@ -19,11 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 
-import java.lang.reflect.Field;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Level;
 
@@ -31,7 +22,7 @@ public class InventoryEvent implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent e) {
-        int month = Calendar.getInstance().get(Calendar.MONTH);
+       // int month = Calendar.getInstance().get(Calendar.MONTH);
         if (e.getInventory().getName().equalsIgnoreCase("HeadsPlus Head selector: page " + InventoryManager.getPage() + "/" + InventoryManager.getPages())) {
             try {
                 if (e.getCurrentItem().getType().equals(Material.BARRIER)) {
@@ -51,7 +42,7 @@ public class InventoryEvent implements Listener {
                         e.getWhoClicked().openInventory(InventoryManager.changePage(false, true, (Player) e.getWhoClicked(), "advent_calender"));
                         e.setCancelled(true);
                         return;
-                    } else if (InventoryManager.getSection().equalsIgnoreCase("advent_calender")) {
+                    } /* else if (InventoryManager.getSection().equalsIgnoreCase("advent_calender")) {
                         if (!(month == 11)) { // TODO Change for testing
                             e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getChristmasDeniedMessage()));
                             e.setCancelled(true);
@@ -118,7 +109,7 @@ public class InventoryEvent implements Listener {
                         e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("xmas-denied")));
                         e.setCancelled(true);
                         return;
-                    }
+                    } */
                     if (e.getWhoClicked().getInventory().firstEmpty() == -1) {
                         e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("full-inv")));
                         e.setCancelled(true);

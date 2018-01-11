@@ -74,8 +74,8 @@ public class RecipePerms implements Listener {
 	        }
 		} else {
 			if(e.getSlot() == 0){
-                if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
-                	if (e.getInventory().getType().equals(InventoryType.CRAFTING) || e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
+			    if (e.getInventory().getType().equals(InventoryType.CRAFTING) || e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
+                    if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
                 		e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
                         e.setCancelled(true);
                 	}

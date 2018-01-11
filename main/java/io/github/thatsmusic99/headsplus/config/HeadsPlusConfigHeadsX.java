@@ -24,7 +24,7 @@ public class HeadsPlusConfigHeadsX {
     public static boolean s = false;
     private static FileConfiguration headsx;
     private static File headsxf;
-    public static double cVersion = 0.9;
+    public static double cVersion = 1.0;
 
     public static void saveHeadsX() {
         headsxf = new File(HeadsPlus.getInstance().getDataFolder(), "headsx.yml");

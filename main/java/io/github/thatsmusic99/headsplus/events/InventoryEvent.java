@@ -5,6 +5,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsXSections;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 
+import io.github.thatsmusic99.headsplus.util.SearchGUI;
 import net.milkbowl.vault.economy.EconomyResponse;
 
 import org.bukkit.*;
@@ -12,6 +13,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -20,8 +23,10 @@ import java.util.logging.Level;
 
 public class InventoryEvent implements Listener {
 
+    private String name;
+
     @EventHandler
-    public void onClick(InventoryClickEvent e) {
+    public void onClickEvent(InventoryClickEvent e) {
        // int month = Calendar.getInstance().get(Calendar.MONTH);
         if (e.getInventory().getName().equalsIgnoreCase("HeadsPlus Head selector: page " + InventoryManager.getPage() + "/" + InventoryManager.getPages())) {
             try {
@@ -190,13 +195,36 @@ public class InventoryEvent implements Listener {
                     if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("[Stats]")) {
                         e.setCancelled(true);
                     }
-                } else if (e.getCurrentItem().getType().equals(Material.STAINED_GLASS_PANE)) {
+                } else if (e.getCurrentItem().getType().equals(Material.NAME_TAG)) {
+                    if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("[Search Heads]")) {
+                        e.setCancelled(true);
+                        e.getWhoClicked().closeInventory();
+                        final InventoryClickEvent ev = e;
+                        SearchGUI s = new SearchGUI((Player) e.getWhoClicked(), new SearchGUI.AnvilClickEventHandler() {
+                            @Override
+                            public void onAnvilClick(SearchGUI.AnvilClickEvent event) {
+                                if (event.getSlot().equals(SearchGUI.AnvilSlot.OUTPUT)) {
+                                    event.setWillClose(false);
+                                    event.setWillDestroy(false);
+                                    InventoryManager.setSection("search:" + event.getName());
+                                    event.getPlayer().closeInventory();
+                                    event.getPlayer().openInventory(InventoryManager.changePage(false, true, event.getPlayer(), "search:" + event.getName()));
+                                }
+                                ev.setCancelled(true);
+                            }
+                        });
+                        s.setSlot(SearchGUI.AnvilSlot.INPUT_LEFT, new ItemStack(Material.NAME_TAG));
+                        s.open();
+                    }
+                }
+
+                else if (e.getCurrentItem().getType().equals(Material.STAINED_GLASS_PANE)) {
                     e.setCancelled(true);
                 }
             } catch (NullPointerException ex) {
+                ex.printStackTrace();
                 e.setCancelled(true);
             }
         }
-
     }
 }

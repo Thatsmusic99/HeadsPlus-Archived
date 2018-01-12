@@ -43,43 +43,8 @@ public class DeathEvents implements Listener {
 		            double chance2 = (double) rand.nextInt(100);
 		            if (chance1 == 0.0) return;
 		            if (chance2 <= chance1) {
-			            ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-			            SkullMeta headM = (SkullMeta) head.getItemMeta();
-			            if (HeadsPlusConfigHeads.getHeads().getString(entity + "HeadN").isEmpty()) return;
-			            if (HeadsPlusConfigHeadsX.isHPXSkull(HeadsPlusConfigHeads.getHeads().getString(entity + "HeadN")))  {
-			                ItemStack i = HeadsPlusConfigHeadsX.getSkull(HeadsPlusConfigHeads.getHeads().getString(entity + "HeadN"));
-			                SkullMeta sm = (SkullMeta) i.getItemMeta();
-			                sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString(entity + "HeadDN")));
-                            List<String> ls = new ArrayList<>();
-                            for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
-                                ls.add(ChatColor.translateAlternateColorCodes('&', str));
-                            }
-                            sm.setLore(ls);
-                            i.setItemMeta(sm);
-                            Location entityLoc = e.getEntity().getLocation();
-                            double entityLocY = entityLoc.getY() + 1;
-                            entityLoc.setY(entityLocY);
-                            World world = e.getEntity().getWorld();
-                            world.dropItem(entityLoc, i);
-                            return;
-                        }
-			            headM.setOwner(HeadsPlusConfigHeads.getHeads().getString(entity + "HeadN"));
-			            headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString(entity + "HeadDN")));
-                        List<String> ls = new ArrayList<>();
-                        for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
-                            ls.add(ChatColor.translateAlternateColorCodes('&', str));
-                        }
-                        headM.setLore(ls);
-			            head.setItemMeta(headM);
-			            Location entityLoc = e.getEntity().getLocation();
-                        double entityLocY = entityLoc.getY() + 1;
-                        entityLoc.setY(entityLocY);
-                        World world = e.getEntity().getWorld();
-                        EntityHeadDropEvent event = new EntityHeadDropEvent(e.getEntity().getKiller(), head, world, entityLoc, e.getEntityType());
-                        Bukkit.getServer().getPluginManager().callEvent(event);
-                        if (!event.isCancelled()) {
-                            world.dropItem(entityLoc, head);
-                        }
+			            if (HeadsPlusConfigHeads.getHeads().getStringList(entity + "HeadN").isEmpty()) return;
+			            dropHead(e.getEntity(), e.getEntity().getKiller());
                     }
 		       }
 		    }
@@ -121,7 +86,7 @@ public class DeathEvents implements Listener {
                 PlayerHeadDropEvent event = new PlayerHeadDropEvent(ep.getEntity(), ep.getEntity().getKiller(), head, world, entityLoc);
                 Bukkit.getServer().getPluginManager().callEvent(event);
                 if (!event.isCancelled()) {
-                    world.dropItem(entityLoc, head);
+                    world.dropItem(event.getLocation(), event.getSkull());
                 }
             }
         }
@@ -138,4 +103,66 @@ public class DeathEvents implements Listener {
 			ableEntities.addAll(Arrays.asList(EntityType.DONKEY, EntityType.ELDER_GUARDIAN, EntityType.EVOKER, EntityType.HUSK, EntityType.LLAMA, EntityType.MULE, EntityType.PARROT, EntityType.POLAR_BEAR, EntityType.SHULKER, EntityType.SKELETON_HORSE, EntityType.STRAY, EntityType.VEX, EntityType.VINDICATOR, EntityType.WITHER_SKELETON));
 		}
 	}
+
+	private static List<String> hasColor(Entity e) {
+        if (e instanceof Sheep) {
+            Sheep sheep = (Sheep) e;
+            DyeColor dc = sheep.getColor();
+            for (String str : HeadsPlusConfigHeads.getHeads().getConfigurationSection("sheepHeadN").getKeys(false)) {
+                if (!str.equalsIgnoreCase("default")) {
+                    if (dc.equals(DyeColor.valueOf(str))) {
+                        return HeadsPlusConfigHeads.getHeads().getStringList("sheepHeadN." + str);
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    private static void dropHead(Entity e, Player k) {
+	    Random r = new Random();
+	    int thing;
+	    String s;
+	    ItemStack i;
+        if (hasColor(e) != null && !hasColor(e).isEmpty()) {
+            thing = r.nextInt(hasColor(e).size());
+            s = hasColor(e).get(thing);
+
+        } else {
+            if (e instanceof Sheep) {
+                thing = r.nextInt(HeadsPlusConfigHeads.getHeads().getStringList(e.getType().name().toLowerCase() + "HeadN.default").size());
+                s = HeadsPlusConfigHeads.getHeads().getStringList(e.getType().name().toLowerCase() + "HeadN.default").get(thing);
+            } else {
+                thing = r.nextInt(HeadsPlusConfigHeads.getHeads().getStringList(e.getType().name().toLowerCase() + "HeadN").size());
+                s = HeadsPlusConfigHeads.getHeads().getStringList(e.getType().name().toLowerCase() + "HeadN").get(thing);
+            }
+
+
+        }
+        if (HeadsPlusConfigHeadsX.isHPXSkull(s))  {
+            i = HeadsPlusConfigHeadsX.getSkull(s);
+        } else {
+            i = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+            SkullMeta sm = (SkullMeta) i.getItemMeta();
+            sm.setOwner(s);
+        }
+        SkullMeta sm = (SkullMeta) i.getItemMeta();
+        sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString(e.getType().name().toLowerCase() + "HeadDN")));
+        List<String> ls = new ArrayList<>();
+        for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
+            ls.add(ChatColor.translateAlternateColorCodes('&', str));
+        }
+        sm.setLore(ls);
+        i.setItemMeta(sm);
+        Location entityLoc = e.getLocation();
+        double entityLocY = entityLoc.getY() + 1;
+        entityLoc.setY(entityLocY);
+        World world = e.getWorld();
+        EntityHeadDropEvent event = new EntityHeadDropEvent(k, i, world, entityLoc, e.getType());
+        Bukkit.getServer().getPluginManager().callEvent(event);
+        if (!event.isCancelled()) {
+            world.dropItem(event.getLocation(), event.getSkull());
+        }
+    }
+
 }

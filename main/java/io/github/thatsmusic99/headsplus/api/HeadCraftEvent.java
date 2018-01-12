@@ -58,4 +58,18 @@ public class HeadCraftEvent extends Event implements Cancellable {
     public static HandlerList getHandlerList() {
         return handlers;
     }
+
+    public void setSkull(ItemStack skull) {
+        this.skull = skull;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public String getEventName() {
+        return super.getEventName();
+    }
 }

@@ -73,4 +73,39 @@ public class EntityHeadDropEvent extends Event implements Cancellable {
     public static HandlerList getHandlerList() {
         return handlers;
     }
+
+    public void setEntityType(EntityType entityType) {
+        this.entityType = entityType;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public void setSkull(ItemStack skull) {
+        this.skull = skull;
+    }
+
+    public void setWorld(World world) {
+        this.world = world;
+    }
+
+    @Override
+    public String getEventName() {
+        return super.getEventName();
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

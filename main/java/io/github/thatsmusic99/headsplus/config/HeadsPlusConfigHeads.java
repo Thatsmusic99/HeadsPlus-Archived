@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.WordUtils;
-import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -42,6 +41,7 @@ public class HeadsPlusConfigHeads {
 		    addPlayerHeads();
 		    addENHeads();
 		    addieHeads();
+		    updateHeads();
 		    getHeads().options().copyDefaults(true);
 		    saveHeads();
 		} catch (Exception e) {
@@ -88,15 +88,15 @@ public class HeadsPlusConfigHeads {
     		    getHeads().addDefault(key + "HeadEN", WordUtils.capitalize(key));
     		    
     		} else if (key.equals("irongolem")) {
-    			getHeads().addDefault("irongolemHeadN", "MHF_Golem");
+    			getHeads().addDefault("irongolemHeadN", new ArrayList<>(Collections.singleton("MHF_Golem")));
     			getHeads().addDefault("irongolemHeadC", 25);
     			getHeads().addDefault("irongolemHeadDN", "Iron Golem Head");
     			getHeads().addDefault("irongolemHeadP", 10.00);
     		    getHeads().addDefault("irongolemHeadEN", "Iron Golem");
     		} else {
-    			getHeads().addDefault("sheepHeadN.color.default", new ArrayList<>(Collections.singleton("MHF_Sheep")));
+    			getHeads().addDefault("sheepHeadN.default", new ArrayList<>(Collections.singleton("MHF_Sheep")));
     			for (DyeColor dc : DyeColor.values()) {
-    			    getHeads().addDefault("sheepHeadN.color." + dc.name(), "");
+    			    getHeads().addDefault("sheepHeadN." + dc.name(), "");
                 }
                 getHeads().addDefault(key + "HeadC", 25);
                 getHeads().addDefault(key + "HeadDN", WordUtils.capitalize(key) + " Head");
@@ -171,6 +171,30 @@ public class HeadsPlusConfigHeads {
     			getHeads().addDefault("questionHeadN", "MHF_Question");
     		}
     	}
+    }
+
+    private static void updateHeads() {
+	    if (getHeads().get("blazeHeadN") instanceof String) {
+	        for (String key : mHeads) {
+	            if (!key.equalsIgnoreCase("sheep") && !key.equalsIgnoreCase("irongolem")) {
+	                getHeads().set(key + "HeadN", null);
+	                getHeads().addDefault(key + "HeadN", new ArrayList<>(Collections.singleton("MHF_" + WordUtils.capitalize(key))));
+                } else if (key.equalsIgnoreCase("irongolem")) {
+                    getHeads().set(key + "HeadN", null);
+	                getHeads().addDefault(key + "HeadN", new ArrayList<>(Collections.singleton("MHF_Golem")));
+                } else {
+	                getHeads().set("sheepHeadN", null);
+                    getHeads().addDefault("sheepHeadN.default", new ArrayList<>(Collections.singleton("MHF_Sheep")));
+                    for (DyeColor dc : DyeColor.values()) {
+                        getHeads().addDefault("sheepHeadN." + dc.name(), "");
+                    }
+                }
+            }
+            for (String key : uHeads) {
+                getHeads().set(key + "HeadN", null);
+                getHeads().set(key + "HeadN", new ArrayList<>(Collections.singleton("MHF_" + WordUtils.capitalize(key))));
+            }
+        }
     }
 
 

@@ -43,6 +43,7 @@ public class HeadsPlus extends JavaPlugin {
 	public static Object[] update = null;
     public Connection connection;
     public static boolean con = false;
+    public static boolean dm;
 
     public static FileConfiguration config;
 
@@ -69,7 +70,13 @@ public class HeadsPlus extends JavaPlugin {
 			if (config.getBoolean("leaderboards-mysql")) {
                 openConnection();
             }
-
+            if (getConfig().getBoolean("player-death-messages")) {
+                dm = true;
+                getServer().getPluginManager().registerEvents(new PlayerDeathEvent(), this);
+			} else {
+                dm = false;
+                getServer().getPluginManager().registerEvents(new PlayerDeathEvent(), this);
+            }
 			if (!getConfig().getBoolean("disableCrafting")) {
 			    HeadsPlusCrafting.craftingEnable();
 			    getServer().getPluginManager().registerEvents(new RecipePerms(), this);

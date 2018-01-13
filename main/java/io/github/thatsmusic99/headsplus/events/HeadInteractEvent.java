@@ -27,12 +27,11 @@ public final class HeadInteractEvent implements Listener {
 			    Skull skull = (Skull) block;
 			    String owner;
 
-                    owner = getSkullName(skull);
-
+				owner = getSkullName(skull);
 			    String playerName = player.toString();
 			    if (TimesSent < 1) {
 			    	for (HeadEnums key : HeadEnums.values()) {
-			    		if (owner.equalsIgnoreCase(key.name)) {
+			    		if (key.name.contains(owner)) {
 			    			String iMessage1;
 				    		if (key.displayname.startsWith("a") || key.displayname.startsWith("e") || key.displayname.startsWith("i") || key.displayname.startsWith("o") || key.displayname.startsWith("u") || key.displayname.startsWith("A") || key.displayname.startsWith("E") || key.displayname.startsWith("I") || key.displayname.startsWith("O") || key.displayname.startsWith("U")) {
 				    			iMessage1 = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("head-mhf-interact-message-2"));

@@ -38,4 +38,6 @@ lore:
 - '&6Do /sellhead to sell!'
 player-death-messages: false
 death-messages:
-- "&b%p was killed by %k
+- "&b%p &3was killed by &b%k &3and had their head removed!"
+- "&b%k &3finished the job and removed the worst part of &b%p&3: The head."
+- "&3The server owner screamed at &b%p &3\"OFF WITH HIS HEAD!\"&3. &b%k &3finished the job."

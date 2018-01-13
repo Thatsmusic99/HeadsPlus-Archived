@@ -96,7 +96,7 @@ public class HeadsPlusConfigHeads {
     		} else {
     			getHeads().addDefault("sheepHeadN.default", new ArrayList<>(Collections.singleton("MHF_Sheep")));
     			for (DyeColor dc : DyeColor.values()) {
-    			    getHeads().addDefault("sheepHeadN." + dc.name(), "");
+    			    getHeads().addDefault("sheepHeadN." + dc.name(), new ArrayList<>(Collections.singleton("HP#" + dc.name().toLowerCase() + "_sheep")));
                 }
                 getHeads().addDefault(key + "HeadC", 25);
                 getHeads().addDefault(key + "HeadDN", WordUtils.capitalize(key) + " Head");
@@ -186,7 +186,7 @@ public class HeadsPlusConfigHeads {
 	                getHeads().set("sheepHeadN", null);
                     getHeads().addDefault("sheepHeadN.default", new ArrayList<>(Collections.singleton("MHF_Sheep")));
                     for (DyeColor dc : DyeColor.values()) {
-                        getHeads().addDefault("sheepHeadN." + dc.name(), "");
+                        getHeads().addDefault("sheepHeadN." + dc.name(), new ArrayList<>(Collections.singleton("HP#" + dc.name().toLowerCase() + "_sheep")));
                     }
                 }
             }

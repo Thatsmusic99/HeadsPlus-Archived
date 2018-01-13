@@ -36,7 +36,7 @@ public class HeadsPlusAPI {
                                 pro.setAccessible(true);
                                 GameProfile gm = (GameProfile) pro.get(is.getItemMeta());
                                 for (Property p : gm.getProperties().get("textures")) {
-                                    if (p.getValue().equals(HeadsPlusConfigHeadsX.getTextures(key))) {
+                                    if (p.getValue().equals(HeadsPlusConfigHeadsX.getTextures(HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN." + s).get(i)))) {
                                         return true;
                                     }
                                 }
@@ -50,7 +50,7 @@ public class HeadsPlusAPI {
                             pro.setAccessible(true);
                             GameProfile gm = (GameProfile) pro.get(is.getItemMeta());
                             for (Property p : gm.getProperties().get("textures")) {
-                                if (p.getValue().equals(HeadsPlusConfigHeadsX.getTextures(key))) {
+                                if (p.getValue().equals(HeadsPlusConfigHeadsX.getTextures(HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN").get(i)))) {
                                     return true;
                                 }
                             }
@@ -65,7 +65,7 @@ public class HeadsPlusAPI {
                         pro.setAccessible(true);
                         GameProfile gm = (GameProfile) pro.get(is.getItemMeta());
                         for (Property p : gm.getProperties().get("textures")) {
-                            if (p.getValue().equals(HeadsPlusConfigHeadsX.getTextures(key))) {
+                            if (p.getValue().equals(HeadsPlusConfigHeadsX.getTextures(HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN").get(i)))) {
                                 return true;
                             }
                         }
@@ -149,7 +149,7 @@ public class HeadsPlusAPI {
                             pro.setAccessible(true);
                             GameProfile gm = (GameProfile) pro.get(is.getItemMeta());
                             for (Property p : gm.getProperties().get("textures")) {
-                                if (p.getValue().equals(HeadsPlusConfigHeadsX.getTextures(key))) {
+                                if (p.getValue().equals(HeadsPlusConfigHeadsX.getTextures(HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN." + s).get(i)))) {
                                     return key;
                                 }
                             }
@@ -163,7 +163,7 @@ public class HeadsPlusAPI {
                         pro.setAccessible(true);
                         GameProfile gm = (GameProfile) pro.get(is.getItemMeta());
                         for (Property p : gm.getProperties().get("textures")) {
-                            if (p.getValue().equals(HeadsPlusConfigHeadsX.getTextures(key))) {
+                            if (p.getValue().equals(HeadsPlusConfigHeadsX.getTextures(HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN").get(i)))) {
                                 return key;
                             }
                         }
@@ -180,7 +180,7 @@ public class HeadsPlusAPI {
                     pro.setAccessible(true);
                     GameProfile gm = (GameProfile) pro.get(is.getItemMeta());
                     for (Property p : gm.getProperties().get("textures")) {
-                        if (p.getValue().equals(HeadsPlusConfigHeadsX.getTextures(key))) {
+                        if (p.getValue().equals(HeadsPlusConfigHeadsX.getTextures(HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN").get(i)))) {
                             return key;
                         }
                     }

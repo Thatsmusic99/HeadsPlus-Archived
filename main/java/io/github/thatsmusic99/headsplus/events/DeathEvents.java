@@ -43,8 +43,12 @@ public class DeathEvents implements Listener {
 		            double chance2 = (double) rand.nextInt(100);
 		            if (chance1 == 0.0) return;
 		            if (chance2 <= chance1) {
-			            if (HeadsPlusConfigHeads.getHeads().getStringList(entity + "HeadN").isEmpty()) return;
-			            dropHead(e.getEntity(), e.getEntity().getKiller());
+		                if (entity.equalsIgnoreCase("sheep")) {
+                            dropHead(e.getEntity(), e.getEntity().getKiller());
+                        } else {
+                            if (HeadsPlusConfigHeads.getHeads().getStringList(entity + "HeadN").isEmpty()) return;
+                            dropHead(e.getEntity(), e.getEntity().getKiller());
+                        }
                     }
 		       }
 		    }
@@ -125,14 +129,13 @@ public class DeathEvents implements Listener {
 	    String s;
 	    ItemStack i;
         if (hasColor(e) != null && !hasColor(e).isEmpty()) {
+
             thing = r.nextInt(hasColor(e).size());
             s = hasColor(e).get(thing);
-
         } else {
             if (e instanceof Sheep) {
-                thing = r.nextInt(HeadsPlusConfigHeads.getHeads().getStringList(e.getType().name().toLowerCase() + "HeadN.default").size());
-                s = HeadsPlusConfigHeads.getHeads().getStringList(e.getType().name().toLowerCase() + "HeadN.default").get(thing);
-
+                thing = r.nextInt(HeadsPlusConfigHeads.getHeads().getStringList("sheepHeadN.default").size());
+                s = HeadsPlusConfigHeads.getHeads().getStringList("sheepHeadN.default").get(thing);
             } else {
                 thing = r.nextInt(HeadsPlusConfigHeads.getHeads().getStringList(e.getType().name().toLowerCase() + "HeadN").size());
                 s = HeadsPlusConfigHeads.getHeads().getStringList(e.getType().name().toLowerCase() + "HeadN").get(thing);
@@ -143,7 +146,6 @@ public class DeathEvents implements Listener {
             i = HeadsPlusConfigHeadsX.getSkull(s);
             sm = (SkullMeta) i.getItemMeta();
         } else {
-            HeadsPlus.getInstance().getLogger().info("Piing!");
             i = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
             sm = (SkullMeta) i.getItemMeta();
             sm.setOwner(s);

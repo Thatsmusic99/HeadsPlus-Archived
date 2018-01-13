@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class HeadsPlusConfigHeadsX {
 
@@ -162,6 +163,13 @@ public class HeadsPlusConfigHeadsX {
     }
     public static String getTextures(String s) {
         String[] st = s.split("#");
-        return HeadsPlusConfigHeadsX.getHeadsX().getString("heads." + st[0] + ".texture");
+        try {
+            return HeadsPlusConfigHeadsX.getHeadsX().getString("heads." + st[1] + ".texture");
+        } catch (Exception ex) {
+            HeadsPlus.getInstance().getLogger().log(Level.SEVERE, "Texture returning error. Please report to the developer if this consists!");
+            HeadsPlus.getInstance().getLogger().log(Level.SEVERE, "Link: https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
+            ex.printStackTrace();
+            return "";
+        }
     }
 }

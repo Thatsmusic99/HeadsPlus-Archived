@@ -36,3 +36,6 @@ pTheme: classic
 lore:
 - '&6&lThis head can be sold!'
 - '&6Do /sellhead to sell!'
+player-death-messages: false
+death-messages:
+- "&b%p was killed by %k

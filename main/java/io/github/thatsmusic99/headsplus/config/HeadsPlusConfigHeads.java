@@ -28,6 +28,7 @@ public class HeadsPlusConfigHeads {
 	public static FileConfiguration getHeads() {
 		return heads;
 	}
+
 	public static void headsEnable() {
 		reloadHeads();
 		loadHeads();

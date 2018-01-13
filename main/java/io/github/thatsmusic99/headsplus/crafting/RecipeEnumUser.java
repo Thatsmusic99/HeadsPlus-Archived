@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
@@ -29,7 +30,7 @@ public class RecipeEnumUser {
 			im.setOwner(heads.getString(key.str + "HeadN"));
 			RecipeListeners.makeSell(im);
 			i.setItemMeta(im);
-			ShapelessRecipe recipe = new ShapelessRecipe(i);
+			ShapelessRecipe recipe = getRecipe(i, "hp" + key.name());
 			List<String> ingrs = new ArrayList<>();
 			for (String key2 : crafting.getStringList(key.str + "I")) {
 				recipe.addIngredient(Material.getMaterial(key2));
@@ -49,7 +50,7 @@ public class RecipeEnumUser {
 		    	im.setOwner(heads.getString(key.str + "N"));
 		    	RecipeListeners.makeSell(im);
 		    	i.setItemMeta(im);
-		    	ShapelessRecipe recipe = new ShapelessRecipe(i);
+		    	ShapelessRecipe recipe = getRecipe(i, "hp" + key.name());
 		    	List<String> ingrs = new ArrayList<>();
 		    	if (crafting.getStringList(key.str + "I") != null) {
 		    		ingrs = crafting.getStringList(key.str + "I");
@@ -69,4 +70,12 @@ public class RecipeEnumUser {
 		    }
     	}
 	}
+
+	private static ShapelessRecipe getRecipe(ItemStack i, String name) {
+	    if (Bukkit.getVersion().contains("1.12") || Bukkit.getVersion().contains("1.13")) {
+            return new ShapelessRecipe(new NamespacedKey(HeadsPlus.getInstance(), name), i);
+        } else {
+	        return new ShapelessRecipe(i);
+        }
+    }
 }

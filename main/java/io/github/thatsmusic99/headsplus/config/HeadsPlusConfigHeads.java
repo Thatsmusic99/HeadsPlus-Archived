@@ -192,7 +192,7 @@ public class HeadsPlusConfigHeads {
             }
             for (String key : uHeads) {
                 getHeads().set(key + "HeadN", null);
-                getHeads().set(key + "HeadN", new ArrayList<>(Collections.singleton("MHF_" + WordUtils.capitalize(key))));
+                getHeads().set(key + "HeadN", new ArrayList<>());
             }
         }
     }

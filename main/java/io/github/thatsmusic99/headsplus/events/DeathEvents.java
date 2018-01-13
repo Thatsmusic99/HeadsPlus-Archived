@@ -132,21 +132,23 @@ public class DeathEvents implements Listener {
             if (e instanceof Sheep) {
                 thing = r.nextInt(HeadsPlusConfigHeads.getHeads().getStringList(e.getType().name().toLowerCase() + "HeadN.default").size());
                 s = HeadsPlusConfigHeads.getHeads().getStringList(e.getType().name().toLowerCase() + "HeadN.default").get(thing);
+
             } else {
                 thing = r.nextInt(HeadsPlusConfigHeads.getHeads().getStringList(e.getType().name().toLowerCase() + "HeadN").size());
                 s = HeadsPlusConfigHeads.getHeads().getStringList(e.getType().name().toLowerCase() + "HeadN").get(thing);
             }
-
-
         }
+        SkullMeta sm;
         if (HeadsPlusConfigHeadsX.isHPXSkull(s))  {
             i = HeadsPlusConfigHeadsX.getSkull(s);
+            sm = (SkullMeta) i.getItemMeta();
         } else {
+            HeadsPlus.getInstance().getLogger().info("Piing!");
             i = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-            SkullMeta sm = (SkullMeta) i.getItemMeta();
+            sm = (SkullMeta) i.getItemMeta();
             sm.setOwner(s);
         }
-        SkullMeta sm = (SkullMeta) i.getItemMeta();
+
         sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString(e.getType().name().toLowerCase() + "HeadDN")));
         List<String> ls = new ArrayList<>();
         for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {

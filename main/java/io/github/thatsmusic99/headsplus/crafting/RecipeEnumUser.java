@@ -24,12 +24,16 @@ public class RecipeEnumUser {
 	public static List<ShapelessRecipe> recipes = new ArrayList<>();
 
 	public static void addEnumToConfig() {
-	    try {
             for (RecipeEnums key : RecipeEnums.values()) {
                 ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
                 SkullMeta im = (SkullMeta) i.getItemMeta();
                 im.setDisplayName(ChatColor.translateAlternateColorCodes('&', heads.getString(key.str + "HeadDN")));
-                im.setOwner(heads.getStringList(key.str + "HeadN").get(0));
+                if (key.str.equalsIgnoreCase("sheep")) {
+                    im.setOwner(heads.getStringList("sheepHeadN.default").get(0));
+                } else {
+                    im.setOwner(heads.getStringList(key.str + "HeadN").get(0));
+                }
+
                 RecipeListeners.makeSell(im);
                 i.setItemMeta(im);
                 ShapelessRecipe recipe = getRecipe(i, "hp" + key.name());
@@ -40,16 +44,20 @@ public class RecipeEnumUser {
                 }
                 recipe.addIngredient(Material.SKULL_ITEM);
                 if (ingrs.size() > 0) {
-                    recipes.add(recipe);
-                    Bukkit.addRecipe(recipe);
+                    try {
+                        recipes.add(recipe);
+                        Bukkit.addRecipe(recipe);
+                    } catch (IllegalStateException ignored) {
+
+                    }
                 }
             }
             for (RecipeUndefinedEnums key : RecipeUndefinedEnums.values()) {
                 ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
                 SkullMeta im = (SkullMeta) i.getItemMeta();
-                if (!(heads.getString(key.str + "HeadDN").equals("")) && !(heads.getStringList(key.str + "HeadN").get(0).equals(""))) {
+                if (!(heads.getString(key.str + "HeadDN").equals("")) && !(heads.getStringList(key.str + "HeadN").isEmpty())) {
                     im.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(heads.getString(key.str + "HeadDN"))));
-                    im.setOwner(heads.getStringList(key.str + "N").get(0));
+                    im.setOwner(heads.getStringList(key.str + "HeadN").get(0));
                     RecipeListeners.makeSell(im);
                     i.setItemMeta(im);
                     ShapelessRecipe recipe = getRecipe(i, "hp" + key.name());
@@ -66,14 +74,15 @@ public class RecipeEnumUser {
                         crafting.addDefault(key.str + "I", ingrs);
                     }
                     if (ingrs.size() > 0) {
-                        recipes.add(recipe);
-                        Bukkit.addRecipe(recipe);
+                        try {
+                            recipes.add(recipe);
+                            Bukkit.addRecipe(recipe);
+                        } catch (IllegalStateException ignored) {
+
+                        }
                     }
                 }
             }
-        } catch (Exception e) {
-	        HeadsPlus.getInstance().getLogger().log(Level.WARNING, "If you're updating from a version earlier than 3.6, recipes currently don't work. Don't worry; this is just one-off, and next restart they'll be fine.");
-        }
 
 	}
 

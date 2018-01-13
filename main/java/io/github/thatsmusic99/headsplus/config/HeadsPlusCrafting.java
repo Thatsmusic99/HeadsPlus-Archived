@@ -24,9 +24,6 @@ public class HeadsPlusCrafting {
 	}
 	public static void craftingEnable() {
 		reloadCrafting();
-		checkCrafting();
-		loadCrafting();
-		reloadCrafting();
 	}
 	
 	private static void loadCrafting() {

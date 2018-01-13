@@ -102,7 +102,6 @@ public class SellHead implements CommandExecutor {
                                             price = setPrice(price, args, invi, (Player) sender);
                                         }
                                         pay((Player) sender, args, invi, price);
-
                                     }
                                 }
                             }
@@ -911,24 +910,24 @@ public class SellHead implements CommandExecutor {
 			String s = null;
 			for (String str : HeadsPlusConfigHeads.mHeads) {
                 if (str.equalsIgnoreCase("sheep")) {
-                    for (String st : HeadsPlusConfigHeads.getHeads().getConfigurationSection(s + "HeadN").getKeys(false)) {
-                        for (int in = 0; in < HeadsPlusConfigHeads.getHeads().getStringList(s + "HeadN." + st).size(); in++) {
-                            if (sm.getOwner().equalsIgnoreCase(HeadsPlusConfigHeads.getHeads().getStringList(s + "HeadN." + st).get(in))) {
+                    for (String st : HeadsPlusConfigHeads.getHeads().getConfigurationSection("sheepHeadN").getKeys(false)) {
+                        for (int in = 0; in < HeadsPlusConfigHeads.getHeads().getStringList("sheepHeadN." + st).size(); in++) {
+                            if (sm.getOwner().equalsIgnoreCase(HeadsPlusConfigHeads.getHeads().getStringList("sheepHeadN." + st).get(in))) {
                                 s = str;
                             }
                         }
                     }
                 } else {
-                    for (int in = 0; in < HeadsPlusConfigHeads.getHeads().getStringList(s + "HeadN").size(); in++) {
-                        if (sm.getOwner().equalsIgnoreCase(HeadsPlusConfigHeads.getHeads().getStringList(s + "HeadN").get(in))) {
+                    for (int in = 0; in < HeadsPlusConfigHeads.getHeads().getStringList("sheepHeadN").size(); in++) {
+                        if (sm.getOwner().equalsIgnoreCase(HeadsPlusConfigHeads.getHeads().getStringList("sheepHeadN").get(in))) {
                             s = str;
                         }
                     }
                 }
 			}
             for (String str : HeadsPlusConfigHeads.uHeads) {
-                for (int in = 0; in < HeadsPlusConfigHeads.getHeads().getStringList(s + "HeadN").size(); in++) {
-                    if (sm.getOwner().equalsIgnoreCase(HeadsPlusConfigHeads.getHeads().getStringList(s + "HeadN").get(in))) {
+                for (int in = 0; in < HeadsPlusConfigHeads.getHeads().getStringList("sheepHeadN").size(); in++) {
+                    if (sm.getOwner().equalsIgnoreCase(HeadsPlusConfigHeads.getHeads().getStringList("sheepHeadN").get(in))) {
                         s = str;
                     }
                 }

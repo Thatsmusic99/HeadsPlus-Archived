@@ -10,9 +10,9 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class BlacklistwToggle {
 	
-	private static final FileConfiguration config = HeadsPlus.getInstance().getConfig();
+	private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
 	
-	public static void toggleWorldNoArgs(CommandSender sender) {
+	public void toggleWorldNoArgs(CommandSender sender) {
 		if (sender.hasPermission("headsplus.maincommand.blacklistw.toggle")) {
 			  try {
 				  if (config.getBoolean("blacklistwOn")) {
@@ -32,10 +32,10 @@ public class BlacklistwToggle {
 				  sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("blw-fail"))));
 			  }
 		  } else {
-		      sender.sendMessage(HeadsPlusCommand.noPerms);
+		      sender.sendMessage(new HeadsPlusCommand().noPerms);
 		  }
 	}
-	public static void toggleWorld(CommandSender sender, String str) {
+	public void toggleWorld(CommandSender sender, String str) {
 		if (sender.hasPermission("headsplus.maincommand.blacklistw.toggle")) {
 			try {
 			   	if (str.equalsIgnoreCase("on")) {
@@ -66,7 +66,7 @@ public class BlacklistwToggle {
 			    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("blw-fail"))));
 		    }
 		} else {
-	    	sender.sendMessage(HeadsPlusCommand.noPerms);
+	    	sender.sendMessage(new HeadsPlusCommand().noPerms);
 	    }
 	}
 

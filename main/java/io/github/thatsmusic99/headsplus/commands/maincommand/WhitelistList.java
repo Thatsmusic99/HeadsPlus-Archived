@@ -3,6 +3,7 @@ package io.github.thatsmusic99.headsplus.commands.maincommand;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
+import io.github.thatsmusic99.headsplus.util.PagedLists;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -10,19 +11,16 @@ import java.util.List;
 
 public class WhitelistList {
 
-    public static void wlListNoArgs(CommandSender sender) {
+    private HeadsPlusConfig hpc = new HeadsPlusConfig();
+
+    public void wlListNoArgs(CommandSender sender) {
         if (sender.hasPermission("headsplus.maincommand.whitelist.list")) {
-            int headsN = 1;
             List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("whitelist");
-            int bls = bl.size();
-            if (bls < 1) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("empty-wl"))));
+            if (bl.size() < 1) {
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(.getMessages().getString("empty-wl"))));
                 return;
             }
-            while (bls > 8) {
-                headsN++;
-                bls = bls - 8;
-            }
+            PagedLists pl = new PagedLists(bl, 8);
             sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "============ " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + "Whitelist: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + "1/" + headsN + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + " ==========" );
             int TimesSent = 0;
             for (String key : bl) {
@@ -32,10 +30,10 @@ public class WhitelistList {
                 }
             }
         } else {
-            sender.sendMessage(HeadsPlusCommand.noPerms);
+            sender.sendMessage(new HeadsPlusCommand().noPerms);
         }
     }
-    public static void wlList(CommandSender sender, String i) {
+    public void wlList(CommandSender sender, String i) {
         if (sender.hasPermission("headsplus.maincommand.whitelist.list")) {
             if (i.matches("^[0-9]+$")) {
                 List<String> wl = HeadsPlus.getInstance().getConfig().getStringList("whitelist");
@@ -66,7 +64,7 @@ public class WhitelistList {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("invalid-input-int"))));
             }
         } else {
-            sender.sendMessage(HeadsPlusCommand.noPerms);
+            sender.sendMessage(new HeadsPlusCommand().noPerms);
         }
     }
 }

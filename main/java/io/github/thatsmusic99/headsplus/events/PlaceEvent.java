@@ -25,7 +25,7 @@ public class PlaceEvent implements Listener {
                         }
                         if (e.getItemInHand().getItemMeta().getLore().equals(ls)) {
                             e.setCancelled(true);
-                            e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("block-place-denied")));
+                            e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', new HeadsPlusConfig().getMessages().getString("block-place-denied")));
                         }
                     }
                 }

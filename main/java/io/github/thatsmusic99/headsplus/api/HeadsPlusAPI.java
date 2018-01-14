@@ -9,6 +9,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusLeaderboards;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -21,22 +22,26 @@ import java.util.UUID;
 
 public class HeadsPlusAPI {
 
-    public static ItemStack getHead(String option) {
-        return HeadsPlusConfigHeadsX.getSkull(option);
+    private HeadsPlusConfigHeadsX hpcHeadsX = new HeadsPlusConfigHeadsX();
+    private HeadsPlusConfigHeads hpcHeads = new HeadsPlusConfigHeads();
+
+    public ItemStack getHead(String option) {
+        return hpcHeadsX.getSkull(option);
     }
 
-    public static boolean isSellable(ItemStack is) throws NoSuchFieldException, IllegalAccessException {
+
+    public boolean isSellable(ItemStack is) throws NoSuchFieldException, IllegalAccessException {
         if (is.getType() == Material.SKULL_ITEM) {
-            for (String key : HeadsPlusConfigHeads.mHeads) {
+            for (String key : hpcHeads.mHeads) {
                 if (key.equalsIgnoreCase("sheep")) {
-                    for (String s : HeadsPlusConfigHeads.getHeads().getConfigurationSection("sheepHeadN").getKeys(false)) {
-                        for (int i = 0; i < HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN." + s).size(); i++) {
-                            if (HeadsPlusConfigHeadsX.isHPXSkull(HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN." + s).get(i))) {
+                    for (String s : hpcHeads.getHeads().getConfigurationSection("sheepHeadN").getKeys(false)) {
+                        for (int i = 0; i < hpcHeads.getHeads().getStringList(key + "HeadN." + s).size(); i++) {
+                            if (hpcHeadsX.isHPXSkull(hpcHeads.getHeads().getStringList(key + "HeadN." + s).get(i))) {
                                 Field pro = ((SkullMeta) is.getItemMeta()).getClass().getDeclaredField("profile");
                                 pro.setAccessible(true);
                                 GameProfile gm = (GameProfile) pro.get(is.getItemMeta());
                                 for (Property p : gm.getProperties().get("textures")) {
-                                    if (p.getValue().equals(HeadsPlusConfigHeadsX.getTextures(HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN." + s).get(i)))) {
+                                    if (p.getValue().equals(hpcHeadsX.getTextures(hpcHeads.getHeads().getStringList(key + "HeadN." + s).get(i)))) {
                                         return true;
                                     }
                                 }
@@ -44,13 +49,13 @@ public class HeadsPlusAPI {
                         }
                     }
                 } else {
-                    for (int i = 0; i < HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN").size(); i++) {
-                        if (HeadsPlusConfigHeadsX.isHPXSkull(HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN").get(i))) {
+                    for (int i = 0; i < hpcHeads.getHeads().getStringList(key + "HeadN").size(); i++) {
+                        if (hpcHeadsX.isHPXSkull(hpcHeads.getHeads().getStringList(key + "HeadN").get(i))) {
                             Field pro = ((SkullMeta) is.getItemMeta()).getClass().getDeclaredField("profile");
                             pro.setAccessible(true);
                             GameProfile gm = (GameProfile) pro.get(is.getItemMeta());
                             for (Property p : gm.getProperties().get("textures")) {
-                                if (p.getValue().equals(HeadsPlusConfigHeadsX.getTextures(HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN").get(i)))) {
+                                if (p.getValue().equals(hpcHeadsX.getTextures(hpcHeads.getHeads().getStringList(key + "HeadN").get(i)))) {
                                     return true;
                                 }
                             }
@@ -58,14 +63,14 @@ public class HeadsPlusAPI {
                     }
                 }
             }
-            for (String key : HeadsPlusConfigHeads.uHeads) {
-                for (int i = 0; i < HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN").size(); i++) {
-                    if (HeadsPlusConfigHeadsX.isHPXSkull(HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN").get(i))) {
+            for (String key : hpcHeads.uHeads) {
+                for (int i = 0; i < hpcHeads.getHeads().getStringList(key + "HeadN").size(); i++) {
+                    if (hpcHeadsX.isHPXSkull(hpcHeads.getHeads().getStringList(key + "HeadN").get(i))) {
                         Field pro = ((SkullMeta) is.getItemMeta()).getClass().getDeclaredField("profile");
                         pro.setAccessible(true);
                         GameProfile gm = (GameProfile) pro.get(is.getItemMeta());
                         for (Property p : gm.getProperties().get("textures")) {
-                            if (p.getValue().equals(HeadsPlusConfigHeadsX.getTextures(HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN").get(i)))) {
+                            if (p.getValue().equals(hpcHeadsX.getTextures(hpcHeads.getHeads().getStringList(key + "HeadN").get(i)))) {
                                 return true;
                             }
                         }
@@ -81,22 +86,22 @@ public class HeadsPlusAPI {
 
             if ((skullM.getLore() != null) &&  (skullM.getLore().equals(ls))) {
 
-                List<String> mHeads = HeadsPlusConfigHeads.mHeads;
-                List<String> uHeads = HeadsPlusConfigHeads.uHeads;
+                List<String> mHeads = hpcHeads.mHeads;
+                List<String> uHeads = hpcHeads.uHeads;
                 for (String key : mHeads) {
                     if (key.equalsIgnoreCase("sheep")) {
-                        for (String s : HeadsPlusConfigHeads.getHeads().getConfigurationSection("sheepHeadN").getKeys(false)) {
-                            for (int i = 0; i < HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN." + s).size(); i++) {
-                                if (owner.matches(HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN." + s).get(i))) {
+                        for (String s : hpcHeads.getHeads().getConfigurationSection("sheepHeadN").getKeys(false)) {
+                            for (int i = 0; i < hpcHeads.getHeads().getStringList(key + "HeadN." + s).size(); i++) {
+                                if (owner.matches(hpcHeads.getHeads().getStringList(key + "HeadN." + s).get(i))) {
                                     return true;
                                 }
                             }
                         }
                     } else {
-                        for (int i = 0; i < HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN").size(); i++) {
-                            if (owner.matches(HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN").get(i))) {
+                        for (int i = 0; i < hpcHeads.getHeads().getStringList(key + "HeadN").size(); i++) {
+                            if (owner.matches(hpcHeads.getHeads().getStringList(key + "HeadN").get(i))) {
                                 return true;
-                            } else if ((owner.matches(HeadsPlusConfigHeads.getHeads().getStringList("irongolemHeadN").get(i))) && (key.equalsIgnoreCase("irongolem"))) {
+                            } else if ((owner.matches(hpcHeads.getHeads().getStringList("irongolemHeadN").get(i))) && (key.equalsIgnoreCase("irongolem"))) {
                                 return true;
                             }
                         }
@@ -104,8 +109,8 @@ public class HeadsPlusAPI {
 
                 }
                 for (String key : uHeads) {
-                    for (int i = 0; i < HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN").size(); i++) {
-                        if (owner.matches(HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN").get(i))) {
+                    for (int i = 0; i < hpcHeads.getHeads().getStringList(key + "HeadN").size(); i++) {
+                        if (owner.matches(hpcHeads.getHeads().getStringList(key + "HeadN").get(i))) {
                             return true;
                         }
                     }
@@ -116,7 +121,7 @@ public class HeadsPlusAPI {
         return false;
     }
 
-    public static ItemStack createSkull(String texture, String displayname) {
+    public ItemStack createSkull(String texture, String displayname) {
         ItemStack s = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         SkullMeta sm = (SkullMeta) s.getItemMeta();
         GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
@@ -139,17 +144,17 @@ public class HeadsPlusAPI {
         return s;
     }
 
-    public static String getSkullType(ItemStack is) throws NoSuchFieldException, IllegalAccessException {
-        for (String key : HeadsPlusConfigHeads.mHeads) {
+    public String getSkullType(ItemStack is) throws NoSuchFieldException, IllegalAccessException {
+        for (String key : hpcHeads.mHeads) {
             if (key.equalsIgnoreCase("sheep")) {
-                for (String s : HeadsPlusConfigHeads.getHeads().getConfigurationSection("sheepHeadN").getKeys(false)) {
-                    for (int i = 0; i < HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN." + s).size(); i++) {
-                        if (HeadsPlusConfigHeadsX.isHPXSkull(HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN." + s).get(i))) {
+                for (String s : hpcHeads.getHeads().getConfigurationSection("sheepHeadN").getKeys(false)) {
+                    for (int i = 0; i < hpcHeads.getHeads().getStringList(key + "HeadN." + s).size(); i++) {
+                        if (hpcHeadsX.isHPXSkull(hpcHeads.getHeads().getStringList(key + "HeadN." + s).get(i))) {
                             Field pro = ((SkullMeta) is.getItemMeta()).getClass().getDeclaredField("profile");
                             pro.setAccessible(true);
                             GameProfile gm = (GameProfile) pro.get(is.getItemMeta());
                             for (Property p : gm.getProperties().get("textures")) {
-                                if (p.getValue().equals(HeadsPlusConfigHeadsX.getTextures(HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN." + s).get(i)))) {
+                                if (p.getValue().equals(hpcHeadsX.getTextures(hpcHeads.getHeads().getStringList(key + "HeadN." + s).get(i)))) {
                                     return key;
                                 }
                             }
@@ -157,13 +162,13 @@ public class HeadsPlusAPI {
                     }
                 }
             } else {
-                for (int i = 0; i < HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN").size(); i++) {
-                    if (HeadsPlusConfigHeadsX.isHPXSkull(HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN").get(i))) {
+                for (int i = 0; i < hpcHeads.getHeads().getStringList(key + "HeadN").size(); i++) {
+                    if (hpcHeadsX.isHPXSkull(hpcHeads.getHeads().getStringList(key + "HeadN").get(i))) {
                         Field pro = ((SkullMeta) is.getItemMeta()).getClass().getDeclaredField("profile");
                         pro.setAccessible(true);
                         GameProfile gm = (GameProfile) pro.get(is.getItemMeta());
                         for (Property p : gm.getProperties().get("textures")) {
-                            if (p.getValue().equals(HeadsPlusConfigHeadsX.getTextures(HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN").get(i)))) {
+                            if (p.getValue().equals(hpcHeadsX.getTextures(hpcHeads.getHeads().getStringList(key + "HeadN").get(i)))) {
                                 return key;
                             }
                         }
@@ -173,14 +178,14 @@ public class HeadsPlusAPI {
 
 
         }
-        for (String key : HeadsPlusConfigHeads.uHeads) {
-            for (int i = 0; i < HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN").size(); i++) {
-                if (HeadsPlusConfigHeadsX.isHPXSkull(HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN").get(i))) {
+        for (String key : hpcHeads.uHeads) {
+            for (int i = 0; i < hpcHeads.getHeads().getStringList(key + "HeadN").size(); i++) {
+                if (hpcHeadsX.isHPXSkull(hpcHeads.getHeads().getStringList(key + "HeadN").get(i))) {
                     Field pro = ((SkullMeta) is.getItemMeta()).getClass().getDeclaredField("profile");
                     pro.setAccessible(true);
                     GameProfile gm = (GameProfile) pro.get(is.getItemMeta());
                     for (Property p : gm.getProperties().get("textures")) {
-                        if (p.getValue().equals(HeadsPlusConfigHeadsX.getTextures(HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN").get(i)))) {
+                        if (p.getValue().equals(hpcHeadsX.getTextures(hpcHeads.getHeads().getStringList(key + "HeadN").get(i)))) {
                             return key;
                         }
                     }
@@ -197,30 +202,30 @@ public class HeadsPlusAPI {
 
         if ((skullM.getLore() != null) &&  (skullM.getLore().equals(ls))) {
 
-            List<String> mHeads = HeadsPlusConfigHeads.mHeads;
-            List<String> uHeads = HeadsPlusConfigHeads.uHeads;
+            List<String> mHeads = hpcHeads.mHeads;
+            List<String> uHeads = hpcHeads.uHeads;
             for (String key : mHeads) {
                 if (key.equalsIgnoreCase("sheep")) {
-                    for (String s : HeadsPlusConfigHeads.getHeads().getConfigurationSection("sheepHeadN").getKeys(false)) {
-                        for (int i = 0; i < HeadsPlusConfigHeads.getHeads().getStringList("sheepHeadN." + s).size(); i++) {
-                            if (owner.matches(HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN." + s).get(i))) {
+                    for (String s : hpcHeads.getHeads().getConfigurationSection("sheepHeadN").getKeys(false)) {
+                        for (int i = 0; i < hpcHeads.getHeads().getStringList("sheepHeadN." + s).size(); i++) {
+                            if (owner.matches(hpcHeads.getHeads().getStringList(key + "HeadN." + s).get(i))) {
                                 return key;
                             }
                         }
                     }
                 } else {
-                    for (int i = 0; i < HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN").size(); i++) {
-                        if (owner.matches(HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN").get(i))) {
+                    for (int i = 0; i < hpcHeads.getHeads().getStringList(key + "HeadN").size(); i++) {
+                        if (owner.matches(hpcHeads.getHeads().getStringList(key + "HeadN").get(i))) {
                             return key;
-                        } else if ((owner.matches(HeadsPlusConfigHeads.getHeads().getStringList("irongolemHeadN").get(i))) && (key.equalsIgnoreCase("irongolem"))) {
+                        } else if ((owner.matches(hpcHeads.getHeads().getStringList("irongolemHeadN").get(i))) && (key.equalsIgnoreCase("irongolem"))) {
                             return key;
                         }
                     }
                 }
             }
             for (String key : uHeads) {
-                for (int i = 0; i < HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN").size(); i++) {
-                    if (owner.matches(HeadsPlusConfigHeads.getHeads().getStringList(key + "HeadN").get(i))) {
+                for (int i = 0; i < hpcHeads.getHeads().getStringList(key + "HeadN").size(); i++) {
+                    if (owner.matches(hpcHeads.getHeads().getStringList(key + "HeadN").get(i))) {
                         return key;
                     }
                 }
@@ -231,12 +236,12 @@ public class HeadsPlusAPI {
         return "invalid";
     }
 
-    public static int getPlayerInLeaderboards(OfflinePlayer p, String section) throws SQLException {
-        return HeadsPlusLeaderboards.getScores(section).get(p);
+    public int getPlayerInLeaderboards(OfflinePlayer p, String section) throws SQLException {
+        return new HeadsPlusLeaderboards().getScores(section).get(p);
     }
 
-    public static LinkedHashMap<OfflinePlayer, Integer> getScores(String section) throws SQLException {
-        return HeadsPlusLeaderboards.getScores(section);
+    public LinkedHashMap<OfflinePlayer, Integer> getScores(String section) throws SQLException {
+        return new HeadsPlusLeaderboards().getScores(section);
     }
 
 }

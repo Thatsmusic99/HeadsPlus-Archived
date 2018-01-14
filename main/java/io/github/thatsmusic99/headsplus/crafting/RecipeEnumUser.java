@@ -19,11 +19,11 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusCrafting;
 
 public class RecipeEnumUser {
 	
-	private static final FileConfiguration crafting = HeadsPlusCrafting.getCrafting();
-	private static final FileConfiguration heads = HeadsPlusConfigHeads.getHeads();
-	public static List<ShapelessRecipe> recipes = new ArrayList<>();
+	private final FileConfiguration crafting = new HeadsPlusCrafting().getCrafting();
+	private final FileConfiguration heads = new HeadsPlusConfigHeads().getHeads();
+	public List<ShapelessRecipe> recipes = new ArrayList<>();
 
-	public static void addEnumToConfig() {
+	public void addEnumToConfig() {
             for (RecipeEnums key : RecipeEnums.values()) {
                 ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
                 SkullMeta im = (SkullMeta) i.getItemMeta();
@@ -86,7 +86,7 @@ public class RecipeEnumUser {
 
 	}
 
-	private static ShapelessRecipe getRecipe(ItemStack i, String name) {
+	private ShapelessRecipe getRecipe(ItemStack i, String name) {
 	    if (Bukkit.getVersion().contains("1.12") || Bukkit.getVersion().contains("1.13")) {
             return new ShapelessRecipe(new NamespacedKey(HeadsPlus.getInstance(), name), i);
         } else {

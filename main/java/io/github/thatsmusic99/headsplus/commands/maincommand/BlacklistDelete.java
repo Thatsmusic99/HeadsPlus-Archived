@@ -13,11 +13,11 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class BlacklistDelete {
 	
-	private static final FileConfiguration config = HeadsPlus.getInstance().getConfig();
+	private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
 	@SuppressWarnings("unused")
-	private static File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
+	private File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
 
-	public static void blacklistDel(CommandSender sender, String name) {
+	public void blacklistDel(CommandSender sender, String name) {
 		if (sender.hasPermission("headsplus.maincommand.blacklist.delete")) {
 			if (name.matches("^[A-Za-z0-9_]+$")) {
 		        try {
@@ -53,7 +53,7 @@ public class BlacklistDelete {
 			  sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("alpha-names"))));
 		  }
 	} else {
-		sender.sendMessage(HeadsPlusCommand.noPerms);
+		sender.sendMessage(new HeadsPlusCommand().noPerms);
 	}
 	}
 

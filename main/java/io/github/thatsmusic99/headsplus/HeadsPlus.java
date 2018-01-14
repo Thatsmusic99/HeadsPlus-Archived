@@ -42,10 +42,13 @@ public class HeadsPlus extends JavaPlugin {
 	public boolean stopP;
 	public static Object[] update = null;
     public Connection connection;
-    public static boolean con = false;
-    public static boolean dm;
+    public boolean con = false;
+    public boolean dm;
+    private HeadsPlusConfig hpc = new HeadsPlusConfig();
+    private DeathEvents de = new DeathEvents();
 
-    public static FileConfiguration config;
+
+    public FileConfiguration config;
 
     @SuppressWarnings("unused")
 	private File messagesF;
@@ -56,15 +59,15 @@ public class HeadsPlus extends JavaPlugin {
 			instance = this;
 			setUpMConfig();
 			try {
-                HeadsPlusConfig.getMessages().getString("locale");
+                hpc.getMessages().getString("locale");
             } catch (NullPointerException ex) {
-                HeadsPlusConfig.msgEnable(true);
+                hpc.msgEnable(true);
             }
 			LocaleManager.class.newInstance().setupLocale();
-			HeadsPlusConfig.msgEnable(false);
-			HeadsPlusConfigHeads.headsEnable();
-			HeadsPlusConfigHeadsX.headsxEnable();
-			DeathEvents.createList();
+			hpc.msgEnable(false);
+			new HeadsPlusConfigHeads().headsEnable();
+			new HeadsPlusConfigHeadsX().headsxEnable();
+			de.createList();
 			checkTheme();
 
 			if (config.getBoolean("leaderboards-mysql")) {
@@ -78,7 +81,7 @@ public class HeadsPlus extends JavaPlugin {
                 getServer().getPluginManager().registerEvents(new PlayerDeathEvent(), this);
             }
 			if (!getConfig().getBoolean("disableCrafting")) {
-			    HeadsPlusCrafting.craftingEnable();
+			    new HeadsPlusCrafting().craftingEnable();
 			    getServer().getPluginManager().registerEvents(new RecipePerms(), this);
 			}
 			if (!(econ()) && (getConfig().getBoolean("sellHeads"))) {
@@ -126,7 +129,7 @@ public class HeadsPlus extends JavaPlugin {
 			    lb = true;
 			    getServer().getPluginManager().registerEvents(new LBEvents(), this);
 
-			    HeadsPlusLeaderboards.lbFileEnable();
+			    new HeadsPlusLeaderboards().lbFileEnable();
             }
             db = getConfig().getBoolean("headsDatabase");
 		    this.getCommand("headsplus").setExecutor(new HeadsPlusCommand());
@@ -185,7 +188,7 @@ public class HeadsPlus extends JavaPlugin {
 		return instance;
 		
 	}
-	private static void setUpMConfig() {
+	private void setUpMConfig() {
         File configF = new File(instance.getDataFolder(), "config.yml");
 			config = instance.getConfig();
 			if(!instance.getDataFolder().exists()) {
@@ -216,7 +219,7 @@ public class HeadsPlus extends JavaPlugin {
     		s = s.replaceAll("'$", "");
     	}
     	if (s.contains("%h")) {
-    		s = s.replaceAll("%h", ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("prefix")));
+    		s = s.replaceAll("%h", ChatColor.translateAlternateColorCodes('&', hpc.getMessages().getString("prefix")));
     	}
 		return s;
     }
@@ -232,7 +235,7 @@ public class HeadsPlus extends JavaPlugin {
         return econ != null;
 	}
 
-	public void openConnection() throws SQLException, ClassNotFoundException {
+	private void openConnection() throws SQLException, ClassNotFoundException {
         if (connection != null && !connection.isClosed()) {
             return;
         }
@@ -253,7 +256,7 @@ public class HeadsPlus extends JavaPlugin {
 						"`id` INT NOT NULL AUTO_INCREMENT," +
 						"`uuid` VARCHAR(45)," +
 						"`total` VARCHAR(45)");
-				for (EntityType e : DeathEvents.ableEntities) {
+				for (EntityType e : de.ableEntities) {
 					sb.append(", `").append(e.name()).append("` VARCHAR(45)");
 				}
 				sb.append(", `PLAYER` VARCHAR(45)");
@@ -261,11 +264,11 @@ public class HeadsPlus extends JavaPlugin {
 				st.executeUpdate(sb.toString());
 				StringBuilder sb2 = new StringBuilder();
 				sb2.append("INSERT INTO `headspluslb` (uuid, total");
-				for (EntityType e : DeathEvents.ableEntities) {
+				for (EntityType e : de.ableEntities) {
 					sb2.append(", ").append(e.name());
 				}
 				sb2.append(", PLAYER) VALUES('server-total', '0'");
-				for (EntityType ignored : DeathEvents.ableEntities) {
+				for (EntityType ignored : de.ableEntities) {
 					sb2.append(", '0'");
 				}
 				sb2.append(", '0'");

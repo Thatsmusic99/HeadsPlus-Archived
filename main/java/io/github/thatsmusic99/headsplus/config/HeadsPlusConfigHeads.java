@@ -15,25 +15,25 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 
 public class HeadsPlusConfigHeads {
-	public static final List<String> mHeads = new ArrayList<>(Arrays.asList("blaze", "cavespider", "chicken", "cow", "creeper", "enderman", "ghast", "guardian", "irongolem", "mushroomcow", "rabbit", "pig", "sheep", "skeleton", "slime", "spider", "squid", "villager", "witch", "zombie"));
-	public static final List<String> uHeads = new ArrayList<>(Arrays.asList("bat", "donkey", "enderdragon", "elderguardian", "endermite", "evoker", "horse", "llama", "magmacube", "mule", "parrot", "polarbear", "shulker", "silverfish", "skeletonhorse", "snowman", "stray", "vex", "vindicator", "wither", "witherskeleton"));
-	private static final List<String> eHeads = new ArrayList<>(Arrays.asList("apple", "cake", "chest", "cactus", "melon", "pumpkin"));
-	private static final List<String> ieHeads = new ArrayList<>(Arrays.asList("coconutB", "coconutG", "oaklog", "present1", "present2", "tnt", "tnt2", "arrowUp", "arrowDown", "arrowQuestion", "arrowLeft", "arrowRight", "arrowExclamation"));
-	private static FileConfiguration heads;
-	private static File headsF;
+	public final List<String> mHeads = new ArrayList<>(Arrays.asList("blaze", "cavespider", "chicken", "cow", "creeper", "enderman", "ghast", "guardian", "irongolem", "mushroomcow", "rabbit", "pig", "sheep", "skeleton", "slime", "spider", "squid", "villager", "witch", "zombie"));
+	public final List<String> uHeads = new ArrayList<>(Arrays.asList("bat", "donkey", "enderdragon", "elderguardian", "endermite", "evoker", "horse", "llama", "magmacube", "mule", "parrot", "polarbear", "shulker", "silverfish", "skeletonhorse", "snowman", "stray", "vex", "vindicator", "wither", "witherskeleton"));
+	private final List<String> eHeads = new ArrayList<>(Arrays.asList("apple", "cake", "chest", "cactus", "melon", "pumpkin"));
+	private final List<String> ieHeads = new ArrayList<>(Arrays.asList("coconutB", "coconutG", "oaklog", "present1", "present2", "tnt", "tnt2", "arrowUp", "arrowDown", "arrowQuestion", "arrowLeft", "arrowRight", "arrowExclamation"));
+	public FileConfiguration heads;
+	private File headsF;
 	
-	public static FileConfiguration config = HeadsPlus.getInstance().getConfig();
+	public FileConfiguration config = HeadsPlus.getInstance().getConfig();
 	
-	public static FileConfiguration getHeads() {
+	public FileConfiguration getHeads() {
 		return heads;
 	}
 
-	public static void headsEnable() {
+	public void headsEnable() {
 		reloadHeads();
 		loadHeads();
 	}
 	
-	private static void loadHeads() {
+	private void loadHeads() {
 		try {
 			getHeads().options().header("HeadsPlus by Thatsmusic99 - Config wiki: https://github.com/Thatsmusic99/HeadsPlus/wiki/Configuration");
 		    addMHFHeads();
@@ -49,7 +49,7 @@ public class HeadsPlusConfigHeads {
 		}
 		
 	}
-	public static void reloadHeads() {
+	public void reloadHeads() {
 		if (headsF == null) {
 			headsF = new File(HeadsPlus.getInstance().getDataFolder(), "heads.yml");
 		}
@@ -57,7 +57,7 @@ public class HeadsPlusConfigHeads {
 		loadHeads();
 		saveHeads();
 	}
-    private static void saveHeads() {
+    private void saveHeads() {
     	if (heads == null || headsF == null) {
     		return;
     	}
@@ -68,7 +68,7 @@ public class HeadsPlusConfigHeads {
     		e.printStackTrace();
     	}
     }
-    private static void addUndefinedHeads() {
+    private void addUndefinedHeads() {
     	for (String key : uHeads) {
     		getHeads().addDefault(key + "HeadN", new ArrayList<>());
     		getHeads().addDefault(key + "HeadC", 0);
@@ -77,7 +77,7 @@ public class HeadsPlusConfigHeads {
     		getHeads().addDefault(key + "HeadEN", WordUtils.capitalize(key));
     	}
     }
-    private static void addMHFHeads() {
+    private void addMHFHeads() {
     	
     	for (String key : mHeads) {
     		if (!key.equals("irongolem") && !key.equals("sheep")) {
@@ -105,18 +105,18 @@ public class HeadsPlusConfigHeads {
 			}
     	}
     }
-    private static void addPlayerHeads() {
+    private void addPlayerHeads() {
     	getHeads().addDefault("playerHeadC", 100);
     	getHeads().addDefault("playerHeadDN", "%d's head");
     	getHeads().addDefault("playerHeadP", 10.00);
     }
-    private static void addENHeads() {
+    private void addENHeads() {
     	for (String key : eHeads) {
     		getHeads().addDefault(key + "HeadEN", WordUtils.capitalize(key));
     		getHeads().addDefault(key + "HeadN", "MHF_" + key);
     	}
     }
-    private static void addieHeads() {
+    private void addieHeads() {
     	for (String key : ieHeads) {
     		if (key.equals("coconutB")) {
     			getHeads().addDefault("brownCoconutHeadEN", "Brown Coconut");
@@ -173,7 +173,7 @@ public class HeadsPlusConfigHeads {
     	}
     }
 
-    private static void updateHeads() {
+    private void updateHeads() {
 	    if (getHeads().get("blazeHeadN") instanceof String) {
 	        for (String key : mHeads) {
 	            if (!key.equalsIgnoreCase("sheep") && !key.equalsIgnoreCase("irongolem")) {

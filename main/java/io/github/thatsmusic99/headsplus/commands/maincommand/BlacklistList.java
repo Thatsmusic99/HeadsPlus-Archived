@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import java.util.List;
 
+import io.github.thatsmusic99.headsplus.util.PagedLists;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -10,14 +11,16 @@ import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class BlacklistList {
+
+	private HeadsPlusConfig hpc = new HeadsPlusConfig();
 	
-	public static void blacklistListNoArgs(CommandSender sender) {
+	public void blacklistListNoArgs(CommandSender sender) {
 		if (sender.hasPermission("headsplus.maincommand.blacklist.list")) {
 			int headsN = 1;
 			List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("blacklist");
 			int bls = bl.size();
 			if (bls < 1) {
-				sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("empty-bl"))));
+				sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("empty-bl"))));
 				return;
 			}
 			while (bls > 8) {
@@ -33,41 +36,32 @@ public class BlacklistList {
 				}
 			}
 	    } else {
-	    	sender.sendMessage(HeadsPlusCommand.noPerms);
+	    	sender.sendMessage(new HeadsPlusCommand().noPerms);
 	    }
 	}
-	public static void blacklistList(CommandSender sender, String i) {
+	public void blacklistList(CommandSender sender, String i) {
 		if (sender.hasPermission("headsplus.maincommand.blacklist.list")) {
 			   if (i.matches("^[0-9]+$")) {
 				   List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("blacklist");
-				   int entries = 8;
 				   int page = Integer.parseInt(i);
-				   int sIndex = (page - 1) * entries;
-				   int eIndex = entries + sIndex;
-				   if (eIndex > bl.size()) {
-				 	   eIndex = bl.size();
-				   }
-				   int pages = 1;
-				   int bls = bl.size();
-				   while (bls > 8) {
-					   pages++;
-					   bls = bls - 8;
-				   }
+
+                   PagedLists pl = new PagedLists(bl, 8);
 				  
-				   if ((page > pages) || (0 >= page)) {
-					   sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("invalid-pg-no"))));
+				   if ((page > pl.getTotalPages()) || (0 >= page)) {
+					   sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("invalid-pg-no"))));
 				   } else {
-					   sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "============ " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + "Blacklist: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + page + "/" + pages + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + " ==========");
-			           List<String> blsl = bl.subList(sIndex, eIndex);
-				       for (String key : blsl) {
+					   sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "============ " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + "Blacklist: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + page + "/" + pl.getTotalPages() + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + " ==========");
+
+				       for (Object keyz : pl.getContentsInPage(page)) {
+				           String key = (String) keyz;
 				           sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + key);
 				       }
 				   }
 	       } else {
-		       sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("invalid-input-int"))));	  
+		       sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("invalid-input-int"))));
 		   }
 	} else {
-    	sender.sendMessage(HeadsPlusCommand.noPerms);
+    	sender.sendMessage(new HeadsPlusCommand().noPerms);
     }
 	}
 

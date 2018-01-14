@@ -13,10 +13,11 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class WhitelistwAdd {
 
-    private static final FileConfiguration config = HeadsPlus.getInstance().getConfig();
-    private static final File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
+    private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
+    private final File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
+    private HeadsPlusConfig hpc = new HeadsPlusConfig();
 
-    public static void wlAdd(CommandSender sender, String world) {
+    public void wlAdd(CommandSender sender, String world) {
 
         if (sender.hasPermission("headsplus.maincommand.whitelistw.add")) {
             if (world.matches("^[A-Za-z0-9_]+$")) {
@@ -32,25 +33,25 @@ public class WhitelistwAdd {
                     List<String> blacklist = config.getStringList("whitelistw");
                     String aWorld = world.toLowerCase();
                     if (blacklist.contains(aWorld)) {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("world-a-add"))));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("world-a-add"))));
                     } else {
                         blacklist.add(aWorld);
                         config.set("whitelistw", blacklist);
                         config.options().copyDefaults(true);
                         HeadsPlus.getInstance().saveConfig();
 
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("world-added-wl").replaceAll("%w", world))));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("world-added-wl").replaceAll("%w", world))));
                     }
                 } catch (Exception e) {
                     HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to add world to whitelist!");
                     e.printStackTrace();
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("wlw-fail"))));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("wlw-fail"))));
                 }
             } else {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("alpha-names"))));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("alpha-names"))));
             }
         } else {
-            sender.sendMessage(HeadsPlusCommand.noPerms);
+            sender.sendMessage(new HeadsPlusCommand().noPerms);
         }
 
     }

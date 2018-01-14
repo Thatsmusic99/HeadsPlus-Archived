@@ -10,18 +10,18 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 
 public class HeadsPlusConfig {
-	private static FileConfiguration messages;
-	private static File messagesF;
+	public FileConfiguration messages;
+	private File messagesF;
 	
-	public static FileConfiguration getMessages() {
+	public FileConfiguration getMessages() {
 		return messages;
 	}
-	public static void msgEnable(boolean nullpoint) {
+	public void msgEnable(boolean nullpoint) {
 		reloadMessages(nullpoint);
 		loadMessages(nullpoint);
 	}
 	
-	private static void loadMessages(boolean nullpoint) {
+	private void loadMessages(boolean nullpoint) {
 
 		getMessages().options().header("HeadsPlus by Thatsmusic99 \nPlease do NOT change pLocale! This will be used to change the plugin's language in the future!");
 
@@ -173,7 +173,7 @@ public class HeadsPlusConfig {
 		saveMessages();
 		
 	}
-	public static void reloadMessages(boolean nullpoint) {
+	public void reloadMessages(boolean nullpoint) {
 
 		if (messagesF == null) {
 			messagesF = new File(HeadsPlus.getInstance().getDataFolder(), "messages.yml");
@@ -184,7 +184,7 @@ public class HeadsPlusConfig {
 		saveMessages();
 
 	}
-    private static void saveMessages() {
+    private void saveMessages() {
 
     	if (messages == null || messagesF == null) {
     		return;

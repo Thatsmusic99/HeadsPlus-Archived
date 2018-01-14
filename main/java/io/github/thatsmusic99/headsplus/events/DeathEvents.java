@@ -7,6 +7,7 @@ import java.util.Random;
 
 import io.github.thatsmusic99.headsplus.api.EntityHeadDropEvent;
 import io.github.thatsmusic99.headsplus.api.PlayerHeadDropEvent;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
 import org.bukkit.*;
 import org.bukkit.entity.*;
@@ -22,7 +23,9 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 
 public class DeathEvents implements Listener {
 	
-	public static final List<EntityType> ableEntities = new ArrayList<>(Arrays.asList(EntityType.BAT, EntityType.BLAZE, EntityType.CAVE_SPIDER, EntityType.CHICKEN, EntityType.COW, EntityType.CREEPER, EntityType.ENDER_DRAGON, EntityType.ENDERMAN, EntityType.ENDERMITE, EntityType.GHAST, EntityType.GUARDIAN, EntityType.HORSE, EntityType.IRON_GOLEM, EntityType.MAGMA_CUBE, EntityType.MUSHROOM_COW, EntityType.OCELOT, EntityType.PIG, EntityType.RABBIT, EntityType.SHEEP, EntityType.SILVERFISH, EntityType.SKELETON, EntityType.SLIME, EntityType.SNOWMAN, EntityType.SPIDER, EntityType.SQUID, EntityType.VILLAGER, EntityType.WITCH, EntityType.WITHER, EntityType.ZOMBIE));
+	public final List<EntityType> ableEntities = new ArrayList<>(Arrays.asList(EntityType.BAT, EntityType.BLAZE, EntityType.CAVE_SPIDER, EntityType.CHICKEN, EntityType.COW, EntityType.CREEPER, EntityType.ENDER_DRAGON, EntityType.ENDERMAN, EntityType.ENDERMITE, EntityType.GHAST, EntityType.GUARDIAN, EntityType.HORSE, EntityType.IRON_GOLEM, EntityType.MAGMA_CUBE, EntityType.MUSHROOM_COW, EntityType.OCELOT, EntityType.PIG, EntityType.RABBIT, EntityType.SHEEP, EntityType.SILVERFISH, EntityType.SKELETON, EntityType.SLIME, EntityType.SNOWMAN, EntityType.SPIDER, EntityType.SQUID, EntityType.VILLAGER, EntityType.WITCH, EntityType.WITHER, EntityType.ZOMBIE));
+    private HeadsPlusConfigHeadsX hpchx = new HeadsPlusConfigHeadsX();
+    private HeadsPlusConfigHeads hpch = new HeadsPlusConfigHeads();
 
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent e) {
@@ -39,14 +42,14 @@ public class DeathEvents implements Listener {
 			    if (!HeadsPlus.getInstance().getConfig().getStringList("blacklistw").contains(e.getEntity().getWorld().getName()) || e.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn")) {
 		            String entity = e.getEntityType().toString().toLowerCase().replaceAll("_", "");
 		            Random rand = new Random();
-		            double chance1 = HeadsPlusConfigHeads.getHeads().getDouble(entity + "HeadC");
+		            double chance1 = hpch.getHeads().getDouble(entity + "HeadC");
 		            double chance2 = (double) rand.nextInt(100);
 		            if (chance1 == 0.0) return;
 		            if (chance2 <= chance1) {
 		                if (entity.equalsIgnoreCase("sheep")) {
                             dropHead(e.getEntity(), e.getEntity().getKiller());
                         } else {
-                            if (HeadsPlusConfigHeads.getHeads().getStringList(entity + "HeadN").isEmpty()) return;
+                            if (hpch.getHeads().getStringList(entity + "HeadN").isEmpty()) return;
                             dropHead(e.getEntity(), e.getEntity().getKiller());
                         }
                     }
@@ -67,14 +70,14 @@ public class DeathEvents implements Listener {
             }
             if (!HeadsPlus.getInstance().getConfig().getStringList("blacklistw").contains(ep.getEntity().getWorld().getName()) || ep.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn")) {
             Random rand = new Random();
-            double chance1 = HeadsPlusConfigHeads.getHeads().getDouble("playerHeadC");
+            double chance1 = hpch.getHeads().getDouble("playerHeadC");
             double chance2 = (double) rand.nextInt(100);
             if (chance1 == 0.0) return;
             if (chance2 <= chance1) {
                 ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
                 SkullMeta headM = (SkullMeta) head.getItemMeta();
                 headM.setOwner(ep.getEntity().getName());
-                headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("playerHeadDN").replaceAll("%d", ep.getEntity().getName())));
+                headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getHeads().getString("playerHeadDN").replaceAll("%d", ep.getEntity().getName())));
                 if ((HeadsPlus.getInstance().sellable) && (ep.getEntity().getKiller().hasPermission("headsplus.sellhead"))) {
                     List<String> ls = new ArrayList<>();
                     for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
@@ -97,7 +100,7 @@ public class DeathEvents implements Listener {
     }
 	}
 
-	public static void createList() {
+	public void createList() {
         String bukkitVersion = org.bukkit.Bukkit.getVersion();
         bukkitVersion = bukkitVersion.substring(bukkitVersion.indexOf("MC: ") + 4, bukkitVersion.length() - 1);
         if (bukkitVersion.contains("1.11")) {
@@ -108,14 +111,14 @@ public class DeathEvents implements Listener {
 		}
 	}
 
-	private static List<String> hasColor(Entity e) {
+	private List<String> hasColor(Entity e) {
         if (e instanceof Sheep) {
             Sheep sheep = (Sheep) e;
             DyeColor dc = sheep.getColor();
-            for (String str : HeadsPlusConfigHeads.getHeads().getConfigurationSection("sheepHeadN").getKeys(false)) {
+            for (String str : hpch.getHeads().getConfigurationSection("sheepHeadN").getKeys(false)) {
                 if (!str.equalsIgnoreCase("default")) {
                     if (dc.equals(DyeColor.valueOf(str))) {
-                        return HeadsPlusConfigHeads.getHeads().getStringList("sheepHeadN." + str);
+                        return hpch.getHeads().getStringList("sheepHeadN." + str);
                     }
                 }
             }
@@ -123,7 +126,7 @@ public class DeathEvents implements Listener {
         return null;
     }
 
-    private static void dropHead(Entity e, Player k) {
+    private void dropHead(Entity e, Player k) {
 	    Random r = new Random();
 	    int thing;
 	    String s;
@@ -134,16 +137,16 @@ public class DeathEvents implements Listener {
             s = hasColor(e).get(thing);
         } else {
             if (e instanceof Sheep) {
-                thing = r.nextInt(HeadsPlusConfigHeads.getHeads().getStringList("sheepHeadN.default").size());
-                s = HeadsPlusConfigHeads.getHeads().getStringList("sheepHeadN.default").get(thing);
+                thing = r.nextInt(hpch.getHeads().getStringList("sheepHeadN.default").size());
+                s = hpch.getHeads().getStringList("sheepHeadN.default").get(thing);
             } else {
-                thing = r.nextInt(HeadsPlusConfigHeads.getHeads().getStringList(e.getType().name().toLowerCase() + "HeadN").size());
-                s = HeadsPlusConfigHeads.getHeads().getStringList(e.getType().name().toLowerCase() + "HeadN").get(thing);
+                thing = r.nextInt(hpch.getHeads().getStringList(e.getType().name().toLowerCase() + "HeadN").size());
+                s = hpch.getHeads().getStringList(e.getType().name().toLowerCase() + "HeadN").get(thing);
             }
         }
         SkullMeta sm;
-        if (HeadsPlusConfigHeadsX.isHPXSkull(s))  {
-            i = HeadsPlusConfigHeadsX.getSkull(s);
+        if (hpchx.isHPXSkull(s))  {
+            i = hpchx.getSkull(s);
             sm = (SkullMeta) i.getItemMeta();
         } else {
             i = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
@@ -151,7 +154,7 @@ public class DeathEvents implements Listener {
             sm.setOwner(s);
         }
 
-        sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString(e.getType().name().toLowerCase() + "HeadDN")));
+        sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getHeads().getString(e.getType().name().toLowerCase() + "HeadDN")));
         List<String> ls = new ArrayList<>();
         for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
             ls.add(ChatColor.translateAlternateColorCodes('&', str));

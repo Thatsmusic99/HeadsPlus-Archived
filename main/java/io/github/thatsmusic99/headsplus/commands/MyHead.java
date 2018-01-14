@@ -19,6 +19,8 @@ import java.util.List;
 
 public class MyHead implements CommandExecutor {
 
+    private HeadsPlusConfig hpc = new HeadsPlusConfig();
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
         if (command.getName().equalsIgnoreCase("myhead")) {
@@ -40,7 +42,7 @@ public class MyHead implements CommandExecutor {
             boolean wlOn = HeadsPlus.getInstance().getConfig().getBoolean("whitelistOn");
             String head = sender.getName().toLowerCase();
             if (((Player) sender).getInventory().firstEmpty() == -1) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("full-inv")));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', hpc.getMessages().getString("full-inv")));
                 return true;
             }
             if (wlOn) {
@@ -53,7 +55,7 @@ public class MyHead implements CommandExecutor {
                             giveHead((Player) sender, sender.getName());
                             return true;
                         } else {
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("blacklist-head"))));
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("blacklist-head"))));
                             return true;
                         }
                     } else if (sender.hasPermission("headsplus.bypass.whitelist")) {
@@ -64,11 +66,11 @@ public class MyHead implements CommandExecutor {
                             giveHead((Player) sender, sender.getName());
                             return true;
                         } else {
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("blacklist-head"))));
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("blacklist-head"))));
                             return true;
                         }
                     } else {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("whitelist-head"))));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("whitelist-head"))));
                         return true;
                     }
                 } else {
@@ -79,7 +81,7 @@ public class MyHead implements CommandExecutor {
                         giveHead((Player) sender, sender.getName());
                         return true;
                     } else {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("whitelist-head"))));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("whitelist-head"))));
                         return true;
                     }
                 }
@@ -92,7 +94,7 @@ public class MyHead implements CommandExecutor {
                         giveHead((Player) sender, sender.getName());
                         return true;
                     } else {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("blacklist-head"))));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("blacklist-head"))));
                         return true;
                     }
                 } else {
@@ -107,7 +109,7 @@ public class MyHead implements CommandExecutor {
         ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         SkullMeta meta = (SkullMeta) skull.getItemMeta();
         meta.setOwner(n);
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("playerHeadDN").replaceAll("%d", n)));
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', new HeadsPlusConfigHeads().getHeads().getString("playerHeadDN").replaceAll("%d", n)));
         skull.setItemMeta(meta);
         Location playerLoc = (p).getLocation();
         double playerLocY = playerLoc.getY() + 1;

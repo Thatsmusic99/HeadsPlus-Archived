@@ -16,17 +16,17 @@ import java.util.*;
 
 public class HeadsPlusLeaderboards {
 
-    private static FileConfiguration lb;
-    private static File lbF;
+    public FileConfiguration lb;
+    private File lbF;
 
-    public static FileConfiguration getLeaderboards() {
+    public FileConfiguration getLeaderboards() {
         return lb;
     }
-    public static void lbFileEnable() {
+    public void lbFileEnable() {
         reloadLeaderboards();
     }
 
-    public static void reloadLeaderboards() {
+    public void reloadLeaderboards() {
         boolean n = false;
         if (lbF == null) {
             lbF = new File(HeadsPlus.getInstance().getDataFolder(), "leaderboards.yml");
@@ -39,7 +39,7 @@ public class HeadsPlusLeaderboards {
         saveLeaderboards();
 
     }
-    private static void saveLeaderboards() {
+    private void saveLeaderboards() {
 
         if (lb == null || lbF == null) {
             return;
@@ -54,7 +54,7 @@ public class HeadsPlusLeaderboards {
 
     }
 
-    private static void loadLeaderboards() {
+    private void loadLeaderboards() {
         try {
             getLeaderboards().options().header("HeadsPlus by Thatsmusic99 - Config wiki: https://github.com/Thatsmusic99/HeadsPlus/wiki/Configuration");
             getLeaderboards().addDefault("server-total", 0);
@@ -65,7 +65,7 @@ public class HeadsPlusLeaderboards {
         }
     }
 
-    public static void addPlayer(Player p, String section) {
+    public void addPlayer(Player p, String section) {
         if (HeadsPlus.con) {
             Connection c = HeadsPlus.getInstance().connection;
             Statement s = null;
@@ -100,7 +100,7 @@ public class HeadsPlusLeaderboards {
         }
     }
 
-    public static void addNewPlayerValue(Player p, String section) throws SQLException {
+    public void addNewPlayerValue(Player p, String section) throws SQLException {
         if (HeadsPlus.con) {
             Connection c = HeadsPlus.getInstance().connection;
             Statement s = null;
@@ -172,7 +172,7 @@ public class HeadsPlusLeaderboards {
         }
     }
 
-    public static void addOntoValue(Player p, String section) {
+    public void addOntoValue(Player p, String section) {
         if (HeadsPlus.con) {
             try {
                 Connection c = HeadsPlus.getInstance().connection;
@@ -232,7 +232,7 @@ public class HeadsPlusLeaderboards {
 
     }
 
-    public static LinkedHashMap<OfflinePlayer, Integer> getScores(String section) throws SQLException {
+    public LinkedHashMap<OfflinePlayer, Integer> getScores(String section) throws SQLException {
         if (HeadsPlus.con) {
             LinkedHashMap<OfflinePlayer, Integer> hs = new LinkedHashMap<>();
             Connection c = HeadsPlus.getInstance().connection;
@@ -272,7 +272,7 @@ public class HeadsPlusLeaderboards {
 
     }
 
-    private static LinkedHashMap<OfflinePlayer, Integer> sortHashMapByValues(HashMap<OfflinePlayer, Integer> passedMap) {
+    private LinkedHashMap<OfflinePlayer, Integer> sortHashMapByValues(HashMap<OfflinePlayer, Integer> passedMap) {
         List<OfflinePlayer> mapKeys = new ArrayList<>(passedMap.keySet());
         List<Integer> mapValues = new ArrayList<>(passedMap.values());
         Collections.sort(mapValues);
@@ -297,7 +297,7 @@ public class HeadsPlusLeaderboards {
         }
         return sortedMap;
     }
-    public static boolean addPlayerOnFileIfNotFound(Player p, String section) {
+    public boolean addPlayerOnFileIfNotFound(Player p, String section) {
         if (HeadsPlus.con) {
             Connection c = HeadsPlus.getInstance().connection;
             Statement s = null;
@@ -346,7 +346,7 @@ public class HeadsPlusLeaderboards {
         }
     }
 
-    public static boolean addSectionOnFileIfNotFound(Player p, String section) {
+    public boolean addSectionOnFileIfNotFound(Player p, String section) {
         if (HeadsPlus.con) {
             Connection c = HeadsPlus.getInstance().connection;
             Statement s = null;

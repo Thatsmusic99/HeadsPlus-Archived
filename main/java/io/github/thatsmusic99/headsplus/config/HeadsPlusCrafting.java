@@ -16,23 +16,23 @@ import io.github.thatsmusic99.headsplus.crafting.RecipeUndefinedEnums;
 
 public class HeadsPlusCrafting {
 	
-	private static FileConfiguration crafting;
-	private static File craftingF;
+	public FileConfiguration crafting;
+	private File craftingF;
 	
-	public static FileConfiguration getCrafting() {
+	public FileConfiguration getCrafting() {
 		return crafting;
 	}
-	public static void craftingEnable() {
+	public void craftingEnable() {
 		reloadCrafting();
 	}
 	
-	private static void loadCrafting() {
+	private void loadCrafting() {
 		getCrafting().options().header("HeadsPlus by Thatsmusic99 - due to the way Bukkit works, this config can only be reloaded on restart.\nInstructions for setting up can be found at: https://github.com/Thatsmusic99/HeadsPlus/wiki");
 		RecipeEnumUser.addEnumToConfig();
 		getCrafting().options().copyDefaults(true);
 		saveCrafting();
 	}
-	public static void reloadCrafting() {
+	public void reloadCrafting() {
 		if (craftingF == null) {
 			craftingF = new File(HeadsPlus.getInstance().getDataFolder(), "crafting.yml");
 		}
@@ -41,7 +41,7 @@ public class HeadsPlusCrafting {
 		checkCrafting();
 		saveCrafting();
 	}
-	private static void saveCrafting() {
+	private void saveCrafting() {
 		if (crafting == null || craftingF == null) {
 			return;
 		}
@@ -52,7 +52,7 @@ public class HeadsPlusCrafting {
 			e.printStackTrace();
 		}
 	}
-	private static void checkCrafting() {
+	private void checkCrafting() {
 		for (RecipeEnums key : RecipeEnums.values()) {
 			getCrafting().addDefault(key.str + "I", new ArrayList<>(Collections.singletonList(key.mat.toString())));
 			List<String> keyl = getCrafting().getStringList(key.str + "I");

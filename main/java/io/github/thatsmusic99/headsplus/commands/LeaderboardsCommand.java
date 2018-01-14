@@ -18,15 +18,15 @@ import java.util.*;
 
 public class LeaderboardsCommand implements CommandExecutor {
 
-    private static PagedHashmaps ph;
-
+    private PagedHashmaps ph;
+    private HeadsPlusConfig hpc = new HeadsPlusConfig();
 
     @Override
     public boolean onCommand(CommandSender cs, Command command, String s, String[] args) {
         if (cs.hasPermission("headsplus.leaderboards.display")) {
             if (args.length > 0) {
                 try {
-                    if (DeathEvents.ableEntities.contains(EntityType.valueOf(args[0].toUpperCase()))) {
+                    if (new DeathEvents().ableEntities.contains(EntityType.valueOf(args[0].toUpperCase()))) {
                         if (args.length > 1) {
                             if (args[1].matches("^[0-9]+$")) {
                                 cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1])));
@@ -63,7 +63,7 @@ public class LeaderboardsCommand implements CommandExecutor {
                             cs.sendMessage(getLeaderboard(args[0], 1));
                         }
                     } else {
-                        cs.sendMessage(HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("invalid-args"))));
+                        cs.sendMessage(HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', hpc.getMessages().getString("invalid-args"))));
                     }
                 }
 
@@ -74,11 +74,11 @@ public class LeaderboardsCommand implements CommandExecutor {
         return false;
     }
 
-    private static String getLeaderboard(String sec, int page) {
+    private String getLeaderboard(String sec, int page) {
         try {
             StringBuilder sb = new StringBuilder();
             try {
-                ph = new PagedHashmaps(HeadsPlusLeaderboards.getScores(sec), 8);
+                ph = new PagedHashmaps(new HeadsPlusLeaderboards().getScores(sec), 8);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -92,12 +92,12 @@ public class LeaderboardsCommand implements CommandExecutor {
             return sb.toString();
         } catch (IllegalArgumentException ex) {
             if (ph.getHs().size() > 0) {
-                return HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("invalid-pg-no")));
+                return HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', hpc.getMessages().getString("invalid-pg-no")));
             } else {
-                return HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("no-data-lb")));
+                return HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', hpc.getMessages().getString("no-data-lb")));
             }
         } catch (NullPointerException ex) {
-            return HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("no-data-lb")));
+            return HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', hpc.getMessages().getString("no-data-lb")));
         }
     }
 }

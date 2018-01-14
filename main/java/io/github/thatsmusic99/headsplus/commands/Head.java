@@ -17,6 +17,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 
 public class Head implements CommandExecutor {
+
+    private HeadsPlusConfig hpc = new HeadsPlusConfig();
+
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {   
 	    if (cmd.getName().equalsIgnoreCase("head")) {
 		    if (sender instanceof Player){
@@ -26,20 +29,20 @@ public class Head implements CommandExecutor {
 				        return true;
 			        }
 		        	if ((args.length == 1) && !(args[0].matches("^[A-Za-z0-9_]+$"))) {
-			         	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("alpha-names"))));
+			         	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("alpha-names"))));
 				        return true;
 			        }
 			        if (args.length > 1) {
-			        	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("too-many-args"))));
+			        	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("too-many-args"))));
 				        sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/head [IGN]");
 				        return true;
 			        }
 		    	    if (args[0].length() > 16) {
-		    	    	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("head-too-long"))));
+		    	    	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("head-too-long"))));
 			    	    return true;
 			        }
 			        if (args[0].length() < 3) {
-			        	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("too-short-head"))));
+			        	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("too-short-head"))));
 				        return true;
 			        }
 			
@@ -58,7 +61,7 @@ public class Head implements CommandExecutor {
                         boolean wlOn = HeadsPlus.getInstance().getConfig().getBoolean("whitelistOn");
 				        String head = args[0].toLowerCase();
 				        if (((Player) sender).getInventory().firstEmpty() == -1) {
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("full-inv")));
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', hpc.getMessages().getString("full-inv")));
                             return true;
                         }
 				        if (wlOn) {
@@ -71,7 +74,7 @@ public class Head implements CommandExecutor {
                                        giveHead((Player) sender, args[0]);
                                        return true;
                                    } else {
-                                       sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("blacklist-head"))));
+                                       sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("blacklist-head"))));
                                        return true;
                                    }
                                } else if (sender.hasPermission("headsplus.bypass.whitelist")) {
@@ -82,11 +85,11 @@ public class Head implements CommandExecutor {
                                        giveHead((Player) sender, args[0]);
                                        return true;
                                    } else {
-                                       sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("blacklist-head"))));
+                                       sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("blacklist-head"))));
                                        return true;
                                    }
                                } else {
-                                   sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("whitelist-head"))));
+                                   sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("whitelist-head"))));
                                    return true;
                                }
                            } else {
@@ -97,7 +100,7 @@ public class Head implements CommandExecutor {
                                    giveHead((Player) sender, args[0]);
                                    return true;
                                } else {
-                                   sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("whitelist-head"))));
+                                   sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("whitelist-head"))));
                                    return true;
                                }
                            }
@@ -110,7 +113,7 @@ public class Head implements CommandExecutor {
                                     giveHead((Player) sender, args[0]);
                                     return true;
                                 } else {
-                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("blacklist-head"))));
+                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("blacklist-head"))));
                                     return true;
                                 }
                             } else {
@@ -121,7 +124,7 @@ public class Head implements CommandExecutor {
                     }
                 }
             } else {
-                sender.sendMessage(HeadsPlusCommand.noPerms);
+                sender.sendMessage(new HeadsPlusCommand().noPerms);
                 return false;
             }
         } else {
@@ -134,7 +137,7 @@ public class Head implements CommandExecutor {
 		ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         SkullMeta meta = (SkullMeta) skull.getItemMeta();
         meta.setOwner(n);
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeads.getHeads().getString("playerHeadDN").replaceAll("%d", n)));
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', new HeadsPlusConfigHeads().getHeads().getString("playerHeadDN").replaceAll("%d", n)));
         skull.setItemMeta(meta);
         Location playerLoc = (p).getLocation();
         double playerLocY = playerLoc.getY() + 1;

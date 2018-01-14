@@ -5,38 +5,30 @@ import java.io.File;
 import io.github.thatsmusic99.headsplus.config.*;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 
 public class MCReload {
 	
-	private static final File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
+	private final File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
 
-	@SuppressWarnings("unused")
-	private static FileConfiguration messages;
 	private static final File messagesF = new File(HeadsPlus.getInstance().getDataFolder(), "messages.yml");
-	
-	@SuppressWarnings("unused")
-	private static FileConfiguration heads;
+
 	private static final File headsF = new File(HeadsPlus.getInstance().getDataFolder(), "heads.yml");
-	
-	@SuppressWarnings("unused")
-	private static FileConfiguration crafting;
+
 	private static final File craftingF = new File(HeadsPlus.getInstance().getDataFolder(), "crafting.yml");
 
-	private static FileConfiguration headsX;
 	private  static final File headsXF = new File(HeadsPlus.getInstance().getDataFolder(), "headsx.yml");
 
-	private static FileConfiguration lb;
 	private static final File lbF = new File(HeadsPlus.getInstance().getDataFolder(), "leaderboards.yml");
 	
-	public static void reload(CommandSender sender) {
+	public void reload(CommandSender sender) {
 		if (sender.hasPermission("headsplus.maincommand.reload")) {
-			   String reloadM = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("reload-message"));
-			   String reloadingM = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("reloading-message"));
-			   String reloadF = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("reload-fail"));
+		    HeadsPlusConfig m = new HeadsPlusConfig();
+			   String reloadM = ChatColor.translateAlternateColorCodes('&', m.getMessages().getString("reload-message"));
+			   String reloadingM = ChatColor.translateAlternateColorCodes('&', m.getMessages().getString("reloading-message"));
+			   String reloadF = ChatColor.translateAlternateColorCodes('&', m.getMessages().getString("reload-fail"));
 			   reloadM = HeadsPlus.getInstance().translateMessages(reloadM);
 			   reloadingM = HeadsPlus.getInstance().translateMessages(reloadingM);
 			   reloadF = HeadsPlus.getInstance().translateMessages(reloadF);
@@ -61,53 +53,59 @@ public class MCReload {
 
 					   HeadsPlus.getInstance().log.info("[HeadsPlus] Config reloaded!");
 				   }
+
 			      if (!(messagesF.exists())) {
 			    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Messages not found, creating!");
-			    	  HeadsPlusConfig.reloadMessages(false);
-			    	  messages = YamlConfiguration.loadConfiguration(messagesF);
+			    	  m.reloadMessages(false);
+			    	  m.messages = YamlConfiguration.loadConfiguration(messagesF);
 			    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Messages created!");
 			      } else {
-			    	  HeadsPlusConfig.reloadMessages(false);
+			    	  m.reloadMessages(false);
 			      }
+			      HeadsPlusConfigHeads hpch = new HeadsPlusConfigHeads();
 			      if (!(headsF.exists())) {
 			    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Heads not found, creating!");
-			    	  HeadsPlusConfigHeads.reloadHeads();
-			    	  heads = YamlConfiguration.loadConfiguration(headsF);
+			    	  hpch.reloadHeads();
+			    	  hpch.heads = YamlConfiguration.loadConfiguration(headsF);
 			    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Heads created!");
 			      } else {
-			    	  HeadsPlusConfigHeads.reloadHeads();
+			    	  hpch.reloadHeads();
 			      }
+			      HeadsPlusCrafting hpc = new HeadsPlusCrafting();
 			      if (!(craftingF.exists())) {
 			    	  if (HeadsPlus.getInstance().getConfig().getBoolean("craftHeads")) {
 			    		  HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting not found, creating!");
-			    	      HeadsPlusCrafting.craftingEnable();
-			    	      crafting = YamlConfiguration.loadConfiguration(craftingF);
+
+			    	      hpc.craftingEnable();
+			    	      hpc.crafting = YamlConfiguration.loadConfiguration(craftingF);
 			    	      HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting created!");
 			    	      sender.sendMessage(reloadM);
 			    	  }
 			      } else {
-                      HeadsPlusCrafting.reloadCrafting();
+                      hpc.reloadCrafting();
 			    	  sender.sendMessage(reloadM);
 			      }
+			      HeadsPlusConfigHeadsX hpchx = new HeadsPlusConfigHeadsX();
 				   if (!headsXF.exists()) {
 					   if (HeadsPlus.getInstance().getConfig().getBoolean("headsDatabase")) {
 						   HeadsPlus.getInstance().log.info("[HeadsPlus] HeadsX not found, creating!");
-						   HeadsPlusConfigHeadsX.reloadHeadsX();
-						   headsX = YamlConfiguration.loadConfiguration(headsXF);
+						   hpchx.reloadHeadsX();
+						   hpchx.headsx = YamlConfiguration.loadConfiguration(headsXF);
 						   HeadsPlus.getInstance().log.info("[HeadsPlus] HeadsX created!");
 					   }
 				   } else {
-					   HeadsPlusConfigHeadsX.reloadHeadsX();
+					   hpchx.reloadHeadsX();
 				   }
+				   HeadsPlusLeaderboards hpl = new HeadsPlusLeaderboards();
 				   if (!lbF.exists()) {
 			           if (HeadsPlus.getInstance().getConfig().getBoolean("leaderboards") && !HeadsPlus.getInstance().getConfig().getBoolean("leaderboards-mysql")) {
                            HeadsPlus.getInstance().log.info("[HeadsPlus] Leaderboards not found, creating!");
-                           HeadsPlusLeaderboards.reloadLeaderboards();
-                           lb = YamlConfiguration.loadConfiguration(lbF);
+                           hpl.reloadLeaderboards();
+                           hpl.lb = YamlConfiguration.loadConfiguration(lbF);
                            HeadsPlus.getInstance().log.info("[HeadsPlus] Leaderboards created!");
                        }
                    } else {
-                       HeadsPlusLeaderboards.reloadLeaderboards();
+                       hpl.reloadLeaderboards();
                    }
 			      
 		       } catch (Exception e) {
@@ -116,7 +114,7 @@ public class MCReload {
 			       sender.sendMessage(reloadF);
 		       }
 		   } else {
-		       sender.sendMessage(HeadsPlusCommand.noPerms);
+		       sender.sendMessage(new HeadsPlusCommand().noPerms);
 		   }
 	   }
 	

@@ -23,13 +23,14 @@ import java.util.*;
 
 public class InventoryManager {
 
-    private static int pages;
-    private static int heads;
-    private static int timesSent = 0;
-    private static int cPage = 0;
-    private static int sections = 0;
-    private static String cSection = "menu";
-    private static int[] pos() {
+    private int pages;
+    private int heads;
+    private int timesSent = 0;
+    private int cPage = 0;
+    private int sections = 0;
+    private String cSection = "menu";
+    private HeadsPlusConfigHeadsX hpchx = new HeadsPlusConfigHeadsX();
+    private int[] pos() {
         int[] a = new int[28];
         a[0] = 10;
         a[1] = 11;
@@ -61,7 +62,7 @@ public class InventoryManager {
         a[27] = 43;
         return a;
     }
-    private static int[] glass() {
+    private int[] glass() {
         int[] a = new int[24];
         a[0] = 0;
         a[1] = 1;
@@ -90,60 +91,23 @@ public class InventoryManager {
         return a;
     }
 
-    public static Inventory create(int slots, String name) {
-        return Bukkit.createInventory(null, slots, name);
+    private Inventory create(String name) {
+        return Bukkit.createInventory(null, 54, name);
     }
-  /*  public static Inventory setupInvHeadsX() {
-        cPage = 1;
-        heads = HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false).size();
-        int h = heads;
-        pages = 1;
-        while (h > 45) {
-            h -= 45;
-            pages++;
-        }
-        Inventory i = create(54, "HeadsPlus Head selector: page " + cPage + "/" + pages);
-        if (heads > 45) {
-            loop(45, i);
-        } else {
-            loop(heads, i);
-        }
-        ItemStack it = new ItemStack(Material.BARRIER);
-        ItemMeta is = it.getItemMeta();
-        is.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Close Menu");
-        it.setItemMeta(is);
-        i.setItem(49, it);
-        if (pages > 1) {
-            ItemStack item = new ItemStack(Material.ARROW);
-            ItemMeta im = item.getItemMeta();
-            im.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + "Next Page");
-            item.setItemMeta(im);
-            i.setItem(50, item);
-        }
-        timesSent = 0;
-        return i;
-    } */
 
-    public static int getPages() { return pages; }
-    public static int getPage() { return cPage; }
-    public static int getHeads() { return heads; }
-    public static String getSection() { return cSection; }
-    public static int getSections() { return sections; }
-    public static void setSection(String s) { cSection = s; }
-    private static void loop(int in, Inventory i) {
-        if (HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false).size() == 0) return;
-        while (timesSent < in) {
-            for (String str : HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false)) {
-                skull(str, i);
-            }
-        }
-    }
-    public static Inventory changePage(boolean next, boolean start, Player p, String section) {
+    public int getPages() { return pages; }
+    public int getPage() { return cPage; }
+    public int getHeads() { return heads; }
+    public String getSection() { return cSection; }
+    public int getSections() { return sections; }
+    public void setSection(String s) { cSection = s; }
+
+    public Inventory changePage(boolean next, boolean start, Player p, String section) {
 
         Inventory i;
         PagedLists ls;
-        sections = HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("sections").getKeys(false).size();
-        heads = HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false).size();
+        sections = hpchx.getHeadsX().getConfigurationSection("sections").getKeys(false).size();
+        heads = hpchx.getHeadsX().getConfigurationSection("heads").getKeys(false).size();
         if (next) {
             cPage++;
         } else {
@@ -158,14 +122,14 @@ public class InventoryManager {
            //     sections++;
            // }
 
-            ls = new PagedLists(new ArrayList<>(HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("sections").getKeys(false)), 28);
-            i = create(54, "HeadsPlus Head selector: page " + cPage + "/" + ls.getTotalPages());
+            ls = new PagedLists(new ArrayList<>(hpchx.getHeadsX().getConfigurationSection("sections").getKeys(false)), 28);
+            i = create("HeadsPlus Head selector: page " + cPage + "/" + ls.getTotalPages());
             for (Object str : ls.getContentsInPage(cPage)) {
                 String st = (String) str;
-                if (HeadsPlusConfigHeadsX.isHPXSkull(HeadsPlusConfigHeadsX.getHeadsX().getString("sections." + st + ".texture"))) {
-                    ItemStack is = HeadsPlusConfigHeadsX.getSkull(HeadsPlusConfigHeadsX.getHeadsX().getString("sections." + st + ".texture"));
+                if (hpchx.isHPXSkull(hpchx.getHeadsX().getString("sections." + st + ".texture"))) {
+                    ItemStack is = hpchx.getSkull(hpchx.getHeadsX().getString("sections." + st + ".texture"));
                     SkullMeta im = (SkullMeta) is.getItemMeta();
-                    im.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeadsX.getHeadsX().getString("sections." + st + ".display-name")));
+                    im.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpchx.getHeadsX().getString("sections." + st + ".display-name")));
                     is.setItemMeta(im);
                     i.setItem(pos()[timesSent], is);
                     timesSent++;
@@ -190,9 +154,9 @@ public class InventoryManager {
             List<String> f = new ArrayList<>();
             List<String> c = new ArrayList<>();
             HashMap<String, String> s = new HashMap<>();
-            for (String str : HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false)) {
-                c.add(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeadsX.getHeadsX().getString("heads." + str + ".displayname"))).replace("[", "").replace("]", ""));
-                s.put(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeadsX.getHeadsX().getString("heads." + str + ".displayname"))).replace("[", "").replace("]", ""), str);
+            for (String str : hpchx.getHeadsX().getConfigurationSection("heads").getKeys(false)) {
+                c.add(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', hpchx.getHeadsX().getString("heads." + str + ".displayname"))).replace("[", "").replace("]", ""));
+                s.put(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', hpchx.getHeadsX().getString("heads." + str + ".displayname"))).replace("[", "").replace("]", ""), str);
             }
             StringUtil.copyPartialMatches(term, c, f);
             Collections.sort(f);
@@ -206,34 +170,11 @@ public class InventoryManager {
 
 
             heads = s.size();
-           /* int h = heads;
-            pages = 1;
-            while (h > 28) {
-                h -= 28;
-                pages++;
-            }
-            if (next) {
-                cPage++;
-            } else {
-                cPage--;
-            }
-            if (start) {
-                cPage = 1;
-            }
-
-            int si = (cPage - 1) * 28;
-            int ei = 28 + si;
-
-            if (ei > s.size()) {
-                ei = s.size();
-            }
-
-            List<String> l = new ArrayList<>(s.values()).subList(si, ei); */
 
             ls = new PagedLists(new ArrayList<>(s.values()), 28);
-            i = create(54, "HeadsPlus Head selector: page " + cPage + "/" + ls.getTotalPages());
+            i = create("HeadsPlus Head selector: page " + cPage + "/" + ls.getTotalPages());
             for (Object str : ls.getContentsInPage(cPage)) {
-                if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("heads." + str + ".database")) {
+                if (hpchx.getHeadsX().getBoolean("heads." + str + ".database")) {
                     skull(String.valueOf(str), i);
                 }
             }
@@ -242,16 +183,16 @@ public class InventoryManager {
         } else {
             List<String> l = new ArrayList<>();
            // if (!section.equalsIgnoreCase("advent_calender")) {
-                for (String str : HeadsPlusConfigHeadsX.getHeadsX().getConfigurationSection("heads").getKeys(false)) {
-                    if (HeadsPlusConfigHeadsX.getHeadsX().getString("heads." + str + ".section").equalsIgnoreCase(section)) {
+                for (String str : hpchx.getHeadsX().getConfigurationSection("heads").getKeys(false)) {
+                    if (hpchx.getHeadsX().getString("heads." + str + ".section").equalsIgnoreCase(section)) {
                         l.add(str);
                     }
                 }
                 heads = l.size();
                 ls = new PagedLists(l, 28);
-                i = create(54, "HeadsPlus Head selector: page " + cPage + "/" + ls.getTotalPages());
+                i = create("HeadsPlus Head selector: page " + cPage + "/" + ls.getTotalPages());
                 for (Object str : ls.getContentsInPage(cPage)) {
-                    if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("heads." + str + ".database")) {
+                    if (hpchx.getHeadsX().getBoolean("heads." + str + ".database")) {
                         skull(String.valueOf(str), i);
                     }
                 }
@@ -316,15 +257,15 @@ public class InventoryManager {
         return i;
     }
 
-    private static void skull(String str, Inventory i) {
+    private void skull(String str, Inventory i) {
         ItemStack s = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         SkullMeta sm = (SkullMeta) s.getItemMeta();
         GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
-        if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("heads." + str + ".encode")) {
-            byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", HeadsPlusConfigHeadsX.getHeadsX().getString(str + ".texture")).getBytes());
+        if (hpchx.getHeadsX().getBoolean("heads." + str + ".encode")) {
+            byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", hpchx.getHeadsX().getString(str + ".texture")).getBytes());
             gm.getProperties().put("textures", new Property("texture", Arrays.toString(encodedData)));
         } else {
-            gm.getProperties().put("textures", new Property("texture", HeadsPlusConfigHeadsX.getHeadsX().getString("heads." + str + ".texture")));
+            gm.getProperties().put("textures", new Property("texture", hpchx.getHeadsX().getString("heads." + str + ".texture")));
         }
 
         Field profileField = null;
@@ -339,25 +280,25 @@ public class InventoryManager {
         } catch (IllegalArgumentException | IllegalAccessException e) {
             e.printStackTrace();
         }
-        sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeadsX.getHeadsX().getString("heads." + str + ".displayname")));
-        if (HeadsPlusConfigHeadsX.getHeadsX().get("heads." + str + ".price") instanceof String) {
-            if (!((String) HeadsPlusConfigHeadsX.getHeadsX().get("heads." + str + ".price")).equalsIgnoreCase("free")) {
-                if (((String) HeadsPlusConfigHeadsX.getHeadsX().get("heads." + str + ".price")).equalsIgnoreCase("default")) {
-                    if (!HeadsPlusConfigHeadsX.getHeadsX().get("options.default-price").equals("free")) {
+        sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpchx.getHeadsX().getString("heads." + str + ".displayname")));
+        if (hpchx.getHeadsX().get("heads." + str + ".price") instanceof String) {
+            if (!((String) hpchx.getHeadsX().get("heads." + str + ".price")).equalsIgnoreCase("free")) {
+                if (((String) hpchx.getHeadsX().get("heads." + str + ".price")).equalsIgnoreCase("default")) {
+                    if (!hpchx.getHeadsX().get("options.default-price").equals("free")) {
                         List<String> price = new ArrayList<>();
-                        price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + HeadsPlusConfigHeadsX.getHeadsX().get("options.default-price")));
+                        price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + hpchx.getHeadsX().get("options.default-price")));
                         sm.setLore(price);
                     }
                 } else {
                     List<String> price = new ArrayList<>();
-                    price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + HeadsPlusConfigHeadsX.getHeadsX().get("heads." + str + ".price")));
+                    price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + hpchx.getHeadsX().get("heads." + str + ".price")));
                     sm.setLore(price);
                 }
             }
         } else {
-            if (!(((Double) HeadsPlusConfigHeadsX.getHeadsX().get("heads." + str + ".price")) == 0.0)) {
+            if (!(((Double) hpchx.getHeadsX().get("heads." + str + ".price")) == 0.0)) {
                 List<String> price = new ArrayList<>();
-                price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + HeadsPlusConfigHeadsX.getHeadsX().get("heads." + str + ".price")));
+                price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + hpchx.getHeadsX().get("heads." + str + ".price")));
                 sm.setLore(price);
             }
 

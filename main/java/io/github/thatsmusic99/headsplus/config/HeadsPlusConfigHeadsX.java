@@ -22,12 +22,12 @@ import java.util.logging.Level;
 
 public class HeadsPlusConfigHeadsX {
 
-    public static boolean s = false;
-    private static FileConfiguration headsx;
-    private static File headsxf;
-    public static double cVersion = 1.1;
+    public boolean s = false;
+    public FileConfiguration headsx;
+    private File headsxf;
+    private double cVersion = 1.1;
 
-    public static void saveHeadsX() {
+    private void saveHeadsX() {
         headsxf = new File(HeadsPlus.getInstance().getDataFolder(), "headsx.yml");
         if (headsx == null) {
             return;
@@ -39,7 +39,7 @@ public class HeadsPlusConfigHeadsX {
             e.printStackTrace();
         }
     }
-    private static void loadHeadsX() {
+    private void loadHeadsX() {
         getHeadsX().options().header("HeadsPlus by Thatsmusic99 " +
                 "\n WARNING: This is an advanced section of the plugin. If you do not know what you a doing with it, please do not use it due to risk of crashing your own and other's games. " +
                 "\n For more information visit the GitHub wiki for HeadsX.yml: https://github.com/Thatsmusic99/HeadsPlus/wiki/headsx.yml");
@@ -62,11 +62,11 @@ public class HeadsPlusConfigHeadsX {
         saveHeadsX();
     }
 
-    public static FileConfiguration getHeadsX() {
+    public FileConfiguration getHeadsX() {
         return headsx;
     }
 
-    public static void reloadHeadsX() {
+    public void reloadHeadsX() {
         if (headsxf == null) {
             headsxf = new File(HeadsPlus.getInstance().getDataFolder(), "headsx.yml");
         }
@@ -122,27 +122,27 @@ public class HeadsPlusConfigHeadsX {
         saveHeadsX();
         s = false;
     }
-    public static void headsxEnable() {
+    public void headsxEnable() {
         reloadHeadsX();
        // if (s) {
       //      loadHeadsX();
       //  }
         s = false;
     }
-    public static boolean isHPXSkull(String str) {
+    public boolean isHPXSkull(String str) {
         return str.startsWith("HP#");
     }
 
-    public static ItemStack getSkull(String s) {
+    public ItemStack getSkull(String s) {
         String st = s.split("#")[1];
         ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         SkullMeta sm = (SkullMeta) i.getItemMeta();
         GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
-        if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("heads." + st + ".encode")) {
-            byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", HeadsPlusConfigHeadsX.getHeadsX().getString(st + ".texture")).getBytes());
+        if (getHeadsX().getBoolean("heads." + st + ".encode")) {
+            byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", getHeadsX().getString(st + ".texture")).getBytes());
             gm.getProperties().put("textures", new Property("texture", Arrays.toString(encodedData)));
         } else {
-            gm.getProperties().put("textures", new Property("texture", HeadsPlusConfigHeadsX.getHeadsX().getString("heads." + st + ".texture")));
+            gm.getProperties().put("textures", new Property("texture", getHeadsX().getString("heads." + st + ".texture")));
         }
 
         Field profileField = null;
@@ -157,14 +157,14 @@ public class HeadsPlusConfigHeadsX {
         } catch (IllegalArgumentException | IllegalAccessException e) {
             e.printStackTrace();
         }
-        sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfigHeadsX.getHeadsX().getString("heads." + st + ".displayname")));
+        sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', getHeadsX().getString("heads." + st + ".displayname")));
         i.setItemMeta(sm);
         return i;
     }
-    public static String getTextures(String s) {
+    public String getTextures(String s) {
         String[] st = s.split("#");
         try {
-            return HeadsPlusConfigHeadsX.getHeadsX().getString("heads." + st[1] + ".texture");
+            return getHeadsX().getString("heads." + st[1] + ".texture");
         } catch (Exception ex) {
             HeadsPlus.getInstance().getLogger().log(Level.SEVERE, "Texture returning error. Please report to the developer if this consists!");
             HeadsPlus.getInstance().getLogger().log(Level.SEVERE, "Link: https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");

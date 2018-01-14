@@ -12,10 +12,11 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class BlacklistAdd {
 	
-	private static final FileConfiguration config = HeadsPlus.getInstance().getConfig();
-	private static final File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
+	private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
+	private final File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
+	private HeadsPlusConfig hpc = new HeadsPlusConfig();
 
-	public static void blacklistAdd(CommandSender sender, String name) {
+	public void blacklistAdd(CommandSender sender, String name) {
 		if (sender.hasPermission("headsplus.maincommand.blacklist.add")) {
 			   if (name.matches("^[A-Za-z0-9_]+$")) {
 		           try {
@@ -30,27 +31,27 @@ public class BlacklistAdd {
 			           List<String> blacklist = config.getStringList("blacklist");
 			           String aHead = name.toLowerCase();
 			           if (blacklist.contains(aHead)) {
-				           sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("head-a-add"))));
+				           sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("head-a-add"))));
 			           } else {
 			    	       blacklist.add(aHead);
 				           config.set("blacklist", blacklist);
 				           config.options().copyDefaults(true);
 				           HeadsPlus.getInstance().saveConfig();
 				       
-				           sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("head-added-bl").replaceAll("%p", name))));
+				           sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("head-added-bl").replaceAll("%p", name))));
 			          }
 		           } catch (Exception e) {
 			          HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to add head!");
 			          e.printStackTrace();
-			          sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("bl-fail"))));
+			          sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("bl-fail"))));
 			        	  
 			          
 		           }
 			   } else {
-				   sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("alpha-names"))));
+				   sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("alpha-names"))));
 			   }
 	} else {
-		sender.sendMessage(HeadsPlusCommand.noPerms);
+		sender.sendMessage(new HeadsPlusCommand().noPerms);
 	}
 
 	}

@@ -13,10 +13,10 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class BlacklistwAdd {
 	
-	private static final FileConfiguration config = HeadsPlus.getInstance().getConfig();
-	private static final File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
+	private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
+	private final File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
 
-	public static void blacklistAdd(CommandSender sender, String world) {
+	public void blacklistAdd(CommandSender sender, String world) {
 		
 		if (sender.hasPermission("headsplus.maincommand.blacklistw.add")) {
 			   if (world.matches("^[A-Za-z0-9_]+$")) {
@@ -50,7 +50,7 @@ public class BlacklistwAdd {
 				   sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("alpha-names"))));
 			   }
 	} else {
-		sender.sendMessage(HeadsPlusCommand.noPerms);
+		sender.sendMessage(new HeadsPlusCommand().noPerms);
 	}
 
 	}

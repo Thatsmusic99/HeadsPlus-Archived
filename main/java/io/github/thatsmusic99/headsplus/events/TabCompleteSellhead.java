@@ -18,8 +18,9 @@ public class TabCompleteSellhead implements TabCompleter {
     public List<String> onTabComplete(CommandSender cs, Command command, String s, String[] args) {
         if (args.length == 1) {
             List<String> c = new ArrayList<>();
-            c.addAll(HeadsPlusConfigHeads.mHeads);
-            c.addAll(HeadsPlusConfigHeads.uHeads);
+            HeadsPlusConfigHeads h = new HeadsPlusConfigHeads();
+            c.addAll(h.mHeads);
+            c.addAll(h.uHeads);
             c.add("player");
             c.add("all");
             List<String> f = new ArrayList<>();

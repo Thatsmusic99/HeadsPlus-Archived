@@ -9,9 +9,9 @@ import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 
 public class Info {
 	
-	private static final String noPerms = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusCommand.noPerms));
+	private final String noPerms = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(new HeadsPlusCommand().noPerms));
 	
-	public static void info(CommandSender sender) {
+	public void info(CommandSender sender) {
 		if (sender.hasPermission("headsplus.maincommand.info")) {
 		       String version = HeadsPlus.getInstance().version;
 		       String author = HeadsPlus.getInstance().author;

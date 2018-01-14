@@ -3,6 +3,7 @@ package io.github.thatsmusic99.headsplus.commands.maincommand;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.thatsmusic99.headsplus.util.PagedLists;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -11,9 +12,8 @@ import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class HelpMenu {
-	
-	
-	public static void helpNoArgs(CommandSender sender) {
+
+	public void helpNoArgs(CommandSender sender) {
 	if (sender.hasPermission("headsplus.maincommand")) {
 		List<PermissionEnums> headPerms = new ArrayList<>();
 	    for (PermissionEnums key : PermissionEnums.values()) {
@@ -36,10 +36,10 @@ public class HelpMenu {
 			}
 		}
 	    } else {
-	    	sender.sendMessage(HeadsPlusCommand.noPerms);
+	    	sender.sendMessage(new HeadsPlusCommand().noPerms);
 	    } 
 	}
-	public static void helpNo(CommandSender sender, String str) {
+	public void helpNo(CommandSender sender, String str) {
 		if (sender.hasPermission("headsplus.maincommand")) {
 			if (str.matches("^[0-9]+$")) {
 				List<PermissionEnums> headPerms = new ArrayList<>();
@@ -48,32 +48,22 @@ public class HelpMenu {
 						headPerms.add(key);
 					}
 				}
-				int pages = 1;
-				int hps = headPerms.size();
-				while (hps > 8) {
-					pages++;
-					hps = hps - 8;
-				}
-				int entries = 8;
 				int page = Integer.parseInt(str);
-				int sIndex = (page - 1) * entries;
-				int eIndex = entries + sIndex;
-				if (eIndex > headPerms.size()) {
-					eIndex = headPerms.size();
-				}
+				PagedLists pl = new PagedLists(headPerms, 8);
 				
-				if ((page > pages) || (0 >= page)) {
+				if ((page > pl.getTotalPages()) || (0 >= page)) {
 					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("invalid-pg-no"))));
 				} else {
-					sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + " HeadsPlus " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + String.valueOf(page) + "/" + String.valueOf(pages) + " " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============");
-					List<PermissionEnums> hppsl = headPerms.subList(sIndex, eIndex);
-				    for (PermissionEnums key : hppsl) {
+					sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + " HeadsPlus " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + String.valueOf(page) + "/" + String.valueOf(pl.getTotalPages()) + " " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============");
+					List<?> hppsl = pl.getContentsInPage(page);
+				    for (Object keyz : hppsl) {
+				        PermissionEnums key = (PermissionEnums) keyz;
 				        sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + key.cmd + " - " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + key.dsc);
 				    }
 				}
 			}
 		} else {
-	    	sender.sendMessage(HeadsPlusCommand.noPerms);
+	    	sender.sendMessage(new HeadsPlusCommand().noPerms);
 	    }
 	}
 }

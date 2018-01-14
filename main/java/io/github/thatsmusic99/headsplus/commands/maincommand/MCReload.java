@@ -48,7 +48,7 @@ public class MCReload {
                        HeadsPlus.getInstance().stopP = HeadsPlus.getInstance().getConfig().getBoolean("stop-placement-of-sellable-heads");
                        HeadsPlus.getInstance().lb = HeadsPlus.getInstance().getConfig().getBoolean("leaderboards");
                        HeadsPlus.getInstance().db = HeadsPlus.getInstance().getConfig().getBoolean("headsDatabase");
-                       HeadsPlus.dm = HeadsPlus.getInstance().getConfig().getBoolean("player-death-messages");
+                       HeadsPlus.getInstance().dm = HeadsPlus.getInstance().getConfig().getBoolean("player-death-messages");
                        HeadsPlus.checkTheme();
 
 					   HeadsPlus.getInstance().log.info("[HeadsPlus] Config reloaded!");

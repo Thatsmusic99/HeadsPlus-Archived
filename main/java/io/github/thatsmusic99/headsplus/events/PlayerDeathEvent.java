@@ -14,7 +14,7 @@ public class PlayerDeathEvent implements Listener {
 
     @EventHandler
     public void onDeath(PlayerHeadDropEvent e) {
-        if (HeadsPlus.dm) {
+        if (HeadsPlus.getInstance().dm) {
             if (e.getKiller() != null) {
                 Random r = new Random();
                 int thing = r.nextInt(HeadsPlus.getInstance().getConfig().getStringList("death-messages").size());

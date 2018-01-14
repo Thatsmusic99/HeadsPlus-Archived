@@ -14,8 +14,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 public class BlacklistwDelete {
 	
 	private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
-	@SuppressWarnings("unused")
-	private File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
+	private HeadsPlusConfig hpc = new HeadsPlusConfig();
 
 	public void blacklistDel(CommandSender sender, String world) {
 		if (sender.hasPermission("headsplus.maincommand.blacklistw.delete")) {
@@ -35,22 +34,22 @@ public class BlacklistwDelete {
 				              config.set("blacklistw", blacklist);
 				              config.options().copyDefaults(true);
 				              HeadsPlus.getInstance().saveConfig();
-				              sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("world-removed-bl").replaceAll("%w", world))));
+				              sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("world-removed-bl").replaceAll("%w", world))));
 			              } else {
-			    	          sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("world-a-removed-bl"))));
+			    	          sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("world-a-removed-bl"))));
 			          
                     }} catch (Exception e) {
 			    	      HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove world!");
 			    	      e.printStackTrace();
-			    	      sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("blw-fail"))));
+			    	      sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("blw-fail"))));
 			          }
 		       } catch (Exception e) {
 			       HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove world!");
 			       e.printStackTrace();
-			       sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("blw-fail"))));
+			       sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("blw-fail"))));
 		       }
 		  } else {
-			  sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("alpha-names"))));
+			  sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("alpha-names"))));
 		  }
 	} else {
 		sender.sendMessage(new HeadsPlusCommand().noPerms);

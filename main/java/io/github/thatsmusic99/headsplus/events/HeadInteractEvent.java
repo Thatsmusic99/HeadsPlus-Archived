@@ -14,7 +14,10 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import org.bukkit.ChatColor;
 
 public final class HeadInteractEvent implements Listener {
+
+	private HeadsPlusConfig hpc = new HeadsPlusConfig();
 	private int TimesSent = 0;
+
 	@EventHandler
 	public void interact(PlayerInteractEvent event) {
 		try {
@@ -34,9 +37,9 @@ public final class HeadInteractEvent implements Listener {
 			    		if (key.name.contains(owner)) {
 			    			String iMessage1;
 				    		if (key.displayname.startsWith("a") || key.displayname.startsWith("e") || key.displayname.startsWith("i") || key.displayname.startsWith("o") || key.displayname.startsWith("u") || key.displayname.startsWith("A") || key.displayname.startsWith("E") || key.displayname.startsWith("I") || key.displayname.startsWith("O") || key.displayname.startsWith("U")) {
-				    			iMessage1 = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("head-mhf-interact-message-2"));
+				    			iMessage1 = ChatColor.translateAlternateColorCodes('&', hpc.getMessages().getString("head-mhf-interact-message-2"));
 				    		} else {
-				    			iMessage1 = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("head-mhf-interact-message"));
+				    			iMessage1 = ChatColor.translateAlternateColorCodes('&', hpc.getMessages().getString("head-mhf-interact-message"));
 				    		}
 				    		iMessage1 = HeadsPlus.getInstance().translateMessages(iMessage1).replaceAll("%p", key.displayname).replaceAll("%m", playerName);
 				    		player.sendMessage(iMessage1);
@@ -44,7 +47,7 @@ public final class HeadInteractEvent implements Listener {
 				    		return;
 			    		}
 			    	}
-			    	String iMessage1 = ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("head-interact-message"));
+			    	String iMessage1 = ChatColor.translateAlternateColorCodes('&', hpc.getMessages().getString("head-interact-message"));
 		            iMessage1 = HeadsPlus.getInstance().translateMessages(iMessage1);
 		            iMessage1 = iMessage1.replaceAll("%p", owner);
 		    		iMessage1 = iMessage1.replaceAll("%m", playerName);

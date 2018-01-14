@@ -11,11 +11,10 @@ import java.io.File;
 import java.util.List;
 
 public class WhitelistwDelete {
-    private static final FileConfiguration config = HeadsPlus.getInstance().getConfig();
-    @SuppressWarnings("unused")
-    private static File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
+    private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
+    private HeadsPlusConfig hpc = new HeadsPlusConfig();
 
-    public static void wlDel(CommandSender sender, String world) {
+    public void wlDel(CommandSender sender, String world) {
         if (sender.hasPermission("headsplus.maincommand.whitelistw.delete")) {
             if (world.matches("^[A-Za-z0-9_]+$")) {
                 try {
@@ -33,25 +32,25 @@ public class WhitelistwDelete {
                             config.set("whitelistw", blacklist);
                             config.options().copyDefaults(true);
                             HeadsPlus.getInstance().saveConfig();
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("world-removed-wl").replaceAll("%w", world))));
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("world-removed-wl").replaceAll("%w", world))));
                         } else {
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("world-a-removed-wl"))));
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("world-a-removed-wl"))));
 
                         }} catch (Exception e) {
                         HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove world from whitelist!");
                         e.printStackTrace();
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("wlw-fail"))));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("wlw-fail"))));
                     }
                 } catch (Exception e) {
                     HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove world from whitelist!");
                     e.printStackTrace();
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("wlw-fail"))));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("wlw-fail"))));
                 }
             } else {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("alpha-names"))));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("alpha-names"))));
             }
         } else {
-            sender.sendMessage(HeadsPlusCommand.noPerms);
+            sender.sendMessage(new HeadsPlusCommand().noPerms);
         }
     }
 }

@@ -11,22 +11,24 @@ import org.bukkit.entity.Player;
 
 public class Heads implements CommandExecutor {
 
+    private InventoryManager im = new InventoryManager();
+
     @Override
     public boolean onCommand(CommandSender cs, Command cmd, String l, String[] args) {
         if (HeadsPlus.getInstance().db) {
             if (cs instanceof Player) {
                 if (cs.hasPermission("headsplus.heads")) {
                     Player p = (Player) cs;
-                    InventoryManager.setSection("Menu");
-                    p.openInventory(InventoryManager.changePage(true, true, (Player) cs, "Menu"));
+                    im.setSection("Menu");
+                    p.openInventory(im.changePage(true, true, (Player) cs, "Menu"));
                 } else {
-                    cs.sendMessage(HeadsPlusCommand.noPerms);
+                    cs.sendMessage(new HeadsPlusCommand().noPerms);
                 }
             } else {
                 cs.sendMessage("[HeadsPlus] You have to be a player to run this command!");
             }
         } else {
-            cs.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("disabled")));
+            cs.sendMessage(ChatColor.translateAlternateColorCodes('&', new HeadsPlusConfig().getMessages().getString("disabled")));
         }
         return true;
     }

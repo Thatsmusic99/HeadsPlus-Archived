@@ -12,11 +12,10 @@ import java.util.List;
 
 public class WhitelistDel {
 
-    private static final FileConfiguration config = HeadsPlus.getInstance().getConfig();
-    @SuppressWarnings("unused")
-    private static File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
+    private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
+    private HeadsPlusConfig hpc = new HeadsPlusConfig();
 
-    public static void whitelistDel(CommandSender sender, String name) {
+    public void whitelistDel(CommandSender sender, String name) {
         if (sender.hasPermission("headsplus.maincommand.whitelist.delete")) {
             if (name.matches("^[A-Za-z0-9_]+$")) {
                 try {
@@ -34,25 +33,25 @@ public class WhitelistDel {
                             config.set("whitelist", wl);
                             config.options().copyDefaults(true);
                             HeadsPlus.getInstance().saveConfig();
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("head-removed-wl").replaceAll("%p", name))));
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("head-removed-wl").replaceAll("%p", name))));
                         } else {
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("head-a-removed-wl"))));
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("head-a-removed-wl"))));
 
                         }} catch (Exception e) {
                         HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove head!");
                         e.printStackTrace();
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("wl-fail"))));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("wl-fail"))));
                     }
                 } catch (Exception e) {
                     HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove head!");
                     e.printStackTrace();
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("wl-fail"))));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("wl-fail"))));
                 }
             } else {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("alpha-names"))));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("alpha-names"))));
             }
         } else {
-            sender.sendMessage(HeadsPlusCommand.noPerms);
+            sender.sendMessage(new HeadsPlusCommand().noPerms);
         }
     }
 }

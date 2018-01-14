@@ -18,6 +18,7 @@ public class HeadsPlusLeaderboards {
 
     public FileConfiguration lb;
     private File lbF;
+    private DeathEvents de = new DeathEvents();
 
     public FileConfiguration getLeaderboards() {
         return lb;
@@ -65,8 +66,8 @@ public class HeadsPlusLeaderboards {
         }
     }
 
-    public void addPlayer(Player p, String section) {
-        if (HeadsPlus.con) {
+    private void addPlayer(Player p, String section) {
+        if (HeadsPlus.getInstance().con) {
             Connection c = HeadsPlus.getInstance().connection;
             Statement s = null;
             try {
@@ -76,11 +77,11 @@ public class HeadsPlusLeaderboards {
             }
             StringBuilder sb2 = new StringBuilder();
             sb2.append("INSERT INTO `headspluslb` (uuid, total");
-            for (EntityType e : DeathEvents.ableEntities) {
+            for (EntityType e : de.ableEntities) {
                 sb2.append(", ").append(e.name());
             }
             sb2.append(") VALUES('").append(p.getUniqueId().toString()).append("', '0'");
-            for (EntityType ignored : DeathEvents.ableEntities) {
+            for (EntityType ignored : de.ableEntities) {
                 sb2.append(", 0");
             }
             sb2.append(")");
@@ -101,10 +102,10 @@ public class HeadsPlusLeaderboards {
     }
 
     public void addNewPlayerValue(Player p, String section) throws SQLException {
-        if (HeadsPlus.con) {
+        if (HeadsPlus.getInstance().con) {
             Connection c = HeadsPlus.getInstance().connection;
             Statement s = null;
-            ResultSet rs = null;
+            ResultSet rs;
             try {
                 s = c.createStatement();
             } catch (SQLException e) {
@@ -116,11 +117,11 @@ public class HeadsPlusLeaderboards {
             } catch (SQLException ex) {
                 StringBuilder sb2 = new StringBuilder();
                 sb2.append("INSERT INTO `headspluslb` (uuid, total");
-                for (EntityType e : DeathEvents.ableEntities) {
+                for (EntityType e : de.ableEntities) {
                     sb2.append(", ").append(e.name());
                 }
                 sb2.append(") VALUES('").append(p.getUniqueId().toString()).append("', '0'");
-                for (EntityType ignored : DeathEvents.ableEntities) {
+                for (EntityType ignored : de.ableEntities) {
                     sb2.append(", '0'");
                 }
                 sb2.append(");");
@@ -173,7 +174,7 @@ public class HeadsPlusLeaderboards {
     }
 
     public void addOntoValue(Player p, String section) {
-        if (HeadsPlus.con) {
+        if (HeadsPlus.getInstance().con) {
             try {
                 Connection c = HeadsPlus.getInstance().connection;
                 Statement s = c.createStatement();
@@ -233,7 +234,7 @@ public class HeadsPlusLeaderboards {
     }
 
     public LinkedHashMap<OfflinePlayer, Integer> getScores(String section) throws SQLException {
-        if (HeadsPlus.con) {
+        if (HeadsPlus.getInstance().con) {
             LinkedHashMap<OfflinePlayer, Integer> hs = new LinkedHashMap<>();
             Connection c = HeadsPlus.getInstance().connection;
             Statement s = c.createStatement();
@@ -298,7 +299,7 @@ public class HeadsPlusLeaderboards {
         return sortedMap;
     }
     public boolean addPlayerOnFileIfNotFound(Player p, String section) {
-        if (HeadsPlus.con) {
+        if (HeadsPlus.getInstance().con) {
             Connection c = HeadsPlus.getInstance().connection;
             Statement s = null;
             try {
@@ -313,11 +314,11 @@ public class HeadsPlusLeaderboards {
             } catch (SQLException ex) {
                 StringBuilder sb2 = new StringBuilder();
                 sb2.append("INSERT INTO `headspluslb` (uuid, total");
-                for (EntityType e : DeathEvents.ableEntities) {
+                for (EntityType e : de.ableEntities) {
                     sb2.append(", ").append(e.name());
                 }
                 sb2.append(") VALUES('").append(p.getUniqueId().toString()).append("', '0'");
-                for (EntityType ignored : DeathEvents.ableEntities) {
+                for (EntityType ignored : de.ableEntities) {
                     sb2.append(", 0");
                 }
                 sb2.append(")");
@@ -347,7 +348,7 @@ public class HeadsPlusLeaderboards {
     }
 
     public boolean addSectionOnFileIfNotFound(Player p, String section) {
-        if (HeadsPlus.con) {
+        if (HeadsPlus.getInstance().con) {
             Connection c = HeadsPlus.getInstance().connection;
             Statement s = null;
             try {
@@ -362,11 +363,11 @@ public class HeadsPlusLeaderboards {
             } catch (SQLException ex) {
                 StringBuilder sb2 = new StringBuilder();
                 sb2.append("INSERT INTO `headspluslb` (uuid, total");
-                for (EntityType e : DeathEvents.ableEntities) {
+                for (EntityType e : de.ableEntities) {
                     sb2.append(", ").append(e.name());
                 }
                 sb2.append(") VALUES('").append(p.getUniqueId().toString()).append("', '0'");
-                for (EntityType ignored : DeathEvents.ableEntities) {
+                for (EntityType ignored : de.ableEntities) {
                     sb2.append(", 0");
                 }
                 sb2.append(")");

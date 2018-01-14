@@ -13,30 +13,24 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class HelpMenu {
 
+	private HeadsPlusConfig hpc = new HeadsPlusConfig();
+
 	public void helpNoArgs(CommandSender sender) {
-	if (sender.hasPermission("headsplus.maincommand")) {
-		List<PermissionEnums> headPerms = new ArrayList<>();
-	    for (PermissionEnums key : PermissionEnums.values()) {
-	    	if (sender.hasPermission(key.str)) {
-	    		headPerms.add(key);
-	    	}
-	    }
-	    int pageNo = 1;
-	    int hpp = headPerms.size();
-	    while (hpp > 8) {
-	    	pageNo++;
-	    	hpp = hpp - 8;
-	    }
-		sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + " HeadsPlus " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + "1/" + String.valueOf(pageNo) + " " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============");
-		int TimesSent = 0;
-		for (PermissionEnums key2 : headPerms) {
-			if (TimesSent <= 7) {
-				sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + key2.cmd + " - " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + key2.dsc);
-				TimesSent++;
-			}
-		}
-	    } else {
-	    	sender.sendMessage(new HeadsPlusCommand().noPerms);
+	    if (sender.hasPermission("headsplus.maincommand")) {
+		    List<PermissionEnums> headPerms = new ArrayList<>();
+	        for (PermissionEnums key : PermissionEnums.values()) {
+	        	if (sender.hasPermission(key.str)) {
+	        		headPerms.add(key);
+	        	}
+	        }
+            PagedLists pl = new PagedLists(headPerms, 8);
+		    sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + " HeadsPlus " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + "1/" + pl.getTotalPages() + " " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============");
+		    for (Object key : pl.getContentsInPage(1)) {
+		        PermissionEnums key2 = (PermissionEnums) key;
+                sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + key2.cmd + " - " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + key2.dsc);
+		    }
+        } else {
+	        	sender.sendMessage(new HeadsPlusCommand().noPerms);
 	    } 
 	}
 	public void helpNo(CommandSender sender, String str) {
@@ -52,7 +46,7 @@ public class HelpMenu {
 				PagedLists pl = new PagedLists(headPerms, 8);
 				
 				if ((page > pl.getTotalPages()) || (0 >= page)) {
-					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlusConfig.getMessages().getString("invalid-pg-no"))));
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("invalid-pg-no"))));
 				} else {
 					sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + " HeadsPlus " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + String.valueOf(page) + "/" + String.valueOf(pl.getTotalPages()) + " " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============");
 					List<?> hppsl = pl.getContentsInPage(page);

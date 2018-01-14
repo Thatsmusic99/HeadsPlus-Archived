@@ -28,7 +28,7 @@ public class HeadsPlusCrafting {
 	
 	private void loadCrafting() {
 		getCrafting().options().header("HeadsPlus by Thatsmusic99 - due to the way Bukkit works, this config can only be reloaded on restart.\nInstructions for setting up can be found at: https://github.com/Thatsmusic99/HeadsPlus/wiki");
-		RecipeEnumUser.addEnumToConfig();
+		new RecipeEnumUser().addEnumToConfig();
 		getCrafting().options().copyDefaults(true);
 		saveCrafting();
 	}

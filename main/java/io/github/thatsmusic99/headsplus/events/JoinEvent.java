@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
+import io.github.thatsmusic99.headsplus.crafting.RecipeEnumUser;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import mkremins.fanciful.FancyMessage;
 import org.bukkit.Bukkit;
@@ -84,12 +85,16 @@ public class JoinEvent implements Listener {
 						      if (!(craftingF.exists())) {
 						    	  if (HeadsPlus.getInstance().getConfig().getBoolean("craftHeads")) {
 						    		  HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting not found, creating!");
+						    		  Bukkit.clearRecipes();
 						    	      hpcr.reloadCrafting();
 						    	      hpcr.crafting = YamlConfiguration.loadConfiguration(craftingF);
+						    	      new RecipeEnumUser();
 						    	      HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting created!");
 						    	  }
 						      } else {
+						          Bukkit.resetRecipes();
 						    	  hpcr.reloadCrafting();
+						    	  new RecipeEnumUser();
 						      }
 						      HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().hpchx;
 						      if (!headsXF.exists()) {

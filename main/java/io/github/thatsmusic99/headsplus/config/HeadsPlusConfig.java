@@ -12,6 +12,10 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 public class HeadsPlusConfig {
 	public FileConfiguration messages;
 	private File messagesF;
+
+	public HeadsPlusConfig(boolean nullpoint) {
+        msgEnable(nullpoint);
+    }
 	
 	public FileConfiguration getMessages() {
 		return messages;

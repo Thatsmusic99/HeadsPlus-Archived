@@ -15,7 +15,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class HeadsPlusCommand implements CommandExecutor {
 
-    private HeadsPlusConfig hpc = new HeadsPlusConfig();
+    private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 	public final String noPerms = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("no-perm")));
 	private final String tooManyArgs = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("too-many-args")));
 

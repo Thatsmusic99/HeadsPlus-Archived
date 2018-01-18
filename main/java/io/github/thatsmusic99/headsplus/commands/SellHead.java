@@ -28,9 +28,9 @@ import net.milkbowl.vault.economy.EconomyResponse;
 public class SellHead implements CommandExecutor {
 	
 	private boolean sold;
-	private HeadsPlusConfigHeads hpch = new HeadsPlusConfigHeads();
-	private HeadsPlusConfig hpc = new HeadsPlusConfig();
-	private HeadsPlusConfigHeadsX hpchx = new HeadsPlusConfigHeadsX();
+	private HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().hpch;
+	private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+	private HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().hpchx;
     private final String disabled = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("disabled")));
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -500,7 +500,7 @@ public class SellHead implements CommandExecutor {
 			String s = null;
 			for (String str : hpch.mHeads) {
                 if (str.equalsIgnoreCase("sheep")) {
-                    for (String st : hpch.getHeads().getConfigurationSection(s + "HeadN").getKeys(false)) {
+                    for (String st : hpch.getHeads().getConfigurationSection(str + "HeadN").getKeys(false)) {
                         s = g(hpch.getHeads().getStringList(str + "HeadN." + st), sm, str);
                     }
                 } else {
@@ -605,7 +605,7 @@ public class SellHead implements CommandExecutor {
             if (hpchx.isHPXSkull(ls.get(in))) {
                 GameProfile gm = h(i);
                 for (Property pr : gm.getProperties().get("textures")) {
-                    if (pr.getValue().equals(hpchx.getTextures(hpch.getHeads().getStringList(key + "HeadN").get(in)))) {
+                    if (pr.getValue().equals(hpchx.getTextures(ls.get(in)))) {
                         if (i.getAmount() > 0) {
                             if (e) {
                                 price = setPrice(price, args, i, p);

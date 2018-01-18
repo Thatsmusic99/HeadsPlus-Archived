@@ -8,7 +8,6 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ import org.bukkit.command.CommandExecutor;
 
 public class Head implements CommandExecutor {
 
-    private HeadsPlusConfig hpc = new HeadsPlusConfig();
+    private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {   
 	    if (cmd.getName().equalsIgnoreCase("head")) {
@@ -137,7 +136,7 @@ public class Head implements CommandExecutor {
 		ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         SkullMeta meta = (SkullMeta) skull.getItemMeta();
         meta.setOwner(n);
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', new HeadsPlusConfigHeads().getHeads().getString("playerHeadDN").replaceAll("%d", n)));
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().hpch.getHeads().getString("playerHeadDN").replaceAll("%d", n)));
         skull.setItemMeta(meta);
         Location playerLoc = (p).getLocation();
         double playerLocY = playerLoc.getY() + 1;

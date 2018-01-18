@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.events;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.commands.Heads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsXSections;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
@@ -22,8 +23,8 @@ import java.util.logging.Level;
 public class InventoryEvent implements Listener {
 
     private String name;
-    private InventoryManager im = new InventoryManager();
-    private HeadsPlusConfig hpc = new HeadsPlusConfig();
+    private InventoryManager im = HeadsPlus.getInstance().im;
+    private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
     @EventHandler
     public void onClickEvent(InventoryClickEvent e) {

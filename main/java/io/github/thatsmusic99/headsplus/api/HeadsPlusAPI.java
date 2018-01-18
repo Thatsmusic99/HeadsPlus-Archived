@@ -9,7 +9,6 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusLeaderboards;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -22,8 +21,8 @@ import java.util.UUID;
 
 public class HeadsPlusAPI {
 
-    private HeadsPlusConfigHeadsX hpcHeadsX = new HeadsPlusConfigHeadsX();
-    private HeadsPlusConfigHeads hpcHeads = new HeadsPlusConfigHeads();
+    private HeadsPlusConfigHeadsX hpcHeadsX = HeadsPlus.getInstance().hpchx;
+    private HeadsPlusConfigHeads hpcHeads = HeadsPlus.getInstance().hpch;
 
     public ItemStack getHead(String option) {
         return hpcHeadsX.getSkull(option);
@@ -237,11 +236,11 @@ public class HeadsPlusAPI {
     }
 
     public int getPlayerInLeaderboards(OfflinePlayer p, String section) throws SQLException {
-        return new HeadsPlusLeaderboards().getScores(section).get(p);
+        return HeadsPlus.getInstance().hplb.getScores(section).get(p);
     }
 
     public LinkedHashMap<OfflinePlayer, Integer> getScores(String section) throws SQLException {
-        return new HeadsPlusLeaderboards().getScores(section);
+        return HeadsPlus.getInstance().hplb.getScores(section);
     }
 
 }

@@ -22,13 +22,18 @@ public class HeadsPlusConfigHeads {
 	public FileConfiguration heads;
 	private File headsF;
 	
-	public FileConfiguration config = HeadsPlus.getInstance().getConfig();
+	public FileConfiguration config;
+
+	public HeadsPlusConfigHeads() {
+	    headsEnable();
+    }
 	
 	public FileConfiguration getHeads() {
 		return heads;
 	}
 
 	public void headsEnable() {
+		config = HeadsPlus.getInstance().getConfig();
 		reloadHeads();
 		loadHeads();
 	}

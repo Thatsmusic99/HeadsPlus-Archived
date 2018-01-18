@@ -2,9 +2,12 @@ package io.github.thatsmusic99.headsplus;
 
 import io.github.thatsmusic99.headsplus.commands.*;
 import io.github.thatsmusic99.headsplus.config.*;
+import io.github.thatsmusic99.headsplus.crafting.RecipeEnumUser;
 import io.github.thatsmusic99.headsplus.events.*;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
+import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import org.apache.commons.lang.WordUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.EntityType;
@@ -44,9 +47,13 @@ public class HeadsPlus extends JavaPlugin {
     public Connection connection;
     public boolean con = false;
     public boolean dm;
-    private HeadsPlusConfig hpc = new HeadsPlusConfig();
-    private DeathEvents de = new DeathEvents();
-
+    public HeadsPlusConfig hpc;
+    public HeadsPlusConfigHeads hpch;
+    public HeadsPlusConfigHeadsX hpchx;
+    public DeathEvents de;
+    public HeadsPlusLeaderboards hplb;
+    public HeadsPlusCrafting hpcr;
+    public InventoryManager im;
 
     public FileConfiguration config;
 
@@ -58,31 +65,29 @@ public class HeadsPlus extends JavaPlugin {
 		try { 
 			instance = this;
 			setUpMConfig();
+
 			try {
                 hpc.getMessages().getString("locale");
+                LocaleManager.class.newInstance().setupLocale();
             } catch (NullPointerException ex) {
-                hpc.msgEnable(true);
+                hpc = new HeadsPlusConfig(true);
+                LocaleManager.class.newInstance().setupLocale();
             }
-			LocaleManager.class.newInstance().setupLocale();
-			hpc.msgEnable(false);
-			new HeadsPlusConfigHeads().headsEnable();
-			new HeadsPlusConfigHeadsX().headsxEnable();
-			de.createList();
+			hpc = new HeadsPlusConfig(false);
+			hpch = new HeadsPlusConfigHeads();
+			hpchx = new HeadsPlusConfigHeadsX();
+            im = new InventoryManager();
+			de = new DeathEvents();
 			checkTheme();
-
+            getServer().getPluginManager().registerEvents(new PlayerDeathEvent(), this);
 			if (config.getBoolean("leaderboards-mysql")) {
                 openConnection();
             }
-            if (getConfig().getBoolean("player-death-messages")) {
-                dm = true;
-                getServer().getPluginManager().registerEvents(new PlayerDeathEvent(), this);
-			} else {
-                dm = false;
-                getServer().getPluginManager().registerEvents(new PlayerDeathEvent(), this);
-            }
+            dm = getConfig().getBoolean("player-death-messages");
 			if (!getConfig().getBoolean("disableCrafting")) {
-			    new HeadsPlusCrafting().craftingEnable();
-			    getServer().getPluginManager().registerEvents(new RecipePerms(), this);
+			    hpcr = new HeadsPlusCrafting();
+                new RecipeEnumUser();
+                getServer().getPluginManager().registerEvents(new RecipePerms(), this);
 			}
 			if (!(econ()) && (getConfig().getBoolean("sellHeads"))) {
                 this.getCommand("sellhead").setExecutor(new SellHead());
@@ -102,15 +107,12 @@ public class HeadsPlus extends JavaPlugin {
                 this.getCommand("sellhead").setTabCompleter(new TabCompleteSellhead());
 				sellable = false;
 			}
+			hplb = new HeadsPlusLeaderboards();
 			getServer().getPluginManager().registerEvents(new InventoryEvent(), this);
 			getServer().getPluginManager().registerEvents(new HeadInteractEvent(), this);
-			if (getConfig().getBoolean("dropHeads")) {
-			    drops = true;
-			    getServer().getPluginManager().registerEvents(new DeathEvents(), this);
-		    } else {
-			    drops = false;
-                getServer().getPluginManager().registerEvents(new DeathEvents(), this);
-            }
+			getServer().getPluginManager().registerEvents(new DeathEvents(), this);
+			drops = getConfig().getBoolean("dropHeads");
+
 			if (getConfig().getBoolean("autoReloadOnFirstJoin")) {
 			    arofj = true;
 				getServer().getPluginManager().registerEvents(new JoinEvent(), this);
@@ -129,7 +131,7 @@ public class HeadsPlus extends JavaPlugin {
 			    lb = true;
 			    getServer().getPluginManager().registerEvents(new LBEvents(), this);
 
-			    new HeadsPlusLeaderboards().lbFileEnable();
+
             }
             db = getConfig().getBoolean("headsDatabase");
 		    this.getCommand("headsplus").setExecutor(new HeadsPlusCommand());
@@ -279,7 +281,7 @@ public class HeadsPlus extends JavaPlugin {
         }
     }
 
-    public static void checkTheme() {
+    public void checkTheme() {
 	    if (!getInstance().getConfig().getString("theme").equalsIgnoreCase(getInstance().getConfig().getString("pTheme"))) {
 	        try {
 	            MenuThemes mt = MenuThemes.valueOf(getInstance().getConfig().getString("theme").toUpperCase());

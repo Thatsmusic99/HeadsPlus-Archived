@@ -14,7 +14,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 public class BlacklistDelete {
 	
 	private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
-	private HeadsPlusConfig hpc = new HeadsPlusConfig();
+	private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
 	public void blacklistDel(CommandSender sender, String name) {
 		if (sender.hasPermission("headsplus.maincommand.blacklist.delete")) {

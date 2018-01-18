@@ -19,7 +19,7 @@ import java.util.*;
 public class LeaderboardsCommand implements CommandExecutor {
 
     private PagedHashmaps ph;
-    private HeadsPlusConfig hpc = new HeadsPlusConfig();
+    private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
     @Override
     public boolean onCommand(CommandSender cs, Command command, String s, String[] args) {
@@ -78,7 +78,7 @@ public class LeaderboardsCommand implements CommandExecutor {
         try {
             StringBuilder sb = new StringBuilder();
             try {
-                ph = new PagedHashmaps(new HeadsPlusLeaderboards().getScores(sec), 8);
+                ph = new PagedHashmaps(HeadsPlus.getInstance().hplb.getScores(sec), 8);
             } catch (SQLException e) {
                 e.printStackTrace();
             }

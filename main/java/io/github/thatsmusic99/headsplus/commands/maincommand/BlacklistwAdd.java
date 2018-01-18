@@ -15,7 +15,7 @@ public class BlacklistwAdd {
 	
 	private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
 	private final File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
-	private HeadsPlusConfig hpc = new HeadsPlusConfig();
+	private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
 	public void blacklistAdd(CommandSender sender, String world) {
 		

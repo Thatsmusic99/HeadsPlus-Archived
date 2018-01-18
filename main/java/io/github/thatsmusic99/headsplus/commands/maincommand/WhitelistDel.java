@@ -13,7 +13,7 @@ import java.util.List;
 public class WhitelistDel {
 
     private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
-    private HeadsPlusConfig hpc = new HeadsPlusConfig();
+    private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
     public void whitelistDel(CommandSender sender, String name) {
         if (sender.hasPermission("headsplus.maincommand.whitelist.delete")) {

@@ -13,7 +13,7 @@ public class LBEvents implements Listener {
     public void onHeadDrop(EntityHeadDropEvent e) {
         if (!e.isCancelled()) {
             if (HeadsPlus.getInstance().lb) {
-                new HeadsPlusLeaderboards().addOntoValue(e.getPlayer(), e.getEntityType().name());
+                HeadsPlus.getInstance().hplb.addOntoValue(e.getPlayer(), e.getEntityType().name());
             }
         }
     }
@@ -22,7 +22,7 @@ public class LBEvents implements Listener {
     public void onPHeadDrop(PlayerHeadDropEvent e) {
         if (!e.isCancelled()) {
             if (HeadsPlus.getInstance().lb) {
-                new HeadsPlusLeaderboards().addOntoValue(e.getKiller(), "player");
+                HeadsPlus.getInstance().hplb.addOntoValue(e.getKiller(), "player");
             }
         }
     }

@@ -25,7 +25,7 @@ public class MCReload {
 	
 	public void reload(CommandSender sender) {
 		if (sender.hasPermission("headsplus.maincommand.reload")) {
-		    HeadsPlusConfig m = new HeadsPlusConfig();
+		    HeadsPlusConfig m = HeadsPlus.getInstance().hpc;
 			   String reloadM = ChatColor.translateAlternateColorCodes('&', m.getMessages().getString("reload-message"));
 			   String reloadingM = ChatColor.translateAlternateColorCodes('&', m.getMessages().getString("reloading-message"));
 			   String reloadF = ChatColor.translateAlternateColorCodes('&', m.getMessages().getString("reload-fail"));
@@ -49,7 +49,7 @@ public class MCReload {
                        HeadsPlus.getInstance().lb = HeadsPlus.getInstance().getConfig().getBoolean("leaderboards");
                        HeadsPlus.getInstance().db = HeadsPlus.getInstance().getConfig().getBoolean("headsDatabase");
                        HeadsPlus.getInstance().dm = HeadsPlus.getInstance().getConfig().getBoolean("player-death-messages");
-                       HeadsPlus.checkTheme();
+                       HeadsPlus.getInstance().checkTheme();
 
 					   HeadsPlus.getInstance().log.info("[HeadsPlus] Config reloaded!");
 				   }
@@ -62,7 +62,7 @@ public class MCReload {
 			      } else {
 			    	  m.reloadMessages(false);
 			      }
-			      HeadsPlusConfigHeads hpch = new HeadsPlusConfigHeads();
+			      HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().hpch;
 			      if (!(headsF.exists())) {
 			    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Heads not found, creating!");
 			    	  hpch.reloadHeads();
@@ -71,7 +71,7 @@ public class MCReload {
 			      } else {
 			    	  hpch.reloadHeads();
 			      }
-			      HeadsPlusCrafting hpc = new HeadsPlusCrafting();
+			      HeadsPlusCrafting hpc = HeadsPlus.getInstance().hpcr;
 			      if (!(craftingF.exists())) {
 			    	  if (HeadsPlus.getInstance().getConfig().getBoolean("craftHeads")) {
 			    		  HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting not found, creating!");
@@ -85,7 +85,7 @@ public class MCReload {
                       hpc.reloadCrafting();
 			    	  sender.sendMessage(reloadM);
 			      }
-			      HeadsPlusConfigHeadsX hpchx = new HeadsPlusConfigHeadsX();
+			      HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().hpchx;
 				   if (!headsXF.exists()) {
 					   if (HeadsPlus.getInstance().getConfig().getBoolean("headsDatabase")) {
 						   HeadsPlus.getInstance().log.info("[HeadsPlus] HeadsX not found, creating!");
@@ -96,7 +96,7 @@ public class MCReload {
 				   } else {
 					   hpchx.reloadHeadsX();
 				   }
-				   HeadsPlusLeaderboards hpl = new HeadsPlusLeaderboards();
+				   HeadsPlusLeaderboards hpl = HeadsPlus.getInstance().hplb;
 				   if (!lbF.exists()) {
 			           if (HeadsPlus.getInstance().getConfig().getBoolean("leaderboards") && !HeadsPlus.getInstance().getConfig().getBoolean("leaderboards-mysql")) {
                            HeadsPlus.getInstance().log.info("[HeadsPlus] Leaderboards not found, creating!");

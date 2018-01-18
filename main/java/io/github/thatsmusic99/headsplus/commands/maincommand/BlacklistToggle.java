@@ -11,7 +11,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 public class BlacklistToggle {
 	
 	private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
-	private HeadsPlusConfig hpc = new HeadsPlusConfig();
+	private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 	
 	public void toggleNoArgs(CommandSender sender) {
 		if (sender.hasPermission("headsplus.maincommand.blacklist.toggle")) {

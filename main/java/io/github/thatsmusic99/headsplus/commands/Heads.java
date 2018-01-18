@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 public class Heads implements CommandExecutor {
 
-    private InventoryManager im = new InventoryManager();
+    private InventoryManager im = HeadsPlus.getInstance().im;
 
     @Override
     public boolean onCommand(CommandSender cs, Command cmd, String l, String[] args) {
@@ -28,7 +28,7 @@ public class Heads implements CommandExecutor {
                 cs.sendMessage("[HeadsPlus] You have to be a player to run this command!");
             }
         } else {
-            cs.sendMessage(ChatColor.translateAlternateColorCodes('&', new HeadsPlusConfig().getMessages().getString("disabled")));
+            cs.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().hpc.getMessages().getString("disabled")));
         }
         return true;
     }

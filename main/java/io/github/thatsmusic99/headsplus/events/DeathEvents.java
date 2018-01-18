@@ -7,7 +7,6 @@ import java.util.Random;
 
 import io.github.thatsmusic99.headsplus.api.EntityHeadDropEvent;
 import io.github.thatsmusic99.headsplus.api.PlayerHeadDropEvent;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
 import org.bukkit.*;
 import org.bukkit.entity.*;
@@ -22,10 +21,14 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 
 public class DeathEvents implements Listener {
+
+    public DeathEvents() {
+        createList();
+    }
 	
 	public final List<EntityType> ableEntities = new ArrayList<>(Arrays.asList(EntityType.BAT, EntityType.BLAZE, EntityType.CAVE_SPIDER, EntityType.CHICKEN, EntityType.COW, EntityType.CREEPER, EntityType.ENDER_DRAGON, EntityType.ENDERMAN, EntityType.ENDERMITE, EntityType.GHAST, EntityType.GUARDIAN, EntityType.HORSE, EntityType.IRON_GOLEM, EntityType.MAGMA_CUBE, EntityType.MUSHROOM_COW, EntityType.OCELOT, EntityType.PIG, EntityType.RABBIT, EntityType.SHEEP, EntityType.SILVERFISH, EntityType.SKELETON, EntityType.SLIME, EntityType.SNOWMAN, EntityType.SPIDER, EntityType.SQUID, EntityType.VILLAGER, EntityType.WITCH, EntityType.WITHER, EntityType.ZOMBIE));
-    private HeadsPlusConfigHeadsX hpchx = new HeadsPlusConfigHeadsX();
-    private HeadsPlusConfigHeads hpch = new HeadsPlusConfigHeads();
+    private HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().hpchx;
+    private HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().hpch;
 
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent e) {

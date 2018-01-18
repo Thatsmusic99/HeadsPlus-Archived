@@ -31,7 +31,8 @@ public class JoinEvent implements Listener {
 	private static final File craftingF = new File(HeadsPlus.getInstance().getDataFolder(), "crafting.yml");
 
 	private static final File headsXF = new File(HeadsPlus.getInstance().getDataFolder(), "headsx.yml");
-    private HeadsPlusConfig hpc = new HeadsPlusConfig();
+
+    private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 	
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e) {
@@ -70,7 +71,7 @@ public class JoinEvent implements Listener {
 						      } else {
 						    	  hpc.reloadMessages(false);
 						      }
-						      HeadsPlusConfigHeads hpch = new HeadsPlusConfigHeads();
+						      HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().hpch;
 						      if (!(headsF.exists())) {
 						    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Heads not found, creating!");
 						    	  hpch.reloadHeads();
@@ -79,20 +80,18 @@ public class JoinEvent implements Listener {
 						      } else {
 						    	  hpch.reloadHeads();
 						      }
-						      HeadsPlusCrafting hpcr = new HeadsPlusCrafting();
+						      HeadsPlusCrafting hpcr = HeadsPlus.getInstance().hpcr;
 						      if (!(craftingF.exists())) {
 						    	  if (HeadsPlus.getInstance().getConfig().getBoolean("craftHeads")) {
 						    		  HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting not found, creating!");
-						    	      Bukkit.resetRecipes();
 						    	      hpcr.reloadCrafting();
 						    	      hpcr.crafting = YamlConfiguration.loadConfiguration(craftingF);
 						    	      HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting created!");
 						    	  }
 						      } else {
-						    	  Bukkit.resetRecipes();
 						    	  hpcr.reloadCrafting();
 						      }
-						      HeadsPlusConfigHeadsX hpchx = new HeadsPlusConfigHeadsX();
+						      HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().hpchx;
 						      if (!headsXF.exists()) {
                                   if (HeadsPlus.getInstance().getConfig().getBoolean("headsDatabase")) {
                                   	  HeadsPlus.getInstance().log.info("[HeadsPlus] HeadsX not found, creating!");

@@ -13,7 +13,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class HelpMenu {
 
-	private HeadsPlusConfig hpc = new HeadsPlusConfig();
+	private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
 	public void helpNoArgs(CommandSender sender) {
 	    if (sender.hasPermission("headsplus.maincommand")) {

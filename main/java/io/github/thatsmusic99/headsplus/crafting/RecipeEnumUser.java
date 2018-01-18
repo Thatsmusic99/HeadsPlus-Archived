@@ -1,9 +1,6 @@
 package io.github.thatsmusic99.headsplus.crafting;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -13,15 +10,18 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusCrafting;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecipeEnumUser {
 	
-	private final FileConfiguration crafting = new HeadsPlusCrafting().getCrafting();
-	private final FileConfiguration heads = new HeadsPlusConfigHeads().getHeads();
-	public List<ShapelessRecipe> recipes = new ArrayList<>();
+	private final FileConfiguration crafting = HeadsPlus.getInstance().hpcr.getCrafting();
+	private final FileConfiguration heads = HeadsPlus.getInstance().hpch.getHeads();
+	private List<ShapelessRecipe> recipes = new ArrayList<>();
+
+	public RecipeEnumUser() {
+	    addEnumToConfig();
+    }
 
 	public void addEnumToConfig() {
             for (RecipeEnums key : RecipeEnums.values()) {
@@ -78,7 +78,6 @@ public class RecipeEnumUser {
                             recipes.add(recipe);
                             Bukkit.addRecipe(recipe);
                         } catch (IllegalStateException ignored) {
-
                         }
                     }
                 }
@@ -88,9 +87,9 @@ public class RecipeEnumUser {
 
 	private ShapelessRecipe getRecipe(ItemStack i, String name) {
 	    if (Bukkit.getVersion().contains("1.12") || Bukkit.getVersion().contains("1.13")) {
-            return new ShapelessRecipe(new NamespacedKey(HeadsPlus.getInstance(), name), i);
+            return new ShapelessRecipe(new NamespacedKey(HeadsPlus.getInstance(), "HeadsPlus_" + name), i);
         } else {
 	        return new ShapelessRecipe(i);
-        }
+       }
     }
 }

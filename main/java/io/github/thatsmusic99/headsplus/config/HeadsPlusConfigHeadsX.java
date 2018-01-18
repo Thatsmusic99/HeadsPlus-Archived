@@ -27,6 +27,10 @@ public class HeadsPlusConfigHeadsX {
     private File headsxf;
     private double cVersion = 1.1;
 
+    public HeadsPlusConfigHeadsX() {
+        headsxEnable();
+    }
+
     private void saveHeadsX() {
         headsxf = new File(HeadsPlus.getInstance().getDataFolder(), "headsx.yml");
         if (headsx == null) {

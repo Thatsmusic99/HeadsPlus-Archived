@@ -11,7 +11,7 @@ import java.util.List;
 
 public class WhitelistList {
 
-    private HeadsPlusConfig hpc = new HeadsPlusConfig();
+    private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
     public void wlListNoArgs(CommandSender sender) {
         if (sender.hasPermission("headsplus.maincommand.whitelist.list")) {

@@ -18,13 +18,17 @@ public class HeadsPlusLeaderboards {
 
     public FileConfiguration lb;
     private File lbF;
-    private DeathEvents de = new DeathEvents();
+    private DeathEvents de = HeadsPlus.getInstance().de;
 
     public FileConfiguration getLeaderboards() {
         return lb;
     }
     public void lbFileEnable() {
         reloadLeaderboards();
+    }
+
+    public HeadsPlusLeaderboards() {
+        lbFileEnable();
     }
 
     public void reloadLeaderboards() {

@@ -29,7 +29,7 @@ public class InventoryManager {
     private int cPage = 0;
     private int sections = 0;
     private String cSection = "menu";
-    private HeadsPlusConfigHeadsX hpchx = new HeadsPlusConfigHeadsX();
+    private HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().hpchx;
     private int[] pos() {
         int[] a = new int[28];
         a[0] = 10;
@@ -216,25 +216,13 @@ public class InventoryManager {
         i.setItem(8, name);
         pages = ls.getTotalPages();
         if (pages > cPage) {
-            ItemStack item = new ItemStack(Material.ARROW);
-            ItemMeta im = item.getItemMeta();
-            im.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + "Next Page");
-            item.setItemMeta(im);
-            i.setItem(50, item);
+            setItem(i, "Next Page", 50);
         }
         if (cPage != 1) {
-            ItemStack item = new ItemStack(Material.ARROW);
-            ItemMeta im = item.getItemMeta();
-            im.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + "Back");
-            item.setItemMeta(im);
-            i.setItem(48, item);
+            setItem(i, "Back", 48);
         }
         if (!cSection.equalsIgnoreCase("menu")) {
-            ItemStack item = new ItemStack(Material.ARROW);
-            ItemMeta im = item.getItemMeta();
-            im.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + "Main Menu");
-            item.setItemMeta(im);
-            i.setItem(45, item);
+            setItem(i, "Main Menu", 45);
         }
         ItemStack it = new ItemStack(Material.BARRIER);
         ItemMeta is = it.getItemMeta();
@@ -361,4 +349,12 @@ public class InventoryManager {
             }
         }
     } */
+
+    private void setItem(Inventory i, String s, int o) {
+        ItemStack item = new ItemStack(Material.ARROW);
+        ItemMeta im = item.getItemMeta();
+        im.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + s);
+        item.setItemMeta(im);
+        i.setItem(o, item);
+    }
 }

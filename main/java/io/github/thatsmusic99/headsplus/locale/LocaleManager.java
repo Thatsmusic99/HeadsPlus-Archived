@@ -9,13 +9,14 @@ public class LocaleManager {
 
     private static LocaleManager instance;
     private static Locale locale;
+    private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
     public void setupLocale() {
         instance = this;
         try {
             try {
                 try {
-                    setLocale((Locale) Class.forName("io.github.thatsmusic99.headsplus.locale." + new HeadsPlusConfig().getMessages().getString("locale").toLowerCase()).getConstructor().newInstance());
+                    setLocale((Locale) Class.forName("io.github.thatsmusic99.headsplus.locale." + hpc.getMessages().getString("locale").toLowerCase()).getConstructor().newInstance());
                 } catch (InvocationTargetException | NoSuchMethodException e) {
                     e.printStackTrace();
                 }

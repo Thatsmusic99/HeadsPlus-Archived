@@ -10,7 +10,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 public class WhitelistwToggle {
 
     private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
-    private HeadsPlusConfig hpc = new HeadsPlusConfig();
+    private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
     public void togglewlwNoArgs(CommandSender sender) {
         if (sender.hasPermission("headsplus.maincommand.whitelistw.toggle")) {

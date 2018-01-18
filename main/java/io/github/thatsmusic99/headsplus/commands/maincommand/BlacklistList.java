@@ -12,7 +12,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class BlacklistList {
 
-	private HeadsPlusConfig hpc = new HeadsPlusConfig();
+	private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 	
 	public void blacklistListNoArgs(CommandSender sender) {
 		if (sender.hasPermission("headsplus.maincommand.blacklist.list")) {

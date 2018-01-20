@@ -81,21 +81,23 @@ public class JoinEvent implements Listener {
 						      } else {
 						    	  hpch.reloadHeads();
 						      }
-						      HeadsPlusCrafting hpcr = HeadsPlus.getInstance().hpcr;
-						      if (!(craftingF.exists())) {
-						    	  if (HeadsPlus.getInstance().getConfig().getBoolean("craftHeads")) {
-						    		  HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting not found, creating!");
-						    		  Bukkit.clearRecipes();
-						    	      hpcr.reloadCrafting();
-						    	      hpcr.crafting = YamlConfiguration.loadConfiguration(craftingF);
-						    	      new RecipeEnumUser();
-						    	      HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting created!");
-						    	  }
-						      } else {
-						          Bukkit.resetRecipes();
-						    	  hpcr.reloadCrafting();
-						    	  new RecipeEnumUser();
-						      }
+						      if (HeadsPlus.getInstance().hpcr != null) {
+								  HeadsPlusCrafting hpcr = HeadsPlus.getInstance().hpcr;
+								  if (!(craftingF.exists())) {
+									  if (HeadsPlus.getInstance().getConfig().getBoolean("craftHeads")) {
+										  HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting not found, creating!");
+										  Bukkit.clearRecipes();
+										  hpcr.reloadCrafting();
+										  hpcr.crafting = YamlConfiguration.loadConfiguration(craftingF);
+										  new RecipeEnumUser();
+										  HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting created!");
+									  }
+								  } else {
+									  Bukkit.resetRecipes();
+									  hpcr.reloadCrafting();
+									  new RecipeEnumUser();
+								  }
+							  }
 						      HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().hpchx;
 						      if (!headsXF.exists()) {
                                   if (HeadsPlus.getInstance().getConfig().getBoolean("headsDatabase")) {

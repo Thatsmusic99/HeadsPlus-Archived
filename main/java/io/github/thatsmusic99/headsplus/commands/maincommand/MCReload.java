@@ -71,20 +71,22 @@ public class MCReload {
 			      } else {
 			    	  hpch.reloadHeads();
 			      }
-			      HeadsPlusCrafting hpc = HeadsPlus.getInstance().hpcr;
-			      if (!(craftingF.exists())) {
-			    	  if (HeadsPlus.getInstance().getConfig().getBoolean("craftHeads")) {
-			    		  HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting not found, creating!");
+			      if (HeadsPlus.getInstance().hpcr != null) {
+					  HeadsPlusCrafting hpc = HeadsPlus.getInstance().hpcr;
+					  if (!(craftingF.exists())) {
+						  if (HeadsPlus.getInstance().getConfig().getBoolean("craftHeads")) {
+							  HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting not found, creating!");
 
-			    	      hpc.craftingEnable();
-			    	      hpc.crafting = YamlConfiguration.loadConfiguration(craftingF);
-			    	      HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting created!");
-			    	      sender.sendMessage(reloadM);
-			    	  }
-			      } else {
-                      hpc.reloadCrafting();
-			    	  sender.sendMessage(reloadM);
-			      }
+							  hpc.craftingEnable();
+							  hpc.crafting = YamlConfiguration.loadConfiguration(craftingF);
+							  HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting created!");
+							  sender.sendMessage(reloadM);
+						  }
+					  } else {
+						  hpc.reloadCrafting();
+						  sender.sendMessage(reloadM);
+					  }
+				  }
 			      HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().hpchx;
 				   if (!headsXF.exists()) {
 					   if (HeadsPlus.getInstance().getConfig().getBoolean("headsDatabase")) {

@@ -23,7 +23,7 @@ public class RecipeEnumUser {
 	    addEnumToConfig();
     }
 
-	public void addEnumToConfig() {
+	private void addEnumToConfig() {
             for (RecipeEnums key : RecipeEnums.values()) {
                 ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
                 SkullMeta im = (SkullMeta) i.getItemMeta();

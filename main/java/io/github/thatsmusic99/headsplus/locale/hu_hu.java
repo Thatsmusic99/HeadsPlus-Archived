@@ -498,4 +498,9 @@ public class hu_hu implements Locale {
     public String getNoDataRecorded() {
         return "&cMég nincs értékelő adat!";
     }
+
+    @Override
+    public String getPlayerOffline() {
+        return "&cEz a játékos offline állapotban van!";
+    }
 }

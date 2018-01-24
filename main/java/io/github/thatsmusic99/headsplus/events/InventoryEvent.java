@@ -23,12 +23,16 @@ import java.util.logging.Level;
 public class InventoryEvent implements Listener {
 
     private String name;
-    private InventoryManager im = HeadsPlus.getInstance().im;
+    private Player p;
+    private InventoryManager im;
     private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
     @EventHandler
     public void onClickEvent(InventoryClickEvent e) {
-       // int month = Calendar.getInstance().get(Calendar.MONTH);
+        p = (Player) e.getWhoClicked();
+        if (InventoryManager.getIM(p) == null) return;
+        im = InventoryManager.getIM(p);
+        // int month = Calendar.getInstance().get(Calendar.MONTH);
         if (e.getInventory().getName().equalsIgnoreCase("HeadsPlus Head selector: page " + im.getPage() + "/" + im.getPages())) {
             try {
                 if (e.getCurrentItem().getType().equals(Material.BARRIER)) {

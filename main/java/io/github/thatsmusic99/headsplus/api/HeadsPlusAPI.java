@@ -28,7 +28,6 @@ public class HeadsPlusAPI {
         return hpcHeadsX.getSkull(option);
     }
 
-
     public boolean isSellable(ItemStack is) throws NoSuchFieldException, IllegalAccessException {
         if (is.getType() == Material.SKULL_ITEM) {
             for (String key : hpcHeads.mHeads) {

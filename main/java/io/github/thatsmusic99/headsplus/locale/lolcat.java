@@ -495,4 +495,9 @@ public class lolcat implements Locale {
     public String getNoDataRecorded() {
         return "&cNaw gud stuffz heer yet...";
     }
+
+    @Override
+    public String getPlayerOffline() {
+        return "&cDat playah iz ded!";
+    }
 }

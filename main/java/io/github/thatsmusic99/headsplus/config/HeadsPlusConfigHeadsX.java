@@ -2,9 +2,7 @@ package io.github.thatsmusic99.headsplus.config;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-
 import org.apache.commons.codec.binary.Base64;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -25,7 +23,7 @@ public class HeadsPlusConfigHeadsX {
     public boolean s = false;
     public FileConfiguration headsx;
     private File headsxf;
-    private double cVersion = 1.1;
+    private double cVersion = 1.2;
 
     public HeadsPlusConfigHeadsX() {
         headsxEnable();

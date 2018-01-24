@@ -225,4 +225,6 @@ public interface Locale {
 
     String getNoDataRecorded();
 
+    String getPlayerOffline();
+
 }

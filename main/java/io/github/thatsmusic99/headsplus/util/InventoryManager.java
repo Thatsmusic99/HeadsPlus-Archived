@@ -30,6 +30,7 @@ public class InventoryManager {
     private int sections = 0;
     private String cSection = "menu";
     private HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().hpchx;
+    public static HashMap<Player, InventoryManager> pls = new HashMap<>();
     private int[] pos() {
         int[] a = new int[28];
         a[0] = 10;
@@ -356,5 +357,9 @@ public class InventoryManager {
         im.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + s);
         item.setItemMeta(im);
         i.setItem(o, item);
+    }
+
+    public static InventoryManager getIM(Player p) {
+        return pls.get(p);
     }
 }

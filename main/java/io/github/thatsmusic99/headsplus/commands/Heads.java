@@ -11,14 +11,15 @@ import org.bukkit.entity.Player;
 
 public class Heads implements CommandExecutor {
 
-    private InventoryManager im = HeadsPlus.getInstance().im;
-
     @Override
     public boolean onCommand(CommandSender cs, Command cmd, String l, String[] args) {
         if (HeadsPlus.getInstance().db) {
             if (cs instanceof Player) {
+                Player p = (Player) cs;
                 if (cs.hasPermission("headsplus.heads")) {
-                    Player p = (Player) cs;
+                    InventoryManager im2 = new InventoryManager();
+                    InventoryManager.pls.put(p, im2);
+                    InventoryManager im = InventoryManager.getIM(p);
                     im.setSection("Menu");
                     p.openInventory(im.changePage(true, true, (Player) cs, "Menu"));
                 } else {

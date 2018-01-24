@@ -498,4 +498,9 @@ public class ro_ro implements Locale {
     public String getNoDataRecorded() {
         return "&cNu au fost inregistrate inca date despre clasament!";
     }
+
+    @Override
+    public String getPlayerOffline() {
+        return "Acest jucator este offline!";
+    }
 }

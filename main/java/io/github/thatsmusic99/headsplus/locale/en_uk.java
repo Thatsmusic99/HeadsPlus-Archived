@@ -496,4 +496,9 @@ public class en_uk implements Locale {
     public String getNoDataRecorded() {
         return "&cNo leaderboard data has been recorded yet!";
     }
+
+    @Override
+    public String getPlayerOffline() {
+        return "&cThat player is offline!";
+    }
 }

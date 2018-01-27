@@ -173,7 +173,11 @@ public class HeadsPlusCommand implements CommandExecutor {
 				   hm.helpNoArgs(sender);
 			   }
 			   if ((args.length >= 2) && (args[0].equalsIgnoreCase("help"))) {
-			 	   hm.helpNo(sender, args[1]);
+                   if (args[1].matches("^[0-9]+$")) {
+                       hm.helpNo(sender, args[1]);
+                   } else {
+                       hm.helpCmd(sender, args[1]);
+                   }
 			   }
 			   if ((args.length > 0) && !validCmds.contains(args[0].toLowerCase()) && !args[0].matches("^[0-9]+$")) {
 				   hm.helpNoArgs(sender);

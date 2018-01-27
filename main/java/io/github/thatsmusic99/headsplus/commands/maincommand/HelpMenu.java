@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.thatsmusic99.headsplus.util.PagedLists;
+import mkremins.fanciful.FancyMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -27,8 +28,11 @@ public class HelpMenu {
 		    sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + " HeadsPlus " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + "1/" + pl.getTotalPages() + " " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============");
 		    for (Object key : pl.getContentsInPage(1)) {
 		        PermissionEnums key2 = (PermissionEnums) key;
-                sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + key2.cmd + " - " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + key2.dsc);
-		    }
+                new FancyMessage()
+                        .text(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + key2.cmd + " - " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + key2.dsc)
+                        .command("/hp help " + key2.scmd)
+                        .send(sender);
+            }
         } else {
 	        	sender.sendMessage(new HeadsPlusCommand().noPerms);
 	    } 
@@ -52,12 +56,37 @@ public class HelpMenu {
 					List<?> hppsl = pl.getContentsInPage(page);
 				    for (Object keyz : hppsl) {
 				        PermissionEnums key = (PermissionEnums) keyz;
-				        sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + key.cmd + " - " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + key.dsc);
-				    }
+				        new FancyMessage()
+                                .text(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + key.cmd + " - " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + key.dsc)
+                                .command("/hp help " + key.scmd)
+                                .send(sender);
+				         }
 				}
 			}
 		} else {
 	    	sender.sendMessage(new HeadsPlusCommand().noPerms);
 	    }
 	}
+
+	public void helpCmd(CommandSender cs, String cmdName) {
+        if (cs.hasPermission("headsplus.maincommand")) {
+            PermissionEnums pe = null;
+            for (PermissionEnums key : PermissionEnums.values()) {
+                if (key.scmd.equalsIgnoreCase(cmdName)) {
+                    pe = key;
+                    break;
+                }
+            }
+            if (pe != null) {
+                cs.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + " HeadsPlus " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============");
+                cs.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + "Usage: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + pe.cmd);
+                cs.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + "Description: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + pe.dsc);
+                if (cs.hasPermission("headsplus.help.viewperms")) {
+                    cs.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3"))+ "Permission: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + pe.str);
+                }
+            } else {
+                helpNoArgs(cs);
+            }
+        }
+    }
 }

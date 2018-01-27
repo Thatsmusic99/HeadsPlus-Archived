@@ -21,7 +21,9 @@ public class TabComplete implements TabCompleter {
             List<String> c = new ArrayList<>();
             for (PermissionEnums key : PermissionEnums.values()) {
                 if (cs.hasPermission(key.str)) {
-                    c.add(key.scmd);
+                    if (key.mcmd) {
+                        c.add(key.scmd);
+                    }
                 }
             }
             StringUtil.copyPartialMatches(args[0], c, f);

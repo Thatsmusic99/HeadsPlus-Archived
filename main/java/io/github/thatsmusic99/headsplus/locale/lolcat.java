@@ -500,4 +500,19 @@ public class lolcat implements Locale {
     public String getPlayerOffline() {
         return "&cDat playah iz ded!";
     }
+
+    @Override
+    public String easy() {
+        return "Ez";
+    }
+
+    @Override
+    public String medium() {
+        return "wait a min";
+    }
+
+    @Override
+    public String hard() {
+        return "OMG";
+    }
 }

@@ -227,4 +227,10 @@ public interface Locale {
 
     String getPlayerOffline();
 
+    String easy();
+
+    String medium();
+
+    String hard();
+
 }

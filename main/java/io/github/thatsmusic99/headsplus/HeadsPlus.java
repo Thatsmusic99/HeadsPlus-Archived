@@ -3,21 +3,18 @@ package io.github.thatsmusic99.headsplus;
 import io.github.thatsmusic99.headsplus.commands.*;
 import io.github.thatsmusic99.headsplus.config.*;
 import io.github.thatsmusic99.headsplus.crafting.RecipeEnumUser;
+import io.github.thatsmusic99.headsplus.crafting.RecipePerms;
 import io.github.thatsmusic99.headsplus.events.*;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
-import io.github.thatsmusic99.headsplus.util.InventoryManager;
+
+import net.milkbowl.vault.economy.Economy;
 import org.apache.commons.lang.WordUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import io.github.thatsmusic99.headsplus.crafting.RecipePerms;
-
-import net.milkbowl.vault.economy.Economy;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
@@ -26,6 +23,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
@@ -47,13 +45,13 @@ public class HeadsPlus extends JavaPlugin {
     public Connection connection;
     public boolean con = false;
     public boolean dm;
+    public boolean chal;
     public HeadsPlusConfig hpc;
     public HeadsPlusConfigHeads hpch;
     public HeadsPlusConfigHeadsX hpchx;
     public DeathEvents de;
     public HeadsPlusLeaderboards hplb;
     public HeadsPlusCrafting hpcr;
-    public InventoryManager im;
 
     public FileConfiguration config;
 
@@ -73,75 +71,22 @@ public class HeadsPlus extends JavaPlugin {
                 hpc = new HeadsPlusConfig(true);
                 LocaleManager.class.newInstance().setupLocale();
             }
-			hpc = new HeadsPlusConfig(false);
-			hpch = new HeadsPlusConfigHeads();
-			hpchx = new HeadsPlusConfigHeadsX();
-            im = new InventoryManager();
-			de = new DeathEvents();
+            createInstances();
 			checkTheme();
-            getServer().getPluginManager().registerEvents(new PlayerDeathEvent(), this);
-			if (config.getBoolean("leaderboards-mysql")) {
+			if (config.getBoolean("mysql-usage")) {
                 openConnection();
             }
-            dm = getConfig().getBoolean("player-death-messages");
 			if (!getConfig().getBoolean("disableCrafting")) {
 			    hpcr = new HeadsPlusCrafting();
                 new RecipeEnumUser();
                 getServer().getPluginManager().registerEvents(new RecipePerms(), this);
 			}
 			if (!(econ()) && (getConfig().getBoolean("sellHeads"))) {
-                this.getCommand("sellhead").setExecutor(new SellHead());
-				this.getCommand("sellhead").setTabCompleter(new TabCompleteSellhead());
 				log.warning("[HeadsPlus] Vault not found! Heads cannot be sold.");
-				sellable = false;
-			} else if ((econ()) && !(getConfig().getBoolean("sellHeads"))) {
-				this.getCommand("sellhead").setExecutor(new SellHead());
-				this.getCommand("sellhead").setTabCompleter(new TabCompleteSellhead());
-				sellable = false;
-			} else if ((econ()) && (getConfig().getBoolean("sellHeads"))){
-				this.getCommand("sellhead").setExecutor(new SellHead());
-                this.getCommand("sellhead").setTabCompleter(new TabCompleteSellhead());
-				sellable = true;
-			} else if (!(econ() && !(getConfig().getBoolean("sellHeads")))) {
-                this.getCommand("sellhead").setExecutor(new SellHead());
-                this.getCommand("sellhead").setTabCompleter(new TabCompleteSellhead());
-				sellable = false;
 			}
-			hplb = new HeadsPlusLeaderboards();
-			getServer().getPluginManager().registerEvents(new InventoryEvent(), this);
-			getServer().getPluginManager().registerEvents(new HeadInteractEvent(), this);
-			getServer().getPluginManager().registerEvents(new DeathEvents(), this);
-			drops = getConfig().getBoolean("dropHeads");
-
-			if (getConfig().getBoolean("autoReloadOnFirstJoin")) {
-			    arofj = true;
-				getServer().getPluginManager().registerEvents(new JoinEvent(), this);
-			} else {
-			    arofj = false;
-                getServer().getPluginManager().registerEvents(new JoinEvent(), this);
-            }
-            if(getConfig().getBoolean("stop-placement-of-sellable-heads")) {
-			    stopP = true;
-			    getServer().getPluginManager().registerEvents(new PlaceEvent(), this);
-            } else {
-			    stopP = false;
-			    getServer().getPluginManager().registerEvents(new PlaceEvent(), this);
-            }
-            if (getConfig().getBoolean("leaderboards")) {
-			    lb = true;
-			    getServer().getPluginManager().registerEvents(new LBEvents(), this);
-
-
-            }
-            db = getConfig().getBoolean("headsDatabase");
-		    this.getCommand("headsplus").setExecutor(new HeadsPlusCommand());
-		    this.getCommand("hp").setExecutor(new HeadsPlusCommand());
-		    this.getCommand("hp").setTabCompleter(new TabComplete());
-		    this.getCommand("head").setExecutor(new Head());
-		    this.getCommand("heads").setExecutor(new Heads());
-		    this.getCommand("myhead").setExecutor(new MyHead());
-			this.getCommand("hplb").setExecutor(new LeaderboardsCommand());
-			this.getCommand("hplb").setTabCompleter(new TabCompleteLB());
+			setPluginValues();
+            registerEvents();
+            registerCommands();
 		    JoinEvent.reloaded = false;
 			Metrics metrics = new Metrics(this);
 			metrics.addCustomChart(new Metrics.SimplePie("languages", new Callable<String>() {
@@ -250,34 +195,36 @@ public class HeadsPlus extends JavaPlugin {
             connection = DriverManager.getConnection("jdbc:mysql://" + config.getString("mysql-host")+ ":" + config.getString("mysql-port") + "/" + config.getString("mysql-database") + "?useSSL=false", config.getString("mysql-username"), config.getString("mysql-password"));
             Statement st = connection.createStatement();
             StringBuilder sb = new StringBuilder();
-            try {
-				st.executeQuery("SELECT * from headspluslb");
-				con = true;
-			} catch (SQLException ex) {
-				sb.append("CREATE TABLE `headspluslb` (" +
-						"`id` INT NOT NULL AUTO_INCREMENT," +
-						"`uuid` VARCHAR(45)," +
-						"`total` VARCHAR(45)");
-				for (EntityType e : de.ableEntities) {
-					sb.append(", `").append(e.name()).append("` VARCHAR(45)");
-				}
-				sb.append(", `PLAYER` VARCHAR(45)");
-				sb.append(", PRIMARY KEY (`id`))");
-				st.executeUpdate(sb.toString());
-				StringBuilder sb2 = new StringBuilder();
-				sb2.append("INSERT INTO `headspluslb` (uuid, total");
-				for (EntityType e : de.ableEntities) {
-					sb2.append(", ").append(e.name());
-				}
-				sb2.append(", PLAYER) VALUES('server-total', '0'");
-				for (EntityType ignored : de.ableEntities) {
-					sb2.append(", '0'");
-				}
-				sb2.append(", '0'");
-				sb2.append(")");
-				st.executeUpdate(sb2.toString());
-				con = true;
-			}
+            for (String str : Arrays.asList("headspluslb", "headsplussh", "headspluscraft")) {
+                try {
+                    st.executeQuery("SELECT * from " + str);
+                } catch (SQLException ex) {
+                    sb.append("CREATE TABLE `" + str + "` (" +
+                            "`id` INT NOT NULL AUTO_INCREMENT," +
+                            "`uuid` VARCHAR(45)," +
+                            "`total` VARCHAR(45)");
+                    for (EntityType e : de.ableEntities) {
+                        sb.append(", `").append(e.name()).append("` VARCHAR(45)");
+                    }
+                    sb.append(", `PLAYER` VARCHAR(45)");
+                    sb.append(", PRIMARY KEY (`id`))");
+                    st.executeUpdate(sb.toString());
+                    StringBuilder sb2 = new StringBuilder();
+                    sb2.append("INSERT INTO `" + str + "` (uuid, total");
+                    for (EntityType e : de.ableEntities) {
+                        sb2.append(", ").append(e.name());
+                    }
+                    sb2.append(", PLAYER) VALUES('server-total', '0'");
+                    for (EntityType ignored : de.ableEntities) {
+                        sb2.append(", '0'");
+                    }
+                    sb2.append(", '0'");
+                    sb2.append(")");
+                    st.executeUpdate(sb2.toString());
+
+                }
+            }
+            con = true;
         }
     }
 
@@ -296,5 +243,48 @@ public class HeadsPlus extends JavaPlugin {
 	            getInstance().log.warning("[HeadsPlus] Faulty theme was input! No theme changes will be made.");
             }
         }
+    }
+
+    private void registerEvents() {
+        getServer().getPluginManager().registerEvents(new InventoryEvent(), this);
+        getServer().getPluginManager().registerEvents(new HeadInteractEvent(), this);
+        getServer().getPluginManager().registerEvents(new DeathEvents(), this);
+        getServer().getPluginManager().registerEvents(new JoinEvent(), this);
+        getServer().getPluginManager().registerEvents(new PlaceEvent(), this);
+        getServer().getPluginManager().registerEvents(new LBEvents(), this);
+        getServer().getPluginManager().registerEvents(new PlayerDeathEvent(), this);
+    }
+
+    private void setPluginValues() {
+        drops = getConfig().getBoolean("dropHeads");
+        arofj = getConfig().getBoolean("autoReloadOnFirstJoin");
+        stopP = getConfig().getBoolean("stop-placement-of-sellable-heads");
+        lb = getConfig().getBoolean("leaderboards");
+        db = getConfig().getBoolean("headsDatabase");
+        dm = getConfig().getBoolean("player-death-messages");
+        sellable = (econ()) && (getConfig().getBoolean("sellHeads"));
+        chal = getConfig().getBoolean("challenges");
+    }
+
+    private void registerCommands() {
+        this.getCommand("headsplus").setExecutor(new HeadsPlusCommand());
+        this.getCommand("hp").setExecutor(new HeadsPlusCommand());
+        this.getCommand("hp").setTabCompleter(new TabComplete());
+        this.getCommand("head").setExecutor(new Head());
+        this.getCommand("heads").setExecutor(new Heads());
+        this.getCommand("myhead").setExecutor(new MyHead());
+        this.getCommand("hplb").setExecutor(new LeaderboardsCommand());
+        this.getCommand("hplb").setTabCompleter(new TabCompleteLB());
+        this.getCommand("sellhead").setExecutor(new SellHead());
+        this.getCommand("sellhead").setTabCompleter(new TabCompleteSellhead());
+        this.getCommand("hpc").setExecutor(new ChallengeCommand());
+    }
+
+    private void createInstances() {
+        hpc = new HeadsPlusConfig(false);
+        hpch = new HeadsPlusConfigHeads();
+        hpchx = new HeadsPlusConfigHeadsX();
+        de = new DeathEvents();
+        hplb = new HeadsPlusLeaderboards();
     }
 }

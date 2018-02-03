@@ -20,7 +20,7 @@ public class HeadsPlusConfig {
 	public FileConfiguration getMessages() {
 		return messages;
 	}
-	public void msgEnable(boolean nullpoint) {
+	private void msgEnable(boolean nullpoint) {
 		reloadMessages(nullpoint);
 		loadMessages(nullpoint);
 	}

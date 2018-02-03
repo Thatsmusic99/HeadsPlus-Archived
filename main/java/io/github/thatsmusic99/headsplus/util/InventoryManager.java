@@ -4,12 +4,14 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusChallengeDifficulty;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
 
 import org.apache.commons.codec.binary.Base64;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -23,12 +25,18 @@ import java.util.*;
 
 public class InventoryManager {
 
+    public InventoryManager(String t) {
+        this.type = t;
+    }
+
+    private String type;
     private int pages;
     private int heads;
     private int timesSent = 0;
     private int cPage = 0;
     private int sections = 0;
     private String cSection = "menu";
+    private int chSections = 0;
     private HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().hpchx;
     public static HashMap<Player, InventoryManager> pls = new HashMap<>();
     private int[] pos() {
@@ -92,6 +100,35 @@ public class InventoryManager {
         return a;
     }
 
+    private int[] cColouredGlass() {
+        int[] a = new int[24];
+        a[0] = 0;
+        a[1] = 1;
+        a[2] = 2;
+        a[3] = 3;
+        a[4] = 5;
+        a[5] = 6;
+        a[6] = 7;
+        a[7] = 9;
+        a[8] = 17;
+        a[9] = 18;
+        a[10] = 26;
+        a[11] = 27;
+        a[12] = 35;
+        a[13] = 36;
+        a[14] = 44;
+        a[15] = 45;
+        a[16] = 46;
+        a[17] = 47;
+        a[18] = 48;
+        a[19] = 49;
+        a[20] = 50;
+        a[21] = 51;
+        a[22] = 52;
+        a[23] = 53;
+        return a;
+    }
+
     private Inventory create(String name) {
         return Bukkit.createInventory(null, 54, name);
     }
@@ -102,88 +139,91 @@ public class InventoryManager {
     public String getSection() { return cSection; }
     public int getSections() { return sections; }
     public void setSection(String s) { cSection = s; }
+    public String getType() {
+        return type;
+    }
 
     public Inventory changePage(boolean next, boolean start, Player p, String section) {
-
         Inventory i;
-        PagedLists ls;
-        sections = hpchx.getHeadsX().getConfigurationSection("sections").getKeys(false).size();
-        heads = hpchx.getHeadsX().getConfigurationSection("heads").getKeys(false).size();
-        if (next) {
-            cPage++;
-        } else {
-            cPage--;
-        }
-        if (start) {
-            cPage = 1;
-        }
+        if (type.equalsIgnoreCase("heads")) {
+            PagedLists ls;
+            sections = hpchx.getHeadsX().getConfigurationSection("sections").getKeys(false).size();
+            heads = hpchx.getHeadsX().getConfigurationSection("heads").getKeys(false).size();
+            if (next) {
+                cPage++;
+            } else {
+                cPage--;
+            }
+            if (start) {
+                cPage = 1;
+            }
 
-        if (section.equalsIgnoreCase("menu")) {
-           // if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("options.advent-calender")) {
-           //     sections++;
-           // }
+            if (section.equalsIgnoreCase("menu")) {
+                // if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("options.advent-calender")) {
+                //     sections++;
+                // }
 
-            ls = new PagedLists(new ArrayList<>(hpchx.getHeadsX().getConfigurationSection("sections").getKeys(false)), 28);
-            i = create("HeadsPlus Head selector: page " + cPage + "/" + ls.getTotalPages());
-            for (Object str : ls.getContentsInPage(cPage)) {
-                String st = (String) str;
-                if (hpchx.isHPXSkull(hpchx.getHeadsX().getString("sections." + st + ".texture"))) {
-                    ItemStack is = hpchx.getSkull(hpchx.getHeadsX().getString("sections." + st + ".texture"));
-                    SkullMeta im = (SkullMeta) is.getItemMeta();
-                    im.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpchx.getHeadsX().getString("sections." + st + ".display-name")));
-                    is.setItemMeta(im);
-                    i.setItem(pos()[timesSent], is);
-                    timesSent++;
-                } else {
-                    ItemStack is = new ItemStack(Material.SKULL_ITEM);
-                    SkullMeta sm = (SkullMeta) is.getItemMeta();
-                    sm.setOwner(st);
-                    is.setItemMeta(sm);
-                    i.setItem(pos()[timesSent], is);
-                    timesSent++;
+                ls = new PagedLists(new ArrayList<>(hpchx.getHeadsX().getConfigurationSection("sections").getKeys(false)), 28);
+                i = create("HeadsPlus Head selector: page " + cPage + "/" + ls.getTotalPages());
+                for (Object str : ls.getContentsInPage(cPage)) {
+                    String st = (String) str;
+                    if (hpchx.isHPXSkull(hpchx.getHeadsX().getString("sections." + st + ".texture"))) {
+                        ItemStack is = hpchx.getSkull(hpchx.getHeadsX().getString("sections." + st + ".texture"));
+                        SkullMeta im = (SkullMeta) is.getItemMeta();
+                        im.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpchx.getHeadsX().getString("sections." + st + ".display-name")));
+                        is.setItemMeta(im);
+                        i.setItem(pos()[timesSent], is);
+                        timesSent++;
+                    } else {
+                        ItemStack is = new ItemStack(Material.SKULL_ITEM);
+                        SkullMeta sm = (SkullMeta) is.getItemMeta();
+                        sm.setOwner(st);
+                        is.setItemMeta(sm);
+                        i.setItem(pos()[timesSent], is);
+                        timesSent++;
+                    }
                 }
-            }
-          //  if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("options.advent-calender")) {
-             //   ItemStack is = HeadsPlusConfigHeadsX.getSkull("HP#snowman_head");
-             //   SkullMeta sm = (SkullMeta) is.getItemMeta();
-             //   sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4[&a&lHeadsPlus &c&lAdvent Calender!&2]"));
-             //   is.setItemMeta(sm);
-             //   i.setItem(pos()[timesSent], is);
-           // }
-        } else if (section.startsWith("search:")) {
-            String term = section.split(":")[1];
-            List<String> f = new ArrayList<>();
-            List<String> c = new ArrayList<>();
-            HashMap<String, String> s = new HashMap<>();
-            for (String str : hpchx.getHeadsX().getConfigurationSection("heads").getKeys(false)) {
-                c.add(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', hpchx.getHeadsX().getString("heads." + str + ".displayname"))).replace("[", "").replace("]", ""));
-                s.put(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', hpchx.getHeadsX().getString("heads." + str + ".displayname"))).replace("[", "").replace("]", ""), str);
-            }
-            StringUtil.copyPartialMatches(term, c, f);
-            Collections.sort(f);
-            Iterator<Map.Entry<String, String>> m = s.entrySet().iterator();
-            while (m.hasNext()) {
-                if (!f.contains(m.next().getKey())) {
-                    m.remove();
+                //  if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("options.advent-calender")) {
+                //   ItemStack is = HeadsPlusConfigHeadsX.getSkull("HP#snowman_head");
+                //   SkullMeta sm = (SkullMeta) is.getItemMeta();
+                //   sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4[&a&lHeadsPlus &c&lAdvent Calender!&2]"));
+                //   is.setItemMeta(sm);
+                //   i.setItem(pos()[timesSent], is);
+                // }
+            } else if (section.startsWith("search:")) {
+                String term = section.split(":")[1];
+                List<String> f = new ArrayList<>();
+                List<String> c = new ArrayList<>();
+                HashMap<String, String> s = new HashMap<>();
+                for (String str : hpchx.getHeadsX().getConfigurationSection("heads").getKeys(false)) {
+                    c.add(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', hpchx.getHeadsX().getString("heads." + str + ".displayname"))).replace("[", "").replace("]", ""));
+                    s.put(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', hpchx.getHeadsX().getString("heads." + str + ".displayname"))).replace("[", "").replace("]", ""), str);
                 }
-            }
-
-
-
-            heads = s.size();
-
-            ls = new PagedLists(new ArrayList<>(s.values()), 28);
-            i = create("HeadsPlus Head selector: page " + cPage + "/" + ls.getTotalPages());
-            for (Object str : ls.getContentsInPage(cPage)) {
-                if (hpchx.getHeadsX().getBoolean("heads." + str + ".database")) {
-                    skull(String.valueOf(str), i);
+                StringUtil.copyPartialMatches(term, c, f);
+                Collections.sort(f);
+                Iterator<Map.Entry<String, String>> m = s.entrySet().iterator();
+                while (m.hasNext()) {
+                    if (!f.contains(m.next().getKey())) {
+                        m.remove();
+                    }
                 }
-            }
 
 
-        } else {
-            List<String> l = new ArrayList<>();
-           // if (!section.equalsIgnoreCase("advent_calender")) {
+
+                heads = s.size();
+
+                ls = new PagedLists(new ArrayList<>(s.values()), 28);
+                i = create("HeadsPlus Head selector: page " + cPage + "/" + ls.getTotalPages());
+                for (Object str : ls.getContentsInPage(cPage)) {
+                    if (hpchx.getHeadsX().getBoolean("heads." + str + ".database")) {
+                        skull(String.valueOf(str), i);
+                    }
+                }
+
+
+            } else {
+                List<String> l = new ArrayList<>();
+                // if (!section.equalsIgnoreCase("advent_calender")) {
                 for (String str : hpchx.getHeadsX().getConfigurationSection("heads").getKeys(false)) {
                     if (hpchx.getHeadsX().getString("heads." + str + ".section").equalsIgnoreCase(section)) {
                         l.add(str);
@@ -197,53 +237,77 @@ public class InventoryManager {
                         skull(String.valueOf(str), i);
                     }
                 }
-           // } else {
-              //  i = create(54, "HeadsPlus Head selector: page " + cPage + "/" + pages);
-              //  skullChristmas(i, p.getPlayer());
-            //}
+                // } else {
+                //  i = create(54, "HeadsPlus Head selector: page " + cPage + "/" + pages);
+                //  skullChristmas(i, p.getPlayer());
+                //}
 
+            }
+            ItemStack isi = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 8);
+            ItemMeta ims = isi.getItemMeta();
+            ims.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6"));
+            isi.setItemMeta(ims);
+            for (int in : glass()) {
+                i.setItem(in, isi);
+            }
+            ItemStack name = new ItemStack(Material.NAME_TAG, 1);
+            ItemMeta nams = name.getItemMeta();
+            nams.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6[&e&lSearch Heads&6]"));
+            name.setItemMeta(nams);
+            i.setItem(8, name);
+            pages = ls.getTotalPages();
+            if (pages > cPage) {
+                setItem(i, "Next Page", 50);
+            }
+            if (cPage != 1) {
+                setItem(i, "Back", 48);
+            }
+            if (!cSection.equalsIgnoreCase("menu")) {
+                setItem(i, "Main Menu", 45);
+            }
+            ItemStack it = new ItemStack(Material.BARRIER);
+            ItemMeta is = it.getItemMeta();
+            is.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Close Menu");
+            it.setItemMeta(is);
+            i.setItem(49, it);
+            ItemStack is2 = new ItemStack(Material.PAPER);
+            ItemMeta im = is2.getItemMeta();
+            im.setDisplayName(ChatColor.GOLD + "[" + ChatColor.YELLOW + "" + ChatColor.BOLD + "Stats" + ChatColor.GOLD + "]");
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.GREEN + "Total heads: " + heads);
+            lore.add(ChatColor.GREEN + "Total pages: " + pages);
+            lore.add(ChatColor.GREEN + "Total sections: " + sections) ;
+            lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().econ.getBalance(p));
+            lore.add(ChatColor.GREEN + "Current section: " + section);
+            im.setLore(lore);
+            is2.setItemMeta(im);
+            i.setItem(4, is2);
+            timesSent = 0;
+            return i;
+        } else {
+            i = create("HeadsPlus challenges: " + cSection);
+            int ran = new Random().nextInt(DyeColor.values().length);
+            DyeColor dc = DyeColor.values()[ran];
+            ItemStack isi = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) dc.ordinal());
+            ItemMeta ims = isi.getItemMeta();
+            ims.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6"));
+            isi.setItemMeta(ims);
+            for (int in : cColouredGlass()) {
+                i.setItem(in, isi);
+            }
+            if (cSection.equalsIgnoreCase("menu")) {
+                for (HeadsPlusChallengeDifficulty hpcd: HeadsPlusChallengeDifficulty.values()) {
+                    ItemStack is = new ItemStack(Material.STAINED_CLAY, 1, (short) hpcd.color.ordinal());
+                    ItemMeta im = is.getItemMeta();
+                    im.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpcd.dn));
+                    is.setItemMeta(im);
+                    i.setItem(hpcd.i, is);
+                }
+            } else {
+
+            }
+            return i;
         }
-        ItemStack isi = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 8);
-        ItemMeta ims = isi.getItemMeta();
-        ims.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6"));
-        isi.setItemMeta(ims);
-        for (int in : glass()) {
-            i.setItem(in, isi);
-        }
-        ItemStack name = new ItemStack(Material.NAME_TAG, 1);
-        ItemMeta nams = name.getItemMeta();
-        nams.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6[&e&lSearch Heads&6]"));
-        name.setItemMeta(nams);
-        i.setItem(8, name);
-        pages = ls.getTotalPages();
-        if (pages > cPage) {
-            setItem(i, "Next Page", 50);
-        }
-        if (cPage != 1) {
-            setItem(i, "Back", 48);
-        }
-        if (!cSection.equalsIgnoreCase("menu")) {
-            setItem(i, "Main Menu", 45);
-        }
-        ItemStack it = new ItemStack(Material.BARRIER);
-        ItemMeta is = it.getItemMeta();
-        is.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Close Menu");
-        it.setItemMeta(is);
-        i.setItem(49, it);
-        ItemStack is2 = new ItemStack(Material.PAPER);
-        ItemMeta im = is2.getItemMeta();
-        im.setDisplayName(ChatColor.GOLD + "[" + ChatColor.YELLOW + "" + ChatColor.BOLD + "Stats" + ChatColor.GOLD + "]");
-        List<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GREEN + "Total heads: " + heads);
-        lore.add(ChatColor.GREEN + "Total pages: " + pages);
-        lore.add(ChatColor.GREEN + "Total sections: " + sections) ;
-        lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().econ.getBalance(p));
-        lore.add(ChatColor.GREEN + "Current section: " + section);
-        im.setLore(lore);
-        is2.setItemMeta(im);
-        i.setItem(4, is2);
-        timesSent = 0;
-        return i;
     }
 
     private void skull(String str, Inventory i) {

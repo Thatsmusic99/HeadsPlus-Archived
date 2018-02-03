@@ -1,7 +1,7 @@
 package io.github.thatsmusic99.headsplus.events;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.commands.Heads;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusChallengeDifficulty;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsXSections;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
@@ -227,8 +227,21 @@ public class InventoryEvent implements Listener {
                     e.setCancelled(true);
                 }
             } catch (NullPointerException ex) {
-                ex.printStackTrace();
                 e.setCancelled(true);
+            }
+        } else if (im.getType().equalsIgnoreCase("chal")) {
+            if (im.getSection().equalsIgnoreCase("menu")) {
+                ItemStack i = e.getCurrentItem();
+                if (i.getType().equals(Material.STAINED_CLAY)) {
+                    for (HeadsPlusChallengeDifficulty hpcd : HeadsPlusChallengeDifficulty.values()) {
+                        if (i.getDurability() == hpcd.color.ordinal()) {
+                            e.setCancelled(true);
+                            e.getWhoClicked().closeInventory();
+                            im.setSection("EasyC");
+                            e.getWhoClicked().openInventory(this.im.changePage(false, false, (Player) e.getWhoClicked(), this.im.getSection()));
+                        }
+                    }
+                }
             }
         }
     }

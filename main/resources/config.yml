@@ -29,10 +29,11 @@ mysql-port: 3306
 mysql-database: db
 mysql-username: username
 mysql-password: password
-leaderboards-mysql: false
+mysql-usage: false
 leaderboards: true
 theme: classic
 pTheme: classic
+# challenges: true
 lore:
 - '&6&lThis head can be sold!'
 - '&6Do /sellhead to sell!'

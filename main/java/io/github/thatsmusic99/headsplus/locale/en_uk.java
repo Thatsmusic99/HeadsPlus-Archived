@@ -501,4 +501,19 @@ public class en_uk implements Locale {
     public String getPlayerOffline() {
         return "&cThat player is offline!";
     }
+
+    @Override
+    public String easy() {
+        return "Easy";
+    }
+
+    @Override
+    public String medium() {
+        return "Intermediate";
+    }
+
+    @Override
+    public String hard() {
+        return "Hard";
+    }
 }

@@ -503,4 +503,19 @@ public class ro_ro implements Locale {
     public String getPlayerOffline() {
         return "Acest jucator este offline!";
     }
+
+    @Override
+    public String easy() {
+        return "Usor";
+    }
+
+    @Override
+    public String medium() {
+        return "Mediat";
+    }
+
+    @Override
+    public String hard() {
+        return "Greu";
+    }
 }

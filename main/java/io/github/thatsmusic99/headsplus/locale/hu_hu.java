@@ -503,4 +503,19 @@ public class hu_hu implements Locale {
     public String getPlayerOffline() {
         return "&cEz a játékos offline állapotban van!";
     }
+
+    @Override
+    public String easy() {
+        return "Könnyen";
+    }
+
+    @Override
+    public String medium() {
+        return "Közbülső";
+    }
+
+    @Override
+    public String hard() {
+        return "Kemény";
+    }
 }

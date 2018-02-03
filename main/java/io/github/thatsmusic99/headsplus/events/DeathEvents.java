@@ -142,6 +142,9 @@ public class DeathEvents implements Listener {
             if (e instanceof Sheep) {
                 thing = r.nextInt(hpch.getHeads().getStringList("sheepHeadN.default").size());
                 s = hpch.getHeads().getStringList("sheepHeadN.default").get(thing);
+            } else if (e instanceof IronGolem) {
+                thing = r.nextInt(hpch.getHeads().getStringList("irongolemHeadN").size());
+                s = hpch.getHeads().getStringList("irongolemHeadN").get(thing);
             } else {
                 thing = r.nextInt(hpch.getHeads().getStringList(e.getType().name().toLowerCase() + "HeadN").size());
                 s = hpch.getHeads().getStringList(e.getType().name().toLowerCase() + "HeadN").get(thing);

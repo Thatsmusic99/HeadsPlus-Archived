@@ -21,6 +21,7 @@ public enum HeadsPlusChallengeEnums {
     public HeadsPlusChallengeDifficulty cd;
     public Object o;
     public int a;
+    public String t;
 
     HeadsPlusChallengeEnums(String name, String header, List<String> desc, int min, HeadsPlusChallengeTypes hpct, HPChallengeRewardTypes hpcrt, Object o, int amount, HeadsPlusChallengeDifficulty difficulty, String type) {
         this.n = name;
@@ -32,6 +33,7 @@ public enum HeadsPlusChallengeEnums {
         this.o = o;
         this.a = amount;
         this.cd = difficulty;
+        this.t = type;
     }
 
 }

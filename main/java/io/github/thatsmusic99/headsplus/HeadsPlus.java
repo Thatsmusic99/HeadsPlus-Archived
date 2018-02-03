@@ -195,7 +195,7 @@ public class HeadsPlus extends JavaPlugin {
             connection = DriverManager.getConnection("jdbc:mysql://" + config.getString("mysql-host")+ ":" + config.getString("mysql-port") + "/" + config.getString("mysql-database") + "?useSSL=false", config.getString("mysql-username"), config.getString("mysql-password"));
             Statement st = connection.createStatement();
             StringBuilder sb = new StringBuilder();
-            for (String str : Arrays.asList("headspluslb", "headsplussh", "headspluscraft")) {
+            for (String str : Arrays.asList("headspluslb" /*, "headsplussh", "headspluscraft" */)) {
                 try {
                     st.executeQuery("SELECT * from " + str);
                 } catch (SQLException ex) {
@@ -263,7 +263,7 @@ public class HeadsPlus extends JavaPlugin {
         db = getConfig().getBoolean("headsDatabase");
         dm = getConfig().getBoolean("player-death-messages");
         sellable = (econ()) && (getConfig().getBoolean("sellHeads"));
-        chal = getConfig().getBoolean("challenges");
+        //chal = getConfig().getBoolean("challenges");
     }
 
     private void registerCommands() {
@@ -277,7 +277,7 @@ public class HeadsPlus extends JavaPlugin {
         this.getCommand("hplb").setTabCompleter(new TabCompleteLB());
         this.getCommand("sellhead").setExecutor(new SellHead());
         this.getCommand("sellhead").setTabCompleter(new TabCompleteSellhead());
-        this.getCommand("hpc").setExecutor(new ChallengeCommand());
+     //   this.getCommand("hpc").setExecutor(new ChallengeCommand());
     }
 
     private void createInstances() {

@@ -1,6 +1,6 @@
 main: io.github.thatsmusic99.headsplus.HeadsPlus
 name: HeadsPlus
-version: 3.6.5
+version: 3.6.6
 description: Spawns in heads with extra features.
 author: Thatsmusic99
 commands:
@@ -29,7 +29,7 @@ commands:
         description: Displays the HeadsPlus leaderboards.
         default: true
         permission: headsplus.leaderboards.display
-    hpc:
-        description: Displays available challenges.
-        default: true
-        permission: headsplus.challenges.display
+ #   hpc:
+   #     description: Displays available challenges.
+   #     default: true
+   #     permission: headsplus.challenges.display

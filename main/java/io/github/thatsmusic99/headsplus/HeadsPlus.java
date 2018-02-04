@@ -7,6 +7,7 @@ import io.github.thatsmusic99.headsplus.crafting.RecipePerms;
 import io.github.thatsmusic99.headsplus.events.*;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 
+import io.github.thatsmusic99.headsplus.util.MySQLAPI;
 import net.milkbowl.vault.economy.Economy;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
@@ -52,6 +53,7 @@ public class HeadsPlus extends JavaPlugin {
     public DeathEvents de;
     public HeadsPlusLeaderboards hplb;
     public HeadsPlusCrafting hpcr;
+    public MySQLAPI mySQLAPI;
 
     public FileConfiguration config;
 
@@ -195,7 +197,7 @@ public class HeadsPlus extends JavaPlugin {
             connection = DriverManager.getConnection("jdbc:mysql://" + config.getString("mysql-host")+ ":" + config.getString("mysql-port") + "/" + config.getString("mysql-database") + "?useSSL=false", config.getString("mysql-username"), config.getString("mysql-password"));
             Statement st = connection.createStatement();
             StringBuilder sb = new StringBuilder();
-            for (String str : Arrays.asList("headspluslb" /*, "headsplussh", "headspluscraft" */)) {
+            for (String str : Arrays.asList("headspluslb", "headsplussh", "headspluscraft" )) {
                 try {
                     st.executeQuery("SELECT * from " + str);
                 } catch (SQLException ex) {
@@ -263,7 +265,7 @@ public class HeadsPlus extends JavaPlugin {
         db = getConfig().getBoolean("headsDatabase");
         dm = getConfig().getBoolean("player-death-messages");
         sellable = (econ()) && (getConfig().getBoolean("sellHeads"));
-        //chal = getConfig().getBoolean("challenges");
+        chal = getConfig().getBoolean("challenges");
     }
 
     private void registerCommands() {
@@ -277,7 +279,7 @@ public class HeadsPlus extends JavaPlugin {
         this.getCommand("hplb").setTabCompleter(new TabCompleteLB());
         this.getCommand("sellhead").setExecutor(new SellHead());
         this.getCommand("sellhead").setTabCompleter(new TabCompleteSellhead());
-     //   this.getCommand("hpc").setExecutor(new ChallengeCommand());
+        this.getCommand("hpc").setExecutor(new ChallengeCommand());
     }
 
     private void createInstances() {
@@ -286,5 +288,6 @@ public class HeadsPlus extends JavaPlugin {
         hpchx = new HeadsPlusConfigHeadsX();
         de = new DeathEvents();
         hplb = new HeadsPlusLeaderboards();
+        mySQLAPI = new MySQLAPI();
     }
 }

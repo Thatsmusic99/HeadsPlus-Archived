@@ -44,7 +44,7 @@ public class HeadsPlusLeaderboards {
         saveLeaderboards();
 
     }
-    private void saveLeaderboards() {
+    public void saveLeaderboards() {
 
         if (lb == null || lbF == null) {
             return;

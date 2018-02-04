@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.util;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusLeaderboards;
 import io.github.thatsmusic99.headsplus.events.DeathEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -16,10 +17,10 @@ import java.util.*;
 
 public class MySQLAPI {
 
-    FileConfiguration fc;
+    private HeadsPlusLeaderboards hpl = HeadsPlus.getInstance().hplb;
     private DeathEvents de = HeadsPlus.getInstance().de;
 
-   /* private void addPlayer(Player p, String section, String database) {
+    private void addPlayer(Player p, String section, String database) {
         if (HeadsPlus.getInstance().con) {
             Connection c = HeadsPlus.getInstance().connection;
             Statement s = null;
@@ -29,7 +30,7 @@ public class MySQLAPI {
                 e.printStackTrace();
             }
             StringBuilder sb2 = new StringBuilder();
-            sb2.append("INSERT INTO `headspluslb` (uuid, total");
+            sb2.append("INSERT INTO `" + database + "` (uuid, total");
             for (EntityType e : de.ableEntities) {
                 sb2.append(", ").append(e.name());
             }
@@ -44,17 +45,20 @@ public class MySQLAPI {
                 e.printStackTrace();
             }
         } else {
-            getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + ".total", 0);
-            getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + "." + section, 0);
-            int s = getLeaderboards().getInt("server-total");
-            s++;
-            getLeaderboards().set("server-total", s);
-            getLeaderboards().options().copyDefaults(true);
-            saveLeaderboards();
+            if (database.equalsIgnoreCase("headspluslb")) {
+                hpl.getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + ".total", 0);
+                hpl.getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + "." + section, 0);
+                int s = hpl.getLeaderboards().getInt("server-total");
+                s++;
+                hpl.getLeaderboards().set("server-total", s);
+                hpl.getLeaderboards().options().copyDefaults(true);
+                hpl.saveLeaderboards();
+            }
+
         }
     }
 
-    public void addNewPlayerValue(Player p, String section) throws SQLException {
+    public void addNewPlayerValue(Player p, String section, String database) throws SQLException {
         if (HeadsPlus.getInstance().con) {
             Connection c = HeadsPlus.getInstance().connection;
             Statement s = null;
@@ -65,7 +69,7 @@ public class MySQLAPI {
                 e.printStackTrace();
             }
             try {
-                rs = s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='" + p.getUniqueId().toString() + "'");
+                rs = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + p.getUniqueId().toString() + "'");
                 Integer.parseInt(rs.getString(section));
             } catch (SQLException ex) {
                 StringBuilder sb2 = new StringBuilder();
@@ -117,16 +121,16 @@ public class MySQLAPI {
 
             }
         } else {
-            getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + "." + section, 0);
-            int s = getLeaderboards().getInt("server-total");
+            hpl.getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + "." + section, 0);
+            int s = hpl.getLeaderboards().getInt("server-total");
             s++;
-            getLeaderboards().set("server-total", s);
-            getLeaderboards().options().copyDefaults(true);
-            saveLeaderboards();
+            hpl.getLeaderboards().set("server-total", s);
+            hpl.getLeaderboards().options().copyDefaults(true);
+            hpl.saveLeaderboards();
         }
     }
 
-    public void addOntoValue(Player p, String section) {
+    public void addOntoValue(Player p, String section, String database) {
         if (HeadsPlus.getInstance().con) {
             try {
                 Connection c = HeadsPlus.getInstance().connection;
@@ -155,38 +159,38 @@ public class MySQLAPI {
                 s.executeUpdate("UPDATE `headspluslb` SET `total`='" + val2 + "' WHERE `uuid`='server-total'");
             } catch (SQLException e) {
                 try {
-                    addNewPlayerValue(p, section);
+                    addNewPlayerValue(p, section, database);
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                 }
             }
 
         } else {
-            try {
-                int i = getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + "." + section);
-                i++;
-                getLeaderboards().set("player-data." + p.getUniqueId().toString() + "." + section, i);
-                int is = getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + ".total");
-                is++;
-                getLeaderboards().set("player-data." + p.getUniqueId().toString() + ".total", is);
-                int s = getLeaderboards().getInt("server-total");
-                s++;
-                getLeaderboards().set("server-total", s);
-                getLeaderboards().options().copyDefaults(true);
-                saveLeaderboards();
-            } catch (Exception e) {
+            if (database.equalsIgnoreCase("headspluslb")) {
                 try {
-                    addNewPlayerValue(p, section);
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
+                    int i = hpl.getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + "." + section);
+                    i++;
+                    hpl.getLeaderboards().set("player-data." + p.getUniqueId().toString() + "." + section, i);
+                    int is = hpl.getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + ".total");
+                    is++;
+                    hpl.getLeaderboards().set("player-data." + p.getUniqueId().toString() + ".total", is);
+                    int s = hpl.getLeaderboards().getInt("server-total");
+                    s++;
+                    hpl.getLeaderboards().set("server-total", s);
+                    hpl.getLeaderboards().options().copyDefaults(true);
+                    hpl.saveLeaderboards();
+                } catch (Exception e) {
+                    try {
+                        addNewPlayerValue(p, section, database);
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
+                    }
                 }
             }
-
         }
-
     }
 
-    public LinkedHashMap<OfflinePlayer, Integer> getScores(String section) throws SQLException {
+    public LinkedHashMap<OfflinePlayer, Integer> getScores(String section, String database) throws SQLException {
         if (HeadsPlus.getInstance().con) {
             LinkedHashMap<OfflinePlayer, Integer> hs = new LinkedHashMap<>();
             Connection c = HeadsPlus.getInstance().connection;
@@ -214,14 +218,17 @@ public class MySQLAPI {
             hs = sortHashMapByValues(hs);
             return hs;
         } else {
-            LinkedHashMap<OfflinePlayer, Integer> hs = new LinkedHashMap<>();
-            for (String cs : getLeaderboards().getConfigurationSection("player-data").getKeys(false)) {
-                OfflinePlayer p = Bukkit.getOfflinePlayer(UUID.fromString(cs));
-                int i = getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + "." + section);
-                hs.put(p, i);
+            if (database.equalsIgnoreCase("headspluslb")) {
+                LinkedHashMap<OfflinePlayer, Integer> hs = new LinkedHashMap<>();
+                for (String cs : hpl.getLeaderboards().getConfigurationSection("player-data").getKeys(false)) {
+                    OfflinePlayer p = Bukkit.getOfflinePlayer(UUID.fromString(cs));
+                    int i = hpl.getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + "." + section);
+                    hs.put(p, i);
+                }
+                hs = sortHashMapByValues(hs);
+                return hs;
             }
-            hs = sortHashMapByValues(hs);
-            return hs;
+            return null; // Temp
         }
 
     }
@@ -251,7 +258,7 @@ public class MySQLAPI {
         }
         return sortedMap;
     }
-    public boolean addPlayerOnFileIfNotFound(Player p, String section) {
+    public boolean addPlayerOnFileIfNotFound(Player p, String section, String database) {
         if (HeadsPlus.getInstance().con) {
             Connection c = HeadsPlus.getInstance().connection;
             Statement s = null;
@@ -280,27 +287,31 @@ public class MySQLAPI {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                addOntoValue(p, section);
+                addOntoValue(p, section, database);
                 return false;
             }
 
         } else {
-            try {
-                if (getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + ".total") != 0) {
-                    return true;
-                } else {
-                    addPlayer(p, section);
+            if (database.equalsIgnoreCase("headspluslb")) {
+                try {
+                    if (hpl.getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + ".total") != 0) {
+                        return true;
+                    } else {
+                        addPlayer(p, section, database);
+                        return false;
+                    }
+
+                } catch (Exception ex) {
+                    addPlayer(p, section, database);
                     return false;
                 }
-
-            } catch (Exception ex) {
-                addPlayer(p, section);
-                return false;
             }
+
         }
+        return false;
     }
 
-    public boolean addSectionOnFileIfNotFound(Player p, String section) {
+    public boolean addSectionOnFileIfNotFound(Player p, String section, String database) {
         if (HeadsPlus.getInstance().con) {
             Connection c = HeadsPlus.getInstance().connection;
             Statement s = null;
@@ -329,26 +340,29 @@ public class MySQLAPI {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                addOntoValue(p, section);
+                addOntoValue(p, section, database);
                 return false;
             }
         } else {
-            try {
-                if (getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + "." + section) != 0) {
-                    getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + "." + section);
-                    return true;
-                } else {
-                    addNewPlayerValue(p, section);
+            if (database.equalsIgnoreCase("headspluslb")) {
+                try {
+                    if (hpl.getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + "." + section) != 0) {
+                        hpl.getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + "." + section);
+                        return true;
+                    } else {
+                        addNewPlayerValue(p, section, database);
+                        return false;
+                    }
+                } catch (Exception ex) {
+                    try {
+                        addNewPlayerValue(p, section, database);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                     return false;
                 }
-            } catch (Exception ex) {
-                try {
-                    addNewPlayerValue(p, section);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                return false;
             }
         }
-    } */
+        return false;
+    }
 }

@@ -101,6 +101,7 @@ public class HeadsPlusConfig {
         getMessages().addDefault("block-place-denied", "&cYou can not place sellable heads!");
         getMessages().addDefault("no-data-lb", "&cNo leaderboard data has been recorded yet!");
         getMessages().addDefault("player-offline", "&cThat player is offline!");
+        getMessages().addDefault("challenge-complete", "%h &b%p &3has completed the &b%c &3challenge!");
 
         if (!getMessages().getString("locale").equalsIgnoreCase(getMessages().getString("pLocale")) && !nullpoint) {
             getMessages().set("pLocale", getMessages().getString("locale"));
@@ -172,8 +173,9 @@ public class HeadsPlusConfig {
             getMessages().set("xmas-denied", LocaleManager.getLocale().getChristmasDeniedMessage());
             getMessages().set("block-place-denied", LocaleManager.getLocale().getBlockPlaceDenied());
             getMessages().set("no-data-lb", LocaleManager.getLocale().getNoDataRecorded());
-			getMessages().addDefault("update-found", LocaleManager.getLocale().getUpdateFound());
-			getMessages().addDefault("player-offline", LocaleManager.getLocale().getPlayerOffline());
+			getMessages().set("update-found", LocaleManager.getLocale().getUpdateFound());
+			getMessages().set("player-offline", LocaleManager.getLocale().getPlayerOffline());
+			getMessages().set("challenge-complete", LocaleManager.getLocale().chCompleteMessage());
         }
 
 		getMessages().options().copyDefaults(true);

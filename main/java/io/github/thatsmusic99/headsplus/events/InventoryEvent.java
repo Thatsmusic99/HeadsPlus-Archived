@@ -17,6 +17,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.sql.SQLException;
 import java.util.*;
 import java.util.logging.Level;
 
@@ -237,8 +238,33 @@ public class InventoryEvent implements Listener {
                         if (i.getDurability() == hpcd.color.ordinal()) {
                             e.setCancelled(true);
                             e.getWhoClicked().closeInventory();
-                            im.setSection("EasyC");
-                            e.getWhoClicked().openInventory(this.im.changePage(false, false, (Player) e.getWhoClicked(), this.im.getSection()));
+                            im.setSection("easy");
+                            e.getWhoClicked().openInventory(this.im.changePage(false, true, (Player) e.getWhoClicked(), this.im.getSection()));
+                        }
+                    }
+                } else {
+                    e.setCancelled(true);
+                }
+            } else {
+                if (im != null) {
+                    for (String s : HeadsPlus.getInstance().hpchl.getChallenges().getConfigurationSection("challenges." + im.getSection().toUpperCase()).getKeys(false)) {
+                        try {
+                            if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + im.getSection().toUpperCase() + "." + s + ".header"))).equalsIgnoreCase(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()))) {
+                                if (!HeadsPlus.getInstance().hpchl.isChallengeCompleted(p, s)) {
+                                    try {
+                                        if (HeadsPlus.getInstance().hpchl.canComplete(p, s, im.getSection().toUpperCase())) {
+                                            HeadsPlus.getInstance().hpchl.completeChallenge(p, s, e.getInventory(), im.getSection().toUpperCase(), e.getSlot());
+                                        } else {
+                                            // TODO fail message
+                                        }
+                                    } catch (SQLException e1) {
+                                        e1.printStackTrace();
+                                    }
+                                }
+                                e.setCancelled(true);
+                            }
+                        } catch (NullPointerException ignored) {
+
                         }
                     }
                 }

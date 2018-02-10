@@ -16,12 +16,16 @@ public class HeadCraftEvent extends Event implements Cancellable {
     private ItemStack skull;
     private World world;
     private Location location;
+    private int headsCrafted;
+    private String entityType;
 
-    public HeadCraftEvent(Player p, ItemStack head, World world, Location location) {
+    public HeadCraftEvent(Player p, ItemStack head, World world, Location location, int hc, String type) {
         player = p;
         skull = head;
         this.world = world;
         this.location = location;
+        this.headsCrafted = hc;
+        this.entityType = type;
     }
 
     @Override
@@ -71,5 +75,17 @@ public class HeadCraftEvent extends Event implements Cancellable {
     @Override
     public String getEventName() {
         return super.getEventName();
+    }
+
+    public int getHeadsCrafted() {
+        return headsCrafted;
+    }
+
+    public void setHeadsCrafted(int headsCrafted) {
+        this.headsCrafted = headsCrafted;
+    }
+
+    public String getEntityType() {
+        return entityType;
     }
 }

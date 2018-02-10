@@ -518,4 +518,14 @@ public class ro_ro implements Locale {
     public String hard() {
         return "Greu";
     }
+
+    @Override
+    public String getReward() {
+        return "Recompensa: ";
+    }
+
+    @Override
+    public String chCompleteMessage() {
+        return "%h &b%p &3a finalizat Challenge &b%c&3!";
+    }
 }

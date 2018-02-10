@@ -1,5 +1,6 @@
 package io.github.thatsmusic99.headsplus;
 
+import io.github.thatsmusic99.headsplus.api.HeadsPlusAPI;
 import io.github.thatsmusic99.headsplus.commands.*;
 import io.github.thatsmusic99.headsplus.config.*;
 import io.github.thatsmusic99.headsplus.crafting.RecipeEnumUser;
@@ -9,6 +10,7 @@ import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 
 import io.github.thatsmusic99.headsplus.util.MySQLAPI;
 import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.permission.Permission;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -37,6 +39,7 @@ public class HeadsPlus extends JavaPlugin {
 	public final String version = pluginYml.getVersion();
 	public boolean sellable;
 	public Economy econ;
+	public Permission perms;
 	public boolean drops;
 	public boolean arofj;
 	public boolean db;
@@ -54,6 +57,8 @@ public class HeadsPlus extends JavaPlugin {
     public HeadsPlusLeaderboards hplb;
     public HeadsPlusCrafting hpcr;
     public MySQLAPI mySQLAPI;
+    public HeadsPlusChallenges hpchl;
+    public HeadsPlusAPI hapi;
 
     public FileConfiguration config;
 
@@ -86,6 +91,7 @@ public class HeadsPlus extends JavaPlugin {
 			if (!(econ()) && (getConfig().getBoolean("sellHeads"))) {
 				log.warning("[HeadsPlus] Vault not found! Heads cannot be sold.");
 			}
+			setupPermissions();
 			setPluginValues();
             registerEvents();
             registerCommands();
@@ -288,6 +294,14 @@ public class HeadsPlus extends JavaPlugin {
         hpchx = new HeadsPlusConfigHeadsX();
         de = new DeathEvents();
         hplb = new HeadsPlusLeaderboards();
+        hpchl = new HeadsPlusChallenges();
+        hapi = new HeadsPlusAPI();
         mySQLAPI = new MySQLAPI();
+    }
+
+    private boolean setupPermissions() {
+        RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
+        perms = rsp.getProvider();
+        return perms != null;
     }
 }

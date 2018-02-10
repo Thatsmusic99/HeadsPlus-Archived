@@ -516,4 +516,14 @@ public class en_uk implements Locale {
     public String hard() {
         return "Hard";
     }
+
+    @Override
+    public String getReward() {
+        return "Reward:";
+    }
+
+    @Override
+    public String chCompleteMessage() {
+        return "%h &b%p &3has completed the &b%c &3challenge!";
+    }
 }

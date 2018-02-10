@@ -233,4 +233,8 @@ public interface Locale {
 
     String hard();
 
+    String getReward();
+
+    String chCompleteMessage();
+
 }

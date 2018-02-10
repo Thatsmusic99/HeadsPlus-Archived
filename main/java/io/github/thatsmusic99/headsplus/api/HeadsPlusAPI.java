@@ -5,7 +5,6 @@ import com.mojang.authlib.properties.Property;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusLeaderboards;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -151,10 +150,18 @@ public class HeadsPlusAPI {
                             Field pro = ((SkullMeta) is.getItemMeta()).getClass().getDeclaredField("profile");
                             pro.setAccessible(true);
                             GameProfile gm = (GameProfile) pro.get(is.getItemMeta());
-                            for (Property p : gm.getProperties().get("textures")) {
-                                if (p.getValue().equals(hpcHeadsX.getTextures(hpcHeads.getHeads().getStringList(key + "HeadN." + s).get(i)))) {
-                                    return key;
+                            if (gm != null) {
+                                if (gm.getProperties() != null) {
+                                    for (Property p : gm.getProperties().get("textures")) {
+                                        if (p.getValue().equals(hpcHeadsX.getTextures(hpcHeads.getHeads().getStringList(key + "HeadN." + s).get(i)))) {
+                                            return key;
+                                        }
+                                    }
+                                } else {
+                                    return "invalid";
                                 }
+                            } else {
+                                return "invalid";
                             }
                         }
                     }
@@ -234,12 +241,22 @@ public class HeadsPlusAPI {
         return "invalid";
     }
 
+    @Deprecated
     public int getPlayerInLeaderboards(OfflinePlayer p, String section) throws SQLException {
         return HeadsPlus.getInstance().hplb.getScores(section).get(p);
     }
 
+    @Deprecated
     public LinkedHashMap<OfflinePlayer, Integer> getScores(String section) throws SQLException {
         return HeadsPlus.getInstance().hplb.getScores(section);
+    }
+
+    public int getPlayerInLeaderboards(OfflinePlayer p, String section, String database) throws SQLException {
+        return HeadsPlus.getInstance().mySQLAPI.getScores(section, database).get(p);
+    }
+
+    public LinkedHashMap<OfflinePlayer, Integer> getScores(String section, String database) throws SQLException {
+        return HeadsPlus.getInstance().mySQLAPI.getScores(section, database);
     }
 
 }

@@ -1,11 +1,11 @@
 package io.github.thatsmusic99.headsplus.util;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusChallenges;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusLeaderboards;
 import io.github.thatsmusic99.headsplus.events.DeathEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
@@ -17,10 +17,17 @@ import java.util.*;
 
 public class MySQLAPI {
 
-    private HeadsPlusLeaderboards hpl = HeadsPlus.getInstance().hplb;
-    private DeathEvents de = HeadsPlus.getInstance().de;
+    private HeadsPlusLeaderboards hpl;
+    private HeadsPlusChallenges hpc;
+    private DeathEvents de;
 
-    private void addPlayer(Player p, String section, String database) {
+    public MySQLAPI() {
+        hpl = HeadsPlus.getInstance().hplb;
+        hpc = HeadsPlus.getInstance().hpchl;
+        de = HeadsPlus.getInstance().de;
+    }
+
+    private void addPlayer(Player p, String section, String database, int shAmount) {
         if (HeadsPlus.getInstance().con) {
             Connection c = HeadsPlus.getInstance().connection;
             Statement s = null;
@@ -48,17 +55,43 @@ public class MySQLAPI {
             if (database.equalsIgnoreCase("headspluslb")) {
                 hpl.getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + ".total", 0);
                 hpl.getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + "." + section, 0);
-                int s = hpl.getLeaderboards().getInt("server-total");
+                int s = hpl.getLeaderboards().getInt("server-total.total");
                 s++;
-                hpl.getLeaderboards().set("server-total", s);
+                hpl.getLeaderboards().set("server-total.total", s);
+                int i = hpl.getLeaderboards().getInt("server-total." + section);
+                i++;
+                hpl.getLeaderboards().set("server-total." + section, i);
                 hpl.getLeaderboards().options().copyDefaults(true);
                 hpl.saveLeaderboards();
+            } else {
+                if (database.equalsIgnoreCase("headsplussh")) {
+                    hpc.getChallenges().addDefault("player-data." + p.getUniqueId().toString() + ".sellhead.total", 0);
+                    hpc.getChallenges().addDefault("player-data." + p.getUniqueId().toString() + ".sellhead." + section, 0);
+                    int s = hpc.getChallenges().getInt("server-total.sellhead.total");
+                    s += shAmount;
+                    hpc.getChallenges().set("server-total.sellhead.total", s);
+                    int i = hpc.getChallenges().getInt("server-total.sellhead." + section);
+                    i += shAmount;
+                    hpc.getChallenges().set("server-total.sellhead." + section, i);
+                    hpc.getChallenges().options().copyDefaults(true);
+                    hpc.saveChallenges();
+                } else {
+                    hpc.getChallenges().addDefault("player-data." + p.getUniqueId().toString() + ".crafting.total", 0);
+                    hpc.getChallenges().addDefault("player-data." + p.getUniqueId().toString() + ".crafting." + section, 0);
+                    int s = hpc.getChallenges().getInt("server-total.crafting.total");
+                    s += shAmount;
+                    hpc.getChallenges().set("server-total.crafting.total", s);
+                    int i = hpc.getChallenges().getInt("server-total.crafting." + section);
+                    i += shAmount;
+                    hpc.getChallenges().set("server-total.crafting." + section, i);
+                    hpc.getChallenges().options().copyDefaults(true);
+                    hpc.saveChallenges();
+                }
             }
-
         }
     }
 
-    public void addNewPlayerValue(Player p, String section, String database) throws SQLException {
+    public void addNewPlayerValue(Player p, String section, String database, int shAmount) throws SQLException {
         if (HeadsPlus.getInstance().con) {
             Connection c = HeadsPlus.getInstance().connection;
             Statement s = null;
@@ -70,10 +103,10 @@ public class MySQLAPI {
             }
             try {
                 rs = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + p.getUniqueId().toString() + "'");
-                Integer.parseInt(rs.getString(section));
+                Integer.parseInt(rs.getString(section)); // I don't care if it's ignored
             } catch (SQLException ex) {
                 StringBuilder sb2 = new StringBuilder();
-                sb2.append("INSERT INTO `headspluslb` (uuid, total");
+                sb2.append("INSERT INTO `" + database + "` (uuid, total");
                 for (EntityType e : de.ableEntities) {
                     sb2.append(", ").append(e.name());
                 }
@@ -85,81 +118,107 @@ public class MySQLAPI {
 
                 s.executeUpdate(sb2.toString());
 
-                rs = s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='" + p.getUniqueId().toString() + "'");
+                rs = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + p.getUniqueId().toString() + "'");
 
                 rs.next();
 
                 int val = Integer.parseInt(rs.getString(section));
 
                 val++;
-                s.executeUpdate("UPDATE `headspluslb` SET `" + section + "`='" + val + "' WHERE `uuid`='" + p.getUniqueId().toString() + "'");
+                s.executeUpdate("UPDATE `" + database + "` SET `" + section + "`='" + val + "' WHERE `uuid`='" + p.getUniqueId().toString() + "'");
                 int val2;
-                ResultSet rs3 = s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='" + p.getUniqueId().toString() + "'");
+                ResultSet rs3 = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + p.getUniqueId().toString() + "'");
                 rs3.next();
                 val2 = Integer.parseInt(rs3.getString("total"));
 
                 val2++;
-                s.executeUpdate("UPDATE `headspluslb` SET total='" + val2 + "' WHERE `uuid`='" + p.getUniqueId().toString() + "'");
+                s.executeUpdate("UPDATE `" + database + "` SET total='" + val2 + "' WHERE `uuid`='" + p.getUniqueId().toString() + "'");
 
-                ResultSet rs4 = s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='server-total'");
+                ResultSet rs4 = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='server-total'");
 
                 rs4.next();
 
                 int val3 = Integer.parseInt(rs4.getString(section));
                 val3++;
-                s.executeUpdate("UPDATE `headspluslb` SET `" + section + "`='" + val3 + "' WHERE `uuid`='server-total'");
+                s.executeUpdate("UPDATE `" + database + "` SET `" + section + "`='" + val3 + "' WHERE `uuid`='server-total'");
 
                 ResultSet rs2;
-                rs2 = s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='server-total'");
+                rs2 = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='server-total'");
 
                 rs2.next();
 
                 val2 = Integer.parseInt(rs2.getString("total"));
 
                 val2++;
-                s.executeUpdate("UPDATE `headspluslb` SET total='" + val2 + "' WHERE `uuid`='server-total'");
+                s.executeUpdate("UPDATE `" + database + "` SET total='" + val2 + "' WHERE `uuid`='server-total'");
 
             }
         } else {
-            hpl.getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + "." + section, 0);
-            int s = hpl.getLeaderboards().getInt("server-total");
-            s++;
-            hpl.getLeaderboards().set("server-total", s);
-            hpl.getLeaderboards().options().copyDefaults(true);
-            hpl.saveLeaderboards();
+            if (database.equalsIgnoreCase("headspluslb")) {
+                hpl.getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + "." + section, 0);
+                int s = hpl.getLeaderboards().getInt("server-total.total");
+                s++;
+                hpl.getLeaderboards().set("server-total.total", s);
+                int is = hpl.getLeaderboards().getInt("server-total." + section);
+                is++;
+                hpl.getLeaderboards().set("server-total." + section, is);
+                hpl.getLeaderboards().options().copyDefaults(true);
+                hpl.saveLeaderboards();
+            } else if (database.equalsIgnoreCase("headsplussh")) {
+                hpc.getChallenges().addDefault("player-data." + p.getUniqueId().toString() + ".sellhead." + section, 0);
+                int s = hpc.getChallenges().getInt("server-total.sellhead.total");
+                s += shAmount;
+                hpc.getChallenges().set("server-total.sellhead.total", s);
+                int is = hpc.getChallenges().getInt("server-total." + section);
+                is += shAmount;
+                hpc.getChallenges().set("server-total." + section, is);
+                hpc.getChallenges().options().copyDefaults(true);
+                hpc.saveChallenges();
+            } else {
+                hpc.getChallenges().addDefault("player-data." + p.getUniqueId().toString() + ".crafting." + section, 0);
+                int s = hpc.getChallenges().getInt("server-total.crafting.total");
+                s += shAmount;
+                hpc.getChallenges().set("server-total.crafting.total", s);
+                int is = hpc.getChallenges().getInt("server-total.crafting." + section);
+                is += shAmount;
+                hpc.getChallenges().set("server-total.crafting." + section, is);
+                hpc.getChallenges().options().copyDefaults(true);
+                hpc.saveChallenges();
+            }
+
         }
     }
 
-    public void addOntoValue(Player p, String section, String database) {
+    public void addOntoValue(Player p, String section, String database, int shAmount) {
         if (HeadsPlus.getInstance().con) {
             try {
                 Connection c = HeadsPlus.getInstance().connection;
                 Statement s = c.createStatement();
                 ResultSet rs;
-                rs = s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='" + p.getUniqueId().toString() + "'");
+                rs = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + p.getUniqueId().toString() + "'");
                 rs.next();
                 int val = Integer.parseInt(rs.getString(section));
                 val++;
-                s.executeUpdate("UPDATE `headspluslb` SET `" + section + "`='" + val + "' WHERE `uuid`='" + p.getUniqueId().toString() + "'");
-                ResultSet rs3 = s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='" + p.getUniqueId().toString() + "'");
+                s.executeUpdate("UPDATE `" + database + "` SET `" + section + "`='" + val + "' WHERE `uuid`='" + p.getUniqueId().toString() + "'");
+                ResultSet rs3 = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + p.getUniqueId().toString() + "'");
                 rs3.next();
                 int val2 = Integer.parseInt(rs3.getString("total"));
                 val2++;
-                s.executeUpdate("UPDATE `headspluslb` SET `total`='" + val2 + "' WHERE `uuid`='" + p.getUniqueId().toString() + "'");
+                s.executeUpdate("UPDATE `" + database + "` SET `total`='" + val2 + "' WHERE `uuid`='" + p.getUniqueId().toString() + "'");
                 ResultSet rs2;
-                rs2 = s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='server-total'");
+                rs2 = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='server-total'");
                 rs2.next();
                 int val3 = Integer.parseInt(rs2.getString(section));
                 val3++;
-                s.executeUpdate("UPDATE `headspluslb` SET `" + section + "`='" + val3 + "' WHERE `uuid`='server-total'");
-                ResultSet rs4 = s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='server-total'");
+                s.executeUpdate("UPDATE `" + database + "` SET `" + section + "`='" + val3 + "' WHERE `uuid`='server-total'");
+                ResultSet rs4 = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='server-total'");
                 rs4.next();
                 val2 = Integer.parseInt(rs4.getString("total"));
                 val2++;
-                s.executeUpdate("UPDATE `headspluslb` SET `total`='" + val2 + "' WHERE `uuid`='server-total'");
+                s.executeUpdate("UPDATE `" + database + "` SET `total`='" + val2 + "' WHERE `uuid`='server-total'");
             } catch (SQLException e) {
                 try {
-                    addNewPlayerValue(p, section, database);
+                    addNewPlayerValue(p, section, database, shAmount);
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                 }
@@ -174,16 +233,67 @@ public class MySQLAPI {
                     int is = hpl.getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + ".total");
                     is++;
                     hpl.getLeaderboards().set("player-data." + p.getUniqueId().toString() + ".total", is);
-                    int s = hpl.getLeaderboards().getInt("server-total");
+                    int s = hpl.getLeaderboards().getInt("server-total." + section);
                     s++;
-                    hpl.getLeaderboards().set("server-total", s);
+                    hpl.getLeaderboards().set("server-total." + section, s);
+                    int h = hpl.getLeaderboards().getInt("server-total.total");
+                    h++;
+                    hpl.getLeaderboards().set("server-total.total", h);
                     hpl.getLeaderboards().options().copyDefaults(true);
                     hpl.saveLeaderboards();
                 } catch (Exception e) {
                     try {
-                        addNewPlayerValue(p, section, database);
+                        addNewPlayerValue(p, section, database, shAmount);
                     } catch (SQLException e1) {
                         e1.printStackTrace();
+                    }
+                }
+            } else {
+                if (database.equalsIgnoreCase("headsplussh")) {
+                    try {
+                        int i = hpc.getChallenges().getInt("player-data." + p.getUniqueId().toString() + ".sellhead." + section);
+                        i += shAmount;
+                        hpc.getChallenges().set("player-data." + p.getUniqueId().toString() + ".sellhead." + section, i);
+                        int is = hpc.getChallenges().getInt("player-data." + p.getUniqueId().toString() + ".sellhead.total");
+                        is += shAmount;
+                        hpc.getChallenges().set("player-data." + p.getUniqueId().toString() + ".sellhead.total", is);
+                        int s = hpc.getChallenges().getInt("server-total.sellhead.total");
+                        s += shAmount;
+                        hpc.getChallenges().set("server-total.sellhead.total", s);
+                        int h = hpc.getChallenges().getInt("server-total.sellhead." + section);
+                        h += shAmount;
+                        hpc.getChallenges().set("server-total.sellhead." + section, h);
+                        hpc.challenges.options().copyDefaults(true);
+                        hpc.saveChallenges();
+                    } catch (Exception e) {
+                        try {
+                            addNewPlayerValue(p, section, database, shAmount);
+                        } catch (SQLException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                } else {
+                    try {
+                        int i = hpc.getChallenges().getInt("player-data." + p.getUniqueId().toString() + ".crafting." + section);
+                        i += shAmount;
+                        hpc.getChallenges().set("player-data." + p.getUniqueId().toString() + ".crafting." + section, i);
+                        int is = hpc.getChallenges().getInt("player-data." + p.getUniqueId().toString() + ".crafting.total");
+                        is += shAmount;
+                        hpc.getChallenges().set("player-data." + p.getUniqueId().toString() + ".crafting.total", is);
+                        int s = hpc.getChallenges().getInt("server-total.crafting.total");
+                        s += shAmount;
+                        hpc.getChallenges().set("server-total.crafting.total", s);
+                        int h = hpc.getChallenges().getInt("server-total.crafting." + section);
+                        h += shAmount;
+                        hpc.getChallenges().set("server-total.crafting." + section, h);
+                        hpc.challenges.options().copyDefaults(true);
+                        hpc.saveChallenges();
+                    } catch (Exception e) {
+                        try {
+                            addNewPlayerValue(p, section, database, shAmount);
+                        } catch (SQLException e1) {
+                            e1.printStackTrace();
+                        }
                     }
                 }
             }
@@ -195,7 +305,7 @@ public class MySQLAPI {
             LinkedHashMap<OfflinePlayer, Integer> hs = new LinkedHashMap<>();
             Connection c = HeadsPlus.getInstance().connection;
             Statement s = c.createStatement();
-            ResultSet rs = s.executeQuery("SELECT * FROM `headspluslb` ORDER BY id");
+            ResultSet rs = s.executeQuery("SELECT * FROM `" + database + "` ORDER BY id");
             while (rs.next()) {
 
                 boolean player = false;
@@ -210,7 +320,7 @@ public class MySQLAPI {
                 if (player) {
                     name = Bukkit.getOfflinePlayer(uuid);
                     Statement st = c.createStatement();
-                    ResultSet rs2 = st.executeQuery("SELECT * FROM `headspluslb` WHERE `uuid`='" + name.getUniqueId().toString() + "'");
+                    ResultSet rs2 = st.executeQuery("SELECT * FROM `" + database + "` WHERE `uuid`='" + name.getUniqueId().toString() + "'");
                     rs2.next();
                     hs.put(name, Integer.valueOf(rs2.getString(section)));
                 }
@@ -227,8 +337,25 @@ public class MySQLAPI {
                 }
                 hs = sortHashMapByValues(hs);
                 return hs;
+            } else if (database.equalsIgnoreCase("headsplussh")) {
+                LinkedHashMap<OfflinePlayer, Integer> hs = new LinkedHashMap<>();
+                for (String cs : hpc.getChallenges().getConfigurationSection("player-data").getKeys(false)) {
+                    OfflinePlayer p = Bukkit.getOfflinePlayer(UUID.fromString(cs));
+                    int i = hpc.getChallenges().getInt("player-data." + p.getUniqueId().toString() + ".sellhead." + section);
+                    hs.put(p, i);
+                }
+                hs = sortHashMapByValues(hs);
+                return hs;
+            } else {
+                LinkedHashMap<OfflinePlayer, Integer> hs = new LinkedHashMap<>();
+                for (String cs : hpc.getChallenges().getConfigurationSection("player-data").getKeys(false)) {
+                    OfflinePlayer p = Bukkit.getOfflinePlayer(UUID.fromString(cs));
+                    int i = hpc.getChallenges().getInt("player-data." + p.getUniqueId().toString() + ".crafting." + section);
+                    hs.put(p, i);
+                }
+                hs = sortHashMapByValues(hs);
+                return hs;
             }
-            return null; // Temp
         }
 
     }
@@ -258,7 +385,7 @@ public class MySQLAPI {
         }
         return sortedMap;
     }
-    public boolean addPlayerOnFileIfNotFound(Player p, String section, String database) {
+    public boolean addPlayerOnFileIfNotFound(Player p, String section, String database, int shAmount) {
         if (HeadsPlus.getInstance().con) {
             Connection c = HeadsPlus.getInstance().connection;
             Statement s = null;
@@ -269,11 +396,11 @@ public class MySQLAPI {
             }
             try {
 
-                s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='" + p.getUniqueId() + "'");
+                s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + p.getUniqueId() + "'");
                 return true;
             } catch (SQLException ex) {
                 StringBuilder sb2 = new StringBuilder();
-                sb2.append("INSERT INTO `headspluslb` (uuid, total");
+                sb2.append("INSERT INTO `" + database + "` (uuid, total");
                 for (EntityType e : de.ableEntities) {
                     sb2.append(", ").append(e.name());
                 }
@@ -287,7 +414,7 @@ public class MySQLAPI {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                addOntoValue(p, section, database);
+                addOntoValue(p, section, database, shAmount);
                 return false;
             }
 
@@ -297,12 +424,24 @@ public class MySQLAPI {
                     if (hpl.getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + ".total") != 0) {
                         return true;
                     } else {
-                        addPlayer(p, section, database);
+                        addPlayer(p, section, database, shAmount);
                         return false;
                     }
 
                 } catch (Exception ex) {
-                    addPlayer(p, section, database);
+                    addPlayer(p, section, database, shAmount);
+                    return false;
+                }
+            } else if (database.equalsIgnoreCase("headsplussh")) {
+                try {
+                    if (hpc.getChallenges().getInt("player-data." + p.getUniqueId() + ".sellhead.total") != 0) {
+                        return true;
+                    } else {
+                        addPlayer(p, section, database, shAmount);
+                        return false;
+                    }
+                } catch (Exception ex) {
+                    addPlayer(p, section, database, shAmount);
                     return false;
                 }
             }
@@ -311,7 +450,7 @@ public class MySQLAPI {
         return false;
     }
 
-    public boolean addSectionOnFileIfNotFound(Player p, String section, String database) {
+    public boolean addSectionOnFileIfNotFound(Player p, String section, String database, int shAmount) {
         if (HeadsPlus.getInstance().con) {
             Connection c = HeadsPlus.getInstance().connection;
             Statement s = null;
@@ -322,11 +461,11 @@ public class MySQLAPI {
             }
             try {
 
-                s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='" + p.getUniqueId() + "'");
+                s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + p.getUniqueId() + "'");
                 return true;
             } catch (SQLException ex) {
                 StringBuilder sb2 = new StringBuilder();
-                sb2.append("INSERT INTO `headspluslb` (uuid, total");
+                sb2.append("INSERT INTO `" + database + "` (uuid, total");
                 for (EntityType e : de.ableEntities) {
                     sb2.append(", ").append(e.name());
                 }
@@ -340,7 +479,7 @@ public class MySQLAPI {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                addOntoValue(p, section, database);
+                addOntoValue(p, section, database, shAmount);
                 return false;
             }
         } else {
@@ -350,19 +489,44 @@ public class MySQLAPI {
                         hpl.getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + "." + section);
                         return true;
                     } else {
-                        addNewPlayerValue(p, section, database);
+                        addNewPlayerValue(p, section, database, shAmount);
                         return false;
                     }
                 } catch (Exception ex) {
                     try {
-                        addNewPlayerValue(p, section, database);
+                        addNewPlayerValue(p, section, database, shAmount);
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
                     return false;
                 }
+            } else {
+                if (database.equalsIgnoreCase("headsplussh")) {
+                    if (hpc.getChallenges().getInt("player-data." + p.getUniqueId().toString() + ".sellhead." + section) != 0) {
+                        hpc.getChallenges().getInt("player-data." + p.getUniqueId().toString() + ".sellhead." + section);
+                        return true;
+                    } else {
+                        try {
+                            addNewPlayerValue(p, section, database, shAmount);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        return false;
+                    }
+                } else {
+                    if (hpc.getChallenges().getInt("player-data." + p.getUniqueId() + ".crafting." + section) != 0) {
+                        hpc.getChallenges().getInt("player-data." + p.getUniqueId().toString() + ".crafting." + section);
+                        return true;
+                    } else {
+                        try {
+                            addNewPlayerValue(p, section, database, shAmount);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        return false;
+                    }
+                }
             }
         }
-        return false;
     }
 }

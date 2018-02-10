@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
@@ -62,7 +63,16 @@ public class HeadsPlusLeaderboards {
     private void loadLeaderboards() {
         try {
             getLeaderboards().options().header("HeadsPlus by Thatsmusic99 - Config wiki: https://github.com/Thatsmusic99/HeadsPlus/wiki/Configuration");
-            getLeaderboards().addDefault("server-total", 0);
+            getLeaderboards().addDefault("server-total.total", 0);
+            for (EntityType e : de.ableEntities) {
+                getLeaderboards().addDefault("server-total." + e.name(), 0);
+            }
+            try {
+                if (getLeaderboards().getInt("server-total") != 0) {
+                    getLeaderboards().set("server-total.total", getLeaderboards().getInt("server-total"));
+                }
+            } catch (Exception ignored) {
+            }
             getLeaderboards().options().copyDefaults(true);
             saveLeaderboards();
         } catch (Exception e) {
@@ -70,6 +80,7 @@ public class HeadsPlusLeaderboards {
         }
     }
 
+    @Deprecated
     private void addPlayer(Player p, String section) {
         if (HeadsPlus.getInstance().con) {
             Connection c = HeadsPlus.getInstance().connection;
@@ -105,6 +116,7 @@ public class HeadsPlusLeaderboards {
         }
     }
 
+    @Deprecated
     public void addNewPlayerValue(Player p, String section) throws SQLException {
         if (HeadsPlus.getInstance().con) {
             Connection c = HeadsPlus.getInstance().connection;
@@ -177,6 +189,7 @@ public class HeadsPlusLeaderboards {
         }
     }
 
+    @Deprecated
     public void addOntoValue(Player p, String section) {
         if (HeadsPlus.getInstance().con) {
             try {
@@ -237,6 +250,7 @@ public class HeadsPlusLeaderboards {
 
     }
 
+    @Deprecated
     public LinkedHashMap<OfflinePlayer, Integer> getScores(String section) throws SQLException {
         if (HeadsPlus.getInstance().con) {
             LinkedHashMap<OfflinePlayer, Integer> hs = new LinkedHashMap<>();
@@ -302,6 +316,7 @@ public class HeadsPlusLeaderboards {
         }
         return sortedMap;
     }
+    @Deprecated
     public boolean addPlayerOnFileIfNotFound(Player p, String section) {
         if (HeadsPlus.getInstance().con) {
             Connection c = HeadsPlus.getInstance().connection;
@@ -351,6 +366,7 @@ public class HeadsPlusLeaderboards {
         }
     }
 
+    @Deprecated
     public boolean addSectionOnFileIfNotFound(Player p, String section) {
         if (HeadsPlus.getInstance().con) {
             Connection c = HeadsPlus.getInstance().connection;

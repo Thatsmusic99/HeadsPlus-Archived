@@ -515,4 +515,14 @@ public class lolcat implements Locale {
     public String hard() {
         return "OMG";
     }
+
+    @Override
+    public String getReward() {
+        return "Kitty treetz: ";
+    }
+
+    @Override
+    public String chCompleteMessage() {
+        return "%h &3OMG GUYZ &b%p &3DIDZ DA &b%c THING!!!";
+    }
 }

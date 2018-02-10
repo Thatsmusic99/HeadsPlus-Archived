@@ -2,7 +2,6 @@ package io.github.thatsmusic99.headsplus.commands;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusLeaderboards;
 import io.github.thatsmusic99.headsplus.events.DeathEvents;
 import io.github.thatsmusic99.headsplus.util.PagedHashmaps;
 import org.apache.commons.lang.WordUtils;
@@ -78,7 +77,7 @@ public class LeaderboardsCommand implements CommandExecutor {
         try {
             StringBuilder sb = new StringBuilder();
             try {
-                ph = new PagedHashmaps(HeadsPlus.getInstance().hplb.getScores(sec), 8);
+                ph = new PagedHashmaps(HeadsPlus.getInstance().mySQLAPI.getScores(sec, "headspluslb"), 8);
             } catch (SQLException e) {
                 e.printStackTrace();
             }

@@ -518,4 +518,14 @@ public class hu_hu implements Locale {
     public String hard() {
         return "Kemény";
     }
+
+    @Override
+    public String getReward() {
+        return "Jutalom: ";
+    }
+
+    @Override
+    public String chCompleteMessage() {
+        return "%h &b%p &3befejezte a &b%c &3Challenge-ot!";
+    }
 }

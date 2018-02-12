@@ -525,4 +525,9 @@ public class lolcat implements Locale {
     public String chCompleteMessage() {
         return "%h &3OMG GUYZ &b%p &3DIDZ DA &b%c THING!!!";
     }
+
+    @Override
+    public String descProfile() {
+        return "Shoes u ur prof ;3";
+    }
 }

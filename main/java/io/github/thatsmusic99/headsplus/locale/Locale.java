@@ -237,4 +237,6 @@ public interface Locale {
 
     String chCompleteMessage();
 
+    String descProfile();
+
 }

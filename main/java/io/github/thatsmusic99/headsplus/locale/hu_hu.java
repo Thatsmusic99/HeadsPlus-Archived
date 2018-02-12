@@ -528,4 +528,9 @@ public class hu_hu implements Locale {
     public String chCompleteMessage() {
         return "%h &b%p &3befejezte a &b%c &3Challenge-ot!";
     }
+
+    @Override
+    public String descProfile() {
+        return "A bővítmény profilját jeleníti meg.";
+    }
 }

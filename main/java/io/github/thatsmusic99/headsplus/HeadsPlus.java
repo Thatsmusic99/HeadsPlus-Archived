@@ -261,6 +261,7 @@ public class HeadsPlus extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlaceEvent(), this);
         getServer().getPluginManager().registerEvents(new LBEvents(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathEvent(), this);
+        getServer().getPluginManager().registerEvents(new InventoryCloseEvent(), this);
     }
 
     private void setPluginValues() {

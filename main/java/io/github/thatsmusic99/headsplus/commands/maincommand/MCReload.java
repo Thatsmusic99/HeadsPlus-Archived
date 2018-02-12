@@ -22,6 +22,8 @@ public class MCReload {
 	private  static final File headsXF = new File(HeadsPlus.getInstance().getDataFolder(), "headsx.yml");
 
 	private static final File lbF = new File(HeadsPlus.getInstance().getDataFolder(), "leaderboards.yml");
+
+	private final File chalF = new File(HeadsPlus.getInstance().getDataFolder(), "challenges.yml");
 	
 	public void reload(CommandSender sender) {
 		if (sender.hasPermission("headsplus.maincommand.reload")) {
@@ -108,6 +110,15 @@ public class MCReload {
                        }
                    } else {
                        hpl.reloadLeaderboards();
+                   }
+                   HeadsPlusChallenges hpchal = HeadsPlus.getInstance().hpchl;
+				   if (!chalF.exists()) {
+				       HeadsPlus.getInstance().getLogger().info("Challenges not found, creating!");
+				       hpchal.reloadChlnges();
+				       hpchal.challenges = YamlConfiguration.loadConfiguration(chalF);
+				       HeadsPlus.getInstance().getLogger().info("Challenges created!");
+                   } else {
+				       hpchal.reloadChlnges();
                    }
 			      
 		       } catch (Exception e) {

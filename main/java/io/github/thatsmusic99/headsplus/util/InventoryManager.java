@@ -314,38 +314,41 @@ public class InventoryManager {
                         PagedLists pl = new PagedLists(bb, 27);
                         int in = 0;
                         for (Object s : pl.getContentsInPage(cPage)) {
-                             String str = (String) s;
-                             ItemStack is;
-                             if (HeadsPlus.getInstance().hpchl.isChallengeCompleted(p, str)) {
-                                 is = new ItemStack(Material.STAINED_CLAY, 1, (short) 13);
-                             } else {
-                                 is = new ItemStack(Material.STAINED_CLAY, 1, (short) 14);
-                             }
-                             ItemMeta im = is.getItemMeta();
-                             im.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + hpcd.name() + "." + s + ".header")));
-                             List<String> lore = new ArrayList<>();
-                             for (String st : HeadsPlus.getInstance().hpchl.getChallenges().getStringList("challenges." + hpcd.name() + "." + s + ".description")) {
-                                 lore.add(ChatColor.translateAlternateColorCodes('&', st));
-                             }
-                             StringBuilder sb = new StringBuilder();
-                             sb.append(ChatColor.GOLD).append("Reward: ");
-                             String re = HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + hpcd.name() + "." + s + ".reward-type");
-                             if (re.equalsIgnoreCase("ECO")) {
-                                 sb.append(ChatColor.GREEN).append("$").append(HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + hpcd.name() + "." + s + ".reward-value"));
-                             } else if (re.equalsIgnoreCase("GIVE_ITEM")) {
-                                 try {
-                                     Material.valueOf(HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + hpcd.name() + "." + s + ".reward-value"));
-                                     sb.append(ChatColor.GREEN).append(HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + hpcd.name() + "." + s +".item-amount")).append(" ").append(WordUtils.capitalize(HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + hpcd.name() + "." + s + ".reward-value")));
-                                 } catch (IllegalArgumentException e) {
-                                     //
-                                 }
-                             }
-                             lore.add(sb.toString());
-                             lore.add(ChatColor.GOLD + "XP: " + ChatColor.GREEN + HeadsPlus.getInstance().hpchl.getChallenges().getInt("challenges." + hpcd.name() + "." + s +".xp"));
-                             im.setLore(lore);
-                             is.setItemMeta(im);
-                             i.setItem(pos()[in], is);
-                             in++;
+                            String str = (String) s;
+                            ItemStack is;
+                            if (HeadsPlus.getInstance().hpchl.isChallengeCompleted(p, str)) {
+                                is = new ItemStack(Material.STAINED_CLAY, 1, (short) 13);
+                            } else {
+                                is = new ItemStack(Material.STAINED_CLAY, 1, (short) 14);
+                            }
+                            ItemMeta im = is.getItemMeta();
+                            im.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + hpcd.name() + "." + s + ".header")));
+                            List<String> lore = new ArrayList<>();
+                            for (String st : HeadsPlus.getInstance().hpchl.getChallenges().getStringList("challenges." + hpcd.name() + "." + s + ".description")) {
+                                lore.add(ChatColor.translateAlternateColorCodes('&', st));
+                            }
+                            StringBuilder sb = new StringBuilder();
+                            sb.append(ChatColor.GOLD).append("Reward: ");
+                            String re = HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + hpcd.name() + "." + s + ".reward-type");
+                            if (re.equalsIgnoreCase("ECO")) {
+                                sb.append(ChatColor.GREEN).append("$").append(HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + hpcd.name() + "." + s + ".reward-value"));
+                            } else if (re.equalsIgnoreCase("GIVE_ITEM")) {
+                                try {
+                                    Material.valueOf(HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + hpcd.name() + "." + s + ".reward-value"));
+                                    sb.append(ChatColor.GREEN).append(HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + hpcd.name() + "." + s +".item-amount")).append(" ").append(WordUtils.capitalize(HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + hpcd.name() + "." + s + ".reward-value")));
+                                } catch (IllegalArgumentException ignored) {
+
+                                }
+                            }
+                            lore.add(sb.toString());
+                            lore.add(ChatColor.GOLD + "XP: " + ChatColor.GREEN + HeadsPlus.getInstance().hpchl.getChallenges().getInt("challenges." + hpcd.name() + "." + s +".xp"));
+                            if (HeadsPlus.getInstance().hpchl.isChallengeCompleted(p, str)) {
+                                lore.add(ChatColor.GREEN + "Completed!");
+                            }
+                            im.setLore(lore);
+                            is.setItemMeta(im);
+                            i.setItem(pos()[in], is);
+                            in++;
                         }
                     }
                 }

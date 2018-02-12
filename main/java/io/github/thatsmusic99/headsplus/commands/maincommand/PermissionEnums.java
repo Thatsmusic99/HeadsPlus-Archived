@@ -26,7 +26,8 @@ public enum PermissionEnums {
 	WHITELISTW_LIST("headsplus.maincommand.whitelistw.list", "/hp whitelistwl", LocaleManager.getLocale().descWhitelistwList(), "Whitelistwl", true),
 	HEADS("headsplus.heads", "/heads", LocaleManager.getLocale().descHeads(), "Heads", false),
 	MYHEAD("headsplus.myhead", "/myhead", LocaleManager.getLocale().descMyHead(), "Myhead", false),
-	HPLB("headsplus.leaderboards.display", "/hplb [Entity|Total|Page #] [Page #]", LocaleManager.getLocale().descHPLeaderboards(), "Hplb", false);
+	HPLB("headsplus.leaderboards.display", "/hplb [Entity|Total|Page #] [Page #]", LocaleManager.getLocale().descHPLeaderboards(), "Hplb", false),
+	PROFILE("headsplus.profile.display", "/hp profile [Player]", LocaleManager.getLocale().descProfile(), "Profile", true);
 	
 	public final String str;
 	final String cmd;

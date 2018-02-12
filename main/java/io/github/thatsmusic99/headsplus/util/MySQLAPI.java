@@ -332,7 +332,7 @@ public class MySQLAPI {
                 LinkedHashMap<OfflinePlayer, Integer> hs = new LinkedHashMap<>();
                 for (String cs : hpl.getLeaderboards().getConfigurationSection("player-data").getKeys(false)) {
                     OfflinePlayer p = Bukkit.getOfflinePlayer(UUID.fromString(cs));
-                    int i = hpl.getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + "." + section);
+                    int i = hpl.getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + "." + (section.equalsIgnoreCase("total") ? section : section.toUpperCase()));
                     hs.put(p, i);
                 }
                 hs = sortHashMapByValues(hs);

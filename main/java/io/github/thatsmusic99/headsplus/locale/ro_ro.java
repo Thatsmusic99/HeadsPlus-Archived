@@ -528,4 +528,9 @@ public class ro_ro implements Locale {
     public String chCompleteMessage() {
         return "%h &b%p &3a finalizat Challenge &b%c&3!";
     }
+
+    @Override
+    public String descProfile() {
+        return "Afiseaza profilul pentru plugin-ul.";
+    }
 }

@@ -5,20 +5,28 @@ import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 
 public class InventoryCloseEvent implements Listener {
 
-    @EventHandler
+  /*  @EventHandler
     public void onInvClose(org.bukkit.event.inventory.InventoryCloseEvent e) {
         Player p = (Player) e.getPlayer();
         HeadsPlus.getInstance().getLogger().info("Piing!");
         if (InventoryManager.pls.containsKey(p)) {
             HeadsPlus.getInstance().getLogger().info("Poong!");
-            InventoryManager im = InventoryManager.getIM(p);
-            if (e.getInventory().getName().equalsIgnoreCase("HeadsPlus Head selector: page " + im.getPage() + "/" + im.getPages()) || e.getInventory().getName().equalsIgnoreCase("HeadsPlus ")) {
-                HeadsPlus.getInstance().getLogger().info("Paang!");
-                InventoryManager.pls.remove(p);
-            }
+            InventoryManager.pls.remove(p);
+
         }
     }
+
+    @EventHandler
+    public void onInvOpen(InventoryOpenEvent e) {
+        Player p = (Player) e.getPlayer();
+        if (!InventoryManager.pls.containsKey(p)) {
+            if (e.getInventory().getName().startsWith("HeadsPlus")) {
+                InventoryManager.pls.put(p)
+            }
+        }
+    } */
 }

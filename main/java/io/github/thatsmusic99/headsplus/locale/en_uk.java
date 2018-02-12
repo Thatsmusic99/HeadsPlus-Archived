@@ -526,4 +526,9 @@ public class en_uk implements Locale {
     public String chCompleteMessage() {
         return "%h &b%p &3has completed the &b%c &3challenge!";
     }
+
+    @Override
+    public String descProfile() {
+        return "Displays your profile for the plugin.";
+    }
 }

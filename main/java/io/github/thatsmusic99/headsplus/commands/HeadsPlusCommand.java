@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import io.github.thatsmusic99.headsplus.commands.maincommand.*;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -40,7 +41,8 @@ public class HeadsPlusCommand implements CommandExecutor {
 				"whitelistwadd",
                 "whitelistwdel",
                 "whitelistwl",
-                "whitelistw"));
+                "whitelistw",
+                "profile"));
 
 		if ((cmd.getName().equalsIgnoreCase("headsplus")) || (cmd.getName().equalsIgnoreCase("hp"))) {
 			   if ((args.length == 0)) {
@@ -298,6 +300,12 @@ public class HeadsPlusCommand implements CommandExecutor {
                 } else {
                     sender.sendMessage(noPerms);
                 }
+            }
+            ProfileCommand pc = new ProfileCommand();
+            if ((args.length == 1) && (args[0].equalsIgnoreCase("profile"))) {
+                pc.getProfile(Bukkit.getOfflinePlayer(sender.getName()), sender);
+            } else if ((args.length >= 2) && (args[0].equalsIgnoreCase("profile"))) {
+                pc.getProfile(Bukkit.getOfflinePlayer(args[1]), sender);
             }
        
 	} return false;

@@ -31,17 +31,22 @@ public class HeadsPlusChallenges {
 
     private void chlngeEnable() {
         reloadChlnges();
-        loadChlnges();
     }
 
     public void reloadChlnges() {
+        boolean n = false;
         if (challengesF == null) {
+            n = true;
             challengesF = new File(HeadsPlus.getInstance().getDataFolder(), "challenges.yml");
         }
         challenges = YamlConfiguration.loadConfiguration(challengesF);
+        if (n) {
+            loadChlnges();
+        }
+        saveChallenges();
     }
 
-    public void loadChlnges() {
+    private void loadChlnges() {
         challenges.options().header("HeadsPlus by Thatsmusic99 - Challenge configuration" +
                 "\nKey for challenges:" +
                 "\nHeader - what is displayed as the challenge title." +
@@ -61,7 +66,7 @@ public class HeadsPlusChallenges {
             challenges.addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".type", hpc.p.name());
             challenges.addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".min", hpc.m);
             challenges.addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".reward-type", hpc.r.name());
-            challenges.addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".reward-value", hpc.o);
+            challenges.addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".reward-value", hpc.o instanceof Material ? ((Material) hpc.o).name() : hpc.o);
             challenges.addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".item-amount", hpc.a);
             challenges.addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".head-type", hpc.t);
             challenges.addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".xp", hpc.exp);
@@ -185,13 +190,13 @@ public class HeadsPlusChallenges {
                         .append(ChatColor.GREEN)
                         .append(getChallenges().getInt("challenges." + dif + "." + s +".item-amount"))
                         .append(" ")
-                        .append(WordUtils.capitalize(HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + dif + "." + s + ".reward-value")))
-                        .append(getChallenges().getInt("challenges." + dif + "." + s +".item-amount") > 1 ? "s" : "");
+                        .append(WordUtils.capitalize(HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + dif + "." + s + ".reward-value").replaceAll("_", " ")))
+                        .append(getChallenges().getInt("challenges." + dif + "." + s +".item-amount") > 1 ? "(s)" : "");
                 sb2
                         .append(getChallenges().getInt("challenges." + dif + "." + s +".item-amount"))
                         .append(" ")
-                        .append(WordUtils.capitalize(HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + dif + "." + s + ".reward-value")))
-                        .append(getChallenges().getInt("challenges." + dif + "." + s +".item-amount") > 1 ? "s" : "");
+                        .append(WordUtils.capitalize(HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + dif + "." + s + ".reward-value").replaceAll("_", " ")))
+                        .append(getChallenges().getInt("challenges." + dif + "." + s +".item-amount") > 1 ? "(s)" : "");
             } catch (IllegalArgumentException e) {
                 //
             }

@@ -207,10 +207,7 @@ public class HeadsPlus extends JavaPlugin {
                 try {
                     st.executeQuery("SELECT * from " + str);
                 } catch (SQLException ex) {
-                    sb.append("CREATE TABLE `" + str + "` (" +
-                            "`id` INT NOT NULL AUTO_INCREMENT," +
-                            "`uuid` VARCHAR(45)," +
-                            "`total` VARCHAR(45)");
+                    sb.append("CREATE TABLE `").append(str).append("` (").append("`id` INT NOT NULL AUTO_INCREMENT,").append("`uuid` VARCHAR(45),").append("`total` VARCHAR(45)");
                     for (EntityType e : de.ableEntities) {
                         sb.append(", `").append(e.name()).append("` VARCHAR(45)");
                     }
@@ -218,7 +215,7 @@ public class HeadsPlus extends JavaPlugin {
                     sb.append(", PRIMARY KEY (`id`))");
                     st.executeUpdate(sb.toString());
                     StringBuilder sb2 = new StringBuilder();
-                    sb2.append("INSERT INTO `" + str + "` (uuid, total");
+                    sb2.append("INSERT INTO `").append(str).append("` (uuid, total");
                     for (EntityType e : de.ableEntities) {
                         sb2.append(", ").append(e.name());
                     }

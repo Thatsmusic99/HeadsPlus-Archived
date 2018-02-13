@@ -239,4 +239,12 @@ public interface Locale {
 
     String descProfile();
 
+    String noData();
+
+    String cantCompleteChallenge();
+
+    String alreadyCompleted();
+
+    String cantViewData();
+
 }

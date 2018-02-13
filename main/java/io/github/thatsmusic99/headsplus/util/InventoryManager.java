@@ -5,6 +5,7 @@ import com.mojang.authlib.properties.Property;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusChallengeDifficulty;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusChallengeEnums;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
 
 import org.apache.commons.codec.binary.Base64;
@@ -305,6 +306,20 @@ public class InventoryManager {
                     is.setItemMeta(im);
                     i.setItem(hpcd.i, is);
                 }
+                int cch = HeadsPlus.getInstance().hpchl.getChallenges().getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").size();
+                setItem(i, "Back", 8);
+                ItemStack is2 = new ItemStack(Material.PAPER);
+                ItemMeta im = is2.getItemMeta();
+                im.setDisplayName(ChatColor.GOLD + "[" + ChatColor.YELLOW + "" + ChatColor.BOLD + "Stats" + ChatColor.GOLD + "]");
+                List<String> lore = new ArrayList<>();
+                lore.add(ChatColor.GREEN + "Total challenges: " + HeadsPlusChallengeEnums.values().length);
+                lore.add(ChatColor.GREEN + "Total pages: " + pages);
+                lore.add(ChatColor.GREEN + "Total sections: " + sections) ;
+                lore.add(ChatColor.GREEN + "Completed challenges: " + cch);
+                lore.add(ChatColor.GREEN + "Current section: " + section);
+                im.setLore(lore);
+                is2.setItemMeta(im);
+                i.setItem(4, is2);
             } else {
                 for (HeadsPlusChallengeDifficulty hpcd : HeadsPlusChallengeDifficulty.values()) {
                     if (hpcd.key.equalsIgnoreCase(cSection)) {
@@ -335,7 +350,7 @@ public class InventoryManager {
                             } else if (re.equalsIgnoreCase("GIVE_ITEM")) {
                                 try {
                                     Material.valueOf(HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + hpcd.name() + "." + s + ".reward-value"));
-                                    sb.append(ChatColor.GREEN).append(HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + hpcd.name() + "." + s +".item-amount")).append(" ").append(WordUtils.capitalize(HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + hpcd.name() + "." + s + ".reward-value")));
+                                    sb.append(ChatColor.GREEN).append(HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + hpcd.name() + "." + s +".item-amount")).append(" ").append(WordUtils.capitalize(HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + hpcd.name() + "." + s + ".reward-value").toLowerCase().replaceAll("_", " "))).append("(s)");
                                 } catch (IllegalArgumentException ignored) {
 
                                 }
@@ -351,6 +366,21 @@ public class InventoryManager {
                             in++;
                         }
                     }
+                    int ch = HeadsPlus.getInstance().hpchl.getChallenges().getConfigurationSection("challenges." + cSection.toUpperCase()).getKeys(false).size();
+                    int cch = HeadsPlus.getInstance().hpchl.getChallenges().getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").size();
+                    setItem(i, "Back", 8);
+                    ItemStack is2 = new ItemStack(Material.PAPER);
+                    ItemMeta im = is2.getItemMeta();
+                    im.setDisplayName(ChatColor.GOLD + "[" + ChatColor.YELLOW + "" + ChatColor.BOLD + "Stats" + ChatColor.GOLD + "]");
+                    List<String> lore = new ArrayList<>();
+                    lore.add(ChatColor.GREEN + "Total challenges: " + ch);
+                    lore.add(ChatColor.GREEN + "Total pages: " + pages);
+                    lore.add(ChatColor.GREEN + "Total sections: " + sections) ;
+                    lore.add(ChatColor.GREEN + "Completed challenges: " + cch);
+                    lore.add(ChatColor.GREEN + "Current section: " + section);
+                    im.setLore(lore);
+                    is2.setItemMeta(im);
+                    i.setItem(4, is2);
                 }
             }
             return i;

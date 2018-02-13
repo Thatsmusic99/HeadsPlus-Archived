@@ -533,4 +533,24 @@ public class hu_hu implements Locale {
     public String descProfile() {
         return "A bővítmény profilját jeleníti meg.";
     }
+
+    @Override
+    public String noData() {
+        return null;
+    }
+
+    @Override
+    public String cantCompleteChallenge() {
+        return null;
+    }
+
+    @Override
+    public String alreadyCompleted() {
+        return null;
+    }
+
+    @Override
+    public String cantViewData() {
+        return null;
+    }
 }

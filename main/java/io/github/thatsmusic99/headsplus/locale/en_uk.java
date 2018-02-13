@@ -531,4 +531,24 @@ public class en_uk implements Locale {
     public String descProfile() {
         return "Displays your profile for the plugin.";
     }
+
+    @Override
+    public String noData() {
+        return "&cThere is no data for this player!";
+    }
+
+    @Override
+    public String cantCompleteChallenge() {
+        return "&cYou can't complete this challenge!";
+    }
+
+    @Override
+    public String alreadyCompleted() {
+        return "&cYou've already completed that challenge!";
+    }
+
+    @Override
+    public String cantViewData() {
+        return "&cYou can't view your own data in console!";
+    }
 }

@@ -1,7 +1,6 @@
 package io.github.thatsmusic99.headsplus.commands;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

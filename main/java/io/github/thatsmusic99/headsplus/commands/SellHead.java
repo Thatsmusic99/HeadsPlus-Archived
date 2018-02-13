@@ -634,11 +634,11 @@ public class SellHead implements CommandExecutor {
     }
 
     private Double b(Double price, String key, List<String> ls, ItemStack i, Player p, String[] args, boolean e, boolean f) {
-        for (int in = 0; in < ls.size(); in++) {
-            if (hpchx.isHPXSkull(ls.get(in))) {
+        for (String l : ls) {
+            if (hpchx.isHPXSkull(l)) {
                 GameProfile gm = h(i);
                 for (Property pr : gm.getProperties().get("textures")) {
-                    if (pr.getValue().equals(hpchx.getTextures(ls.get(in)))) {
+                    if (pr.getValue().equals(hpchx.getTextures(l))) {
                         if (i.getAmount() > 0) {
                             if (e) {
                                 price = setPrice(price, args, i, p);

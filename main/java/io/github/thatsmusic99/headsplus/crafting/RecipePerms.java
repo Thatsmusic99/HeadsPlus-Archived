@@ -3,13 +3,13 @@ package io.github.thatsmusic99.headsplus.crafting;
 import java.util.List;
 
 import io.github.thatsmusic99.headsplus.api.HeadCraftEvent;
-import org.apache.commons.lang.ObjectUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 
@@ -28,8 +28,9 @@ public class RecipePerms implements Listener {
 					if ((player.hasPermission("headsplus.craft"))) {
                         if (e.getInventory().getType().equals(InventoryType.CRAFTING) || e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
                             HeadCraftEvent event = null;
+                            int amount = shift(e);
                             try {
-                                event = new HeadCraftEvent(((Player) e.getWhoClicked()).getPlayer(), e.getCurrentItem(), e.getWhoClicked().getWorld(), e.getWhoClicked().getLocation(), e.getCurrentItem().getAmount(), HeadsPlus.getInstance().hapi.getSkullType(e.getCurrentItem()));
+                                event = new HeadCraftEvent(((Player) e.getWhoClicked()).getPlayer(), e.getCurrentItem(), e.getWhoClicked().getWorld(), e.getWhoClicked().getLocation(), amount, HeadsPlus.getInstance().hapi.getSkullType(e.getCurrentItem()));
                             } catch (NoSuchFieldException | IllegalAccessException e1) {
                                 e1.printStackTrace();
                             }
@@ -51,8 +52,9 @@ public class RecipePerms implements Listener {
                                         if (HeadsPlus.getInstance().hapi.getSkullType(e.getCurrentItem()) != null) {
                                             try {
                                                 HeadCraftEvent event = null;
+                                                int amount = shift(e);
                                                 try {
-                                                    event = new HeadCraftEvent(((Player) e.getWhoClicked()).getPlayer(), e.getCurrentItem(), e.getWhoClicked().getWorld(), e.getWhoClicked().getLocation(), e.getCurrentItem().getAmount(), HeadsPlus.getInstance().hapi.getSkullType(e.getCurrentItem()));
+                                                    event = new HeadCraftEvent(((Player) e.getWhoClicked()).getPlayer(), e.getCurrentItem(), e.getWhoClicked().getWorld(), e.getWhoClicked().getLocation(), amount, HeadsPlus.getInstance().hapi.getSkullType(e.getCurrentItem()));
                                                 } catch (NoSuchFieldException | IllegalAccessException e1) {
                                                     e1.printStackTrace();
                                                 }
@@ -78,8 +80,9 @@ public class RecipePerms implements Listener {
                         if (e.getInventory().getType().equals(InventoryType.CRAFTING) || e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
 
                             HeadCraftEvent event = null;
+                            int amount = shift(e);
                             try {
-                                event = new HeadCraftEvent(((Player) e.getWhoClicked()).getPlayer(), e.getCurrentItem(), e.getWhoClicked().getWorld(), e.getWhoClicked().getLocation(), e.getCurrentItem().getAmount(), HeadsPlus.getInstance().hapi.getSkullType(e.getCurrentItem()));
+                                event = new HeadCraftEvent(((Player) e.getWhoClicked()).getPlayer(), e.getCurrentItem(), e.getWhoClicked().getWorld(), e.getWhoClicked().getLocation(), amount, HeadsPlus.getInstance().hapi.getSkullType(e.getCurrentItem()));
                             } catch (NoSuchFieldException | IllegalAccessException e1) {
                                 e1.printStackTrace();
                             }
@@ -114,4 +117,37 @@ public class RecipePerms implements Listener {
 	        }
 		}
 	}
+
+	private int shift(InventoryClickEvent e) {
+	    int amount;
+        if (e.isShiftClick()) {
+            int a = 0;
+            if (e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
+                for (int i = 1; i <= 9; i++) {
+                    if (e.getInventory().getItem(i) != null) {
+                        a += e.getInventory().getItem(i).getAmount();
+                    }
+                }
+                if (a % 2 == 0) {
+                    amount = a / 2;
+                } else {
+                    amount = (a - 1) / 2;
+                }
+            } else {
+                for (int i = 80; i <= 83; i++) {
+                    if (e.getInventory().getItem(i) != null) {
+                        a += e.getInventory().getItem(i).getAmount();
+                    }
+                }
+                if (a % 2 == 0) {
+                    amount = a / 2;
+                } else {
+                    amount = (a - 1) / 2;
+                }
+            }
+        } else {
+            amount = 1;
+        }
+        return amount;
+    }
 }

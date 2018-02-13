@@ -37,7 +37,7 @@ public class MySQLAPI {
                 e.printStackTrace();
             }
             StringBuilder sb2 = new StringBuilder();
-            sb2.append("INSERT INTO `" + database + "` (uuid, total");
+            sb2.append("INSERT INTO `").append(database).append("` (uuid, total");
             for (EntityType e : de.ableEntities) {
                 sb2.append(", ").append(e.name());
             }
@@ -106,7 +106,7 @@ public class MySQLAPI {
                 Integer.parseInt(rs.getString(section)); // I don't care if it's ignored
             } catch (SQLException ex) {
                 StringBuilder sb2 = new StringBuilder();
-                sb2.append("INSERT INTO `" + database + "` (uuid, total");
+                sb2.append("INSERT INTO `").append(database).append("` (uuid, total");
                 for (EntityType e : de.ableEntities) {
                     sb2.append(", ").append(e.name());
                 }
@@ -260,7 +260,7 @@ public class MySQLAPI {
                         int s = hpc.getChallenges().getInt("server-total.sellhead.total");
                         s += shAmount;
                         hpc.getChallenges().set("server-total.sellhead.total", s);
-                        int h = hpc.getChallenges().getInt("server-total.sellhead." + section);
+                        int h = hpc.getChallenges().getInt("server-total.sellhead." + section.toUpperCase());
                         h += shAmount;
                         hpc.getChallenges().set("server-total.sellhead." + section, h);
                         hpc.challenges.options().copyDefaults(true);
@@ -275,7 +275,9 @@ public class MySQLAPI {
                 } else {
                     try {
                         int i = hpc.getChallenges().getInt("player-data." + p.getUniqueId().toString() + ".crafting." + section);
+                        HeadsPlus.getInstance().getLogger().info(String.valueOf(i));
                         i += shAmount;
+                        HeadsPlus.getInstance().getLogger().info(String.valueOf(i));
                         hpc.getChallenges().set("player-data." + p.getUniqueId().toString() + ".crafting." + section, i);
                         int is = hpc.getChallenges().getInt("player-data." + p.getUniqueId().toString() + ".crafting.total");
                         is += shAmount;
@@ -283,9 +285,9 @@ public class MySQLAPI {
                         int s = hpc.getChallenges().getInt("server-total.crafting.total");
                         s += shAmount;
                         hpc.getChallenges().set("server-total.crafting.total", s);
-                        int h = hpc.getChallenges().getInt("server-total.crafting." + section);
+                        int h = hpc.getChallenges().getInt("server-total.crafting." + section.toUpperCase());
                         h += shAmount;
-                        hpc.getChallenges().set("server-total.crafting." + section, h);
+                        hpc.getChallenges().set("server-total.crafting." + section.toUpperCase(), h);
                         hpc.challenges.options().copyDefaults(true);
                         hpc.saveChallenges();
                     } catch (Exception e) {
@@ -400,7 +402,7 @@ public class MySQLAPI {
                 return true;
             } catch (SQLException ex) {
                 StringBuilder sb2 = new StringBuilder();
-                sb2.append("INSERT INTO `" + database + "` (uuid, total");
+                sb2.append("INSERT INTO `").append(database).append("` (uuid, total");
                 for (EntityType e : de.ableEntities) {
                     sb2.append(", ").append(e.name());
                 }
@@ -465,7 +467,7 @@ public class MySQLAPI {
                 return true;
             } catch (SQLException ex) {
                 StringBuilder sb2 = new StringBuilder();
-                sb2.append("INSERT INTO `" + database + "` (uuid, total");
+                sb2.append("INSERT INTO `").append(database).append("` (uuid, total");
                 for (EntityType e : de.ableEntities) {
                     sb2.append(", ").append(e.name());
                 }

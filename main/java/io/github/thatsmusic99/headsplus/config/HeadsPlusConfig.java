@@ -102,6 +102,10 @@ public class HeadsPlusConfig {
         getMessages().addDefault("no-data-lb", "&cNo leaderboard data has been recorded yet!");
         getMessages().addDefault("player-offline", "&cThat player is offline!");
         getMessages().addDefault("challenge-complete", "%h &b%p &3has completed the &b%c &3challenge!");
+        getMessages().addDefault("no-data", "&cThere is no data for that player!");
+        getMessages().addDefault("cant-complete-challenge", "&cYou can't complete this challenge!");
+        getMessages().addDefault("already-complete-challenge", "&cYou've already completed that challenge!");
+        getMessages().addDefault("cant-view-data", "&cYou can't view your own data in console!");
 
         if (!getMessages().getString("locale").equalsIgnoreCase(getMessages().getString("pLocale")) && !nullpoint) {
             getMessages().set("pLocale", getMessages().getString("locale"));
@@ -176,6 +180,9 @@ public class HeadsPlusConfig {
 			getMessages().set("update-found", LocaleManager.getLocale().getUpdateFound());
 			getMessages().set("player-offline", LocaleManager.getLocale().getPlayerOffline());
 			getMessages().set("challenge-complete", LocaleManager.getLocale().chCompleteMessage());
+			getMessages().set("no-data", LocaleManager.getLocale().noData());
+			getMessages().set("cant-complete-challenge", LocaleManager.getLocale().cantCompleteChallenge());
+			getMessages().set("");
         }
 
 		getMessages().options().copyDefaults(true);

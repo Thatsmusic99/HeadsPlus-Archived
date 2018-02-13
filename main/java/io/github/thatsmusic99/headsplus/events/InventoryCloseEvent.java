@@ -1,11 +1,6 @@
 package io.github.thatsmusic99.headsplus.events;
 
-import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.util.InventoryManager;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryOpenEvent;
 
 public class InventoryCloseEvent implements Listener {
 

@@ -551,8 +551,12 @@ public class SellHead implements CommandExecutor {
 				    price = setPrice(price, a, is, p);
 			    }
 		 	}
-			
 		}
+		if (hm.get("sheep") != 0 || hm.get("sheep") != null) {
+		    if (hm.get("sheep") % 3 == 0) {
+		        hm.put("sheep", hm.get("sheep") / 3);
+            }
+        }
 		if (price == 0) {
 			p.sendMessage(ChatColor.translateAlternateColorCodes('&', hpc.getMessages().getString("no-heads")));
 			return;

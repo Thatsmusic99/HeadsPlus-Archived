@@ -71,13 +71,15 @@ public class HeadsPlusChallenges {
             challenges.addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".head-type", hpc.t);
             challenges.addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".xp", hpc.exp);
         }
-        getChallenges().addDefault("server-total.sellhead.total", 0);
-        for (EntityType e : HeadsPlus.getInstance().de.ableEntities) {
-            getChallenges().addDefault("server-total.sellhead." + e.name(), 0);
-        }
-        getChallenges().addDefault("server-total.crafting.total", 0);
-        for (EntityType e : HeadsPlus.getInstance().de.ableEntities) {
-            getChallenges().addDefault("server-total.crafting." + e.name(), 0);
+        if (!HeadsPlus.getInstance().con) {
+            getChallenges().addDefault("server-total.sellhead.total", 0);
+            for (EntityType e : HeadsPlus.getInstance().de.ableEntities) {
+                getChallenges().addDefault("server-total.sellhead." + e.name(), 0);
+            }
+            getChallenges().addDefault("server-total.crafting.total", 0);
+            for (EntityType e : HeadsPlus.getInstance().de.ableEntities) {
+                getChallenges().addDefault("server-total.crafting." + e.name(), 0);
+            }
         }
         getChallenges().options().copyDefaults(true);
         saveChallenges();

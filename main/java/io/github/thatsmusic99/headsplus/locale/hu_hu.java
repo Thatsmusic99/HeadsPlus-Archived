@@ -536,21 +536,21 @@ public class hu_hu implements Locale {
 
     @Override
     public String noData() {
-        return null;
+        return "&cNincsenek adatok ehhez a játékoshoz!";
     }
 
     @Override
     public String cantCompleteChallenge() {
-        return null;
+        return "&cNem tudja befejezni ezt a kihívást!";
     }
 
     @Override
     public String alreadyCompleted() {
-        return null;
+        return "&cÖn már befejezte a kihívást!";
     }
 
     @Override
     public String cantViewData() {
-        return null;
+        return "A saját adatait nem tekintheti meg a konzolban!";
     }
 }

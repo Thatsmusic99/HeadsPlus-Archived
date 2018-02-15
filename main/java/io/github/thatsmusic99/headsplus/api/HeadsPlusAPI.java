@@ -252,7 +252,11 @@ public class HeadsPlusAPI {
     }
 
     public int getPlayerInLeaderboards(OfflinePlayer p, String section, String database) throws SQLException {
-        return HeadsPlus.getInstance().mySQLAPI.getScores(section, database).get(p);
+        try {
+            return HeadsPlus.getInstance().mySQLAPI.getScores(section, database).get(p);
+        } catch (NullPointerException ex) {
+            return 0;
+        }
     }
 
     public LinkedHashMap<OfflinePlayer, Integer> getScores(String section, String database) throws SQLException {

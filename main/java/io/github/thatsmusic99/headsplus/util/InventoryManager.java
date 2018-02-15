@@ -307,7 +307,7 @@ public class InventoryManager {
                     i.setItem(hpcd.i, is);
                 }
                 int cch = HeadsPlus.getInstance().hpchl.getChallenges().getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").size();
-                setItem(i, "Back", 8);
+                i.setItem(8, isi);
                 ItemStack is2 = new ItemStack(Material.PAPER);
                 ItemMeta im = is2.getItemMeta();
                 im.setDisplayName(ChatColor.GOLD + "[" + ChatColor.YELLOW + "" + ChatColor.BOLD + "Stats" + ChatColor.GOLD + "]");

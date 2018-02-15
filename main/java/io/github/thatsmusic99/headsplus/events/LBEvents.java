@@ -14,7 +14,7 @@ public class LBEvents implements Listener {
     public void onHeadDrop(EntityHeadDropEvent e) {
         if (!e.isCancelled()) {
             if (HeadsPlus.getInstance().lb) {
-                HeadsPlus.getInstance().mySQLAPI.addOntoValue(e.getPlayer(), e.getEntityType().name(), "headspluslb", 0);
+                HeadsPlus.getInstance().mySQLAPI.addOntoValue(e.getPlayer(), e.getEntityType().name(), "headspluslb", 1);
             }
         }
     }
@@ -23,7 +23,7 @@ public class LBEvents implements Listener {
     public void onPHeadDrop(PlayerHeadDropEvent e) {
         if (!e.isCancelled()) {
             if (HeadsPlus.getInstance().lb) {
-                HeadsPlus.getInstance().mySQLAPI.addOntoValue(e.getKiller(), "player", "headspluslb", 0);
+                HeadsPlus.getInstance().mySQLAPI.addOntoValue(e.getKiller(), "player", "headspluslb", 1);
             }
         }
     }

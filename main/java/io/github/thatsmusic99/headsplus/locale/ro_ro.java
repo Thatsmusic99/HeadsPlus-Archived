@@ -533,4 +533,24 @@ public class ro_ro implements Locale {
     public String descProfile() {
         return "Afiseaza profilul pentru plugin-ul.";
     }
+
+    @Override
+    public String noData() {
+        return "&cNincsenek adatok ehhez a jatekoshoz!";
+    }
+
+    @Override
+    public String cantCompleteChallenge() {
+        return "&cNu puteti face aceasta provocare!";
+    }
+
+    @Override
+    public String alreadyCompleted() {
+        return "&cAti terminat deja aceasta provocare!";
+    }
+
+    @Override
+    public String cantViewData() {
+        return "&cNu puteti vedea propriile date in consola!";
+    }
 }

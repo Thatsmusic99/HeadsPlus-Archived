@@ -530,4 +530,24 @@ public class lolcat implements Locale {
     public String descProfile() {
         return "Shoes u ur prof ;3";
     }
+
+    @Override
+    public String noData() {
+        return "&cDat purrrrzon haz nu day-ta!";
+    }
+
+    @Override
+    public String cantCompleteChallenge() {
+        return "&cNU u canz nawt compleet deh chaleng!";
+    }
+
+    @Override
+    public String alreadyCompleted() {
+        return "&cLOL u alredi compleet'd deh chaleng!";
+    }
+
+    @Override
+    public String cantViewData() {
+        return "&cU r console. I am cat. U shall nawt veww ur data.";
+    }
 }

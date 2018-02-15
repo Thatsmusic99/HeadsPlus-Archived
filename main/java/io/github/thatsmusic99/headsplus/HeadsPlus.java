@@ -204,30 +204,27 @@ public class HeadsPlus extends JavaPlugin {
             Statement st = connection.createStatement();
             StringBuilder sb = new StringBuilder();
             for (String str : Arrays.asList("headspluslb", "headsplussh", "headspluscraft" )) {
-                try {
-                    st.executeQuery("SELECT * from " + str);
-                } catch (SQLException ex) {
-                    sb.append("CREATE TABLE `").append(str).append("` (").append("`id` INT NOT NULL AUTO_INCREMENT,").append("`uuid` VARCHAR(45),").append("`total` VARCHAR(45)");
-                    for (EntityType e : de.ableEntities) {
-                        sb.append(", `").append(e.name()).append("` VARCHAR(45)");
-                    }
-                    sb.append(", `PLAYER` VARCHAR(45)");
-                    sb.append(", PRIMARY KEY (`id`))");
-                    st.executeUpdate(sb.toString());
-                    StringBuilder sb2 = new StringBuilder();
-                    sb2.append("INSERT INTO `").append(str).append("` (uuid, total");
-                    for (EntityType e : de.ableEntities) {
-                        sb2.append(", ").append(e.name());
-                    }
-                    sb2.append(", PLAYER) VALUES('server-total', '0'");
-                    for (EntityType ignored : de.ableEntities) {
-                        sb2.append(", '0'");
-                    }
-                    sb2.append(", '0'");
-                    sb2.append(")");
-                    st.executeUpdate(sb2.toString());
 
+                sb.append("CREATE TABLE IF NOT EXISTS `").append(str).append("` (").append("`id` INT NOT NULL AUTO_INCREMENT,").append("`uuid` VARCHAR(45),").append("`total` VARCHAR(45)");
+                for (EntityType e : de.ableEntities) {
+                    sb.append(", `").append(e.name()).append("` VARCHAR(45)");
                 }
+                sb.append(", `PLAYER` VARCHAR(45)");
+                sb.append(", PRIMARY KEY (`id`))");
+                st.executeUpdate(sb.toString());
+                StringBuilder sb2 = new StringBuilder();
+                sb2.append("INSERT INTO `").append(str).append("` (uuid, total");
+                for (EntityType e : de.ableEntities) {
+                    sb2.append(", ").append(e.name());
+                }
+                sb2.append(", PLAYER) VALUES('server-total', '0'");
+                for (EntityType ignored : de.ableEntities) {
+                    sb2.append(", '0'");
+                }
+                sb2.append(", '0'");
+                sb2.append(")");
+                st.executeUpdate(sb2.toString());
+
             }
             con = true;
         }
@@ -245,7 +242,7 @@ public class HeadsPlus extends JavaPlugin {
                 getInstance().getConfig().options().copyDefaults(true);
                 getInstance().saveConfig();
             } catch (Exception ex) {
-	            getInstance().log.warning("[HeadsPlus] Faulty theme was input! No theme changes will be made.");
+	            getInstance().log.warning("[HeadsPlus] Faulty theme was put in! No theme changes will be made.");
             }
         }
     }

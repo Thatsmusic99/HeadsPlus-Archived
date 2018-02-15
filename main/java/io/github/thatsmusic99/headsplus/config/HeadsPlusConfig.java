@@ -182,7 +182,8 @@ public class HeadsPlusConfig {
 			getMessages().set("challenge-complete", LocaleManager.getLocale().chCompleteMessage());
 			getMessages().set("no-data", LocaleManager.getLocale().noData());
 			getMessages().set("cant-complete-challenge", LocaleManager.getLocale().cantCompleteChallenge());
-			getMessages().set("");
+			getMessages().set("already-complete-challenge", LocaleManager.getLocale().alreadyCompleted());
+			getMessages().set("cant-view-data", LocaleManager.getLocale().cantViewData());
         }
 
 		getMessages().options().copyDefaults(true);

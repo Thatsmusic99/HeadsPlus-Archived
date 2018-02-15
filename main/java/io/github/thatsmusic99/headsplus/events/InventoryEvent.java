@@ -232,43 +232,58 @@ public class InventoryEvent implements Listener {
             }
         } else if (im.getType().equalsIgnoreCase("chal")) {
             if (e.getInventory().getName().startsWith("HeadsPlus")) {
-                if (im.getSection().equalsIgnoreCase("menu")) {
-                    ItemStack i = e.getCurrentItem();
-                    if (i.getType().equals(Material.STAINED_CLAY)) {
-                        for (HeadsPlusChallengeDifficulty hpcd : HeadsPlusChallengeDifficulty.values()) {
-                            if (i.getDurability() == hpcd.color.ordinal()) {
-                                e.setCancelled(true);
-                                e.getWhoClicked().closeInventory();
-                                im.setSection(hpcd.key);
-                                e.getWhoClicked().openInventory(this.im.changePage(false, true, (Player) e.getWhoClicked(), this.im.getSection()));
+                try {
+                    if (im.getSection().equalsIgnoreCase("menu")) {
+                        ItemStack i = e.getCurrentItem();
+                        if (i.getType().equals(Material.STAINED_CLAY)) {
+                            for (HeadsPlusChallengeDifficulty hpcd : HeadsPlusChallengeDifficulty.values()) {
+                                if (i.getDurability() == hpcd.color.ordinal()) {
+                                    e.setCancelled(true);
+                                    e.getWhoClicked().closeInventory();
+                                    im.setSection(hpcd.key);
+                                    e.getWhoClicked().openInventory(this.im.changePage(false, true, (Player) e.getWhoClicked(), this.im.getSection()));
+                                }
                             }
+                        } else {
+                            e.setCancelled(true);
                         }
                     } else {
-                        e.setCancelled(true);
-                    }
-                } else {
-                    if (im != null) {
-                        for (String s : HeadsPlus.getInstance().hpchl.getChallenges().getConfigurationSection("challenges." + im.getSection().toUpperCase()).getKeys(false)) {
-                            try {
-                                if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + im.getSection().toUpperCase() + "." + s + ".header"))).equalsIgnoreCase(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()))) {
-                                    if (!HeadsPlus.getInstance().hpchl.isChallengeCompleted(p, s)) {
-                                        try {
-                                            if (HeadsPlus.getInstance().hpchl.canComplete(p, s, im.getSection().toUpperCase())) {
-                                                HeadsPlus.getInstance().hpchl.completeChallenge(p, s, e.getInventory(), im.getSection().toUpperCase(), e.getSlot());
+                        if (im != null) {
+                            if (e.getCurrentItem().getType().equals(Material.STAINED_CLAY)) {
+                                for (String s : HeadsPlus.getInstance().hpchl.getChallenges().getConfigurationSection("challenges." + im.getSection().toUpperCase()).getKeys(false)) {
+                                    try {
+                                        if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + im.getSection().toUpperCase() + "." + s + ".header"))).equalsIgnoreCase(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()))) {
+                                            if (!HeadsPlus.getInstance().hpchl.isChallengeCompleted(p, s)) {
+                                                try {
+                                                    if (HeadsPlus.getInstance().hpchl.canComplete(p, s, im.getSection().toUpperCase())) {
+                                                        HeadsPlus.getInstance().hpchl.completeChallenge(p, s, e.getInventory(), im.getSection().toUpperCase(), e.getSlot());
+                                                    } else {
+                                                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlus.getInstance().hpc.getMessages().getString("cant-complete-challenge"))));
+                                                    }
+                                                } catch (SQLException e1) {
+                                                    e1.printStackTrace();
+                                                }
                                             } else {
-                                                // TODO fail message
+                                                p.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlus.getInstance().hpc.getMessages().getString("already-complete-challenge"))));
                                             }
-                                        } catch (SQLException e1) {
-                                            e1.printStackTrace();
                                         }
+                                    } catch (NullPointerException ignored) {
+
                                     }
                                 }
-                            } catch (NullPointerException ignored) {
-
+                            } else if (e.getCurrentItem().getType().equals(Material.ARROW)) {
+                                if (!im.getSection().equalsIgnoreCase("menu")) {
+                                    e.setCancelled(true);
+                                    e.getWhoClicked().closeInventory();
+                                    im.setSection("Menu");
+                                    e.getWhoClicked().openInventory(im.changePage(false, true, (Player) e.getWhoClicked(), im.getSection()));
+                                }
                             }
+                            e.setCancelled(true);
                         }
-                        e.setCancelled(true);
                     }
+                } catch (NullPointerException ex) {
+                    e.setCancelled(true);
                 }
             }
         }

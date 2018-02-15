@@ -30,7 +30,11 @@ public class ProfileCommand {
                 }
             } else {
                 try {
-                    cs.sendMessage(prof(p));
+                    if (cs.getName().equalsIgnoreCase(p.getName())) {
+                        cs.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlus.getInstance().hpc.getMessages().getString("cant-view-data"))));
+                    } else {
+                        cs.sendMessage(prof(p));
+                    }
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -49,7 +53,7 @@ public class ProfileCommand {
                     "\n" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "Total heads crafted: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + HeadsPlus.getInstance().hapi.getPlayerInLeaderboards(p, "total", "headspluscraft");
 
         } catch (NullPointerException ex) {
-            return ""; // TODO fail message
+            return HeadsPlus.getInstance().hpc.getMessages().getString("no-data"); // TODO translations
         }
     }
 }

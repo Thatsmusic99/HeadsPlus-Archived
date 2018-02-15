@@ -124,14 +124,14 @@ public class MySQLAPI {
 
                 int val = Integer.parseInt(rs.getString(section));
 
-                val++;
+                val += shAmount;
                 s.executeUpdate("UPDATE `" + database + "` SET `" + section + "`='" + val + "' WHERE `uuid`='" + p.getUniqueId().toString() + "'");
                 int val2;
                 ResultSet rs3 = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + p.getUniqueId().toString() + "'");
                 rs3.next();
                 val2 = Integer.parseInt(rs3.getString("total"));
 
-                val2++;
+                val2 += shAmount;
                 s.executeUpdate("UPDATE `" + database + "` SET total='" + val2 + "' WHERE `uuid`='" + p.getUniqueId().toString() + "'");
 
                 ResultSet rs4 = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='server-total'");
@@ -149,7 +149,7 @@ public class MySQLAPI {
 
                 val2 = Integer.parseInt(rs2.getString("total"));
 
-                val2++;
+                val2 += shAmount;
                 s.executeUpdate("UPDATE `" + database + "` SET total='" + val2 + "' WHERE `uuid`='server-total'");
 
             }
@@ -198,23 +198,23 @@ public class MySQLAPI {
                 rs = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + p.getUniqueId().toString() + "'");
                 rs.next();
                 int val = Integer.parseInt(rs.getString(section));
-                val++;
+                val += shAmount;
                 s.executeUpdate("UPDATE `" + database + "` SET `" + section + "`='" + val + "' WHERE `uuid`='" + p.getUniqueId().toString() + "'");
                 ResultSet rs3 = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + p.getUniqueId().toString() + "'");
                 rs3.next();
                 int val2 = Integer.parseInt(rs3.getString("total"));
-                val2++;
+                val2 += shAmount;
                 s.executeUpdate("UPDATE `" + database + "` SET `total`='" + val2 + "' WHERE `uuid`='" + p.getUniqueId().toString() + "'");
                 ResultSet rs2;
                 rs2 = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='server-total'");
                 rs2.next();
                 int val3 = Integer.parseInt(rs2.getString(section));
-                val3++;
+                val3 += shAmount;
                 s.executeUpdate("UPDATE `" + database + "` SET `" + section + "`='" + val3 + "' WHERE `uuid`='server-total'");
                 ResultSet rs4 = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='server-total'");
                 rs4.next();
                 val2 = Integer.parseInt(rs4.getString("total"));
-                val2++;
+                val2 += shAmount;
                 s.executeUpdate("UPDATE `" + database + "` SET `total`='" + val2 + "' WHERE `uuid`='server-total'");
             } catch (SQLException e) {
                 try {
@@ -275,9 +275,7 @@ public class MySQLAPI {
                 } else {
                     try {
                         int i = hpc.getChallenges().getInt("player-data." + p.getUniqueId().toString() + ".crafting." + section);
-                        HeadsPlus.getInstance().getLogger().info(String.valueOf(i));
                         i += shAmount;
-                        HeadsPlus.getInstance().getLogger().info(String.valueOf(i));
                         hpc.getChallenges().set("player-data." + p.getUniqueId().toString() + ".crafting." + section, i);
                         int is = hpc.getChallenges().getInt("player-data." + p.getUniqueId().toString() + ".crafting.total");
                         is += shAmount;
@@ -324,7 +322,12 @@ public class MySQLAPI {
                     Statement st = c.createStatement();
                     ResultSet rs2 = st.executeQuery("SELECT * FROM `" + database + "` WHERE `uuid`='" + name.getUniqueId().toString() + "'");
                     rs2.next();
-                    hs.put(name, Integer.valueOf(rs2.getString(section)));
+                    try {
+                        hs.put(name, Integer.valueOf(rs2.getString(section)));
+                    } catch (NumberFormatException ex) {
+
+                    }
+
                 }
             }
             hs = sortHashMapByValues(hs);

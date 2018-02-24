@@ -3,7 +3,7 @@ package io.github.thatsmusic99.headsplus.events;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusChallengeDifficulty;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
-import io.github.thatsmusic99.headsplus.config.HeadsXSections;
+import io.github.thatsmusic99.headsplus.config.headsx.HeadsXSections;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 
 import io.github.thatsmusic99.headsplus.util.SearchGUI;

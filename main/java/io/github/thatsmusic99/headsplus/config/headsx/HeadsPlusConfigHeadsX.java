@@ -1,4 +1,4 @@
-package io.github.thatsmusic99.headsplus.config;
+package io.github.thatsmusic99.headsplus.config.headsx;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
@@ -23,7 +23,7 @@ public class HeadsPlusConfigHeadsX {
     public boolean s = false;
     public FileConfiguration headsx;
     private File headsxf;
-    private double cVersion = 1.2;
+    private double cVersion = 1.3;
 
     public HeadsPlusConfigHeadsX() {
         headsxEnable();

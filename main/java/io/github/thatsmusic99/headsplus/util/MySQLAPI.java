@@ -6,6 +6,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusLeaderboards;
 import io.github.thatsmusic99.headsplus.events.DeathEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
@@ -251,12 +252,13 @@ public class MySQLAPI {
             } else {
                 if (database.equalsIgnoreCase("headsplussh")) {
                     try {
-                        int i = hpc.getChallenges().getInt("player-data." + p.getUniqueId().toString() + ".sellhead." + section);
+                        FileConfiguration ch = hpc.getChallenges();
+                        int i = ch.getInt("player-data." + p.getUniqueId().toString() + ".sellhead." + section);
                         i += shAmount;
-                        hpc.getChallenges().set("player-data." + p.getUniqueId().toString() + ".sellhead." + section, i);
-                        int is = hpc.getChallenges().getInt("player-data." + p.getUniqueId().toString() + ".sellhead.total");
+                        ch.set("player-data." + p.getUniqueId().toString() + ".sellhead." + section, i);
+                        int is = ch.getInt("player-data." + p.getUniqueId().toString() + ".sellhead.total");
                         is += shAmount;
-                        hpc.getChallenges().set("player-data." + p.getUniqueId().toString() + ".sellhead.total", is);
+                        ch.set("player-data." + p.getUniqueId().toString() + ".sellhead.total", is);
                         int s = hpc.getChallenges().getInt("server-total.sellhead.total");
                         s += shAmount;
                         hpc.getChallenges().set("server-total.sellhead.total", s);

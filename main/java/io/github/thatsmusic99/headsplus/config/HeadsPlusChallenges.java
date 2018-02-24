@@ -2,6 +2,8 @@ package io.github.thatsmusic99.headsplus.config;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
+import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.permission.Permission;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -19,6 +21,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class HeadsPlusChallenges {
 
@@ -122,16 +125,18 @@ public class HeadsPlusChallenges {
     }
 
     private void reward(Player p, String s, String dif) {
+        Economy econ = HeadsPlus.getInstance().econ;
+        Permission perms = HeadsPlus.getInstance().perms;
         String re = getChallenges().getString("challenges." + dif + "." + s + ".reward-type");
         if (re.equalsIgnoreCase("ECO")) {
-            HeadsPlus.getInstance().econ.depositPlayer(p, getChallenges().getDouble("challenges." + dif + "." + s + ".reward-value"));
+            econ.depositPlayer(p, getChallenges().getDouble("challenges." + dif + "." + s + ".reward-value"));
         } else if (re.equalsIgnoreCase("ADD_GROUP")) {
-            if (!HeadsPlus.getInstance().perms.playerInGroup(p, getChallenges().getString("challenges." + dif + "." + s + ".reward-value"))) {
-                HeadsPlus.getInstance().perms.playerAddGroup(p, getChallenges().getString("challenges." + dif + "." + s + ".reward-value"));
+            if (!perms.playerInGroup(p, getChallenges().getString("challenges." + dif + "." + s + ".reward-value"))) {
+                perms.playerAddGroup(p, getChallenges().getString("challenges." + dif + "." + s + ".reward-value"));
             }
         } else if (re.equalsIgnoreCase("REMOVE_GROUP")) {
-            if (HeadsPlus.getInstance().perms.playerInGroup(p, getChallenges().getString("challenges." + dif + "." + s + ".reward-value"))) {
-                HeadsPlus.getInstance().perms.playerRemoveGroup(p, getChallenges().getString("challenges." + dif + "." + s + ".reward-value"));
+            if (perms.playerInGroup(p, getChallenges().getString("challenges." + dif + "." + s + ".reward-value"))) {
+                perms.playerRemoveGroup(p, getChallenges().getString("challenges." + dif + "." + s + ".reward-value"));
             }
         } else if (re.equalsIgnoreCase("GIVE_ITEM")) {
             try {
@@ -140,11 +145,12 @@ public class HeadsPlusChallenges {
                     p.getInventory().addItem(is);
                 }
             } catch (IllegalArgumentException ex) {
-                HeadsPlus.getInstance().getLogger().severe("Couldn't give reward to " + p.getName() + "! Details:");
-                HeadsPlus.getInstance().getLogger().warning("Challenge name: " + s);
-                HeadsPlus.getInstance().getLogger().warning("Difficulty: " + dif);
-                HeadsPlus.getInstance().getLogger().warning("Item name: " + getChallenges().getString("challenges." + dif + "." + s + ".reward-value").toUpperCase());
-                HeadsPlus.getInstance().getLogger().warning("Item amount: " + getChallenges().getInt("challenges." + dif + "." + s +".item-amount"));
+                Logger log = HeadsPlus.getInstance().getLogger();
+                log.severe("Couldn't give reward to " + p.getName() + "! Details:");
+                log.warning("Challenge name: " + s);
+                log.warning("Difficulty: " + dif);
+                log.warning("Item name: " + getChallenges().getString("challenges." + dif + "." + s + ".reward-value").toUpperCase());
+                log.warning("Item amount: " + getChallenges().getInt("challenges." + dif + "." + s +".item-amount"));
             }
         }
     }

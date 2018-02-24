@@ -6,7 +6,7 @@ import com.mojang.authlib.properties.Property;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusChallengeDifficulty;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusChallengeEnums;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeadsX;
+import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -195,18 +195,17 @@ public class InventoryManager {
                 // }
             } else if (section.startsWith("search:")) {
                 String term = section.split(":")[1];
-                List<String> f = new ArrayList<>();
                 List<String> c = new ArrayList<>();
                 HashMap<String, String> s = new HashMap<>();
                 for (String str : hpchx.getHeadsX().getConfigurationSection("heads").getKeys(false)) {
-                    c.add(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', hpchx.getHeadsX().getString("heads." + str + ".displayname"))).replace("[", "").replace("]", ""));
-                    s.put(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', hpchx.getHeadsX().getString("heads." + str + ".displayname"))).replace("[", "").replace("]", ""), str);
-                }
-                StringUtil.copyPartialMatches(term, c, f);
-                Collections.sort(f);
+                    if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', hpchx.getHeadsX().getString("heads." + str + ".displayname"))).replace("[", "").replace("]", "").contains(term)) {
+                        c.add(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', hpchx.getHeadsX().getString("heads." + str + ".displayname"))).replace("[", "").replace("]", ""));
+                        s.put(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', hpchx.getHeadsX().getString("heads." + str + ".displayname"))).replace("[", "").replace("]", ""), str);
+                    }
+                 }
                 Iterator<Map.Entry<String, String>> m = s.entrySet().iterator();
                 while (m.hasNext()) {
-                    if (!f.contains(m.next().getKey())) {
+                    if (!c.contains(m.next().getKey())) {
                         m.remove();
                     }
                 }

@@ -1,4 +1,4 @@
-package io.github.thatsmusic99.headsplus.config;
+package io.github.thatsmusic99.headsplus.config.headsx;
 
 public enum HeadsXSections {
 
@@ -8,7 +8,8 @@ public enum HeadsXSections {
     FOOD_AND_DRINK("food_and_drink", "&8[&6Food &7and &9Drink&8]", "HP#pepsi", 0.0),
     LOGOS("logos", "&8[&cLogos&8]", "HP#youtube", 0.0),
     PLANTS("plants", "&8[&aPlants&8]", "HP#white_flower_bush", 1.0),
-    COLOURS("colors", "&8[&4C&6o&el&ao&br&ds&8]", "HP#rainbow", 1.2);
+    COLOURS("colors", "&8[&4C&6o&el&ao&br&ds&8]", "HP#rainbow", 1.2),
+    EMOTES("emotes", "&8[&eEmotes&8]", "HP#e_wink", 1.3);
 
     public String let;
     public String dn;

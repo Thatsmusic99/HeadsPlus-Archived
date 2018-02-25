@@ -11,6 +11,7 @@ import io.github.thatsmusic99.headsplus.crafting.RecipePerms;
 import io.github.thatsmusic99.headsplus.events.*;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 
+import io.github.thatsmusic99.headsplus.nms.*;
 import io.github.thatsmusic99.headsplus.util.MySQLAPI;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
@@ -65,6 +66,7 @@ public class HeadsPlus extends JavaPlugin {
     public HeadsPlusChallenges hpchl;
     public HeadsPlusAPI hapi;
     public List<Challenge> challenges = new ArrayList<>();
+    public NMSManager nms;
 
     public FileConfiguration config;
 
@@ -99,6 +101,7 @@ public class HeadsPlus extends JavaPlugin {
 			}
 			setupPermissions();
 			setPluginValues();
+			setupNMS();
             registerEvents();
             registerCommands();
 		    JoinEvent.reloaded = false;
@@ -304,5 +307,21 @@ public class HeadsPlus extends JavaPlugin {
         RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
         perms = rsp.getProvider();
         return perms != null;
+    }
+
+    private void setupNMS() {
+	    if (getServer().getVersion().contains("1.8")) {
+	        nms = new v1_8_R3NMS();
+        } else if (getServer().getVersion().contains("1.9.4")) {
+	        nms = new V1_9_NMS2();
+        } else if (getServer().getVersion().contains("1.9")) {
+	        nms = new v1_9_NMS();
+        } else if (getServer().getVersion().contains("1.10")) {
+	        nms = new v1_10_NMS();
+        } else if (getServer().getVersion().contains("1.11")) {
+	        nms = new v1_11_NMS();
+        } else if (getServer().getVersion().contains("1.12")) {
+	        nms = new v1_12_NMS();
+        }
     }
 }

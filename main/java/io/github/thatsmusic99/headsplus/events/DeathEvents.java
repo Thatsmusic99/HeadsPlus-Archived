@@ -86,6 +86,7 @@ public class DeathEvents implements Listener {
                     headM.setLore(ls);
                 }
                 head.setItemMeta(headM);
+                HeadsPlus.getInstance().nms.addNBTTag(head);
                 Location entityLoc = ep.getEntity().getLocation();
                 double entityLocY = entityLoc.getY() + 1;
                 entityLoc.setY(entityLocY);
@@ -167,6 +168,7 @@ public class DeathEvents implements Listener {
         }
         sm.setLore(ls);
         i.setItemMeta(sm);
+        HeadsPlus.getInstance().nms.addNBTTag(i);
         Location entityLoc = e.getLocation();
         double entityLocY = entityLoc.getY() + 1;
         entityLoc.setY(entityLocY);

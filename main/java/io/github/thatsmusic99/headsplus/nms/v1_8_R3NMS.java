@@ -1,10 +1,10 @@
 package io.github.thatsmusic99.headsplus.nms;
 
-import net.minecraft.server.v1_12_R1.ItemStack;
-import net.minecraft.server.v1_12_R1.NBTTagCompound;
-import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
+import net.minecraft.server.v1_8_R3.ItemStack;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 
-public class v1_12_NMS implements NMSManager {
+public class v1_8_R3NMS implements NMSManager {
 
     @Override
     public ItemStack addNBTTag(Object i) {

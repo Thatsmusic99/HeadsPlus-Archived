@@ -87,7 +87,7 @@ public class HeadsPlusConfigHeads {
     	
     	for (String key : mHeads) {
     		if (!key.equals("irongolem") && !key.equals("sheep")) {
-    		    getHeads().addDefault(key + ".name", new ArrayList<>(Collections.singleton("MHF_" + WordUtils.capitalize(key))));
+    		    getHeads().addDefault(key + ".name", Collections.singleton("MHF_" + WordUtils.capitalize(key)));
     		    getHeads().addDefault(key + ".chance", 25);
     		    getHeads().addDefault(key + ".display-name", WordUtils.capitalize(key) + " Head");
     		    getHeads().addDefault(key + ".price", 10.00);
@@ -207,7 +207,7 @@ public class HeadsPlusConfigHeads {
 	    for (String key : mHeads) {
 	        if (!key.equalsIgnoreCase("sheep")) {
                 if (getHeads().getString(key + "HeadN") != null) {
-                    getHeads().set(key + ".name", getHeads().getString(key + "HeadN"));
+                    getHeads().set(key + ".name", getHeads().getStringList(key + "HeadN"));
                     getHeads().set(key + ".chance", getHeads().getInt(key + "HeadC"));
                     getHeads().set(key + ".display-name", getHeads().getString(key + "HeadDN"));
                     getHeads().set(key + ".price", getHeads().getDouble(key + "HeadP"));

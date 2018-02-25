@@ -71,8 +71,8 @@ public class SellHead implements CommandExecutor {
                             ls.add(ChatColor.translateAlternateColorCodes('&', ChatColor.stripColor(str)));
                         }
 
-                        if ((skullM.getLore() != null) &&  (skullM.getLore().equals(ls))) {
-		  
+                     //   if ((skullM.getLore() != null) &&  (skullM.getLore().equals(ls))) {
+		                if (HeadsPlus.getInstance().nms.isSellable(invi)) {
                             Economy econ = HeadsPlus.getInstance().econ;
                             List<String> mHeads = hpch.mHeads;
                             List<String> uHeads = hpch.uHeads;
@@ -272,7 +272,8 @@ public class SellHead implements CommandExecutor {
                                 for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
                                     ls.add(ChatColor.translateAlternateColorCodes('&', ChatColor.stripColor(str)));
                                 }
-								if ((is.getItemMeta().getLore().size() == 2) && ((is.getItemMeta().getLore().equals(ls)))) {
+								//if ((is.getItemMeta().getLore().size() == 2) && ((is.getItemMeta().getLore().equals(ls)))) {
+                                if (HeadsPlus.getInstance().nms.isSellable(is)) {
 									p.getInventory().remove(is);
 								}
 							}
@@ -294,7 +295,8 @@ public class SellHead implements CommandExecutor {
                             for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
                                 ls.add(ChatColor.translateAlternateColorCodes('&', ChatColor.stripColor(str)));
                             }
-							if ((sm.getLore() != null) && (sm.getLore().equals(ls))) {
+						//	if ((sm.getLore() != null) && (sm.getLore().equals(ls))) {
+                            if (HeadsPlus.getInstance().nms.isSellable(is)) {
 								boolean found = false;
 								for (String s : hpch.mHeads) {
 								    if (s.equalsIgnoreCase("sheep")) {
@@ -369,7 +371,8 @@ public class SellHead implements CommandExecutor {
                         for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
                             ls.add(ChatColor.translateAlternateColorCodes('&', ChatColor.stripColor(str)));
                         }
-						if ((sm.getLore() != null) && (sm.getLore().equals(ls))) {
+						// if ((sm.getLore() != null) && (sm.getLore().equals(ls))) {
+                        if (HeadsPlus.getInstance().nms.isSellable(i)) {
 							boolean found = false;
 							for (String s : hpch.mHeads) {
 							    if (s.equalsIgnoreCase("sheep")) {
@@ -703,7 +706,7 @@ public class SellHead implements CommandExecutor {
                 for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
                     ls.add(ChatColor.translateAlternateColorCodes('&', ChatColor.stripColor(str)));
                 }
-                if ((sm.getLore() != null) && (sm.getLore().size() == 2) && (sm.getLore().equals(ls))) {
+                if (HeadsPlus.getInstance().nms.isSellable(i)) {
                     soldHeads.add(s);
                     i(s);
                     p = p + (i.getAmount() * hpch.getHeads().getDouble(s + ".price"));
@@ -718,13 +721,11 @@ public class SellHead implements CommandExecutor {
                     for (Property pr : gm.getProperties().get("textures")) {
                         if (pr.getValue().equals(hpchx.getTextures(aLs2))) {
                             if (i.getAmount() > 0) {
-                                if (i.getItemMeta().getLore() != null) {
-                                    if (i.getItemMeta().getLore().equals(ls)) {
-                                        soldHeads.add(s);
-                                        i(s);
-                                        p = p + (i.getAmount() * hpch.getHeads().getDouble(s + ".price"));
-                                        break;
-                                    }
+                                if (HeadsPlus.getInstance().nms.isSellable(i)) {
+                                    soldHeads.add(s);
+                                    i(s);
+                                    p = p + (i.getAmount() * hpch.getHeads().getDouble(s + ".price"));
+                                    break;
                                 }
                             }
                         }

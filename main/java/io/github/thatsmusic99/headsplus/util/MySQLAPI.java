@@ -1,7 +1,7 @@
 package io.github.thatsmusic99.headsplus.util;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusChallenges;
+import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallenges;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusLeaderboards;
 import io.github.thatsmusic99.headsplus.events.DeathEvents;
 import org.bukkit.Bukkit;

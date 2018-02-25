@@ -1,6 +1,7 @@
-package io.github.thatsmusic99.headsplus.config;
+package io.github.thatsmusic99.headsplus.config.challenges;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeEnums;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;

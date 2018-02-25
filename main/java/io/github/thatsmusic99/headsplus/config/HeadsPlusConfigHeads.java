@@ -47,6 +47,7 @@ public class HeadsPlusConfigHeads {
 		    addENHeads();
 		    addieHeads();
 		    updateHeads();
+		    checkForOldFormat();
 		    getHeads().options().copyDefaults(true);
 		    saveHeads();
 		} catch (Exception e) {
@@ -86,39 +87,39 @@ public class HeadsPlusConfigHeads {
     	
     	for (String key : mHeads) {
     		if (!key.equals("irongolem") && !key.equals("sheep")) {
-    		    getHeads().addDefault(key + "HeadN", new ArrayList<>(Collections.singleton("MHF_" + WordUtils.capitalize(key))));
-    		    getHeads().addDefault(key + "HeadC", 25);
-    		    getHeads().addDefault(key + "HeadDN", WordUtils.capitalize(key) + " Head");
-    		    getHeads().addDefault(key + "HeadP", 10.00);
-    		    getHeads().addDefault(key + "HeadEN", WordUtils.capitalize(key));
+    		    getHeads().addDefault(key + ".name", new ArrayList<>(Collections.singleton("MHF_" + WordUtils.capitalize(key))));
+    		    getHeads().addDefault(key + ".chance", 25);
+    		    getHeads().addDefault(key + ".display-name", WordUtils.capitalize(key) + " Head");
+    		    getHeads().addDefault(key + ".price", 10.00);
+    		    getHeads().addDefault(key + ".interact-name", WordUtils.capitalize(key));
     		    
     		} else if (key.equals("irongolem")) {
-    			getHeads().addDefault("irongolemHeadN", new ArrayList<>(Collections.singleton("MHF_Golem")));
-    			getHeads().addDefault("irongolemHeadC", 25);
-    			getHeads().addDefault("irongolemHeadDN", "Iron Golem Head");
-    			getHeads().addDefault("irongolemHeadP", 10.00);
-    		    getHeads().addDefault("irongolemHeadEN", "Iron Golem");
+    			getHeads().addDefault("irongolem.name", new ArrayList<>(Collections.singleton("MHF_Golem")));
+    			getHeads().addDefault("irongolem.chance", 25);
+    			getHeads().addDefault("irongolem.display-name", "Iron Golem Head");
+    			getHeads().addDefault("irongolem.price", 10.00);
+    		    getHeads().addDefault("irongolem.interact-name", "Iron Golem");
     		} else {
-    			getHeads().addDefault("sheepHeadN.default", new ArrayList<>(Collections.singleton("MHF_Sheep")));
+    			getHeads().addDefault("sheep.name.default", new ArrayList<>(Collections.singleton("MHF_Sheep")));
     			for (DyeColor dc : DyeColor.values()) {
-    			    getHeads().addDefault("sheepHeadN." + dc.name(), new ArrayList<>(Collections.singleton("HP#" + dc.name().toLowerCase() + "_sheep")));
+    			    getHeads().addDefault("sheep.name." + dc.name(), new ArrayList<>(Collections.singleton("HP#" + dc.name().toLowerCase() + "_sheep")));
                 }
-                getHeads().addDefault(key + "HeadC", 25);
-                getHeads().addDefault(key + "HeadDN", WordUtils.capitalize(key) + " Head");
-                getHeads().addDefault(key + "HeadP", 10.00);
-                getHeads().addDefault(key + "HeadEN", WordUtils.capitalize(key));
+                getHeads().addDefault(key + ".chance", 25);
+                getHeads().addDefault(key + ".display-name", WordUtils.capitalize(key) + " Head");
+                getHeads().addDefault(key + ".price", 10.00);
+                getHeads().addDefault(key + ".interact-name", WordUtils.capitalize(key));
 			}
     	}
     }
     private void addPlayerHeads() {
-    	getHeads().addDefault("playerHeadC", 100);
-    	getHeads().addDefault("playerHeadDN", "%d's head");
-    	getHeads().addDefault("playerHeadP", 10.00);
+    	getHeads().addDefault("player.chance", 100);
+    	getHeads().addDefault("player.display-name", "%d's head");
+    	getHeads().addDefault("player.price", 10.00);
     }
     private void addENHeads() {
     	for (String key : eHeads) {
-    		getHeads().addDefault(key + "HeadEN", WordUtils.capitalize(key));
-    		getHeads().addDefault(key + "HeadN", "MHF_" + key);
+    		getHeads().addDefault(key + ".interact-name", WordUtils.capitalize(key));
+    		getHeads().addDefault(key + ".name", "MHF_" + key);
     	}
     }
     private void addieHeads() {
@@ -204,7 +205,7 @@ public class HeadsPlusConfigHeads {
 
     private void checkForOldFormat() {
 	    for (String key : mHeads) {
-	        if (!key.equalsIgnoreCase("sheep") && !key.equalsIgnoreCase("irongolem")) {
+	        if (!key.equalsIgnoreCase("sheep")) {
                 if (getHeads().getString(key + "HeadN") != null) {
                     getHeads().set(key + ".name", getHeads().getString(key + "HeadN"));
                     getHeads().set(key + ".chance", getHeads().getInt(key + "HeadC"));
@@ -217,13 +218,23 @@ public class HeadsPlusConfigHeads {
                     getHeads().set(key + "HeadP", null);
                     getHeads().set(key + "HeadEN", null);
                 }
-            } else if (key.equalsIgnoreCase("sheep")) {
+            } else {
 	            if (getHeads().getString("sheepHeadN.default") != null) {
-                    getHeads().addDefault("sheep.name.default", getHeads().getStringList("sheepHeadN.default"));
+                    getHeads().set("sheep.name.default", getHeads().getStringList("sheepHeadN.default"));
+                    for (DyeColor dc : DyeColor.values()) {
+                        getHeads().set("sheep.name." + dc.name(), getHeads().getStringList("sheepHeadN." + dc.name()));
+                    }
+                    getHeads().set("sheep.chance", getHeads().getInt("sheepHeadC"));
+                    getHeads().set("sheep.display-name", getHeads().getString("sheepHeadDN"));
+                    getHeads().set("sheep.price", getHeads().getDouble("sheepHeadP"));
+                    getHeads().set("sheep.interact-name", getHeads().getString("sheepHeadEN"));
+                    getHeads().set(key + "HeadN", null);
+                    getHeads().set(key + "HeadC", null);
+                    getHeads().set(key + "HeadDN", null);
+                    getHeads().set(key + "HeadP", null);
+                    getHeads().set(key + "HeadEN", null);
                 }
             }
         }
     }
-
-
 }

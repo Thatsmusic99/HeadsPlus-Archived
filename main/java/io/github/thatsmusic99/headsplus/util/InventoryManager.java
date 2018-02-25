@@ -4,8 +4,8 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusChallengeDifficulty;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusChallengeEnums;
+import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeDifficulty;
+import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeEnums;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 
 import org.apache.commons.codec.binary.Base64;
@@ -20,7 +20,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.util.StringUtil;
 
 import java.lang.reflect.Field;
 import java.util.*;

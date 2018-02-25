@@ -1,9 +1,6 @@
 package io.github.thatsmusic99.headsplus.events;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import io.github.thatsmusic99.headsplus.api.EntityHeadDropEvent;
 import io.github.thatsmusic99.headsplus.api.PlayerHeadDropEvent;
@@ -45,14 +42,14 @@ public class DeathEvents implements Listener {
 			    if (!HeadsPlus.getInstance().getConfig().getStringList("blacklistw").contains(e.getEntity().getWorld().getName()) || e.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn")) {
 		            String entity = e.getEntityType().toString().toLowerCase().replaceAll("_", "");
 		            Random rand = new Random();
-		            double chance1 = hpch.getHeads().getDouble(entity + "HeadC");
+		            double chance1 = hpch.getHeads().getDouble(entity + ".chance");
 		            double chance2 = (double) rand.nextInt(100);
 		            if (chance1 == 0.0) return;
 		            if (chance2 <= chance1) {
 		                if (entity.equalsIgnoreCase("sheep")) {
                             dropHead(e.getEntity(), e.getEntity().getKiller());
                         } else {
-                            if (hpch.getHeads().getStringList(entity + "HeadN").isEmpty()) return;
+                            if (hpch.getHeads().getStringList(entity + ".name").isEmpty()) return;
                             dropHead(e.getEntity(), e.getEntity().getKiller());
                         }
                     }
@@ -73,14 +70,14 @@ public class DeathEvents implements Listener {
             }
             if (!HeadsPlus.getInstance().getConfig().getStringList("blacklistw").contains(ep.getEntity().getWorld().getName()) || ep.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn")) {
             Random rand = new Random();
-            double chance1 = hpch.getHeads().getDouble("playerHeadC");
+            double chance1 = hpch.getHeads().getDouble("player.chance");
             double chance2 = (double) rand.nextInt(100);
             if (chance1 == 0.0) return;
             if (chance2 <= chance1) {
                 ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
                 SkullMeta headM = (SkullMeta) head.getItemMeta();
                 headM.setOwner(ep.getEntity().getName());
-                headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getHeads().getString("playerHeadDN").replaceAll("%d", ep.getEntity().getName())));
+                headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getHeads().getString("player.display-name").replaceAll("%d", ep.getEntity().getName())));
                 if ((HeadsPlus.getInstance().sellable) && (ep.getEntity().getKiller().hasPermission("headsplus.sellhead"))) {
                     List<String> ls = new ArrayList<>();
                     for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
@@ -106,6 +103,9 @@ public class DeathEvents implements Listener {
 	public void createList() {
         String bukkitVersion = org.bukkit.Bukkit.getVersion();
         bukkitVersion = bukkitVersion.substring(bukkitVersion.indexOf("MC: ") + 4, bukkitVersion.length() - 1);
+        if (bukkitVersion.contains("1.9")) {
+            ableEntities.addAll(Collections.singletonList(EntityType.SHULKER));
+        }
         if (bukkitVersion.contains("1.11")) {
 			ableEntities.addAll(Arrays.asList(EntityType.DONKEY, EntityType.ELDER_GUARDIAN, EntityType.EVOKER, EntityType.HUSK, EntityType.LLAMA, EntityType.MULE, EntityType.POLAR_BEAR, EntityType.SHULKER, EntityType.SKELETON_HORSE, EntityType.STRAY, EntityType.VEX, EntityType.VINDICATOR, EntityType.WITHER_SKELETON));
 		}
@@ -118,10 +118,10 @@ public class DeathEvents implements Listener {
         if (e instanceof Sheep) {
             Sheep sheep = (Sheep) e;
             DyeColor dc = sheep.getColor();
-            for (String str : hpch.getHeads().getConfigurationSection("sheepHeadN").getKeys(false)) {
+            for (String str : hpch.getHeads().getConfigurationSection("sheep.name").getKeys(false)) {
                 if (!str.equalsIgnoreCase("default")) {
                     if (dc.equals(DyeColor.valueOf(str))) {
-                        return hpch.getHeads().getStringList("sheepHeadN." + str);
+                        return hpch.getHeads().getStringList("sheep.name." + str);
                     }
                 }
             }
@@ -140,14 +140,14 @@ public class DeathEvents implements Listener {
             s = hasColor(e).get(thing);
         } else {
             if (e instanceof Sheep) {
-                thing = r.nextInt(hpch.getHeads().getStringList("sheepHeadN.default").size());
-                s = hpch.getHeads().getStringList("sheepHeadN.default").get(thing);
+                thing = r.nextInt(hpch.getHeads().getStringList("sheep.name.default").size());
+                s = hpch.getHeads().getStringList("sheep.name.default").get(thing);
             } else if (e instanceof IronGolem) {
-                thing = r.nextInt(hpch.getHeads().getStringList("irongolemHeadN").size());
-                s = hpch.getHeads().getStringList("irongolemHeadN").get(thing);
+                thing = r.nextInt(hpch.getHeads().getStringList("irongolem.name").size());
+                s = hpch.getHeads().getStringList("irongolem.name").get(thing);
             } else {
-                thing = r.nextInt(hpch.getHeads().getStringList(e.getType().name().toLowerCase() + "HeadN").size());
-                s = hpch.getHeads().getStringList(e.getType().name().toLowerCase() + "HeadN").get(thing);
+                thing = r.nextInt(hpch.getHeads().getStringList(e.getType().name().toLowerCase() + ".name").size());
+                s = hpch.getHeads().getStringList(e.getType().name().toLowerCase() + ".name").get(thing);
             }
         }
         SkullMeta sm;
@@ -160,7 +160,7 @@ public class DeathEvents implements Listener {
             sm.setOwner(s);
         }
 
-        sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getHeads().getString(e.getType().name().toLowerCase() + "HeadDN")));
+        sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getHeads().getString(e.getType().name().toLowerCase() + ".display-name")));
         List<String> ls = new ArrayList<>();
         for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
             ls.add(ChatColor.translateAlternateColorCodes('&', str));

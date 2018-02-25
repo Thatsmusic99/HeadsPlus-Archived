@@ -1,8 +1,10 @@
 package io.github.thatsmusic99.headsplus;
 
+import io.github.thatsmusic99.headsplus.api.Challenge;
 import io.github.thatsmusic99.headsplus.api.HeadsPlusAPI;
 import io.github.thatsmusic99.headsplus.commands.*;
 import io.github.thatsmusic99.headsplus.config.*;
+import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallenges;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.crafting.RecipeEnumUser;
 import io.github.thatsmusic99.headsplus.crafting.RecipePerms;
@@ -27,7 +29,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
@@ -60,6 +64,7 @@ public class HeadsPlus extends JavaPlugin {
     public MySQLAPI mySQLAPI;
     public HeadsPlusChallenges hpchl;
     public HeadsPlusAPI hapi;
+    public List<Challenge> challenges = new ArrayList<>();
 
     public FileConfiguration config;
 

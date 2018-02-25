@@ -3,6 +3,7 @@ package io.github.thatsmusic99.headsplus.commands.maincommand;
 import java.io.File;
 
 import io.github.thatsmusic99.headsplus.config.*;
+import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallenges;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;

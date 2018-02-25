@@ -1,4 +1,4 @@
-package io.github.thatsmusic99.headsplus.config;
+package io.github.thatsmusic99.headsplus.config.challenges;
 
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import org.bukkit.ChatColor;

@@ -49,7 +49,7 @@ public class SellHead implements CommandExecutor {
                         if (((SkullMeta)invi.getItemMeta()).getOwner() == null || ((SkullMeta)invi.getItemMeta()).getOwner().equalsIgnoreCase("HPXHead")) {
                             for (String key : hpch.mHeads) {
                                 if (!key.equalsIgnoreCase("sheep")) {
-                                    if (checkSkullForTexture((Player) sender, invi, hpch.getHeads().getStringList(key + "HeadN"), key, args)) {
+                                    if (checkSkullForTexture((Player) sender, invi, hpch.getHeads().getStringList(key + ".name"), key, args)) {
                                         return true; // Ends because head is already sold
                                     }
                                 } else {
@@ -59,7 +59,7 @@ public class SellHead implements CommandExecutor {
                                 }
                             }
                             for (String key : hpch.uHeads) {
-                                if (checkSkullForTexture((Player) sender, invi, hpch.getHeads().getStringList(key + "HeadN"), key, args)) {
+                                if (checkSkullForTexture((Player) sender, invi, hpch.getHeads().getStringList(key + ".name"), key, args)) {
                                     return true;
                                 }
                             }
@@ -78,26 +78,26 @@ public class SellHead implements CommandExecutor {
                             List<String> uHeads = hpch.uHeads;
                             for (String key : mHeads) {
                                 if (key.equalsIgnoreCase("sheep")) {
-                                    for (String s : hpch.getHeads().getConfigurationSection("sheepHeadN").getKeys(false)) {
-                                        for (int i = 0; i < hpch.getHeads().getStringList("sheepHeadN." + s).size(); i++) {
-                                            if (owner.matches(hpch.getHeads().getStringList("sheepHeadN." + s).get(i))) {
+                                    for (String s : hpch.getHeads().getConfigurationSection("sheep.name").getKeys(false)) {
+                                        for (int i = 0; i < hpch.getHeads().getStringList("sheep.name." + s).size(); i++) {
+                                            if (owner.matches(hpch.getHeads().getStringList("sheep.name." + s).get(i))) {
                                                 a(invi, key, args, (Player) sender);
                                             }
                                         }
                                     }
                                 } else {
-                                    for (int i = 0; i < hpch.getHeads().getStringList(key + "HeadN").size(); i++) {
-                                        if (owner.matches(hpch.getHeads().getStringList(key + "HeadN").get(i))) {
+                                    for (int i = 0; i < hpch.getHeads().getStringList(key + ".name").size(); i++) {
+                                        if (owner.matches(hpch.getHeads().getStringList(key + ".name").get(i))) {
                                             a(invi, key, args, (Player) sender);
-                                        } else if ((owner.matches(hpch.getHeads().getStringList("irongolemHeadN").get(i))) && (key.equalsIgnoreCase("irongolem"))) {
+                                        } else if ((owner.matches(hpch.getHeads().getStringList("irongolem.name").get(i))) && (key.equalsIgnoreCase("irongolem"))) {
                                             a(invi, key, args, (Player) sender);
                                         }
                                     }
                                 }
                             }
                             for (String key : uHeads) {
-                                if (owner.equalsIgnoreCase(hpch.getHeads().getString(key + "HeadN"))) {
-                                    Double price = hpch.getHeads().getDouble(key + "HeadP");
+                                if (owner.equalsIgnoreCase(hpch.getHeads().getString(key + ".name"))) {
+                                    Double price = hpch.getHeads().getDouble(key + ".price");
                                     if (invi.getAmount() > 0) {
                                         price = setPrice(price, args, invi, (Player) sender);
                                         SellHeadEvent she = new SellHeadEvent(price, soldHeads, (Player) sender, econ.getBalance((Player) sender), econ.getBalance((Player) sender) + price, hm);
@@ -122,7 +122,7 @@ public class SellHead implements CommandExecutor {
                                 }
                             }
                             if (!sold) {
-                                Double price = hpch.getHeads().getDouble("playerHeadP");
+                                Double price = hpch.getHeads().getDouble("player.price");
                                 if (invi.getAmount() > 0) {
                                     price = setPrice(price, args, invi, (Player) sender);
                                 }
@@ -167,17 +167,17 @@ public class SellHead implements CommandExecutor {
                                                 try {
                                                     if (sm.getOwner() != null) {
                                                         if (str.equalsIgnoreCase("sheep")) {
-                                                            for (String s : hpch.getHeads().getConfigurationSection(str + "HeadN").getKeys(false)) {
-                                                                for (int in = 0; in < hpch.getHeads().getStringList(str + "HeadN." + s).size(); in++) {
-                                                                    if (sm.getOwner().equalsIgnoreCase(hpch.getHeads().getStringList(str + "HeadN." + s).get(in))) {
+                                                            for (String s : hpch.getHeads().getConfigurationSection(str + ".name").getKeys(false)) {
+                                                                for (int in = 0; in < hpch.getHeads().getStringList(str + ".name." + s).size(); in++) {
+                                                                    if (sm.getOwner().equalsIgnoreCase(hpch.getHeads().getStringList(str + ".name." + s).get(in))) {
                                                                         found = true;
                                                                         price = setPrice(price, args, i, p);
                                                                     }
                                                                 }
                                                             }
                                                         } else {
-                                                            for (int in = 0; in < hpch.getHeads().getStringList(str + "HeadN").size(); in++) {
-                                                                if (sm.getOwner().equalsIgnoreCase(hpch.getHeads().getStringList(str + "HeadN").get(in))) {
+                                                            for (int in = 0; in < hpch.getHeads().getStringList(str + ".name").size(); in++) {
+                                                                if (sm.getOwner().equalsIgnoreCase(hpch.getHeads().getStringList(str + ".name").get(in))) {
                                                                     found = true;
                                                                     price = setPrice(price, args, i, p);
                                                                 }
@@ -191,7 +191,7 @@ public class SellHead implements CommandExecutor {
                                             for (String str : hpch.uHeads) {
                                                 try {
                                                     if (sm.getOwner() != null) {
-                                                        if (sm.getOwner().equalsIgnoreCase(hpch.getHeads().getString(str + "HeadN"))) {
+                                                        if (sm.getOwner().equalsIgnoreCase(hpch.getHeads().getString(str + ".name"))) {
                                                             found = true;
                                                             price = setPrice(price, args, i, p);
                                                         }
@@ -206,15 +206,15 @@ public class SellHead implements CommandExecutor {
                                                 } else if (sm.getOwner().equalsIgnoreCase("HPXHead")) {
                                                     for (String key : hpch.mHeads) {
                                                         if (!key.equalsIgnoreCase("sheep")) {
-                                                            price = b(price, key, hpch.getHeads().getStringList(key + "HeadN"), i, (Player) sender, args, true, false);
+                                                            price = b(price, key, hpch.getHeads().getStringList(key + ".name"), i, (Player) sender, args, true, false);
                                                         } else {
-                                                            for (String s : hpch.getHeads().getConfigurationSection("sheepHeadN").getKeys(false)) {
-                                                                price = b(price, key, hpch.getHeads().getStringList(key + "HeadN." + s), i, (Player) sender, args, true, false);
+                                                            for (String s : hpch.getHeads().getConfigurationSection("sheep.name").getKeys(false)) {
+                                                                price = b(price, key, hpch.getHeads().getStringList(key + ".name." + s), i, (Player) sender, args, true, false);
                                                             }
                                                         }
                                                     }
                                                     for (String key : hpch.uHeads) {
-                                                        price = b(price, key, hpch.getHeads().getStringList(key + "HeadN"), i, (Player) sender, args, true, false);
+                                                        price = b(price, key, hpch.getHeads().getStringList(key + ".name"), i, (Player) sender, args, true, false);
                                                     }
                                                 }
                                             }
@@ -298,29 +298,29 @@ public class SellHead implements CommandExecutor {
 								boolean found = false;
 								for (String s : hpch.mHeads) {
 								    if (s.equalsIgnoreCase("sheep")) {
-                                        for (String st : hpch.getHeads().getConfigurationSection("sheepHeadN").getKeys(false)) {
-                                            found = c(s, a, is, hpch.getHeads().getStringList(s + "HeadN." + st), p, true);
+                                        for (String st : hpch.getHeads().getConfigurationSection("sheep.name").getKeys(false)) {
+                                            found = c(s, a, is, hpch.getHeads().getStringList(s + ".name." + st), p, true);
                                         }
                                     } else {
-                                        found = c(s, a, is, hpch.getHeads().getStringList(s + "HeadN"), p, true);
+                                        found = c(s, a, is, hpch.getHeads().getStringList(s + ".name"), p, true);
                                     }
 							    }
 							    for (String s : hpch.uHeads) {
-                                    found = c(s, a, is, hpch.getHeads().getStringList(s + "HeadN"), p, true);
+                                    found = c(s, a, is, hpch.getHeads().getStringList(s + ".name"), p, true);
                                 }
                                 if (!found && a[0].equalsIgnoreCase("player")) {
                                     boolean player = true;
                                     SkullMeta sms = (SkullMeta) is.getItemMeta();
                                     for (String s : hpch.uHeads) {
-                                        player = d(hpch.getHeads().getStringList(s + "HeadN"), sms);
+                                        player = d(hpch.getHeads().getStringList(s + ".name"), sms);
                                     }
                                     for (String s : hpch.mHeads) {
                                         if (s.equalsIgnoreCase("sheep")) {
-                                            for (String st : hpch.getHeads().getConfigurationSection("sheepHeadN").getKeys(false)) {
-                                                player = d(hpch.getHeads().getStringList(s + "HeadN." + st), sms);
+                                            for (String st : hpch.getHeads().getConfigurationSection("sheep.name").getKeys(false)) {
+                                                player = d(hpch.getHeads().getStringList(s + ".name." + st), sms);
                                             }
                                         } else {
-                                            player = d(hpch.getHeads().getStringList(s + "HeadN"), sms);
+                                            player = d(hpch.getHeads().getStringList(s + ".name"), sms);
                                         }
                                     }
                                     if (player) {
@@ -336,16 +336,16 @@ public class SellHead implements CommandExecutor {
 							    } else if (sm.getOwner().equalsIgnoreCase("HPXHead")) {
                                     for (String key : hpch.mHeads) {
                                         if (key.equalsIgnoreCase("sheep")) {
-                                            for (String s : hpch.getHeads().getConfigurationSection("sheepHeadN").getKeys(false)) {
-                                                b(0.0, key, hpch.getHeads().getStringList(key + "HeadN." + s), is, p, a, false, false);
+                                            for (String s : hpch.getHeads().getConfigurationSection("sheep.name").getKeys(false)) {
+                                                b(0.0, key, hpch.getHeads().getStringList(key + ".name." + s), is, p, a, false, false);
                                             }
                                         } else {
-                                            b(0.0, key, hpch.getHeads().getStringList(key + "HeadN"), is, p, a, false, false);
+                                            b(0.0, key, hpch.getHeads().getStringList(key + ".name"), is, p, a, false, false);
                                         }
 
                                     }
                                     for (String key : hpch.uHeads) {
-                                        b(0.0, key, hpch.getHeads().getStringList(key + "HeadN"), is, p, a, false, false);
+                                        b(0.0, key, hpch.getHeads().getStringList(key + ".name"), is, p, a, false, false);
                                     }
                                 }
 							}
@@ -373,9 +373,9 @@ public class SellHead implements CommandExecutor {
 							boolean found = false;
 							for (String s : hpch.mHeads) {
 							    if (s.equalsIgnoreCase("sheep")) {
-							        for (String st : hpch.getHeads().getConfigurationSection("sheepHeadN").getKeys(false)) {
-							            if (!Objects.equals(e(hpch.getHeads().getStringList(s + "HeadN." + st), p, s, sm, i), p)) {
-                                            p = e(hpch.getHeads().getStringList(s + "HeadN." + st), p, s, sm, i);
+							        for (String st : hpch.getHeads().getConfigurationSection("sheep.name").getKeys(false)) {
+							            if (!Objects.equals(e(hpch.getHeads().getStringList(s + ".name." + st), p, s, sm, i), p)) {
+                                            p = e(hpch.getHeads().getStringList(s + ".name." + st), p, s, sm, i);
                                             soldHeads.add(s);
                                             i(s);
                                             found = true;
@@ -383,8 +383,8 @@ public class SellHead implements CommandExecutor {
                                         }
                                     }
                                 } else {
-                                    if (!Objects.equals(e(hpch.getHeads().getStringList(s + "HeadN"), p, s, sm, i), p)) {
-                                        p = e(hpch.getHeads().getStringList(s + "HeadN"), p, s, sm, i);
+                                    if (!Objects.equals(e(hpch.getHeads().getStringList(s + ".name"), p, s, sm, i), p)) {
+                                        p = e(hpch.getHeads().getStringList(s + ".name"), p, s, sm, i);
                                         soldHeads.add(s);
                                         i(s);
                                         found = true;
@@ -393,16 +393,16 @@ public class SellHead implements CommandExecutor {
                                 }
 						    }
 						    for (String s : hpch.uHeads) {
-                                if (!Objects.equals(e(hpch.getHeads().getStringList(s + "HeadN"), p, s, sm, i), p)) {
-                                    p = e(hpch.getHeads().getStringList(s + "HeadN"), p, s, sm, i);
+                                if (!Objects.equals(e(hpch.getHeads().getStringList(s + ".name"), p, s, sm, i), p)) {
+                                    p = e(hpch.getHeads().getStringList(s + ".name"), p, s, sm, i);
                                     soldHeads.add(s);
                                     i(s);
                                     found = true;
                                     break;
                                 }
 						    }
-                            if (!Objects.equals(e(hpch.getHeads().getStringList("irongolemHeadN"), p, "irongolem", sm, i), p)) {
-                                p = e(hpch.getHeads().getStringList("irongolemHeadN"), p, "irongolem", sm, i);
+                            if (!Objects.equals(e(hpch.getHeads().getStringList("irongolem.name"), p, "irongolem", sm, i), p)) {
+                                p = e(hpch.getHeads().getStringList("irongolem.name"), p, "irongolem", sm, i);
                                 soldHeads.add("irongolem");
                                 i("irongolem");
                                 found = true;
@@ -411,9 +411,9 @@ public class SellHead implements CommandExecutor {
 						    if (sm.getOwner().equalsIgnoreCase("HPXHead")) {
                                 for (String key : hpch.mHeads) {
                                     if (key.equalsIgnoreCase("sheep")) {
-                                        for (String s : hpch.getHeads().getConfigurationSection("sheepHeadN").getKeys(false)) {
-                                            if (!b(p, key, hpch.getHeads().getStringList(key + "HeadN." + s), i, pl, a, false, true).equals(p)) {
-                                                p = b(p, key, hpch.getHeads().getStringList(key + "HeadN." + s), i, pl, a, false, true);
+                                        for (String s : hpch.getHeads().getConfigurationSection("sheep.name").getKeys(false)) {
+                                            if (!b(p, key, hpch.getHeads().getStringList(key + ".name." + s), i, pl, a, false, true).equals(p)) {
+                                                p = b(p, key, hpch.getHeads().getStringList(key + ".name." + s), i, pl, a, false, true);
                                                 soldHeads.add(key);
                                                 i(key);
                                                 found = true;
@@ -421,8 +421,8 @@ public class SellHead implements CommandExecutor {
                                             }
                                         }
                                     } else {
-                                        if (!b(p, key, hpch.getHeads().getStringList(key + "HeadN"), i, pl, a, false, true).equals(p)) {
-                                            p = b(p, key, hpch.getHeads().getStringList(key + "HeadN"), i, pl, a, false, true);
+                                        if (!b(p, key, hpch.getHeads().getStringList(key + ".name"), i, pl, a, false, true).equals(p)) {
+                                            p = b(p, key, hpch.getHeads().getStringList(key + ".name"), i, pl, a, false, true);
                                             soldHeads.add(key);
                                             i(key);
                                             found = true;
@@ -432,8 +432,8 @@ public class SellHead implements CommandExecutor {
 
                                 }
                                 for (String key : hpch.uHeads) {
-                                    if (!b(p, key, hpch.getHeads().getStringList(key + "HeadN"), i, pl, a, false, true).equals(p)) {
-                                        p = b(p, key, hpch.getHeads().getStringList(key + "HeadN"), i, pl, a, false, true);
+                                    if (!b(p, key, hpch.getHeads().getStringList(key + ".name"), i, pl, a, false, true).equals(p)) {
+                                        p = b(p, key, hpch.getHeads().getStringList(key + ".name"), i, pl, a, false, true);
                                         soldHeads.add(key);
                                         i(key);
                                         found = true;
@@ -442,7 +442,7 @@ public class SellHead implements CommandExecutor {
                                 }
                             }
 						    if (!found) {
-						    	p = p + (i.getAmount() * hpch.getHeads().getDouble("playerHeadP"));
+						    	p = p + (i.getAmount() * hpch.getHeads().getDouble("player.price"));
                                 soldHeads.add("player");
                                 i("player");
 						    }
@@ -453,33 +453,33 @@ public class SellHead implements CommandExecutor {
 						if (a[0].equalsIgnoreCase(s)) {
 						    SkullMeta sm = (SkullMeta) i.getItemMeta();
 						    if (s.equalsIgnoreCase("sheep")) {
-						        for (String st : hpch.getHeads().getConfigurationSection("sheepHeadN").getKeys(false)) {
-                                    p = f(i, sm, p, s, a, hpch.getHeads().getStringList(s + "HeadN." + st));
+						        for (String st : hpch.getHeads().getConfigurationSection("sheep.name").getKeys(false)) {
+                                    p = f(i, sm, p, s, a, hpch.getHeads().getStringList(s + ".name." + st));
                                 }
                             } else {
-                                p = f(i, sm, p, s, a, hpch.getHeads().getStringList(s + "HeadN"));
+                                p = f(i, sm, p, s, a, hpch.getHeads().getStringList(s + ".name"));
                             }
 						}
 					}
 					for (String s : hpch.uHeads) {
                         SkullMeta sm = (SkullMeta) i.getItemMeta();
 						if (a[0].equalsIgnoreCase(s)) {
-                            p = f(i, sm, p, s, a, hpch.getHeads().getStringList(s + "HeadN"));
+                            p = f(i, sm, p, s, a, hpch.getHeads().getStringList(s + ".name"));
                         }
 					}
 					if (a[0].equalsIgnoreCase("player")) {
 					    boolean player = true;
 					    SkullMeta sm = (SkullMeta) i.getItemMeta();
 					    for (String s : hpch.uHeads) {
-					        player = d(hpch.getHeads().getStringList(s + "HeadN"), sm);
+					        player = d(hpch.getHeads().getStringList(s + ".name"), sm);
                         }
                         for (String s : hpch.mHeads) {
 					        if (s.equalsIgnoreCase("sheep")) {
-					            for (String st : hpch.getHeads().getConfigurationSection(s + "HeadN").getKeys(false)) {
-                                    player = d(hpch.getHeads().getStringList(s + "HeadN." + st), sm);
+					            for (String st : hpch.getHeads().getConfigurationSection(s + ".name").getKeys(false)) {
+                                    player = d(hpch.getHeads().getStringList(s + ".name." + st), sm);
                                 }
                             } else {
-                                player = d(hpch.getHeads().getStringList(s + "HeadN"), sm);
+                                player = d(hpch.getHeads().getStringList(s + ".name"), sm);
                             }
                         }
                         if (player) {
@@ -489,7 +489,7 @@ public class SellHead implements CommandExecutor {
                                 ls.add(ChatColor.translateAlternateColorCodes('&', ChatColor.stripColor(str)));
                             }
                             if ((sm.getLore() != null) && (sm.getLore().size() == 2) && (sm.getLore().equals(ls))) {
-                                p = p + (i.getAmount() * hpch.getHeads().getDouble("playerHeadP"));
+                                p = p + (i.getAmount() * hpch.getHeads().getDouble("player.price"));
                                 soldHeads.add("player");
                                 i("player");
                             }
@@ -502,14 +502,14 @@ public class SellHead implements CommandExecutor {
 					String s = null;
 					for (String str : hpch.mHeads) {
                         if (str.equalsIgnoreCase("sheep")) {
-                            for (String st : hpch.getHeads().getConfigurationSection(s + "HeadN").getKeys(false)) {
-                                s = g(hpch.getHeads().getStringList(str + "HeadN." + st), sm, str);
+                            for (String st : hpch.getHeads().getConfigurationSection(s + ".name").getKeys(false)) {
+                                s = g(hpch.getHeads().getStringList(str + ".name." + st), sm, str);
                             }
                         } else {
-                            s = g(hpch.getHeads().getStringList(str + "HeadN"), sm, str);
+                            s = g(hpch.getHeads().getStringList(str + ".name"), sm, str);
                         }
 					}
-					p = hpch.getHeads().getDouble(s + "HeadP") * Integer.parseInt(a[0]);
+					p = hpch.getHeads().getDouble(s + ".price") * Integer.parseInt(a[0]);
                     soldHeads.add(s);
                     i(s);
 				} else {
@@ -521,23 +521,23 @@ public class SellHead implements CommandExecutor {
 			String s = null;
 			for (String str : hpch.mHeads) {
                 if (str.equalsIgnoreCase("sheep")) {
-                    for (String st : hpch.getHeads().getConfigurationSection(str + "HeadN").getKeys(false)) {
-                        s = g(hpch.getHeads().getStringList(str + "HeadN." + st), sm, str);
+                    for (String st : hpch.getHeads().getConfigurationSection(str + ".name").getKeys(false)) {
+                        s = g(hpch.getHeads().getStringList(str + ".name." + st), sm, str);
 
                     }
                 } else {
-                    s = g(hpch.getHeads().getStringList(str + "HeadN"), sm, str);
+                    s = g(hpch.getHeads().getStringList(str + ".name"), sm, str);
 
                 }
 			}
             for (String str : hpch.uHeads) {
-                s = g(hpch.getHeads().getStringList(str + "HeadN"), sm, str);
+                s = g(hpch.getHeads().getStringList(str + ".name"), sm, str);
 
             }
             if (s == null) {
 			    s = "player";
             }
-			p = hpch.getHeads().getDouble(s + "HeadP") * i.getAmount();
+			p = hpch.getHeads().getDouble(s + ".price") * i.getAmount();
             soldHeads.add(s);
             i(s);
 	    }
@@ -585,15 +585,15 @@ public class SellHead implements CommandExecutor {
 	}
 
 	private boolean checkColorSheep(Player sender, String[] args, ItemStack invi) throws NoSuchFieldException, IllegalAccessException {
-	    for (String s : hpch.getHeads().getConfigurationSection( "sheepHeadN").getKeys(false)) {
-	        for (int i = 0; i < hpch.getHeads().getStringList("sheepHeadN." + s).size(); i++) {
-                if (hpchx.isHPXSkull(hpch.getHeads().getStringList("sheepHeadN." + s).get(i))) {
+	    for (String s : hpch.getHeads().getConfigurationSection( "sheep.name").getKeys(false)) {
+	        for (int i = 0; i < hpch.getHeads().getStringList("sheep.name." + s).size(); i++) {
+                if (hpchx.isHPXSkull(hpch.getHeads().getStringList("sheep.name." + s).get(i))) {
                     Field pro = ((SkullMeta) invi.getItemMeta()).getClass().getDeclaredField("profile");
                     pro.setAccessible(true);
                     GameProfile gm = (GameProfile) pro.get(invi.getItemMeta());
                     for (Property p : gm.getProperties().get("textures")) {
-                        if (p.getValue().equals(hpchx.getTextures(hpch.getHeads().getStringList("sheepHeadN." + s).get(i)))) {
-                            Double price = hpch.getHeads().getDouble("sheepHeadP");
+                        if (p.getValue().equals(hpchx.getTextures(hpch.getHeads().getStringList("sheep.name." + s).get(i)))) {
+                            Double price = hpch.getHeads().getDouble("sheep.price");
                             if (invi.getAmount() > 0) {
                                 price *= invi.getAmount();
                             }
@@ -613,8 +613,8 @@ public class SellHead implements CommandExecutor {
                 pro.setAccessible(true);
                 GameProfile gm = (GameProfile) pro.get(is.getItemMeta());
                 for (Property p : gm.getProperties().get("textures")) {
-                    if (p.getValue().equals(hpchx.getTextures(hpch.getHeads().getStringList(key + "HeadN").get(i)))) {
-                        Double price = hpch.getHeads().getDouble(key + "HeadP");
+                    if (p.getValue().equals(hpchx.getTextures(hpch.getHeads().getStringList(key + ".name").get(i)))) {
+                        Double price = hpch.getHeads().getDouble(key + ".price");
                         if (is.getAmount() > 0) {
                             price *= is.getAmount();
                         }
@@ -628,7 +628,7 @@ public class SellHead implements CommandExecutor {
     }
 
     private void a(ItemStack is, String key, String[] args, Player p) {
-        Double price = hpch.getHeads().getDouble(key + "HeadP");
+        Double price = hpch.getHeads().getDouble(key + ".price");
         soldHeads.add(key);
         i(key);
         if (is.getAmount() > 0) {
@@ -650,7 +650,7 @@ public class SellHead implements CommandExecutor {
                             } else if (f) {
                                 soldHeads.add(key);
                                 i(key);
-                                price = price + (i.getAmount() * hpch.getHeads().getDouble(key + "HeadP"));
+                                price = price + (i.getAmount() * hpch.getHeads().getDouble(key + ".price"));
                                 return price;
                             } else {
                                 p.getInventory().remove(i);
@@ -688,7 +688,7 @@ public class SellHead implements CommandExecutor {
     private Double e(List<String> ls, Double p, String s, SkullMeta sm, ItemStack i) {
         for (String l : ls) {
             if (sm.getOwner().equals(l)) {
-                p = p + (i.getAmount() * hpch.getHeads().getDouble(s + "HeadP"));
+                p = p + (i.getAmount() * hpch.getHeads().getDouble(s + ".price"));
                 return p;
             }
         }
@@ -706,7 +706,7 @@ public class SellHead implements CommandExecutor {
                 if ((sm.getLore() != null) && (sm.getLore().size() == 2) && (sm.getLore().equals(ls))) {
                     soldHeads.add(s);
                     i(s);
-                    p = p + (i.getAmount() * hpch.getHeads().getDouble(s + "HeadP"));
+                    p = p + (i.getAmount() * hpch.getHeads().getDouble(s + ".price"));
                 }
             } else if (sm.getOwner().equalsIgnoreCase("HPXHead")) {
                 if (hpchx.isHPXSkull(aLs2)) {
@@ -722,7 +722,7 @@ public class SellHead implements CommandExecutor {
                                     if (i.getItemMeta().getLore().equals(ls)) {
                                         soldHeads.add(s);
                                         i(s);
-                                        p = p + (i.getAmount() * hpch.getHeads().getDouble(s + "HeadP"));
+                                        p = p + (i.getAmount() * hpch.getHeads().getDouble(s + ".price"));
                                         break;
                                     }
                                 }

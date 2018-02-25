@@ -1,4 +1,4 @@
-package io.github.thatsmusic99.headsplus.config;
+package io.github.thatsmusic99.headsplus.config.challenges;
 
 public enum HPChallengeRewardTypes {
 

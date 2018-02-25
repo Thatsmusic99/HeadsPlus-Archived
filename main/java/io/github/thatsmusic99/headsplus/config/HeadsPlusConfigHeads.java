@@ -75,11 +75,11 @@ public class HeadsPlusConfigHeads {
     }
     private void addUndefinedHeads() {
     	for (String key : uHeads) {
-    		getHeads().addDefault(key + "HeadN", new ArrayList<>());
-    		getHeads().addDefault(key + "HeadC", 0);
-    		getHeads().addDefault(key + "HeadDN", "");
-    		getHeads().addDefault(key + "HeadP", 0.00);
-    		getHeads().addDefault(key + "HeadEN", WordUtils.capitalize(key));
+    		getHeads().addDefault(key + ".name", new ArrayList<>());
+    		getHeads().addDefault(key + ".chance", 0);
+    		getHeads().addDefault(key + ".display-name", "");
+    		getHeads().addDefault(key + ".price", 0.00);
+    		getHeads().addDefault(key + ".interact-name", WordUtils.capitalize(key));
     	}
     }
     private void addMHFHeads() {
@@ -189,7 +189,7 @@ public class HeadsPlusConfigHeads {
 	                getHeads().addDefault(key + "HeadN", new ArrayList<>(Collections.singleton("MHF_Golem")));
                 } else {
 	                getHeads().set("sheepHeadN", null);
-                    getHeads().addDefault("sheepHeadN.default", new ArrayList<>(Collections.singleton("MHF_Sheep")));
+                    getHeads().addDefault("sheep.name.default", new ArrayList<>(Collections.singleton("MHF_Sheep")));
                     for (DyeColor dc : DyeColor.values()) {
                         getHeads().addDefault("sheepHeadN." + dc.name(), new ArrayList<>(Collections.singleton("HP#" + dc.name().toLowerCase() + "_sheep")));
                     }
@@ -198,6 +198,29 @@ public class HeadsPlusConfigHeads {
             for (String key : uHeads) {
                 getHeads().set(key + "HeadN", null);
                 getHeads().set(key + "HeadN", new ArrayList<>());
+            }
+        }
+    }
+
+    private void checkForOldFormat() {
+	    for (String key : mHeads) {
+	        if (!key.equalsIgnoreCase("sheep") && !key.equalsIgnoreCase("irongolem")) {
+                if (getHeads().getString(key + "HeadN") != null) {
+                    getHeads().set(key + ".name", getHeads().getString(key + "HeadN"));
+                    getHeads().set(key + ".chance", getHeads().getInt(key + "HeadC"));
+                    getHeads().set(key + ".display-name", getHeads().getString(key + "HeadDN"));
+                    getHeads().set(key + ".price", getHeads().getDouble(key + "HeadP"));
+                    getHeads().set(key + ".interact-name", getHeads().getString(key + "HeadEN"));
+                    getHeads().set(key + "HeadN", null);
+                    getHeads().set(key + "HeadC", null);
+                    getHeads().set(key + "HeadDN", null);
+                    getHeads().set(key + "HeadP", null);
+                    getHeads().set(key + "HeadEN", null);
+                }
+            } else if (key.equalsIgnoreCase("sheep")) {
+	            if (getHeads().getString("sheepHeadN.default") != null) {
+                    getHeads().addDefault("sheep.name.default", getHeads().getStringList("sheepHeadN.default"));
+                }
             }
         }
     }

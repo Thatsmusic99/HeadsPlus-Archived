@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.crafting;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -28,12 +29,18 @@ public class RecipeEnumUser {
                 ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
                 SkullMeta im = (SkullMeta) i.getItemMeta();
                 im.setDisplayName(ChatColor.translateAlternateColorCodes('&', heads.getString(key.str + ".display-name")));
-                if (key.str.equalsIgnoreCase("sheep")) {
-                    im.setOwner(heads.getStringList("sheep.name.default").get(0));
-                } else {
-                    im.setOwner(heads.getStringList(key.str + ".name").get(0));
+                try {
+                    if (key.str.equalsIgnoreCase("sheep")) {
+                        im.setOwner(heads.getStringList("sheep.name.default").get(0));
+                    } else {
+                        im.setOwner(heads.getStringList(key.str + ".name").get(0));
+                    }
+                } catch (IndexOutOfBoundsException ex) {
+                    HeadsPlus.getInstance().getLogger().warning("There was an issue setting the crafting skull for " + key.str + "! Setting it to default...");
+                    HeadsPlus.getInstance().getLogger().warning("If your heads.yml was out of date, just let it update and then the config will automatically reload as soon as a player joins (if enabled).");
+                    HeadsPlus.getInstance().getLogger().warning("Otherwise, use /hp reload.");
+                    im.setOwner("MHF_" + WordUtils.capitalize(key.str));
                 }
-
                 RecipeListeners.makeSell(im);
                 i.setItemMeta(im);
                 ShapelessRecipe recipe = getRecipe(i, "hp" + key.name());

@@ -138,21 +138,25 @@ public class DeathEvents implements Listener {
 	    int thing;
 	    String s;
 	    ItemStack i;
-        if (hasColor(e) != null && !hasColor(e).isEmpty()) {
+	    try {
+            if (hasColor(e) != null && !hasColor(e).isEmpty()) {
 
-            thing = r.nextInt(hasColor(e).size());
-            s = hasColor(e).get(thing);
-        } else {
-            if (e instanceof Sheep) {
-                thing = r.nextInt(hpch.getHeads().getStringList("sheep.name.default").size());
-                s = hpch.getHeads().getStringList("sheep.name.default").get(thing);
-            } else if (e instanceof IronGolem) {
-                thing = r.nextInt(hpch.getHeads().getStringList("irongolem.name").size());
-                s = hpch.getHeads().getStringList("irongolem.name").get(thing);
+                thing = r.nextInt(hasColor(e).size());
+                s = hasColor(e).get(thing);
             } else {
-                thing = r.nextInt(hpch.getHeads().getStringList(e.getType().name().toLowerCase() + ".name").size());
-                s = hpch.getHeads().getStringList(e.getType().name().toLowerCase() + ".name").get(thing);
+                if (e instanceof Sheep) {
+                    thing = r.nextInt(hpch.getHeads().getStringList("sheep.name.default").size());
+                    s = hpch.getHeads().getStringList("sheep.name.default").get(thing);
+                } else if (e instanceof IronGolem) {
+                    thing = r.nextInt(hpch.getHeads().getStringList("irongolem.name").size());
+                    s = hpch.getHeads().getStringList("irongolem.name").get(thing);
+                } else {
+                    thing = r.nextInt(hpch.getHeads().getStringList(e.getType().name().toLowerCase() + ".name").size());
+                    s = hpch.getHeads().getStringList(e.getType().name().toLowerCase() + ".name").get(thing);
+                }
             }
+        } catch (IndexOutOfBoundsException ex) {
+	        return;
         }
         SkullMeta sm;
         if (hpchx.isHPXSkull(s))  {

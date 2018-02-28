@@ -118,8 +118,8 @@ public class HeadsPlusConfigHeads {
     }
     private void addENHeads() {
     	for (String key : eHeads) {
-    		getHeads().addDefault(key + ".interact-name", WordUtils.capitalize(key));
-    		getHeads().addDefault(key + ".name", "MHF_" + key);
+    		getHeads().addDefault(key + "HeadN", WordUtils.capitalize(key));
+    		getHeads().addDefault(key + "N", "MHF_" + key);
     	}
     }
     private void addieHeads() {
@@ -264,6 +264,15 @@ public class HeadsPlusConfigHeads {
                 getHeads().set(key + ".interact-name", e);
 
             }
+            String dn = getHeads().getString("playerHeadDN");
+            int c = getHeads().getInt("playerHeadC");
+            double p = getHeads().getDouble("playerHeadP");
+            getHeads().set("playerHeadDN", null);
+            getHeads().set("playerHeadC", null);
+            getHeads().set("playerHeadP", null);
+            getHeads().set("player.chance", c);
+            getHeads().set("player.display-name", dn);
+            getHeads().set("player.price", p);
 		}
     }
 }

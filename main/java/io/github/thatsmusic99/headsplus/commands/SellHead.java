@@ -47,21 +47,26 @@ public class SellHead implements CommandExecutor {
                     ItemStack invi = checkHand((Player) sender);
                     if (args.length == 0 && (checkHand((Player) sender).getType() == Material.SKULL_ITEM) && (sender.hasPermission("headsplus.sellhead"))) { // If sold via hand
                         if (((SkullMeta)invi.getItemMeta()).getOwner() == null || ((SkullMeta)invi.getItemMeta()).getOwner().equalsIgnoreCase("HPXHead")) {
-                            for (String key : hpch.mHeads) {
-                                if (!key.equalsIgnoreCase("sheep")) {
-                                    if (checkSkullForTexture((Player) sender, invi, hpch.getHeads().getStringList(key + ".name"), key, args)) {
-                                        return true; // Ends because head is already sold
+                            if (HeadsPlus.getInstance().nms.isSellable(invi)) {
+                                for (String key : hpch.mHeads) {
+                                    if (!key.equalsIgnoreCase("sheep")) {
+                                        if (checkSkullForTexture((Player) sender, invi, hpch.getHeads().getStringList(key + ".name"), key, args)) {
+                                            return true; // Ends because head is already sold
+                                        }
+                                    } else {
+                                        if (checkColorSheep((Player) sender, args, invi)) {
+                                            return true;
+                                        }
                                     }
-                                } else {
-                                    if (checkColorSheep((Player) sender, args, invi)) {
+                                }
+                                for (String key : hpch.uHeads) {
+                                    if (checkSkullForTexture((Player) sender, invi, hpch.getHeads().getStringList(key + ".name"), key, args)) {
                                         return true;
                                     }
                                 }
-                            }
-                            for (String key : hpch.uHeads) {
-                                if (checkSkullForTexture((Player) sender, invi, hpch.getHeads().getStringList(key + ".name"), key, args)) {
-                                    return true;
-                                }
+                            } else {
+                                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', hpc.getMessages().getString("false-head")));
+                                return true;
                             }
                         }
                         SkullMeta skullM = (SkullMeta) invi.getItemMeta();
@@ -267,16 +272,10 @@ public class SellHead implements CommandExecutor {
 				for (ItemStack is : p.getInventory()) {
 					if (is != null) {
 						if (is.getType() == Material.SKULL_ITEM) {
-							if (is.getItemMeta().getLore() != null) {
-                                List<String> ls = new ArrayList<>();
-                                for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
-                                    ls.add(ChatColor.translateAlternateColorCodes('&', ChatColor.stripColor(str)));
-                                }
-								//if ((is.getItemMeta().getLore().size() == 2) && ((is.getItemMeta().getLore().equals(ls)))) {
-                                if (HeadsPlus.getInstance().nms.isSellable(is)) {
-									p.getInventory().remove(is);
-								}
-							}
+                            //if ((is.getItemMeta().getLore().size() == 2) && ((is.getItemMeta().getLore().equals(ls)))) {
+                            if (HeadsPlus.getInstance().nms.isSellable(is)) {
+                                p.getInventory().remove(is);
+                            }
 					    }
 					}
 				}
@@ -549,21 +548,27 @@ public class SellHead implements CommandExecutor {
 	private void sellAll(Player p, String[] a, ItemStack i) {
 		Double price = 0.0;
 		for (ItemStack is : p.getInventory()) {
-			if (is != null) {
-				if (is.getType().equals(Material.SKULL_ITEM)) {
-				    price = setPrice(price, a, is, p);
-			    }
-		 	}
-		}
-		if (hm.get("sheep") != 0 || hm.get("sheep") != null) {
-		    if (hm.get("sheep") % 3 == 0) {
-		        hm.put("sheep", hm.get("sheep") / 3);
+            if (is != null) {
+                if (is.getType().equals(Material.SKULL_ITEM)) {
+                    price = setPrice(price, a, is, p);
+                }
             }
         }
-		if (price == 0) {
-			p.sendMessage(ChatColor.translateAlternateColorCodes('&', hpc.getMessages().getString("no-heads")));
-			return;
-		}
+        try {
+            if (hm.get("sheep") != 0 || hm.get("sheep") != null) {
+                if (hm.get("sheep") % 3 == 0) {
+                    hm.put("sheep", hm.get("sheep") / 3);
+                }
+            }
+        } catch (Exception ignored) {
+
+        }
+
+        if (price == 0) {
+            p.sendMessage(ChatColor.translateAlternateColorCodes('&', hpc.getMessages().getString("no-heads")));
+            return;
+        }
+
 		pay(p, a, i, price);
 	}
 	private void pay(Player p, String[] a, ItemStack i, double pr) {

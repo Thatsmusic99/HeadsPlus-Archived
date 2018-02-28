@@ -33,7 +33,9 @@ mysql-usage: false
 leaderboards: true
 theme: classic
 pTheme: classic
+gui-glass-color: SILVER
 # challenges: true
+use-lore: false
 lore:
 - '&6&lThis head can be sold!'
 - '&6Do /sellhead to sell!'

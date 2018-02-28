@@ -79,11 +79,13 @@ public class DeathEvents implements Listener {
                 headM.setOwner(ep.getEntity().getName());
                 headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getHeads().getString("player.display-name").replaceAll("%d", ep.getEntity().getName())));
                 if ((HeadsPlus.getInstance().sellable) && (ep.getEntity().getKiller().hasPermission("headsplus.sellhead"))) {
-                    List<String> ls = new ArrayList<>();
-                    for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
-                        ls.add(ChatColor.translateAlternateColorCodes('&', str));
+                    if (HeadsPlus.getInstance().getConfig().getBoolean("use-lore")) {
+                        List<String> ls = new ArrayList<>();
+                        for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
+                            ls.add(ChatColor.translateAlternateColorCodes('&', str));
+                        }
+                        headM.setLore(ls);
                     }
-                    headM.setLore(ls);
                 }
                 head.setItemMeta(headM);
                 HeadsPlus.getInstance().nms.addNBTTag(head);
@@ -91,6 +93,7 @@ public class DeathEvents implements Listener {
                 double entityLocY = entityLoc.getY() + 1;
                 entityLoc.setY(entityLocY);
                 World world = ep.getEntity().getWorld();
+                head = HeadsPlus.getInstance().nms.addNBTTag(head);
                 PlayerHeadDropEvent event = new PlayerHeadDropEvent(ep.getEntity(), ep.getEntity().getKiller(), head, world, entityLoc);
                 Bukkit.getServer().getPluginManager().callEvent(event);
                 if (!event.isCancelled()) {
@@ -157,6 +160,7 @@ public class DeathEvents implements Listener {
             sm = (SkullMeta) i.getItemMeta();
         } else {
             i = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+
             sm = (SkullMeta) i.getItemMeta();
             sm.setOwner(s);
         }
@@ -166,13 +170,16 @@ public class DeathEvents implements Listener {
         for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
             ls.add(ChatColor.translateAlternateColorCodes('&', str));
         }
-        sm.setLore(ls);
+        if (HeadsPlus.getInstance().getConfig().getBoolean("use-lore")) {
+            sm.setLore(ls);
+        }
         i.setItemMeta(sm);
-        HeadsPlus.getInstance().nms.addNBTTag(i);
+
         Location entityLoc = e.getLocation();
         double entityLocY = entityLoc.getY() + 1;
         entityLoc.setY(entityLocY);
         World world = e.getWorld();
+        i = HeadsPlus.getInstance().nms.addNBTTag(i);
         EntityHeadDropEvent event = new EntityHeadDropEvent(k, i, world, entityLoc, e.getType());
         Bukkit.getServer().getPluginManager().callEvent(event);
         if (!event.isCancelled()) {

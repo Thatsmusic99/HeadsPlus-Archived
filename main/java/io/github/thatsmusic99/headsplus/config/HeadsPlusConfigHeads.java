@@ -204,37 +204,66 @@ public class HeadsPlusConfigHeads {
     }
 
     private void checkForOldFormat() {
-	    for (String key : mHeads) {
-	        if (!key.equalsIgnoreCase("sheep")) {
-                if (getHeads().getString(key + "HeadN") != null) {
-                    getHeads().set(key + ".name", getHeads().getStringList(key + "HeadN"));
-                    getHeads().set(key + ".chance", getHeads().getInt(key + "HeadC"));
-                    getHeads().set(key + ".display-name", getHeads().getString(key + "HeadDN"));
-                    getHeads().set(key + ".price", getHeads().getDouble(key + "HeadP"));
-                    getHeads().set(key + ".interact-name", getHeads().getString(key + "HeadEN"));
-                    getHeads().set(key + "HeadN", null);
+		if (getHeads().get("blazeHeadDN") instanceof String) {
+            for (String key : mHeads) {
+                if (!key.equalsIgnoreCase("sheep")) {
+                	List<String> ls = getHeads().getStringList(key + "HeadN");
+                	int c = getHeads().getInt(key + "HeadC");
+                	String dn = getHeads().getString(key + "HeadDN");
+                	double p = getHeads().getDouble(key + "HeadP");
+                	String e = getHeads().getString(key + "HeadEN");
+                	getHeads().set(key + "HeadN", null);
                     getHeads().set(key + "HeadC", null);
                     getHeads().set(key + "HeadDN", null);
                     getHeads().set(key + "HeadP", null);
                     getHeads().set(key + "HeadEN", null);
-                }
-            } else {
-	            if (getHeads().getString("sheepHeadN.default") != null) {
+                    getHeads().set(key + ".name", ls);
+                    getHeads().set(key + ".chance", c);
+                    getHeads().set(key + ".display-name", dn);
+                    getHeads().set(key + ".price", p);
+                    getHeads().set(key + ".interact-name", e);
+
+                } else {
+
                     getHeads().set("sheep.name.default", getHeads().getStringList("sheepHeadN.default"));
                     for (DyeColor dc : DyeColor.values()) {
                         getHeads().set("sheep.name." + dc.name(), getHeads().getStringList("sheepHeadN." + dc.name()));
                     }
-                    getHeads().set("sheep.chance", getHeads().getInt("sheepHeadC"));
-                    getHeads().set("sheep.display-name", getHeads().getString("sheepHeadDN"));
-                    getHeads().set("sheep.price", getHeads().getDouble("sheepHeadP"));
-                    getHeads().set("sheep.interact-name", getHeads().getString("sheepHeadEN"));
-                    getHeads().set(key + "HeadN", null);
-                    getHeads().set(key + "HeadC", null);
-                    getHeads().set(key + "HeadDN", null);
-                    getHeads().set(key + "HeadP", null);
-                    getHeads().set(key + "HeadEN", null);
+                    int c = getHeads().getInt(key + "HeadC");
+                    String dn = getHeads().getString(key + "HeadDN");
+                    double p = getHeads().getDouble(key + "HeadP");
+                    String e = getHeads().getString(key + "HeadEN");
+                    getHeads().set("sheepHeadN", null);
+                    getHeads().set("sheepHeadC", null);
+                    getHeads().set("sheepHeadDN", null);
+                    getHeads().set("sheepHeadP", null);
+                    getHeads().set("sheepHeadEN", null);
+                    getHeads().set("sheep.chance", c);
+                    getHeads().set("sheep.display-name", dn);
+                    getHeads().set("sheep.price", p);
+                    getHeads().set("sheep.interact-name", e);
+
                 }
+
             }
-        }
+            for (String key : uHeads) {
+                List<String> ls = getHeads().getStringList(key + "HeadN");
+                int c = getHeads().getInt(key + "HeadC");
+                String dn = getHeads().getString(key + "HeadDN");
+                double p = getHeads().getDouble(key + "HeadP");
+                String e = getHeads().getString(key + "HeadEN");
+                getHeads().set(key + "HeadN", null);
+                getHeads().set(key + "HeadC", null);
+                getHeads().set(key + "HeadDN", null);
+                getHeads().set(key + "HeadP", null);
+                getHeads().set(key + "HeadEN", null);
+                getHeads().set(key + ".name", ls);
+                getHeads().set(key + ".chance", c);
+                getHeads().set(key + ".display-name", dn);
+                getHeads().set(key + ".price", p);
+                getHeads().set(key + ".interact-name", e);
+
+            }
+		}
     }
 }

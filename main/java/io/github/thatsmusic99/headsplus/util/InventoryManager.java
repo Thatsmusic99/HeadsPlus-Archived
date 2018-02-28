@@ -244,7 +244,13 @@ public class InventoryManager {
                 //}
 
             }
-            ItemStack isi = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 8);
+            DyeColor dc;
+            try {
+                dc = DyeColor.valueOf(HeadsPlus.getInstance().getConfig().getString("gui-glass-color").toUpperCase());
+            } catch (Exception e) {
+                dc = DyeColor.SILVER;
+            }
+            ItemStack isi = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) dc.ordinal());
             ItemMeta ims = isi.getItemMeta();
             ims.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6"));
             isi.setItemMeta(ims);
@@ -287,8 +293,12 @@ public class InventoryManager {
             return i;
         } else {
             i = create("HeadsPlus challenges: " + cSection);
-            int ran = new Random().nextInt(DyeColor.values().length);
-            DyeColor dc = DyeColor.values()[ran];
+            DyeColor dc;
+            try {
+                dc = DyeColor.valueOf(HeadsPlus.getInstance().getConfig().getString("gui-glass-color").toUpperCase());
+            } catch (Exception e) {
+                dc = DyeColor.SILVER;
+            }
             ItemStack isi = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) dc.ordinal());
             ItemMeta ims = isi.getItemMeta();
             ims.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6"));

@@ -1,8 +1,10 @@
 package io.github.thatsmusic99.headsplus.nms;
 
+import org.bukkit.inventory.ItemStack;
+
 public interface NMSManager {
 
-    Object addNBTTag(Object item);
+    ItemStack addNBTTag(Object item);
 
     boolean isSellable(Object item);
 

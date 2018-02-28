@@ -8,13 +8,13 @@ import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
 public class v1_11_NMS implements NMSManager {
 
     @Override
-    public ItemStack addNBTTag(Object i) {
+    public org.bukkit.inventory.ItemStack addNBTTag(Object i) {
         ItemStack is = CraftItemStack.asNMSCopy((org.bukkit.inventory.ItemStack) i);
         if (is.getTag() == null) {
             is.setTag(new NBTTagCompound());
         }
         is.getTag().setBoolean("headsplus-sell", true);
-        return is;
+        return CraftItemStack.asBukkitCopy(is);
     }
 
     @Override

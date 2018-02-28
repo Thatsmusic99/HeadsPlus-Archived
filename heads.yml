@@ -1,239 +1,319 @@
 # HeadsPlus by Thatsmusic99 - Config wiki: https://github.com/Thatsmusic99/HeadsPlus/wiki/Configuration
-blazeHeadN:
-- MHF_Blaze
-blazeHeadC: 25
-blazeHeadDN: '&6&lBlaze &7&lHead'
-blazeHeadP: 50.0
-blazeHeadEN: Blaze
-cavespiderHeadN:
-- MHF_Cavespider
-cavespiderHeadC: 25
-cavespiderHeadDN: '&1&lCave &3&lSpider &7&lHead'
-cavespiderHeadP: 30.0
-cavespiderHeadEN: Cavespider
-chickenHeadN:
-- MHF_Chicken
-chickenHeadC: 25
-chickenHeadDN: '&lChicken &7&lHead'
-chickenHeadP: 10.0
-chickenHeadEN: Chicken
-cowHeadN:
-- MHF_Cow
-cowHeadC: 25
-cowHeadDN: '&8&lCow &7&lHead'
-cowHeadP: 10.0
-cowHeadEN: Cow
-creeperHeadN:
-- MHF_Creeper
-creeperHeadC: 25
-creeperHeadDN: '&a&lCreeper &7&lHead'
-creeperHeadP: 20.0
-creeperHeadEN: Creeper
-endermanHeadN:
-- MHF_Enderman
-endermanHeadC: 25
-endermanHeadDN: '&0&lEnderman &7&lHead'
-endermanHeadP: 30.0
-endermanHeadEN: Enderman
-ghastHeadN:
-- MHF_Ghast
-ghastHeadC: 25
-ghastHeadDN: '&lGhast &7&lHead'
-ghastHeadP: 50.0
-ghastHeadEN: Ghast
-guardianHeadN:
-- MHF_Guardian
-guardianHeadC: 25
-guardianHeadDN: '&3&lGuardian &7&lHead'
-guardianHeadP: 50.0
-guardianHeadEN: Guardian
-irongolemHeadN:
-- MHF_Golem
-irongolemHeadC: 25
-irongolemHeadDN: '&lIron Golem &7&lHead'
-irongolemHeadP: 30.0
-irongolemHeadEN: Iron Golem
-mushroomcowHeadN:
-- MHF_Mushroomcow
-mushroomcowHeadC: 25
-mushroomcowHeadDN: '&c&lMushroomcow &7&lHead'
-mushroomcowHeadP: 10.0
-mushroomcowHeadEN: Mushroomcow
-pigHeadN:
-- MHF_Pig
-pigHeadC: 25
-pigHeadDN: '&e&lPig &7&lHead'
-pigHeadP: 10.0
-pigHeadEN: Pig
-sheepHeadN:
-- MHF_Sheep
-sheepHeadC: 25
-sheepHeadDN: '&lSheep &7&lHead'
-sheepHeadP: 10.0
-sheepHeadEN: Sheep
-skeletonHeadN:
-- MHF_Skeleton
-skeletonHeadC: 25
-skeletonHeadDN: '&7&lSkeleton Head'
-skeletonHeadP: 15.0
-skeletonHeadEN: Skeleton
-slimeHeadN:
-- MHF_Slime
-slimeHeadC: 25
-slimeHeadDN: '&a&lSlime &7&lHead'
-slimeHeadP: 20.0
-slimeHeadEN: Slime
-spiderHeadN:
-- MHF_Spider
-spiderHeadC: 25
-spiderHeadDN: '&8&lSpider &7&lHead'
-spiderHeadP: 15.0
-spiderHeadEN: Spider
-squidHeadN:
-- MHF_Squid
-squidHeadC: 25
-squidHeadDN: '&9&lSquid &7&lHead'
-squidHeadP: 10.0
-squidHeadEN: Squid
-villagerHeadN:
-- MHF_Villager
-villagerHeadC: 25
-villagerHeadDN: '&6&lVillager &7&lHead'
-villagerHeadP: 10.0
-villagerHeadEN: Villager
-witchHeadN:
-- MHF_Witch
-witchHeadC: 25
-witchHeadDN: '&5&lWitch &7&lHead'
-witchHeadP: 20.0
-witchHeadEN: Witch
-zombieHeadN:
-- MHF_Zombie
-zombieHeadC: 25
-zombieHeadDN: '&2&lZombie &7&lHead'
-zombieHeadP: 15.0
-zombieHeadEN: Zombie
-batHeadN: []
-batHeadC: 0
-batHeadDN: ''
-batHeadP: 0.0
-batHeadEN: Bat
-donkeyHeadN: []
-donkeyHeadC: 0
-donkeyHeadDN: ''
-donkeyHeadP: 0.0
-donkeyHeadEN: Donkey
-enderdragonHeadN: []
-enderdragonHeadC: 0
-enderdragonHeadDN: ''
-enderdragonHeadP: 0.0
-enderdragonHeadEN: Enderdragon
-elderguardianHeadN: []
-elderguardianHeadC: 0
-elderguardianHeadDN: ''
-elderguardianHeadP: 0.0
-elderguardianHeadEN: Elderguardian
-endermiteHeadN: []
-endermiteHeadC: 0
-endermiteHeadDN: ''
-endermiteHeadP: 0.0
-endermiteHeadEN: Endermite
-evokerHeadN: []
-evokerHeadC: 0
-evokerHeadDN: ''
-evokerHeadP: 0.0
-evokerHeadEN: Evoker
-horseHeadN: []
-horseHeadC: 0
-horseHeadDN: ''
-horseHeadP: 0.0
-horseHeadEN: Horse
-llamaHeadN: []
-llamaHeadC: 0
-llamaHeadDN: ''
-llamaHeadP: 0.0
-llamaHeadEN: Llama
-magmacubeHeadN: []
-magmacubeHeadC: 0
-magmacubeHeadDN: ''
-magmacubeHeadP: 0.0
-magmacubeHeadEN: Magmacube
-muleHeadN: []
-muleHeadC: 0
-muleHeadDN: ''
-muleHeadP: 0.0
-muleHeadEN: Mule
-polarbearHeadN: []
-polarbearHeadC: 0
-polarbearHeadDN: ''
-polarbearHeadP: 0.0
-polarbearHeadEN: Polarbear
-rabbitHeadN:
-- MHF_Rabbit
-rabbitHeadC: 10
-rabbitHeadDN: '&e&lRabbit &7&lHead'
-rabbitHeadP: 10.0
-rabbitHeadEN: Rabbit
-shulkerHeadN: []
-shulkerHeadC: 0
-shulkerHeadDN: ''
-shulkerHeadP: 0.0
-shulkerHeadEN: Shulker
-silverfishHeadN: []
-silverfishHeadC: 0
-silverfishHeadDN: ''
-silverfishHeadP: 0.0
-silverfishHeadEN: Silverfish
-skeletonhorseHeadN: []
-skeletonhorseHeadC: 0
-skeletonhorseHeadDN: ''
-skeletonhorseHeadP: 0.0
-skeletonhorseHeadEN: Skeletonhorse
-snowmanHeadN: []
-snowmanHeadC: 0
-snowmanHeadDN: ''
-snowmanHeadP: 0.0
-snowmanHeadEN: Snowman
-strayHeadN: []
-strayHeadC: 0
-strayHeadDN: ''
-strayHeadP: 0.0
-strayHeadEN: Stray
-vexHeadN: []
-vexHeadC: 0
-vexHeadDN: ''
-vexHeadP: 0.0
-vexHeadEN: Vex
-vindicatorHeadN: []
-vindicatorHeadC: 0
-vindicatorHeadDN: ''
-vindicatorHeadP: 0.0
-vindicatorHeadEN: Vindicator
-witherHeadN: []
-witherHeadC: 0
-witherHeadDN: ''
-witherHeadP: 0.0
-witherHeadEN: Wither
-witherskeletonHeadN: []
-witherskeletonHeadC: 0
-witherskeletonHeadDN: ''
-witherskeletonHeadP: 0.0
-witherskeletonHeadEN: Witherskeleton
-playerHeadC: 100
-playerHeadDN: '&b&l%d''s &7&lhead'
-playerHeadP: 10.0
-appleHeadEN: Apple
+blaze:
+  name:
+  - MHF_Blaze
+  chance: 25
+  display-name: '&6&lBlaze &7&lHead'
+  price: 50.0
+  interact-name: Blaze
+cavespider:
+  name:
+  - MHF_Cavespider
+  chance: 25
+  display-name: '&1&lCave &3&lSpider &7&lHead'
+  price: 30.0
+  interact-name: Cavespider
+chicken:
+  name:
+  - MHF_Chicken
+  chance: 25
+  display-name: '&lChicken &7&lHead'
+  price: 10.0
+  interact-name: Chicken
+cow:
+  name:
+  - MHF_Cow
+  chance: 25
+  display-name: '&8&lCow &7&lHead'
+  price: 10.0
+  interact-name: Cow
+creeper:
+  name:
+  - MHF_Creeper
+  chance: 25
+  display-name: '&a&lCreeper &7&lHead'
+  price: 20.0
+  interact-name: Creeper
+enderman:
+  name:
+  - MHF_Enderman
+  chance: 25
+  display-name: '&0&lEnderman &7&lHead'
+  price: 30.0
+  interact-name: Enderman
+ghast:
+  name:
+  - MHF_Ghast
+  chance: 25
+  display-name: '&lGhast &7&lHead'
+  price: 50.0
+  interact-name: Ghast
+guardian:
+  name:
+  - MHF_Guardian
+  chance: 25
+  display-name: '&3&lGuardian &7&lHead'
+  price: 50.0
+  interact-name: Guardian
+irongolem:
+  name:
+  - MHF_Golem
+  chance: 25
+  display-name: '&lIron Golem &7&lHead'
+  price: 30.0
+  interact-name: Iron Golem
+mushroomcow:
+  name:
+  - MHF_Mushroomcow
+  chance: 25
+  display-name: '&c&lMushroomcow &7&lHead'
+  price: 10.0
+  interact-name: Mushroomcow
+rabbit:
+  name:
+  - MHF_Rabbit
+  chance: 10
+  display-name: '&e&lRabbit &7&lHead'
+  price: 10.0
+  interact-name: Rabbit
+pig:
+  name:
+  - MHF_Pig
+  chance: 25
+  display-name: '&e&lPig &7&lHead'
+  price: 10.0
+  interact-name: Pig
+sheep:
+  name:
+    default:
+    - MHF_Sheep
+    WHITE:
+    - HP#white_sheep
+    ORANGE:
+    - HP#orange_sheep
+    MAGENTA:
+    - HP#magenta_sheep
+    LIGHT_BLUE:
+    - HP#light_blue_sheep
+    YELLOW:
+    - HP#yellow_sheep
+    LIME:
+    - HP#lime_sheep
+    PINK:
+    - HP#pink_sheep
+    GRAY:
+    - HP#gray_sheep
+    SILVER:
+    - HP#silver_sheep
+    CYAN:
+    - HP#cyan_sheep
+    PURPLE:
+    - HP#purple_sheep
+    BLUE:
+    - HP#blue_sheep
+    BROWN:
+    - HP#brown_sheep
+    GREEN:
+    - HP#green_sheep
+    RED:
+    - HP#red_sheep
+    BLACK:
+    - HP#black_sheep
+  chance: 25
+  display-name: '&lSheep &7&lHead'
+  price: 10.0
+  interact-name: Sheep
+skeleton:
+  name:
+  - MHF_Skeleton
+  chance: 25
+  display-name: '&7&lSkeleton Head'
+  price: 15.0
+  interact-name: Skeleton
+slime:
+  name:
+  - MHF_Slime
+  chance: 25
+  display-name: '&a&lSlime &7&lHead'
+  price: 20.0
+  interact-name: Slime
+spider:
+  name:
+  - MHF_Spider
+  chance: 25
+  display-name: '&8&lSpider &7&lHead'
+  price: 15.0
+  interact-name: Spider
+squid:
+  name:
+  - MHF_Squid
+  chance: 25
+  display-name: '&9&lSquid &7&lHead'
+  price: 10.0
+  interact-name: Squid
+villager:
+  name:
+  - MHF_Villager
+  chance: 25
+  display-name: '&6&lVillager &7&lHead'
+  price: 10.0
+  interact-name: Villager
+witch:
+  name:
+  - MHF_Witch
+  chance: 25
+  display-name: '&5&lWitch &7&lHead'
+  price: 20.0
+  interact-name: Witch
+zombie:
+  name:
+  - MHF_Zombie
+  chance: 25
+  display-name: '&2&lZombie &7&lHead'
+  price: 15.0
+  interact-name: Zombie
+bat:
+  name: []
+  chance: 0
+  display-name: ''
+  price: 0.0
+  interact-name: Bat
+donkey:
+  name: []
+  chance: 0
+  display-name: ''
+  price: 0.0
+  interact-name: Donkey
+enderdragon:
+  name: []
+  chance: 0
+  display-name: ''
+  price: 0.0
+  interact-name: Enderdragon
+elderguardian:
+  name: []
+  chance: 0
+  display-name: ''
+  price: 0.0
+  interact-name: Elderguardian
+endermite:
+  name: []
+  chance: 0
+  display-name: ''
+  price: 0.0
+  interact-name: Endermite
+evoker:
+  name: []
+  chance: 0
+  display-name: ''
+  price: 0.0
+  interact-name: Evoker
+horse:
+  name: []
+  chance: 0
+  display-name: ''
+  price: 0.0
+  interact-name: Horse
+llama:
+  name: []
+  chance: 0
+  display-name: ''
+  price: 0.0
+  interact-name: Llama
+magmacube:
+  name: []
+  chance: 0
+  display-name: ''
+  price: 0.0
+  interact-name: Magmacube
+mule:
+  name: []
+  chance: 0
+  display-name: ''
+  price: 0.0
+  interact-name: Mule
+parrot:
+  name: []
+  chance: 0
+  display-name: ''
+  price: 0.0
+  interact-name: Parrot
+polarbear:
+  name: []
+  chance: 0
+  display-name: ''
+  price: 0.0
+  interact-name: Polarbear
+shulker:
+  name: []
+  chance: 0
+  display-name: ''
+  price: 0.0
+  interact-name: Shulker
+silverfish:
+  name: []
+  chance: 0
+  display-name: ''
+  price: 0.0
+  interact-name: Silverfish
+skeletonhorse:
+  name: []
+  chance: 0
+  display-name: ''
+  price: 0.0
+  interact-name: Skeletonhorse
+snowman:
+  name: []
+  chance: 0
+  display-name: ''
+  price: 0.0
+  interact-name: Snowman
+stray:
+  name: []
+  chance: 0
+  display-name: ''
+  price: 0.0
+  interact-name: Stray
+vex:
+  name: []
+  chance: 0
+  display-name: ''
+  price: 0.0
+  interact-name: Vex
+vindicator:
+  name: []
+  chance: 0
+  display-name: ''
+  price: 0.0
+  interact-name: Vindicator
+wither:
+  name: []
+  chance: 0
+  display-name: ''
+  price: 0.0
+  interact-name: Wither
+witherskeleton:
+  name: []
+  chance: 0
+  display-name: ''
+  price: 0.0
+  interact-name: Witherskeleton
+player:
+  chance: 100
+  display-name: '&b&l%d''s &7&lhead'
+  price: 10.0
 appleHeadN: MHF_apple
-cakeHeadEN: Cake
+appleN: MHF_apple
 cakeHeadN: MHF_cake
-chestHeadEN: Chest
+cakeN: MHF_cake
 chestHeadN: MHF_chest
-cactusHeadEN: Cactus
+chestN: MHF_chest
 cactusHeadN: MHF_cactus
-melonHeadEN: Melon
+cactusN: MHF_cactus
 melonHeadN: MHF_melon
-pumpkinHeadEN: Pumpkin
+melonN: MHF_melon
 pumpkinHeadN: MHF_pumpkin
+pumpkinN: MHF_pumpkin
 brownCoconutHeadEN: Brown Coconut
 brownCoconutHeadN: MHF_CoconutB
 greenCoconutHeadEN: Green Coconut
@@ -260,3 +340,9 @@ arrowRightHeadEN: Arrow pointing right
 arrowRightHeadN: MHF_ArrowRight
 exclamationHeadEN: Exclamation
 exclamationHeadN: MHF_Exclamation
+appleHeadEN: Apple
+cakeHeadEN: Cake
+chestHeadEN: Chest
+cactusHeadEN: Cactus
+melonHeadEN: Melon
+pumpkinHeadEN: Pumpkin

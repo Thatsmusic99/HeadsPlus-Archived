@@ -2,17 +2,17 @@ package io.github.thatsmusic99.headsplus.util;
 
 import java.util.List;
 
-public class PagedLists {
+public class PagedLists<T> {
 
     // Util by Thatsmusic99
 
-    private List<?> list;
+    private List<T> list;
     private int pages;
     private int contents;
     private int currentPage;
     private int contentsPerPage;
 
-    public PagedLists(List<?> list, int contentsPerPage) {
+    public PagedLists(List<T> list, int contentsPerPage) {
         if (contentsPerPage < 1) {
             throw new IllegalArgumentException("The provided int must be bigger than 0 for contents per page!");
         }
@@ -41,11 +41,11 @@ public class PagedLists {
         return currentPage;
     }
 
-    public List<?> getList() {
+    public List<T> getList() {
         return list;
     }
 
-    public List<?> getContentsInPage(int page) {
+    public List<T> getContentsInPage(int page) {
         if (page > getTotalPages()) {
             throw new IllegalArgumentException("The provided page is an int larger than the total number of pages!");
         }

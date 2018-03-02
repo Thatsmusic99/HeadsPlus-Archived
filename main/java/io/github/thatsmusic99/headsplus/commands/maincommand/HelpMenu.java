@@ -24,10 +24,9 @@ public class HelpMenu {
 	        		headPerms.add(key);
 	        	}
 	        }
-            PagedLists pl = new PagedLists(headPerms, 8);
+            PagedLists<PermissionEnums> pl = new PagedLists<>(headPerms, 8);
 		    sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + " HeadsPlus " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + "1/" + pl.getTotalPages() + " " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============");
-		    for (Object key : pl.getContentsInPage(1)) {
-		        PermissionEnums key2 = (PermissionEnums) key;
+		    for (PermissionEnums key2 : pl.getContentsInPage(1)) {
                 new FancyMessage()
                         .text(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + key2.cmd + " - " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + key2.dsc)
                         .command("/hp help " + key2.scmd)
@@ -47,15 +46,13 @@ public class HelpMenu {
 					}
 				}
 				int page = Integer.parseInt(str);
-				PagedLists pl = new PagedLists(headPerms, 8);
+				PagedLists<PermissionEnums> pl = new PagedLists<>(headPerms, 8);
 				
 				if ((page > pl.getTotalPages()) || (0 >= page)) {
 					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("invalid-pg-no"))));
 				} else {
 					sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + " HeadsPlus " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + String.valueOf(page) + "/" + String.valueOf(pl.getTotalPages()) + " " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============");
-					List<?> hppsl = pl.getContentsInPage(page);
-				    for (Object keyz : hppsl) {
-				        PermissionEnums key = (PermissionEnums) keyz;
+				    for (PermissionEnums key : pl.getContentsInPage(page)) {
 				        new FancyMessage()
                                 .text(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + key.cmd + " - " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + key.dsc)
                                 .command("/hp help " + key.scmd)

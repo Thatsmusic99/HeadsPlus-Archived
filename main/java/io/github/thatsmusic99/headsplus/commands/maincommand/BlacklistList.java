@@ -45,7 +45,7 @@ public class BlacklistList {
 				   List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("blacklist");
 				   int page = Integer.parseInt(i);
 
-                   PagedLists pl = new PagedLists(bl, 8);
+                   PagedLists<String> pl = new PagedLists<>(bl, 8);
 				  
 				   if ((page > pl.getTotalPages()) || (0 >= page)) {
 					   sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("invalid-pg-no"))));

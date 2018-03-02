@@ -22,7 +22,7 @@ public class HeadsPlusConfigHeads {
 	public FileConfiguration heads;
 	private File headsF;
 	
-	public FileConfiguration config;
+	private FileConfiguration config;
 
 	public HeadsPlusConfigHeads() {
 	    headsEnable();
@@ -32,7 +32,7 @@ public class HeadsPlusConfigHeads {
 		return heads;
 	}
 
-	public void headsEnable() {
+	private void headsEnable() {
 		config = HeadsPlus.getInstance().getConfig();
 		reloadHeads();
 		loadHeads();

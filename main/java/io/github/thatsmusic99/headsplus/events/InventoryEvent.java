@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.events;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.api.Challenge;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeDifficulty;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsXSections;
@@ -250,26 +251,24 @@ public class InventoryEvent implements Listener {
                     } else {
                         if (im != null) {
                             if (e.getCurrentItem().getType().equals(Material.STAINED_CLAY)) {
-                                for (String s : HeadsPlus.getInstance().hpchl.getChallenges().getConfigurationSection("challenges." + im.getSection().toUpperCase()).getKeys(false)) {
-                                    try {
-                                        if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + im.getSection().toUpperCase() + "." + s + ".header"))).equalsIgnoreCase(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()))) {
-                                            if (!HeadsPlus.getInstance().hpchl.isChallengeCompleted(p, s)) {
-                                                try {
-                                                    if (HeadsPlus.getInstance().hpchl.canComplete(p, s, im.getSection().toUpperCase())) {
-                                                        HeadsPlus.getInstance().hpchl.completeChallenge(p, s, e.getInventory(), im.getSection().toUpperCase(), e.getSlot());
-                                                    } else {
-                                                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlus.getInstance().hpc.getMessages().getString("cant-complete-challenge"))));
-                                                    }
-                                                } catch (SQLException e1) {
-                                                    e1.printStackTrace();
+                                Challenge challenge = HeadsPlus.getInstance().hapi.getChallenge(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()));
+                                try {
+                                    if (challenge != null) {
+                                        if (!challenge.isComplete(p)) {
+                                            try {
+                                                if (challenge.canComplete(p)) {
+                                                    challenge.complete(p, e.getInventory(), e.getSlot());
+                                                } else {
+                                                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlus.getInstance().hpc.getMessages().getString("cant-complete-challenge"))));
                                                 }
-                                            } else {
-                                                p.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlus.getInstance().hpc.getMessages().getString("already-complete-challenge"))));
+                                            } catch (SQLException e1) {
+                                                e1.printStackTrace();
                                             }
+                                        } else {
+                                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlus.getInstance().hpc.getMessages().getString("already-complete-challenge"))));
                                         }
-                                    } catch (NullPointerException ignored) {
-
                                     }
+                                }catch (NullPointerException ignored) {
                                 }
                             } else if (e.getCurrentItem().getType().equals(Material.ARROW)) {
                                 if (!im.getSection().equalsIgnoreCase("menu")) {

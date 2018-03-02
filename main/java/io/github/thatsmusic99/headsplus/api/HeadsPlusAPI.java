@@ -270,4 +270,13 @@ public class HeadsPlusAPI {
         return HeadsPlus.getInstance().challenges;
     }
 
+    public Challenge getChallenge(String challengeName) {
+        for (Challenge c : getChallenges()) {
+            if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', c.getChallengeHeader())).equals(challengeName)) {
+                return c;
+            }
+        }
+        return null;
+    }
+
 }

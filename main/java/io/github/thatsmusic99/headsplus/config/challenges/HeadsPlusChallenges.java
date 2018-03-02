@@ -1,28 +1,15 @@
 package io.github.thatsmusic99.headsplus.config.challenges;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeEnums;
-import io.github.thatsmusic99.headsplus.locale.LocaleManager;
-import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.permission.Permission;
-import org.apache.commons.lang.WordUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import io.github.thatsmusic99.headsplus.api.Challenge;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class HeadsPlusChallenges {
 
@@ -47,6 +34,7 @@ public class HeadsPlusChallenges {
         if (n) {
             loadChlnges();
         }
+        addChallenges();
         saveChallenges();
     }
 
@@ -104,126 +92,35 @@ public class HeadsPlusChallenges {
         }
     }
 
-    public boolean isChallengeCompleted(Player p, String s) {
-        if (getChallenges().getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").size() <= 0) {
-            getChallenges().addDefault("player-data." + p.getUniqueId().toString() + ".completed-challenges", new ArrayList<>());
-            return false;
-        } else {
-            return getChallenges().getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").contains(s);
-        }
-    }
-
-    private void addXp(Player p, int exp) {
-        if (getChallenges().getInt("player-data." + p.getUniqueId().toString() + ".profile.xp") <= 0) {
-            getChallenges().addDefault("player-data." + p.getUniqueId().toString() + ".profile.xp", exp);
-        } else {
-            int a = getChallenges().getInt("player-data." + p.getUniqueId().toString() + ".profile.xp");
-            a += exp;
-            getChallenges().set("player-data." + p.getUniqueId().toString() + ".profile.xp", a);
-        }
-        getChallenges().options().copyDefaults(true);
-        saveChallenges();
-    }
-
-    private void reward(Player p, String s, String dif) {
-        Economy econ = HeadsPlus.getInstance().econ;
-        Permission perms = HeadsPlus.getInstance().perms;
-        String re = getChallenges().getString("challenges." + dif + "." + s + ".reward-type");
-        if (re.equalsIgnoreCase("ECO")) {
-            econ.depositPlayer(p, getChallenges().getDouble("challenges." + dif + "." + s + ".reward-value"));
-        } else if (re.equalsIgnoreCase("ADD_GROUP")) {
-            if (!perms.playerInGroup(p, getChallenges().getString("challenges." + dif + "." + s + ".reward-value"))) {
-                perms.playerAddGroup(p, getChallenges().getString("challenges." + dif + "." + s + ".reward-value"));
-            }
-        } else if (re.equalsIgnoreCase("REMOVE_GROUP")) {
-            if (perms.playerInGroup(p, getChallenges().getString("challenges." + dif + "." + s + ".reward-value"))) {
-                perms.playerRemoveGroup(p, getChallenges().getString("challenges." + dif + "." + s + ".reward-value"));
-            }
-        } else if (re.equalsIgnoreCase("GIVE_ITEM")) {
-            try {
-                ItemStack is = new ItemStack(Material.valueOf(getChallenges().getString("challenges." + dif + "." + s + ".reward-value").toUpperCase()), getChallenges().getInt("challenges." + dif + "." + s +".item-amount"));
-                if (p.getInventory().firstEmpty() != -1) {
-                    p.getInventory().addItem(is);
+    private void addChallenges() {
+        for (String st : getChallenges().getConfigurationSection("challenges").getKeys(false)) {
+            for (String s : getChallenges().getConfigurationSection("challenges." + st).getKeys(false)) {
+                String name = getChallenges().getString("challenges." + st + "." + s + ".name");
+                String header = getChallenges().getString("challenges." + st + "." + s + ".header");
+                List<String> desc = getChallenges().getStringList("challenges." + st + "." + ".description");
+                HeadsPlusChallengeTypes type;
+                try {
+                    type = HeadsPlusChallengeTypes.valueOf(getChallenges().getString("challenges." + st + "." + s + ".type").toUpperCase());
+                } catch (Exception ex) {
+                    continue;
                 }
-            } catch (IllegalArgumentException ex) {
-                Logger log = HeadsPlus.getInstance().getLogger();
-                log.severe("Couldn't give reward to " + p.getName() + "! Details:");
-                log.warning("Challenge name: " + s);
-                log.warning("Difficulty: " + dif);
-                log.warning("Item name: " + getChallenges().getString("challenges." + dif + "." + s + ".reward-value").toUpperCase());
-                log.warning("Item amount: " + getChallenges().getInt("challenges." + dif + "." + s +".item-amount"));
-            }
-        }
-    }
-    public boolean canComplete(Player p, String s, String dif) throws SQLException {
-        if (challenges.getString("challenges." + dif + "." + s + ".type").equalsIgnoreCase("MISC")) {
-            return true;
-        } else if (challenges.getString("challenges." + dif + "." + s + ".type").equalsIgnoreCase("SELLHEAD")) {
-            if (HeadsPlus.getInstance().hapi.getPlayerInLeaderboards(p, challenges.getString("challenges." + dif + "." + s + ".head-type"), "headsplussh") >= challenges.getInt("challenges." + dif + "." + s + ".min")) {
-                return true;
-            }
-        } else if (challenges.getString("challenges." + dif + "." + s + ".type").equalsIgnoreCase("CRAFTING")) {
-            if (HeadsPlus.getInstance().hapi.getPlayerInLeaderboards(p, challenges.getString("challenges." + dif + "." + s + ".head-type"), "headspluscraft") >= challenges.getInt("challenges." + dif + "." + s + ".min")) {
-                return true;
-            }
-        } else if (challenges.getString("challenges." + dif + "." + s + ".type").equalsIgnoreCase("LEADERBOARD")) {
-            if (HeadsPlus.getInstance().hapi.getPlayerInLeaderboards(p, challenges.getString("challenges." + dif + "." + s + ".head-type"), "headspluslb") >= challenges.getInt("challenges." + dif + "." + s + ".min")) {
-                return true;
-            }
-        }
-        return false;
-    }
+                int min = getChallenges().getInt("challenges." + st + "." + s + ".min");
+                HPChallengeRewardTypes reward;
+                try {
+                    reward = HPChallengeRewardTypes.valueOf(getChallenges().getString("challenges." + st + "." + s + ".reward-type").toUpperCase());
+                } catch (Exception e) {
+                    continue;
+                }
+                Object rewardVal = getChallenges().get("challenges." + st + "." + s + ".reward-value");
+                int items = getChallenges().getInt("challenges." + st + "." + s + ".item-amount");
+                String headType = getChallenges().getString("challenges." + st + "." + s + ".head-type");
+                int xp = getChallenges().getInt("challenges." + st + "." + s + ".xp");
 
-    public void completeChallenge(Player p, String s, Inventory i, String dif, int in) {
-        List<String> str = getChallenges().getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges");
-        str.add(s);
-        getChallenges().set("player-data." + p.getUniqueId().toString() + ".completed-challenges", str);
-        ItemStack is = new ItemStack(Material.STAINED_CLAY, 1, (short) 13);
-        ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.translateAlternateColorCodes('&', getChallenges().getString("challenges." + dif + "." + s + ".header")));
-        List<String> lore = new ArrayList<>();
-        for (String st : getChallenges().getStringList("challenges." + dif + "." + s + ".description")) {
-            lore.add(ChatColor.translateAlternateColorCodes('&', st));
-        }
-        StringBuilder sb = new StringBuilder();
-        sb.append(ChatColor.GOLD).append("Reward: ");
-        String re = getChallenges().getString("challenges." + dif + "." + s + ".reward-type");
-        StringBuilder sb2 = new StringBuilder();
-        if (re.equalsIgnoreCase("ECO")) {
-            sb.append(ChatColor.GREEN).append("$").append(getChallenges().getDouble("challenges." + dif + "." + s + ".reward-value"));
-            sb2.append("$").append(getChallenges().getDouble("challenges." + dif + "." + s + ".reward-value"));
-        } else if (re.equalsIgnoreCase("GIVE_ITEM")) {
-            try {
-                Material.valueOf(getChallenges().getString("challenges." + dif + "." + s + ".reward-value").toUpperCase());
-                sb
-                        .append(ChatColor.GREEN)
-                        .append(getChallenges().getInt("challenges." + dif + "." + s +".item-amount"))
-                        .append(" ")
-                        .append(WordUtils.capitalize(HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + dif + "." + s + ".reward-value").replaceAll("_", " ")))
-                        .append(getChallenges().getInt("challenges." + dif + "." + s +".item-amount") > 1 ? "(s)" : "");
-                sb2
-                        .append(getChallenges().getInt("challenges." + dif + "." + s +".item-amount"))
-                        .append(" ")
-                        .append(WordUtils.capitalize(HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + dif + "." + s + ".reward-value").replaceAll("_", " ")))
-                        .append(getChallenges().getInt("challenges." + dif + "." + s +".item-amount") > 1 ? "(s)" : "");
-            } catch (IllegalArgumentException e) {
-                //
+                Challenge c = new Challenge(s, name, header, desc, min, type, reward, rewardVal, items, headType, xp);
+                HeadsPlus.getInstance().challenges.add(c);
+
             }
         }
-        lore.add(sb.toString());
-        lore.add(ChatColor.GOLD + "XP: " + ChatColor.GREEN + getChallenges().getInt("challenges." + dif + "." + s +".xp"));
-        lore.add(ChatColor.GREEN + "Completed!");
-        im.setLore(lore);
-        is.setItemMeta(im);
-        i.setItem(in, is);
-        addXp(p, getChallenges().getInt("challenges." + dif + "." + s +".xp"));
-        reward(p, s, dif);
-        for (Player pl : Bukkit.getOnlinePlayers()) {
-            pl.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlus.getInstance().hpc.getMessages().getString("challenge-complete")
-            .replaceAll("%c", getChallenges().getString("challenges." + dif + "." + s + ".name"))
-            .replaceAll("%p", p.getName()))));
-        }
-        p.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + LocaleManager.getLocale().getReward() + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + sb2.toString());
-        p.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "XP: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + getChallenges().getInt("challenges." + dif + "." + s +".xp"));
+
     }
 }

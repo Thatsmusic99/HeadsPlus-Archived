@@ -68,7 +68,7 @@ public class HeadsPlus extends JavaPlugin {
     public List<Challenge> challenges = new ArrayList<>();
     public NMSManager nms;
 
-    public FileConfiguration config;
+    private FileConfiguration config;
 
     @SuppressWarnings("unused")
 	private File messagesF;

@@ -4,6 +4,8 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.api.Challenge;
+import io.github.thatsmusic99.headsplus.config.challenges.HPChallengeRewardTypes;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeDifficulty;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeEnums;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
@@ -155,7 +157,7 @@ public class InventoryManager {
             cPage = 1;
         }
         if (type.equalsIgnoreCase("heads")) {
-            PagedLists ls;
+            PagedLists<String> ls;
             sections = hpchx.getHeadsX().getConfigurationSection("sections").getKeys(false).size();
             heads = hpchx.getHeadsX().getConfigurationSection("heads").getKeys(false).size();
 
@@ -165,7 +167,7 @@ public class InventoryManager {
                 //     sections++;
                 // }
 
-                ls = new PagedLists(new ArrayList<>(hpchx.getHeadsX().getConfigurationSection("sections").getKeys(false)), 28);
+                ls = new PagedLists<>(new ArrayList<>(hpchx.getHeadsX().getConfigurationSection("sections").getKeys(false)), 27);
                 i = create("HeadsPlus Head selector: page " + cPage + "/" + ls.getTotalPages());
                 for (Object str : ls.getContentsInPage(cPage)) {
                     String st = (String) str;
@@ -213,7 +215,7 @@ public class InventoryManager {
 
                 heads = s.size();
 
-                ls = new PagedLists(new ArrayList<>(s.values()), 28);
+                ls = new PagedLists<>(new ArrayList<>(s.values()), 28);
                 i = create("HeadsPlus Head selector: page " + cPage + "/" + ls.getTotalPages());
                 for (Object str : ls.getContentsInPage(cPage)) {
                     if (hpchx.getHeadsX().getBoolean("heads." + str + ".database")) {
@@ -231,7 +233,7 @@ public class InventoryManager {
                     }
                 }
                 heads = l.size();
-                ls = new PagedLists(l, 28);
+                ls = new PagedLists<>(l, 28);
                 i = create("HeadsPlus Head selector: page " + cPage + "/" + ls.getTotalPages());
                 for (Object str : ls.getContentsInPage(cPage)) {
                     if (hpchx.getHeadsX().getBoolean("heads." + str + ".database")) {
@@ -329,67 +331,70 @@ public class InventoryManager {
                 is2.setItemMeta(im);
                 i.setItem(4, is2);
             } else {
-                for (HeadsPlusChallengeDifficulty hpcd : HeadsPlusChallengeDifficulty.values()) {
-                    if (hpcd.key.equalsIgnoreCase(cSection)) {
-                        Set<String> aa = HeadsPlus.getInstance().hpchl.getChallenges().getConfigurationSection("challenges." + hpcd.name()).getKeys(false);
-                        List<String> bb = new ArrayList<>();
-                        bb.addAll(aa);
-                        PagedLists pl = new PagedLists(bb, 27);
-                        int in = 0;
-                        for (Object s : pl.getContentsInPage(cPage)) {
-                            String str = (String) s;
-                            ItemStack is;
-                            if (HeadsPlus.getInstance().hpchl.isChallengeCompleted(p, str)) {
-                                is = new ItemStack(Material.STAINED_CLAY, 1, (short) 13);
-                            } else {
-                                is = new ItemStack(Material.STAINED_CLAY, 1, (short) 14);
-                            }
-                            ItemMeta im = is.getItemMeta();
-                            im.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + hpcd.name() + "." + s + ".header")));
-                            List<String> lore = new ArrayList<>();
-                            for (String st : HeadsPlus.getInstance().hpchl.getChallenges().getStringList("challenges." + hpcd.name() + "." + s + ".description")) {
-                                lore.add(ChatColor.translateAlternateColorCodes('&', st));
-                            }
-                            StringBuilder sb = new StringBuilder();
-                            sb.append(ChatColor.GOLD).append("Reward: ");
-                            String re = HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + hpcd.name() + "." + s + ".reward-type");
-                            if (re.equalsIgnoreCase("ECO")) {
-                                sb.append(ChatColor.GREEN).append("$").append(HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + hpcd.name() + "." + s + ".reward-value"));
-                            } else if (re.equalsIgnoreCase("GIVE_ITEM")) {
-                                try {
-                                    Material.valueOf(HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + hpcd.name() + "." + s + ".reward-value"));
-                                    sb.append(ChatColor.GREEN).append(HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + hpcd.name() + "." + s +".item-amount")).append(" ").append(WordUtils.capitalize(HeadsPlus.getInstance().hpchl.getChallenges().getString("challenges." + hpcd.name() + "." + s + ".reward-value").toLowerCase().replaceAll("_", " "))).append("(s)");
-                                } catch (IllegalArgumentException ignored) {
-
-                                }
-                            }
-                            lore.add(sb.toString());
-                            lore.add(ChatColor.GOLD + "XP: " + ChatColor.GREEN + HeadsPlus.getInstance().hpchl.getChallenges().getInt("challenges." + hpcd.name() + "." + s +".xp"));
-                            if (HeadsPlus.getInstance().hpchl.isChallengeCompleted(p, str)) {
-                                lore.add(ChatColor.GREEN + "Completed!");
-                            }
-                            im.setLore(lore);
-                            is.setItemMeta(im);
-                            i.setItem(pos()[in], is);
-                            in++;
-                        }
+                List<Challenge> cs = new ArrayList<>();
+                for (Challenge c : HeadsPlus.getInstance().challenges) {
+                    if (c.getChallengeType().name().equalsIgnoreCase(cSection)) {
+                        cs.add(c);
                     }
-                    int ch = HeadsPlus.getInstance().hpchl.getChallenges().getConfigurationSection("challenges." + cSection.toUpperCase()).getKeys(false).size();
-                    int cch = HeadsPlus.getInstance().hpchl.getChallenges().getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").size();
-                    setItem(i, "Back", 8);
-                    ItemStack is2 = new ItemStack(Material.PAPER);
-                    ItemMeta im = is2.getItemMeta();
-                    im.setDisplayName(ChatColor.GOLD + "[" + ChatColor.YELLOW + "" + ChatColor.BOLD + "Stats" + ChatColor.GOLD + "]");
-                    List<String> lore = new ArrayList<>();
-                    lore.add(ChatColor.GREEN + "Total challenges: " + ch);
-                    lore.add(ChatColor.GREEN + "Total pages: " + pages);
-                    lore.add(ChatColor.GREEN + "Total sections: " + sections) ;
-                    lore.add(ChatColor.GREEN + "Completed challenges: " + cch);
-                    lore.add(ChatColor.GREEN + "Current section: " + section);
-                    im.setLore(lore);
-                    is2.setItemMeta(im);
-                    i.setItem(4, is2);
                 }
+                PagedLists<Challenge> pl = new PagedLists<>(cs, 27);
+                int in = 0;
+                for (Challenge c : pl.getContentsInPage(cPage)) {
+                    ItemStack is;
+                    if (c.isComplete(p)) {
+                        is = new ItemStack(Material.STAINED_CLAY, 1, (short) 13);
+                    } else {
+                        is = new ItemStack(Material.STAINED_CLAY, 1, (short) 14);
+                    }
+                    ItemMeta im = is.getItemMeta();
+                    im.setDisplayName(ChatColor.translateAlternateColorCodes('&', c.getChallengeHeader()));
+                    List<String> lore = new ArrayList<>();
+                    for (String st : c.getDescription()) {
+                        lore.add(ChatColor.translateAlternateColorCodes('&', st));
+                    }
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(ChatColor.GOLD).append("Reward: ");
+                    HPChallengeRewardTypes re = c.getRewardType();
+                    if (re == HPChallengeRewardTypes.ECO) {
+                        sb.append(ChatColor.GREEN).append("$").append(HeadsPlus.getInstance().hpchl.getChallenges().getString(c.getRewardValue().toString()));
+                    } else if (re == HPChallengeRewardTypes.GIVE_ITEM) {
+                        try {
+                            Material.valueOf(c.getRewardValue().toString());
+                            sb.append(ChatColor.GREEN).append(c.getRewardItemAmount()).append(" ").append(WordUtils.capitalize(c.getRewardValue().toString().toLowerCase().replaceAll("_", " "))).append("(s)");
+                        } catch (IllegalArgumentException ignored) {
+
+                        }
+                    } else if (re == HPChallengeRewardTypes.ADD_GROUP) {
+                        sb.append(ChatColor.GREEN).append("Group ").append(c.getRewardValue().toString()).append(" addition");
+                    } else {
+                        sb.append(ChatColor.GREEN).append("Group ").append(c.getRewardValue().toString()).append(" removal");
+                    }
+                    lore.add(sb.toString());
+                    lore.add(ChatColor.GOLD + "XP: " + ChatColor.GREEN + c.getGainedXP());
+                    if (c.isComplete(p)) {
+                        lore.add(ChatColor.GREEN + "Completed!");
+                    }
+                    im.setLore(lore);
+                    is.setItemMeta(im);
+                    i.setItem(pos()[in], is);
+                    in++;
+                }
+
+                int ch = HeadsPlus.getInstance().challenges.size();
+                int cch = HeadsPlus.getInstance().hpchl.getChallenges().getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").size();
+                setItem(i, "Back", 8);
+                ItemStack is2 = new ItemStack(Material.PAPER);
+                ItemMeta im = is2.getItemMeta();
+                im.setDisplayName(ChatColor.GOLD + "[" + ChatColor.YELLOW + "" + ChatColor.BOLD + "Stats" + ChatColor.GOLD + "]");
+                List<String> lore = new ArrayList<>();
+                lore.add(ChatColor.GREEN + "Total challenges: " + ch);
+                lore.add(ChatColor.GREEN + "Total pages: " + pages);
+                lore.add(ChatColor.GREEN + "Total sections: " + sections) ;
+                lore.add(ChatColor.GREEN + "Completed challenges: " + cch);
+                lore.add(ChatColor.GREEN + "Current section: " + section);
+                im.setLore(lore);
+                is2.setItemMeta(im);
+                i.setItem(4, is2);
             }
             return i;
         }

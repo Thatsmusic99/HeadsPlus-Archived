@@ -20,10 +20,9 @@ public class WhitelistList {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("empty-wl"))));
                 return;
             }
-            PagedLists pl = new PagedLists(bl, 8);
+            PagedLists<String> pl = new PagedLists<>(bl, 8);
             sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "============ " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + "Whitelist: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + "1/" + pl.getTotalPages() + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + " ==========" );
-            for (Object key2 : pl.getContentsInPage(1)) {
-                String key = (String) key2;
+            for (String key : pl.getContentsInPage(1)) {
                 sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + key);
             }
         } else {
@@ -35,14 +34,13 @@ public class WhitelistList {
             if (i.matches("^[0-9]+$")) {
                 List<String> wl = HeadsPlus.getInstance().getConfig().getStringList("whitelist");
                 int page = Integer.parseInt(i);
-                PagedLists pl = new PagedLists(wl, 8);
+                PagedLists<String> pl = new PagedLists<>(wl, 8);
                 if ((page > pl.getTotalPages()) || (0 >= page)) {
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("invalid-pg-no"))));
                 } else {
                     sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "============ " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + "Whitelist: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + page + "/" + pl.getTotalPages() + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + " ==========");
 
-                    for (Object key2 : pl.getContentsInPage(page)) {
-                        String key = (String) key2;
+                    for (String key : pl.getContentsInPage(page)) {
                         sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + key);
                     }
                 }

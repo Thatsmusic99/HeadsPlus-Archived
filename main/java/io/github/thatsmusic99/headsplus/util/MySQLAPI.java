@@ -327,7 +327,7 @@ public class MySQLAPI {
                     try {
                         hs.put(name, Integer.valueOf(rs2.getString(section)));
                     } catch (NumberFormatException ex) {
-
+                        //
                     }
 
                 }

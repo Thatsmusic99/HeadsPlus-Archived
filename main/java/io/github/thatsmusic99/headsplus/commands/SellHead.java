@@ -71,12 +71,6 @@ public class SellHead implements CommandExecutor {
                         }
                         SkullMeta skullM = (SkullMeta) invi.getItemMeta();
                         String owner = skullM.getOwner();
-                        List<String> ls = new ArrayList<>();
-                        for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
-                            ls.add(ChatColor.translateAlternateColorCodes('&', ChatColor.stripColor(str)));
-                        }
-
-                     //   if ((skullM.getLore() != null) &&  (skullM.getLore().equals(ls))) {
 		                if (HeadsPlus.getInstance().nms.isSellable(invi)) {
                             Economy econ = HeadsPlus.getInstance().econ;
                             List<String> mHeads = hpch.mHeads;
@@ -272,7 +266,6 @@ public class SellHead implements CommandExecutor {
 				for (ItemStack is : p.getInventory()) {
 					if (is != null) {
 						if (is.getType() == Material.SKULL_ITEM) {
-                            //if ((is.getItemMeta().getLore().size() == 2) && ((is.getItemMeta().getLore().equals(ls)))) {
                             if (HeadsPlus.getInstance().nms.isSellable(is)) {
                                 p.getInventory().remove(is);
                             }
@@ -290,11 +283,6 @@ public class SellHead implements CommandExecutor {
 		    		if (is != null) {
 		    			if (is.getType() == Material.SKULL_ITEM) {
 		    				SkullMeta sm = (SkullMeta) is.getItemMeta();
-                            List<String> ls = new ArrayList<>();
-                            for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
-                                ls.add(ChatColor.translateAlternateColorCodes('&', ChatColor.stripColor(str)));
-                            }
-						//	if ((sm.getLore() != null) && (sm.getLore().equals(ls))) {
                             if (HeadsPlus.getInstance().nms.isSellable(is)) {
 								boolean found = false;
 								for (String s : hpch.mHeads) {
@@ -707,10 +695,7 @@ public class SellHead implements CommandExecutor {
         for (String aLs2 : ls2) {
 
             if (sm.getOwner().equalsIgnoreCase(aLs2)) {
-                List<String> ls = new ArrayList<>();
-                for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
-                    ls.add(ChatColor.translateAlternateColorCodes('&', ChatColor.stripColor(str)));
-                }
+
                 if (HeadsPlus.getInstance().nms.isSellable(i)) {
                     soldHeads.add(s);
                     i(s);
@@ -718,10 +703,7 @@ public class SellHead implements CommandExecutor {
                 }
             } else if (sm.getOwner().equalsIgnoreCase("HPXHead")) {
                 if (hpchx.isHPXSkull(aLs2)) {
-                    List<String> ls = new ArrayList<>();
-                    for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
-                        ls.add(ChatColor.translateAlternateColorCodes('&', ChatColor.stripColor(str)));
-                    }
+
                     GameProfile gm = h(i);
                     for (Property pr : gm.getProperties().get("textures")) {
                         if (pr.getValue().equals(hpchx.getTextures(aLs2))) {

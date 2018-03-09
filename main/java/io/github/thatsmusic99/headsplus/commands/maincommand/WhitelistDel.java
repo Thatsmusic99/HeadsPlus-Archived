@@ -33,22 +33,22 @@ public class WhitelistDel {
                             config.set("whitelist", wl);
                             config.options().copyDefaults(true);
                             HeadsPlus.getInstance().saveConfig();
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("head-removed-wl").replaceAll("%p", name))));
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("head-removed-wl").replaceAll("%p", name))));
                         } else {
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("head-a-removed-wl"))));
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("head-a-removed-wl"))));
 
                         }} catch (Exception e) {
                         HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove head!");
                         e.printStackTrace();
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("wl-fail"))));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wl-fail"))));
                     }
                 } catch (Exception e) {
                     HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove head!");
                     e.printStackTrace();
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("wl-fail"))));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wl-fail"))));
                 }
             } else {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("alpha-names"))));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("alpha-names"))));
             }
         } else {
             sender.sendMessage(new HeadsPlusCommand().noPerms);

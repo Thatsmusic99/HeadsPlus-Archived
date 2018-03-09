@@ -67,6 +67,7 @@ public class HeadsPlus extends JavaPlugin {
     public HeadsPlusAPI hapi;
     public List<Challenge> challenges = new ArrayList<>();
     public NMSManager nms;
+    public List<IHeadsPlusCommand> commands = new ArrayList<>();
 
     private FileConfiguration config;
 
@@ -80,7 +81,7 @@ public class HeadsPlus extends JavaPlugin {
 			setUpMConfig();
 
 			try {
-                hpc.getMessages().getString("locale");
+                hpc.getConfig().getString("locale");
                 LocaleManager.class.newInstance().setupLocale();
             } catch (NullPointerException ex) {
                 hpc = new HeadsPlusConfig(true);
@@ -183,7 +184,7 @@ public class HeadsPlus extends JavaPlugin {
     		s = s.replaceAll("'$", "");
     	}
     	if (s.contains("%h")) {
-    		s = s.replaceAll("%h", ChatColor.translateAlternateColorCodes('&', hpc.getMessages().getString("prefix")));
+    		s = s.replaceAll("%h", ChatColor.translateAlternateColorCodes('&', hpc.getConfig().getString("prefix")));
     	}
 		return s;
     }
@@ -324,4 +325,9 @@ public class HeadsPlus extends JavaPlugin {
 	        nms = new v1_12_NMS();
         }
     }
+
+    private void registerSubCommands() {
+
+    }
+
 }

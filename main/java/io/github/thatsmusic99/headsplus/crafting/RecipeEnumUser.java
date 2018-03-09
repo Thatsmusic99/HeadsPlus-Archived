@@ -16,8 +16,8 @@ import java.util.List;
 
 public class RecipeEnumUser {
 	
-	private final FileConfiguration crafting = HeadsPlus.getInstance().hpcr.getCrafting();
-	private final FileConfiguration heads = HeadsPlus.getInstance().hpch.getHeads();
+	private final FileConfiguration crafting = HeadsPlus.getInstance().hpcr.getConfig();
+	private final FileConfiguration heads = HeadsPlus.getInstance().hpch.getConfig();
 	private List<ShapelessRecipe> recipes = new ArrayList<>();
 
 	public RecipeEnumUser() {

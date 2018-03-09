@@ -40,7 +40,7 @@ public class JoinEvent implements Listener {
 		if (e.getPlayer().hasPermission("headsplus.notify")) {
 		    if (HeadsPlus.getInstance().getConfig().getBoolean("update-notify")) {
                 if (HeadsPlus.update != null) {
-                    new FancyMessage().text(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("update-found"))))
+                    new FancyMessage().text(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("update-found"))))
                     .tooltip(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getCurrentVersion() + HeadsPlus.getInstance().getDescription().getVersion())
 							+ "\n" + ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getNewVersion() + HeadsPlus.update[2])
 							+ "\n" + ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getDescription() + HeadsPlus.update[1])).link("https://www.spigotmc.org/resources/headsplus-1-8-x-1-12-x.40265/updates/").send(e.getPlayer());
@@ -66,20 +66,20 @@ public class JoinEvent implements Listener {
 
 						      if (!(messagesF.exists())) {
 						    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Messages not found, creating!");
-						    	  hpc.reloadMessages(false);
-						    	  hpc.messages = YamlConfiguration.loadConfiguration(messagesF);
+						    	  hpc.reloadC(false);
+						    	  hpc.config = YamlConfiguration.loadConfiguration(messagesF);
 						    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Messages created!");
 						      } else {
-						    	  hpc.reloadMessages(false);
+						    	  hpc.reloadC(false);
 						      }
 						      HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().hpch;
 						      if (!(headsF.exists())) {
 						    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Heads not found, creating!");
-						    	  hpch.reloadHeads();
-						    	  hpch.heads = YamlConfiguration.loadConfiguration(headsF);
+						    	  hpch.reloadC(false);
+						    	  hpch.config = YamlConfiguration.loadConfiguration(headsF);
 						    	  HeadsPlus.getInstance().log.info("[HeadsPlus] Heads created!");
 						      } else {
-						    	  hpch.reloadHeads();
+						    	  hpch.reloadC(false);
 						      }
 						      if (HeadsPlus.getInstance().hpcr != null) {
 								  HeadsPlusCrafting hpcr = HeadsPlus.getInstance().hpcr;
@@ -87,14 +87,14 @@ public class JoinEvent implements Listener {
 									  if (HeadsPlus.getInstance().getConfig().getBoolean("craftHeads")) {
 										  HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting not found, creating!");
 										  Bukkit.clearRecipes();
-										  hpcr.reloadCrafting();
-										  hpcr.crafting = YamlConfiguration.loadConfiguration(craftingF);
+										  hpcr.reloadC(false);
+										  hpcr.config = YamlConfiguration.loadConfiguration(craftingF);
 										  new RecipeEnumUser();
 										  HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting created!");
 									  }
 								  } else {
 									  Bukkit.resetRecipes();
-									  hpcr.reloadCrafting();
+									  hpcr.reloadC(false);
 									  new RecipeEnumUser();
 								  }
 							  }
@@ -102,12 +102,12 @@ public class JoinEvent implements Listener {
 						      if (!headsXF.exists()) {
                                   if (HeadsPlus.getInstance().getConfig().getBoolean("headsDatabase")) {
                                   	  HeadsPlus.getInstance().log.info("[HeadsPlus] HeadsX not found, creating!");
-                                      hpchx.reloadHeadsX();
-                                      hpchx.headsx = YamlConfiguration.loadConfiguration(headsXF);
+                                      hpchx.reloadC(false);
+                                      hpchx.config = YamlConfiguration.loadConfiguration(headsXF);
                                       HeadsPlus.getInstance().log.info("[HeadsPlus] HeadsX created!");
 								  }
                               } else {
-							      hpchx.reloadHeadsX();
+							      hpchx.reloadC(false);
                               }
 					}});
 			    	timer.setRepeats(false); // Make it so it does not repeat every 3 seconds

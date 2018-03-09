@@ -2,44 +2,40 @@ package io.github.thatsmusic99.headsplus.config.challenges;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.Challenge;
+import io.github.thatsmusic99.headsplus.config.ConfigSettings;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
-public class HeadsPlusChallenges {
+public class HeadsPlusChallenges extends ConfigSettings {
 
-    public FileConfiguration challenges;
-    private File challengesF;
 
     public HeadsPlusChallenges() {
-        chlngeEnable();
+        this.conName = "challenges";
+        enable(false);
     }
 
-    private void chlngeEnable() {
-        reloadChlnges();
-    }
-
-    public void reloadChlnges() {
+    @Override
+    public void reloadC(boolean a) {
         boolean n = false;
-        if (challengesF == null) {
+        if (configF == null) {
             n = true;
-            challengesF = new File(HeadsPlus.getInstance().getDataFolder(), "challenges.yml");
+            configF = new File(HeadsPlus.getInstance().getDataFolder(), "challenges.yml");
         }
-        challenges = YamlConfiguration.loadConfiguration(challengesF);
+        config = YamlConfiguration.loadConfiguration(configF);
         if (n) {
-            loadChlnges();
+            load(false);
         }
         addChallenges();
-        saveChallenges();
+        save();
     }
 
-    private void loadChlnges() {
-        challenges.options().header("HeadsPlus by Thatsmusic99 - Challenge configuration" +
+    @Override
+    public void load(boolean aaaan) {
+        getConfig().options().header("HeadsPlus by Thatsmusic99 - Challenge configuration" +
                 "\nKey for challenges:" +
                 "\nHeader - what is displayed as the challenge title." +
                 "\nDescription - Description for the challenge." +
@@ -52,71 +48,57 @@ public class HeadsPlusChallenges {
                 "\nXP - Amount of XP (HeadsPlus levels) that will be received.");
 
         for (HeadsPlusChallengeEnums hpc : HeadsPlusChallengeEnums.values()) {
-            challenges.addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".name", hpc.dName);
-            challenges.addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".header", hpc.h);
-            challenges.addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".description", hpc.d);
-            challenges.addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".type", hpc.p.name());
-            challenges.addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".min", hpc.m);
-            challenges.addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".reward-type", hpc.r.name());
-            challenges.addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".reward-value", hpc.o instanceof Material ? ((Material) hpc.o).name() : hpc.o);
-            challenges.addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".item-amount", hpc.a);
-            challenges.addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".head-type", hpc.t);
-            challenges.addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".xp", hpc.exp);
+            getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".name", hpc.dName);
+            getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".header", hpc.h);
+            getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".description", hpc.d);
+            getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".type", hpc.p.name());
+            getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".min", hpc.m);
+            getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".reward-type", hpc.r.name());
+            getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".reward-value", hpc.o instanceof Material ? ((Material) hpc.o).name() : hpc.o);
+            getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".item-amount", hpc.a);
+            getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".head-type", hpc.t);
+            getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".xp", hpc.exp);
         }
         if (!HeadsPlus.getInstance().con) {
-            getChallenges().addDefault("server-total.sellhead.total", 0);
+            getConfig().addDefault("server-total.sellhead.total", 0);
             for (EntityType e : HeadsPlus.getInstance().de.ableEntities) {
-                getChallenges().addDefault("server-total.sellhead." + e.name(), 0);
+                getConfig().addDefault("server-total.sellhead." + e.name(), 0);
             }
-            getChallenges().addDefault("server-total.crafting.total", 0);
+            getConfig().addDefault("server-total.crafting.total", 0);
             for (EntityType e : HeadsPlus.getInstance().de.ableEntities) {
-                getChallenges().addDefault("server-total.crafting." + e.name(), 0);
+                getConfig().addDefault("server-total.crafting." + e.name(), 0);
             }
         }
-        getChallenges().options().copyDefaults(true);
-        saveChallenges();
-    }
-
-    public FileConfiguration getChallenges() {
-        return challenges;
-    }
-
-    public void saveChallenges() {
-        if (challenges == null || challengesF == null) {
-            return;
-        }
-        try {
-            challenges.save(challengesF);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        getConfig().options().copyDefaults(true);
+        save();
     }
 
     private void addChallenges() {
-        for (String st : getChallenges().getConfigurationSection("challenges").getKeys(false)) {
-            for (String s : getChallenges().getConfigurationSection("challenges." + st).getKeys(false)) {
-                String name = getChallenges().getString("challenges." + st + "." + s + ".name");
-                String header = getChallenges().getString("challenges." + st + "." + s + ".header");
-                List<String> desc = getChallenges().getStringList("challenges." + st + "." + ".description");
+        HeadsPlus.getInstance().challenges.clear();
+        for (String st : getConfig().getConfigurationSection("challenges").getKeys(false)) {
+            for (String s : getConfig().getConfigurationSection("challenges." + st).getKeys(false)) {
+                String name = getConfig().getString("challenges." + st + "." + s + ".name");
+                String header = getConfig().getString("challenges." + st + "." + s + ".header");
+                List<String> desc = getConfig().getStringList("challenges." + st + "." + s + ".description");
                 HeadsPlusChallengeTypes type;
                 try {
-                    type = HeadsPlusChallengeTypes.valueOf(getChallenges().getString("challenges." + st + "." + s + ".type").toUpperCase());
+                    type = HeadsPlusChallengeTypes.valueOf(getConfig().getString("challenges." + st + "." + s + ".type").toUpperCase());
                 } catch (Exception ex) {
                     continue;
                 }
-                int min = getChallenges().getInt("challenges." + st + "." + s + ".min");
+                int min = getConfig().getInt("challenges." + st + "." + s + ".min");
                 HPChallengeRewardTypes reward;
                 try {
-                    reward = HPChallengeRewardTypes.valueOf(getChallenges().getString("challenges." + st + "." + s + ".reward-type").toUpperCase());
+                    reward = HPChallengeRewardTypes.valueOf(getConfig().getString("challenges." + st + "." + s + ".reward-type").toUpperCase());
                 } catch (Exception e) {
                     continue;
                 }
-                Object rewardVal = getChallenges().get("challenges." + st + "." + s + ".reward-value");
-                int items = getChallenges().getInt("challenges." + st + "." + s + ".item-amount");
-                String headType = getChallenges().getString("challenges." + st + "." + s + ".head-type");
-                int xp = getChallenges().getInt("challenges." + st + "." + s + ".xp");
+                Object rewardVal = getConfig().get("challenges." + st + "." + s + ".reward-value");
+                int items = getConfig().getInt("challenges." + st + "." + s + ".item-amount");
+                String headType = getConfig().getString("challenges." + st + "." + s + ".head-type");
+                int xp = getConfig().getInt("challenges." + st + "." + s + ".xp");
 
-                Challenge c = new Challenge(s, name, header, desc, min, type, reward, rewardVal, items, headType, xp);
+                Challenge c = new Challenge(s, name, header, desc, min, type, reward, rewardVal, items, headType, xp, HeadsPlusChallengeDifficulty.valueOf(st.toUpperCase()));
                 HeadsPlus.getInstance().challenges.add(c);
 
             }

@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus.api;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.challenges.HPChallengeRewardTypes;
+import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeDifficulty;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeTypes;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallenges;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
@@ -35,8 +36,9 @@ public class Challenge {
     private int rewardItemAmount;
     private String headType;
     private int gainedXP;
+    private HeadsPlusChallengeDifficulty difficulty;
 
-    public Challenge(String configName, String mainName, String header, List<String> description, int requiredHeadAmount, HeadsPlusChallengeTypes challengeType, HPChallengeRewardTypes rewardType, Object rewardValue, int rewardItemAmount, String headType, int gainedXP) {
+    public Challenge(String configName, String mainName, String header, List<String> description, int requiredHeadAmount, HeadsPlusChallengeTypes challengeType, HPChallengeRewardTypes rewardType, Object rewardValue, int rewardItemAmount, String headType, int gainedXP, HeadsPlusChallengeDifficulty difficulty) {
         this.configName = configName;
         this.mainName = mainName;
         this.header = header;
@@ -48,6 +50,7 @@ public class Challenge {
         this.rewardItemAmount = rewardItemAmount;
         this.headType = headType;
         this.gainedXP = gainedXP;
+        this.difficulty = difficulty;
     }
 
     public String getConfigName() {
@@ -94,6 +97,10 @@ public class Challenge {
         return gainedXP;
     }
 
+    public HeadsPlusChallengeDifficulty getDifficulty() {
+        return difficulty;
+    }
+
     public boolean canComplete(Player p) throws SQLException {
         if (getChallengeType() == HeadsPlusChallengeTypes.MISC) {
             return true;
@@ -114,9 +121,9 @@ public class Challenge {
     }
 
     public boolean isComplete(Player p) {
-        FileConfiguration c = HeadsPlus.getInstance().hpchl.getChallenges();
+        FileConfiguration c = HeadsPlus.getInstance().hpchl.getConfig();
         if (c.getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").size() <= 0) {
-            HeadsPlus.getInstance().hpchl.getChallenges().addDefault("player-data." + p.getUniqueId().toString() + ".completed-challenges", new ArrayList<>());
+            HeadsPlus.getInstance().hpchl.getConfig().addDefault("player-data." + p.getUniqueId().toString() + ".completed-challenges", new ArrayList<>());
             return false;
         } else {
             return c.getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").contains(getConfigName());
@@ -125,9 +132,9 @@ public class Challenge {
 
     public void complete(Player p, Inventory i, int slot) {
         HeadsPlusChallenges hpc = HeadsPlus.getInstance().hpchl;
-        List<String> str = hpc.getChallenges().getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges");
+        List<String> str = hpc.getConfig().getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges");
         str.add(getConfigName());
-        hpc.getChallenges().set("player-data." + p.getUniqueId().toString() + ".completed-challenges", str);
+        hpc.getConfig().set("player-data." + p.getUniqueId().toString() + ".completed-challenges", str);
         ItemStack is = new ItemStack(Material.STAINED_CLAY, 1, (short) 13);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.translateAlternateColorCodes('&', getChallengeHeader()));
@@ -169,7 +176,7 @@ public class Challenge {
         addXp(p);
         reward(p);
         for (Player pl : Bukkit.getOnlinePlayers()) {
-            pl.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlus.getInstance().hpc.getMessages().getString("challenge-complete")
+            pl.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlus.getInstance().hpc.getConfig().getString("challenge-complete")
                     .replaceAll("%c", getMainName())
                     .replaceAll("%p", p.getName()))));
         }
@@ -182,7 +189,7 @@ public class Challenge {
         Permission perms = HeadsPlus.getInstance().perms;
         HPChallengeRewardTypes re = getRewardType();
         if (re == HPChallengeRewardTypes.ECO) {
-            econ.depositPlayer(p, (Double) getRewardValue());
+            econ.depositPlayer(p, Double.valueOf(String.valueOf(getRewardValue())));
         } else if (re == HPChallengeRewardTypes.ADD_GROUP) {
             if (!perms.playerInGroup(p, (String) getRewardValue())) {
                 perms.playerAddGroup(p, (String) getRewardValue());
@@ -210,14 +217,14 @@ public class Challenge {
 
     private void addXp(Player p) {
         HeadsPlusChallenges hpc = HeadsPlus.getInstance().hpchl;
-        if (hpc.getChallenges().getInt("player-data." + p.getUniqueId().toString() + ".profile.xp") <= 0) {
-            hpc.getChallenges().addDefault("player-data." + p.getUniqueId().toString() + ".profile.xp", getGainedXP());
+        if (hpc.getConfig().getInt("player-data." + p.getUniqueId().toString() + ".profile.xp") <= 0) {
+            hpc.getConfig().addDefault("player-data." + p.getUniqueId().toString() + ".profile.xp", getGainedXP());
         } else {
-            int a = hpc.getChallenges().getInt("player-data." + p.getUniqueId().toString() + ".profile.xp");
+            int a = hpc.getConfig().getInt("player-data." + p.getUniqueId().toString() + ".profile.xp");
             a += getGainedXP();
-            hpc.getChallenges().set("player-data." + p.getUniqueId().toString() + ".profile.xp", a);
+            hpc.getConfig().set("player-data." + p.getUniqueId().toString() + ".profile.xp", a);
         }
-        hpc.getChallenges().options().copyDefaults(true);
-        hpc.saveChallenges();
+        hpc.getConfig().options().copyDefaults(true);
+        hpc.save();
     }
 }

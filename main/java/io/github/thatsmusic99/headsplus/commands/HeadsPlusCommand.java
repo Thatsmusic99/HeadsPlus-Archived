@@ -17,8 +17,8 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 public class HeadsPlusCommand implements CommandExecutor {
 
     private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
-	public final String noPerms = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("no-perm")));
-	private final String tooManyArgs = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("too-many-args")));
+	public final String noPerms = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("no-perm")));
+	private final String tooManyArgs = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("too-many-args")));
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		HelpMenu hm = new HelpMenu();
@@ -310,4 +310,13 @@ public class HeadsPlusCommand implements CommandExecutor {
        
 	} return false;
 	}
+
+	private IHeadsPlusCommand getCommandByName(String name) {
+	    for (IHeadsPlusCommand hpc : HeadsPlus.getInstance().commands) {
+	        if (hpc.getCmdName().equalsIgnoreCase(name)) {
+	            return hpc;
+            }
+        }
+        return null;
+    }
 }

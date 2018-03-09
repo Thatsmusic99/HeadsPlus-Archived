@@ -4,76 +4,53 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.events.DeathEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import java.io.File;
-import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 
-public class HeadsPlusLeaderboards {
+public class HeadsPlusLeaderboards extends ConfigSettings {
 
-    public FileConfiguration lb;
-    private File lbF;
     private DeathEvents de = HeadsPlus.getInstance().de;
 
-    public FileConfiguration getLeaderboards() {
-        return lb;
-    }
-    public void lbFileEnable() {
-        reloadLeaderboards();
-    }
-
     public HeadsPlusLeaderboards() {
-        lbFileEnable();
+        this.conName = "leaderboards";
+        enable(false);
     }
 
-    public void reloadLeaderboards() {
+    @Override
+    public void reloadC(boolean aaaa) {
         boolean n = false;
-        if (lbF == null) {
-            lbF = new File(HeadsPlus.getInstance().getDataFolder(), "leaderboards.yml");
+        if (configF == null) {
+            configF = new File(HeadsPlus.getInstance().getDataFolder(), "leaderboards.yml");
             n = true;
         }
-        lb = YamlConfiguration.loadConfiguration(lbF);
+        config = YamlConfiguration.loadConfiguration(configF);
         if (n) {
             loadLeaderboards();
         }
-        saveLeaderboards();
-
-    }
-    public void saveLeaderboards() {
-
-        if (lb == null || lbF == null) {
-            return;
-        }
-
-        try {
-            lb.save(lbF);
-        } catch (IOException e) {
-            HeadsPlus.getInstance().log.severe("[HeadsPlus] Couldn't save leaderboards.yml!");
-            e.printStackTrace();
-        }
+        save();
 
     }
 
     private void loadLeaderboards() {
         try {
-            getLeaderboards().options().header("HeadsPlus by Thatsmusic99 - Config wiki: https://github.com/Thatsmusic99/HeadsPlus/wiki/Configuration");
-            getLeaderboards().addDefault("server-total.total", 0);
+            getConfig().options().header("HeadsPlus by Thatsmusic99 - Config wiki: https://github.com/Thatsmusic99/HeadsPlus/wiki/Configuration");
+            getConfig().addDefault("server-total.total", 0);
             for (EntityType e : de.ableEntities) {
-                getLeaderboards().addDefault("server-total." + e.name(), 0);
+                getConfig().addDefault("server-total." + e.name(), 0);
             }
             try {
-                if (getLeaderboards().getInt("server-total") != 0) {
-                    getLeaderboards().set("server-total.total", getLeaderboards().getInt("server-total"));
+                if (getConfig().getInt("server-total") != 0) {
+                    getConfig().set("server-total.total", getConfig().getInt("server-total"));
                 }
             } catch (Exception ignored) {
             }
-            getLeaderboards().options().copyDefaults(true);
-            saveLeaderboards();
+            getConfig().options().copyDefaults(true);
+            save();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -105,13 +82,13 @@ public class HeadsPlusLeaderboards {
                 e.printStackTrace();
             }
         } else {
-            getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + ".total", 0);
-            getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + "." + section, 0);
-            int s = getLeaderboards().getInt("server-total");
+            getConfig().addDefault("player-data." + p.getUniqueId().toString() + ".total", 0);
+            getConfig().addDefault("player-data." + p.getUniqueId().toString() + "." + section, 0);
+            int s = getConfig().getInt("server-total");
             s++;
-            getLeaderboards().set("server-total", s);
-            getLeaderboards().options().copyDefaults(true);
-            saveLeaderboards();
+            getConfig().set("server-total", s);
+            getConfig().options().copyDefaults(true);
+            save();
         }
     }
 
@@ -179,12 +156,12 @@ public class HeadsPlusLeaderboards {
 
             }
         } else {
-            getLeaderboards().addDefault("player-data." + p.getUniqueId().toString() + "." + section, 0);
-            int s = getLeaderboards().getInt("server-total");
+            getConfig().addDefault("player-data." + p.getUniqueId().toString() + "." + section, 0);
+            int s = getConfig().getInt("server-total");
             s++;
-            getLeaderboards().set("server-total", s);
-            getLeaderboards().options().copyDefaults(true);
-            saveLeaderboards();
+            getConfig().set("server-total", s);
+            getConfig().options().copyDefaults(true);
+            save();
         }
     }
 
@@ -226,17 +203,17 @@ public class HeadsPlusLeaderboards {
 
         } else {
             try {
-                int i = getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + "." + section);
+                int i = getConfig().getInt("player-data." + p.getUniqueId().toString() + "." + section);
                 i++;
-                getLeaderboards().set("player-data." + p.getUniqueId().toString() + "." + section, i);
-                int is = getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + ".total");
+                getConfig().set("player-data." + p.getUniqueId().toString() + "." + section, i);
+                int is = getConfig().getInt("player-data." + p.getUniqueId().toString() + ".total");
                 is++;
-                getLeaderboards().set("player-data." + p.getUniqueId().toString() + ".total", is);
-                int s = getLeaderboards().getInt("server-total");
+                getConfig().set("player-data." + p.getUniqueId().toString() + ".total", is);
+                int s = getConfig().getInt("server-total");
                 s++;
-                getLeaderboards().set("server-total", s);
-                getLeaderboards().options().copyDefaults(true);
-                saveLeaderboards();
+                getConfig().set("server-total", s);
+                getConfig().options().copyDefaults(true);
+                save();
             } catch (Exception e) {
                 try {
                     addNewPlayerValue(p, section);
@@ -279,9 +256,9 @@ public class HeadsPlusLeaderboards {
             return hs;
         } else {
             LinkedHashMap<OfflinePlayer, Integer> hs = new LinkedHashMap<>();
-            for (String cs : getLeaderboards().getConfigurationSection("player-data").getKeys(false)) {
+            for (String cs : getConfig().getConfigurationSection("player-data").getKeys(false)) {
                 OfflinePlayer p = Bukkit.getOfflinePlayer(UUID.fromString(cs));
-                int i = getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + "." + section);
+                int i = getConfig().getInt("player-data." + p.getUniqueId().toString() + "." + section);
                 hs.put(p, i);
             }
             hs = sortHashMapByValues(hs);
@@ -351,7 +328,7 @@ public class HeadsPlusLeaderboards {
 
         } else {
             try {
-                if (getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + ".total") != 0) {
+                if (getConfig().getInt("player-data." + p.getUniqueId().toString() + ".total") != 0) {
                     return true;
                 } else {
                     addPlayer(p, section);
@@ -400,8 +377,8 @@ public class HeadsPlusLeaderboards {
             }
         } else {
             try {
-                if (getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + "." + section) != 0) {
-                    getLeaderboards().getInt("player-data." + p.getUniqueId().toString() + "." + section);
+                if (getConfig().getInt("player-data." + p.getUniqueId().toString() + "." + section) != 0) {
+                    getConfig().getInt("player-data." + p.getUniqueId().toString() + "." + section);
                     return true;
                 } else {
                     addNewPlayerValue(p, section);

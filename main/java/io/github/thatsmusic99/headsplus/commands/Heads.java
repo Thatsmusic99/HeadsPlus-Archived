@@ -28,7 +28,7 @@ public class Heads implements CommandExecutor {
                 cs.sendMessage("[HeadsPlus] You have to be a player to run this command!");
             }
         } else {
-            cs.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().hpc.getMessages().getString("disabled")));
+            cs.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().hpc.getConfig().getString("disabled")));
         }
         return true;
     }

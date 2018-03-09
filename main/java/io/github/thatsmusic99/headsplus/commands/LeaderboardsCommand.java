@@ -62,7 +62,7 @@ public class LeaderboardsCommand implements CommandExecutor {
                             cs.sendMessage(getLeaderboard(args[0], 1));
                         }
                     } else {
-                        cs.sendMessage(HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', hpc.getMessages().getString("invalid-args"))));
+                        cs.sendMessage(HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', hpc.getConfig().getString("invalid-args"))));
                     }
                 }
 
@@ -91,12 +91,12 @@ public class LeaderboardsCommand implements CommandExecutor {
             return sb.toString();
         } catch (IllegalArgumentException ex) {
             if (ph.getHs().size() > 0) {
-                return HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', hpc.getMessages().getString("invalid-pg-no")));
+                return HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', hpc.getConfig().getString("invalid-pg-no")));
             } else {
-                return HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', hpc.getMessages().getString("no-data-lb")));
+                return HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', hpc.getConfig().getString("no-data-lb")));
             }
         } catch (NullPointerException ex) {
-            return HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', hpc.getMessages().getString("no-data-lb")));
+            return HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', hpc.getConfig().getString("no-data-lb")));
         }
     }
 }

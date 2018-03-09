@@ -19,17 +19,17 @@ public class WhitelistwToggle {
                     config.set("whitelistwOn", false);
                     config.options().copyDefaults(true);
                     HeadsPlus.getInstance().saveConfig();
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("wlw-off"))));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wlw-off"))));
                 } else if (!config.getBoolean("whitelistwOn")) {
                     config.set("whitelistwOn", true);
                     config.options().copyDefaults(true);
                     HeadsPlus.getInstance().saveConfig();
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("wlw-on"))));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wlw-on"))));
                 }
             } catch (Exception e) {
                 HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to toggle world whitelist!");
                 e.printStackTrace();
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("wlw-fail"))));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wlw-fail"))));
             }
         } else {
             sender.sendMessage(new HeadsPlusCommand().noPerms);
@@ -43,9 +43,9 @@ public class WhitelistwToggle {
                         config.set("whitelistwOn", true);
                         config.options().copyDefaults(true);
                         HeadsPlus.getInstance().saveConfig();
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("wlw-on"))));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wlw-on"))));
                     } else {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("wlw-a-on"))));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wlw-a-on"))));
                     }
 
                 } else if (str.equalsIgnoreCase("off")) {
@@ -53,9 +53,9 @@ public class WhitelistwToggle {
                         config.set("whitelistwOn", false);
                         config.options().copyDefaults(true);
                         HeadsPlus.getInstance().saveConfig();
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("wlw-off"))));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wlw-off"))));
                     } else {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("wlw-a-off"))));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wlw-a-off"))));
                     }
                 } else {
                     sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/headsplus whitelistw [On|Off]");
@@ -63,7 +63,7 @@ public class WhitelistwToggle {
             } catch (Exception e) {
                 HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to toggle world whitelist!");
                 e.printStackTrace();
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("wlw-fail"))));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wlw-fail"))));
             }
         } else {
             sender.sendMessage(new HeadsPlusCommand().noPerms);

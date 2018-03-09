@@ -30,24 +30,24 @@ public class WhitelistAdd {
                     List<String> wl = config.getStringList("whitelist");
                     String aHead = name.toLowerCase();
                     if (wl.contains(aHead)) {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("head-a-add"))));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("head-a-add"))));
                     } else {
                         wl.add(aHead);
                         config.set("whitelist", wl);
                         config.options().copyDefaults(true);
                         HeadsPlus.getInstance().saveConfig();
 
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("head-added-wl").replaceAll("%p", name))));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("head-added-wl").replaceAll("%p", name))));
                     }
                 } catch (Exception e) {
                     HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to add head!");
                     e.printStackTrace();
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("wl-fail"))));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wl-fail"))));
 
 
                 }
             } else {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("alpha-names"))));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("alpha-names"))));
             }
         } else {
             sender.sendMessage(new HeadsPlusCommand().noPerms);

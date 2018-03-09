@@ -17,7 +17,7 @@ public class WhitelistList {
         if (sender.hasPermission("headsplus.maincommand.whitelist.list")) {
             List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("whitelist");
             if (bl.size() < 1) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("empty-wl"))));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("empty-wl"))));
                 return;
             }
             PagedLists<String> pl = new PagedLists<>(bl, 8);
@@ -36,7 +36,7 @@ public class WhitelistList {
                 int page = Integer.parseInt(i);
                 PagedLists<String> pl = new PagedLists<>(wl, 8);
                 if ((page > pl.getTotalPages()) || (0 >= page)) {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("invalid-pg-no"))));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("invalid-pg-no"))));
                 } else {
                     sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "============ " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + "Whitelist: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + page + "/" + pl.getTotalPages() + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + " ==========");
 
@@ -45,7 +45,7 @@ public class WhitelistList {
                     }
                 }
             } else {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("invalid-input-int"))));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("invalid-input-int"))));
             }
         } else {
             sender.sendMessage(new HeadsPlusCommand().noPerms);

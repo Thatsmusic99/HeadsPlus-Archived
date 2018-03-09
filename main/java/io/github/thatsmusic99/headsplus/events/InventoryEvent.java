@@ -102,7 +102,7 @@ public class InventoryEvent implements Listener {
                                         return;
                                     } else {
                                         if (e.getWhoClicked().getInventory().firstEmpty() == -1) {
-                                            e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("full-inv")));
+                                            e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getConfig().getString("full-inv")));
                                             e.setCancelled(true);
                                             return;
                                         }
@@ -111,19 +111,19 @@ public class InventoryEvent implements Listener {
                                         return;
                                     }
                                 } else {
-                                    e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("xmas-denied")));
+                                    e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getConfig().getString("xmas-denied")));
                                     e.setCancelled(true);
                                     return;
                                 }
                             }
                         }
 
-                        e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getMessages().getString("xmas-denied")));
+                        e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getConfig().getString("xmas-denied")));
                         e.setCancelled(true);
                         return;
                     } */
                     if (e.getWhoClicked().getInventory().firstEmpty() == -1) {
-                        e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', hpc.getMessages().getString("full-inv")));
+                        e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', hpc.getConfig().getString("full-inv")));
                         e.setCancelled(true);
                         return;
                     }
@@ -134,16 +134,16 @@ public class InventoryEvent implements Listener {
                         } catch (NumberFormatException ex) {
                             HeadsPlus.getInstance().log.log(Level.SEVERE, "[HeadsPlus] HeadsX.yml fault! Please check your config, and make sure the price value for your heads are set to a double value, or 'Free' or 'default'!");
                             HeadsPlus.getInstance().log.log(Level.SEVERE, "Value: " + e.getCurrentItem().getItemMeta().getLore().get(0).split(" ")[1]);
-                            String fail = HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("buy-fail"));
+                            String fail = HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("buy-fail"));
                             fail = ChatColor.translateAlternateColorCodes('&', fail);
                             e.getWhoClicked().sendMessage(fail);
                             e.setCancelled(true);
                             return;
                         }
                         EconomyResponse er = HeadsPlus.getInstance().econ.withdrawPlayer((OfflinePlayer) e.getWhoClicked(), price);
-                        String success = HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("buy-success")).replaceAll("%l", Double.toString(er.amount)).replaceAll("%b", Double.toString(er.balance));
+                        String success = HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("buy-success")).replaceAll("%l", Double.toString(er.amount)).replaceAll("%b", Double.toString(er.balance));
                         success = ChatColor.translateAlternateColorCodes('&', success);
-                        String fail = HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("buy-fail"));
+                        String fail = HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("buy-fail"));
                         fail = ChatColor.translateAlternateColorCodes('&', fail);
                         if (er.transactionSuccess()) {
                             e.getWhoClicked().sendMessage(success);
@@ -259,13 +259,13 @@ public class InventoryEvent implements Listener {
                                                 if (challenge.canComplete(p)) {
                                                     challenge.complete(p, e.getInventory(), e.getSlot());
                                                 } else {
-                                                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlus.getInstance().hpc.getMessages().getString("cant-complete-challenge"))));
+                                                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlus.getInstance().hpc.getConfig().getString("cant-complete-challenge"))));
                                                 }
                                             } catch (SQLException e1) {
                                                 e1.printStackTrace();
                                             }
                                         } else {
-                                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlus.getInstance().hpc.getMessages().getString("already-complete-challenge"))));
+                                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlus.getInstance().hpc.getConfig().getString("already-complete-challenge"))));
                                         }
                                     }
                                 }catch (NullPointerException ignored) {

@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import java.util.List;
 
+import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.util.PagedLists;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -10,7 +11,7 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
-public class BlacklistList {
+public class BlacklistList implements IHeadsPlusCommand {
 
 	private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 	
@@ -20,7 +21,7 @@ public class BlacklistList {
 			List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("blacklist");
 			int bls = bl.size();
 			if (bls < 1) {
-				sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("empty-bl"))));
+				sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("empty-bl"))));
 				return;
 			}
 			while (bls > 8) {
@@ -48,7 +49,7 @@ public class BlacklistList {
                    PagedLists<String> pl = new PagedLists<>(bl, 8);
 				  
 				   if ((page > pl.getTotalPages()) || (0 >= page)) {
-					   sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("invalid-pg-no"))));
+					   sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("invalid-pg-no"))));
 				   } else {
 					   sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "============ " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + "Blacklist: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + page + "/" + pl.getTotalPages() + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + " ==========");
 
@@ -58,11 +59,45 @@ public class BlacklistList {
 				       }
 				   }
 	       } else {
-		       sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getMessages().getString("invalid-input-int"))));
+		       sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("invalid-input-int"))));
 		   }
 	} else {
     	sender.sendMessage(new HeadsPlusCommand().noPerms);
     }
 	}
 
+	@Override
+	public String getCmdName() {
+		return null;
+	}
+
+	@Override
+	public String getPermission() {
+		return null;
+	}
+
+	@Override
+	public String getCmdDescription() {
+		return null;
+	}
+
+	@Override
+	public String getSubCommand() {
+		return null;
+	}
+
+	@Override
+	public String getUsage() {
+		return null;
+	}
+
+	@Override
+	public boolean isMainCommand() {
+		return false;
+	}
+
+	@Override
+	public boolean fire(String[] args, CommandSender sender) {
+		return false;
+	}
 }

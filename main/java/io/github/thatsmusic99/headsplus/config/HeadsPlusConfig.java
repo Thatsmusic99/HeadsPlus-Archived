@@ -1,219 +1,178 @@
 package io.github.thatsmusic99.headsplus.config;
 
-import java.io.File;
-import java.io.IOException;
-
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 
-import io.github.thatsmusic99.headsplus.HeadsPlus;
-
-public class HeadsPlusConfig {
-	public FileConfiguration messages;
-	private File messagesF;
+public class HeadsPlusConfig extends ConfigSettings {
 
 	public HeadsPlusConfig(boolean nullpoint) {
-        msgEnable(nullpoint);
+	    this.conName = "messages";
+        enable(nullpoint);
     }
-	
-	public FileConfiguration getMessages() {
-		return messages;
-	}
-	private void msgEnable(boolean nullpoint) {
-		reloadMessages(nullpoint);
-		loadMessages(nullpoint);
-	}
-	
-	private void loadMessages(boolean nullpoint) {
 
-		getMessages().options().header("HeadsPlus by Thatsmusic99 \nPlease do NOT change pLocale! This will be used to change the plugin's language in the future!");
+	@Override
+	public void load(boolean nullpoint) {
 
-		getMessages().addDefault("prefix", "&1[&6HeadsPlus&1]");
-		getMessages().addDefault("locale", "en_uk");
-		getMessages().addDefault("pLocale", "en_uk");
-		getMessages().addDefault("reloading-message", "%h &3Reloading config...");
-		getMessages().addDefault("reload-message", "%h &3Config has reloaded!");
-		getMessages().addDefault("reload-fail", "%h &cConfig failed to reload.");
-		getMessages().addDefault("head-interact-message", "&3That is &b%p&3''s &3head!");
-		getMessages().addDefault("head-mhf-interact-message", "&3That is a &b%p&3''s head!");
-		getMessages().addDefault("head-mhf-interact-message-2", "&3That is an &b%p&3''s &3head!");
-		getMessages().addDefault("sell-success", "&3You successfully sold the head(s) for &b%l &3and now have &b%b!");
-		getMessages().addDefault("not-enough-heads", "&cYou don't have enough heads!");
-		getMessages().addDefault("no-heads", "&cYou don't have any valid heads in your inventory!");
-		getMessages().addDefault("invalid-args", "&cInvalid arguments!");
-		getMessages().addDefault("sell-fail", "&cCouldn''t sell head!");
-		getMessages().addDefault("false-head", "&cThis head cannot be sold!");
-		getMessages().addDefault("false-item", "&cThis is not a head!");
-		getMessages().addDefault("blacklist-head", "&cThis head is blacklisted and cannot be used!");
-		getMessages().addDefault("whitelist-head", "&cThis head isn't whitelisted and therefore cannot be used!");
-		getMessages().addDefault("full-inv", "&cYour inventory is full!");
-		getMessages().addDefault("alpha-names", "&cThis command only handles alphanumeric names!");
-		getMessages().addDefault("too-many-args", "&cToo many arguments!");
-		getMessages().addDefault("head-too-long", "&cIGN is too long to be valid! Please use an IGN between 3 and 16 characters.");
-		getMessages().addDefault("too-short-head", "&cIGN is too short to be valid! Please use an IGN between 3 and 16 characters.");
-		getMessages().addDefault("invalid-pg-no", "%h &cInvalid page number!");
-		getMessages().addDefault("invalid-input-int", "%h &cYou can only use integers in this command!");
-		getMessages().addDefault("no-perm", "&cYou do not have permission to use this command.");
-		getMessages().addDefault("head-a-add", "%h &3This head is already added!");
-		getMessages().addDefault("head-added-bl", "%h &3%p has been added to the blacklist!");
-		getMessages().addDefault("head-a-removed-bl", "%h &3This head is not on the blacklist!");
-		getMessages().addDefault("head-removed-bl", "%h &3%p has been removed from the blacklist!");
-		getMessages().addDefault("head-added-wl", "%h &3%p has been added to the whitelist!");
-		getMessages().addDefault("head-a-removed-wl", "%h &3This head is not on the whitelist!");
-		getMessages().addDefault("head-removed-wl", "%h &3%p has been removed from the whitelist!");
-		getMessages().addDefault("world-a-add", "%h &3This world is already added!");
-		getMessages().addDefault("world-added-bl", "%h &3%w has been added to the world blacklist!");
-		getMessages().addDefault("world-a-removed-bl", "%h &3This world is not on the blacklist!");
-		getMessages().addDefault("world-removed-bl", "%h &3%w has been removed from the blacklist!");
-		getMessages().addDefault("world-added-wl", "%h &3%w has been added to the world whitelist!");
-		getMessages().addDefault("world-a-removed-wl", "%h &3This world is not on the whitelist!");
-		getMessages().addDefault("world-removed-wl", "%h &3%w has been removed from the whitelist!");
-		getMessages().addDefault("bl-on", "%h &3The blacklist has been enabled!");
-		getMessages().addDefault("bl-a-on", "%h &3The blacklist is already enabled!");
-		getMessages().addDefault("bl-off", "%h &3The blacklist has been disabled!");
-		getMessages().addDefault("bl-a-off", "%h &3The blacklist is already disabled!");
-		getMessages().addDefault("blw-on", "%h &3The world blacklist has been enabled!");
-		getMessages().addDefault("blw-a-on", "%h &3The world blacklist is already enabled!");
-		getMessages().addDefault("blw-off", "%h &3The world blacklist has been disabled!");
-		getMessages().addDefault("blw-a-off", "%h &3The world blacklist is already disabled!");
-		getMessages().addDefault("wl-on", "%h &3The whitelist has been enabled!");
-		getMessages().addDefault("wl-a-on", "%h &3The whitelist is already enabled!");
-		getMessages().addDefault("wl-off", "%h &3The whitelist has been disabled!");
-		getMessages().addDefault("wl-a-off", "%h &3The whitelist is already disabled!");
-		getMessages().addDefault("wlw-on", "%h &3The world whitelist has been enabled!");
-		getMessages().addDefault("wlw-a-on", "%h &3The world whitelist is already enabled!");
-		getMessages().addDefault("wlw-off", "%h &3The world whitelist has been disabled!");
-		getMessages().addDefault("wlw-a-off", "%h &3The world whitelist is already disabled!");
-		getMessages().addDefault("bl-fail", "%h &cFailed to add head to blacklist!");
-        getMessages().addDefault("wl-fail", "%h &cFailed to add head to whitelist!");
-        getMessages().addDefault("blw-fail", "%h &cFailed to add world to blacklist!");
-        getMessages().addDefault("wlw-fail", "%h &cFailed to add world to whitelist!");
-		getMessages().addDefault("disabled", "&cThis command is disabled.");
-		getMessages().addDefault("empty-bl", "%h &cThe blacklist is empty!");
-		getMessages().addDefault("empty-blw", "%h &cThe world blacklist is empty!");
-		getMessages().addDefault("empty-wl", "%h &cThe whitelist is empty!");
-		getMessages().addDefault("empty-wlw", "%h &cThe world whitelist is empty!");
-		getMessages().addDefault("buy-success", "&3You have bought a head for &b%l &3and now have &b%b!");
-        getMessages().addDefault("buy-fail", "&cCouldn''t buy head!");
-        getMessages().addDefault("update-found", "%h &3An update has been found for HeadsPlus!");
-        getMessages().addDefault("xmas-denied", "&cIt isn't that date yet!");
-        getMessages().addDefault("block-place-denied", "&cYou can not place sellable heads!");
-        getMessages().addDefault("no-data-lb", "&cNo leaderboard data has been recorded yet!");
-        getMessages().addDefault("player-offline", "&cThat player is offline!");
-        getMessages().addDefault("challenge-complete", "%h &b%p &3has completed the &b%c &3challenge!");
-        getMessages().addDefault("no-data", "&cThere is no data for that player!");
-        getMessages().addDefault("cant-complete-challenge", "&cYou can't complete this challenge!");
-        getMessages().addDefault("already-complete-challenge", "&cYou've already completed that challenge!");
-        getMessages().addDefault("cant-view-data", "&cYou can't view your own data in console!");
+		getConfig().options().header("HeadsPlus by Thatsmusic99 \nPlease do NOT change pLocale! This will be used to change the plugin's language in the future!");
 
-        if (!getMessages().getString("locale").equalsIgnoreCase(getMessages().getString("pLocale")) && !nullpoint) {
-            getMessages().set("pLocale", getMessages().getString("locale"));
+		getConfig().addDefault("prefix", "&1[&6HeadsPlus&1]");
+		getConfig().addDefault("locale", "en_uk");
+		getConfig().addDefault("pLocale", "en_uk");
+		getConfig().addDefault("reloading-message", "%h &3Reloading config...");
+		getConfig().addDefault("reload-message", "%h &3Config has reloaded!");
+		getConfig().addDefault("reload-fail", "%h &cConfig failed to reload.");
+		getConfig().addDefault("head-interact-message", "&3That is &b%p&3''s &3head!");
+		getConfig().addDefault("head-mhf-interact-message", "&3That is a &b%p&3''s head!");
+		getConfig().addDefault("head-mhf-interact-message-2", "&3That is an &b%p&3''s &3head!");
+		getConfig().addDefault("sell-success", "&3You successfully sold the head(s) for &b%l &3and now have &b%b!");
+		getConfig().addDefault("not-enough-heads", "&cYou don't have enough heads!");
+		getConfig().addDefault("no-heads", "&cYou don't have any valid heads in your inventory!");
+		getConfig().addDefault("invalid-args", "&cInvalid arguments!");
+		getConfig().addDefault("sell-fail", "&cCouldn''t sell head!");
+		getConfig().addDefault("false-head", "&cThis head cannot be sold!");
+		getConfig().addDefault("false-item", "&cThis is not a head!");
+		getConfig().addDefault("blacklist-head", "&cThis head is blacklisted and cannot be used!");
+		getConfig().addDefault("whitelist-head", "&cThis head isn't whitelisted and therefore cannot be used!");
+		getConfig().addDefault("full-inv", "&cYour inventory is full!");
+		getConfig().addDefault("alpha-names", "&cThis command only handles alphanumeric names!");
+		getConfig().addDefault("too-many-args", "&cToo many arguments!");
+		getConfig().addDefault("head-too-long", "&cIGN is too long to be valid! Please use an IGN between 3 and 16 characters.");
+		getConfig().addDefault("too-short-head", "&cIGN is too short to be valid! Please use an IGN between 3 and 16 characters.");
+		getConfig().addDefault("invalid-pg-no", "%h &cInvalid page number!");
+		getConfig().addDefault("invalid-input-int", "%h &cYou can only use integers in this command!");
+		getConfig().addDefault("no-perm", "&cYou do not have permission to use this command.");
+		getConfig().addDefault("head-a-add", "%h &3This head is already added!");
+		getConfig().addDefault("head-added-bl", "%h &3%p has been added to the blacklist!");
+		getConfig().addDefault("head-a-removed-bl", "%h &3This head is not on the blacklist!");
+		getConfig().addDefault("head-removed-bl", "%h &3%p has been removed from the blacklist!");
+		getConfig().addDefault("head-added-wl", "%h &3%p has been added to the whitelist!");
+		getConfig().addDefault("head-a-removed-wl", "%h &3This head is not on the whitelist!");
+		getConfig().addDefault("head-removed-wl", "%h &3%p has been removed from the whitelist!");
+		getConfig().addDefault("world-a-add", "%h &3This world is already added!");
+		getConfig().addDefault("world-added-bl", "%h &3%w has been added to the world blacklist!");
+		getConfig().addDefault("world-a-removed-bl", "%h &3This world is not on the blacklist!");
+		getConfig().addDefault("world-removed-bl", "%h &3%w has been removed from the blacklist!");
+		getConfig().addDefault("world-added-wl", "%h &3%w has been added to the world whitelist!");
+		getConfig().addDefault("world-a-removed-wl", "%h &3This world is not on the whitelist!");
+		getConfig().addDefault("world-removed-wl", "%h &3%w has been removed from the whitelist!");
+		getConfig().addDefault("bl-on", "%h &3The blacklist has been enabled!");
+		getConfig().addDefault("bl-a-on", "%h &3The blacklist is already enabled!");
+		getConfig().addDefault("bl-off", "%h &3The blacklist has been disabled!");
+		getConfig().addDefault("bl-a-off", "%h &3The blacklist is already disabled!");
+		getConfig().addDefault("blw-on", "%h &3The world blacklist has been enabled!");
+		getConfig().addDefault("blw-a-on", "%h &3The world blacklist is already enabled!");
+		getConfig().addDefault("blw-off", "%h &3The world blacklist has been disabled!");
+		getConfig().addDefault("blw-a-off", "%h &3The world blacklist is already disabled!");
+		getConfig().addDefault("wl-on", "%h &3The whitelist has been enabled!");
+		getConfig().addDefault("wl-a-on", "%h &3The whitelist is already enabled!");
+		getConfig().addDefault("wl-off", "%h &3The whitelist has been disabled!");
+		getConfig().addDefault("wl-a-off", "%h &3The whitelist is already disabled!");
+		getConfig().addDefault("wlw-on", "%h &3The world whitelist has been enabled!");
+		getConfig().addDefault("wlw-a-on", "%h &3The world whitelist is already enabled!");
+		getConfig().addDefault("wlw-off", "%h &3The world whitelist has been disabled!");
+		getConfig().addDefault("wlw-a-off", "%h &3The world whitelist is already disabled!");
+		getConfig().addDefault("bl-fail", "%h &cFailed to add head to blacklist!");
+        getConfig().addDefault("wl-fail", "%h &cFailed to add head to whitelist!");
+        getConfig().addDefault("blw-fail", "%h &cFailed to add world to blacklist!");
+        getConfig().addDefault("wlw-fail", "%h &cFailed to add world to whitelist!");
+		getConfig().addDefault("disabled", "&cThis command is disabled.");
+		getConfig().addDefault("empty-bl", "%h &cThe blacklist is empty!");
+		getConfig().addDefault("empty-blw", "%h &cThe world blacklist is empty!");
+		getConfig().addDefault("empty-wl", "%h &cThe whitelist is empty!");
+		getConfig().addDefault("empty-wlw", "%h &cThe world whitelist is empty!");
+		getConfig().addDefault("buy-success", "&3You have bought a head for &b%l &3and now have &b%b!");
+        getConfig().addDefault("buy-fail", "&cCouldn''t buy head!");
+        getConfig().addDefault("update-found", "%h &3An update has been found for HeadsPlus!");
+        getConfig().addDefault("xmas-denied", "&cIt isn't that date yet!");
+        getConfig().addDefault("block-place-denied", "&cYou can not place sellable heads!");
+        getConfig().addDefault("no-data-lb", "&cNo leaderboard data has been recorded yet!");
+        getConfig().addDefault("player-offline", "&cThat player is offline!");
+        getConfig().addDefault("challenge-complete", "%h &b%p &3has completed the &b%c &3challenge!");
+        getConfig().addDefault("no-data", "&cThere is no data for that player!");
+        getConfig().addDefault("cant-complete-challenge", "&cYou can't complete this challenge!");
+        getConfig().addDefault("already-complete-challenge", "&cYou've already completed that challenge!");
+        getConfig().addDefault("cant-view-data", "&cYou can't view your own data in console!");
+
+        if (!getConfig().getString("locale").equalsIgnoreCase(getConfig().getString("pLocale")) && !nullpoint) {
+            getConfig().set("pLocale", getConfig().getString("locale"));
             LocaleManager.getInstance().setupLocale();
-            getMessages().set("reloading-message", LocaleManager.getLocale().getReloadingMessage());
-            getMessages().set("reload-message", LocaleManager.getLocale().getReloadMessage());
-            getMessages().set("reload-fail", LocaleManager.getLocale().getReloadFailMessage());
-            getMessages().set("head-interact-message", LocaleManager.getLocale().getHeadInteractMessage());
-            getMessages().set("head-mhf-interact-message", LocaleManager.getLocale().getHeadMhfInteractMessage());
-            getMessages().set("head-mhf-interact-message-2", LocaleManager.getLocale().getHeadMhfInteractMessage2());
-            getMessages().set("sell-success", LocaleManager.getLocale().getSellSuccess());
-            getMessages().set("not-enough-heads", LocaleManager.getLocale().getNotEnoughHeads());
-            getMessages().set("no-heads", LocaleManager.getLocale().getNoHeads());
-            getMessages().set("invalid-args", LocaleManager.getLocale().getInvalidArguments());
-            getMessages().set("sell-fail", LocaleManager.getLocale().getSellFail());
-            getMessages().set("false-head", LocaleManager.getLocale().getFalseHead());
-            getMessages().set("false-item", LocaleManager.getLocale().getFalseItem());
-            getMessages().set("blacklist-head", LocaleManager.getLocale().getBlacklistHead());
-            getMessages().set("whitelist-head", LocaleManager.getLocale().getWhitelistHead());
-            getMessages().set("full-inv", LocaleManager.getLocale().getFullInventory());
-            getMessages().set("alpha-names", LocaleManager.getLocale().getAlphaNames());
-            getMessages().set("too-many-args", LocaleManager.getLocale().getTooManyArguments());
-            getMessages().set("head-too-long", LocaleManager.getLocale().getHeadTooLong());
-            getMessages().set("too-short-head", LocaleManager.getLocale().getHeadTooShort());
-            getMessages().set("invalid-pg-no", LocaleManager.getLocale().getInvalidPageNumber());
-            getMessages().set("invalid-input-int", LocaleManager.getLocale().getInvalidInputInteger());
-            getMessages().set("no-perm", LocaleManager.getLocale().getNoPermissions());
-            getMessages().set("head-a-add", LocaleManager.getLocale().getHeadAlreadyAdded());
-            getMessages().set("head-added-bl", LocaleManager.getLocale().getHeadAddedBlacklist());
-            getMessages().set("head-a-removed-bl", LocaleManager.getLocale().getHeadNotOnBlacklist());
-            getMessages().set("head-removed-bl", LocaleManager.getLocale().getHeadRemovedBlacklist());
-            getMessages().set("head-added-wl", LocaleManager.getLocale().getHeadAddedWhitelist());
-            getMessages().set("head-a-removed-wl", LocaleManager.getLocale().getHeadNotOnWhitelist());
-            getMessages().set("head-removed-wl", LocaleManager.getLocale().getHeadRemovedWhitelist());
-            getMessages().set("world-a-added", LocaleManager.getLocale().getWorldAlreadyAdded());
-            getMessages().set("world-added-bl", LocaleManager.getLocale().getWorldAddedBlacklist());
-            getMessages().set("world-a-removed-bl", LocaleManager.getLocale().getWorldNotOnBlacklist());
-            getMessages().set("world-removed-bl", LocaleManager.getLocale().getWorldRemovedBlacklist());
-            getMessages().set("world-added-wl", LocaleManager.getLocale().getWorldAddedWhitelist());
-            getMessages().set("world-a-removed-wl", LocaleManager.getLocale().getWorldNotOnWhitelist());
-            getMessages().set("world-removed-wl", LocaleManager.getLocale().getWorldRemovedWhitelist());
-            getMessages().set("bl-on", LocaleManager.getLocale().getBlacklistOn());
-            getMessages().set("bl-a-on", LocaleManager.getLocale().getBlacklistAlreadyOn());
-            getMessages().set("bl-off", LocaleManager.getLocale().getBlacklistOff());
-            getMessages().set("bl-a-off", LocaleManager.getLocale().getBlacklistAlreadyOff());
-            getMessages().set("blw-on", LocaleManager.getLocale().getWBlacklistOn());
-            getMessages().set("blw-a-on", LocaleManager.getLocale().getWBlacklistAlreadyOn());
-            getMessages().set("blw-off", LocaleManager.getLocale().getWBlacklistOff());
-            getMessages().set("blw-a-off", LocaleManager.getLocale().getWBlacklistAlreadyOff());
-            getMessages().set("wl-on", LocaleManager.getLocale().getWhitelistOn());
-            getMessages().set("wl-a-on", LocaleManager.getLocale().getWhitelistAlreadyOn());
-            getMessages().set("wl-off", LocaleManager.getLocale().getWhitelistOff());
-            getMessages().set("wl-a-off", LocaleManager.getLocale().getWhitelistAlreadyOff());
-            getMessages().set("wlw-on", LocaleManager.getLocale().getWWhitelistOn());
-            getMessages().set("wlw-a-on", LocaleManager.getLocale().getWWhitelistAlreadyOn());
-            getMessages().set("wlw-off", LocaleManager.getLocale().getWWhitelistOff());
-            getMessages().set("wlw-a-off", LocaleManager.getLocale().getWWhitelistAlreadyOff());
-            getMessages().set("bl-fail", LocaleManager.getLocale().getBlacklistFail());
-            getMessages().set("wl-fail", LocaleManager.getLocale().getWhitelistFail());
-            getMessages().set("blw-fail", LocaleManager.getLocale().getWBlacklistFail());
-            getMessages().set("wlw-fail", LocaleManager.getLocale().getWWhitelistFail());
-            getMessages().set("disabled", LocaleManager.getLocale().getDisabledCommand());
-            getMessages().set("empty-bl", LocaleManager.getLocale().getEmptyBlacklist());
-            getMessages().set("empty-blw", LocaleManager.getLocale().getEmptyWBlacklist());
-            getMessages().set("empty-wl", LocaleManager.getLocale().getEmptyWhitelist());
-            getMessages().set("empty-wlw", LocaleManager.getLocale().getEmptyWWhitelist());
-            getMessages().set("buy-success", LocaleManager.getLocale().getBuySuccess());
-            getMessages().set("buy-fail", LocaleManager.getLocale().getBuyFail());
-            getMessages().set("xmas-denied", LocaleManager.getLocale().getChristmasDeniedMessage());
-            getMessages().set("block-place-denied", LocaleManager.getLocale().getBlockPlaceDenied());
-            getMessages().set("no-data-lb", LocaleManager.getLocale().getNoDataRecorded());
-			getMessages().set("update-found", LocaleManager.getLocale().getUpdateFound());
-			getMessages().set("player-offline", LocaleManager.getLocale().getPlayerOffline());
-			getMessages().set("challenge-complete", LocaleManager.getLocale().chCompleteMessage());
-			getMessages().set("no-data", LocaleManager.getLocale().noData());
-			getMessages().set("cant-complete-challenge", LocaleManager.getLocale().cantCompleteChallenge());
-			getMessages().set("already-complete-challenge", LocaleManager.getLocale().alreadyCompleted());
-			getMessages().set("cant-view-data", LocaleManager.getLocale().cantViewData());
+            getConfig().set("reloading-message", LocaleManager.getLocale().getReloadingMessage());
+            getConfig().set("reload-message", LocaleManager.getLocale().getReloadMessage());
+            getConfig().set("reload-fail", LocaleManager.getLocale().getReloadFailMessage());
+            getConfig().set("head-interact-message", LocaleManager.getLocale().getHeadInteractMessage());
+            getConfig().set("head-mhf-interact-message", LocaleManager.getLocale().getHeadMhfInteractMessage());
+            getConfig().set("head-mhf-interact-message-2", LocaleManager.getLocale().getHeadMhfInteractMessage2());
+            getConfig().set("sell-success", LocaleManager.getLocale().getSellSuccess());
+            getConfig().set("not-enough-heads", LocaleManager.getLocale().getNotEnoughHeads());
+            getConfig().set("no-heads", LocaleManager.getLocale().getNoHeads());
+            getConfig().set("invalid-args", LocaleManager.getLocale().getInvalidArguments());
+            getConfig().set("sell-fail", LocaleManager.getLocale().getSellFail());
+            getConfig().set("false-head", LocaleManager.getLocale().getFalseHead());
+            getConfig().set("false-item", LocaleManager.getLocale().getFalseItem());
+            getConfig().set("blacklist-head", LocaleManager.getLocale().getBlacklistHead());
+            getConfig().set("whitelist-head", LocaleManager.getLocale().getWhitelistHead());
+            getConfig().set("full-inv", LocaleManager.getLocale().getFullInventory());
+            getConfig().set("alpha-names", LocaleManager.getLocale().getAlphaNames());
+            getConfig().set("too-many-args", LocaleManager.getLocale().getTooManyArguments());
+            getConfig().set("head-too-long", LocaleManager.getLocale().getHeadTooLong());
+            getConfig().set("too-short-head", LocaleManager.getLocale().getHeadTooShort());
+            getConfig().set("invalid-pg-no", LocaleManager.getLocale().getInvalidPageNumber());
+            getConfig().set("invalid-input-int", LocaleManager.getLocale().getInvalidInputInteger());
+            getConfig().set("no-perm", LocaleManager.getLocale().getNoPermissions());
+            getConfig().set("head-a-add", LocaleManager.getLocale().getHeadAlreadyAdded());
+            getConfig().set("head-added-bl", LocaleManager.getLocale().getHeadAddedBlacklist());
+            getConfig().set("head-a-removed-bl", LocaleManager.getLocale().getHeadNotOnBlacklist());
+            getConfig().set("head-removed-bl", LocaleManager.getLocale().getHeadRemovedBlacklist());
+            getConfig().set("head-added-wl", LocaleManager.getLocale().getHeadAddedWhitelist());
+            getConfig().set("head-a-removed-wl", LocaleManager.getLocale().getHeadNotOnWhitelist());
+            getConfig().set("head-removed-wl", LocaleManager.getLocale().getHeadRemovedWhitelist());
+            getConfig().set("world-a-added", LocaleManager.getLocale().getWorldAlreadyAdded());
+            getConfig().set("world-added-bl", LocaleManager.getLocale().getWorldAddedBlacklist());
+            getConfig().set("world-a-removed-bl", LocaleManager.getLocale().getWorldNotOnBlacklist());
+            getConfig().set("world-removed-bl", LocaleManager.getLocale().getWorldRemovedBlacklist());
+            getConfig().set("world-added-wl", LocaleManager.getLocale().getWorldAddedWhitelist());
+            getConfig().set("world-a-removed-wl", LocaleManager.getLocale().getWorldNotOnWhitelist());
+            getConfig().set("world-removed-wl", LocaleManager.getLocale().getWorldRemovedWhitelist());
+            getConfig().set("bl-on", LocaleManager.getLocale().getBlacklistOn());
+            getConfig().set("bl-a-on", LocaleManager.getLocale().getBlacklistAlreadyOn());
+            getConfig().set("bl-off", LocaleManager.getLocale().getBlacklistOff());
+            getConfig().set("bl-a-off", LocaleManager.getLocale().getBlacklistAlreadyOff());
+            getConfig().set("blw-on", LocaleManager.getLocale().getWBlacklistOn());
+            getConfig().set("blw-a-on", LocaleManager.getLocale().getWBlacklistAlreadyOn());
+            getConfig().set("blw-off", LocaleManager.getLocale().getWBlacklistOff());
+            getConfig().set("blw-a-off", LocaleManager.getLocale().getWBlacklistAlreadyOff());
+            getConfig().set("wl-on", LocaleManager.getLocale().getWhitelistOn());
+            getConfig().set("wl-a-on", LocaleManager.getLocale().getWhitelistAlreadyOn());
+            getConfig().set("wl-off", LocaleManager.getLocale().getWhitelistOff());
+            getConfig().set("wl-a-off", LocaleManager.getLocale().getWhitelistAlreadyOff());
+            getConfig().set("wlw-on", LocaleManager.getLocale().getWWhitelistOn());
+            getConfig().set("wlw-a-on", LocaleManager.getLocale().getWWhitelistAlreadyOn());
+            getConfig().set("wlw-off", LocaleManager.getLocale().getWWhitelistOff());
+            getConfig().set("wlw-a-off", LocaleManager.getLocale().getWWhitelistAlreadyOff());
+            getConfig().set("bl-fail", LocaleManager.getLocale().getBlacklistFail());
+            getConfig().set("wl-fail", LocaleManager.getLocale().getWhitelistFail());
+            getConfig().set("blw-fail", LocaleManager.getLocale().getWBlacklistFail());
+            getConfig().set("wlw-fail", LocaleManager.getLocale().getWWhitelistFail());
+            getConfig().set("disabled", LocaleManager.getLocale().getDisabledCommand());
+            getConfig().set("empty-bl", LocaleManager.getLocale().getEmptyBlacklist());
+            getConfig().set("empty-blw", LocaleManager.getLocale().getEmptyWBlacklist());
+            getConfig().set("empty-wl", LocaleManager.getLocale().getEmptyWhitelist());
+            getConfig().set("empty-wlw", LocaleManager.getLocale().getEmptyWWhitelist());
+            getConfig().set("buy-success", LocaleManager.getLocale().getBuySuccess());
+            getConfig().set("buy-fail", LocaleManager.getLocale().getBuyFail());
+            getConfig().set("xmas-denied", LocaleManager.getLocale().getChristmasDeniedMessage());
+            getConfig().set("block-place-denied", LocaleManager.getLocale().getBlockPlaceDenied());
+            getConfig().set("no-data-lb", LocaleManager.getLocale().getNoDataRecorded());
+			getConfig().set("update-found", LocaleManager.getLocale().getUpdateFound());
+			getConfig().set("player-offline", LocaleManager.getLocale().getPlayerOffline());
+			getConfig().set("challenge-complete", LocaleManager.getLocale().chCompleteMessage());
+			getConfig().set("no-data", LocaleManager.getLocale().noData());
+			getConfig().set("cant-complete-challenge", LocaleManager.getLocale().cantCompleteChallenge());
+			getConfig().set("already-complete-challenge", LocaleManager.getLocale().alreadyCompleted());
+			getConfig().set("cant-view-data", LocaleManager.getLocale().cantViewData());
         }
 
-		getMessages().options().copyDefaults(true);
-		saveMessages();
-		
+		getConfig().options().copyDefaults(true);
+		save();
 	}
-	public void reloadMessages(boolean nullpoint) {
-
-		if (messagesF == null) {
-			messagesF = new File(HeadsPlus.getInstance().getDataFolder(), "messages.yml");
-		}
-
-		messages = YamlConfiguration.loadConfiguration(messagesF);
-		loadMessages(nullpoint);
-		saveMessages();
-
-	}
-    private void saveMessages() {
-
-    	if (messages == null || messagesF == null) {
-    		return;
-    	}
-
-    	try {
-    		messages.save(messagesF);
-    	} catch (IOException e) {
-    		HeadsPlus.getInstance().log.severe("[HeadsPlus] Couldn't save messages.yml!");
-    		e.printStackTrace();
-    	}
-
-    }
 
 }

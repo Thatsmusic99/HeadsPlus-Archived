@@ -42,14 +42,14 @@ public class DeathEvents implements Listener {
 			    if (!HeadsPlus.getInstance().getConfig().getStringList("blacklistw").contains(e.getEntity().getWorld().getName()) || e.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn")) {
 		            String entity = e.getEntityType().toString().toLowerCase().replaceAll("_", "");
 		            Random rand = new Random();
-		            double chance1 = hpch.getHeads().getDouble(entity + ".chance");
+		            double chance1 = hpch.getConfig().getDouble(entity + ".chance");
 		            double chance2 = (double) rand.nextInt(100);
 		            if (chance1 == 0.0) return;
 		            if (chance2 <= chance1) {
 		                if (entity.equalsIgnoreCase("sheep")) {
                             dropHead(e.getEntity(), e.getEntity().getKiller());
                         } else {
-                            if (hpch.getHeads().getStringList(entity + ".name").isEmpty()) return;
+                            if (hpch.getConfig().getStringList(entity + ".name").isEmpty()) return;
                             dropHead(e.getEntity(), e.getEntity().getKiller());
                         }
                     }
@@ -70,14 +70,14 @@ public class DeathEvents implements Listener {
             }
             if (!HeadsPlus.getInstance().getConfig().getStringList("blacklistw").contains(ep.getEntity().getWorld().getName()) || ep.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn")) {
             Random rand = new Random();
-            double chance1 = hpch.getHeads().getDouble("player.chance");
+            double chance1 = hpch.getConfig().getDouble("player.chance");
             double chance2 = (double) rand.nextInt(100);
             if (chance1 == 0.0) return;
             if (chance2 <= chance1) {
                 ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
                 SkullMeta headM = (SkullMeta) head.getItemMeta();
                 headM.setOwner(ep.getEntity().getName());
-                headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getHeads().getString("player.display-name").replaceAll("%d", ep.getEntity().getName())));
+                headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getConfig().getString("player.display-name").replaceAll("%d", ep.getEntity().getName())));
                 if ((HeadsPlus.getInstance().sellable) && (ep.getEntity().getKiller().hasPermission("headsplus.sellhead"))) {
                     if (HeadsPlus.getInstance().getConfig().getBoolean("use-lore")) {
                         List<String> ls = new ArrayList<>();
@@ -122,10 +122,10 @@ public class DeathEvents implements Listener {
         if (e instanceof Sheep) {
             Sheep sheep = (Sheep) e;
             DyeColor dc = sheep.getColor();
-            for (String str : hpch.getHeads().getConfigurationSection("sheep.name").getKeys(false)) {
+            for (String str : hpch.getConfig().getConfigurationSection("sheep.name").getKeys(false)) {
                 if (!str.equalsIgnoreCase("default")) {
                     if (dc.equals(DyeColor.valueOf(str))) {
-                        return hpch.getHeads().getStringList("sheep.name." + str);
+                        return hpch.getConfig().getStringList("sheep.name." + str);
                     }
                 }
             }
@@ -145,14 +145,14 @@ public class DeathEvents implements Listener {
                 s = hasColor(e).get(thing);
             } else {
                 if (e instanceof Sheep) {
-                    thing = r.nextInt(hpch.getHeads().getStringList("sheep.name.default").size());
-                    s = hpch.getHeads().getStringList("sheep.name.default").get(thing);
+                    thing = r.nextInt(hpch.getConfig().getStringList("sheep.name.default").size());
+                    s = hpch.getConfig().getStringList("sheep.name.default").get(thing);
                 } else if (e instanceof IronGolem) {
-                    thing = r.nextInt(hpch.getHeads().getStringList("irongolem.name").size());
-                    s = hpch.getHeads().getStringList("irongolem.name").get(thing);
+                    thing = r.nextInt(hpch.getConfig().getStringList("irongolem.name").size());
+                    s = hpch.getConfig().getStringList("irongolem.name").get(thing);
                 } else {
-                    thing = r.nextInt(hpch.getHeads().getStringList(e.getType().name().toLowerCase() + ".name").size());
-                    s = hpch.getHeads().getStringList(e.getType().name().toLowerCase() + ".name").get(thing);
+                    thing = r.nextInt(hpch.getConfig().getStringList(e.getType().name().toLowerCase() + ".name").size());
+                    s = hpch.getConfig().getStringList(e.getType().name().toLowerCase() + ".name").get(thing);
                 }
             }
         } catch (IndexOutOfBoundsException ex) {
@@ -169,7 +169,7 @@ public class DeathEvents implements Listener {
             sm.setOwner(s);
         }
 
-        sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getHeads().getString(e.getType().name().toLowerCase() + ".display-name")));
+        sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getConfig().getString(e.getType().name().toLowerCase() + ".display-name")));
         List<String> ls = new ArrayList<>();
         for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
             ls.add(ChatColor.translateAlternateColorCodes('&', str));

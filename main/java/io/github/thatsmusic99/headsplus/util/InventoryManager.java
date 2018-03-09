@@ -158,8 +158,8 @@ public class InventoryManager {
         }
         if (type.equalsIgnoreCase("heads")) {
             PagedLists<String> ls;
-            sections = hpchx.getHeadsX().getConfigurationSection("sections").getKeys(false).size();
-            heads = hpchx.getHeadsX().getConfigurationSection("heads").getKeys(false).size();
+            sections = hpchx.getConfig().getConfigurationSection("sections").getKeys(false).size();
+            heads = hpchx.getConfig().getConfigurationSection("heads").getKeys(false).size();
 
 
             if (section.equalsIgnoreCase("menu")) {
@@ -167,14 +167,14 @@ public class InventoryManager {
                 //     sections++;
                 // }
 
-                ls = new PagedLists<>(new ArrayList<>(hpchx.getHeadsX().getConfigurationSection("sections").getKeys(false)), 27);
+                ls = new PagedLists<>(new ArrayList<>(hpchx.getConfig().getConfigurationSection("sections").getKeys(false)), 27);
                 i = create("HeadsPlus Head selector: page " + cPage + "/" + ls.getTotalPages());
                 for (Object str : ls.getContentsInPage(cPage)) {
                     String st = (String) str;
-                    if (hpchx.isHPXSkull(hpchx.getHeadsX().getString("sections." + st + ".texture"))) {
-                        ItemStack is = hpchx.getSkull(hpchx.getHeadsX().getString("sections." + st + ".texture"));
+                    if (hpchx.isHPXSkull(hpchx.getConfig().getString("sections." + st + ".texture"))) {
+                        ItemStack is = hpchx.getSkull(hpchx.getConfig().getString("sections." + st + ".texture"));
                         SkullMeta im = (SkullMeta) is.getItemMeta();
-                        im.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpchx.getHeadsX().getString("sections." + st + ".display-name")));
+                        im.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpchx.getConfig().getString("sections." + st + ".display-name")));
                         is.setItemMeta(im);
                         i.setItem(pos()[timesSent], is);
                         timesSent++;
@@ -198,10 +198,10 @@ public class InventoryManager {
                 String term = section.split(":")[1];
                 List<String> c = new ArrayList<>();
                 HashMap<String, String> s = new HashMap<>();
-                for (String str : hpchx.getHeadsX().getConfigurationSection("heads").getKeys(false)) {
-                    if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', hpchx.getHeadsX().getString("heads." + str + ".displayname"))).replace("[", "").replace("]", "").contains(term)) {
-                        c.add(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', hpchx.getHeadsX().getString("heads." + str + ".displayname"))).replace("[", "").replace("]", ""));
-                        s.put(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', hpchx.getHeadsX().getString("heads." + str + ".displayname"))).replace("[", "").replace("]", ""), str);
+                for (String str : hpchx.getConfig().getConfigurationSection("heads").getKeys(false)) {
+                    if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', hpchx.getConfig().getString("heads." + str + ".displayname"))).replace("[", "").replace("]", "").contains(term)) {
+                        c.add(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', hpchx.getConfig().getString("heads." + str + ".displayname"))).replace("[", "").replace("]", ""));
+                        s.put(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', hpchx.getConfig().getString("heads." + str + ".displayname"))).replace("[", "").replace("]", ""), str);
                     }
                  }
                 Iterator<Map.Entry<String, String>> m = s.entrySet().iterator();
@@ -218,7 +218,7 @@ public class InventoryManager {
                 ls = new PagedLists<>(new ArrayList<>(s.values()), 28);
                 i = create("HeadsPlus Head selector: page " + cPage + "/" + ls.getTotalPages());
                 for (Object str : ls.getContentsInPage(cPage)) {
-                    if (hpchx.getHeadsX().getBoolean("heads." + str + ".database")) {
+                    if (hpchx.getConfig().getBoolean("heads." + str + ".database")) {
                         skull(String.valueOf(str), i);
                     }
                 }
@@ -227,8 +227,8 @@ public class InventoryManager {
             } else {
                 List<String> l = new ArrayList<>();
                 // if (!section.equalsIgnoreCase("advent_calender")) {
-                for (String str : hpchx.getHeadsX().getConfigurationSection("heads").getKeys(false)) {
-                    if (hpchx.getHeadsX().getString("heads." + str + ".section").equalsIgnoreCase(section)) {
+                for (String str : hpchx.getConfig().getConfigurationSection("heads").getKeys(false)) {
+                    if (hpchx.getConfig().getString("heads." + str + ".section").equalsIgnoreCase(section)) {
                         l.add(str);
                     }
                 }
@@ -236,7 +236,7 @@ public class InventoryManager {
                 ls = new PagedLists<>(l, 28);
                 i = create("HeadsPlus Head selector: page " + cPage + "/" + ls.getTotalPages());
                 for (Object str : ls.getContentsInPage(cPage)) {
-                    if (hpchx.getHeadsX().getBoolean("heads." + str + ".database")) {
+                    if (hpchx.getConfig().getBoolean("heads." + str + ".database")) {
                         skull(String.valueOf(str), i);
                     }
                 }
@@ -316,7 +316,7 @@ public class InventoryManager {
                     is.setItemMeta(im);
                     i.setItem(hpcd.i, is);
                 }
-                int cch = HeadsPlus.getInstance().hpchl.getChallenges().getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").size();
+                int cch = HeadsPlus.getInstance().hpchl.getConfig().getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").size();
                 i.setItem(8, isi);
                 ItemStack is2 = new ItemStack(Material.PAPER);
                 ItemMeta im = is2.getItemMeta();
@@ -333,7 +333,7 @@ public class InventoryManager {
             } else {
                 List<Challenge> cs = new ArrayList<>();
                 for (Challenge c : HeadsPlus.getInstance().challenges) {
-                    if (c.getChallengeType().name().equalsIgnoreCase(cSection)) {
+                    if (c.getDifficulty().name().equalsIgnoreCase(cSection)) {
                         cs.add(c);
                     }
                 }
@@ -356,7 +356,7 @@ public class InventoryManager {
                     sb.append(ChatColor.GOLD).append("Reward: ");
                     HPChallengeRewardTypes re = c.getRewardType();
                     if (re == HPChallengeRewardTypes.ECO) {
-                        sb.append(ChatColor.GREEN).append("$").append(HeadsPlus.getInstance().hpchl.getChallenges().getString(c.getRewardValue().toString()));
+                        sb.append(ChatColor.GREEN).append("$").append(c.getRewardValue().toString());
                     } else if (re == HPChallengeRewardTypes.GIVE_ITEM) {
                         try {
                             Material.valueOf(c.getRewardValue().toString());
@@ -381,7 +381,7 @@ public class InventoryManager {
                 }
 
                 int ch = HeadsPlus.getInstance().challenges.size();
-                int cch = HeadsPlus.getInstance().hpchl.getChallenges().getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").size();
+                int cch = HeadsPlus.getInstance().hpchl.getConfig().getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").size();
                 setItem(i, "Back", 8);
                 ItemStack is2 = new ItemStack(Material.PAPER);
                 ItemMeta im = is2.getItemMeta();
@@ -404,11 +404,11 @@ public class InventoryManager {
         ItemStack s = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         SkullMeta sm = (SkullMeta) s.getItemMeta();
         GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
-        if (hpchx.getHeadsX().getBoolean("heads." + str + ".encode")) {
-            byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", hpchx.getHeadsX().getString(str + ".texture")).getBytes());
+        if (hpchx.getConfig().getBoolean("heads." + str + ".encode")) {
+            byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", hpchx.getConfig().getString(str + ".texture")).getBytes());
             gm.getProperties().put("textures", new Property("texture", Arrays.toString(encodedData)));
         } else {
-            gm.getProperties().put("textures", new Property("texture", hpchx.getHeadsX().getString("heads." + str + ".texture")));
+            gm.getProperties().put("textures", new Property("texture", hpchx.getConfig().getString("heads." + str + ".texture")));
         }
 
         Field profileField = null;
@@ -423,25 +423,25 @@ public class InventoryManager {
         } catch (IllegalArgumentException | IllegalAccessException e) {
             e.printStackTrace();
         }
-        sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpchx.getHeadsX().getString("heads." + str + ".displayname")));
-        if (hpchx.getHeadsX().get("heads." + str + ".price") instanceof String) {
-            if (!((String) hpchx.getHeadsX().get("heads." + str + ".price")).equalsIgnoreCase("free")) {
-                if (((String) hpchx.getHeadsX().get("heads." + str + ".price")).equalsIgnoreCase("default")) {
-                    if (!hpchx.getHeadsX().get("options.default-price").equals("free")) {
+        sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpchx.getConfig().getString("heads." + str + ".displayname")));
+        if (hpchx.getConfig().get("heads." + str + ".price") instanceof String) {
+            if (!((String) hpchx.getConfig().get("heads." + str + ".price")).equalsIgnoreCase("free")) {
+                if (((String) hpchx.getConfig().get("heads." + str + ".price")).equalsIgnoreCase("default")) {
+                    if (!hpchx.getConfig().get("options.default-price").equals("free")) {
                         List<String> price = new ArrayList<>();
-                        price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + hpchx.getHeadsX().get("options.default-price")));
+                        price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + hpchx.getConfig().get("options.default-price")));
                         sm.setLore(price);
                     }
                 } else {
                     List<String> price = new ArrayList<>();
-                    price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + hpchx.getHeadsX().get("heads." + str + ".price")));
+                    price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + hpchx.getConfig().get("heads." + str + ".price")));
                     sm.setLore(price);
                 }
             }
         } else {
-            if (!(((Double) hpchx.getHeadsX().get("heads." + str + ".price")) == 0.0)) {
+            if (!(((Double) hpchx.getConfig().get("heads." + str + ".price")) == 0.0)) {
                 List<String> price = new ArrayList<>();
-                price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + hpchx.getHeadsX().get("heads." + str + ".price")));
+                price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + hpchx.getConfig().get("heads." + str + ".price")));
                 sm.setLore(price);
             }
 

@@ -16,7 +16,7 @@ public class LocaleManager {
         try {
             try {
                 try {
-                    setLocale((Locale) Class.forName("io.github.thatsmusic99.headsplus.locale." + hpc.getMessages().getString("locale").toLowerCase()).getConstructor().newInstance());
+                    setLocale((Locale) Class.forName("io.github.thatsmusic99.headsplus.locale." + hpc.getConfig().getString("locale").toLowerCase()).getConstructor().newInstance());
                 } catch (InvocationTargetException | NoSuchMethodException e) {
                     e.printStackTrace();
                 }

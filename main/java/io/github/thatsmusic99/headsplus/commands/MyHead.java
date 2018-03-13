@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus.commands;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
+import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -16,13 +17,13 @@ import org.bukkit.inventory.meta.SkullMeta;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyHead implements CommandExecutor {
+public class MyHead implements CommandExecutor, IHeadsPlusCommand {
 
     private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
-        if (command.getName().equalsIgnoreCase("myhead")) {
+        if (sender.hasPermission(getPermission())) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage(ChatColor.RED + "You must be a player to run this command!");
                 return false;
@@ -115,5 +116,40 @@ public class MyHead implements CommandExecutor {
         playerLoc.setY(playerLocY);
         World world = (p).getWorld();
         world.dropItem(playerLoc, skull).setPickupDelay(0);
+    }
+
+    @Override
+    public String getCmdName() {
+        return "myhead";
+    }
+
+    @Override
+    public String getPermission() {
+        return "headsplus.myhead";
+    }
+
+    @Override
+    public String getCmdDescription() {
+        return LocaleManager.getLocale().descMyHead();
+    }
+
+    @Override
+    public String getSubCommand() {
+        return "Myhead";
+    }
+
+    @Override
+    public String getUsage() {
+        return "/myhead";
+    }
+
+    @Override
+    public boolean isMainCommand() {
+        return false;
+    }
+
+    @Override
+    public boolean fire(String[] args, CommandSender sender) {
+        return false;
     }
 }

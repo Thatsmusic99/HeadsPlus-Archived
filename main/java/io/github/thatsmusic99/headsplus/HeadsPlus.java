@@ -3,6 +3,7 @@ package io.github.thatsmusic99.headsplus;
 import io.github.thatsmusic99.headsplus.api.Challenge;
 import io.github.thatsmusic99.headsplus.api.HeadsPlusAPI;
 import io.github.thatsmusic99.headsplus.commands.*;
+import io.github.thatsmusic99.headsplus.commands.maincommand.*;
 import io.github.thatsmusic99.headsplus.config.*;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallenges;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
@@ -105,6 +106,7 @@ public class HeadsPlus extends JavaPlugin {
 			setupNMS();
             registerEvents();
             registerCommands();
+            registerSubCommands();
 		    JoinEvent.reloaded = false;
 			Metrics metrics = new Metrics(this);
 			metrics.addCustomChart(new Metrics.SimplePie("languages", new Callable<String>() {
@@ -327,7 +329,32 @@ public class HeadsPlus extends JavaPlugin {
     }
 
     private void registerSubCommands() {
-
+        commands.add(new BlacklistAdd());
+        commands.add(new BlacklistDelete());
+        commands.add(new BlacklistList());
+        commands.add(new BlacklistToggle());
+        commands.add(new BlacklistwAdd());
+        commands.add(new BlacklistwDelete());
+        commands.add(new BlacklistwList());
+        commands.add(new BlacklistwToggle());
+        commands.add(new HelpMenu());
+        commands.add(new Info());
+        commands.add(new MCReload());
+        commands.add(new ProfileCommand());
+        commands.add(new WhitelistAdd());
+        commands.add(new WhitelistDel());
+        commands.add(new WhitelistList());
+        commands.add(new WhitelistToggle());
+        commands.add(new WhitelistwAdd());
+        commands.add(new WhitelistwDelete());
+        commands.add(new WhitelistwList());
+        commands.add(new WhitelistwToggle());
+        commands.add(new ChallengeCommand());
+        commands.add(new Head());
+        commands.add(new Heads());
+        commands.add(new LeaderboardsCommand());
+        commands.add(new MyHead());
+        commands.add(new SellHead());
     }
 
 }

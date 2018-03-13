@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.events;
 
-import io.github.thatsmusic99.headsplus.commands.maincommand.PermissionEnums;
+import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -19,10 +20,10 @@ public class TabComplete implements TabCompleter {
         if (args.length == 1) {
             List<String> f = new ArrayList<>();
             List<String> c = new ArrayList<>();
-            for (PermissionEnums key : PermissionEnums.values()) {
-                if (cs.hasPermission(key.str)) {
-                    if (key.mcmd) {
-                        c.add(key.scmd);
+            for (IHeadsPlusCommand key : HeadsPlus.getInstance().commands) {
+                if (cs.hasPermission(key.getPermission())) {
+                    if (key.isMainCommand()) {
+                        c.add(key.getSubCommand());
                     }
                 }
             }

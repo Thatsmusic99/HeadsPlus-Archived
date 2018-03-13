@@ -121,6 +121,11 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
     }
 
     @Override
+    public String getUsage() {
+        return "/head <IGN|Player giving head to> [IGN]";
+    }
+
+    @Override
     public boolean isMainCommand() {
         return false;
     }
@@ -130,7 +135,7 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
         if (sender instanceof Player){
             if (sender.hasPermission("headsplus.head")) {
                 if (args.length == 0) {
-                    sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/head <IGN|Player giving head to> [IGN]");
+                    sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());
                     return true;
                 }
                 if ((args.length == 1) && !(args[0].matches("^[A-Za-z0-9_]+$"))) {
@@ -139,7 +144,7 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
                 }
                 if (args.length > 2) {
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("too-many-args"))));
-                    sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/head <IGN|Player giving head to> [IGN]");
+                    sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());
                     return true;
                 }
                 if (args[0].length() > 16) {

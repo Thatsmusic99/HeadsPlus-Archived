@@ -550,4 +550,14 @@ public class lolcat implements Locale {
     public String cantViewData() {
         return "&cU r console. I am cat. U shall nawt veww ur data.";
     }
+
+    @Override
+    public String descHelpMenu() {
+        return "Shoes deh halp menoo.";
+    }
+
+    @Override
+    public String descChallenges() {
+        return "Shoes ur chalengz.";
+    }
 }

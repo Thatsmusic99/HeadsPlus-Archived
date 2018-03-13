@@ -9,7 +9,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class BlacklistAdd implements IHeadsPlusCommand {
@@ -50,42 +49,42 @@ public class BlacklistAdd implements IHeadsPlusCommand {
 
 	@Override
 	public boolean fire(String[] args, CommandSender sender) {
-		if (sender.hasPermission("headsplus.maincommand.blacklist.add")) {
-			if (args[1].matches("^[A-Za-z0-9_]+$")) {
-				try {
+	    if (args.length > 1) {
+            if (args[1].matches("^[A-Za-z0-9_]+$")) {
+                try {
 
-					if  (!(configF.exists())) {
-						HeadsPlus.getInstance().log.info("[HeadsPlus] Config not found, creating!");
-						config.options().copyDefaults(true);
-						HeadsPlus.getInstance().saveConfig();
-						@SuppressWarnings("unused")
-						File cfile = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
-					}
-					List<String> blacklist = config.getStringList("blacklist");
-					String aHead = args[1].toLowerCase();
-					if (blacklist.contains(aHead)) {
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("head-a-add"))));
-					} else {
-						blacklist.add(aHead);
-						config.set("blacklist", blacklist);
-						config.options().copyDefaults(true);
-						HeadsPlus.getInstance().saveConfig();
+                    if (!(configF.exists())) {
+                        HeadsPlus.getInstance().log.info("[HeadsPlus] Config not found, creating!");
+                        config.options().copyDefaults(true);
+                        HeadsPlus.getInstance().saveConfig();
+                        @SuppressWarnings("unused")
+                        File cfile = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
+                    }
+                    List<String> blacklist = config.getStringList("blacklist");
+                    String aHead = args[1].toLowerCase();
+                    if (blacklist.contains(aHead)) {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("head-a-add"))));
+                    } else {
+                        blacklist.add(aHead);
+                        config.set("blacklist", blacklist);
+                        config.options().copyDefaults(true);
+                        HeadsPlus.getInstance().saveConfig();
 
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("head-added-bl").replaceAll("%p", args[1]))));
-					}
-				} catch (Exception e) {
-					HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to add head!");
-					e.printStackTrace();
-					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("bl-fail"))));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("head-added-bl").replaceAll("%p", args[1]))));
+                    }
+                } catch (Exception e) {
+                    HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to add head!");
+                    e.printStackTrace();
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("bl-fail"))));
 
 
-				}
-			} else {
-				sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("alpha-names"))));
-			}
-		} else {
-			sender.sendMessage(new HeadsPlusCommand().noPerms);
+                }
+            } else {
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("alpha-names"))));
+            }
+        } else {
+			sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());
 		}
-		return true;
+        return true;
 	}
 }

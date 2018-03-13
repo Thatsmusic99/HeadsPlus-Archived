@@ -553,4 +553,14 @@ public class hu_hu implements Locale {
     public String cantViewData() {
         return "A saját adatait nem tekintheti meg a konzolban!";
     }
+
+    @Override
+    public String descHelpMenu() {
+        return "Megjeleníti a súgó menüt.";
+    }
+
+    @Override
+    public String descChallenges() {
+        return "Megjeleníti azokat a kihívásokat, amelyekkel befejezheti.";
+    }
 }

@@ -551,4 +551,14 @@ public class en_uk implements Locale {
     public String cantViewData() {
         return "&cYou can't view your own data in console!";
     }
+
+    @Override
+    public String descHelpMenu() {
+        return "Displays the help menu.";
+    }
+
+    @Override
+    public String descChallenges() {
+        return "Displays challenges you can complete.";
+    }
 }

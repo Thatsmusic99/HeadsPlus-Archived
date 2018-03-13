@@ -2,7 +2,9 @@ package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
+import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
+import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -10,14 +12,45 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.io.File;
 import java.util.List;
 
-public class WhitelistDel {
+public class WhitelistDel implements IHeadsPlusCommand {
 
     private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
     private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
-    public void whitelistDel(CommandSender sender, String name) {
-        if (sender.hasPermission("headsplus.maincommand.whitelist.delete")) {
-            if (name.matches("^[A-Za-z0-9_]+$")) {
+    @Override
+    public String getCmdName() {
+        return "whitelistdel";
+    }
+
+    @Override
+    public String getPermission() {
+        return "headsplus.maincommand.whitelist.delete";
+    }
+
+    @Override
+    public String getCmdDescription() {
+        return LocaleManager.getLocale().descWhitelistDelete();
+    }
+
+    @Override
+    public String getSubCommand() {
+        return "Whitelistdel";
+    }
+
+    @Override
+    public String getUsage() {
+        return "/hp whitelistdel";
+    }
+
+    @Override
+    public boolean isMainCommand() {
+        return true;
+    }
+
+    @Override
+    public boolean fire(String[] args, CommandSender sender) {
+        if (args.length > 1) {
+            if (args[1].matches("^[A-Za-z0-9_]+$")) {
                 try {
                     config.options().copyDefaults(true);
                     HeadsPlus.getInstance().saveConfig();
@@ -27,13 +60,13 @@ public class WhitelistDel {
                     }
                     try {
                         List<String> wl = config.getStringList("whitelist");
-                        String rHead = name.toLowerCase();
+                        String rHead = args[1].toLowerCase();
                         if (wl.contains(rHead)) {
                             wl.remove(rHead);
                             config.set("whitelist", wl);
                             config.options().copyDefaults(true);
                             HeadsPlus.getInstance().saveConfig();
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("head-removed-wl").replaceAll("%p", name))));
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("head-removed-wl").replaceAll("%p", args[1]))));
                         } else {
                             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("head-a-removed-wl"))));
 
@@ -50,8 +83,10 @@ public class WhitelistDel {
             } else {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("alpha-names"))));
             }
+
         } else {
-            sender.sendMessage(new HeadsPlusCommand().noPerms);
+            sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());
         }
+        return true;
     }
 }

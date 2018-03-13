@@ -147,12 +147,13 @@ public class DeathEvents implements Listener {
                 if (e instanceof Sheep) {
                     thing = r.nextInt(hpch.getConfig().getStringList("sheep.name.default").size());
                     s = hpch.getConfig().getStringList("sheep.name.default").get(thing);
-                } else if (e instanceof IronGolem) {
-                    thing = r.nextInt(hpch.getConfig().getStringList("irongolem.name").size());
-                    s = hpch.getConfig().getStringList("irongolem.name").get(thing);
+                // else if (e instanceof IronGolem)
+
+                //    thing = r.nextInt(hpch.getConfig().getStringList("irongolem.name").size());
+                //    s = hpch.getConfig().getStringList("irongolem.name").get(thing);
                 } else {
-                    thing = r.nextInt(hpch.getConfig().getStringList(e.getType().name().toLowerCase() + ".name").size());
-                    s = hpch.getConfig().getStringList(e.getType().name().toLowerCase() + ".name").get(thing);
+                    thing = r.nextInt(hpch.getConfig().getStringList(e.getType().name().replaceAll("_", "").toLowerCase() + ".name").size());
+                    s = hpch.getConfig().getStringList(e.getType().name().replaceAll("_", "").toLowerCase() + ".name").get(thing);
                 }
             }
         } catch (IndexOutOfBoundsException ex) {

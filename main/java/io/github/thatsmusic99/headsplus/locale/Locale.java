@@ -247,4 +247,8 @@ public interface Locale {
 
     String cantViewData();
 
+    String descHelpMenu();
+
+    String descChallenges();
+
 }

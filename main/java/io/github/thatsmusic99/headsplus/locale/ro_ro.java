@@ -553,4 +553,14 @@ public class ro_ro implements Locale {
     public String cantViewData() {
         return "&cNu puteti vedea propriile date in consola!";
     }
+
+    @Override
+    public String descHelpMenu() {
+        return "Afiseaza meniul de ajutor.";
+    }
+
+    @Override
+    public String descChallenges() {
+        return "Afiseaza provocarile pe care le puteti finaliza.";
+    }
 }

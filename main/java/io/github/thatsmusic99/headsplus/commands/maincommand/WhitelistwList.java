@@ -1,24 +1,56 @@
 package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
+import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
+import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.util.PagedLists;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
-public class WhitelistwList {
+public class WhitelistwList implements IHeadsPlusCommand {
 
     private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
-    public void wlwListNoArgs(CommandSender sender) {
-        if (sender.hasPermission("headsplus.maincommand.whitelistw.list")) {
+    @Override
+    public String getCmdName() {
+        return "whitelistwl";
+    }
+
+    @Override
+    public String getPermission() {
+        return "headsplus.maincommand.whitelistw.list";
+    }
+
+    @Override
+    public String getCmdDescription() {
+        return LocaleManager.getLocale().descWhitelistwList();
+    }
+
+    @Override
+    public String getSubCommand() {
+        return "Whitelistwl";
+    }
+
+    @Override
+    public String getUsage() {
+        return "/hp whitelistwl [Page No.]";
+    }
+
+    @Override
+    public boolean isMainCommand() {
+        return true;
+    }
+
+    @Override
+    public boolean fire(String[] args, CommandSender sender) {
+        if (args.length == 1) {
             List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("whitelistw");
             if (bl.size() < 1) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("empty-wlw"))));
-                return;
+                return true;
             }
             PagedLists<String> pl = new PagedLists<>(bl, 8);
             sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "============ " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + "World Whitelist: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + "1/" + pl.getTotalPages() + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + " ==========" );
@@ -27,14 +59,9 @@ public class WhitelistwList {
                 sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + key);
             }
         } else {
-            sender.sendMessage(new HeadsPlusCommand().noPerms);
-        }
-    }
-    public void wlwList(CommandSender sender, String i) {
-        if (sender.hasPermission("headsplus.maincommand.whitelistw.list")) {
-            if (i.matches("^[0-9]+$")) {
+            if (args[1].matches("^[0-9]+$")) {
                 List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("whitelistw");
-                int page = Integer.parseInt(i);
+                int page = Integer.parseInt(args[1]);
                 PagedLists<String> pl = new PagedLists<>(bl, 8);
 
                 if ((page > pl.getTotalPages()) || (0 >= page)) {
@@ -51,8 +78,7 @@ public class WhitelistwList {
             } else {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("invalid-input-int"))));
             }
-        } else {
-            sender.sendMessage(new HeadsPlusCommand().noPerms);
         }
+        return true;
     }
 }

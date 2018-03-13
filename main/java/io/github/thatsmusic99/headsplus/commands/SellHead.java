@@ -10,6 +10,7 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import io.github.thatsmusic99.headsplus.api.SellHeadEvent;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
+import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -27,7 +28,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 
-public class SellHead implements CommandExecutor {
+public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 	
 	private boolean sold;
 	private HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().hpch;
@@ -757,5 +758,40 @@ public class SellHead implements CommandExecutor {
         } else {
 	        hm.put(s, 1);
         }
+    }
+
+    @Override
+    public String getCmdName() {
+        return "sellhead";
+    }
+
+    @Override
+    public String getPermission() {
+        return "headsplus.sellhead";
+    }
+
+    @Override
+    public String getCmdDescription() {
+        return LocaleManager.getLocale().descSellhead();
+    }
+
+    @Override
+    public String getSubCommand() {
+        return "Sellhead";
+    }
+
+    @Override
+    public String getUsage() {
+        return "/sellhead [All|Entity|#]";
+    }
+
+    @Override
+    public boolean isMainCommand() {
+        return false;
+    }
+
+    @Override
+    public boolean fire(String[] args, CommandSender sender) {
+        return false;
     }
 }

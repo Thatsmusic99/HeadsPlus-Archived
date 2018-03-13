@@ -170,7 +170,7 @@ public class DeathEvents implements Listener {
             sm.setOwner(s);
         }
 
-        sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getConfig().getString(e.getType().name().toLowerCase() + ".display-name")));
+        sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getConfig().getString(e.getType().name().replaceAll("_", "").toLowerCase() + ".display-name")));
         List<String> ls = new ArrayList<>();
         for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
             ls.add(ChatColor.translateAlternateColorCodes('&', str));

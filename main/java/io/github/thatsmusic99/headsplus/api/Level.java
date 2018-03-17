@@ -1,4 +1,13 @@
 package io.github.thatsmusic99.headsplus.api;
 
-public class Level {
+public interface Level {
+
+    String getConfigName();
+
+    String getDisplayName();
+
+    int getRequiredXP();
+
+    double getAddedVersion();
+
 }

@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus;
 
 import io.github.thatsmusic99.headsplus.api.Challenge;
 import io.github.thatsmusic99.headsplus.api.HeadsPlusAPI;
+import io.github.thatsmusic99.headsplus.api.Level;
 import io.github.thatsmusic99.headsplus.commands.*;
 import io.github.thatsmusic99.headsplus.commands.maincommand.*;
 import io.github.thatsmusic99.headsplus.config.*;
@@ -33,6 +34,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
@@ -69,6 +71,7 @@ public class HeadsPlus extends JavaPlugin {
     public List<Challenge> challenges = new ArrayList<>();
     public NMSManager nms;
     public List<IHeadsPlusCommand> commands = new ArrayList<>();
+    public HashMap<Integer, Level> levels = new HashMap<>();
 
     private FileConfiguration config;
 

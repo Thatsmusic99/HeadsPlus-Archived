@@ -20,7 +20,7 @@ import java.util.logging.Level;
 public class HeadsPlusConfigHeadsX extends ConfigSettings {
 
     public boolean s = false;
-    private double cVersion = 1.4;
+    private double cVersion = 1.5;
 
     public HeadsPlusConfigHeadsX() {
         this.conName = "headsx";

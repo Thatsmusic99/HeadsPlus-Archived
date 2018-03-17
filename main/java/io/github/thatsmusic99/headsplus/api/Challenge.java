@@ -131,10 +131,8 @@ public class Challenge {
     }
 
     public void complete(Player p, Inventory i, int slot) {
-        HeadsPlusChallenges hpc = HeadsPlus.getInstance().hpchl;
-        List<String> str = hpc.getConfig().getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges");
-        str.add(getConfigName());
-        hpc.getConfig().set("player-data." + p.getUniqueId().toString() + ".completed-challenges", str);
+        HPPlayer player = HPPlayer.getHPPlayer(p);
+        player.addCompleteChallenge(this);
         ItemStack is = new ItemStack(Material.STAINED_CLAY, 1, (short) 13);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.translateAlternateColorCodes('&', getChallengeHeader()));
@@ -173,7 +171,7 @@ public class Challenge {
         im.setLore(lore);
         is.setItemMeta(im);
         i.setItem(slot, is);
-        addXp(p);
+        player.addXp(getGainedXP());
         reward(p);
         for (Player pl : Bukkit.getOnlinePlayers()) {
             pl.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlus.getInstance().hpc.getConfig().getString("challenge-complete")
@@ -215,16 +213,4 @@ public class Challenge {
         }
     }
 
-    private void addXp(Player p) {
-        HeadsPlusChallenges hpc = HeadsPlus.getInstance().hpchl;
-        if (hpc.getConfig().getInt("player-data." + p.getUniqueId().toString() + ".profile.xp") <= 0) {
-            hpc.getConfig().addDefault("player-data." + p.getUniqueId().toString() + ".profile.xp", getGainedXP());
-        } else {
-            int a = hpc.getConfig().getInt("player-data." + p.getUniqueId().toString() + ".profile.xp");
-            a += getGainedXP();
-            hpc.getConfig().set("player-data." + p.getUniqueId().toString() + ".profile.xp", a);
-        }
-        hpc.getConfig().options().copyDefaults(true);
-        hpc.save();
-    }
 }

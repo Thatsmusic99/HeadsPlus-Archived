@@ -245,7 +245,12 @@ public enum HeadsXEnums {
     RED_EGG("red_egg", "&8[&cRed Easter Egg&8]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjNkNjliMjNhZTU5MmM2NDdlYjhkY2ViOWRhYWNlNDQxMzlmNzQ4ZTczNGRjODQ5NjI2MTNjMzY2YTA4YiJ9fX0", "easter", 1.4),
     WHITE_EGG("white_egg", "&8[&fWhite Easter Egg&8]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjY0NDMwZTQ5M2ZlYjVlYWExNDU1ODJlNTRlNzYxYTg2MDNmYjE2Y2MwZmYxMjY4YTVkMWU4NjRlNmY0NzlmNiJ9fX0", "easter", 1.4),
     EASTER_BASKET("easter_basket", "&8[&aEaster Basket&8]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODNjMjVhN2ExODgxOTZiMTg3MTcyNjRmZmU4MzdjYTM0OGNmNzE5ZTgyNzE3OWVkYzRiNzhjYmNiOGM3ZGQ4In19fQ", "easter", 1.4),
-    GOLD_EGG("gold_egg", "&8[&6Golden Egg&8]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTNlOGJiYzhkMTc0YWVjZDZiNDY4ODhmYTYzZjliYWRlMTRiMDQyZTVlMTcwNjMxMzlkNjdmOGUwMTYzYTM4In19fQ", "easter", 1.4);
+    GOLD_EGG("gold_egg", "&8[&6Golden Egg&8]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTNlOGJiYzhkMTc0YWVjZDZiNDY4ODhmYTYzZjliYWRlMTRiMDQyZTVlMTcwNjMxMzlkNjdmOGUwMTYzYTM4In19fQ", "easter", 1.4),
+    BLACK_EGG("black_egg", "&8[&7Black Easter egg&8]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWViZjc4ZTFjMWIwMWRlY2ZiNmIzZGY1MjU4MTY4YzNhYTg3NDg3MWJlNGJjNGRiMjU1ODRlZDU5MGE1NTdiMiJ9fX0", "easter", 1.5),
+    CHICK("chick", "&8[&eChick&8]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTRkODE2YTQ3NWIzZjMxM2I2MjBkNjViZjkzNTg5MzFiNDZhZjljOGY0ZTdjOWFlNjQ3MDg4ODBiZWE2YmUifX19", "easter", 1.5),
+    YOSHI_EGG("yoshi_egg", "&8[&aYoshi Egg&8]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGEyOGQ4OWVjMTcyMjQ3MTczZDE2ODlkYjhjNmFhZDE0NjczYzE5YTJmN2M2ODgxNjJhZjRlYTZlZGE2ODkzIn19fQ", "easter", 1.5),
+    LAVENDER_EGG("lavender_egg", "&8[&dLavender Easter Egg&8]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2MzZDcxMWZmM2M0ODkxMzNlM2Y0NjY1NWNlYjE1Nzk4OTdmMTg0YmZmYmU2ZWZmYTJlN2I2YmJlZjQ3YWIzIn19fQ", "easter", 1.5),
+    RAINBOW_EGG("rainbow_egg", "&8[&4R&6a&ei&an&bb&3o&dw &bEaster &aEgg&8]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjU2ZjdmM2YzNTM2NTA2NjI2ZDVmMzViNDVkN2ZkZjJkOGFhYjI2MDA4NDU2NjU5ZWZlYjkxZTRjM2E5YzUifX19", "easter", 1.5);
 
     String name;
     String dn;

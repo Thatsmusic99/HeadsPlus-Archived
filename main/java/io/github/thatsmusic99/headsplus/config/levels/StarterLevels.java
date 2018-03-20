@@ -4,7 +4,7 @@ import io.github.thatsmusic99.headsplus.api.Level;
 
 public class StarterLevels {
 
-    public class Grass implements Level {
+    public static class Grass implements Level {
 
         @Override
         public String getConfigName() {
@@ -27,7 +27,7 @@ public class StarterLevels {
         }
     }
 
-    public class Dirt implements Level {
+    public static class Dirt implements Level {
 
         @Override
         public String getConfigName() {
@@ -50,7 +50,7 @@ public class StarterLevels {
         }
     }
 
-    public class Stone implements Level {
+    public static class Stone implements Level {
 
         @Override
         public String getConfigName() {
@@ -59,7 +59,7 @@ public class StarterLevels {
 
         @Override
         public String getDisplayName() {
-            return "&l&7Stone";
+            return "&7&lStone";
         }
 
         @Override

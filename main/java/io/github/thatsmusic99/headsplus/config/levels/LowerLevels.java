@@ -4,7 +4,7 @@ import io.github.thatsmusic99.headsplus.api.Level;
 
 public class LowerLevels {
 
-    public class Coal implements Level {
+    public static class Coal implements Level {
 
         @Override
         public String getConfigName() {
@@ -27,7 +27,7 @@ public class LowerLevels {
         }
     }
 
-    public class CoalII implements Level {
+    public static class CoalII implements Level {
 
         @Override
         public String getConfigName() {
@@ -50,7 +50,7 @@ public class LowerLevels {
         }
     }
 
-    public class Iron implements Level {
+    public static class Iron implements Level {
 
         @Override
         public String getConfigName() {
@@ -59,7 +59,7 @@ public class LowerLevels {
 
         @Override
         public String getDisplayName() {
-            return "&lIron";
+            return "&f&lIron";
         }
 
         @Override
@@ -73,7 +73,7 @@ public class LowerLevels {
         }
     }
 
-    public class IronII implements Level {
+    public static class IronII implements Level {
 
         @Override
         public String getConfigName() {
@@ -82,7 +82,7 @@ public class LowerLevels {
 
         @Override
         public String getDisplayName() {
-            return "&lIron &7&lII";
+            return "&f&lIron &7&lII";
         }
 
         @Override
@@ -96,7 +96,7 @@ public class LowerLevels {
         }
     }
 
-    public class Redstone implements Level {
+    public static class Redstone implements Level {
 
         @Override
         public String getConfigName() {
@@ -119,7 +119,7 @@ public class LowerLevels {
         }
     }
 
-    public class RedstoneII implements Level {
+    public static class RedstoneII implements Level {
 
         @Override
         public String getConfigName() {

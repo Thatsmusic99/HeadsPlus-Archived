@@ -251,4 +251,6 @@ public interface Locale {
 
     String descChallenges();
 
+    String getAchievedNextLevel();
+
 }

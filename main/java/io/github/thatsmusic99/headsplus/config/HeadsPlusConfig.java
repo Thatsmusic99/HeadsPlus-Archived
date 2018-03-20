@@ -91,6 +91,7 @@ public class HeadsPlusConfig extends ConfigSettings {
         getConfig().addDefault("cant-complete-challenge", "&cYou can't complete this challenge!");
         getConfig().addDefault("already-complete-challenge", "&cYou've already completed that challenge!");
         getConfig().addDefault("cant-view-data", "&cYou can't view your own data in console!");
+        getConfig().addDefault("level-up", "%h &3%p has reached level %lvl&3!");
 
         if (!getConfig().getString("locale").equalsIgnoreCase(getConfig().getString("pLocale")) && !nullpoint) {
             getConfig().set("pLocale", getConfig().getString("locale"));
@@ -169,6 +170,7 @@ public class HeadsPlusConfig extends ConfigSettings {
 			getConfig().set("cant-complete-challenge", LocaleManager.getLocale().cantCompleteChallenge());
 			getConfig().set("already-complete-challenge", LocaleManager.getLocale().alreadyCompleted());
 			getConfig().set("cant-view-data", LocaleManager.getLocale().cantViewData());
+			getConfig().set("level-up", LocaleManager.getLocale().getAchievedNextLevel());
         }
 
 		getConfig().options().copyDefaults(true);

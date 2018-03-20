@@ -355,11 +355,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 				if (a[0].equalsIgnoreCase("all")) {
 					if (i.getType().equals(Material.SKULL_ITEM)) {
 						SkullMeta sm = (SkullMeta) i.getItemMeta();
-                        List<String> ls = new ArrayList<>();
-                        for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
-                            ls.add(ChatColor.translateAlternateColorCodes('&', ChatColor.stripColor(str)));
-                        }
-						// if ((sm.getLore() != null) && (sm.getLore().equals(ls))) {
+
                         if (HeadsPlus.getInstance().nms.isSellable(i)) {
 							boolean found = false;
 							for (String s : hpch.mHeads) {
@@ -368,7 +364,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 							            if (!Objects.equals(e(hpch.getConfig().getStringList(s + ".name." + st), p, s, sm, i), p)) {
                                             p = e(hpch.getConfig().getStringList(s + ".name." + st), p, s, sm, i);
                                             soldHeads.add(s);
-                                            i(s);
+                                            i(s, i.getAmount());
                                             found = true;
                                             break;
                                         }
@@ -377,7 +373,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                     if (!Objects.equals(e(hpch.getConfig().getStringList(s + ".name"), p, s, sm, i), p)) {
                                         p = e(hpch.getConfig().getStringList(s + ".name"), p, s, sm, i);
                                         soldHeads.add(s);
-                                        i(s);
+                                        i(s, i.getAmount());
                                         found = true;
                                         break;
                                     }
@@ -387,7 +383,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                 if (!Objects.equals(e(hpch.getConfig().getStringList(s + ".name"), p, s, sm, i), p)) {
                                     p = e(hpch.getConfig().getStringList(s + ".name"), p, s, sm, i);
                                     soldHeads.add(s);
-                                    i(s);
+                                    i(s, i.getAmount());
                                     found = true;
                                     break;
                                 }
@@ -395,7 +391,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                             if (!Objects.equals(e(hpch.getConfig().getStringList("irongolem.name"), p, "irongolem", sm, i), p)) {
                                 p = e(hpch.getConfig().getStringList("irongolem.name"), p, "irongolem", sm, i);
                                 soldHeads.add("irongolem");
-                                i("irongolem");
+                                i("irongolem", i.getAmount());
                                 found = true;
                             }
 
@@ -406,7 +402,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                             if (!b(p, key, hpch.getConfig().getStringList(key + ".name." + s), i, pl, a, false, true).equals(p)) {
                                                 p = b(p, key, hpch.getConfig().getStringList(key + ".name." + s), i, pl, a, false, true);
                                                 soldHeads.add(key);
-                                                i(key);
+                                                i(key, i.getAmount());
                                                 found = true;
                                                 break;
                                             }
@@ -415,7 +411,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                         if (!b(p, key, hpch.getConfig().getStringList(key + ".name"), i, pl, a, false, true).equals(p)) {
                                             p = b(p, key, hpch.getConfig().getStringList(key + ".name"), i, pl, a, false, true);
                                             soldHeads.add(key);
-                                            i(key);
+                                            i(key, i.getAmount());
                                             found = true;
                                             break;
                                         }
@@ -426,7 +422,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                     if (!b(p, key, hpch.getConfig().getStringList(key + ".name"), i, pl, a, false, true).equals(p)) {
                                         p = b(p, key, hpch.getConfig().getStringList(key + ".name"), i, pl, a, false, true);
                                         soldHeads.add(key);
-                                        i(key);
+                                        i(key, i.getAmount());
                                         found = true;
                                         break;
                                     }
@@ -435,7 +431,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 						    if (!found) {
 						    	p = p + (i.getAmount() * hpch.getConfig().getDouble("player.price"));
                                 soldHeads.add("player");
-                                i("player");
+                                i("player", i.getAmount());
 						    }
 						}
 					}
@@ -482,7 +478,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                             if ((sm.getLore() != null) && (sm.getLore().size() == 2) && (sm.getLore().equals(ls))) {
                                 p = p + (i.getAmount() * hpch.getConfig().getDouble("player.price"));
                                 soldHeads.add("player");
-                                i("player");
+                                i("player", i.getAmount());
                             }
                         }
                     }
@@ -502,7 +498,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 					}
 					p = hpch.getConfig().getDouble(s + ".price") * Integer.parseInt(a[0]);
                     soldHeads.add(s);
-                    i(s);
+                    i(s, i.getAmount());
 				} else {
 					pl.sendMessage(ChatColor.translateAlternateColorCodes('&', hpc.getConfig().getString("not-enough-heads")));
 				}
@@ -530,7 +526,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
             }
 			p = hpch.getConfig().getDouble(s + ".price") * i.getAmount();
             soldHeads.add(s);
-            i(s);
+            i(s, i.getAmount());
 	    }
 		return p;
 	}
@@ -627,7 +623,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
     private void a(ItemStack is, String key, String[] args, Player p) {
         Double price = hpch.getConfig().getDouble(key + ".price");
         soldHeads.add(key);
-        i(key);
+        i(key, is.getAmount());
         if (is.getAmount() > 0) {
             price = setPrice(price, args, is, p);
         }
@@ -646,7 +642,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                 return price;
                             } else if (f) {
                                 soldHeads.add(key);
-                                i(key);
+                                i(key, i.getAmount());
                                 price = price + (i.getAmount() * hpch.getConfig().getDouble(key + ".price"));
                                 return price;
                             } else {
@@ -699,7 +695,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 
                 if (HeadsPlus.getInstance().nms.isSellable(i)) {
                     soldHeads.add(s);
-                    i(s);
+                    i(s, i.getAmount());
                     p = p + (i.getAmount() * hpch.getConfig().getDouble(s + ".price"));
                 }
             } else if (sm.getOwner().equalsIgnoreCase("HPXHead")) {
@@ -711,7 +707,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                             if (i.getAmount() > 0) {
                                 if (HeadsPlus.getInstance().nms.isSellable(i)) {
                                     soldHeads.add(s);
-                                    i(s);
+                                    i(s, i.getAmount());
                                     p = p + (i.getAmount() * hpch.getConfig().getDouble(s + ".price"));
                                     break;
                                 }
@@ -750,13 +746,18 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
         return gm;
     }
 
-    private void i(String s) {
-	    if (hm.get(s) != null) {
+    private void i(String s, int amount) {
+	    if (hm.get(s) == null) {
+	        System.out.println("Pong!");
+            hm.put(s, amount);
+            return;
+        }
+	    if (hm.get(s) > 0) {
 	        int i = hm.get(s);
-	        i++;
+	        i += amount;
 	        hm.put(s, i);
         } else {
-	        hm.put(s, 1);
+	        hm.put(s, amount);
         }
     }
 

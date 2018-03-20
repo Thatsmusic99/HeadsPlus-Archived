@@ -563,4 +563,9 @@ public class ro_ro implements Locale {
     public String descChallenges() {
         return "Afiseaza provocarile pe care le puteti finaliza.";
     }
+
+    @Override
+    public String getAchievedNextLevel() {
+        return "%h &3%p a atins nivelul %lvl!";
+    }
 }

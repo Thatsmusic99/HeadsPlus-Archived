@@ -279,4 +279,13 @@ public class HeadsPlusAPI {
         return null;
     }
 
+    public Challenge getChallengeByConfigName(String name) {
+        for (Challenge c : getChallenges()) {
+            if (c.getConfigName().equals(name)) {
+                return c;
+            }
+        }
+        return null;
+    }
+
 }

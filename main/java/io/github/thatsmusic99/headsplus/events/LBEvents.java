@@ -1,10 +1,7 @@
 package io.github.thatsmusic99.headsplus.events;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.api.EntityHeadDropEvent;
-import io.github.thatsmusic99.headsplus.api.HeadCraftEvent;
-import io.github.thatsmusic99.headsplus.api.PlayerHeadDropEvent;
-import io.github.thatsmusic99.headsplus.api.SellHeadEvent;
+import io.github.thatsmusic99.headsplus.api.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -32,6 +29,9 @@ public class LBEvents implements Listener {
     public void onHeadSold(SellHeadEvent e) {
         if (!e.isCancelled()) {
             if (HeadsPlus.getInstance().chal) {
+                for (int is : e.getEntityAmounts().values()) {
+                    HPPlayer.getHPPlayer(e.getPlayer()).addXp(20 * is);
+                }
                 for (String s : e.getEntityAmounts().keySet()) {
                     for (int i : e.getEntityAmounts().values()) {
                         if (e.getEntityAmounts().get(s) == i) {
@@ -49,6 +49,7 @@ public class LBEvents implements Listener {
             if (HeadsPlus.getInstance().chal) {
                 if (e.getEntityType() != null) {
                     if (!e.getEntityType().equalsIgnoreCase("invalid")) {
+                        HPPlayer.getHPPlayer(e.getPlayer()).addXp(30 * e.getHeadsCrafted());
                         HeadsPlus.getInstance().mySQLAPI.addOntoValue(e.getPlayer(), e.getEntityType(), "headspluscraft", e.getHeadsCrafted());
                     }
                 }

@@ -4,7 +4,7 @@ import io.github.thatsmusic99.headsplus.api.Level;
 
 public class MidLevels {
 
-    public class Lapis implements Level {
+    public static class Lapis implements Level {
 
         @Override
         public String getConfigName() {
@@ -27,7 +27,7 @@ public class MidLevels {
         }
     }
 
-    public class LapisII implements Level {
+    public static class LapisII implements Level {
 
         @Override
         public String getConfigName() {
@@ -50,7 +50,7 @@ public class MidLevels {
         }
     }
 
-    public class LapisIII implements Level {
+    public static class LapisIII implements Level {
 
         @Override
         public String getConfigName() {
@@ -73,7 +73,7 @@ public class MidLevels {
         }
     }
 
-    public class Gold implements Level {
+    public static class Gold implements Level {
 
         @Override
         public String getConfigName() {
@@ -96,7 +96,7 @@ public class MidLevels {
         }
     }
 
-    public class GoldII implements Level {
+    public static class GoldII implements Level {
 
         @Override
         public String getConfigName() {
@@ -119,7 +119,7 @@ public class MidLevels {
         }
     }
 
-    public class GoldIII implements Level {
+    public static class GoldIII implements Level {
 
         @Override
         public String getConfigName() {
@@ -142,7 +142,7 @@ public class MidLevels {
         }
     }
 
-    public class Diamond implements Level {
+    public static class Diamond implements Level {
 
         @Override
         public String getConfigName() {
@@ -165,7 +165,7 @@ public class MidLevels {
         }
     }
 
-    public class DiamondII implements Level {
+    public static class DiamondII implements Level {
 
         @Override
         public String getConfigName() {
@@ -188,7 +188,7 @@ public class MidLevels {
         }
     }
 
-    public class DiamondIII implements Level {
+    public static class DiamondIII implements Level {
 
         @Override
         public String getConfigName() {

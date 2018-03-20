@@ -3,6 +3,7 @@ package io.github.thatsmusic99.headsplus.events;
 import java.util.*;
 
 import io.github.thatsmusic99.headsplus.api.EntityHeadDropEvent;
+import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.api.PlayerHeadDropEvent;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import org.bukkit.*;
@@ -147,10 +148,6 @@ public class DeathEvents implements Listener {
                 if (e instanceof Sheep) {
                     thing = r.nextInt(hpch.getConfig().getStringList("sheep.name.default").size());
                     s = hpch.getConfig().getStringList("sheep.name.default").get(thing);
-                // else if (e instanceof IronGolem)
-
-                //    thing = r.nextInt(hpch.getConfig().getStringList("irongolem.name").size());
-                //    s = hpch.getConfig().getStringList("irongolem.name").get(thing);
                 } else {
                     thing = r.nextInt(hpch.getConfig().getStringList(e.getType().name().replaceAll("_", "").toLowerCase() + ".name").size());
                     s = hpch.getConfig().getStringList(e.getType().name().replaceAll("_", "").toLowerCase() + ".name").get(thing);
@@ -189,6 +186,7 @@ public class DeathEvents implements Listener {
         Bukkit.getServer().getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
             world.dropItem(event.getLocation(), event.getSkull());
+            HPPlayer.getHPPlayer(k).addXp(10);
         }
     }
 

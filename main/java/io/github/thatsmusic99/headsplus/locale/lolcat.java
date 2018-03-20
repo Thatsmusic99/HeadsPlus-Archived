@@ -560,4 +560,9 @@ public class lolcat implements Locale {
     public String descChallenges() {
         return "Shoes ur chalengz.";
     }
+
+    @Override
+    public String getAchievedNextLevel() {
+        return "%h &3OMG &b%p &3haz reeched lvl %lvl&3!";
+    }
 }

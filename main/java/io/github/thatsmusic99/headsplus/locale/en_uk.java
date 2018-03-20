@@ -561,4 +561,9 @@ public class en_uk implements Locale {
     public String descChallenges() {
         return "Displays challenges you can complete.";
     }
+
+    @Override
+    public String getAchievedNextLevel() {
+        return "%h &3%p has reached level %lvl&3!";
+    }
 }

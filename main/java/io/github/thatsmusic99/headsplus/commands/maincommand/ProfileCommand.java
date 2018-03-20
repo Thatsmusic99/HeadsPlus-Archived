@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import org.bukkit.Bukkit;
@@ -15,16 +16,19 @@ public class ProfileCommand implements IHeadsPlusCommand {
 
     private String prof(OfflinePlayer p) throws SQLException {
         try {
+            HPPlayer pl = HPPlayer.getHPPlayer(p);
             return String.valueOf(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1"))) + "===============" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + " HeadsPlus " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============" +
                     "\n" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "Player: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + p.getName() +
-                    "\n" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "XP: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + HeadsPlus.getInstance().hpchl.getConfig().getInt("player-data." + p.getUniqueId().toString() + ".profile.xp") +
-                    "\n" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "Completed challenges: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + HeadsPlus.getInstance().hpchl.getConfig().getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").size() +
+                    "\n" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "XP: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + pl.getXp() +
+                    "\n" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "Completed challenges: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + pl.getCompleteChallenges().size() +
                     "\n" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "Total heads dropped: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + HeadsPlus.getInstance().hapi.getPlayerInLeaderboards(p, "total", "headspluslb") +
                     "\n" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "Total heads sold: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + HeadsPlus.getInstance().hapi.getPlayerInLeaderboards(p, "total", "headsplussh") +
-                    "\n" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "Total heads crafted: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + HeadsPlus.getInstance().hapi.getPlayerInLeaderboards(p, "total", "headspluscraft");
+                    "\n" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "Total heads crafted: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + HeadsPlus.getInstance().hapi.getPlayerInLeaderboards(p, "total", "headspluscraft") +
+                    "\n" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "Current level: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + ChatColor.translateAlternateColorCodes('&', pl.getLevel().getDisplayName()) +
+                    "\n" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "XP until next level: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + String.valueOf(pl.getNextLevel() != null ? (pl.getNextLevel().getRequiredXP() - pl.getXp()) : 0);
 
         } catch (NullPointerException ex) {
-            return HeadsPlus.getInstance().hpc.getConfig().getString("no-data"); // TODO translations
+            return ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().hpc.getConfig().getString("no-data")); // TODO translations
         }
     }
 

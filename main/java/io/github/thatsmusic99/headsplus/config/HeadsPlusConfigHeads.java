@@ -50,7 +50,7 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
     	
     	for (String key : mHeads) {
     		if (!key.equals("irongolem") && !key.equals("sheep")) {
-    		    getConfig().addDefault(key + ".name", Collections.singleton("MHF_" + WordUtils.capitalize(key)));
+    		    getConfig().addDefault(key + ".name", new ArrayList<>(Collections.singleton("MHF_" + WordUtils.capitalize(key))));
     		    getConfig().addDefault(key + ".chance", 25);
     		    getConfig().addDefault(key + ".display-name", WordUtils.capitalize(key) + " Head");
     		    getConfig().addDefault(key + ".price", 10.00);

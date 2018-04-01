@@ -106,12 +106,12 @@ public class hu_hu implements Locale {
 
     @Override
     public String getHeadTooLong() {
-        return "&cAz IGN túl hosszú ahhoz, hogy érvényes legyen! Kérjük, használjon IGN-t 3 és 16 karakter között.";
+        return "&cAz IGN túl hosszú ahhoz, hogy érvényes legyen! Kérjük, használj IGN-t 3 és 16 karakter között.";
     }
 
     @Override
     public String getHeadTooShort() {
-        return "&cAz IGN túl rövid ahhoz, hogy érvényes legyen! Kérjük, használjon IGN-t 3 és 16 karakter között.";
+        return "&cAz IGN túl rövid ahhoz, hogy érvényes legyen! Kérjük, használj IGN-t 3 és 16 karakter között.";
     }
 
     @Override
@@ -121,7 +121,7 @@ public class hu_hu implements Locale {
 
     @Override
     public String getInvalidInputInteger() {
-        return "%h &cEbben a parancsban csak egész számokat használhat!";
+        return "%h &cEbben a parancsban csak egész számokat használhatsz!";
     }
 
     @Override
@@ -431,7 +431,7 @@ public class hu_hu implements Locale {
 
     @Override
     public String descWhitelistwList() {
-        return "Kilistázza a fehérlistában levő világokat.";
+        return "Kilistázza a fehérlistában lévő világokat.";
     }
 
     @Override
@@ -456,7 +456,7 @@ public class hu_hu implements Locale {
 
     @Override
     public String descMyHead() {
-        return "Leidéz a fejed."; // Self-translated
+        return "Leidézi a fejed.";
     }
 
     @Override
@@ -466,7 +466,7 @@ public class hu_hu implements Locale {
 
     @Override
     public String getUpdateFound() {
-        return "%h &3Frissítés található a HeadsPlus pluginban! További információért vigye az egérmutatót az üzenet fölé.";
+        return "%h &3Frissítés található a HeadsPlus pluginban! További információért vidd az egérmutatót az üzenet fölé.";
     }
 
     @Override
@@ -491,7 +491,7 @@ public class hu_hu implements Locale {
 
     @Override
     public String getBlockPlaceDenied() {
-        return "&cNem teheted le a fejeteket!";
+        return "&cNem teheted le a fejeket!";
     }
 
     @Override
@@ -506,12 +506,12 @@ public class hu_hu implements Locale {
 
     @Override
     public String easy() {
-        return "Könnyen";
+        return "Könnyű";
     }
 
     @Override
     public String medium() {
-        return "Közbülső";
+        return "Közepes";
     }
 
     @Override
@@ -526,7 +526,7 @@ public class hu_hu implements Locale {
 
     @Override
     public String chCompleteMessage() {
-        return "%h &b%p &3befejezte a &b%c &3Challenge-ot!";
+        return "%h &b%p &3befejezte a &b%c &3küldetést!";
     }
 
     @Override
@@ -541,17 +541,17 @@ public class hu_hu implements Locale {
 
     @Override
     public String cantCompleteChallenge() {
-        return "&cNem tudja befejezni ezt a kihívást!";
+        return "&cNem tudod befejezni ezt a kihívást!";
     }
 
     @Override
     public String alreadyCompleted() {
-        return "&cÖn már befejezte a kihívást!";
+        return "&cMár befejezted a kihívást!";
     }
 
     @Override
     public String cantViewData() {
-        return "A saját adatait nem tekintheti meg a konzolban!";
+        return "A saját adataid nem tekintheted meg a konzolban!";
     }
 
     @Override
@@ -561,7 +561,7 @@ public class hu_hu implements Locale {
 
     @Override
     public String descChallenges() {
-        return "Megjeleníti azokat a kihívásokat, amelyekkel befejezheti.";
+        return "Megjeleníti azokat a kihívásokat, amelyekkel befejezheted.";
     }
 
     @Override

@@ -2,10 +2,12 @@ package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import java.io.File;
 
+import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.*;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallenges;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
+import io.github.thatsmusic99.headsplus.config.levels.HeadsPlusLevels;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -27,6 +29,8 @@ public class MCReload implements IHeadsPlusCommand{
 	private static final File lbF = new File(HeadsPlus.getInstance().getDataFolder(), "leaderboards.yml");
 
 	private final File chalF = new File(HeadsPlus.getInstance().getDataFolder(), "challenges.yml");
+
+	private final File levelF = new File(HeadsPlus.getInstance().getDataFolder(), "levels.yml");
 
 	@Override
 	public String getCmdName() {
@@ -152,6 +156,17 @@ public class MCReload implements IHeadsPlusCommand{
 			} else {
 				hpchal.reloadC(false);
 			}
+            HeadsPlusLevels hplevels = HeadsPlus.getInstance().hpl;
+			if (!levelF.exists()) {
+			    HeadsPlus.getInstance().getLogger().info("Levels not found, creating!");
+			    hplevels.reloadC(false);
+			    hplevels.config = YamlConfiguration.loadConfiguration(levelF);
+			    HeadsPlus.getInstance().getLogger().info("Levels created!");
+            } else {
+			    hplevels.reloadC(false);
+            }
+            HPPlayer.players.clear();
+
 
 		} catch (Exception e) {
 			HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to reload config!");

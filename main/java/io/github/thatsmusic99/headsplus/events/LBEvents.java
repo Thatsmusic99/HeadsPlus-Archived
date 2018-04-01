@@ -11,6 +11,11 @@ public class LBEvents implements Listener {
     public void onHeadDrop(EntityHeadDropEvent e) {
         if (!e.isCancelled()) {
             if (HeadsPlus.getInstance().lb) {
+                if (HeadsPlus.getInstance().getConfig().getBoolean("smite-player-if-they-get-a-head")) {
+                    for (int i = 0; i < 5; i++) {
+                        e.getLocation().getWorld().strikeLightning(e.getPlayer().getLocation());
+                    }
+                }
                 HeadsPlus.getInstance().mySQLAPI.addOntoValue(e.getPlayer(), e.getEntityType().name(), "headspluslb", 1);
             }
         }
@@ -20,6 +25,11 @@ public class LBEvents implements Listener {
     public void onPHeadDrop(PlayerHeadDropEvent e) {
         if (!e.isCancelled()) {
             if (HeadsPlus.getInstance().lb) {
+                if (HeadsPlus.getInstance().getConfig().getBoolean("smite-player-if-they-get-a-head")) {
+                    for (int i = 0; i < 5; i++) {
+                        e.getLocation().getWorld().strikeLightning(e.getKiller().getLocation());
+                    }
+                }
                 HeadsPlus.getInstance().mySQLAPI.addOntoValue(e.getKiller(), "player", "headspluslb", 1);
             }
         }

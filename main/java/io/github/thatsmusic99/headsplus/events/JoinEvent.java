@@ -4,7 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
+import io.github.thatsmusic99.headsplus.config.levels.HeadsPlusLevels;
 import io.github.thatsmusic99.headsplus.crafting.RecipeEnumUser;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import mkremins.fanciful.FancyMessage;
@@ -32,6 +34,8 @@ public class JoinEvent implements Listener {
 	private static final File craftingF = new File(HeadsPlus.getInstance().getDataFolder(), "crafting.yml");
 
 	private static final File headsXF = new File(HeadsPlus.getInstance().getDataFolder(), "headsx.yml");
+
+	private final File levelF = new File(HeadsPlus.getInstance().getDataFolder(), "levels.yml");
 
     private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 	
@@ -109,6 +113,16 @@ public class JoinEvent implements Listener {
                               } else {
 							      hpchx.reloadC(false);
                               }
+							HeadsPlusLevels hplevels = HeadsPlus.getInstance().hpl;
+							if (!levelF.exists()) {
+								HeadsPlus.getInstance().getLogger().info("Levels not found, creating!");
+								hplevels.reloadC(false);
+								hplevels.config = YamlConfiguration.loadConfiguration(levelF);
+								HeadsPlus.getInstance().getLogger().info("Levels created!");
+							} else {
+								hplevels.reloadC(false);
+							}
+                            HPPlayer.players.clear();
 					}});
 			    	timer.setRepeats(false); // Make it so it does not repeat every 3 seconds
 			    	timer.start(); // Run the Task

@@ -17,7 +17,7 @@ public class HPPlayer {
     private Level level;
     private List<Challenge> completeChallenges;
     private Level nextLevel;
-    private static List<HPPlayer> players = new ArrayList<>();
+    public static List<HPPlayer> players = new ArrayList<>();
 
     public HPPlayer(OfflinePlayer p) {
         this.player = p;

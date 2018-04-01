@@ -8,10 +8,7 @@ import io.github.thatsmusic99.headsplus.commands.maincommand.*;
 import io.github.thatsmusic99.headsplus.config.*;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallenges;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
-import io.github.thatsmusic99.headsplus.config.levels.HigherLevels;
-import io.github.thatsmusic99.headsplus.config.levels.LowerLevels;
-import io.github.thatsmusic99.headsplus.config.levels.MidLevels;
-import io.github.thatsmusic99.headsplus.config.levels.StarterLevels;
+import io.github.thatsmusic99.headsplus.config.levels.*;
 import io.github.thatsmusic99.headsplus.crafting.RecipeEnumUser;
 import io.github.thatsmusic99.headsplus.crafting.RecipePerms;
 import io.github.thatsmusic99.headsplus.events.*;
@@ -72,6 +69,7 @@ public class HeadsPlus extends JavaPlugin {
     public MySQLAPI mySQLAPI;
     public HeadsPlusChallenges hpchl;
     public HeadsPlusAPI hapi;
+    public HeadsPlusLevels hpl;
     public List<Challenge> challenges = new ArrayList<>();
     public NMSManager nms;
     public List<IHeadsPlusCommand> commands = new ArrayList<>();
@@ -95,7 +93,7 @@ public class HeadsPlus extends JavaPlugin {
                 hpc = new HeadsPlusConfig(true);
                 LocaleManager.class.newInstance().setupLocale();
             }
-            addLevels();
+           // addLevels();
             createInstances();
 			checkTheme();
 			if (config.getBoolean("mysql-usage")) {
@@ -112,9 +110,9 @@ public class HeadsPlus extends JavaPlugin {
 			setupPermissions();
 			setPluginValues();
 			setupNMS();
-            registerEvents();
-            registerCommands();
-            registerSubCommands();
+			registerEvents();
+			registerCommands();
+			registerSubCommands();
 		    JoinEvent.reloaded = false;
 			Metrics metrics = new Metrics(this);
 			metrics.addCustomChart(new Metrics.SimplePie("languages", new Callable<String>() {
@@ -312,6 +310,7 @@ public class HeadsPlus extends JavaPlugin {
         hpchl = new HeadsPlusChallenges();
         hapi = new HeadsPlusAPI();
         mySQLAPI = new MySQLAPI();
+        hpl = new HeadsPlusLevels();
     }
 
     private boolean setupPermissions() {

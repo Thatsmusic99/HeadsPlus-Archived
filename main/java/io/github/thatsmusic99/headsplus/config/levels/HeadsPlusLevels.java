@@ -1,18 +1,20 @@
 package io.github.thatsmusic99.headsplus.config.levels;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.api.CLevel;
 import io.github.thatsmusic99.headsplus.api.Level;
 import io.github.thatsmusic99.headsplus.config.ConfigSettings;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class HeadsPlusLevels extends ConfigSettings {
 
-    public HashMap<Integer, Level> levels = new HashMap<>();
+    private HashMap<Integer, Level> levels = new HashMap<>();
 
-    public HashMap<Integer, Level> getLevels() {
+    public HashMap<Integer, Level> getDefLevels() {
         return levels;
     }
 
@@ -21,10 +23,12 @@ public class HeadsPlusLevels extends ConfigSettings {
     public HeadsPlusLevels() {
         this.conName = "levels";
         enable(false);
+
     }
 
     @Override
     public void reloadC(boolean a) {
+        addDefLevels();
         boolean n = false;
         if (configF == null) {
             n = true;
@@ -34,13 +38,27 @@ public class HeadsPlusLevels extends ConfigSettings {
         if (n) {
             load(false);
         }
+        getConfig().options().copyDefaults(true);
         save();
+        loadLevels();
+    }
+
+    public void loadLevels() {
+        HeadsPlus.getInstance().levels = new HashMap<>();
+        for (String s : getConfig().getConfigurationSection("levels").getKeys(false)) {
+            String dn = getConfig().getString("levels." + s + ".display-name");
+            double av = getConfig().getDouble("levels." + s + ".added-version");
+            int rxp = getConfig().getInt("levels." + s + ".required-xp");
+            int h = getConfig().getInt("levels." + s + ".hierachy");
+            CLevel c = new CLevel(s, dn, rxp, av);
+            HeadsPlus.getInstance().levels.put(h, c);
+        }
     }
 
     @Override
     public void load(boolean n) {
-        for (int i = 1; i <= levels.size(); i++) {
-            Level l = levels.get(i);
+        for (int i = 1; i <= getDefLevels().size(); i++) {
+            Level l = getDefLevels().get(i);
             getConfig().addDefault("version", 0.0);
            // if (getConfig().getDouble("version") < version) {
             getConfig().addDefault("levels." + l.getConfigName() + ".display-name", l.getDisplayName());
@@ -49,9 +67,11 @@ public class HeadsPlusLevels extends ConfigSettings {
             getConfig().addDefault("levels." + l.getConfigName() + ".hierachy", i);
           //  }
         }
+        save();
     }
 
     private void addDefLevels() {
+        levels.clear();
         levels.put(1, new StarterLevels.Grass());
         levels.put(2, new StarterLevels.Dirt());
         levels.put(3, new StarterLevels.Stone());

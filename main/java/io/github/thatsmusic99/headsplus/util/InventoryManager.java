@@ -168,7 +168,7 @@ public class InventoryManager {
                 // }
 
                 ls = new PagedLists<>(new ArrayList<>(hpchx.getConfig().getConfigurationSection("sections").getKeys(false)), 27);
-                i = create("HeadsPlus Head selector: page " + cPage + "/" + ls.getTotalPages());
+                i = create("HeadsPlus Head selector: " + cPage + "/" + ls.getTotalPages());
                 for (Object str : ls.getContentsInPage(cPage)) {
                     String st = (String) str;
                     if (hpchx.isHPXSkull(hpchx.getConfig().getString("sections." + st + ".texture"))) {
@@ -216,7 +216,7 @@ public class InventoryManager {
                 heads = s.size();
 
                 ls = new PagedLists<>(new ArrayList<>(s.values()), 28);
-                i = create("HeadsPlus Head selector: page " + cPage + "/" + ls.getTotalPages());
+                i = create("HeadsPlus Head selector: " + cPage + "/" + ls.getTotalPages());
                 for (Object str : ls.getContentsInPage(cPage)) {
                     if (hpchx.getConfig().getBoolean("heads." + str + ".database")) {
                         skull(String.valueOf(str), i);
@@ -234,7 +234,7 @@ public class InventoryManager {
                 }
                 heads = l.size();
                 ls = new PagedLists<>(l, 28);
-                i = create("HeadsPlus Head selector: page " + cPage + "/" + ls.getTotalPages());
+                i = create("HeadsPlus Head selector: " + cPage + "/" + ls.getTotalPages());
                 for (Object str : ls.getContentsInPage(cPage)) {
                     if (hpchx.getConfig().getBoolean("heads." + str + ".database")) {
                         skull(String.valueOf(str), i);
@@ -324,7 +324,7 @@ public class InventoryManager {
                 List<String> lore = new ArrayList<>();
                 lore.add(ChatColor.GREEN + "Total challenges: " + HeadsPlusChallengeEnums.values().length);
                 lore.add(ChatColor.GREEN + "Total pages: " + pages);
-                lore.add(ChatColor.GREEN + "Total sections: " + sections) ;
+                lore.add(ChatColor.GREEN + "Total sections: 5") ;
                 lore.add(ChatColor.GREEN + "Completed challenges: " + cch);
                 lore.add(ChatColor.GREEN + "Current section: " + section);
                 im.setLore(lore);

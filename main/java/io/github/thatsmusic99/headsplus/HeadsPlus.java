@@ -12,6 +12,7 @@ import io.github.thatsmusic99.headsplus.config.levels.*;
 import io.github.thatsmusic99.headsplus.crafting.RecipeEnumUser;
 import io.github.thatsmusic99.headsplus.crafting.RecipePerms;
 import io.github.thatsmusic99.headsplus.events.*;
+import io.github.thatsmusic99.headsplus.locale.Locale;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 
 import io.github.thatsmusic99.headsplus.nms.*;
@@ -124,13 +125,14 @@ public class HeadsPlus extends JavaPlugin {
                     public void run() {
                         update = UpdateChecker.getUpdate();
                         if (update != null) {
-                            log.info("[HeadsPlus] An update has been found!");
-                            log.info("Current version: " + getDescription().getVersion());
-                            log.info("New version: " + update[2]);
+                            log.info( ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getUpdateFound())));
+                            log.info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getCurrentVersion()))
+                                     + getDescription().getVersion());
+                            log.info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getCurrentVersion() + update[2])));
                             if (update[1].toString().length() > 50) {
                                 update[1] = update[1].toString().subSequence(0, 50) + "... (Check Spigot for more information)";
                             }
-                            log.info("Description: " + update[1]);
+                            log.info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getDescription())) + update[1]);
                             log.info("Download link: https://www.spigotmc.org/resources/headsplus-1-8-x-1-12-x.40265/");
                         } else {
                             log.info("[HeadsPlus] Plugin is up to date!");

@@ -35,7 +35,7 @@ public class InventoryEvent implements Listener {
         if (InventoryManager.getIM(p) == null) return;
         im = InventoryManager.getIM(p);
         // int month = Calendar.getInstance().get(Calendar.MONTH);
-        if (e.getInventory().getName().equalsIgnoreCase("HeadsPlus Head selector: page " + im.getPage() + "/" + im.getPages())) {
+        if (e.getInventory().getName().equalsIgnoreCase("HeadsPlus Head selector: " + im.getPage() + "/" + im.getPages())) {
             try {
                 if (e.getCurrentItem().getType().equals(Material.BARRIER)) {
                     e.setCancelled(true);
@@ -207,18 +207,15 @@ public class InventoryEvent implements Listener {
                         e.setCancelled(true);
                         e.getWhoClicked().closeInventory();
                         final InventoryClickEvent ev = e;
-                        SearchGUI s = new SearchGUI((Player) e.getWhoClicked(), new SearchGUI.AnvilClickEventHandler() {
-                            @Override
-                            public void onAnvilClick(SearchGUI.AnvilClickEvent event) {
-                                if (event.getSlot().equals(SearchGUI.AnvilSlot.OUTPUT)) {
-                                    event.setWillClose(false);
-                                    event.setWillDestroy(false);
-                                    im.setSection("search:" + event.getName());
-                                    event.getPlayer().closeInventory();
-                                    event.getPlayer().openInventory(im.changePage(false, true, event.getPlayer(), "search:" + event.getName()));
-                                }
-                                ev.setCancelled(true);
+                        SearchGUI s = new SearchGUI((Player) e.getWhoClicked(), event -> {
+                            if (event.getSlot().equals(SearchGUI.AnvilSlot.OUTPUT)) {
+                                event.setWillClose(false);
+                                event.setWillDestroy(false);
+                                im.setSection("search:" + event.getName());
+                                event.getPlayer().closeInventory();
+                                event.getPlayer().openInventory(im.changePage(false, true, event.getPlayer(), "search:" + event.getName()));
                             }
+                            ev.setCancelled(true);
                         });
                         s.setSlot(SearchGUI.AnvilSlot.INPUT_LEFT, new ItemStack(Material.NAME_TAG));
                         s.open();

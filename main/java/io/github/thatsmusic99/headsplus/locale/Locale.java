@@ -255,4 +255,32 @@ public interface Locale {
 
     String contributors();
 
+  //  String getPluginUpToDate();
+
+  // String getEnabled();
+
+  //  String getErrorEnabled();
+
+  //  String getDisabled();
+
+  //  String couldntCreateConfig();
+
+  //  String badTheme();
+
+  //  String configNotFound();
+
+  //  String headAddError();
+
+  //  String headDelError();
+
+  //  String blacklistToggleFail();
+
+  //  String addWorldError();
+
+  //  String worldDelError();
+
+  //  String wBlacklistToggleFail();
+
+  //  String messagesNotFound();
+
 }

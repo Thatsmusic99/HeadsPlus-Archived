@@ -568,4 +568,9 @@ public class hu_hu implements Locale {
     public String getAchievedNextLevel() {
         return "%h &b%p &3elérte a %lvl &3szintet!";
     }
+
+    @Override
+    public String contributors() {
+        return "Közreműködők: ";
+    }
 }

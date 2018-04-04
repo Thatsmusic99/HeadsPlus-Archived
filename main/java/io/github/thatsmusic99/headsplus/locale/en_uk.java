@@ -566,4 +566,9 @@ public class en_uk implements Locale {
     public String getAchievedNextLevel() {
         return "%h &3%p has reached level %lvl&3!";
     }
+
+    @Override
+    public String contributors() {
+        return "Contributors: ";
+    }
 }

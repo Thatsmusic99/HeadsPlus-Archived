@@ -568,4 +568,9 @@ public class ro_ro implements Locale {
     public String getAchievedNextLevel() {
         return "%h &3%p a atins nivelul %lvl!";
     }
+
+    @Override
+    public String contributors() {
+        return "Contribuabili: ";
+    }
 }

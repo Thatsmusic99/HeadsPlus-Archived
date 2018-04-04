@@ -253,4 +253,6 @@ public interface Locale {
 
     String getAchievedNextLevel();
 
+    String contributors();
+
 }

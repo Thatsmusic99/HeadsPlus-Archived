@@ -9,8 +9,7 @@ public enum HeadsXSections {
     LOGOS("logos", "&8[&cLogos&8]", "HP#youtube", 0.0),
     PLANTS("plants", "&8[&aPlants&8]", "HP#white_flower_bush", 1.0),
     COLOURS("colors", "&8[&4C&6o&el&ao&br&ds&8]", "HP#rainbow", 1.2),
-    EMOTES("emotes", "&8[&eEmotes&8]", "HP#e_wink", 1.3),
-    EASTER("easter", "&8[&cE&6a&es&at&be&dr&8]", "HP#sunflower_egg", 1.4);
+    EMOTES("emotes", "&8[&eEmotes&8]", "HP#e_wink", 1.3);
 
     public String let;
     public String dn;

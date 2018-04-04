@@ -31,7 +31,7 @@ mysql-username: username
 mysql-password: password
 mysql-usage: false
 leaderboards: true
-smite-player-if-they-get-a-head: true
+smite-player-if-they-get-a-head: false
 theme: classic
 pTheme: classic
 gui-glass-color: SILVER

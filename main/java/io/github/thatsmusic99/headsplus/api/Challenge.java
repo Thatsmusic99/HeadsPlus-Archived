@@ -189,12 +189,21 @@ public class Challenge {
         if (re == HPChallengeRewardTypes.ECO) {
             econ.depositPlayer(p, Double.valueOf(String.valueOf(getRewardValue())));
         } else if (re == HPChallengeRewardTypes.ADD_GROUP) {
-            if (!perms.playerInGroup(p, (String) getRewardValue())) {
-                perms.playerAddGroup(p, (String) getRewardValue());
+            if (HeadsPlus.getInstance().econ()) {
+                if (!perms.playerInGroup(p, (String) getRewardValue())) {
+                    perms.playerAddGroup(p, (String) getRewardValue());
+                }
+            } else {
+                HeadsPlus.getInstance().getLogger().warning("Vault wasn't found upon startup! Can not add group.");
             }
+
         } else if (re == HPChallengeRewardTypes.REMOVE_GROUP) {
-            if (perms.playerInGroup(p, (String) getRewardValue())) {
-                perms.playerRemoveGroup(p, (String) getRewardValue());
+            if (HeadsPlus.getInstance().econ()) {
+                if (perms.playerInGroup(p, (String) getRewardValue())) {
+                    perms.playerRemoveGroup(p, (String) getRewardValue());
+                }
+            } else {
+                HeadsPlus.getInstance().getLogger().warning("Vault wasn't found upon startup! Can not remove group.");
             }
         } else if (re == HPChallengeRewardTypes.GIVE_ITEM) {
             try {

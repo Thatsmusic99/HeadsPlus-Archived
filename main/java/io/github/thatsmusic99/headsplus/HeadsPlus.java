@@ -37,7 +37,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
 public class HeadsPlus extends JavaPlugin {
@@ -105,9 +104,11 @@ public class HeadsPlus extends JavaPlugin {
                 getServer().getPluginManager().registerEvents(new RecipePerms(), this);
 			}
 			if (!(econ()) && (getConfig().getBoolean("sellHeads"))) {
-				log.warning("[HeadsPlus] Vault not found! Heads cannot be sold.");
+				log.warning("[HeadsPlus] Vault not found! Heads cannot be sold and challenge rewards can not add/remove groups.");
 			}
-			setupPermissions();
+			if (econ()) {
+                setupPermissions();
+            }
 			setPluginValues();
 			setupNMS();
 			registerEvents();
@@ -115,18 +116,8 @@ public class HeadsPlus extends JavaPlugin {
 			registerSubCommands();
 		    JoinEvent.reloaded = false;
 			Metrics metrics = new Metrics(this);
-			metrics.addCustomChart(new Metrics.SimplePie("languages", new Callable<String>() {
-                @Override
-                public String call() throws Exception {
-                    return LocaleManager.getLocale().getLanguage();
-                }
-            }));
-			metrics.addCustomChart(new Metrics.SimplePie("theme", new Callable<String>() {
-                @Override
-                public String call() throws Exception {
-                    return WordUtils.capitalize(getConfig().getString("pTheme").toLowerCase());
-                }
-            }));
+			metrics.addCustomChart(new Metrics.SimplePie("languages", () -> LocaleManager.getLocale().getLanguage()));
+			metrics.addCustomChart(new Metrics.SimplePie("theme", () -> WordUtils.capitalize(getConfig().getString("pTheme").toLowerCase())));
 			if (getConfig().getBoolean("update-checker")) {
 			    new BukkitRunnable() {
                     @Override

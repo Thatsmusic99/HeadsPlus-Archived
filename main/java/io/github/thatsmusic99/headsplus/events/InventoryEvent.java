@@ -5,9 +5,10 @@ import io.github.thatsmusic99.headsplus.api.Challenge;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeDifficulty;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsXSections;
+import io.github.thatsmusic99.headsplus.nms.SearchGUI;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 
-import io.github.thatsmusic99.headsplus.util.SearchGUI;
+import io.github.thatsmusic99.headsplus.nms.v1_12_NMS.SearchGUI1_12;
 import net.milkbowl.vault.economy.EconomyResponse;
 
 import org.bukkit.*;
@@ -155,7 +156,9 @@ public class InventoryEvent implements Listener {
                             lore.add(ChatColor.GREEN + "Total heads: " + this.im.getHeads());
                             lore.add(ChatColor.GREEN + "Total pages: " + this.im.getPages());
                             lore.add(ChatColor.GREEN + "Total sections: " + this.im.getSections());
-                            lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().econ.getBalance(((OfflinePlayer) e.getWhoClicked()).getPlayer()));
+                            if (HeadsPlus.getInstance().econ()) {
+                                lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().econ.getBalance(((OfflinePlayer) e.getWhoClicked()).getPlayer()));
+                            }
                             lore.add(ChatColor.GREEN + "Current section: " + this.im.getSection());
                             im.setLore(lore);
                             i.setItemMeta(im);
@@ -174,8 +177,10 @@ public class InventoryEvent implements Listener {
                     List<String> lore = new ArrayList<>();
                     lore.add(ChatColor.GREEN + "Total heads: " + this.im.getHeads());
                     lore.add(ChatColor.GREEN + "Total pages: " + this.im.getPages());
-                    lore.add(ChatColor.GREEN + "Total sections: " + this.im.getSections()) ;
-                    lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().econ.getBalance((Player) e.getWhoClicked()));
+                    lore.add(ChatColor.GREEN + "Total sections: " + this.im.getSections());
+                    if (HeadsPlus.getInstance().econ()) {
+                        lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().econ.getBalance((Player) e.getWhoClicked()));
+                    }
                     lore.add(ChatColor.GREEN + "Current section: " + this.im.getSection());
                     im.setLore(lore);
                     i.setItemMeta(im);
@@ -207,8 +212,8 @@ public class InventoryEvent implements Listener {
                         e.setCancelled(true);
                         e.getWhoClicked().closeInventory();
                         final InventoryClickEvent ev = e;
-                        SearchGUI s = new SearchGUI((Player) e.getWhoClicked(), event -> {
-                            if (event.getSlot().equals(SearchGUI.AnvilSlot.OUTPUT)) {
+                        SearchGUI s = HeadsPlus.getInstance().nms.getSearchGUI((Player) e.getWhoClicked(), event -> {
+                            if (event.getSlot().equals(SearchGUI1_12.AnvilSlot.OUTPUT)) {
                                 event.setWillClose(false);
                                 event.setWillDestroy(false);
                                 im.setSection("search:" + event.getName());
@@ -217,7 +222,7 @@ public class InventoryEvent implements Listener {
                             }
                             ev.setCancelled(true);
                         });
-                        s.setSlot(SearchGUI.AnvilSlot.INPUT_LEFT, new ItemStack(Material.NAME_TAG));
+                        s.setSlot(SearchGUI1_12.AnvilSlot.INPUT_LEFT, new ItemStack(Material.NAME_TAG));
                         s.open();
                     }
                 }

@@ -41,7 +41,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		try {
 			if (sender instanceof Player) {
-			    if (HeadsPlus.getInstance().sellable && HeadsPlus.getInstance().getConfig().getBoolean("sellHeads")) {
+			    if (HeadsPlus.getInstance().sellable) {
 
 			        soldHeads.clear();
 			        hm.clear();

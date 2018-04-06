@@ -285,8 +285,10 @@ public class InventoryManager {
             List<String> lore = new ArrayList<>();
             lore.add(ChatColor.GREEN + "Total heads: " + heads);
             lore.add(ChatColor.GREEN + "Total pages: " + pages);
-            lore.add(ChatColor.GREEN + "Total sections: " + sections) ;
-            lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().econ.getBalance(p));
+            lore.add(ChatColor.GREEN + "Total sections: " + sections);
+            if (HeadsPlus.getInstance().econ()) {
+                lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().econ.getBalance(p));
+            }
             lore.add(ChatColor.GREEN + "Current section: " + section);
             im.setLore(lore);
             is2.setItemMeta(im);
@@ -424,27 +426,29 @@ public class InventoryManager {
             e.printStackTrace();
         }
         sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpchx.getConfig().getString("heads." + str + ".displayname")));
-        if (hpchx.getConfig().get("heads." + str + ".price") instanceof String) {
-            if (!((String) hpchx.getConfig().get("heads." + str + ".price")).equalsIgnoreCase("free")) {
-                if (((String) hpchx.getConfig().get("heads." + str + ".price")).equalsIgnoreCase("default")) {
-                    if (!hpchx.getConfig().get("options.default-price").equals("free")) {
+        if (HeadsPlus.getInstance().econ()) {
+            if (hpchx.getConfig().get("heads." + str + ".price") instanceof String) {
+                if (!((String) hpchx.getConfig().get("heads." + str + ".price")).equalsIgnoreCase("free")) {
+                    if (((String) hpchx.getConfig().get("heads." + str + ".price")).equalsIgnoreCase("default")) {
+                        if (!hpchx.getConfig().get("options.default-price").equals("free")) {
+                            List<String> price = new ArrayList<>();
+                            price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + hpchx.getConfig().get("options.default-price")));
+                            sm.setLore(price);
+                        }
+                    } else {
                         List<String> price = new ArrayList<>();
-                        price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + hpchx.getConfig().get("options.default-price")));
+                        price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + hpchx.getConfig().get("heads." + str + ".price")));
                         sm.setLore(price);
                     }
-                } else {
+                }
+            } else {
+                if (!(((Double) hpchx.getConfig().get("heads." + str + ".price")) == 0.0)) {
                     List<String> price = new ArrayList<>();
                     price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + hpchx.getConfig().get("heads." + str + ".price")));
                     sm.setLore(price);
                 }
-            }
-        } else {
-            if (!(((Double) hpchx.getConfig().get("heads." + str + ".price")) == 0.0)) {
-                List<String> price = new ArrayList<>();
-                price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + hpchx.getConfig().get("heads." + str + ".price")));
-                sm.setLore(price);
-            }
 
+            }
         }
         s.setItemMeta(sm);
         i.setItem(pos()[timesSent], s);

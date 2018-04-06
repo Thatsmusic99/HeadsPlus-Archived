@@ -12,10 +12,17 @@ import io.github.thatsmusic99.headsplus.config.levels.*;
 import io.github.thatsmusic99.headsplus.crafting.RecipeEnumUser;
 import io.github.thatsmusic99.headsplus.crafting.RecipePerms;
 import io.github.thatsmusic99.headsplus.events.*;
-import io.github.thatsmusic99.headsplus.locale.Locale;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 
 import io.github.thatsmusic99.headsplus.nms.*;
+import io.github.thatsmusic99.headsplus.nms.v1_10_NMS.v1_10_NMS;
+import io.github.thatsmusic99.headsplus.nms.v1_11_NMS.v1_11_NMS;
+import io.github.thatsmusic99.headsplus.nms.v1_12_NMS.v1_12_NMS;
+import io.github.thatsmusic99.headsplus.nms.v1_8_R1_NMS.v1_8_R1_NMS;
+import io.github.thatsmusic99.headsplus.nms.v1_8_R2_NMS.v1_8_R2_NMS;
+import io.github.thatsmusic99.headsplus.nms.v1_8_R3_NMS.v1_8_R3NMS;
+import io.github.thatsmusic99.headsplus.nms.v1_9_NMS.v1_9_NMS;
+import io.github.thatsmusic99.headsplus.nms.v1_9_R2_NMS.V1_9_NMS2;
 import io.github.thatsmusic99.headsplus.util.MySQLAPI;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
@@ -74,7 +81,7 @@ public class HeadsPlus extends JavaPlugin {
     public NMSManager nms;
     public List<IHeadsPlusCommand> commands = new ArrayList<>();
     public HashMap<Integer, Level> levels = new HashMap<>();
-
+    private List<String> nms1_8 = new ArrayList<>(Arrays.asList("1.8.4", "1.8.5", "1.8.6", "1.8.7", "1.8.8"));
     private FileConfiguration config;
 
     @SuppressWarnings("unused")
@@ -312,10 +319,22 @@ public class HeadsPlus extends JavaPlugin {
         return perms != null;
     }
 
+
+
     private void setupNMS() {
-	    if (getServer().getVersion().contains("1.8")) {
-	        nms = new v1_8_R3NMS();
-        } else if (getServer().getVersion().contains("1.9.4")) {
+	    for (String s : nms1_8) {
+	        if (getServer().getVersion().contains(s)) {
+                nms = new v1_8_R3NMS();
+                return;
+            }
+        }
+	    if (getServer().getVersion().contains("1.8.3")) {
+            nms = new v1_8_R2_NMS();
+        } else if (getServer().getVersion().contains("1.8")) {
+	        nms = new v1_8_R1_NMS();
+        }
+
+        else if (getServer().getVersion().contains("1.9.4")) {
 	        nms = new V1_9_NMS2();
         } else if (getServer().getVersion().contains("1.9")) {
 	        nms = new v1_9_NMS();

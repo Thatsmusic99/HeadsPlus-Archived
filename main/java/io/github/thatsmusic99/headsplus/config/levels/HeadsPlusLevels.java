@@ -29,7 +29,7 @@ public class HeadsPlusLevels extends ConfigSettings {
     public void reloadC(boolean a) {
         addDefLevels();
         boolean n = false;
-        if (configF == null) {
+        if (configF == null || !configF.exists()) {
             n = true;
             configF = new File(HeadsPlus.getInstance().getDataFolder(), "levels.yml");
         }

@@ -257,7 +257,7 @@ public interface Locale {
 
   //  String getPluginUpToDate();
 
-  // String getEnabled();
+  //  String getEnabled();
 
   //  String getErrorEnabled();
 

@@ -1,10 +1,13 @@
-package io.github.thatsmusic99.headsplus.nms;
+package io.github.thatsmusic99.headsplus.nms.v1_10_NMS;
 
-import net.minecraft.server.v1_9_R1.ItemStack;
-import net.minecraft.server.v1_9_R1.NBTTagCompound;
-import org.bukkit.craftbukkit.v1_9_R1.inventory.CraftItemStack;
+import io.github.thatsmusic99.headsplus.nms.NMSManager;
+import io.github.thatsmusic99.headsplus.nms.SearchGUI;
+import net.minecraft.server.v1_10_R1.ItemStack;
+import net.minecraft.server.v1_10_R1.NBTTagCompound;
+import org.bukkit.craftbukkit.v1_10_R1.inventory.CraftItemStack;
+import org.bukkit.entity.Player;
 
-public class v1_9_NMS implements NMSManager {
+public class v1_10_NMS implements NMSManager {
 
     @Override
     public org.bukkit.inventory.ItemStack addNBTTag(Object i) {
@@ -24,5 +27,10 @@ public class v1_9_NMS implements NMSManager {
             }
         }
         return false;
+    }
+
+    @Override
+    public SearchGUI getSearchGUI(Player p, SearchGUI.AnvilClickEventHandler a) {
+        return new SearchGUI1_10(p, a);
     }
 }

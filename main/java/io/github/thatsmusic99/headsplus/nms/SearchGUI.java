@@ -1,9 +1,7 @@
-package io.github.thatsmusic99.headsplus.util;
+package io.github.thatsmusic99.headsplus.nms;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
@@ -17,24 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 
-/**
- * Programmed by Tevin on 8/8/2015.
- */
 public class SearchGUI {
-
-    // Util by ChaseChocolate/frostythedev on Github
-    // https://gist.github.com/frostythedev/95b5d494a1697ad4a0a4
-
-    private class AnvilContainer extends ContainerAnvil {
-        public AnvilContainer(EntityHuman entity) {
-            super(entity.inventory, entity.world,new BlockPosition(0, 0, 0), entity);
-        }
-
-        @Override
-        public boolean a(EntityHuman entityhuman) {
-            return true;
-        }
-    }
 
     public enum AnvilSlot {
         INPUT_LEFT(0),
@@ -114,9 +95,9 @@ public class SearchGUI {
 
     private AnvilClickEventHandler handler;
 
-    private HashMap<AnvilSlot, ItemStack> items = new HashMap<>();
+    protected HashMap<AnvilSlot, ItemStack> items = new HashMap<>();
 
-    private Inventory inv;
+    protected Inventory inv;
 
     private Listener listener;
 
@@ -165,7 +146,6 @@ public class SearchGUI {
             @EventHandler
             public void onInventoryClose(InventoryCloseEvent event) {
                 if (event.getPlayer() instanceof Player) {
-                    Player player = (Player) event.getPlayer();
                     Inventory inv = event.getInventory();
 
                     if (inv.equals(SearchGUI.this.inv)) {
@@ -195,30 +175,6 @@ public class SearchGUI {
     }
 
     public void open() {
-        EntityPlayer p = ((CraftPlayer) player).getHandle();
-
-        AnvilContainer container = new AnvilContainer(p);
-
-        //Set the items to the items from the inventory given
-        inv = container.getBukkitView().getTopInventory();
-
-        for (AnvilSlot slot : items.keySet()) {
-            inv.setItem(slot.getSlot(), items.get(slot));
-        }
-
-        //Counter stuff that the game uses to keep track of inventories
-        int c = p.nextContainerCounter();
-
-        //Send the packet
-        p.playerConnection.sendPacket(new PacketPlayOutOpenWindow(c, "minecraft:anvil", new ChatMessage("Repairing"), 0));
-        //Set their active container to the container
-        p.activeContainer = container;
-
-        //Set their active container window id to that counter stuff
-        p.activeContainer.windowId = c;
-
-        //Add the slot listener
-        p.activeContainer.addSlotListener(p);
     }
 
     public void destroy() {

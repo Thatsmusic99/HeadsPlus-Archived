@@ -4,10 +4,7 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.challenges.HPChallengeRewardTypes;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeDifficulty;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeTypes;
-import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallenges;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
-import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.permission.Permission;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -183,15 +180,18 @@ public class Challenge {
     }
 
     private void reward(Player p) {
-        Economy econ = HeadsPlus.getInstance().econ;
-        Permission perms = HeadsPlus.getInstance().perms;
         HPChallengeRewardTypes re = getRewardType();
         if (re == HPChallengeRewardTypes.ECO) {
-            econ.depositPlayer(p, Double.valueOf(String.valueOf(getRewardValue())));
+            if (HeadsPlus.getInstance().econ()) {
+                HeadsPlus.getInstance().econ.depositPlayer(p, Double.valueOf(String.valueOf(getRewardValue())));
+            } else {
+                HeadsPlus.getInstance().getLogger().warning("Vault wasn't found upon startup! Can not add group.");
+            }
+
         } else if (re == HPChallengeRewardTypes.ADD_GROUP) {
             if (HeadsPlus.getInstance().econ()) {
-                if (!perms.playerInGroup(p, (String) getRewardValue())) {
-                    perms.playerAddGroup(p, (String) getRewardValue());
+                if (!HeadsPlus.getInstance().perms.playerInGroup(p, (String) getRewardValue())) {
+                    HeadsPlus.getInstance().perms.playerAddGroup(p, (String) getRewardValue());
                 }
             } else {
                 HeadsPlus.getInstance().getLogger().warning("Vault wasn't found upon startup! Can not add group.");
@@ -199,8 +199,8 @@ public class Challenge {
 
         } else if (re == HPChallengeRewardTypes.REMOVE_GROUP) {
             if (HeadsPlus.getInstance().econ()) {
-                if (perms.playerInGroup(p, (String) getRewardValue())) {
-                    perms.playerRemoveGroup(p, (String) getRewardValue());
+                if (HeadsPlus.getInstance().perms.playerInGroup(p, (String) getRewardValue())) {
+                    HeadsPlus.getInstance().perms.playerRemoveGroup(p, (String) getRewardValue());
                 }
             } else {
                 HeadsPlus.getInstance().getLogger().warning("Vault wasn't found upon startup! Can not remove group.");

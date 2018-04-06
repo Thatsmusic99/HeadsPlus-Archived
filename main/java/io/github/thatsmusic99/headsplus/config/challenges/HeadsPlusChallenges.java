@@ -21,7 +21,7 @@ public class HeadsPlusChallenges extends ConfigSettings {
     @Override
     public void reloadC(boolean a) {
         boolean n = false;
-        if (configF == null) {
+        if (configF == null || !configF.exists()) {
             n = true;
             configF = new File(HeadsPlus.getInstance().getDataFolder(), "challenges.yml");
         }
@@ -29,8 +29,8 @@ public class HeadsPlusChallenges extends ConfigSettings {
         if (n) {
             load(false);
         }
-        addChallenges();
         save();
+        addChallenges();
     }
 
     @Override
@@ -75,28 +75,28 @@ public class HeadsPlusChallenges extends ConfigSettings {
 
     private void addChallenges() {
         HeadsPlus.getInstance().challenges.clear();
-        for (String st : getConfig().getConfigurationSection("challenges").getKeys(false)) {
-            for (String s : getConfig().getConfigurationSection("challenges." + st).getKeys(false)) {
-                String name = getConfig().getString("challenges." + st + "." + s + ".name");
-                String header = getConfig().getString("challenges." + st + "." + s + ".header");
-                List<String> desc = getConfig().getStringList("challenges." + st + "." + s + ".description");
+        for (String st : config.getConfigurationSection("challenges").getKeys(false)) {
+            for (String s : config.getConfigurationSection("challenges." + st).getKeys(false)) {
+                String name = config.getString("challenges." + st + "." + s + ".name");
+                String header = config.getString("challenges." + st + "." + s + ".header");
+                List<String> desc = config.getStringList("challenges." + st + "." + s + ".description");
                 HeadsPlusChallengeTypes type;
                 try {
-                    type = HeadsPlusChallengeTypes.valueOf(getConfig().getString("challenges." + st + "." + s + ".type").toUpperCase());
+                    type = HeadsPlusChallengeTypes.valueOf(config.getString("challenges." + st + "." + s + ".type").toUpperCase());
                 } catch (Exception ex) {
                     continue;
                 }
-                int min = getConfig().getInt("challenges." + st + "." + s + ".min");
+                int min = config.getInt("challenges." + st + "." + s + ".min");
                 HPChallengeRewardTypes reward;
                 try {
-                    reward = HPChallengeRewardTypes.valueOf(getConfig().getString("challenges." + st + "." + s + ".reward-type").toUpperCase());
+                    reward = HPChallengeRewardTypes.valueOf(config.getString("challenges." + st + "." + s + ".reward-type").toUpperCase());
                 } catch (Exception e) {
                     continue;
                 }
-                Object rewardVal = getConfig().get("challenges." + st + "." + s + ".reward-value");
-                int items = getConfig().getInt("challenges." + st + "." + s + ".item-amount");
-                String headType = getConfig().getString("challenges." + st + "." + s + ".head-type");
-                int xp = getConfig().getInt("challenges." + st + "." + s + ".xp");
+                Object rewardVal = config.get("challenges." + st + "." + s + ".reward-value");
+                int items = config.getInt("challenges." + st + "." + s + ".item-amount");
+                String headType = config.getString("challenges." + st + "." + s + ".head-type");
+                int xp = config.getInt("challenges." + st + "." + s + ".xp");
 
                 Challenge c = new Challenge(s, name, header, desc, min, type, reward, rewardVal, items, headType, xp, HeadsPlusChallengeDifficulty.valueOf(st.toUpperCase()));
                 HeadsPlus.getInstance().challenges.add(c);

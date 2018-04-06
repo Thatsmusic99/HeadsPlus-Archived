@@ -1,7 +1,6 @@
 package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
@@ -15,7 +14,7 @@ import java.util.List;
 public class WhitelistDel implements IHeadsPlusCommand {
 
     private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
-    private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
     @Override
     public String getCmdName() {

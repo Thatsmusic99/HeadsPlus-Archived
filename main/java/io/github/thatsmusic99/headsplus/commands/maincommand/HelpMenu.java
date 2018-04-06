@@ -15,7 +15,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class HelpMenu implements IHeadsPlusCommand {
 
-	private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+	private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
 	private void helpNoArgs(CommandSender sender) {
         List<IHeadsPlusCommand> headPerms = new ArrayList<>();

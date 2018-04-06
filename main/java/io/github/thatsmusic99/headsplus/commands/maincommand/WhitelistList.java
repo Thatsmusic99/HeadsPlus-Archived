@@ -12,7 +12,7 @@ import java.util.List;
 
 public class WhitelistList implements IHeadsPlusCommand {
 
-    private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
     @Override
     public String getCmdName() {

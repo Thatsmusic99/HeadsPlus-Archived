@@ -102,19 +102,12 @@ public class Challenge {
         if (getChallengeType() == HeadsPlusChallengeTypes.MISC) {
             return true;
         } else if (getChallengeType() == HeadsPlusChallengeTypes.CRAFTING) {
-            if (HeadsPlus.getInstance().hapi.getPlayerInLeaderboards(p, getHeadType(), "headspluscraft") >= getRequiredHeadAmount()) {
-                return true;
-            }
+            return HeadsPlus.getInstance().hapi.getPlayerInLeaderboards(p, getHeadType(), "headspluscraft") >= getRequiredHeadAmount();
         } else if (getChallengeType() == HeadsPlusChallengeTypes.LEADERBOARD) {
-            if (HeadsPlus.getInstance().hapi.getPlayerInLeaderboards(p, getHeadType(), "headspluslb") >= getRequiredHeadAmount()) {
-                return true;
-            }
+            return HeadsPlus.getInstance().hapi.getPlayerInLeaderboards(p, getHeadType(), "headspluslb") >= getRequiredHeadAmount();
         } else {
-            if (HeadsPlus.getInstance().hapi.getPlayerInLeaderboards(p, getHeadType(), "headsplussh") >= getRequiredHeadAmount()) {
-                return true;
-            }
+            return HeadsPlus.getInstance().hapi.getPlayerInLeaderboards(p, getHeadType(), "headsplussh") >= getRequiredHeadAmount();
         }
-        return false;
     }
 
     public boolean isComplete(Player p) {

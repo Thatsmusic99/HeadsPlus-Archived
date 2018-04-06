@@ -3,10 +3,7 @@ package io.github.thatsmusic99.headsplus.commands;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -19,7 +16,7 @@ import java.util.List;
 
 public class MyHead implements CommandExecutor, IHeadsPlusCommand {
 
-    private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
@@ -108,7 +105,7 @@ public class MyHead implements CommandExecutor, IHeadsPlusCommand {
     private static void giveHead(Player p, String n) {
         ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         SkullMeta meta = (SkullMeta) skull.getItemMeta();
-        meta.setOwner(n);
+        HeadsPlus.getInstance().nms.setSkullOwner(HeadsPlus.getInstance().nms.getOfflinePlayer(n), meta);
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().hpch.getConfig().getString("player.display-name").replaceAll("%d", n)));
         skull.setItemMeta(meta);
         Location playerLoc = (p).getLocation();

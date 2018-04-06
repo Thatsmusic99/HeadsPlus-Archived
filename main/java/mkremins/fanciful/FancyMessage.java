@@ -571,7 +571,7 @@ public class FancyMessage implements JsonRepresentedObject, Cloneable, Iterable<
 		return messageParts.iterator();
 	}
 
-	private static JsonParser _stringParser = new JsonParser();
+	private static final JsonParser _stringParser = new JsonParser();
 
 	/**
 	 * Deserializes a fancy message from its JSON representation. This JSON representation is of the format of

@@ -14,7 +14,7 @@ public class SellHeadEvent extends Event implements Cancellable {
     private boolean cancelled;
     private double totalPaid;
     private List<String> soldEntities;
-    private Player player;
+    private final Player player;
     private double oldBalance;
     private double newBalance;
     private HashMap<String, Integer> entityAmounts;

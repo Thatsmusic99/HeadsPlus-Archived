@@ -19,7 +19,7 @@ import java.util.*;
 public class LeaderboardsCommand implements CommandExecutor, IHeadsPlusCommand {
 
     private PagedHashmaps ph;
-    private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
     @Override
     public boolean onCommand(CommandSender cs, Command command, String s, String[] args) {

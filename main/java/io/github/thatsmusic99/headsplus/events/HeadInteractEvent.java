@@ -15,7 +15,7 @@ import org.bukkit.ChatColor;
 
 public final class HeadInteractEvent implements Listener {
 
-	private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+	private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 	private int TimesSent = 0;
 
 	@EventHandler

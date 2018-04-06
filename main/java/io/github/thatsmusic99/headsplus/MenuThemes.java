@@ -14,10 +14,10 @@ public enum MenuThemes {
     NETHER("DARK_RED", "GOLD", "RED", "DARK_RED"),
     SAPPHIRE("DARK_BLUE", "BLUE", "DARK_AQUA", "DARK_BLUE");
 
-    public String c1;
-    public String c2;
-    public String c3;
-    public String c4;
+    public final String c1;
+    public final String c2;
+    public final String c3;
+    public final String c4;
 
     MenuThemes(String c1, String c2, String c3, String c4) {
         this.c1 = c1;

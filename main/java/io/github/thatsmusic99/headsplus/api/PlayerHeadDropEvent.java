@@ -12,11 +12,11 @@ public class PlayerHeadDropEvent extends Event implements Cancellable {
 
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled;
-    private Player deadPlayer;
-    private Player killer;
-    private ItemStack head;
-    private World world;
-    private Location location;
+    private final Player deadPlayer;
+    private final Player killer;
+    private final ItemStack head;
+    private final World world;
+    private final Location location;
 
     public PlayerHeadDropEvent(Player deadPlayer, Player killer, ItemStack head, World world, Location location) {
         this.deadPlayer = deadPlayer;

@@ -9,7 +9,7 @@ public class LocaleManager {
 
     private static LocaleManager instance;
     private static Locale locale;
-    private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
     public void setupLocale() {
         instance = this;

@@ -28,7 +28,7 @@ public class InventoryEvent implements Listener {
     private String name;
     private Player p;
     private InventoryManager im;
-    private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
     @EventHandler
     public void onClickEvent(InventoryClickEvent e) {

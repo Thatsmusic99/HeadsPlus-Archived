@@ -18,9 +18,9 @@ import java.util.*;
 
 public class MySQLAPI {
 
-    private HeadsPlusLeaderboards hpl;
-    private HeadsPlusChallenges hpc;
-    private DeathEvents de;
+    private final HeadsPlusLeaderboards hpl;
+    private final HeadsPlusChallenges hpc;
+    private final DeathEvents de;
 
     public MySQLAPI() {
         hpl = HeadsPlus.getInstance().hplb;

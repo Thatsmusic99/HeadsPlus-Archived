@@ -18,7 +18,7 @@ import org.bukkit.command.CommandExecutor;
 
 public class Head implements CommandExecutor, IHeadsPlusCommand {
 
-    private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         return fire(args, sender);
@@ -27,7 +27,7 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
 	private static void giveHead(Player p, String n) {
 		ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         SkullMeta meta = (SkullMeta) skull.getItemMeta();
-        meta.setOwner(n);
+        HeadsPlus.getInstance().nms.setSkullOwner(HeadsPlus.getInstance().nms.getOfflinePlayer(n), meta);
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().hpch.getConfig().getString("player.display-name").replaceAll("%d", n)));
         skull.setItemMeta(meta);
         Location playerLoc = (p).getLocation();
@@ -157,12 +157,12 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
                 }
                 if (args.length == 2) {
                     if (sender.hasPermission("headsplus.head.others")) {
-                        if (Bukkit.getPlayer(args[0]) != null) {
+                        if (HeadsPlus.getInstance().nms.getPlayer(args[0]) != null) {
                             if (args[1].matches("^[A-Za-z0-9_]+$") && (3 < args[1].length()) && (args[1].length() < 16)) {
                                 String[] s = new String[2];
                                 s[0] = args[1];
                                 s[1] = args[0];
-                                giveH(s, (Player) sender, Bukkit.getPlayer(args[0]));
+                                giveH(s, (Player) sender, HeadsPlus.getInstance().nms.getPlayer(args[0]));
                                 return true;
                             } else if (!args[1].matches("^[A-Za-z0-9_]+$")) {
                                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("alpha-names"))));

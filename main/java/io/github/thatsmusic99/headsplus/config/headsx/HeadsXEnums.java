@@ -237,11 +237,11 @@ public enum HeadsXEnums {
     E_DISAPPOINTED("e_disappointed", "&8[&eDisappointed Emote&8]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODNmZGNmMDQyZGFjYzczMmI2OTk1ODJjYWU3YzU5YTY1OWM4NmM1N2U0MzE0MmEyY2M4OWU0ZDllZjAzNyJ9fX0", "emotes", 1.3),
     E_SLEEPING("e_sleeping", "&8[&eSleeping Emote&8]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWM0YTQxNTU0MzQyYjJjYmZiZDg5NWU5ZWM3MDg5YWU4NjFmZWM4ZjUxNjkzODIyZWMxZWIzY2EzZjE4In19fQ", "emotes", 1.3);
 
-    String name;
-    String dn;
-    String tex;
-    String sec;
-    Double v;
+    final String name;
+    final String dn;
+    final String tex;
+    final String sec;
+    final Double v;
 
     HeadsXEnums(String name, String dn, String texture, String section, Double version ) {
         this.name = name;

@@ -10,7 +10,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class HeadsPlusCommand implements CommandExecutor {
 
-    private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 	public final String noPerms = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("no-perm")));
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

@@ -32,7 +32,7 @@ public class InventoryManager {
         this.type = t;
     }
 
-    private String type;
+    private final String type;
     private int pages;
     private int heads;
     private int timesSent = 0;
@@ -40,8 +40,8 @@ public class InventoryManager {
     private int sections = 0;
     private String cSection = "menu";
     private int chSections = 0;
-    private HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().hpchx;
-    public static HashMap<Player, InventoryManager> pls = new HashMap<>();
+    private final HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().hpchx;
+    public static final HashMap<Player, InventoryManager> pls = new HashMap<>();
     private int[] pos() {
         int[] a = new int[28];
         a[0] = 10;
@@ -181,7 +181,7 @@ public class InventoryManager {
                     } else {
                         ItemStack is = new ItemStack(Material.SKULL_ITEM);
                         SkullMeta sm = (SkullMeta) is.getItemMeta();
-                        sm.setOwner(st);
+                        HeadsPlus.getInstance().nms.setSkullOwner(HeadsPlus.getInstance().nms.getOfflinePlayer(st), sm);
                         is.setItemMeta(sm);
                         i.setItem(pos()[timesSent], is);
                         timesSent++;

@@ -15,7 +15,7 @@ public class BlacklistAdd implements IHeadsPlusCommand {
 	
 	private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
 	private final File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
-	private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+	private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
 	@Override
 	public String getCmdName() {

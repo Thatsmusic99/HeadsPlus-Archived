@@ -9,12 +9,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class BlacklistwList implements IHeadsPlusCommand {
 
-	private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+	private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
 	@Override
 	public String getCmdName() {

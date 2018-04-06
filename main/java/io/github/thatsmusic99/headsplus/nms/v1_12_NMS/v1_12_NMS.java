@@ -1,11 +1,17 @@
 package io.github.thatsmusic99.headsplus.nms.v1_12_NMS;
 
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.nms.SearchGUI;
 import net.minecraft.server.v1_12_R1.ItemStack;
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
+import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.meta.SkullMeta;
 
 public class v1_12_NMS implements NMSManager {
 
@@ -22,9 +28,7 @@ public class v1_12_NMS implements NMSManager {
     @Override
     public boolean isSellable(Object i) {
         if (CraftItemStack.asNMSCopy((org.bukkit.inventory.ItemStack) i).getTag() != null) {
-            if (CraftItemStack.asNMSCopy((org.bukkit.inventory.ItemStack) i).getTag().getBoolean("headsplus-sell")) {
-                return true;
-            }
+            return CraftItemStack.asNMSCopy((org.bukkit.inventory.ItemStack) i).getTag().getBoolean("headsplus-sell");
         }
         return false;
     }
@@ -32,5 +36,30 @@ public class v1_12_NMS implements NMSManager {
     @Override
     public SearchGUI getSearchGUI(Player p, SearchGUI.AnvilClickEventHandler a) {
         return new SearchGUI1_12(p, a);
+    }
+
+    @Override
+    public void setSkullOwner(OfflinePlayer p, SkullMeta m) {
+        m.setOwningPlayer(p);
+    }
+
+    @Override
+    public String getSkullOwnerName(SkullMeta m) {
+        return m.getOwningPlayer().getName();
+    }
+
+    @Override
+    public ShapelessRecipe getRecipe(org.bukkit.inventory.ItemStack i, String name) {
+        return new ShapelessRecipe(new NamespacedKey(HeadsPlus.getInstance(), "HeadsPlus_" + name), i);
+    }
+
+    @Override
+    public OfflinePlayer getOfflinePlayer(String name) {
+        return Bukkit.getOfflinePlayer(name);
+    }
+
+    @Override
+    public Player getPlayer(String name) {
+        return Bukkit.getPlayer(name);
     }
 }

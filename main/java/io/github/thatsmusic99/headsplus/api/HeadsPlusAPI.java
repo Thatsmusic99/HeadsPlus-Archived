@@ -20,8 +20,8 @@ import java.util.UUID;
 
 public class HeadsPlusAPI {
 
-    private HeadsPlusConfigHeadsX hpcHeadsX = HeadsPlus.getInstance().hpchx;
-    private HeadsPlusConfigHeads hpcHeads = HeadsPlus.getInstance().hpch;
+    private final HeadsPlusConfigHeadsX hpcHeadsX = HeadsPlus.getInstance().hpchx;
+    private final HeadsPlusConfigHeads hpcHeads = HeadsPlus.getInstance().hpch;
 
     public ItemStack getHead(String option) {
         return hpcHeadsX.getSkull(option);
@@ -78,11 +78,7 @@ public class HeadsPlusAPI {
             }
 
             SkullMeta skullM = (SkullMeta) is.getItemMeta();
-            String owner = skullM.getOwner();
-            List<String> ls = new ArrayList<>();
-            for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
-                ls.add(ChatColor.translateAlternateColorCodes('&', ChatColor.stripColor(str)));
-            }
+            String owner = HeadsPlus.getInstance().nms.getSkullOwnerName(skullM);
 
            // if ((skullM.getLore() != null) &&  (skullM.getLore().equals(ls))) {
             if (HeadsPlus.getInstance().nms.isSellable(is)) {
@@ -202,7 +198,7 @@ public class HeadsPlusAPI {
 
         }
         SkullMeta skullM = (SkullMeta) is.getItemMeta();
-        String owner = skullM.getOwner();
+        String owner = HeadsPlus.getInstance().nms.getSkullOwnerName(skullM);
         List<String> ls = new ArrayList<>();
         for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
             ls.add(ChatColor.translateAlternateColorCodes('&', ChatColor.stripColor(str)));

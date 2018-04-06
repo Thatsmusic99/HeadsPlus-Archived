@@ -14,7 +14,7 @@ import java.util.*;
 
 public class HeadsPlusLeaderboards extends ConfigSettings {
 
-    private DeathEvents de = HeadsPlus.getInstance().de;
+    private final DeathEvents de = HeadsPlus.getInstance().de;
 
     public HeadsPlusLeaderboards() {
         this.conName = "leaderboards";

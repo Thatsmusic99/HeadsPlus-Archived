@@ -14,7 +14,7 @@ import java.util.List;
 
 public class WhitelistwDelete implements IHeadsPlusCommand {
     private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
-    private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
     public void wlDel(CommandSender sender, String world) {
         if (sender.hasPermission("headsplus.maincommand.whitelistw.delete")) {

@@ -22,7 +22,7 @@ public class SearchGUI {
         INPUT_RIGHT(1),
         OUTPUT(2);
 
-        private int slot;
+        private final int slot;
 
         AnvilSlot(int slot) {
             this.slot = slot;
@@ -44,10 +44,10 @@ public class SearchGUI {
     }
 
     public class AnvilClickEvent {
-        private AnvilSlot slot;
+        private final AnvilSlot slot;
 
-        private String name;
-        private Player p;
+        private final String name;
+        private final Player p;
 
         private boolean close = true;
         private boolean destroy = true;

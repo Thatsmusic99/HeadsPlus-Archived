@@ -4,7 +4,6 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -66,9 +65,9 @@ public class ProfileCommand implements IHeadsPlusCommand {
     public boolean fire(String[] args, CommandSender cs) {
         OfflinePlayer p;
         if (args.length == 1) {
-            p = Bukkit.getOfflinePlayer(cs.getName());
+            p = HeadsPlus.getInstance().nms.getOfflinePlayer(cs.getName());
         } else {
-            p = Bukkit.getOfflinePlayer(args[1]);
+            p = HeadsPlus.getInstance().nms.getOfflinePlayer(args[1]);
         }
         if (cs instanceof Player) {
             if (cs.getName().equalsIgnoreCase(p.getName())) {

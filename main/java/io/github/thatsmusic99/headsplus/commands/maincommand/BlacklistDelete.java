@@ -15,7 +15,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 public class BlacklistDelete implements IHeadsPlusCommand {
 	
 	private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
-	private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+	private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
 	@Override
 	public String getCmdName() {

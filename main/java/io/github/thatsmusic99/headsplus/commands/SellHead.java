@@ -11,6 +11,7 @@ import com.mojang.authlib.properties.Property;
 import io.github.thatsmusic99.headsplus.api.SellHeadEvent;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
+import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -31,11 +32,11 @@ import net.milkbowl.vault.economy.EconomyResponse;
 public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 	
 	private boolean sold;
-	private HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().hpch;
-	private HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
-	private HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().hpchx;
-	private List<String> soldHeads = new ArrayList<>();
-	private HashMap<String, Integer> hm = new HashMap<>();
+	private final HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().hpch;
+	private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+	private final HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().hpchx;
+	private final List<String> soldHeads = new ArrayList<>();
+	private final HashMap<String, Integer> hm = new HashMap<>();
     private final String disabled = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("disabled")));
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -47,7 +48,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 			        hm.clear();
                     ItemStack invi = checkHand((Player) sender);
                     if (args.length == 0 && (checkHand((Player) sender).getType() == Material.SKULL_ITEM) && (sender.hasPermission("headsplus.sellhead"))) { // If sold via hand
-                        if (((SkullMeta)invi.getItemMeta()).getOwner() == null || ((SkullMeta)invi.getItemMeta()).getOwner().equalsIgnoreCase("HPXHead")) {
+                        if (nms().getSkullOwnerName((SkullMeta) invi.getItemMeta()) == null || nms().getSkullOwnerName((SkullMeta) invi.getItemMeta()).equalsIgnoreCase("HPXHead")) {
                             if (HeadsPlus.getInstance().nms.isSellable(invi)) {
                                 for (String key : hpch.mHeads) {
                                     if (!key.equalsIgnoreCase("sheep")) {
@@ -71,7 +72,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                             }
                         }
                         SkullMeta skullM = (SkullMeta) invi.getItemMeta();
-                        String owner = skullM.getOwner();
+                        String owner = nms().getSkullOwnerName(skullM);
 		                if (HeadsPlus.getInstance().nms.isSellable(invi)) {
                             Economy econ = HeadsPlus.getInstance().econ;
                             List<String> mHeads = hpch.mHeads;
@@ -155,7 +156,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                         } else if (args.length > 0) {
                             if (args[0].equalsIgnoreCase("all")) {
                                 sellAll((Player) sender, args, invi);
-                            } else if (args[0] != null) {
+                            } else {
                                 Player p = (Player) sender;
                                 double price = 0.0;
                                 for (ItemStack i : p.getInventory()) {
@@ -165,11 +166,11 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                             SkullMeta sm = (SkullMeta) i.getItemMeta();
                                             for (String str : hpch.mHeads) {
                                                 try {
-                                                    if (sm.getOwner() != null) {
+                                                    if (nms().getSkullOwnerName(sm) != null) {
                                                         if (str.equalsIgnoreCase("sheep")) {
                                                             for (String s : hpch.getConfig().getConfigurationSection(str + ".name").getKeys(false)) {
                                                                 for (int in = 0; in < hpch.getConfig().getStringList(str + ".name." + s).size(); in++) {
-                                                                    if (sm.getOwner().equalsIgnoreCase(hpch.getConfig().getStringList(str + ".name." + s).get(in))) {
+                                                                    if (nms().getSkullOwnerName(sm).equalsIgnoreCase(hpch.getConfig().getStringList(str + ".name." + s).get(in))) {
                                                                         found = true;
                                                                         price = setPrice(price, args, i, p);
                                                                     }
@@ -177,7 +178,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                                             }
                                                         } else {
                                                             for (int in = 0; in < hpch.getConfig().getStringList(str + ".name").size(); in++) {
-                                                                if (sm.getOwner().equalsIgnoreCase(hpch.getConfig().getStringList(str + ".name").get(in))) {
+                                                                if (nms().getSkullOwnerName(sm).equalsIgnoreCase(hpch.getConfig().getStringList(str + ".name").get(in))) {
                                                                     found = true;
                                                                     price = setPrice(price, args, i, p);
                                                                 }
@@ -190,8 +191,8 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                             }
                                             for (String str : hpch.uHeads) {
                                                 try {
-                                                    if (sm.getOwner() != null) {
-                                                        if (sm.getOwner().equalsIgnoreCase(hpch.getConfig().getString(str + ".name"))) {
+                                                    if (nms().getSkullOwnerName(sm) != null) {
+                                                        if (nms().getSkullOwnerName(sm).equalsIgnoreCase(hpch.getConfig().getString(str + ".name"))) {
                                                             found = true;
                                                             price = setPrice(price, args, i, p);
                                                         }
@@ -203,7 +204,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                             if (!found) {
                                                 if (args[0].equalsIgnoreCase("player")) {
                                                     price = setPrice(price, args, i, p);
-                                                } else if (sm.getOwner().equalsIgnoreCase("HPXHead")) {
+                                                } else if (nms().getSkullOwnerName(sm).equalsIgnoreCase("HPXHead")) {
                                                     for (String key : hpch.mHeads) {
                                                         if (!key.equalsIgnoreCase("sheep")) {
                                                             price = b(price, key, hpch.getConfig().getStringList(key + ".name"), i, (Player) sender, args, true, false);
@@ -279,7 +280,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 			    } else {
 			    	setHand(p, new ItemStack(Material.AIR));
 		        }
-		    } else if (a[0] != null) {
+		    } else {
 		    	for (ItemStack is : p.getInventory()) {
 		    		if (is != null) {
 		    			if (is.getType() == Material.SKULL_ITEM) {
@@ -323,7 +324,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                             p.getInventory().remove(is);
                                         }
                                     }
-							    } else if (sm.getOwner().equalsIgnoreCase("HPXHead")) {
+							    } else if (nms().getSkullOwnerName(sm).equalsIgnoreCase("HPXHead")) {
                                     for (String key : hpch.mHeads) {
                                         if (key.equalsIgnoreCase("sheep")) {
                                             for (String s : hpch.getConfig().getConfigurationSection("sheep.name").getKeys(false)) {
@@ -342,8 +343,6 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 		    			}
 		    		}
 		    	}
-		    } else {
-		    	setHand(p, new ItemStack(Material.AIR));
 		    }
 		} else {
 			setHand(p, new ItemStack(Material.AIR));
@@ -395,7 +394,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                 found = true;
                             }
 
-						    if (sm.getOwner().equalsIgnoreCase("HPXHead")) {
+						    if (nms().getSkullOwnerName(sm).equalsIgnoreCase("HPXHead")) {
                                 for (String key : hpch.mHeads) {
                                     if (key.equalsIgnoreCase("sheep")) {
                                         for (String s : hpch.getConfig().getConfigurationSection("sheep.name").getKeys(false)) {
@@ -435,7 +434,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 						    }
 						}
 					}
-				} else if (a[0] != null) {
+				} else {
 					for (String s : hpch.mHeads) {
 						if (a[0].equalsIgnoreCase(s)) {
 						    SkullMeta sm = (SkullMeta) i.getItemMeta();
@@ -659,7 +658,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
     private boolean c(String s, String[] a, ItemStack is, List<String> ls, Player p, boolean f) {
         for (String l : ls) {
             if (a[0].equalsIgnoreCase(s)) {
-                if (((SkullMeta) is.getItemMeta()).getOwner().equals(l)) {
+                if (nms().getSkullOwnerName((SkullMeta) is.getItemMeta()).equals(l)) {
                     if (f) {
                         p.getInventory().remove(is);
                     }
@@ -672,7 +671,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 
     private boolean d(List<String> ls, SkullMeta sms) {
         for (String l : ls) {
-            if (sms.getOwner().equalsIgnoreCase(l)) {
+            if (nms().getSkullOwnerName(sms).equalsIgnoreCase(l)) {
                 return false;
             }
         }
@@ -680,7 +679,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
     }
     private Double e(List<String> ls, Double p, String s, SkullMeta sm, ItemStack i) {
         for (String l : ls) {
-            if (sm.getOwner().equals(l)) {
+            if (nms().getSkullOwnerName(sm).equals(l)) {
                 p = p + (i.getAmount() * hpch.getConfig().getDouble(s + ".price"));
                 return p;
             }
@@ -691,14 +690,14 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
     private Double f(ItemStack i, SkullMeta sm, Double p, String s, String[] a, List<String> ls2) {
         for (String aLs2 : ls2) {
 
-            if (sm.getOwner().equalsIgnoreCase(aLs2)) {
+            if (nms().getSkullOwnerName(sm).equalsIgnoreCase(aLs2)) {
 
                 if (HeadsPlus.getInstance().nms.isSellable(i)) {
                     soldHeads.add(s);
                     i(s, i.getAmount());
                     p = p + (i.getAmount() * hpch.getConfig().getDouble(s + ".price"));
                 }
-            } else if (sm.getOwner().equalsIgnoreCase("HPXHead")) {
+            } else if (nms().getSkullOwnerName(sm).equalsIgnoreCase("HPXHead")) {
                 if (hpchx.isHPXSkull(aLs2)) {
 
                     GameProfile gm = h(i);
@@ -722,7 +721,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 
     private String g(List<String> ls, SkullMeta sm, String str) {
         for (String l : ls) {
-            if (sm.getOwner().equalsIgnoreCase(l)) {
+            if (nms().getSkullOwnerName(sm).equalsIgnoreCase(l)) {
                 return str;
             }
         }
@@ -794,5 +793,9 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
     @Override
     public boolean fire(String[] args, CommandSender sender) {
         return false;
+    }
+
+    private NMSManager nms() {
+	    return HeadsPlus.getInstance().nms;
     }
 }

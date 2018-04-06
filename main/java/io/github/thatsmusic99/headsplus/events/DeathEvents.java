@@ -25,8 +25,8 @@ public class DeathEvents implements Listener {
     }
 	
 	public final List<EntityType> ableEntities = new ArrayList<>(Arrays.asList(EntityType.BAT, EntityType.BLAZE, EntityType.CAVE_SPIDER, EntityType.CHICKEN, EntityType.COW, EntityType.CREEPER, EntityType.ENDER_DRAGON, EntityType.ENDERMAN, EntityType.ENDERMITE, EntityType.GHAST, EntityType.GUARDIAN, EntityType.HORSE, EntityType.IRON_GOLEM, EntityType.MAGMA_CUBE, EntityType.MUSHROOM_COW, EntityType.OCELOT, EntityType.PIG, EntityType.RABBIT, EntityType.SHEEP, EntityType.SILVERFISH, EntityType.SKELETON, EntityType.SLIME, EntityType.SNOWMAN, EntityType.SPIDER, EntityType.SQUID, EntityType.VILLAGER, EntityType.WITCH, EntityType.WITHER, EntityType.ZOMBIE));
-    private HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().hpchx;
-    private HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().hpch;
+    private final HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().hpchx;
+    private final HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().hpch;
 
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent e) {
@@ -77,7 +77,7 @@ public class DeathEvents implements Listener {
             if (chance2 <= chance1) {
                 ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
                 SkullMeta headM = (SkullMeta) head.getItemMeta();
-                headM.setOwner(ep.getEntity().getName());
+                HeadsPlus.getInstance().nms.setSkullOwner(ep.getEntity(), headM);
                 headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getConfig().getString("player.display-name").replaceAll("%d", ep.getEntity().getName())));
                 if ((HeadsPlus.getInstance().sellable) && (ep.getEntity().getKiller().hasPermission("headsplus.sellhead"))) {
                     if (HeadsPlus.getInstance().getConfig().getBoolean("use-lore")) {
@@ -164,7 +164,7 @@ public class DeathEvents implements Listener {
             i = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 
             sm = (SkullMeta) i.getItemMeta();
-            sm.setOwner(s);
+            HeadsPlus.getInstance().nms.setSkullOwner(HeadsPlus.getInstance().nms.getOfflinePlayer(s), sm);
         }
 
         sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getConfig().getString(e.getType().name().replaceAll("_", "").toLowerCase() + ".display-name")));
@@ -188,6 +188,10 @@ public class DeathEvents implements Listener {
             world.dropItem(event.getLocation(), event.getSkull());
             HPPlayer.getHPPlayer(k).addXp(10);
         }
+    }
+
+    private void setOwner(SkullMeta m, OfflinePlayer p) {
+
     }
 
 }

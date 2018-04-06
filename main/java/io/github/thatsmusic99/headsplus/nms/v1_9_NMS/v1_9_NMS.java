@@ -4,9 +4,14 @@ import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.nms.SearchGUI;
 import net.minecraft.server.v1_9_R1.ItemStack;
 import net.minecraft.server.v1_9_R1.NBTTagCompound;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.craftbukkit.v1_9_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.meta.SkullMeta;
 
+@SuppressWarnings("deprecation")
 public class v1_9_NMS implements NMSManager {
 
     @Override
@@ -22,9 +27,7 @@ public class v1_9_NMS implements NMSManager {
     @Override
     public boolean isSellable(Object i) {
         if (CraftItemStack.asNMSCopy((org.bukkit.inventory.ItemStack) i).getTag() != null) {
-            if (CraftItemStack.asNMSCopy((org.bukkit.inventory.ItemStack) i).getTag().getBoolean("headsplus-sell")) {
-                return true;
-            }
+            return CraftItemStack.asNMSCopy((org.bukkit.inventory.ItemStack) i).getTag().getBoolean("headsplus-sell");
         }
         return false;
     }
@@ -32,5 +35,30 @@ public class v1_9_NMS implements NMSManager {
     @Override
     public SearchGUI getSearchGUI(Player p, SearchGUI.AnvilClickEventHandler a) {
         return new SearchGUI1_9(p, a);
+    }
+
+    @Override
+    public void setSkullOwner(OfflinePlayer p, SkullMeta m) {
+        m.setOwner(p.getName());
+    }
+
+    @Override
+    public String getSkullOwnerName(SkullMeta m) {
+        return m.getOwner();
+    }
+
+    @Override
+    public ShapelessRecipe getRecipe(org.bukkit.inventory.ItemStack i, String name) {
+        return new ShapelessRecipe(i);
+    }
+
+    @Override
+    public OfflinePlayer getOfflinePlayer(String name) {
+        return Bukkit.getOfflinePlayer(name);
+    }
+
+    @Override
+    public Player getPlayer(String name) {
+        return Bukkit.getPlayer(name);
     }
 }

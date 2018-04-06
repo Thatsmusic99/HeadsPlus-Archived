@@ -77,11 +77,11 @@ public class HeadsPlus extends JavaPlugin {
     public HeadsPlusChallenges hpchl;
     public HeadsPlusAPI hapi;
     public HeadsPlusLevels hpl;
-    public List<Challenge> challenges = new ArrayList<>();
+    public final List<Challenge> challenges = new ArrayList<>();
     public NMSManager nms;
-    public List<IHeadsPlusCommand> commands = new ArrayList<>();
+    public final List<IHeadsPlusCommand> commands = new ArrayList<>();
     public HashMap<Integer, Level> levels = new HashMap<>();
-    private List<String> nms1_8 = new ArrayList<>(Arrays.asList("1.8.4", "1.8.5", "1.8.6", "1.8.7", "1.8.8"));
+    private final List<String> nms1_8 = new ArrayList<>(Arrays.asList("1.8.4", "1.8.5", "1.8.6", "1.8.7", "1.8.8"));
     private FileConfiguration config;
 
     @SuppressWarnings("unused")
@@ -91,8 +91,8 @@ public class HeadsPlus extends JavaPlugin {
 	public void onEnable() {
 		try { 
 			instance = this;
+			setupNMS();
 			setUpMConfig();
-
 			try {
                 hpc.getConfig().getString("locale");
                 LocaleManager.class.newInstance().setupLocale();
@@ -118,7 +118,7 @@ public class HeadsPlus extends JavaPlugin {
                 setupPermissions();
             }
 			setPluginValues();
-			setupNMS();
+
 			registerEvents();
 			registerCommands();
 			registerSubCommands();

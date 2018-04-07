@@ -305,15 +305,24 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                     boolean player = true;
                                     SkullMeta sms = (SkullMeta) is.getItemMeta();
                                     for (String s : hpch.uHeads) {
-                                        player = d(hpch.getConfig().getStringList(s + ".name"), sms);
+                                        if (!d(hpch.getConfig().getStringList(s + ".name"), sms)) {
+                                            player = false;
+                                            break;
+                                        }
                                     }
                                     for (String s : hpch.mHeads) {
                                         if (s.equalsIgnoreCase("sheep")) {
                                             for (String st : hpch.getConfig().getConfigurationSection("sheep.name").getKeys(false)) {
-                                                player = d(hpch.getConfig().getStringList(s + ".name." + st), sms);
+                                                if (!d(hpch.getConfig().getStringList(s + ".name." + st), sms)) {
+                                                    player = false;
+                                                    break;
+                                                }
                                             }
                                         } else {
-                                            player = d(hpch.getConfig().getStringList(s + ".name"), sms);
+                                            if (!d(hpch.getConfig().getStringList(s + ".name"), sms)) {
+                                                player = false;
+                                                break;
+                                            }
                                         }
                                     }
                                     if (player) {
@@ -433,8 +442,8 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 						}
 					}
 				} else { // Selected mob
-					for (String s : hpch.mHeads) { //
-						if (a[0].equalsIgnoreCase(s)) {
+					for (String s : hpch.mHeads) { // All mobs with defined head names
+						if (a[0].equalsIgnoreCase(s)) { // If the first arg e
 						    SkullMeta sm = (SkullMeta) i.getItemMeta();
 						    if (s.equalsIgnoreCase("sheep")) {
 						        for (String st : hpch.getConfig().getConfigurationSection("sheep.name").getKeys(false)) {
@@ -455,29 +464,31 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 					    boolean player = true;
 					    SkullMeta sm = (SkullMeta) i.getItemMeta();
 					    for (String s : hpch.uHeads) {
-					        player = d(hpch.getConfig().getStringList(s + ".name"), sm);
+					        if (!d(hpch.getConfig().getStringList(s + ".name"), sm)) {
+                                player = false;
+                                break;
+                            }
                         }
                         for (String s : hpch.mHeads) {
 					        if (s.equalsIgnoreCase("sheep")) {
 					            for (String st : hpch.getConfig().getConfigurationSection(s + ".name").getKeys(false)) {
-                                    player = d(hpch.getConfig().getStringList(s + ".name." + st), sm);
+                                    if (!d(hpch.getConfig().getStringList(s + ".name." + st), sm)) {
+                                        player = false;
+                                        break;
+                                    }
                                 }
                             } else {
-                                player = d(hpch.getConfig().getStringList(s + ".name"), sm);
+                                if (!d(hpch.getConfig().getStringList(s + ".name"), sm)) {
+                                    player = false;
+                                    break;
+                                }
                             }
                         }
                         if (player) {
-
-                            List<String> ls = new ArrayList<>();
-                            for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
-                                ls.add(ChatColor.translateAlternateColorCodes('&', ChatColor.stripColor(str)));
-                            }
-                            if ((sm.getLore() != null) && (sm.getLore().size() == 2) && (sm.getLore().equals(ls))) {
-                                p = p + (i.getAmount() * hpch.getConfig().getDouble("player.price"));
-                                soldHeads.add("player");
-                                i("player", i.getAmount());
-                            }
-                        }
+					        p = p + (i.getAmount() * hpch.getConfig().getDouble("player.price"));
+					        soldHeads.add("player");
+					        i("player", i.getAmount());
+					    }
                     }
 				}	
 			} else {

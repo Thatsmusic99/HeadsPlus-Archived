@@ -543,7 +543,6 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
             System.out.println(s);
 			 p = hpch.getConfig().getDouble(s + ".price") * i.getAmount();
             soldHeads.add(s);
-            i(s, i.getAmount());
 	    }
 		return p;
 	}

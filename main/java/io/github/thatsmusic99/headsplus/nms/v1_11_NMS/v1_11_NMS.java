@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus.nms.v1_11_NMS;
 
 
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
+import io.github.thatsmusic99.headsplus.nms.RecipeManager;
 import io.github.thatsmusic99.headsplus.nms.SearchGUI;
 import net.minecraft.server.v1_11_R1.ItemStack;
 import net.minecraft.server.v1_11_R1.NBTTagCompound;
@@ -61,5 +62,10 @@ public class v1_11_NMS implements NMSManager {
     @Override
     public Player getPlayer(String name) {
         return Bukkit.getPlayer(name);
+    }
+
+    @Override
+    public RecipeManager getRecipeManager() {
+        return new RecipeManager();
     }
 }

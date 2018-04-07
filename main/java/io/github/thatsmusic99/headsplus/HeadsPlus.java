@@ -108,7 +108,7 @@ public class HeadsPlus extends JavaPlugin {
             }
 			if (!getConfig().getBoolean("disableCrafting")) {
 			    hpcr = new HeadsPlusCrafting();
-                new RecipeEnumUser();
+            //    new RecipeEnumUser();
                 getServer().getPluginManager().registerEvents(new RecipePerms(), this);
 			}
 			if (!(econ()) && (getConfig().getBoolean("sellHeads"))) {
@@ -147,7 +147,7 @@ public class HeadsPlus extends JavaPlugin {
                     }
                 }.runTaskAsynchronously(this);
             }
-		    log.info("[HeadsPlus] HeadsPlus has been enabled.");
+		    log.info("[HeadsPlus] HeadsPlus has been enabled. As of v4.2.7, crafting will be set up when a player joins the game.");
 		} catch (Exception e) {
 			log.severe("[HeadsPlus] Error enabling HeadsPlus!");
 			e.printStackTrace();

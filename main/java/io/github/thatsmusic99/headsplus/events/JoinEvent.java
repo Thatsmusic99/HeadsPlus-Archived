@@ -8,7 +8,6 @@ import io.github.thatsmusic99.headsplus.config.levels.HeadsPlusLevels;
 import io.github.thatsmusic99.headsplus.crafting.RecipeEnumUser;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import mkremins.fanciful.FancyMessage;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
@@ -19,6 +18,7 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusCrafting;
+import org.bukkit.inventory.ShapelessRecipe;
 
 public class JoinEvent implements Listener { 
 	
@@ -54,79 +54,82 @@ public class JoinEvent implements Listener {
 		    if (HeadsPlus.getInstance().getConfig().getBoolean("autoReloadOnFirstJoin")) {
 			    try {
 			    	javax.swing.Timer timer = new javax.swing.Timer(3000, arg0 -> {
-                        if  (!(configF.exists())) {
-                               HeadsPlus.getInstance().log.info("[HeadsPlus] Config not found, creating!");
-                               HeadsPlus.getInstance().saveConfig();
-
-                           } else {
-                               HeadsPlus.getInstance().log.info("[HeadsPlus] Found config, loading!");
-                               HeadsPlus.getInstance().reloadConfig();
-                               HeadsPlus.getInstance().log.info("[HeadsPlus] Config reloaded!");
-                          }
-
-                          if (!(messagesF.exists())) {
-                              HeadsPlus.getInstance().log.info("[HeadsPlus] Messages not found, creating!");
-                              hpc.reloadC(false);
-                              hpc.config = YamlConfiguration.loadConfiguration(messagesF);
-                              HeadsPlus.getInstance().log.info("[HeadsPlus] Messages created!");
-                          } else {
-                              hpc.reloadC(false);
-                          }
-                          HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().hpch;
-                          if (!(headsF.exists())) {
-                              HeadsPlus.getInstance().log.info("[HeadsPlus] Heads not found, creating!");
-                              hpch.reloadC(false);
-                              hpch.config = YamlConfiguration.loadConfiguration(headsF);
-                              HeadsPlus.getInstance().log.info("[HeadsPlus] Heads created!");
-                          } else {
-                              hpch.reloadC(false);
-                          }
-                          if (HeadsPlus.getInstance().hpcr != null) {
-                              HeadsPlusCrafting hpcr = HeadsPlus.getInstance().hpcr;
-                              if (!(craftingF.exists())) {
-                                  if (HeadsPlus.getInstance().getConfig().getBoolean("craftHeads")) {
-                                      HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting not found, creating!");
-                                      Bukkit.clearRecipes();
-                                      hpcr.reloadC(false);
-                                      hpcr.config = YamlConfiguration.loadConfiguration(craftingF);
-                                      new RecipeEnumUser();
-                                      HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting created!");
-                                  }
-                              } else {
-                                  Bukkit.resetRecipes();
-                                  hpcr.reloadC(false);
-                                  new RecipeEnumUser();
-                              }
-                          }
-                          HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().hpchx;
-                          if (!headsXF.exists()) {
-if (HeadsPlus.getInstance().getConfig().getBoolean("headsDatabase")) {
-HeadsPlus.getInstance().log.info("[HeadsPlus] HeadsX not found, creating!");
-hpchx.reloadC(false);
-hpchx.config = YamlConfiguration.loadConfiguration(headsXF);
-HeadsPlus.getInstance().log.info("[HeadsPlus] HeadsX created!");
-                              }
-} else {
-                              hpchx.reloadC(false);
-}
-                        HeadsPlusLevels hplevels = HeadsPlus.getInstance().hpl;
-                        if (!levelF.exists()) {
-                            HeadsPlus.getInstance().getLogger().info("Levels not found, creating!");
-                            hplevels.reloadC(false);
-                            hplevels.config = YamlConfiguration.loadConfiguration(levelF);
-                            HeadsPlus.getInstance().getLogger().info("Levels created!");
-                        } else {
-                            hplevels.reloadC(false);
-                        }
-HPPlayer.players.clear();
-                });
+			    	    if  (!(configF.exists())) {
+			    	        HeadsPlus.getInstance().log.info("[HeadsPlus] Config not found, creating!");
+			    	        HeadsPlus.getInstance().saveConfig();
+			    	    } else {
+			    	        HeadsPlus.getInstance().log.info("[HeadsPlus] Found config, loading!");
+			    	        HeadsPlus.getInstance().reloadConfig();
+			    	        HeadsPlus.getInstance().log.info("[HeadsPlus] Config reloaded!");
+			    	    }
+			    	    if (!(messagesF.exists())) {
+			    	        HeadsPlus.getInstance().log.info("[HeadsPlus] Messages not found, creating!");
+			    	        hpc.reloadC(false);
+			    	        hpc.config = YamlConfiguration.loadConfiguration(messagesF);
+			    	        HeadsPlus.getInstance().log.info("[HeadsPlus] Messages created!");
+			    	    } else {
+			    	        hpc.reloadC(false);
+			    	    }
+			    	    HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().hpch;
+			    	    if (!(headsF.exists())) {
+			    	        HeadsPlus.getInstance().log.info("[HeadsPlus] Heads not found, creating!");
+			    	        hpch.reloadC(false);
+			    	        hpch.config = YamlConfiguration.loadConfiguration(headsF);
+			    	        HeadsPlus.getInstance().log.info("[HeadsPlus] Heads created!");
+			    	    } else {
+			    	        hpch.reloadC(false);
+			    	    }
+			    	    if (HeadsPlus.getInstance().hpcr != null) {
+			    	        HeadsPlusCrafting hpcr = HeadsPlus.getInstance().hpcr;
+			    	        if (!(craftingF.exists())) {
+			    	            if (HeadsPlus.getInstance().getConfig().getBoolean("craftHeads")) {
+			    	                HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting not found, creating!");
+			    	            //    for (ShapelessRecipe r : RecipeEnumUser.getRecipes()) {
+			    	            //        HeadsPlus.getInstance().nms.getRecipeManager().removeRecipe(r);
+			    	            //    }
+			    	                hpcr.reloadC(false);
+			    	                hpcr.config = YamlConfiguration.loadConfiguration(craftingF);
+			    	                new RecipeEnumUser();
+			    	                HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting created!");
+			    	            }
+			    	        } else {
+			    	        //    for (ShapelessRecipe r : RecipeEnumUser.getRecipes()) {
+			    	        //        HeadsPlus.getInstance().nms.getRecipeManager().removeRecipe(r);
+			    	        //    }
+			    	            hpcr.reloadC(false);
+			    	            new RecipeEnumUser();
+			    	        }
+			    	    }
+			    	    HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().hpchx;
+			    	    if (!headsXF.exists()) {
+			    	        if (HeadsPlus.getInstance().getConfig().getBoolean("headsDatabase")) {
+			    	            HeadsPlus.getInstance().log.info("[HeadsPlus] HeadsX not found, creating!");
+			    	            hpchx.reloadC(false);
+			    	            hpchx.config = YamlConfiguration.loadConfiguration(headsXF);
+			    	            HeadsPlus.getInstance().log.info("[HeadsPlus] HeadsX created!");
+			    	        }
+			    	    } else {
+			    	        hpchx.reloadC(false);
+			    	    }
+			    	    HeadsPlusLevels hplevels = HeadsPlus.getInstance().hpl;
+			    	    if (!levelF.exists()) {
+			    	        HeadsPlus.getInstance().getLogger().info("Levels not found, creating!");
+			    	        hplevels.reloadC(false);
+			    	        hplevels.config = YamlConfiguration.loadConfiguration(levelF);
+			    	        HeadsPlus.getInstance().getLogger().info("Levels created!");
+			    	    } else {
+			    	        hplevels.reloadC(false);
+			    	    }
+			    	    HPPlayer.players.clear();
+			    	});
 			    	timer.setRepeats(false); // Make it so it does not repeat every 3 seconds
 			    	timer.start(); // Run the Task
 				       
-			       } catch (Exception ex) {
-				       HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to reload configs.");
-				       ex.printStackTrace();
-			       }
+
+			    } catch (Exception ex) {
+			        HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to reload configs.");
+			        ex.printStackTrace();
+			    }
 		    }
 		}
 	}

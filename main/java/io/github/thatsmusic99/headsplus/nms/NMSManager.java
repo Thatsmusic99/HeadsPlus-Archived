@@ -24,4 +24,6 @@ public interface NMSManager {
 
     Player getPlayer(String name);
 
+    RecipeManager getRecipeManager();
+
 }

@@ -316,11 +316,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                     }
                                     if (player) {
 
-                                        List<String> lst = new ArrayList<>();
-                                        for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
-                                            lst.add(ChatColor.translateAlternateColorCodes('&', ChatColor.stripColor(str)));
-                                        }
-                                        if ((sms.getLore() != null) && (sms.getLore().size() == 2) && (sms.getLore().equals(lst))) {
+                                        if (HeadsPlus.getInstance().nms.isSellable(is)){
                                             p.getInventory().remove(is);
                                         }
                                     }
@@ -429,8 +425,8 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                             }
 						    if (!found) {
 						    	p = p + (i.getAmount() * hpch.getConfig().getDouble("player.price"));
-                                soldHeads.add("player");
-                                i("player", i.getAmount());
+						    	soldHeads.add("player");
+						    	i("player", i.getAmount());
 						    }
 						}
 					}
@@ -747,7 +743,6 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 
     private void i(String s, int amount) {
 	    if (hm.get(s) == null) {
-	        System.out.println("Pong!");
             hm.put(s, amount);
             return;
         }

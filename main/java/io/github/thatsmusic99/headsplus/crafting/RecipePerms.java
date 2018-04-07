@@ -36,6 +36,7 @@ public class RecipePerms implements Listener {
                             }
                             Bukkit.getServer().getPluginManager().callEvent(event);
                             if (!event.isCancelled()) {
+                                e.setCurrentItem(HeadsPlus.getInstance().nms.addNBTTag(e.getCurrentItem()));
                                 return;
                             } else {
                                 e.setCancelled(true);
@@ -61,6 +62,7 @@ public class RecipePerms implements Listener {
                                                 }
                                                 Bukkit.getServer().getPluginManager().callEvent(event);
                                                 if (!event.isCancelled()) {
+                                                    e.setCurrentItem(HeadsPlus.getInstance().nms.addNBTTag(e.getCurrentItem()));
                                                     return;
                                                 } else {
                                                     e.setCancelled(true);
@@ -90,6 +92,7 @@ public class RecipePerms implements Listener {
                             }
                             Bukkit.getServer().getPluginManager().callEvent(event);
                             if (!event.isCancelled()) {
+                                e.setCurrentItem(HeadsPlus.getInstance().nms.addNBTTag(e.getCurrentItem()));
                                 return;
                             } else {
                                 e.setCancelled(true);

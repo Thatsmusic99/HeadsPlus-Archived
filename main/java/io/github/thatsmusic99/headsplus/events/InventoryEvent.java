@@ -25,14 +25,13 @@ import java.util.logging.Level;
 
 public class InventoryEvent implements Listener {
 
-    private String name;
-    private Player p;
     private InventoryManager im;
     private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
 
     @EventHandler
     public void onClickEvent(InventoryClickEvent e) {
-        p = (Player) e.getWhoClicked();
+        if (!(e.getWhoClicked() instanceof Player)) return;
+        Player p = (Player) e.getWhoClicked();
         if (InventoryManager.getIM(p) == null) return;
         im = InventoryManager.getIM(p);
         // int month = Calendar.getInstance().get(Calendar.MONTH);
@@ -46,13 +45,13 @@ public class InventoryEvent implements Listener {
                         for (HeadsXSections h : HeadsXSections.values()) {
                             if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', h.dn)))) {
                                 im.setSection(h.let);
-                                e.getWhoClicked().openInventory(im.changePage(false, true, (Player) e.getWhoClicked(), h.let));
+                                e.getWhoClicked().openInventory(im.changePage(false, true, p, h.let));
                                 e.setCancelled(true);
                                 return;
                             }
                         }
                         im.setSection("advent_calender");
-                        e.getWhoClicked().openInventory(im.changePage(false, true, (Player) e.getWhoClicked(), "advent_calender"));
+                        e.getWhoClicked().openInventory(im.changePage(false, true, p, "advent_calender"));
                         e.setCancelled(true);
                         return;
                     } /* else if (InventoryManager.getSection().equalsIgnoreCase("advent_calender")) {
@@ -141,7 +140,7 @@ public class InventoryEvent implements Listener {
                             e.setCancelled(true);
                             return;
                         }
-                        EconomyResponse er = HeadsPlus.getInstance().econ.withdrawPlayer((OfflinePlayer) e.getWhoClicked(), price);
+                        EconomyResponse er = HeadsPlus.getInstance().econ.withdrawPlayer(p, price);
                         String success = HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("buy-success")).replaceAll("%l", Double.toString(er.amount)).replaceAll("%b", Double.toString(er.balance));
                         success = ChatColor.translateAlternateColorCodes('&', success);
                         String fail = HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("buy-fail"));
@@ -157,7 +156,7 @@ public class InventoryEvent implements Listener {
                             lore.add(ChatColor.GREEN + "Total pages: " + this.im.getPages());
                             lore.add(ChatColor.GREEN + "Total sections: " + this.im.getSections());
                             if (HeadsPlus.getInstance().econ()) {
-                                lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().econ.getBalance(((OfflinePlayer) e.getWhoClicked()).getPlayer()));
+                                lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().econ.getBalance(p));
                             }
                             lore.add(ChatColor.GREEN + "Current section: " + this.im.getSection());
                             im.setLore(lore);
@@ -179,7 +178,7 @@ public class InventoryEvent implements Listener {
                     lore.add(ChatColor.GREEN + "Total pages: " + this.im.getPages());
                     lore.add(ChatColor.GREEN + "Total sections: " + this.im.getSections());
                     if (HeadsPlus.getInstance().econ()) {
-                        lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().econ.getBalance((Player) e.getWhoClicked()));
+                        lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().econ.getBalance(p));
                     }
                     lore.add(ChatColor.GREEN + "Current section: " + this.im.getSection());
                     im.setLore(lore);
@@ -191,16 +190,16 @@ public class InventoryEvent implements Listener {
                     if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Next Page")) {
                         e.setCancelled(true);
                         e.getWhoClicked().closeInventory();
-                        e.getWhoClicked().openInventory(this.im.changePage(true, false, (Player) e.getWhoClicked(), this.im.getSection()));
+                        e.getWhoClicked().openInventory(this.im.changePage(true, false, p, this.im.getSection()));
                     } else if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Back")) {
                         e.setCancelled(true);
                         e.getWhoClicked().closeInventory();
-                        e.getWhoClicked().openInventory(this.im.changePage(false, false, (Player) e.getWhoClicked(), this.im.getSection()));
+                        e.getWhoClicked().openInventory(this.im.changePage(false, false, p, this.im.getSection()));
                     } else {
                         e.setCancelled(true);
                         e.getWhoClicked().closeInventory();
                         this.im.setSection("Menu");
-                        e.getWhoClicked().openInventory(this.im.changePage(false, true, (Player) e.getWhoClicked(), "Menu"));
+                        e.getWhoClicked().openInventory(this.im.changePage(false, true, p, "Menu"));
 
                     }
                 } else if (e.getCurrentItem().getType().equals(Material.PAPER)) {
@@ -212,7 +211,7 @@ public class InventoryEvent implements Listener {
                         e.setCancelled(true);
                         e.getWhoClicked().closeInventory();
                         final InventoryClickEvent ev = e;
-                        SearchGUI s = HeadsPlus.getInstance().nms.getSearchGUI((Player) e.getWhoClicked(), event -> {
+                        SearchGUI s = HeadsPlus.getInstance().nms.getSearchGUI(p, event -> {
                             if (event.getSlot().equals(SearchGUI1_12.AnvilSlot.OUTPUT)) {
                                 event.setWillClose(false);
                                 event.setWillDestroy(false);
@@ -244,7 +243,7 @@ public class InventoryEvent implements Listener {
                                     e.setCancelled(true);
                                     e.getWhoClicked().closeInventory();
                                     im.setSection(hpcd.key);
-                                    e.getWhoClicked().openInventory(this.im.changePage(false, true, (Player) e.getWhoClicked(), this.im.getSection()));
+                                    e.getWhoClicked().openInventory(this.im.changePage(false, true, p, this.im.getSection()));
                                 }
                             }
                         } else {
@@ -277,7 +276,7 @@ public class InventoryEvent implements Listener {
                                     e.setCancelled(true);
                                     e.getWhoClicked().closeInventory();
                                     im.setSection("Menu");
-                                    e.getWhoClicked().openInventory(im.changePage(false, true, (Player) e.getWhoClicked(), im.getSection()));
+                                    e.getWhoClicked().openInventory(im.changePage(false, true, p, im.getSection()));
                                 }
                             }
                             e.setCancelled(true);

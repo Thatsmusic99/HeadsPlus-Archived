@@ -23,16 +23,12 @@ public class RecipeManager1_12 extends RecipeManager {
         return fieldF;
     }
 
-    private Object getPrivateField(String fieldName, Class clazz, Object object) {
+    private Object getPrivateField(String fieldName, Class clazz, Object object) throws NoSuchFieldException, IllegalAccessException {
         Field field;
-        Object o = null;
-        try {
-            field = clazz.getDeclaredField(fieldName);
-            field.setAccessible(true);
-            o = field.get(object);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        Object o;
+        field = clazz.getDeclaredField(fieldName);
+        field.setAccessible(true);
+        o = field.get(object);
         return o;
     }
 }

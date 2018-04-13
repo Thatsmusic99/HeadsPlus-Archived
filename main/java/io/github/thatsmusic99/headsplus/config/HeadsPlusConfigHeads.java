@@ -1,5 +1,6 @@
 package io.github.thatsmusic99.headsplus.config;
 
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.DyeColor;
 
@@ -33,7 +34,9 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
 		    getConfig().options().copyDefaults(true);
 		    save();
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+				e.printStackTrace();
+			}
 		}
 		
 	}

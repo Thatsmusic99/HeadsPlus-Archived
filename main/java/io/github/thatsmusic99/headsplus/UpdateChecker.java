@@ -19,7 +19,10 @@ class UpdateChecker {
         try {
             versionsArray = (JSONArray) JSONValue.parseWithException(IOUtils.toString(new URL(String.valueOf(versionURL))));
         } catch (ParseException | IOException e) {
-            e.printStackTrace();
+            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                e.printStackTrace();
+            }
+
         }
         Double lastVersion;
         try {
@@ -54,7 +57,9 @@ class UpdateChecker {
             try {
                 updatesArray = (JSONArray) JSONValue.parseWithException(IOUtils.toString(new URL(String.valueOf(descriptionURL))));
             } catch (ParseException | IOException e) {
-                e.printStackTrace();
+                if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                    e.printStackTrace();
+                }
             }
             String updateName = ((JSONObject) updatesArray.get(updatesArray.size() - 1)).get("title").toString();
             return new Object[]{lastVersion, updateName, latestVersionString};

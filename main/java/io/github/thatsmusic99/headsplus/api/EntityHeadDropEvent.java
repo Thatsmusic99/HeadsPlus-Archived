@@ -1,5 +1,6 @@
 package io.github.thatsmusic99.headsplus.api;
 
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.EntityType;
@@ -54,7 +55,9 @@ public class EntityHeadDropEvent extends Event implements Cancellable {
         try {
             return new HeadsPlusAPI().getSkullType(skull);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
+            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                e.printStackTrace();
+            }
         }
         return "unknown";
     }

@@ -28,15 +28,11 @@ public class MySQLAPI {
         de = HeadsPlus.getInstance().de;
     }
 
-    private void addPlayer(Player p, String section, String database, int shAmount) {
+    private void addPlayer(Player p, String section, String database, int shAmount) throws SQLException {
         if (HeadsPlus.getInstance().con) {
             Connection c = HeadsPlus.getInstance().connection;
-            Statement s = null;
-            try {
-                s = c.createStatement();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            Statement s;
+            s = c.createStatement();
             StringBuilder sb2 = new StringBuilder();
             sb2.append("INSERT INTO `").append(database).append("` (uuid, total");
             for (EntityType e : de.ableEntities) {
@@ -47,11 +43,7 @@ public class MySQLAPI {
                 sb2.append(", 0");
             }
             sb2.append(")");
-            try {
-                s.executeUpdate(sb2.toString());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            s.executeUpdate(sb2.toString());
         } else {
             if (database.equalsIgnoreCase("headspluslb")) {
                 hpl.getConfig().addDefault("player-data." + p.getUniqueId().toString() + ".total", 0);
@@ -97,11 +89,7 @@ public class MySQLAPI {
             Connection c = HeadsPlus.getInstance().connection;
             Statement s = null;
             ResultSet rs;
-            try {
-                s = c.createStatement();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            s = c.createStatement();
             try {
                 rs = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + p.getUniqueId().toString() + "'");
                 Integer.parseInt(rs.getString(section)); // I don't care if it's ignored
@@ -190,7 +178,7 @@ public class MySQLAPI {
         }
     }
 
-    public void addOntoValue(Player p, String section, String database, int shAmount) {
+    public void addOntoValue(Player p, String section, String database, int shAmount) throws SQLException {
         if (HeadsPlus.getInstance().con) {
             try {
                 Connection c = HeadsPlus.getInstance().connection;
@@ -218,11 +206,7 @@ public class MySQLAPI {
                 val2 += shAmount;
                 s.executeUpdate("UPDATE `" + database + "` SET `total`='" + val2 + "' WHERE `uuid`='server-total'");
             } catch (SQLException e) {
-                try {
-                    addNewPlayerValue(p, section, database, shAmount);
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
+                addNewPlayerValue(p, section, database, shAmount);
             }
 
         } else {
@@ -243,11 +227,7 @@ public class MySQLAPI {
                     hpl.getConfig().options().copyDefaults(true);
                     hpl.save();
                 } catch (Exception e) {
-                    try {
-                        addNewPlayerValue(p, section, database, shAmount);
-                    } catch (SQLException e1) {
-                        e1.printStackTrace();
-                    }
+                    addNewPlayerValue(p, section, database, shAmount);
                 }
             } else {
                 if (database.equalsIgnoreCase("headsplussh")) {
@@ -268,11 +248,7 @@ public class MySQLAPI {
                         hpc.getConfig().options().copyDefaults(true);
                         hpc.save();
                     } catch (Exception e) {
-                        try {
-                            addNewPlayerValue(p, section, database, shAmount);
-                        } catch (SQLException e1) {
-                            e1.printStackTrace();
-                        }
+                        addNewPlayerValue(p, section, database, shAmount);
                     }
                 } else {
                     try {
@@ -291,11 +267,7 @@ public class MySQLAPI {
                         hpc.getConfig().options().copyDefaults(true);
                         hpc.save();
                     } catch (Exception e) {
-                        try {
-                            addNewPlayerValue(p, section, database, shAmount);
-                        } catch (SQLException e1) {
-                            e1.printStackTrace();
-                        }
+                        addNewPlayerValue(p, section, database, shAmount);
                     }
                 }
             }
@@ -392,15 +364,11 @@ public class MySQLAPI {
         }
         return sortedMap;
     }
-    public boolean addPlayerOnFileIfNotFound(Player p, String section, String database, int shAmount) {
+    public boolean addPlayerOnFileIfNotFound(Player p, String section, String database, int shAmount) throws SQLException {
         if (HeadsPlus.getInstance().con) {
             Connection c = HeadsPlus.getInstance().connection;
-            Statement s = null;
-            try {
-                s = c.createStatement();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            Statement s;
+            s = c.createStatement();
             try {
 
                 s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + p.getUniqueId() + "'");
@@ -416,11 +384,7 @@ public class MySQLAPI {
                     sb2.append(", 0");
                 }
                 sb2.append(")");
-                try {
-                    s.executeUpdate(sb2.toString());
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                s.executeUpdate(sb2.toString());
                 addOntoValue(p, section, database, shAmount);
                 return false;
             }
@@ -457,15 +421,11 @@ public class MySQLAPI {
         return false;
     }
 
-    public boolean addSectionOnFileIfNotFound(Player p, String section, String database, int shAmount) {
+    public boolean addSectionOnFileIfNotFound(Player p, String section, String database, int shAmount) throws SQLException {
         if (HeadsPlus.getInstance().con) {
             Connection c = HeadsPlus.getInstance().connection;
             Statement s = null;
-            try {
-                s = c.createStatement();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            s = c.createStatement();
             try {
 
                 s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + p.getUniqueId() + "'");
@@ -481,11 +441,7 @@ public class MySQLAPI {
                     sb2.append(", 0");
                 }
                 sb2.append(")");
-                try {
-                    s.executeUpdate(sb2.toString());
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                s.executeUpdate(sb2.toString());
                 addOntoValue(p, section, database, shAmount);
                 return false;
             }
@@ -500,11 +456,7 @@ public class MySQLAPI {
                         return false;
                     }
                 } catch (Exception ex) {
-                    try {
-                        addNewPlayerValue(p, section, database, shAmount);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
+                    addNewPlayerValue(p, section, database, shAmount);
                     return false;
                 }
             } else {
@@ -513,11 +465,7 @@ public class MySQLAPI {
                         hpc.getConfig().getInt("player-data." + p.getUniqueId().toString() + ".sellhead." + section);
                         return true;
                     } else {
-                        try {
-                            addNewPlayerValue(p, section, database, shAmount);
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
+                        addNewPlayerValue(p, section, database, shAmount);
                         return false;
                     }
                 } else {
@@ -525,11 +473,7 @@ public class MySQLAPI {
                         hpc.getConfig().getInt("player-data." + p.getUniqueId().toString() + ".crafting." + section);
                         return true;
                     } else {
-                        try {
-                            addNewPlayerValue(p, section, database, shAmount);
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
+                        addNewPlayerValue(p, section, database, shAmount);
                         return false;
                     }
                 }

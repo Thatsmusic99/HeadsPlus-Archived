@@ -9,7 +9,6 @@ import io.github.thatsmusic99.headsplus.config.*;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallenges;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.config.levels.*;
-import io.github.thatsmusic99.headsplus.crafting.RecipeEnumUser;
 import io.github.thatsmusic99.headsplus.crafting.RecipePerms;
 import io.github.thatsmusic99.headsplus.events.*;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
@@ -23,6 +22,7 @@ import io.github.thatsmusic99.headsplus.nms.v1_8_R2_NMS.v1_8_R2_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_8_R3_NMS.v1_8_R3NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_9_NMS.v1_9_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_9_R2_NMS.V1_9_NMS2;
+import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import io.github.thatsmusic99.headsplus.util.MySQLAPI;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
@@ -82,15 +82,14 @@ public class HeadsPlus extends JavaPlugin {
     public final List<IHeadsPlusCommand> commands = new ArrayList<>();
     public HashMap<Integer, Level> levels = new HashMap<>();
     private final List<String> nms1_8 = new ArrayList<>(Arrays.asList("1.8.4", "1.8.5", "1.8.6", "1.8.7", "1.8.8"));
-    private FileConfiguration config;
 
     @SuppressWarnings("unused")
 	private File messagesF;
 
 	@Override
 	public void onEnable() {
-		try { 
-			instance = this;
+		try {
+		    instance = this;
 			setupNMS();
 			setUpMConfig();
 			try {
@@ -103,7 +102,7 @@ public class HeadsPlus extends JavaPlugin {
            // addLevels();
             createInstances();
 			checkTheme();
-			if (config.getBoolean("mysql-usage")) {
+			if (getConfig().getBoolean("mysql-usage")) {
                 openConnection();
             }
 			if (!getConfig().getBoolean("disableCrafting")) {
@@ -150,7 +149,39 @@ public class HeadsPlus extends JavaPlugin {
 		    log.info("[HeadsPlus] HeadsPlus has been enabled. As of v4.2.7, crafting will be set up when a player joins the game.");
 		} catch (Exception e) {
 			log.severe("[HeadsPlus] Error enabling HeadsPlus!");
-			e.printStackTrace();
+
+			try {
+			    if (getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                    e.printStackTrace();
+                }
+			    if (getConfig().getBoolean("debug.create-debug-files")) {
+                    getLogger().severe("HeadsPlus has failed to start up correctly. An error report has been made in /plugins/HeadsPlus/debug");
+                    try {
+                        String s = new DebugFileCreator().createReport(e, "Startup");
+                        getLogger().severe("Report name: " + s);
+                        getLogger().severe("Please submit this report to the developer at one of the following links:");
+                        getLogger().severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
+                        getLogger().severe("https://discord.gg/nbT7wC2");
+                        getLogger().severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
+                    } catch (IOException e1) {
+                        if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                            e1.printStackTrace();
+                        }
+                    }
+                }
+            } catch (Exception ex) {
+			    getLogger().severe("HeadsPlus has failed to start up correctly and can not read the config. An error report has been made in /plugins/HeadsPlus/debug");
+                try {
+                    String s = new DebugFileCreator().createReport(e, "Startup");
+                    getLogger().severe("Report name: " + s);
+                    getLogger().severe("Please submit this report to the developer at one of the following links:");
+                    getLogger().severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
+                    getLogger().severe("https://discord.gg/nbT7wC2");
+                    getLogger().severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
 		}
     }
 	@Override
@@ -162,22 +193,22 @@ public class HeadsPlus extends JavaPlugin {
 		
 	}
 	private void setUpMConfig() {
-        File configF = new File(instance.getDataFolder(), "config.yml");
-			config = instance.getConfig();
-			if(!instance.getDataFolder().exists()) {
-				instance.getDataFolder().mkdirs();
-			}
-			if (!configF.exists()) {
-				try {
-					configF.createNewFile();
-				} catch (IOException e) {
-					instance.log.severe("[HeadsPlus] Couldn't create config!");
-					e.printStackTrace();
-				}
-			}
-			config.options().copyDefaults(true);
-			instance.saveConfig();
-			}
+        File configF = new File(getDataFolder(), "config.yml");
+        if(!getDataFolder().exists()) {
+            getDataFolder().mkdirs();
+        }
+        if (!configF.exists()) {
+            try {
+                configF.createNewFile();
+            } catch (IOException e) {
+                if (getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        getConfig().options().copyDefaults(true);
+        saveConfig();
+	}
 		 
     
     public String translateMessages(String s) { 
@@ -218,7 +249,7 @@ public class HeadsPlus extends JavaPlugin {
                 return;
             }
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://" + config.getString("mysql-host")+ ":" + config.getString("mysql-port") + "/" + config.getString("mysql-database") + "?useSSL=false", config.getString("mysql-username"), config.getString("mysql-password"));
+            connection = DriverManager.getConnection("jdbc:mysql://" + getConfig().getString("mysql-host")+ ":" + getConfig().getString("mysql-port") + "/" + getConfig().getString("mysql-database") + "?useSSL=false", getConfig().getString("mysql-username"), getConfig().getString("mysql-password"));
             Statement st = connection.createStatement();
             StringBuilder sb = new StringBuilder();
             for (String str : Arrays.asList("headspluslb", "headsplussh", "headspluscraft" )) {
@@ -273,7 +304,6 @@ public class HeadsPlus extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlaceEvent(), this);
         getServer().getPluginManager().registerEvents(new LBEvents(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathEvent(), this);
-        getServer().getPluginManager().registerEvents(new InventoryCloseEvent(), this);
     }
 
     private void setPluginValues() {
@@ -374,6 +404,7 @@ public class HeadsPlus extends JavaPlugin {
         commands.add(new LeaderboardsCommand());
         commands.add(new MyHead());
         commands.add(new SellHead());
+        commands.add(new DebugPrint());
     }
 
     private void addLevels() {

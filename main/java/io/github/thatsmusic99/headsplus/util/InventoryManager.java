@@ -146,7 +146,7 @@ public class InventoryManager {
         return type;
     }
 
-    public Inventory changePage(boolean next, boolean start, Player p, String section) {
+    public Inventory changePage(boolean next, boolean start, Player p, String section) throws NoSuchFieldException, IllegalAccessException {
         Inventory i;
         if (next) {
             cPage++;
@@ -402,7 +402,7 @@ public class InventoryManager {
         }
     }
 
-    private void skull(String str, Inventory i) {
+    private void skull(String str, Inventory i) throws NoSuchFieldException, IllegalAccessException {
         ItemStack s = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         SkullMeta sm = (SkullMeta) s.getItemMeta();
         GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
@@ -413,18 +413,10 @@ public class InventoryManager {
             gm.getProperties().put("textures", new Property("texture", hpchx.getConfig().getString("heads." + str + ".texture")));
         }
 
-        Field profileField = null;
-        try {
-            profileField = sm.getClass().getDeclaredField("profile");
-        } catch (NoSuchFieldException | SecurityException e) {
-            e.printStackTrace();
-        }
+        Field profileField;
+        profileField = sm.getClass().getDeclaredField("profile");
         profileField.setAccessible(true);
-        try {
-            profileField.set(sm, gm);
-        } catch (IllegalArgumentException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        profileField.set(sm, gm);
         sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpchx.getConfig().getString("heads." + str + ".displayname")));
         if (HeadsPlus.getInstance().econ()) {
             if (hpchx.getConfig().get("heads." + str + ".price") instanceof String) {

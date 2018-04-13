@@ -1,8 +1,11 @@
 package io.github.thatsmusic99.headsplus.crafting;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 import io.github.thatsmusic99.headsplus.api.HeadCraftEvent;
+import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -19,47 +22,38 @@ public class RecipePerms implements Listener {
 	
 	@EventHandler
 	public void onCraft(InventoryClickEvent e) {
-		if (HeadsPlus.getInstance().getConfig().getBoolean("craftHeads")) {
-			Player player = (Player) e.getWhoClicked();
-		    List<String> worlds = HeadsPlus.getInstance().getConfig().getStringList("blacklistw");
-		    if ((!worlds.contains(player.getWorld().getName())) || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn") || player.hasPermission("headsplus.bypass.blacklistw")) {
-				if (HeadsPlus.getInstance().getConfig().getStringList("whitelistw").contains(player.getWorld().getName())) {
-					if ((player.hasPermission("headsplus.craft"))) {
-                        if (e.getInventory().getType().equals(InventoryType.CRAFTING) || e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
-                            HeadCraftEvent event;
-                            int amount = shift(e);
-                            try {
+	    try {
+            if (HeadsPlus.getInstance().getConfig().getBoolean("craftHeads")) {
+                Player player = (Player) e.getWhoClicked();
+                List<String> worlds = HeadsPlus.getInstance().getConfig().getStringList("blacklistw");
+                if ((!worlds.contains(player.getWorld().getName())) || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn") || player.hasPermission("headsplus.bypass.blacklistw")) {
+                    if (HeadsPlus.getInstance().getConfig().getStringList("whitelistw").contains(player.getWorld().getName())) {
+                        if ((player.hasPermission("headsplus.craft"))) {
+                            if (e.getInventory().getType().equals(InventoryType.CRAFTING) || e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
+                                HeadCraftEvent event;
+                                int amount = shift(e);
                                 event = new HeadCraftEvent(((Player) e.getWhoClicked()).getPlayer(), e.getCurrentItem(), e.getWhoClicked().getWorld(), e.getWhoClicked().getLocation(), amount, HeadsPlus.getInstance().hapi.getSkullType(e.getCurrentItem()));
-                            } catch (NoSuchFieldException | IllegalAccessException e1) {
-                                e1.printStackTrace();
-                                return;
+                                Bukkit.getServer().getPluginManager().callEvent(event);
+                                if (!event.isCancelled()) {
+                                    e.setCurrentItem(HeadsPlus.getInstance().nms.addNBTTag(e.getCurrentItem()));
+                                    return;
+                                } else {
+                                    e.setCancelled(true);
+                                }
                             }
-                            Bukkit.getServer().getPluginManager().callEvent(event);
-                            if (!event.isCancelled()) {
-                                e.setCurrentItem(HeadsPlus.getInstance().nms.addNBTTag(e.getCurrentItem()));
-                                return;
-                            } else {
-                                e.setCancelled(true);
-                            }
+                            return;
                         }
-						return;
-					}
-				} else if (player.hasPermission("headsplus.bypass.whitelistw")){
-                    if ((player.hasPermission("headsplus.craft"))) {
-                        if (e.getInventory().getType().equals(InventoryType.CRAFTING) || e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
-                            try {
+                    } else if (player.hasPermission("headsplus.bypass.whitelistw")){
+                        if ((player.hasPermission("headsplus.craft"))) {
+                            if (e.getInventory().getType().equals(InventoryType.CRAFTING) || e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
                                 if (e.getCurrentItem() != null) {
                                     if (e.getCurrentItem().getItemMeta() instanceof SkullMeta) {
                                         if (HeadsPlus.getInstance().hapi.getSkullType(e.getCurrentItem()) != null) {
                                             try {
                                                 HeadCraftEvent event;
                                                 int amount = shift(e);
-                                                try {
-                                                    event = new HeadCraftEvent(((Player) e.getWhoClicked()).getPlayer(), e.getCurrentItem(), e.getWhoClicked().getWorld(), e.getWhoClicked().getLocation(), amount, HeadsPlus.getInstance().hapi.getSkullType(e.getCurrentItem()));
-                                                } catch (NoSuchFieldException | IllegalAccessException e1) {
-                                                    e1.printStackTrace();
-                                                    return;
-                                                }
+                                                event = new HeadCraftEvent(((Player) e.getWhoClicked()).getPlayer(), e.getCurrentItem(), e.getWhoClicked().getWorld(), e.getWhoClicked().getLocation(), amount, HeadsPlus.getInstance().hapi.getSkullType(e.getCurrentItem()));
+
                                                 Bukkit.getServer().getPluginManager().callEvent(event);
                                                 if (!event.isCancelled()) {
                                                     e.setCurrentItem(HeadsPlus.getInstance().nms.addNBTTag(e.getCurrentItem()));
@@ -68,75 +62,90 @@ public class RecipePerms implements Listener {
                                                     e.setCancelled(true);
                                                 }
                                             } catch (NullPointerException | ClassCastException ignored) {
+
                                             }
                                         }
                                     }
                                 }
-                            } catch (NoSuchFieldException | IllegalAccessException e1) {
-                                e1.printStackTrace();
                             }
+                            return;
                         }
-                        return;
-                    }
-                } else if (!HeadsPlus.getInstance().getConfig().getBoolean("whitelistwOn")) {
-                    if ((player.hasPermission("headsplus.craft"))) {
-                        if (e.getInventory().getType().equals(InventoryType.CRAFTING) || e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
+                    } else if (!HeadsPlus.getInstance().getConfig().getBoolean("whitelistwOn")) {
+                        if ((player.hasPermission("headsplus.craft"))) {
+                            if (e.getInventory().getType().equals(InventoryType.CRAFTING) || e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
 
-                            HeadCraftEvent event;
-                            int amount = shift(e);
-                            try {
+                                HeadCraftEvent event;
+                                int amount = shift(e);
                                 event = new HeadCraftEvent(((Player) e.getWhoClicked()).getPlayer(), e.getCurrentItem(), e.getWhoClicked().getWorld(), e.getWhoClicked().getLocation(), amount, HeadsPlus.getInstance().hapi.getSkullType(e.getCurrentItem()));
-                            } catch (NoSuchFieldException | IllegalAccessException e1) {
-                                e1.printStackTrace();
-                                return;
+                                Bukkit.getServer().getPluginManager().callEvent(event);
+                                if (!event.isCancelled()) {
+                                    e.setCurrentItem(HeadsPlus.getInstance().nms.addNBTTag(e.getCurrentItem()));
+                                    return;
+                                } else {
+                                    e.setCancelled(true);
+                                }
                             }
-                            Bukkit.getServer().getPluginManager().callEvent(event);
-                            if (!event.isCancelled()) {
-                                e.setCurrentItem(HeadsPlus.getInstance().nms.addNBTTag(e.getCurrentItem()));
-                                return;
-                            } else {
-                                e.setCancelled(true);
-                            }
+                            return;
                         }
-                        return;
-                    }
-                }
-
-		    }
-            if (e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
-                if(e.getSlot() == 0){
-                    if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
-                        e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
-                        e.setCancelled(true);
                     }
 
                 }
-            } else if (e.getInventory().getType().equals(InventoryType.CRAFTING)){
-                if (e.getRawSlot() == 0) {
-                    if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
-                        e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
-                        e.setCancelled(true);
+                if (e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
+                    if(e.getSlot() == 0){
+                        if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
+                            e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
+                            e.setCancelled(true);
+                        }
+
+                    }
+                } else if (e.getInventory().getType().equals(InventoryType.CRAFTING)){
+                    if (e.getRawSlot() == 0) {
+                        if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
+                            e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
+                            e.setCancelled(true);
+                        }
+                    }
+                }
+            } else {
+                if (e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
+                    if(e.getSlot() == 0){
+                        if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
+                            e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
+                            e.setCancelled(true);
+                        }
+
+                    }
+                } else if (e.getInventory().getType().equals(InventoryType.CRAFTING)){
+                    if (e.getRawSlot() == 0) {
+                        if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
+                            e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
+                            e.setCancelled(true);
+                        }
                     }
                 }
             }
-		} else {
-		    if (e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
-                if(e.getSlot() == 0){
-                    if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
-                        e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
-                        e.setCancelled(true);
-                    }
-
-                }
-            } else if (e.getInventory().getType().equals(InventoryType.CRAFTING)){
-		        if (e.getRawSlot() == 0) {
-                    if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
-                        e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
-                        e.setCancelled(true);
+        } catch (Exception ex) {
+            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                ex.printStackTrace();
+            }
+            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.create-debug-files")) {
+                Logger log = HeadsPlus.getInstance().getLogger();
+                log.severe("HeadsPlus has failed to fire this event. An error report has been made in /plugins/HeadsPlus/debug");
+                try {
+                    String s = new DebugFileCreator().createReport(ex, "Event (InventoryInteractEvent)");
+                    log.severe("Report name: " + s);
+                    log.severe("Please submit this report to the developer at one of the following links:");
+                    log.severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
+                    log.severe("https://discord.gg/nbT7wC2");
+                    log.severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
+                } catch (IOException e1) {
+                    if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                        e1.printStackTrace();
                     }
                 }
             }
-		}
+        }
+
 	}
 
 	private int shift(InventoryClickEvent e) {

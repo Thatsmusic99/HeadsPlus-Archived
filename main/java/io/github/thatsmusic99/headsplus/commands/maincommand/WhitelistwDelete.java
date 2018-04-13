@@ -5,56 +5,19 @@ import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
+import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class WhitelistwDelete implements IHeadsPlusCommand {
     private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
     private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
-
-    public void wlDel(CommandSender sender, String world) {
-        if (sender.hasPermission("headsplus.maincommand.whitelistw.delete")) {
-            if (world.matches("^[A-Za-z0-9_]+$")) {
-                try {
-                    config.options().copyDefaults(true);
-                    HeadsPlus.getInstance().saveConfig();
-                    File cfile = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
-                    if (!(cfile.exists())) {
-                        HeadsPlus.getInstance().log.info("[HeadsPlus] Config not found, creating!");
-                    }
-                    try {
-                        List<String> blacklist = config.getStringList("whitelistw");
-                        String rHead = world.toLowerCase();
-                        if (blacklist.contains(rHead)) {
-                            blacklist.remove(rHead);
-                            config.set("whitelistw", blacklist);
-                            config.options().copyDefaults(true);
-                            HeadsPlus.getInstance().saveConfig();
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("world-removed-wl").replaceAll("%w", world))));
-                        } else {
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("world-a-removed-wl"))));
-
-                        }} catch (Exception e) {
-                        HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove world from whitelist!");
-                        e.printStackTrace();
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wlw-fail"))));
-                    }
-                } catch (Exception e) {
-                    HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove world from whitelist!");
-                    e.printStackTrace();
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wlw-fail"))));
-                }
-            } else {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("alpha-names"))));
-            }
-        } else {
-            sender.sendMessage(new HeadsPlusCommand().noPerms);
-        }
-    }
 
     @Override
     public String getCmdName() {
@@ -88,43 +51,48 @@ public class WhitelistwDelete implements IHeadsPlusCommand {
 
     @Override
     public boolean fire(String[] args, CommandSender sender) {
-        if (args.length > 1) {
-            if (args[1].matches("^[A-Za-z0-9_]+$")) {
-                try {
-                    config.options().copyDefaults(true);
-                    HeadsPlus.getInstance().saveConfig();
-                    File cfile = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
-                    if (!(cfile.exists())) {
-                        HeadsPlus.getInstance().log.info("[HeadsPlus] Config not found, creating!");
+        try {
+            if (args.length > 1) {
+                if (args[1].matches("^[A-Za-z0-9_]+$")) {
+                    List<String> blacklist = config.getStringList("whitelistw");
+                    String rHead = args[1].toLowerCase();
+                    if (blacklist.contains(rHead)) {
+                        blacklist.remove(rHead);
+                        config.set("whitelistw", blacklist);
+                        config.options().copyDefaults(true);
+                        HeadsPlus.getInstance().saveConfig();
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("world-removed-wl").replaceAll("%w", args[1]))));
+                    } else {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("world-a-removed-wl"))));
                     }
-                    try {
-                        List<String> blacklist = config.getStringList("whitelistw");
-                        String rHead = args[1].toLowerCase();
-                        if (blacklist.contains(rHead)) {
-                            blacklist.remove(rHead);
-                            config.set("whitelistw", blacklist);
-                            config.options().copyDefaults(true);
-                            HeadsPlus.getInstance().saveConfig();
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("world-removed-wl").replaceAll("%w", args[1]))));
-                        } else {
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("world-a-removed-wl"))));
-
-                        }} catch (Exception e) {
-                        HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove world from whitelist!");
-                        e.printStackTrace();
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wlw-fail"))));
-                    }
-                } catch (Exception e) {
-                    HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to remove world from whitelist!");
-                    e.printStackTrace();
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wlw-fail"))));
+                } else {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("alpha-names"))));
                 }
             } else {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("alpha-names"))));
+                sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());
             }
-        } else {
-            sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());
+        } catch (Exception e) {
+            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                e.printStackTrace();
+            }
+            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.create-debug-files")) {
+                Logger log = HeadsPlus.getInstance().getLogger();
+                log.severe("HeadsPlus has failed to execute this command. An error report has been made in /plugins/HeadsPlus/debug");
+                try {
+                    String s = new DebugFileCreator().createReport(e, "Subcommand (whitelistwdel)");
+                    log.severe("Report name: " + s);
+                    log.severe("Please submit this report to the developer at one of the following links:");
+                    log.severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
+                    log.severe("https://discord.gg/nbT7wC2");
+                    log.severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
+                } catch (IOException e1) {
+                    if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                        e1.printStackTrace();
+                    }
+                }
+            }
         }
+
         return false;
     }
 }

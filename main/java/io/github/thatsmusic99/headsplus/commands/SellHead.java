@@ -1,10 +1,12 @@
 package io.github.thatsmusic99.headsplus.commands;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
@@ -12,6 +14,7 @@ import io.github.thatsmusic99.headsplus.api.SellHeadEvent;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
+import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -243,7 +246,25 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                 sender.sendMessage("[HeadsPlus] You must be a player to run this command!");
             }
         } catch (Exception e) {
-			e.printStackTrace();
+		    if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                e.printStackTrace();
+            }
+		    if (HeadsPlus.getInstance().getConfig().getBoolean("debug.create-debug-files")) {
+		        Logger log = HeadsPlus.getInstance().getLogger();
+		        log.severe("HeadsPlus has failed to execute this command. An error report has been made in /plugins/HeadsPlus/debug");
+		        try {
+		            String s = new DebugFileCreator().createReport(e, "Command (sellhead)");
+		            log.severe("Report name: " + s);
+		            log.severe("Please submit this report to the developer at one of the following links:");
+		            log.severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
+		            log.severe("https://discord.gg/nbT7wC2");
+		            log.severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
+		        } catch (IOException e1) {
+                    if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                        e1.printStackTrace();
+                    }
+		        }
+		    }
 		}
         return false;
 	}
@@ -264,7 +285,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 			p.getInventory().setItemInMainHand(i);
 		}
 	}
-	private void itemRemoval(Player p, String[] a, ItemStack i) {
+	private void itemRemoval(Player p, String[] a, ItemStack i) throws NoSuchFieldException, IllegalAccessException {
 		if (a.length > 0) { 
 			if (a[0].equalsIgnoreCase("all")) {
 				for (ItemStack is : p.getInventory()) {
@@ -355,7 +376,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 			setHand(p, new ItemStack(Material.AIR));
 		}
 	}
-	private double setPrice(Double p, String[] a, ItemStack i, Player pl) {
+	private double setPrice(Double p, String[] a, ItemStack i, Player pl) throws NoSuchFieldException, IllegalAccessException {
 		if (a.length > 0) { // More than one argument
 			if (!a[0].matches("^[0-9]+$")) { // More than one head
 				if (a[0].equalsIgnoreCase("all")) { // Sell everything
@@ -544,7 +565,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 	    }
 		return p;
 	}
-	private void sellAll(Player p, String[] a, ItemStack i) {
+	private void sellAll(Player p, String[] a, ItemStack i) throws NoSuchFieldException, IllegalAccessException {
 		Double price = 0.0;
 		for (ItemStack is : p.getInventory()) {
             if (is != null) {
@@ -570,7 +591,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 
 		pay(p, a, i, price);
 	}
-	private void pay(Player p, String[] a, ItemStack i, double pr) {
+	private void pay(Player p, String[] a, ItemStack i, double pr) throws NoSuchFieldException, IllegalAccessException {
 		Economy econ = HeadsPlus.getInstance().econ;
 		SellHeadEvent she = new SellHeadEvent(pr, soldHeads, p, econ.getBalance(p), econ.getBalance(p) + pr, hm);
 		Bukkit.getServer().getPluginManager().callEvent(she);
@@ -634,7 +655,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
         return false;
     }
 
-    private void a(ItemStack is, String key, String[] args, Player p) {
+    private void a(ItemStack is, String key, String[] args, Player p) throws NoSuchFieldException, IllegalAccessException {
         Double price = hpch.getConfig().getDouble(key + ".price");
         soldHeads.add(key);
         i(key, is.getAmount());
@@ -644,7 +665,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
         pay(p, args, is, price);
     }
 
-    private Double b(Double price, String key, List<String> ls, ItemStack i, Player p, String[] args, boolean e, boolean f) {
+    private Double b(Double price, String key, List<String> ls, ItemStack i, Player p, String[] args, boolean e, boolean f) throws NoSuchFieldException, IllegalAccessException {
         for (String l : ls) {
             if (hpchx.isHPXSkull(l)) {
                 GameProfile gm = h(i);
@@ -702,7 +723,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
         return p;
     }
 
-    private Double f(ItemStack i, SkullMeta sm, Double p, String s, String[] a, List<String> ls2) {
+    private Double f(ItemStack i, SkullMeta sm, Double p, String s, String[] a, List<String> ls2) throws NoSuchFieldException, IllegalAccessException {
         for (String aLs2 : ls2) {
 
             if (nms().getSkullOwnerName(sm).equalsIgnoreCase(aLs2)) {
@@ -743,20 +764,12 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
         return false;
     }
 
-    private GameProfile h(ItemStack i) {
-        Field pro = null;
-        try {
-            pro = ((SkullMeta) i.getItemMeta()).getClass().getDeclaredField("profile");
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
+    private GameProfile h(ItemStack i) throws NoSuchFieldException, IllegalAccessException {
+        Field pro;
+        pro = ((SkullMeta) i.getItemMeta()).getClass().getDeclaredField("profile");
         pro.setAccessible(true);
-        GameProfile gm = null;
-        try {
-            gm = (GameProfile) pro.get(i.getItemMeta());
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        GameProfile gm;
+        gm = (GameProfile) pro.get(i.getItemMeta());
         return gm;
     }
 

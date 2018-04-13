@@ -4,12 +4,15 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
+import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public class ProfileCommand implements IHeadsPlusCommand {
 
@@ -63,41 +66,52 @@ public class ProfileCommand implements IHeadsPlusCommand {
 
     @Override
     public boolean fire(String[] args, CommandSender cs) {
-        OfflinePlayer p;
-        if (args.length == 1) {
-            p = HeadsPlus.getInstance().nms.getOfflinePlayer(cs.getName());
-        } else {
-            p = HeadsPlus.getInstance().nms.getOfflinePlayer(args[1]);
-        }
-        if (cs instanceof Player) {
-            if (cs.getName().equalsIgnoreCase(p.getName())) {
-                try {
-                    cs.sendMessage(prof(p));
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+        try {
+            OfflinePlayer p;
+            if (args.length == 1) {
+                p = HeadsPlus.getInstance().nms.getOfflinePlayer(cs.getName());
             } else {
+                p = HeadsPlus.getInstance().nms.getOfflinePlayer(args[1]);
+            }
+            if (cs instanceof Player) {
+                if (cs.getName().equalsIgnoreCase(p.getName())) {
+                    cs.sendMessage(prof(p));
+                } else {
                     if (cs.hasPermission("headsplus.maincommand.profile.others")) {
-                        try {
-                            cs.sendMessage(prof(p));
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
+                        cs.sendMessage(prof(p));
                     } else {
                         cs.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlus.getInstance().hpc.getConfig().getString("no-perm"))));
                     }
                 }
             } else {
-                try {
-                    if (cs.getName().equalsIgnoreCase(p.getName())) {
-                        cs.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlus.getInstance().hpc.getConfig().getString("cant-view-data"))));
-                    } else {
-                        cs.sendMessage(prof(p));
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                if (cs.getName().equalsIgnoreCase(p.getName())) {
+                    cs.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlus.getInstance().hpc.getConfig().getString("cant-view-data"))));
+                } else {
+                    cs.sendMessage(prof(p));
                 }
             }
+        } catch (Exception e) {
+            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                e.printStackTrace();
+            }
+            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.create-debug-files")) {
+                Logger log = HeadsPlus.getInstance().getLogger();
+                log.severe("HeadsPlus has failed to execute this command. An error report has been made in /plugins/HeadsPlus/debug");
+                try {
+                    String s = new DebugFileCreator().createReport(e, "Subcommand (profile)");
+                    log.severe("Report name: " + s);
+                    log.severe("Please submit this report to the developer at one of the following links:");
+                    log.severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
+                    log.severe("https://discord.gg/nbT7wC2");
+                    log.severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
+                } catch (IOException e1) {
+                    if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                        e1.printStackTrace();
+                    }
+                }
+            }
+        }
+
 
         return false;
     }

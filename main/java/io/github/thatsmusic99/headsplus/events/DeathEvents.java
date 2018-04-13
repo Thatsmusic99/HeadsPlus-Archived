@@ -1,11 +1,14 @@
 package io.github.thatsmusic99.headsplus.events;
 
+import java.io.IOException;
 import java.util.*;
+import java.util.logging.Logger;
 
 import io.github.thatsmusic99.headsplus.api.EntityHeadDropEvent;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.api.PlayerHeadDropEvent;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
+import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -30,79 +33,124 @@ public class DeathEvents implements Listener {
 
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent e) {
-		if (!HeadsPlus.getInstance().drops) return;
-		if (ableEntities.contains(e.getEntityType())) {
-			if (e.getEntity().getKiller() != null) {
-				if (!HeadsPlus.getInstance().getConfig().getStringList("whitelistw").contains(e.getEntity().getWorld().getName())) {
-				    if (!e.getEntity().getKiller().hasPermission("headsplus.bypass.whitelistw")) {
-				        if (HeadsPlus.getInstance().getConfig().getBoolean("whitelistwOn")) {
-				            return;
+	    try {
+	        if (!HeadsPlus.getInstance().drops) return;
+            if (ableEntities.contains(e.getEntityType())) {
+                if (e.getEntity().getKiller() != null) {
+                    if (!HeadsPlus.getInstance().getConfig().getStringList("whitelistw").contains(e.getEntity().getWorld().getName())) {
+                        if (!e.getEntity().getKiller().hasPermission("headsplus.bypass.whitelistw")) {
+                            if (HeadsPlus.getInstance().getConfig().getBoolean("whitelistwOn")) {
+                                return;
+                            }
                         }
                     }
-                }
-			    if (!HeadsPlus.getInstance().getConfig().getStringList("blacklistw").contains(e.getEntity().getWorld().getName()) || e.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn")) {
-		            String entity = e.getEntityType().toString().toLowerCase().replaceAll("_", "");
-		            Random rand = new Random();
-		            double chance1 = hpch.getConfig().getDouble(entity + ".chance");
-		            double chance2 = (double) rand.nextInt(100);
-		            if (chance1 == 0.0) return;
-		            if (chance2 <= chance1) {
-		                if (entity.equalsIgnoreCase("sheep")) {
-                            dropHead(e.getEntity(), e.getEntity().getKiller());
-                        } else {
-                            if (hpch.getConfig().getStringList(entity + ".name").isEmpty()) return;
-                            dropHead(e.getEntity(), e.getEntity().getKiller());
+                    if (!HeadsPlus.getInstance().getConfig().getStringList("blacklistw").contains(e.getEntity().getWorld().getName()) || e.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn")) {
+                        String entity = e.getEntityType().toString().toLowerCase().replaceAll("_", "");
+                        Random rand = new Random();
+                        double chance1 = hpch.getConfig().getDouble(entity + ".chance");
+                        double chance2 = (double) rand.nextInt(100);
+                        if (chance1 == 0.0) return;
+                        if (chance2 <= chance1) {
+                            if (entity.equalsIgnoreCase("sheep")) {
+                                dropHead(e.getEntity(), e.getEntity().getKiller());
+                            } else {
+                                if (hpch.getConfig().getStringList(entity + ".name").isEmpty()) return;
+                                dropHead(e.getEntity(), e.getEntity().getKiller());
+                            }
                         }
-                    }
-		       }
-		    }
-		}
-	} 
-	@EventHandler
-	public void onPlayerDeath(PlayerDeathEvent ep) {
-        if (!HeadsPlus.getInstance().drops) return;
-        if (ep.getEntity().getKiller() != null) {
-            if (!HeadsPlus.getInstance().getConfig().getStringList("whitelistw").contains(ep.getEntity().getWorld().getName())) {
-                if (!ep.getEntity().getKiller().hasPermission("headsplus.bypass.whitelistw")) {
-                    if (HeadsPlus.getInstance().getConfig().getBoolean("whitelistwOn")) {
-                        return;
                     }
                 }
             }
-            if (!HeadsPlus.getInstance().getConfig().getStringList("blacklistw").contains(ep.getEntity().getWorld().getName()) || ep.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn")) {
-            Random rand = new Random();
-            double chance1 = hpch.getConfig().getDouble("player.chance");
-            double chance2 = (double) rand.nextInt(100);
-            if (chance1 == 0.0) return;
-            if (chance2 <= chance1) {
-                ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-                SkullMeta headM = (SkullMeta) head.getItemMeta();
-                HeadsPlus.getInstance().nms.setSkullOwner(ep.getEntity(), headM);
-                headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getConfig().getString("player.display-name").replaceAll("%d", ep.getEntity().getName())));
-                if ((HeadsPlus.getInstance().sellable) && (ep.getEntity().getKiller().hasPermission("headsplus.sellhead"))) {
-                    if (HeadsPlus.getInstance().getConfig().getBoolean("use-lore")) {
-                        List<String> ls = new ArrayList<>();
-                        for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
-                            ls.add(ChatColor.translateAlternateColorCodes('&', str));
-                        }
-                        headM.setLore(ls);
+        } catch (Exception ex) {
+	        if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                ex.printStackTrace();
+            }
+            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.create-debug-files")) {
+                Logger log = HeadsPlus.getInstance().getLogger();
+                log.severe("HeadsPlus has failed to fire this event. An error report has been made in /plugins/HeadsPlus/debug");
+                try {
+                    String s = new DebugFileCreator().createReport(ex, "Event (EntityDeathEvent)");
+                    log.severe("Report name: " + s);
+                    log.severe("Please submit this report to the developer at one of the following links:");
+                    log.severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
+                    log.severe("https://discord.gg/nbT7wC2");
+                    log.severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
+                } catch (IOException e1) {
+                    if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                        e1.printStackTrace();
                     }
-                }
-                head.setItemMeta(headM);
-                HeadsPlus.getInstance().nms.addNBTTag(head);
-                Location entityLoc = ep.getEntity().getLocation();
-                double entityLocY = entityLoc.getY() + 1;
-                entityLoc.setY(entityLocY);
-                World world = ep.getEntity().getWorld();
-                head = HeadsPlus.getInstance().nms.addNBTTag(head);
-                PlayerHeadDropEvent event = new PlayerHeadDropEvent(ep.getEntity(), ep.getEntity().getKiller(), head, world, entityLoc);
-                Bukkit.getServer().getPluginManager().callEvent(event);
-                if (!event.isCancelled()) {
-                    world.dropItem(event.getLocation(), event.getSkull());
                 }
             }
         }
-    }
+
+	} 
+	@EventHandler
+	public void onPlayerDeath(PlayerDeathEvent ep) {
+	    try {
+            if (!HeadsPlus.getInstance().drops) return;
+            if (ep.getEntity().getKiller() != null) {
+                if (!HeadsPlus.getInstance().getConfig().getStringList("whitelistw").contains(ep.getEntity().getWorld().getName())) {
+                    if (!ep.getEntity().getKiller().hasPermission("headsplus.bypass.whitelistw")) {
+                        if (HeadsPlus.getInstance().getConfig().getBoolean("whitelistwOn")) {
+                            return;
+                        }
+                    }
+                }
+                if (!HeadsPlus.getInstance().getConfig().getStringList("blacklistw").contains(ep.getEntity().getWorld().getName()) || ep.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn")) {
+                    Random rand = new Random();
+                    double chance1 = hpch.getConfig().getDouble("player.chance");
+                    double chance2 = (double) rand.nextInt(100);
+                    if (chance1 == 0.0) return;
+                    if (chance2 <= chance1) {
+                        ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+                        SkullMeta headM = (SkullMeta) head.getItemMeta();
+                        HeadsPlus.getInstance().nms.setSkullOwner(ep.getEntity(), headM);
+                        headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getConfig().getString("player.display-name").replaceAll("%d", ep.getEntity().getName())));
+                        if ((HeadsPlus.getInstance().sellable) && (ep.getEntity().getKiller().hasPermission("headsplus.sellhead"))) {
+                            if (HeadsPlus.getInstance().getConfig().getBoolean("use-lore")) {
+                                List<String> ls = new ArrayList<>();
+                                for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
+                                    ls.add(ChatColor.translateAlternateColorCodes('&', str));
+                                }
+                                headM.setLore(ls);
+                            }
+                        }
+                        head.setItemMeta(headM);
+                        HeadsPlus.getInstance().nms.addNBTTag(head);
+                        Location entityLoc = ep.getEntity().getLocation();
+                        double entityLocY = entityLoc.getY() + 1;
+                        entityLoc.setY(entityLocY);
+                        World world = ep.getEntity().getWorld();
+                        head = HeadsPlus.getInstance().nms.addNBTTag(head);
+                        PlayerHeadDropEvent event = new PlayerHeadDropEvent(ep.getEntity(), ep.getEntity().getKiller(), head, world, entityLoc);
+                        Bukkit.getServer().getPluginManager().callEvent(event);
+                        if (!event.isCancelled()) {
+                            world.dropItem(event.getLocation(), event.getSkull());
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+	        if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                e.printStackTrace();
+            }
+            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.create-debug-files")) {
+                Logger log = HeadsPlus.getInstance().getLogger();
+                log.severe("HeadsPlus has failed to fire this event. An error report has been made in /plugins/HeadsPlus/debug");
+                try {
+                    String s = new DebugFileCreator().createReport(e, "Event (PlayerDeathEvent)");
+                    log.severe("Report name: " + s);
+                    log.severe("Please submit this report to the developer at one of the following links:");
+                    log.severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
+                    log.severe("https://discord.gg/nbT7wC2");
+                    log.severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
+                } catch (IOException e1) {
+                    if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                        e1.printStackTrace();
+                    }
+                }
+            }
+        }
 	}
 
 	public void createList() {
@@ -134,7 +182,7 @@ public class DeathEvents implements Listener {
         return null;
     }
 
-    private void dropHead(Entity e, Player k) {
+    private void dropHead(Entity e, Player k) throws NoSuchFieldException, IllegalAccessException {
 	    Random r = new Random();
 	    int thing;
 	    String s;

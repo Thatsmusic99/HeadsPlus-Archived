@@ -52,20 +52,19 @@ public class HeadsPlusLeaderboards extends ConfigSettings {
             getConfig().options().copyDefaults(true);
             save();
         } catch (Exception e) {
-            e.printStackTrace();
+            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                e.printStackTrace();
+            }
         }
     }
 
     @Deprecated
-    private void addPlayer(Player p, String section) {
+    private void addPlayer(Player p, String section) throws SQLException {
         if (HeadsPlus.getInstance().con) {
             Connection c = HeadsPlus.getInstance().connection;
-            Statement s = null;
-            try {
-                s = c.createStatement();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            Statement s;
+            s = c.createStatement();
+
             StringBuilder sb2 = new StringBuilder();
             sb2.append("INSERT INTO `headspluslb` (uuid, total");
             for (EntityType e : de.ableEntities) {
@@ -76,11 +75,7 @@ public class HeadsPlusLeaderboards extends ConfigSettings {
                 sb2.append(", 0");
             }
             sb2.append(")");
-            try {
-                s.executeUpdate(sb2.toString());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            s.executeUpdate(sb2.toString());
         } else {
             getConfig().addDefault("player-data." + p.getUniqueId().toString() + ".total", 0);
             getConfig().addDefault("player-data." + p.getUniqueId().toString() + "." + section, 0);
@@ -96,13 +91,9 @@ public class HeadsPlusLeaderboards extends ConfigSettings {
     public void addNewPlayerValue(Player p, String section) throws SQLException {
         if (HeadsPlus.getInstance().con) {
             Connection c = HeadsPlus.getInstance().connection;
-            Statement s = null;
+            Statement s;
             ResultSet rs;
-            try {
-                s = c.createStatement();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            s = c.createStatement();
             try {
                 rs = s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='" + p.getUniqueId().toString() + "'");
                 Integer.parseInt(rs.getString(section));
@@ -166,7 +157,7 @@ public class HeadsPlusLeaderboards extends ConfigSettings {
     }
 
     @Deprecated
-    public void addOntoValue(Player p, String section) {
+    public void addOntoValue(Player p, String section) throws SQLException {
         if (HeadsPlus.getInstance().con) {
             try {
                 Connection c = HeadsPlus.getInstance().connection;
@@ -194,11 +185,7 @@ public class HeadsPlusLeaderboards extends ConfigSettings {
                 val2++;
                 s.executeUpdate("UPDATE `headspluslb` SET `total`='" + val2 + "' WHERE `uuid`='server-total'");
             } catch (SQLException e) {
-                try {
-                    addNewPlayerValue(p, section);
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
+                addNewPlayerValue(p, section);
             }
 
         } else {
@@ -293,17 +280,12 @@ public class HeadsPlusLeaderboards extends ConfigSettings {
         return sortedMap;
     }
     @Deprecated
-    public boolean addPlayerOnFileIfNotFound(Player p, String section) {
+    public boolean addPlayerOnFileIfNotFound(Player p, String section) throws SQLException {
         if (HeadsPlus.getInstance().con) {
             Connection c = HeadsPlus.getInstance().connection;
-            Statement s = null;
+            Statement s;
+            s = c.createStatement();
             try {
-                s = c.createStatement();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-
                 s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='" + p.getUniqueId() + "'");
                 return true;
             } catch (SQLException ex) {
@@ -317,11 +299,7 @@ public class HeadsPlusLeaderboards extends ConfigSettings {
                     sb2.append(", 0");
                 }
                 sb2.append(")");
-                try {
-                    s.executeUpdate(sb2.toString());
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                s.executeUpdate(sb2.toString());
                 addOntoValue(p, section);
                 return false;
             }
@@ -343,15 +321,11 @@ public class HeadsPlusLeaderboards extends ConfigSettings {
     }
 
     @Deprecated
-    public boolean addSectionOnFileIfNotFound(Player p, String section) {
+    public boolean addSectionOnFileIfNotFound(Player p, String section) throws SQLException {
         if (HeadsPlus.getInstance().con) {
             Connection c = HeadsPlus.getInstance().connection;
-            Statement s = null;
-            try {
-                s = c.createStatement();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            Statement s;
+            s = c.createStatement();
             try {
 
                 s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='" + p.getUniqueId() + "'");
@@ -367,11 +341,7 @@ public class HeadsPlusLeaderboards extends ConfigSettings {
                     sb2.append(", 0");
                 }
                 sb2.append(")");
-                try {
-                    s.executeUpdate(sb2.toString());
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                s.executeUpdate(sb2.toString());
                 addOntoValue(p, section);
                 return false;
             }
@@ -385,11 +355,7 @@ public class HeadsPlusLeaderboards extends ConfigSettings {
                     return false;
                 }
             } catch (Exception ex) {
-                try {
-                    addNewPlayerValue(p, section);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                addNewPlayerValue(p, section);
                 return false;
             }
         }

@@ -2,12 +2,16 @@ package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
+import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
+
+import java.io.IOException;
+import java.util.logging.Logger;
 
 public class BlacklistToggle implements IHeadsPlusCommand {
 	
@@ -46,48 +50,65 @@ public class BlacklistToggle implements IHeadsPlusCommand {
 
 	@Override
 	public boolean fire(String[] args, CommandSender sender) {
-		if (args.length == 1) {
-			try {
-				if (config.getBoolean("blacklistOn")) {
-					config.set("blacklistOn", false);
-					config.options().copyDefaults(true);
-					HeadsPlus.getInstance().saveConfig();
-					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("bl-off"))));
-				} else if (!config.getBoolean("blacklistOn")) {
-					config.set("blacklistOn", true);
-					config.options().copyDefaults(true);
-					HeadsPlus.getInstance().saveConfig();
-					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("bl-on"))));
-				}
-			} catch (Exception e) {
-				HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to toggle blacklist!");
-				e.printStackTrace();
-				sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("bl-fail"))));
-			}
-		} else {
-            if (args[1].equalsIgnoreCase("on")) {
-                if (!config.getBoolean("blacklistOn")) {
-                    config.set("blacklistOn", true);
-                    config.options().copyDefaults(true);
-                    HeadsPlus.getInstance().saveConfig();
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("bl-on"))));
-                } else {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("bl-a-on"))));
-                }
+		try {
+			if (args.length == 1) {
+			    if (config.getBoolean("blacklistOn")) {
+			        config.set("blacklistOn", false);
+			        config.options().copyDefaults(true);
+			        HeadsPlus.getInstance().saveConfig();
+			        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("bl-off"))));
+			    } else if (!config.getBoolean("blacklistOn")) {
+			        config.set("blacklistOn", true);
+			        config.options().copyDefaults(true);
+			        HeadsPlus.getInstance().saveConfig();
+			        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("bl-on"))));
+			    }
+			} else {
+				if (args[1].equalsIgnoreCase("on")) {
+					if (!config.getBoolean("blacklistOn")) {
+						config.set("blacklistOn", true);
+						config.options().copyDefaults(true);
+						HeadsPlus.getInstance().saveConfig();
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("bl-on"))));
+					} else {
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("bl-a-on"))));
+					}
 
-            } else if (args[1].equalsIgnoreCase("off")) {
-                    if (config.getBoolean("blacklistOn")) {
-                        config.set("blacklistOn", false);
-                        config.options().copyDefaults(true);
-                        HeadsPlus.getInstance().saveConfig();
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("bl-off"))));
-                    } else {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("bl-a-off"))));
-                    }
-            } else {
-                sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());
+				} else if (args[1].equalsIgnoreCase("off")) {
+					if (config.getBoolean("blacklistOn")) {
+						config.set("blacklistOn", false);
+						config.options().copyDefaults(true);
+						HeadsPlus.getInstance().saveConfig();
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("bl-off"))));
+					} else {
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("bl-a-off"))));
+					}
+				} else {
+					sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());
+				}
+			}
+		} catch (Exception e) {
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("bl-fail"))));
+            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                e.printStackTrace();
             }
-        }
+            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.create-debug-files")) {
+				Logger log = HeadsPlus.getInstance().getLogger();
+				log.severe("HeadsPlus has failed to execute this command. An error report has been made in /plugins/HeadsPlus/debug");
+				try {
+					String s = new DebugFileCreator().createReport(e, "Subcommand (blacklist)");
+					log.severe("Report name: " + s);
+					log.severe("Please submit this report to the developer at one of the following links:");
+					log.severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
+					log.severe("https://discord.gg/nbT7wC2");
+					log.severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
+				} catch (IOException e1) {
+					if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                        e1.printStackTrace();
+					}
+				}
+			}
+		}
         return true;
 	}
 }

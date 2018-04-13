@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.commands;
 
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
+import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -10,8 +11,10 @@ import org.bukkit.inventory.meta.SkullMeta;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -132,69 +135,92 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
 
     @Override
     public boolean fire(String[] args, CommandSender sender) {
-        if (sender instanceof Player){
-            if (sender.hasPermission("headsplus.head")) {
-                if (args.length == 0) {
-                    sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());
-                    return true;
-                }
-                if ((args.length == 1) && !(args[0].matches("^[A-Za-z0-9_]+$"))) {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("alpha-names"))));
-                    return true;
-                }
-                if (args.length > 2) {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("too-many-args"))));
-                    sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());
-                    return true;
-                }
-                if (args[0].length() > 16) {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("head-too-long"))));
-                    return true;
-                }
-                if (args[0].length() < 3) {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("too-short-head"))));
-                    return true;
-                }
-                if (args.length == 2) {
-                    if (sender.hasPermission("headsplus.head.others")) {
-                        if (HeadsPlus.getInstance().nms.getPlayer(args[0]) != null) {
-                            if (args[1].matches("^[A-Za-z0-9_]+$") && (3 < args[1].length()) && (args[1].length() < 16)) {
-                                String[] s = new String[2];
-                                s[0] = args[1];
-                                s[1] = args[0];
-                                giveH(s, (Player) sender, HeadsPlus.getInstance().nms.getPlayer(args[0]));
-                                return true;
-                            } else if (!args[1].matches("^[A-Za-z0-9_]+$")) {
-                                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("alpha-names"))));
-                                return true;
-                            } else if (args[1].length() < 3) {
-                                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("too-short-head"))));
-                                return true;
+	    try {
+            if (sender instanceof Player){
+                if (sender.hasPermission("headsplus.head")) {
+                    if (args.length == 0) {
+                        sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());
+                        return true;
+                    }
+                    if ((args.length == 1) && !(args[0].matches("^[A-Za-z0-9_]+$"))) {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("alpha-names"))));
+                        return true;
+                    }
+                    if (args.length > 2) {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("too-many-args"))));
+                        sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());
+                        return true;
+                    }
+                    if (args[0].length() > 16) {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("head-too-long"))));
+                        return true;
+                    }
+                    if (args[0].length() < 3) {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("too-short-head"))));
+                        return true;
+                    }
+                    if (args.length == 2) {
+                        if (sender.hasPermission("headsplus.head.others")) {
+                            if (HeadsPlus.getInstance().nms.getPlayer(args[0]) != null) {
+                                if (args[1].matches("^[A-Za-z0-9_]+$") && (3 < args[1].length()) && (args[1].length() < 16)) {
+                                    String[] s = new String[2];
+                                    s[0] = args[1];
+                                    s[1] = args[0];
+                                    giveH(s, (Player) sender, HeadsPlus.getInstance().nms.getPlayer(args[0]));
+                                    return true;
+                                } else if (!args[1].matches("^[A-Za-z0-9_]+$")) {
+                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("alpha-names"))));
+                                    return true;
+                                } else if (args[1].length() < 3) {
+                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("too-short-head"))));
+                                    return true;
+                                } else {
+                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("head-too-long"))));
+                                    return true;
+                                }
                             } else {
-                                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("head-too-long"))));
+                                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("player-offline"))));
                                 return true;
                             }
                         } else {
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("player-offline"))));
-                            return true;
+                            sender.sendMessage(new HeadsPlusCommand().noPerms);
+                            return false;
                         }
-                    } else {
-                        sender.sendMessage(new HeadsPlusCommand().noPerms);
-                        return false;
                     }
-                }
-                if (args[0].matches("^[A-Za-z0-9_]+$") && (3 < args[0].length()) && (args[0].length() < 16)) {
-                    giveH(args, (Player) sender, (Player) sender);
-                    return true;
+                    if (args[0].matches("^[A-Za-z0-9_]+$") && (3 < args[0].length()) && (args[0].length() < 16)) {
+                        giveH(args, (Player) sender, (Player) sender);
+                        return true;
+                    }
+                } else {
+                    sender.sendMessage(new HeadsPlusCommand().noPerms);
+                    return false;
                 }
             } else {
-                sender.sendMessage(new HeadsPlusCommand().noPerms);
+                sender.sendMessage(ChatColor.RED + "You must be a player to run this command!");
                 return false;
             }
-        } else {
-            sender.sendMessage(ChatColor.RED + "You must be a player to run this command!");
-            return false;
+        } catch (Exception e) {
+	        if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                e.printStackTrace();
+            }
+            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.create-debug-files")) {
+                Logger log = HeadsPlus.getInstance().getLogger();
+                log.severe("HeadsPlus has failed to execute this command. An error report has been made in /plugins/HeadsPlus/debug");
+                try {
+                    String s = new DebugFileCreator().createReport(e, "Command (head)");
+                    log.severe("Report name: " + s);
+                    log.severe("Please submit this report to the developer at one of the following links:");
+                    log.severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
+                    log.severe("https://discord.gg/nbT7wC2");
+                    log.severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
+                } catch (IOException e1) {
+                    if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                        e1.printStackTrace();
+                    }
+                }
+            }
         }
+
         return false;
     }
 }

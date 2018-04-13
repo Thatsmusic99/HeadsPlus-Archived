@@ -4,6 +4,7 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.events.DeathEvents;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
+import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import io.github.thatsmusic99.headsplus.util.PagedHashmaps;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
@@ -13,8 +14,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class LeaderboardsCommand implements CommandExecutor, IHeadsPlusCommand {
 
@@ -23,65 +26,85 @@ public class LeaderboardsCommand implements CommandExecutor, IHeadsPlusCommand {
 
     @Override
     public boolean onCommand(CommandSender cs, Command command, String s, String[] args) {
-        if (cs.hasPermission("headsplus.leaderboards")) {
-            if (args.length > 0) {
-                try {
-                    if (new DeathEvents().ableEntities.contains(EntityType.valueOf(args[0].toUpperCase()))) {
-                        if (args.length > 1) {
-                            if (args[1].matches("^[0-9]+$")) {
-                                cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1])));
+        try {
+            if (cs.hasPermission("headsplus.leaderboards")) {
+                if (args.length > 0) {
+                    try {
+                        if (new DeathEvents().ableEntities.contains(EntityType.valueOf(args[0].toUpperCase()))) {
+                            if (args.length > 1) {
+                                if (args[1].matches("^[0-9]+$")) {
+                                    cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1])));
+                                }
+                            } else {
+                                cs.sendMessage(getLeaderboard(args[0], 1));
                             }
-                        } else {
-                            cs.sendMessage(getLeaderboard(args[0], 1));
+                        } else if (args[0].equalsIgnoreCase("player")) {
+                            if (args.length > 1) {
+                                if (args[1].matches("^[0-9]+$")) {
+                                    cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1])));
+                                }
+                            } else {
+                                cs.sendMessage(getLeaderboard(args[0], 1));
+                            }
                         }
-                    } else if (args[0].equalsIgnoreCase("player")) {
-                        if (args.length > 1) {
-                            if (args[1].matches("^[0-9]+$")) {
-                                cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1])));
+                    } catch (IllegalArgumentException ex) {
+                        if (args[0].equalsIgnoreCase("total")) {
+                            if (args.length > 1) {
+                                if (args[1].matches("^[0-9]+$")) {
+                                    cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1])));
+                                }
+                            } else {
+                                cs.sendMessage(getLeaderboard(args[0], 1));
+                            }
+                        } else if (args[0].matches("^[0-9]+$")) {
+                            cs.sendMessage(getLeaderboard("total", Integer.parseInt(args[0])));
+                        } else if (args[0].equalsIgnoreCase("player")) {
+                            if (args.length > 1) {
+                                if (args[1].matches("^[0-9]+$")) {
+                                    cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1])));
+                                }
+                            } else {
+                                cs.sendMessage(getLeaderboard(args[0], 1));
                             }
                         } else {
-                            cs.sendMessage(getLeaderboard(args[0], 1));
+                            cs.sendMessage(HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', hpc.getConfig().getString("invalid-args"))));
                         }
                     }
-                } catch (IllegalArgumentException ex) {
-                    if (args[0].equalsIgnoreCase("total")) {
-                        if (args.length > 1) {
-                            if (args[1].matches("^[0-9]+$")) {
-                                cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1])));
-                            }
-                        } else {
-                            cs.sendMessage(getLeaderboard(args[0], 1));
-                        }
-                    } else if (args[0].matches("^[0-9]+$")) {
-                        cs.sendMessage(getLeaderboard("total", Integer.parseInt(args[0])));
-                    } else if (args[0].equalsIgnoreCase("player")) {
-                        if (args.length > 1) {
-                            if (args[1].matches("^[0-9]+$")) {
-                                cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1])));
-                            }
-                        } else {
-                            cs.sendMessage(getLeaderboard(args[0], 1));
-                        }
-                    } else {
-                        cs.sendMessage(HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', hpc.getConfig().getString("invalid-args"))));
+
+                } else {
+                    cs.sendMessage(getLeaderboard("total", 1));
+                }
+            }
+        } catch (Exception e) {
+            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                e.printStackTrace();
+            }
+            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.create-debug-files")) {
+                Logger log = HeadsPlus.getInstance().getLogger();
+                log.severe("HeadsPlus has failed to execute this command. An error report has been made in /plugins/HeadsPlus/debug");
+                try {
+                    String st = new DebugFileCreator().createReport(e, "Command (leaderboards)");
+                    log.severe("Report name: " + st);
+                    log.severe("Please submit this report to the developer at one of the following links:");
+                    log.severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
+                    log.severe("https://discord.gg/nbT7wC2");
+                    log.severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
+                } catch (IOException e1) {
+                    if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                        e1.printStackTrace();
                     }
                 }
-
-            } else {
-                cs.sendMessage(getLeaderboard("total", 1));
             }
         }
+
         return false;
     }
 
-    private String getLeaderboard(String sec, int page) {
+    private String getLeaderboard(String sec, int page) throws SQLException {
         try {
             StringBuilder sb = new StringBuilder();
-            try {
-                ph = new PagedHashmaps(HeadsPlus.getInstance().mySQLAPI.getScores(sec, "headspluslb"), 8);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            ph = new PagedHashmaps(HeadsPlus.getInstance().mySQLAPI.getScores(sec, "headspluslb"), 8);
+
             sb.append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1"))).append("=======").append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2"))).append(" HeadsPlus Leaderboards: ").append(WordUtils.capitalize(sec)).append(" ").append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3"))).append(page).append("/").append(String.valueOf(ph.getTotalPages())).append(" ").append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1"))).append("=======");
             Set<Object> it = ph.getContentsInPage(page).keySet();
             Collection<Object> it2 = ph.getContentsInPage(page).values();

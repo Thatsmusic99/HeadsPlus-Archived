@@ -36,6 +36,9 @@ theme: classic
 pTheme: classic
 gui-glass-color: SILVER
 challenges: true
+debug:
+  create-debug-files: true
+  print-stacktraces-in-console: true
 use-lore: false
 lore:
 - '&6&lThis head can be sold!'

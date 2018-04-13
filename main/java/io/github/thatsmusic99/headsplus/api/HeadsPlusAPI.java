@@ -23,7 +23,7 @@ public class HeadsPlusAPI {
     private final HeadsPlusConfigHeadsX hpcHeadsX = HeadsPlus.getInstance().hpchx;
     private final HeadsPlusConfigHeads hpcHeads = HeadsPlus.getInstance().hpch;
 
-    public ItemStack getHead(String option) {
+    public ItemStack getHead(String option) throws NoSuchFieldException, IllegalAccessException {
         return hpcHeadsX.getSkull(option);
     }
 
@@ -128,13 +128,17 @@ public class HeadsPlusAPI {
         try {
             profileField = sm.getClass().getDeclaredField("profile");
         } catch (NoSuchFieldException | SecurityException e) {
-            e.printStackTrace();
+            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                e.printStackTrace();
+            }
         }
         profileField.setAccessible(true);
         try {
             profileField.set(sm, gm);
         } catch (IllegalArgumentException | IllegalAccessException e) {
-            e.printStackTrace();
+            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                e.printStackTrace();
+            }
         }
         sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', displayname));
         return s;

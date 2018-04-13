@@ -39,7 +39,9 @@ public class ConfigSettings {
         try {
             config.save(configF);
         } catch (IOException e) {
-            e.printStackTrace();
+            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                e.printStackTrace();
+            }
         }
     }
 

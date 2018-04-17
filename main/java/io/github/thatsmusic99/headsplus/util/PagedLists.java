@@ -41,7 +41,7 @@ public class PagedLists<T> {
         return currentPage;
     }
 
-    public List<T> getList() {
+    private List<T> getList() {
         return list;
     }
 
@@ -62,7 +62,7 @@ public class PagedLists<T> {
         this.currentPage = page;
     }
 
-    public int getContentsPerPage() {
+    private int getContentsPerPage() {
         return contentsPerPage;
     }
 

@@ -1,6 +1,8 @@
 package io.github.thatsmusic99.headsplus.config;
 
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
 
 public class HeadsPlusConfig extends ConfigSettings {
 
@@ -176,5 +178,21 @@ public class HeadsPlusConfig extends ConfigSettings {
 		getConfig().options().copyDefaults(true);
 		save();
 	}
+
+	public String getString(String path) {
+	    String str = getConfig().getString(path);
+	    str = str.replaceAll("%h", getConfig().getString("prefix"));
+	    str = str.replaceAll("''", "'");
+	    str = str.replaceAll("^'", "");
+	    str = str.replaceAll("'$", "");
+	    str = ChatColor.translateAlternateColorCodes('&', str);
+        return str;
+    }
+
+    @Override
+    @Deprecated
+    public FileConfiguration getConfig() {
+	    return config;
+    }
 
 }

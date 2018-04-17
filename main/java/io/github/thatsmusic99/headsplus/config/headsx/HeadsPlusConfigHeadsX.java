@@ -112,7 +112,7 @@ public class HeadsPlusConfigHeadsX extends ConfigSettings {
         save();
         s = false;
     }
-    public void headsxEnable() {
+    private void headsxEnable() {
         reloadC(false);
        // if (s) {
       //      loadHeadsX();

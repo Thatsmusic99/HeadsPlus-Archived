@@ -39,6 +39,11 @@ public class Info implements IHeadsPlusCommand {
 	}
 
 	@Override
+	public boolean isCorrectUsage(String[] args, CommandSender sender) {
+		return true;
+	}
+
+	@Override
 	public boolean isMainCommand() {
 		return true;
 	}
@@ -46,8 +51,8 @@ public class Info implements IHeadsPlusCommand {
 	@Override
 	public boolean fire(String[] args, CommandSender sender) {
 		try {
-            String version = HeadsPlus.getInstance().version;
-            String author = HeadsPlus.getInstance().author;
+            String version = HeadsPlus.getInstance().getVersion();
+            String author = HeadsPlus.getInstance().getAuthor();
             sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + "HeadsPlus" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============");
             sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + LocaleManager.getLocale().versionWord() + " " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + version);
             sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + LocaleManager.getLocale().author() + " " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + author);

@@ -35,6 +35,16 @@ public class DebugPrint implements IHeadsPlusCommand {
     }
 
     @Override
+    public boolean isCorrectUsage(String[] args, CommandSender sender) {
+        if (args.length > 1) {
+            if (args[1].equalsIgnoreCase("dump")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public boolean isMainCommand() {
         return true;
     }

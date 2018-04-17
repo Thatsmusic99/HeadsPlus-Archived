@@ -7,7 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -17,8 +16,8 @@ import java.util.List;
 
 public class RecipeEnumUser {
 	
-	private final FileConfiguration crafting = HeadsPlus.getInstance().hpcr.getConfig();
-	private final FileConfiguration heads = HeadsPlus.getInstance().hpch.getConfig();
+	private final FileConfiguration crafting = HeadsPlus.getInstance().getCraftingConfig().getConfig();
+	private final FileConfiguration heads = HeadsPlus.getInstance().getHeadsConfig().getConfig();
 	private static List<ShapelessRecipe> recipes = new ArrayList<>();
 
 	public RecipeEnumUser() {
@@ -26,7 +25,7 @@ public class RecipeEnumUser {
     }
 
 	private void addEnumToConfig() {
-	    NMSManager nms = HeadsPlus.getInstance().nms;
+	    NMSManager nms = HeadsPlus.getInstance().getNMS();
 	    for (RecipeEnums key : RecipeEnums.values()) {
 	        ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 	        SkullMeta im = (SkullMeta) i.getItemMeta();
@@ -81,7 +80,7 @@ public class RecipeEnumUser {
 	        ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 	        SkullMeta im = (SkullMeta) i.getItemMeta();
 	        if (!(heads.getString(key.str + ".display-name").equals("")) && !(heads.getStringList(key.str + ".name").isEmpty())) {
-	            im.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(heads.getString(key.str + ".display-name"))));
+	            im.setDisplayName(ChatColor.translateAlternateColorCodes('&', heads.getString(key.str + ".display-name")));
 
 	            nms.setSkullOwner(nms.getOfflinePlayer(heads.getStringList(key.str + ".name").get(0)), im);
 	            i.setItemMeta(im);
@@ -113,9 +112,5 @@ public class RecipeEnumUser {
 	            }
 	        }
 	    }
-	}
-
-	public static List<ShapelessRecipe> getRecipes() {
-		return recipes;
 	}
 }

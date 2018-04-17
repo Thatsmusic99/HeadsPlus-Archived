@@ -18,7 +18,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 public class BlacklistwDelete implements IHeadsPlusCommand {
 	
 	private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
-	private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+	private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
 	@Override
 	public String getCmdName() {
@@ -46,6 +46,11 @@ public class BlacklistwDelete implements IHeadsPlusCommand {
 	}
 
 	@Override
+	public boolean isCorrectUsage(String[] args, CommandSender sender) {
+		return false;
+	}
+
+	@Override
 	public boolean isMainCommand() {
 		return true;
 	}
@@ -58,7 +63,7 @@ public class BlacklistwDelete implements IHeadsPlusCommand {
                 HeadsPlus.getInstance().saveConfig();
                 File cfile = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
                 if (!(cfile.exists())) {
-                    HeadsPlus.getInstance().log.info("[HeadsPlus] Config not found, creating!");
+                    HeadsPlus.getInstance().getLogger().info("[HeadsPlus] Config not found, creating!");
                 }
                 try {
                     List<String> blacklist = config.getStringList("blacklistw");
@@ -68,16 +73,16 @@ public class BlacklistwDelete implements IHeadsPlusCommand {
                         config.set("blacklistw", blacklist);
                         config.options().copyDefaults(true);
                         HeadsPlus.getInstance().saveConfig();
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("world-removed-bl").replaceAll("%w", args[1]))));
+                        sender.sendMessage(hpc.getString("world-removed-bl").replaceAll("%w", args[1]));
                     } else {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("world-a-removed-bl"))));
+                        sender.sendMessage(hpc.getString("world-a-removed-bl"));
 
                     }
                 } catch (Exception e) {
                 	if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
                         e.printStackTrace();
                     }
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("blw-fail"))));
+                    sender.sendMessage(hpc.getString("blw-fail"));
 					if (HeadsPlus.getInstance().getConfig().getBoolean("debug.create-debug-files")) {
 						Logger log = HeadsPlus.getInstance().getLogger();
 						log.severe("HeadsPlus has failed to execute this command. An error report has been made in /plugins/HeadsPlus/debug");
@@ -96,7 +101,7 @@ public class BlacklistwDelete implements IHeadsPlusCommand {
 					}
                 }
 			} else {
-				sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("alpha-names"))));
+				sender.sendMessage(hpc.getString("alpha-names"));
 			}
 		} else {
             sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());

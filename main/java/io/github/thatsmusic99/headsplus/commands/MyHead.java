@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 
 public class MyHead implements CommandExecutor, IHeadsPlusCommand {
 
-    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String l, String[] strings) {
@@ -43,7 +43,7 @@ public class MyHead implements CommandExecutor, IHeadsPlusCommand {
                 boolean wlOn = HeadsPlus.getInstance().getConfig().getBoolean("whitelistOn");
                 String head = sender.getName().toLowerCase();
                 if (((Player) sender).getInventory().firstEmpty() == -1) {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', hpc.getConfig().getString("full-inv")));
+                    sender.sendMessage(hpc.getString("full-inv"));
                     return true;
                 }
                 if (wlOn) {
@@ -56,7 +56,7 @@ public class MyHead implements CommandExecutor, IHeadsPlusCommand {
                                 giveHead((Player) sender, sender.getName());
                                 return true;
                             } else {
-                                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("blacklist-head"))));
+                                sender.sendMessage(hpc.getString("blacklist-head"));
                                 return true;
                             }
                         } else if (sender.hasPermission("headsplus.bypass.whitelist")) {
@@ -67,11 +67,11 @@ public class MyHead implements CommandExecutor, IHeadsPlusCommand {
                                 giveHead((Player) sender, sender.getName());
                                 return true;
                             } else {
-                                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("blacklist-head"))));
+                                sender.sendMessage(hpc.getString("blacklist-head"));
                                 return true;
                             }
                         } else {
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("whitelist-head"))));
+                            sender.sendMessage(hpc.getString("whitelist-head"));
                             return true;
                         }
                     } else {
@@ -82,7 +82,7 @@ public class MyHead implements CommandExecutor, IHeadsPlusCommand {
                             giveHead((Player) sender, sender.getName());
                             return true;
                         } else {
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("whitelist-head"))));
+                            sender.sendMessage(hpc.getString("whitelist-head"));
                             return true;
                         }
                     }
@@ -95,7 +95,7 @@ public class MyHead implements CommandExecutor, IHeadsPlusCommand {
                             giveHead((Player) sender, sender.getName());
                             return true;
                         } else {
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("blacklist-head"))));
+                            sender.sendMessage(hpc.getString("blacklist-head"));
                             return true;
                         }
                     } else {
@@ -131,8 +131,8 @@ public class MyHead implements CommandExecutor, IHeadsPlusCommand {
     private static void giveHead(Player p, String n) {
         ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         SkullMeta meta = (SkullMeta) skull.getItemMeta();
-        HeadsPlus.getInstance().nms.setSkullOwner(HeadsPlus.getInstance().nms.getOfflinePlayer(n), meta);
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().hpch.getConfig().getString("player.display-name").replaceAll("%d", n)));
+        HeadsPlus.getInstance().getNMS().setSkullOwner(HeadsPlus.getInstance().getNMS().getOfflinePlayer(n), meta);
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().getHeadsConfig().getConfig().getString("player.display-name").replaceAll("%d", n)));
         skull.setItemMeta(meta);
         Location playerLoc = (p).getLocation();
         double playerLocY = playerLoc.getY() + 1;
@@ -164,6 +164,11 @@ public class MyHead implements CommandExecutor, IHeadsPlusCommand {
     @Override
     public String getUsage() {
         return "/myhead";
+    }
+
+    @Override
+    public boolean isCorrectUsage(String[] args, CommandSender sender) {
+        return false;
     }
 
     @Override

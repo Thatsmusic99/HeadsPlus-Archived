@@ -6,8 +6,8 @@ import org.bukkit.inventory.ItemStack;
 class RecipeListeners {
 	
 	public static ItemStack makeSell(ItemStack item) {
-		if ((HeadsPlus.getInstance().sellable)) {
-			item = HeadsPlus.getInstance().nms.addNBTTag(item);
+		if ((HeadsPlus.getInstance().canSellHeads())) {
+			item = HeadsPlus.getInstance().getNMS().addNBTTag(item);
 		}
 		return item;
 	}

@@ -12,10 +12,10 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-public class WhitelistToggle implements IHeadsPlusCommand{
+public class WhitelistToggle implements IHeadsPlusCommand {
 
     private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
-    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @Override
     public String getCmdName() {
@@ -43,6 +43,11 @@ public class WhitelistToggle implements IHeadsPlusCommand{
     }
 
     @Override
+    public boolean isCorrectUsage(String[] args, CommandSender sender) {
+        return false;
+    }
+
+    @Override
     public boolean isMainCommand() {
         return true;
     }
@@ -55,12 +60,12 @@ public class WhitelistToggle implements IHeadsPlusCommand{
                     config.set("whitelistOn", false);
                     config.options().copyDefaults(true);
                     HeadsPlus.getInstance().saveConfig();
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wl-off"))));
+                    sender.sendMessage(hpc.getString("wl-off"));
                 } else if (!config.getBoolean("whitelistOn")) {
                     config.set("whitelistOn", true);
                     config.options().copyDefaults(true);
                     HeadsPlus.getInstance().saveConfig();
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wl-on"))));
+                    sender.sendMessage(hpc.getString("wl-on"));
                 }
             } else {
                 String str = args[1];
@@ -69,18 +74,18 @@ public class WhitelistToggle implements IHeadsPlusCommand{
                         config.set("whitelistOn", true);
                         config.options().copyDefaults(true);
                         HeadsPlus.getInstance().saveConfig();
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wl-on"))));
+                        sender.sendMessage(hpc.getString("wl-on"));
                     } else {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wl-a-on"))));
+                        sender.sendMessage(hpc.getString("wl-a-on"));
                     }
                 } else if (str.equalsIgnoreCase("off")) {
                     if (config.getBoolean("whitelistOn")) {
                         config.set("whitelistOn", false);
                         config.options().copyDefaults(true);
                         HeadsPlus.getInstance().saveConfig();
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wl-off"))));
+                        sender.sendMessage(hpc.getString("wl-off"));
                     } else {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wl-a-off"))));
+                        sender.sendMessage(hpc.getString("wl-a-off"));
                     }
                 } else if (!(str.equalsIgnoreCase("on"))) {
                     sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());
@@ -90,7 +95,7 @@ public class WhitelistToggle implements IHeadsPlusCommand{
             if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
                 e.printStackTrace();
             }
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wl-fail"))));
+            sender.sendMessage(hpc.getString("wl-fail"));
             if (HeadsPlus.getInstance().getConfig().getBoolean("debug.create-debug-files")) {
                 Logger log = HeadsPlus.getInstance().getLogger();
                 log.severe("HeadsPlus has failed to execute this command. An error report has been made in /plugins/HeadsPlus/debug");

@@ -12,14 +12,12 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
-import org.bukkit.ChatColor;
-
 import java.io.IOException;
 import java.util.logging.Logger;
 
 public final class HeadInteractEvent implements Listener {
 
-	private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+	private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 	private int TimesSent = 0;
 
 	@EventHandler
@@ -40,18 +38,17 @@ public final class HeadInteractEvent implements Listener {
 			    	    	if (key.name.contains(owner)) {
 			    		    	String iMessage1;
 				    	    	if (key.displayname.startsWith("a") || key.displayname.startsWith("e") || key.displayname.startsWith("i") || key.displayname.startsWith("o") || key.displayname.startsWith("u") || key.displayname.startsWith("A") || key.displayname.startsWith("E") || key.displayname.startsWith("I") || key.displayname.startsWith("O") || key.displayname.startsWith("U")) {
-				    	    		iMessage1 = ChatColor.translateAlternateColorCodes('&', hpc.getConfig().getString("head-mhf-interact-message-2"));
+				    	    		iMessage1 = hpc.getString("head-mhf-interact-message-2");
 				    	    	} else {
-				    		    	iMessage1 = ChatColor.translateAlternateColorCodes('&', hpc.getConfig().getString("head-mhf-interact-message"));
+				    		    	iMessage1 = hpc.getString("head-mhf-interact-message");
 				    	    	}
-				    	    	iMessage1 = HeadsPlus.getInstance().translateMessages(iMessage1).replaceAll("%p", key.displayname).replaceAll("%m", playerName);
+				    	    	iMessage1 = iMessage1.replaceAll("%p", key.displayname).replaceAll("%m", playerName);
 				    	    	player.sendMessage(iMessage1);
 				    	    	TimesSent++;
 				    	    	return;
 			    		    }
 			    	    }
-			    	    String iMessage1 = ChatColor.translateAlternateColorCodes('&', hpc.getConfig().getString("head-interact-message"));
-		                iMessage1 = HeadsPlus.getInstance().translateMessages(iMessage1);
+			    	    String iMessage1 = hpc.getString("head-interact-message");
 		                iMessage1 = iMessage1.replaceAll("%p", owner);
 		    		    iMessage1 = iMessage1.replaceAll("%m", playerName);
 		                player.sendMessage(iMessage1);

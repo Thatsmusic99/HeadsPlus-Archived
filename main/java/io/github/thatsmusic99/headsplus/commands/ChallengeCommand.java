@@ -4,7 +4,6 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,7 +17,7 @@ public class ChallengeCommand implements CommandExecutor, IHeadsPlusCommand {
     @Override
     public boolean onCommand(CommandSender cs, Command c, String l, String[] args) {
         try {
-            if (HeadsPlus.getInstance().chal) {
+            if (HeadsPlus.getInstance().hasChallengesEnabled()) {
                 if (cs instanceof Player) {
                     Player p = (Player) cs;
                     if (cs.hasPermission("headsplus.challenges")) {
@@ -34,7 +33,7 @@ public class ChallengeCommand implements CommandExecutor, IHeadsPlusCommand {
                     cs.sendMessage("[HeadsPlus] You have to be a player to run this command!");
                 }
             } else {
-                cs.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().hpc.getConfig().getString("disabled")));
+                cs.sendMessage(HeadsPlus.getInstance().getMessagesConfig().getString("disabled"));
             }
         } catch (Exception e) {
             if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
@@ -84,6 +83,11 @@ public class ChallengeCommand implements CommandExecutor, IHeadsPlusCommand {
     @Override
     public String getUsage() {
         return "/hpc";
+    }
+
+    @Override
+    public boolean isCorrectUsage(String[] args, CommandSender sender) {
+        return false;
     }
 
     @Override

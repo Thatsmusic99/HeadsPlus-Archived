@@ -12,9 +12,11 @@ import org.json.simple.JSONObject;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+@SuppressWarnings("unchecked")
 public class DebugFileCreator {
 
     public String createReport(Exception e, String when) throws IOException {
@@ -25,7 +27,7 @@ public class DebugFileCreator {
         o1.put("Special message", getErrorHeader());
         try {
             o1.put("HeadsPlus version", HeadsPlus.getInstance().getDescription().getVersion());
-            o1.put("NMS version", HeadsPlus.getInstance().nms.getClass().getSimpleName());
+            o1.put("NMS version", HeadsPlus.getInstance().getNMS().getClass().getSimpleName());
             o1.put("Has Vault hooked", HeadsPlus.getInstance().econ());
         } catch (NullPointerException ignored) {
 
@@ -34,16 +36,16 @@ public class DebugFileCreator {
         o1.put("Server version", Bukkit.getVersion());
         JSONObject o3 = new JSONObject();
         try {
-            o3.put("Droppable heads enabled", HeadsPlus.getInstance().drops);
-            o3.put("Auto reload on first join", HeadsPlus.getInstance().arofj);
-            o3.put("Uses heads selector", HeadsPlus.getInstance().db);
-            o3.put("Uses leaderboards", HeadsPlus.getInstance().lb);
-            o3.put("Stops placement of sellable heads", HeadsPlus.getInstance().stopP);
-            o3.put("MySQL is enabled", HeadsPlus.getInstance().con);
-            o3.put("Player death messages", HeadsPlus.getInstance().dm);
-            o3.put("Uses challenges", HeadsPlus.getInstance().chal);
-            o3.put("Total challenges", HeadsPlus.getInstance().challenges.size());
-            o3.put("Total levels", HeadsPlus.getInstance().levels.size());
+            o3.put("Droppable heads enabled", HeadsPlus.getInstance().isDropsEnabled());
+            o3.put("Auto reload on first join", HeadsPlus.getInstance().isAutoReloadingOnFirstJoin());
+            o3.put("Uses heads selector", HeadsPlus.getInstance().isUsingHeadDatabase());
+            o3.put("Uses leaderboards", HeadsPlus.getInstance().isUsingLeaderboards());
+            o3.put("Stops placement of sellable heads", HeadsPlus.getInstance().isStoppingPlaceableHeads());
+            o3.put("MySQL is enabled", HeadsPlus.getInstance().isConnectedToMySQLDatabase());
+            o3.put("Player death messages", HeadsPlus.getInstance().isDeathMessagesEnabled());
+            o3.put("Uses challenges", HeadsPlus.getInstance().hasChallengesEnabled());
+            o3.put("Total challenges", HeadsPlus.getInstance().getChallenges().size());
+            o3.put("Total levels", HeadsPlus.getInstance().getLevels().size());
         } catch (NullPointerException ignored) {
 
         }
@@ -59,16 +61,14 @@ public class DebugFileCreator {
             }
             o4.put("Fired when", when);
             JSONArray array = new JSONArray();
-            for (String str : ExceptionUtils.getStackTrace(e).split("\r\n\t")) {
-                array.add(str);
-            }
+            array.addAll(Arrays.asList(ExceptionUtils.getStackTrace(e).split("\r\n\t")));
             o4.put("Stacktrace", array);
             o1.put("Exception details", o4);
         }
         Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
         array1.add(o1);
         String str = gson.toJson(array1);
-        OutputStreamWriter fw = null;
+        OutputStreamWriter fw;
         boolean cancelled = false;
         File fr = null;
         for (int i = 0; !cancelled; i++) {

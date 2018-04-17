@@ -18,7 +18,7 @@ public class PlaceEvent implements Listener {
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent e) {
         try {
-            if (HeadsPlus.getInstance().stopP) {
+            if (HeadsPlus.getInstance().isStoppingPlaceableHeads()) {
                 if (e.getItemInHand().getType() == Material.SKULL || e.getItemInHand().getType() == Material.SKULL_ITEM) {
                     if (!e.getPlayer().hasPermission("headsplus.bypass.preventplacement")) {
                         if (e.getItemInHand().getItemMeta().getLore() != null) {
@@ -28,7 +28,7 @@ public class PlaceEvent implements Listener {
                             }
                             if (e.getItemInHand().getItemMeta().getLore().equals(ls)) {
                                 e.setCancelled(true);
-                                e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().hpc.getConfig().getString("block-place-denied")));
+                                e.getPlayer().sendMessage(HeadsPlus.getInstance().getMessagesConfig().getString("block-place-denied"));
                             }
                         }
                     }

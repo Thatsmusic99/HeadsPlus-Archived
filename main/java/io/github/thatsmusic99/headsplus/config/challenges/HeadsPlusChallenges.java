@@ -59,13 +59,13 @@ public class HeadsPlusChallenges extends ConfigSettings {
             getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".head-type", hpc.t);
             getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".xp", hpc.exp);
         }
-        if (!HeadsPlus.getInstance().con) {
+        if (!HeadsPlus.getInstance().isConnectedToMySQLDatabase()) {
             getConfig().addDefault("server-total.sellhead.total", 0);
-            for (EntityType e : HeadsPlus.getInstance().de.ableEntities) {
+            for (EntityType e : HeadsPlus.getInstance().getDeathEvents().ableEntities) {
                 getConfig().addDefault("server-total.sellhead." + e.name(), 0);
             }
             getConfig().addDefault("server-total.crafting.total", 0);
-            for (EntityType e : HeadsPlus.getInstance().de.ableEntities) {
+            for (EntityType e : HeadsPlus.getInstance().getDeathEvents().ableEntities) {
                 getConfig().addDefault("server-total.crafting." + e.name(), 0);
             }
         }
@@ -74,7 +74,7 @@ public class HeadsPlusChallenges extends ConfigSettings {
     }
 
     private void addChallenges() {
-        HeadsPlus.getInstance().challenges.clear();
+        HeadsPlus.getInstance().getChallenges().clear();
         for (String st : config.getConfigurationSection("challenges").getKeys(false)) {
             for (String s : config.getConfigurationSection("challenges." + st).getKeys(false)) {
                 String name = config.getString("challenges." + st + "." + s + ".name");
@@ -99,7 +99,7 @@ public class HeadsPlusChallenges extends ConfigSettings {
                 int xp = config.getInt("challenges." + st + "." + s + ".xp");
 
                 Challenge c = new Challenge(s, name, header, desc, min, type, reward, rewardVal, items, headType, xp, HeadsPlusChallengeDifficulty.valueOf(st.toUpperCase()));
-                HeadsPlus.getInstance().challenges.add(c);
+                HeadsPlus.getInstance().getChallenges().add(c);
 
             }
         }

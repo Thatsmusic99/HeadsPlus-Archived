@@ -9,16 +9,16 @@ import java.io.IOException;
 
 public class ConfigSettings {
 
-    public FileConfiguration config;
-    public File configF;
+    protected FileConfiguration config;
+    protected File configF;
     public String conName = "";
 
-    public void enable(boolean nullp) {
+    protected void enable(boolean nullp) {
         reloadC(nullp);
         load(nullp);
     }
 
-    public void load(boolean nullp) {
+    protected void load(boolean nullp) {
           getConfig().options().copyDefaults(true);
           save();
     }

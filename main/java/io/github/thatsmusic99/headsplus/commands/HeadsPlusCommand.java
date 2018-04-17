@@ -1,7 +1,6 @@
 package io.github.thatsmusic99.headsplus.commands;
 
 import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,8 +13,8 @@ import java.util.logging.Logger;
 
 public class HeadsPlusCommand implements CommandExecutor {
 
-    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
-	public final String noPerms = ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("no-perm")));
+    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
+	private final String noPerms = hpc.getString("no-perm");
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         try {
@@ -67,7 +66,7 @@ public class HeadsPlusCommand implements CommandExecutor {
 	}
 
 	private IHeadsPlusCommand getCommandByName(String name) {
-	    for (IHeadsPlusCommand hpc : HeadsPlus.getInstance().commands) {
+	    for (IHeadsPlusCommand hpc : HeadsPlus.getInstance().getCommands()) {
 	        if (hpc.getCmdName().equalsIgnoreCase(name)) {
 	            return hpc;
             }

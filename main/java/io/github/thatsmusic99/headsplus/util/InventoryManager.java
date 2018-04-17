@@ -39,8 +39,7 @@ public class InventoryManager {
     private int cPage = 0;
     private int sections = 0;
     private String cSection = "menu";
-    private int chSections = 0;
-    private final HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().hpchx;
+    private final HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().getHeadsXConfig();
     public static final HashMap<Player, InventoryManager> pls = new HashMap<>();
     private int[] pos() {
         int[] a = new int[28];
@@ -181,7 +180,7 @@ public class InventoryManager {
                     } else {
                         ItemStack is = new ItemStack(Material.SKULL_ITEM);
                         SkullMeta sm = (SkullMeta) is.getItemMeta();
-                        HeadsPlus.getInstance().nms.setSkullOwner(HeadsPlus.getInstance().nms.getOfflinePlayer(st), sm);
+                        HeadsPlus.getInstance().getNMS().setSkullOwner(HeadsPlus.getInstance().getNMS().getOfflinePlayer(st), sm);
                         is.setItemMeta(sm);
                         i.setItem(pos()[timesSent], is);
                         timesSent++;
@@ -287,7 +286,7 @@ public class InventoryManager {
             lore.add(ChatColor.GREEN + "Total pages: " + pages);
             lore.add(ChatColor.GREEN + "Total sections: " + sections);
             if (HeadsPlus.getInstance().econ()) {
-                lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().econ.getBalance(p));
+                lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().getEconomy().getBalance(p));
             }
             lore.add(ChatColor.GREEN + "Current section: " + section);
             im.setLore(lore);
@@ -318,7 +317,7 @@ public class InventoryManager {
                     is.setItemMeta(im);
                     i.setItem(hpcd.i, is);
                 }
-                int cch = HeadsPlus.getInstance().hpchl.getConfig().getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").size();
+                int cch = HeadsPlus.getInstance().getChallengeConfig().getConfig().getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").size();
                 i.setItem(8, isi);
                 ItemStack is2 = new ItemStack(Material.PAPER);
                 ItemMeta im = is2.getItemMeta();
@@ -334,7 +333,7 @@ public class InventoryManager {
                 i.setItem(4, is2);
             } else {
                 List<Challenge> cs = new ArrayList<>();
-                for (Challenge c : HeadsPlus.getInstance().challenges) {
+                for (Challenge c : HeadsPlus.getInstance().getChallenges()) {
                     if (c.getDifficulty().name().equalsIgnoreCase(cSection)) {
                         cs.add(c);
                     }
@@ -382,8 +381,8 @@ public class InventoryManager {
                     in++;
                 }
 
-                int ch = HeadsPlus.getInstance().challenges.size();
-                int cch = HeadsPlus.getInstance().hpchl.getConfig().getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").size();
+                int ch = HeadsPlus.getInstance().getChallenges().size();
+                int cch = HeadsPlus.getInstance().getChallengeConfig().getConfig().getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").size();
                 setItem(i, "Back", 8);
                 ItemStack is2 = new ItemStack(Material.PAPER);
                 ItemMeta im = is2.getItemMeta();

@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 public class WhitelistList implements IHeadsPlusCommand {
 
-    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @Override
     public String getCmdName() {
@@ -43,6 +43,11 @@ public class WhitelistList implements IHeadsPlusCommand {
     }
 
     @Override
+    public boolean isCorrectUsage(String[] args, CommandSender sender) {
+        return false;
+    }
+
+    @Override
     public boolean isMainCommand() {
         return true;
     }
@@ -53,7 +58,7 @@ public class WhitelistList implements IHeadsPlusCommand {
             if (args.length == 1) {
                 List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("whitelist");
                 if (bl.size() < 1) {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("empty-wl"))));
+                    sender.sendMessage(hpc.getString("empty-wl"));
                     return true;
                 }
                 PagedLists<String> pl = new PagedLists<>(bl, 8);
@@ -67,7 +72,7 @@ public class WhitelistList implements IHeadsPlusCommand {
                     int page = Integer.parseInt(args[1]);
                     PagedLists<String> pl = new PagedLists<>(wl, 8);
                     if ((page > pl.getTotalPages()) || (0 >= page)) {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("invalid-pg-no"))));
+                        sender.sendMessage(hpc.getString("invalid-pg-no"));
                     } else {
                         sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "============ " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + "Whitelist: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + page + "/" + pl.getTotalPages() + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + " ==========");
 
@@ -76,7 +81,7 @@ public class WhitelistList implements IHeadsPlusCommand {
                         }
                     }
                 } else {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("invalid-input-int"))));
+                    sender.sendMessage(hpc.getString("invalid-input-int"));
                 }
             }
         } catch (Exception e) {

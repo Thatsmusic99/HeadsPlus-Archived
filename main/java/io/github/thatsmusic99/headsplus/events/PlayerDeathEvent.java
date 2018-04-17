@@ -18,13 +18,13 @@ public class PlayerDeathEvent implements Listener {
     @EventHandler
     public void onDeath(PlayerHeadDropEvent e) {
         try {
-            if (HeadsPlus.getInstance().dm) {
+            if (HeadsPlus.getInstance().isDeathMessagesEnabled()) {
                 if (e.getKiller() != null) {
                     Random r = new Random();
                     int thing = r.nextInt(HeadsPlus.getInstance().getConfig().getStringList("death-messages").size());
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         if (!p.hasPermission("headplus.death.ignore")) {
-                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlus.getInstance().getConfig().getStringList("death-messages").get(thing).replaceAll("%k", e.getKiller().getName()).replaceAll("%p", e.getDeadPlayer().getName()))));
+                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().getConfig().getStringList("death-messages").get(thing).replaceAll("%h", HeadsPlus.getInstance().getMessagesConfig().getString("prefix")).replaceAll("%k", e.getKiller().getName()).replaceAll("%p", e.getDeadPlayer().getName())));
                         }
                     }
                 }

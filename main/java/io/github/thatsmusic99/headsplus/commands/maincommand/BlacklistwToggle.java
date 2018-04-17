@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 public class BlacklistwToggle implements IHeadsPlusCommand {
 	
 	private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
-	private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+	private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
 	@Override
 	public String getCmdName() {
@@ -43,7 +43,12 @@ public class BlacklistwToggle implements IHeadsPlusCommand {
 		return "/hp blacklistw [On|Off]";
 	}
 
-	@Override
+    @Override
+    public boolean isCorrectUsage(String[] args, CommandSender sender) {
+        return false;
+    }
+
+    @Override
 	public boolean isMainCommand() {
 		return true;
 	}
@@ -56,12 +61,12 @@ public class BlacklistwToggle implements IHeadsPlusCommand {
                     config.set("blacklistwOn", false);
                     config.options().copyDefaults(true);
                     HeadsPlus.getInstance().saveConfig();
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("blw-off"))));
+                    sender.sendMessage(hpc.getString("blw-off"));
                 } else if (!config.getBoolean("blacklistwOn")) {
                     config.set("blacklistwOn", true);
                     config.options().copyDefaults(true);
                     HeadsPlus.getInstance().saveConfig();
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("blw-on"))));
+                    sender.sendMessage(hpc.getString("blw-on"));
                 }
             } else {
                 if (args[1].equalsIgnoreCase("on")) {
@@ -69,25 +74,25 @@ public class BlacklistwToggle implements IHeadsPlusCommand {
                         config.set("blacklistwOn", true);
                         config.options().copyDefaults(true);
                         HeadsPlus.getInstance().saveConfig();
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("blw-on"))));
+                        sender.sendMessage(hpc.getString("blw-on"));
                     } else {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("blw-a-on"))));
+                        sender.sendMessage(hpc.getString("blw-a-on"));
                     }
                 } else if (args[1].equalsIgnoreCase("off")) {
                     if (config.getBoolean("blacklistwOn")) {
                         config.set("blacklistwOn", false);
                         config.options().copyDefaults(true);
                         HeadsPlus.getInstance().saveConfig();
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("blw-off"))));
+                        sender.sendMessage(hpc.getString("blw-off"));
                     } else {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("blw-a-off"))));
+                        sender.sendMessage(hpc.getString("blw-a-off"));
                     }
                 } else {
                     sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());
                 }
             }
 		} catch (Exception e) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("blw-fail"))));
+            sender.sendMessage(hpc.getString("blw-fail"));
             if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
                 e.printStackTrace();
             }

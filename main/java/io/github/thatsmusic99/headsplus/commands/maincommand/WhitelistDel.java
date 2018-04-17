@@ -15,8 +15,7 @@ import java.util.logging.Logger;
 
 public class WhitelistDel implements IHeadsPlusCommand {
 
-    private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
-    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @Override
     public String getCmdName() {
@@ -44,6 +43,11 @@ public class WhitelistDel implements IHeadsPlusCommand {
     }
 
     @Override
+    public boolean isCorrectUsage(String[] args, CommandSender sender) {
+        return false;
+    }
+
+    @Override
     public boolean isMainCommand() {
         return true;
     }
@@ -53,8 +57,7 @@ public class WhitelistDel implements IHeadsPlusCommand {
         try {
             if (args.length > 1) {
                 if (args[1].matches("^[A-Za-z0-9_]+$")) {
-                    config.options().copyDefaults(true);
-                    HeadsPlus.getInstance().saveConfig();
+                    FileConfiguration config = HeadsPlus.getInstance().getConfig();
                     List<String> wl = config.getStringList("whitelist");
                     String rHead = args[1].toLowerCase();
                     if (wl.contains(rHead)) {
@@ -62,21 +65,21 @@ public class WhitelistDel implements IHeadsPlusCommand {
                         config.set("whitelist", wl);
                         config.options().copyDefaults(true);
                         HeadsPlus.getInstance().saveConfig();
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("head-removed-wl").replaceAll("%p", args[1]))));
+                        sender.sendMessage(hpc.getString("head-removed-wl").replaceAll("%p", args[1]));
                     } else {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("head-a-removed-wl"))));
+                        sender.sendMessage(hpc.getString("head-a-removed-wl"));
 
                     }
 
                 } else {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("alpha-names"))));
+                    sender.sendMessage(hpc.getString("alpha-names"));
                 }
 
             } else {
                 sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());
             }
         } catch (Exception e) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wl-fail"))));
+            sender.sendMessage(hpc.getString("wl-fail"));
             if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
                 e.printStackTrace();
             }

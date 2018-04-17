@@ -4,7 +4,7 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
-import org.bukkit.ChatColor;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,7 +18,7 @@ public class Heads implements CommandExecutor, IHeadsPlusCommand {
     @Override
     public boolean onCommand(CommandSender cs, Command cmd, String l, String[] args) {
         try {
-            if (HeadsPlus.getInstance().db) {
+            if (HeadsPlus.getInstance().isUsingHeadDatabase()) {
                 if (cs instanceof Player) {
                     Player p = (Player) cs;
                     if (cs.hasPermission("headsplus.heads")) {
@@ -28,13 +28,13 @@ public class Heads implements CommandExecutor, IHeadsPlusCommand {
                         im.setSection("Menu");
                         p.openInventory(im.changePage(true, true, (Player) cs, "Menu"));
                     } else {
-                        cs.sendMessage(new HeadsPlusCommand().noPerms);
+                        cs.sendMessage(HeadsPlus.getInstance().getMessagesConfig().getString("no-perms"));
                     }
                 } else {
                     cs.sendMessage("[HeadsPlus] You have to be a player to run this command!");
                 }
             } else {
-                cs.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().hpc.getConfig().getString("disabled")));
+                cs.sendMessage(HeadsPlus.getInstance().getMessagesConfig().getString("disabled"));
             }
         } catch (Exception e) {
             if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
@@ -84,6 +84,11 @@ public class Heads implements CommandExecutor, IHeadsPlusCommand {
     @Override
     public String getUsage() {
         return "/heads";
+    }
+
+    @Override
+    public boolean isCorrectUsage(String[] args, CommandSender sender) {
+        return false;
     }
 
     @Override

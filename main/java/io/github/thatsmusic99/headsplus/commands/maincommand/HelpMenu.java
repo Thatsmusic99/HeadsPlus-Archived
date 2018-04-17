@@ -18,11 +18,11 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class HelpMenu implements IHeadsPlusCommand {
 
-	private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+	private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
 	private void helpNoArgs(CommandSender sender) {
         List<IHeadsPlusCommand> headPerms = new ArrayList<>();
-        for (IHeadsPlusCommand key : HeadsPlus.getInstance().commands) {
+        for (IHeadsPlusCommand key : HeadsPlus.getInstance().getCommands()) {
             if (sender.hasPermission(key.getPermission())) {
                 headPerms.add(key);
             }
@@ -38,7 +38,7 @@ public class HelpMenu implements IHeadsPlusCommand {
 	}
 	private void helpNo(CommandSender sender, String str) {
         List<IHeadsPlusCommand> headPerms = new ArrayList<>();
-        for (IHeadsPlusCommand key : HeadsPlus.getInstance().commands) {
+        for (IHeadsPlusCommand key : HeadsPlus.getInstance().getCommands()) {
             if (sender.hasPermission(key.getPermission())) {
                 headPerms.add(key);
             }
@@ -47,7 +47,7 @@ public class HelpMenu implements IHeadsPlusCommand {
         PagedLists<IHeadsPlusCommand> pl = new PagedLists<>(headPerms, 8);
 				
         if ((page > pl.getTotalPages()) || (0 >= page)) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("invalid-pg-no"))));
+            sender.sendMessage(hpc.getString("invalid-pg-no"));
         } else {
             sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + " HeadsPlus " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + String.valueOf(page) + "/" + String.valueOf(pl.getTotalPages()) + " " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============");
             for (IHeadsPlusCommand key : pl.getContentsInPage(page)) {
@@ -62,7 +62,7 @@ public class HelpMenu implements IHeadsPlusCommand {
 	private void helpCmd(CommandSender cs, String cmdName) {
         if (cs.hasPermission("headsplus.maincommand")) {
             IHeadsPlusCommand pe = null;
-            for (IHeadsPlusCommand key : HeadsPlus.getInstance().commands) {
+            for (IHeadsPlusCommand key : HeadsPlus.getInstance().getCommands()) {
                 if (key.getCmdName().equalsIgnoreCase(cmdName)) {
                     pe = key;
                     break;
@@ -106,7 +106,12 @@ public class HelpMenu implements IHeadsPlusCommand {
 		return "/hp <help|Page No.> [Page No.]";
 	}
 
-	@Override
+    @Override
+    public boolean isCorrectUsage(String[] args, CommandSender sender) {
+        return false;
+    }
+
+    @Override
 	public boolean isMainCommand() {
 		return true;
 	}

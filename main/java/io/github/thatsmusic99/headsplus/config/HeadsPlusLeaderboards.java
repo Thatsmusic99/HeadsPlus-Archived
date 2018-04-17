@@ -14,7 +14,7 @@ import java.util.*;
 
 public class HeadsPlusLeaderboards extends ConfigSettings {
 
-    private final DeathEvents de = HeadsPlus.getInstance().de;
+    private final DeathEvents de = HeadsPlus.getInstance().getDeathEvents();
 
     public HeadsPlusLeaderboards() {
         this.conName = "leaderboards";
@@ -60,8 +60,8 @@ public class HeadsPlusLeaderboards extends ConfigSettings {
 
     @Deprecated
     private void addPlayer(Player p, String section) throws SQLException {
-        if (HeadsPlus.getInstance().con) {
-            Connection c = HeadsPlus.getInstance().connection;
+        if (HeadsPlus.getInstance().isConnectedToMySQLDatabase()) {
+            Connection c = HeadsPlus.getInstance().getConnection();
             Statement s;
             s = c.createStatement();
 
@@ -89,8 +89,8 @@ public class HeadsPlusLeaderboards extends ConfigSettings {
 
     @Deprecated
     public void addNewPlayerValue(Player p, String section) throws SQLException {
-        if (HeadsPlus.getInstance().con) {
-            Connection c = HeadsPlus.getInstance().connection;
+        if (HeadsPlus.getInstance().isConnectedToMySQLDatabase()) {
+            Connection c = HeadsPlus.getInstance().getConnection();
             Statement s;
             ResultSet rs;
             s = c.createStatement();
@@ -158,9 +158,9 @@ public class HeadsPlusLeaderboards extends ConfigSettings {
 
     @Deprecated
     public void addOntoValue(Player p, String section) throws SQLException {
-        if (HeadsPlus.getInstance().con) {
+        if (HeadsPlus.getInstance().isConnectedToMySQLDatabase()) {
             try {
-                Connection c = HeadsPlus.getInstance().connection;
+                Connection c = HeadsPlus.getInstance().getConnection();
                 Statement s = c.createStatement();
                 ResultSet rs;
                 rs = s.executeQuery("SELECT * FROM `headspluslb` WHERE uuid='" + p.getUniqueId().toString() + "'");
@@ -215,9 +215,9 @@ public class HeadsPlusLeaderboards extends ConfigSettings {
 
     @Deprecated
     public LinkedHashMap<OfflinePlayer, Integer> getScores(String section) throws SQLException {
-        if (HeadsPlus.getInstance().con) {
+        if (HeadsPlus.getInstance().isConnectedToMySQLDatabase()) {
             LinkedHashMap<OfflinePlayer, Integer> hs = new LinkedHashMap<>();
-            Connection c = HeadsPlus.getInstance().connection;
+            Connection c = HeadsPlus.getInstance().getConnection();
             Statement s = c.createStatement();
             ResultSet rs = s.executeQuery("SELECT * FROM `headspluslb` ORDER BY id");
             while (rs.next()) {
@@ -281,8 +281,8 @@ public class HeadsPlusLeaderboards extends ConfigSettings {
     }
     @Deprecated
     public boolean addPlayerOnFileIfNotFound(Player p, String section) throws SQLException {
-        if (HeadsPlus.getInstance().con) {
-            Connection c = HeadsPlus.getInstance().connection;
+        if (HeadsPlus.getInstance().isConnectedToMySQLDatabase()) {
+            Connection c = HeadsPlus.getInstance().getConnection();
             Statement s;
             s = c.createStatement();
             try {
@@ -322,8 +322,8 @@ public class HeadsPlusLeaderboards extends ConfigSettings {
 
     @Deprecated
     public boolean addSectionOnFileIfNotFound(Player p, String section) throws SQLException {
-        if (HeadsPlus.getInstance().con) {
-            Connection c = HeadsPlus.getInstance().connection;
+        if (HeadsPlus.getInstance().isConnectedToMySQLDatabase()) {
+            Connection c = HeadsPlus.getInstance().getConnection();
             Statement s;
             s = c.createStatement();
             try {

@@ -14,6 +14,8 @@ public interface IHeadsPlusCommand {
 
     String getUsage();
 
+    boolean isCorrectUsage(String[] args, CommandSender sender);
+
     boolean isMainCommand();
 
     boolean fire(String[] args, CommandSender sender);

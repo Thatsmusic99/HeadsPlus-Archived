@@ -1,132 +1,55 @@
 package io.github.thatsmusic99.headsplus.events;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Logger;
-
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
-import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
-import io.github.thatsmusic99.headsplus.config.levels.HeadsPlusLevels;
+import io.github.thatsmusic99.headsplus.config.ConfigSettings;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.crafting.RecipeEnumUser;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import mkremins.fanciful.FancyMessage;
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
-import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusCrafting;
+import java.io.IOException;
+import java.util.logging.Logger;
 
 public class JoinEvent implements Listener { 
 	
 	public static boolean reloaded = false;
-    private static final File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
-
-	private static final File messagesF = new File(HeadsPlus.getInstance().getDataFolder(), "messages.yml");
-
-	private static final File headsF = new File(HeadsPlus.getInstance().getDataFolder(), "heads.yml");
-
-	private static final File craftingF = new File(HeadsPlus.getInstance().getDataFolder(), "crafting.yml");
-
-	private static final File headsXF = new File(HeadsPlus.getInstance().getDataFolder(), "headsx.yml");
-
-	private final File levelF = new File(HeadsPlus.getInstance().getDataFolder(), "levels.yml");
-
-    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 	
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e) {
 		if (e.getPlayer().hasPermission("headsplus.notify")) {
 		    if (HeadsPlus.getInstance().getConfig().getBoolean("update-notify")) {
-                if (HeadsPlus.update != null) {
-                    new FancyMessage().text(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("update-found"))))
+                if (HeadsPlus.getUpdate() != null) {
+                    new FancyMessage().text(hpc.getString("update-found"))
                     .tooltip(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getCurrentVersion() + HeadsPlus.getInstance().getDescription().getVersion())
-							+ "\n" + ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getNewVersion() + HeadsPlus.update[2])
-							+ "\n" + ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getDescription() + HeadsPlus.update[1])).link("https://www.spigotmc.org/resources/headsplus-1-8-x-1-12-x.40265/updates/").send(e.getPlayer());
+							+ "\n" + ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getNewVersion() + HeadsPlus.getUpdate()[2])
+							+ "\n" + ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getDescription() + HeadsPlus.getUpdate()[1])).link("https://www.spigotmc.org/resources/headsplus-1-8-x-1-12-x.40265/updates/").send(e.getPlayer());
                 }
             }
         }
-		if (!HeadsPlus.getInstance().arofj) return;
+        new RecipeEnumUser();
+		if (!HeadsPlus.getInstance().isAutoReloadingOnFirstJoin()) return;
 		if (!reloaded) {
 		    if (HeadsPlus.getInstance().getConfig().getBoolean("autoReloadOnFirstJoin")) {
 			    try {
-			    	javax.swing.Timer timer = new javax.swing.Timer(3000, arg0 -> {
-			    	    if  (!(configF.exists())) {
-			    	        HeadsPlus.getInstance().log.info("[HeadsPlus] Config not found, creating!");
-			    	        HeadsPlus.getInstance().saveConfig();
-			    	    } else {
-			    	        HeadsPlus.getInstance().log.info("[HeadsPlus] Found config, loading!");
-			    	        HeadsPlus.getInstance().reloadConfig();
-			    	        HeadsPlus.getInstance().log.info("[HeadsPlus] Config reloaded!");
-			    	    }
-			    	    if (!(messagesF.exists())) {
-			    	        HeadsPlus.getInstance().log.info("[HeadsPlus] Messages not found, creating!");
-			    	        hpc.reloadC(false);
-			    	        hpc.config = YamlConfiguration.loadConfiguration(messagesF);
-			    	        HeadsPlus.getInstance().log.info("[HeadsPlus] Messages created!");
-			    	    } else {
-			    	        hpc.reloadC(false);
-			    	    }
-			    	    HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().hpch;
-			    	    if (!(headsF.exists())) {
-			    	        HeadsPlus.getInstance().log.info("[HeadsPlus] Heads not found, creating!");
-			    	        hpch.reloadC(false);
-			    	        hpch.config = YamlConfiguration.loadConfiguration(headsF);
-			    	        HeadsPlus.getInstance().log.info("[HeadsPlus] Heads created!");
-			    	    } else {
-			    	        hpch.reloadC(false);
-			    	    }
-			    	    if (HeadsPlus.getInstance().hpcr != null) {
-			    	        HeadsPlusCrafting hpcr = HeadsPlus.getInstance().hpcr;
-			    	        if (!(craftingF.exists())) {
-			    	            if (HeadsPlus.getInstance().getConfig().getBoolean("craftHeads")) {
-			    	                HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting not found, creating!");
-			    	            //    for (ShapelessRecipe r : RecipeEnumUser.getRecipes()) {
-			    	            //        HeadsPlus.getInstance().nms.getRecipeManager().removeRecipe(r);
-			    	            //    }
-			    	                hpcr.reloadC(false);
-			    	                hpcr.config = YamlConfiguration.loadConfiguration(craftingF);
-			    	                new RecipeEnumUser();
-			    	                HeadsPlus.getInstance().log.info("[HeadsPlus] Crafting created!");
-			    	            }
-			    	        } else {
-			    	        //    for (ShapelessRecipe r : RecipeEnumUser.getRecipes()) {
-			    	        //        HeadsPlus.getInstance().nms.getRecipeManager().removeRecipe(r);
-			    	        //    }
-			    	            hpcr.reloadC(false);
-			    	            new RecipeEnumUser();
-			    	        }
-			    	    }
-			    	    HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().hpchx;
-			    	    if (!headsXF.exists()) {
-			    	        if (HeadsPlus.getInstance().getConfig().getBoolean("headsDatabase")) {
-			    	            HeadsPlus.getInstance().log.info("[HeadsPlus] HeadsX not found, creating!");
-			    	            hpchx.reloadC(false);
-			    	            hpchx.config = YamlConfiguration.loadConfiguration(headsXF);
-			    	            HeadsPlus.getInstance().log.info("[HeadsPlus] HeadsX created!");
-			    	        }
-			    	    } else {
-			    	        hpchx.reloadC(false);
-			    	    }
-			    	    HeadsPlusLevels hplevels = HeadsPlus.getInstance().hpl;
-			    	    if (!levelF.exists()) {
-			    	        HeadsPlus.getInstance().getLogger().info("Levels not found, creating!");
-			    	        hplevels.reloadC(false);
-			    	        hplevels.config = YamlConfiguration.loadConfiguration(levelF);
-			    	        HeadsPlus.getInstance().getLogger().info("Levels created!");
-			    	    } else {
-			    	        hplevels.reloadC(false);
-			    	    }
-			    	    HPPlayer.players.clear();
-			    	});
-			    	timer.setRepeats(false); // Make it so it does not repeat every 3 seconds
-			    	timer.start(); // Run the Task
-				       
+			    	new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            for (ConfigSettings cs : HeadsPlus.getInstance().getConfigs()) {
+                                cs.reloadC(false);
+                            }
+                            HeadsPlus.getInstance().getConfig().options().copyDefaults(true);
+                            HeadsPlus.getInstance().saveConfig();
+                            HPPlayer.players.clear();
+                        }
+                    }.runTaskLaterAsynchronously(HeadsPlus.getInstance(), 2);
 
 			    } catch (Exception ex) {
 					if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {

@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 public class LeaderboardsCommand implements CommandExecutor, IHeadsPlusCommand {
 
     private PagedHashmaps ph;
-    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @Override
     public boolean onCommand(CommandSender cs, Command command, String s, String[] args) {
@@ -67,7 +67,7 @@ public class LeaderboardsCommand implements CommandExecutor, IHeadsPlusCommand {
                                 cs.sendMessage(getLeaderboard(args[0], 1));
                             }
                         } else {
-                            cs.sendMessage(HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', hpc.getConfig().getString("invalid-args"))));
+                            cs.sendMessage(hpc.getString("invalid-args"));
                         }
                     }
 
@@ -103,7 +103,7 @@ public class LeaderboardsCommand implements CommandExecutor, IHeadsPlusCommand {
     private String getLeaderboard(String sec, int page) throws SQLException {
         try {
             StringBuilder sb = new StringBuilder();
-            ph = new PagedHashmaps(HeadsPlus.getInstance().mySQLAPI.getScores(sec, "headspluslb"), 8);
+            ph = new PagedHashmaps(HeadsPlus.getInstance().getMySQLAPI().getScores(sec, "headspluslb"), 8);
 
             sb.append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1"))).append("=======").append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2"))).append(" HeadsPlus Leaderboards: ").append(WordUtils.capitalize(sec)).append(" ").append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3"))).append(page).append("/").append(String.valueOf(ph.getTotalPages())).append(" ").append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1"))).append("=======");
             Set<Object> it = ph.getContentsInPage(page).keySet();
@@ -115,12 +115,12 @@ public class LeaderboardsCommand implements CommandExecutor, IHeadsPlusCommand {
             return sb.toString();
         } catch (IllegalArgumentException ex) {
             if (ph.getHs().size() > 0) {
-                return HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', hpc.getConfig().getString("invalid-pg-no")));
+                return hpc.getString("invalid-pg-no");
             } else {
-                return HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', hpc.getConfig().getString("no-data-lb")));
+                return hpc.getString("no-data-lb");
             }
         } catch (NullPointerException ex) {
-            return HeadsPlus.getInstance().translateMessages(ChatColor.translateAlternateColorCodes('&', hpc.getConfig().getString("no-data-lb")));
+            return hpc.getString("no-data-lb");
         }
     }
 
@@ -147,6 +147,11 @@ public class LeaderboardsCommand implements CommandExecutor, IHeadsPlusCommand {
     @Override
     public String getUsage() {
         return "/hplb [Entity|Page No.] [Page No.]";
+    }
+
+    @Override
+    public boolean isCorrectUsage(String[] args, CommandSender sender) {
+        return false;
     }
 
     @Override

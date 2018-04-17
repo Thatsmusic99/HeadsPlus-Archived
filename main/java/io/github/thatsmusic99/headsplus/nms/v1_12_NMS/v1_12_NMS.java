@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.SkullMeta;
 
+@SuppressWarnings("deprecation")
 public class v1_12_NMS implements NMSManager {
 
     @Override

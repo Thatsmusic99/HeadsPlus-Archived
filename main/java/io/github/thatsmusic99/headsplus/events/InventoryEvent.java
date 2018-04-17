@@ -28,7 +28,7 @@ import java.util.logging.Logger;
 public class InventoryEvent implements Listener {
 
     private InventoryManager im;
-    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @EventHandler
     public void onClickEvent(InventoryClickEvent e) {
@@ -126,7 +126,7 @@ public class InventoryEvent implements Listener {
                         return;
                     } */
                         if (e.getWhoClicked().getInventory().firstEmpty() == -1) {
-                            e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', hpc.getConfig().getString("full-inv")));
+                            e.getWhoClicked().sendMessage(hpc.getString("full-inv"));
                             e.setCancelled(true);
                             return;
                         }
@@ -135,19 +135,16 @@ public class InventoryEvent implements Listener {
                             try {
                                 price = Double.valueOf(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getLore().get(0).split(" ")[1]));
                             } catch (NumberFormatException ex) {
-                                HeadsPlus.getInstance().log.log(Level.SEVERE, "[HeadsPlus] HeadsX.yml fault! Please check your config, and make sure the price value for your heads are set to a double value, or 'Free' or 'default'!");
-                                HeadsPlus.getInstance().log.log(Level.SEVERE, "Value: " + e.getCurrentItem().getItemMeta().getLore().get(0).split(" ")[1]);
-                                String fail = HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("buy-fail"));
-                                fail = ChatColor.translateAlternateColorCodes('&', fail);
+                                HeadsPlus.getInstance().getLogger().log(Level.SEVERE, "[HeadsPlus] HeadsX.yml fault! Please check your config, and make sure the price value for your heads are set to a double value, or 'Free' or 'default'!");
+                                HeadsPlus.getInstance().getLogger().log(Level.SEVERE, "Value: " + e.getCurrentItem().getItemMeta().getLore().get(0).split(" ")[1]);
+                                String fail = hpc.getString("buy-fail");
                                 e.getWhoClicked().sendMessage(fail);
                                 e.setCancelled(true);
                                 return;
                             }
-                            EconomyResponse er = HeadsPlus.getInstance().econ.withdrawPlayer(p, price);
-                            String success = HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("buy-success")).replaceAll("%l", Double.toString(er.amount)).replaceAll("%b", Double.toString(er.balance));
-                            success = ChatColor.translateAlternateColorCodes('&', success);
-                            String fail = HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("buy-fail"));
-                            fail = ChatColor.translateAlternateColorCodes('&', fail);
+                            EconomyResponse er = HeadsPlus.getInstance().getEconomy().withdrawPlayer(p, price);
+                            String success = hpc.getString("buy-success").replaceAll("%l", Double.toString(er.amount)).replaceAll("%b", Double.toString(er.balance));
+                            String fail = hpc.getString("buy-fail");
                             if (er.transactionSuccess()) {
                                 e.getWhoClicked().sendMessage(success);
                                 e.getWhoClicked().getInventory().addItem(e.getCurrentItem());
@@ -159,7 +156,7 @@ public class InventoryEvent implements Listener {
                                 lore.add(ChatColor.GREEN + "Total pages: " + this.im.getPages());
                                 lore.add(ChatColor.GREEN + "Total sections: " + this.im.getSections());
                                 if (HeadsPlus.getInstance().econ()) {
-                                    lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().econ.getBalance(p));
+                                    lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().getEconomy().getBalance(p));
                                 }
                                 lore.add(ChatColor.GREEN + "Current section: " + this.im.getSection());
                                 im.setLore(lore);
@@ -181,7 +178,7 @@ public class InventoryEvent implements Listener {
                         lore.add(ChatColor.GREEN + "Total pages: " + this.im.getPages());
                         lore.add(ChatColor.GREEN + "Total sections: " + this.im.getSections());
                         if (HeadsPlus.getInstance().econ()) {
-                            lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().econ.getBalance(p));
+                            lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().getEconomy().getBalance(p));
                         }
                         lore.add(ChatColor.GREEN + "Current section: " + this.im.getSection());
                         im.setLore(lore);
@@ -214,7 +211,7 @@ public class InventoryEvent implements Listener {
                             e.setCancelled(true);
                             e.getWhoClicked().closeInventory();
                             final InventoryClickEvent ev = e;
-                            SearchGUI s = HeadsPlus.getInstance().nms.getSearchGUI(p, event -> {
+                            SearchGUI s = HeadsPlus.getInstance().getNMS().getSearchGUI(p, event -> {
                                 try {
                                     if (event.getSlot().equals(SearchGUI1_12.AnvilSlot.OUTPUT)) {
                                         event.setWillClose(false);
@@ -278,17 +275,17 @@ public class InventoryEvent implements Listener {
                         } else {
                             if (im != null) {
                                 if (e.getCurrentItem().getType().equals(Material.STAINED_CLAY)) {
-                                    Challenge challenge = HeadsPlus.getInstance().hapi.getChallenge(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()));
+                                    Challenge challenge = HeadsPlus.getInstance().getAPI().getChallenge(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()));
                                     try {
                                         if (challenge != null) {
                                             if (!challenge.isComplete(p)) {
                                                 if (challenge.canComplete(p)) {
                                                     challenge.complete(p, e.getInventory(), e.getSlot());
                                                 } else {
-                                                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlus.getInstance().hpc.getConfig().getString("cant-complete-challenge"))));
+                                                    p.sendMessage(hpc.getString("cant-complete-challenge"));
                                                 }
                                             } else {
-                                                p.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlus.getInstance().hpc.getConfig().getString("already-complete-challenge"))));
+                                                p.sendMessage(hpc.getString("already-complete-challenge"));
                                             }
                                         }
                                     }catch (NullPointerException ignored) {

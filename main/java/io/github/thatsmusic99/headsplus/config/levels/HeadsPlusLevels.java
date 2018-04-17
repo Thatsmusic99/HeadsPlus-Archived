@@ -42,15 +42,15 @@ public class HeadsPlusLevels extends ConfigSettings {
         loadLevels();
     }
 
-    public void loadLevels() {
-        HeadsPlus.getInstance().levels = new HashMap<>();
+    private void loadLevels() {
+        HeadsPlus.getInstance().getLevels().clear();
         for (String s : getConfig().getConfigurationSection("levels").getKeys(false)) {
             String dn = getConfig().getString("levels." + s + ".display-name");
             double av = getConfig().getDouble("levels." + s + ".added-version");
             int rxp = getConfig().getInt("levels." + s + ".required-xp");
             int h = getConfig().getInt("levels." + s + ".hierachy");
             CLevel c = new CLevel(s, dn, rxp, av);
-            HeadsPlus.getInstance().levels.put(h, c);
+            HeadsPlus.getInstance().getLevels().put(h, c);
         }
     }
 

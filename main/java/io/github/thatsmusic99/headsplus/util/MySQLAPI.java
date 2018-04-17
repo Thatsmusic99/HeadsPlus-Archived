@@ -23,71 +23,15 @@ public class MySQLAPI {
     private final DeathEvents de;
 
     public MySQLAPI() {
-        hpl = HeadsPlus.getInstance().hplb;
-        hpc = HeadsPlus.getInstance().hpchl;
-        de = HeadsPlus.getInstance().de;
+        hpl = HeadsPlus.getInstance().getLeaderboardsConfig();
+        hpc = HeadsPlus.getInstance().getChallengeConfig();
+        de = HeadsPlus.getInstance().getDeathEvents();
     }
 
-    private void addPlayer(Player p, String section, String database, int shAmount) throws SQLException {
-        if (HeadsPlus.getInstance().con) {
-            Connection c = HeadsPlus.getInstance().connection;
+    private void addNewPlayerValue(Player p, String section, String database, int shAmount) throws SQLException {
+        if (HeadsPlus.getInstance().isConnectedToMySQLDatabase()) {
+            Connection c = HeadsPlus.getInstance().getConnection();
             Statement s;
-            s = c.createStatement();
-            StringBuilder sb2 = new StringBuilder();
-            sb2.append("INSERT INTO `").append(database).append("` (uuid, total");
-            for (EntityType e : de.ableEntities) {
-                sb2.append(", ").append(e.name());
-            }
-            sb2.append(") VALUES('").append(p.getUniqueId().toString()).append("', '0'");
-            for (EntityType ignored : de.ableEntities) {
-                sb2.append(", 0");
-            }
-            sb2.append(")");
-            s.executeUpdate(sb2.toString());
-        } else {
-            if (database.equalsIgnoreCase("headspluslb")) {
-                hpl.getConfig().addDefault("player-data." + p.getUniqueId().toString() + ".total", 0);
-                hpl.getConfig().addDefault("player-data." + p.getUniqueId().toString() + "." + section, 0);
-                int s = hpl.getConfig().getInt("server-total.total");
-                s++;
-                hpl.getConfig().set("server-total.total", s);
-                int i = hpl.getConfig().getInt("server-total." + section);
-                i++;
-                hpl.getConfig().set("server-total." + section, i);
-                hpl.getConfig().options().copyDefaults(true);
-                hpl.save();
-            } else {
-                if (database.equalsIgnoreCase("headsplussh")) {
-                    hpc.getConfig().addDefault("player-data." + p.getUniqueId().toString() + ".sellhead.total", 0);
-                    hpc.getConfig().addDefault("player-data." + p.getUniqueId().toString() + ".sellhead." + section, 0);
-                    int s = hpc.getConfig().getInt("server-total.sellhead.total");
-                    s += shAmount;
-                    hpc.getConfig().set("server-total.sellhead.total", s);
-                    int i = hpc.getConfig().getInt("server-total.sellhead." + section);
-                    i += shAmount;
-                    hpc.getConfig().set("server-total.sellhead." + section, i);
-                    hpc.getConfig().options().copyDefaults(true);
-                    hpc.save();
-                } else {
-                    hpc.getConfig().addDefault("player-data." + p.getUniqueId().toString() + ".crafting.total", 0);
-                    hpc.getConfig().addDefault("player-data." + p.getUniqueId().toString() + ".crafting." + section, 0);
-                    int s = hpc.getConfig().getInt("server-total.crafting.total");
-                    s += shAmount;
-                    hpc.getConfig().set("server-total.crafting.total", s);
-                    int i = hpc.getConfig().getInt("server-total.crafting." + section);
-                    i += shAmount;
-                    hpc.getConfig().set("server-total.crafting." + section, i);
-                    hpc.getConfig().options().copyDefaults(true);
-                    hpc.save();
-                }
-            }
-        }
-    }
-
-    public void addNewPlayerValue(Player p, String section, String database, int shAmount) throws SQLException {
-        if (HeadsPlus.getInstance().con) {
-            Connection c = HeadsPlus.getInstance().connection;
-            Statement s = null;
             ResultSet rs;
             s = c.createStatement();
             try {
@@ -179,9 +123,9 @@ public class MySQLAPI {
     }
 
     public void addOntoValue(Player p, String section, String database, int shAmount) throws SQLException {
-        if (HeadsPlus.getInstance().con) {
+        if (HeadsPlus.getInstance().isConnectedToMySQLDatabase()) {
             try {
-                Connection c = HeadsPlus.getInstance().connection;
+                Connection c = HeadsPlus.getInstance().getConnection();
                 Statement s = c.createStatement();
                 ResultSet rs;
                 rs = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + p.getUniqueId().toString() + "'");
@@ -275,9 +219,9 @@ public class MySQLAPI {
     }
 
     public LinkedHashMap<OfflinePlayer, Integer> getScores(String section, String database) throws SQLException {
-        if (HeadsPlus.getInstance().con) {
+        if (HeadsPlus.getInstance().isConnectedToMySQLDatabase()) {
             LinkedHashMap<OfflinePlayer, Integer> hs = new LinkedHashMap<>();
-            Connection c = HeadsPlus.getInstance().connection;
+            Connection c = HeadsPlus.getInstance().getConnection();
             Statement s = c.createStatement();
             ResultSet rs = s.executeQuery("SELECT * FROM `" + database + "` ORDER BY id");
             while (rs.next()) {
@@ -363,121 +307,5 @@ public class MySQLAPI {
             }
         }
         return sortedMap;
-    }
-    public boolean addPlayerOnFileIfNotFound(Player p, String section, String database, int shAmount) throws SQLException {
-        if (HeadsPlus.getInstance().con) {
-            Connection c = HeadsPlus.getInstance().connection;
-            Statement s;
-            s = c.createStatement();
-            try {
-
-                s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + p.getUniqueId() + "'");
-                return true;
-            } catch (SQLException ex) {
-                StringBuilder sb2 = new StringBuilder();
-                sb2.append("INSERT INTO `").append(database).append("` (uuid, total");
-                for (EntityType e : de.ableEntities) {
-                    sb2.append(", ").append(e.name());
-                }
-                sb2.append(") VALUES('").append(p.getUniqueId().toString()).append("', '0'");
-                for (EntityType ignored : de.ableEntities) {
-                    sb2.append(", 0");
-                }
-                sb2.append(")");
-                s.executeUpdate(sb2.toString());
-                addOntoValue(p, section, database, shAmount);
-                return false;
-            }
-
-        } else {
-            if (database.equalsIgnoreCase("headspluslb")) {
-                try {
-                    if (hpl.getConfig().getInt("player-data." + p.getUniqueId().toString() + ".total") != 0) {
-                        return true;
-                    } else {
-                        addPlayer(p, section, database, shAmount);
-                        return false;
-                    }
-
-                } catch (Exception ex) {
-                    addPlayer(p, section, database, shAmount);
-                    return false;
-                }
-            } else if (database.equalsIgnoreCase("headsplussh")) {
-                try {
-                    if (hpc.getConfig().getInt("player-data." + p.getUniqueId() + ".sellhead.total") != 0) {
-                        return true;
-                    } else {
-                        addPlayer(p, section, database, shAmount);
-                        return false;
-                    }
-                } catch (Exception ex) {
-                    addPlayer(p, section, database, shAmount);
-                    return false;
-                }
-            }
-
-        }
-        return false;
-    }
-
-    public boolean addSectionOnFileIfNotFound(Player p, String section, String database, int shAmount) throws SQLException {
-        if (HeadsPlus.getInstance().con) {
-            Connection c = HeadsPlus.getInstance().connection;
-            Statement s = null;
-            s = c.createStatement();
-            try {
-
-                s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + p.getUniqueId() + "'");
-                return true;
-            } catch (SQLException ex) {
-                StringBuilder sb2 = new StringBuilder();
-                sb2.append("INSERT INTO `").append(database).append("` (uuid, total");
-                for (EntityType e : de.ableEntities) {
-                    sb2.append(", ").append(e.name());
-                }
-                sb2.append(") VALUES('").append(p.getUniqueId().toString()).append("', '0'");
-                for (EntityType ignored : de.ableEntities) {
-                    sb2.append(", 0");
-                }
-                sb2.append(")");
-                s.executeUpdate(sb2.toString());
-                addOntoValue(p, section, database, shAmount);
-                return false;
-            }
-        } else {
-            if (database.equalsIgnoreCase("headspluslb")) {
-                try {
-                    if (hpl.getConfig().getInt("player-data." + p.getUniqueId().toString() + "." + section) != 0) {
-                        hpl.getConfig().getInt("player-data." + p.getUniqueId().toString() + "." + section);
-                        return true;
-                    } else {
-                        addNewPlayerValue(p, section, database, shAmount);
-                        return false;
-                    }
-                } catch (Exception ex) {
-                    addNewPlayerValue(p, section, database, shAmount);
-                    return false;
-                }
-            } else {
-                if (database.equalsIgnoreCase("headsplussh")) {
-                    if (hpc.getConfig().getInt("player-data." + p.getUniqueId().toString() + ".sellhead." + section) != 0) {
-                        hpc.getConfig().getInt("player-data." + p.getUniqueId().toString() + ".sellhead." + section);
-                        return true;
-                    } else {
-                        addNewPlayerValue(p, section, database, shAmount);
-                        return false;
-                    }
-                } else {
-                    if (hpc.getConfig().getInt("player-data." + p.getUniqueId() + ".crafting." + section) != 0) {
-                        hpc.getConfig().getInt("player-data." + p.getUniqueId().toString() + ".crafting." + section);
-                        return true;
-                    } else {
-                        addNewPlayerValue(p, section, database, shAmount);
-                        return false;
-                    }
-                }
-            }
-        }
     }
 }

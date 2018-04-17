@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class WhitelistwToggle implements IHeadsPlusCommand{
 
     private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
-    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @Override
     public String getCmdName() {
@@ -43,6 +43,11 @@ public class WhitelistwToggle implements IHeadsPlusCommand{
     }
 
     @Override
+    public boolean isCorrectUsage(String[] args, CommandSender sender) {
+        return false;
+    }
+
+    @Override
     public boolean isMainCommand() {
         return true;
     }
@@ -55,12 +60,12 @@ public class WhitelistwToggle implements IHeadsPlusCommand{
                     config.set("whitelistwOn", false);
                     config.options().copyDefaults(true);
                     HeadsPlus.getInstance().saveConfig();
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wlw-off"))));
+                    sender.sendMessage(hpc.getString("wlw-off"));
                 } else if (!config.getBoolean("whitelistwOn")) {
                     config.set("whitelistwOn", true);
                     config.options().copyDefaults(true);
                     HeadsPlus.getInstance().saveConfig();
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wlw-on"))));
+                    sender.sendMessage(hpc.getString("wlw-on"));
                 }
             } else {
                 String str = args[1];
@@ -69,18 +74,18 @@ public class WhitelistwToggle implements IHeadsPlusCommand{
                         config.set("whitelistwOn", true);
                         config.options().copyDefaults(true);
                         HeadsPlus.getInstance().saveConfig();
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wlw-on"))));
+                        sender.sendMessage(hpc.getString("wlw-on"));
                     } else {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wlw-a-on"))));
+                        sender.sendMessage(hpc.getString("wlw-a-on"));
                     }
                 } else if (str.equalsIgnoreCase("off")) {
                     if (config.getBoolean("whitelistwOn")) {
                         config.set("whitelistwOn", false);
                         config.options().copyDefaults(true);
                         HeadsPlus.getInstance().saveConfig();
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wlw-off"))));
+                        sender.sendMessage(hpc.getString("wlw-off"));
                     } else {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wlw-a-off"))));
+                        sender.sendMessage(hpc.getString("wlw-a-off"));
                     }
                 } else {
                     sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + "/headsplus whitelistw [On|Off]");

@@ -1,6 +1,5 @@
 package io.github.thatsmusic99.headsplus.commands.maincommand;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
@@ -17,9 +16,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class WhitelistwAdd implements IHeadsPlusCommand {
 
-    private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
-    private final File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
-    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @Override
     public String getCmdName() {
@@ -47,6 +44,11 @@ public class WhitelistwAdd implements IHeadsPlusCommand {
     }
 
     @Override
+    public boolean isCorrectUsage(String[] args, CommandSender sender) {
+        return false;
+    }
+
+    @Override
     public boolean isMainCommand() {
         return true;
     }
@@ -56,24 +58,20 @@ public class WhitelistwAdd implements IHeadsPlusCommand {
         try {
             if (args.length > 1) {
                 if (args[1].matches("^[A-Za-z0-9_]+$")) {
-                    if (!(configF.exists())) {
-                        HeadsPlus.getInstance().log.info("[HeadsPlus] Config not found, creating!");
-                        config.options().copyDefaults(true);
-                        HeadsPlus.getInstance().saveConfig();
-                        }
+                        FileConfiguration config = HeadsPlus.getInstance().getConfig();
                         List<String> blacklist = config.getStringList("whitelistw");
                         String aWorld = args[1].toLowerCase();
                         if (blacklist.contains(aWorld)) {
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("world-a-add"))));
+                            sender.sendMessage(hpc.getString("world-a-add"));
                         } else {
                             blacklist.add(aWorld);
                             config.set("whitelistw", blacklist);
                             config.options().copyDefaults(true);
                             HeadsPlus.getInstance().saveConfig();
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("world-added-wl").replaceAll("%w", args[1]))));
+                            sender.sendMessage(hpc.getString("world-added-wl").replaceAll("%w", args[1]));
                         }
                 } else {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("alpha-names"))));
+                    sender.sendMessage(hpc.getString("alpha-names"));
                 }
             } else {
                 sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());

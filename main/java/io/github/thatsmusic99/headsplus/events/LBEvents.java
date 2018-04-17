@@ -15,13 +15,13 @@ public class LBEvents implements Listener {
     public void onHeadDrop(EntityHeadDropEvent e) {
         try {
             if (!e.isCancelled()) {
-                if (HeadsPlus.getInstance().lb) {
+                if (HeadsPlus.getInstance().isUsingLeaderboards()) {
                     if (HeadsPlus.getInstance().getConfig().getBoolean("smite-player-if-they-get-a-head")) {
                         for (int i = 0; i < 5; i++) {
                             e.getLocation().getWorld().strikeLightning(e.getPlayer().getLocation());
                         }
                     }
-                    HeadsPlus.getInstance().mySQLAPI.addOntoValue(e.getPlayer(), e.getEntityType().name(), "headspluslb", 1);
+                    HeadsPlus.getInstance().getMySQLAPI().addOntoValue(e.getPlayer(), e.getEntityType().name(), "headspluslb", 1);
                 }
             }
         } catch (Exception ex) {
@@ -52,13 +52,13 @@ public class LBEvents implements Listener {
     public void onPHeadDrop(PlayerHeadDropEvent e) {
         try {
             if (!e.isCancelled()) {
-                if (HeadsPlus.getInstance().lb) {
+                if (HeadsPlus.getInstance().isUsingLeaderboards()) {
                     if (HeadsPlus.getInstance().getConfig().getBoolean("smite-player-if-they-get-a-head")) {
                         for (int i = 0; i < 5; i++) {
                             e.getLocation().getWorld().strikeLightning(e.getKiller().getLocation());
                         }
                     }
-                    HeadsPlus.getInstance().mySQLAPI.addOntoValue(e.getKiller(), "player", "headspluslb", 1);
+                    HeadsPlus.getInstance().getMySQLAPI().addOntoValue(e.getKiller(), "player", "headspluslb", 1);
                 }
             }
         } catch (Exception ex) {
@@ -89,14 +89,14 @@ public class LBEvents implements Listener {
     public void onHeadSold(SellHeadEvent e) {
         try {
             if (!e.isCancelled()) {
-                if (HeadsPlus.getInstance().chal) {
+                if (HeadsPlus.getInstance().hasChallengesEnabled()) {
                     for (int is : e.getEntityAmounts().values()) {
                         HPPlayer.getHPPlayer(e.getPlayer()).addXp(20 * is);
                     }
                     for (String s : e.getEntityAmounts().keySet()) {
                         for (int i : e.getEntityAmounts().values()) {
                             if (e.getEntityAmounts().get(s) == i) {
-                                HeadsPlus.getInstance().mySQLAPI.addOntoValue(e.getPlayer(), s, "headsplussh", i);
+                                HeadsPlus.getInstance().getMySQLAPI().addOntoValue(e.getPlayer(), s, "headsplussh", i);
                             }
                         }
                     }
@@ -129,11 +129,11 @@ public class LBEvents implements Listener {
     public void onHeadCraft(HeadCraftEvent e) {
         try {
             if (!e.isCancelled()) {
-                if (HeadsPlus.getInstance().chal) {
+                if (HeadsPlus.getInstance().hasChallengesEnabled()) {
                     if (e.getEntityType() != null) {
                         if (!e.getEntityType().equalsIgnoreCase("invalid")) {
                             HPPlayer.getHPPlayer(e.getPlayer()).addXp(30 * e.getHeadsCrafted());
-                            HeadsPlus.getInstance().mySQLAPI.addOntoValue(e.getPlayer(), e.getEntityType(), "headspluscraft", e.getHeadsCrafted());
+                            HeadsPlus.getInstance().getMySQLAPI().addOntoValue(e.getPlayer(), e.getEntityType(), "headspluscraft", e.getHeadsCrafted());
                         }
                     }
                 }

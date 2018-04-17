@@ -20,7 +20,7 @@ public class TabComplete implements TabCompleter {
         if (args.length == 1) {
             List<String> f = new ArrayList<>();
             List<String> c = new ArrayList<>();
-            for (IHeadsPlusCommand key : HeadsPlus.getInstance().commands) {
+            for (IHeadsPlusCommand key : HeadsPlus.getInstance().getCommands()) {
                 if (cs.hasPermission(key.getPermission())) {
                     if (key.isMainCommand()) {
                         c.add(key.getSubCommand());

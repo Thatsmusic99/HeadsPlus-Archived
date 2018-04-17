@@ -20,8 +20,8 @@ import java.util.UUID;
 
 public class HeadsPlusAPI {
 
-    private final HeadsPlusConfigHeadsX hpcHeadsX = HeadsPlus.getInstance().hpchx;
-    private final HeadsPlusConfigHeads hpcHeads = HeadsPlus.getInstance().hpch;
+    private final HeadsPlusConfigHeadsX hpcHeadsX = HeadsPlus.getInstance().getHeadsXConfig();
+    private final HeadsPlusConfigHeads hpcHeads = HeadsPlus.getInstance().getHeadsConfig();
 
     public ItemStack getHead(String option) throws NoSuchFieldException, IllegalAccessException {
         return hpcHeadsX.getSkull(option);
@@ -29,7 +29,7 @@ public class HeadsPlusAPI {
 
     public boolean isSellable(ItemStack is) throws NoSuchFieldException, IllegalAccessException {
         if (is.getType() == Material.SKULL_ITEM) {
-            if (HeadsPlus.getInstance().nms.isSellable(is)) {
+            if (HeadsPlus.getInstance().getNMS().isSellable(is)) {
                 for (String key : hpcHeads.mHeads) {
                     if (key.equalsIgnoreCase("sheep")) {
                         for (String s : hpcHeads.getConfig().getConfigurationSection("sheep.name").getKeys(false)) {
@@ -78,10 +78,10 @@ public class HeadsPlusAPI {
             }
 
             SkullMeta skullM = (SkullMeta) is.getItemMeta();
-            String owner = HeadsPlus.getInstance().nms.getSkullOwnerName(skullM);
+            String owner = HeadsPlus.getInstance().getNMS().getSkullOwnerName(skullM);
 
            // if ((skullM.getLore() != null) &&  (skullM.getLore().equals(ls))) {
-            if (HeadsPlus.getInstance().nms.isSellable(is)) {
+            if (HeadsPlus.getInstance().getNMS().isSellable(is)) {
                 List<String> mHeads = hpcHeads.mHeads;
                 List<String> uHeads = hpcHeads.uHeads;
                 for (String key : mHeads) {
@@ -202,7 +202,7 @@ public class HeadsPlusAPI {
 
         }
         SkullMeta skullM = (SkullMeta) is.getItemMeta();
-        String owner = HeadsPlus.getInstance().nms.getSkullOwnerName(skullM);
+        String owner = HeadsPlus.getInstance().getNMS().getSkullOwnerName(skullM);
         List<String> ls = new ArrayList<>();
         for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
             ls.add(ChatColor.translateAlternateColorCodes('&', ChatColor.stripColor(str)));
@@ -246,28 +246,28 @@ public class HeadsPlusAPI {
 
     @Deprecated
     public int getPlayerInLeaderboards(OfflinePlayer p, String section) throws SQLException {
-        return HeadsPlus.getInstance().hplb.getScores(section).get(p);
+        return HeadsPlus.getInstance().getLeaderboardsConfig().getScores(section).get(p);
     }
 
     @Deprecated
     public LinkedHashMap<OfflinePlayer, Integer> getScores(String section) throws SQLException {
-        return HeadsPlus.getInstance().hplb.getScores(section);
+        return HeadsPlus.getInstance().getLeaderboardsConfig().getScores(section);
     }
 
     public int getPlayerInLeaderboards(OfflinePlayer p, String section, String database) throws SQLException {
         try {
-            return HeadsPlus.getInstance().mySQLAPI.getScores(section, database).get(p);
+            return HeadsPlus.getInstance().getMySQLAPI().getScores(section, database).get(p);
         } catch (NullPointerException ex) {
             return 0;
         }
     }
 
     public LinkedHashMap<OfflinePlayer, Integer> getScores(String section, String database) throws SQLException {
-        return HeadsPlus.getInstance().mySQLAPI.getScores(section, database);
+        return HeadsPlus.getInstance().getMySQLAPI().getScores(section, database);
     }
 
     public List<Challenge> getChallenges() {
-        return HeadsPlus.getInstance().challenges;
+        return HeadsPlus.getInstance().getChallenges();
     }
 
     public Challenge getChallenge(String challengeName) {

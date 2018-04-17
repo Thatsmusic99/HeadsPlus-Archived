@@ -1,7 +1,6 @@
 package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.commands.HeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
@@ -10,14 +9,13 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
 public class WhitelistwDelete implements IHeadsPlusCommand {
     private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
-    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @Override
     public String getCmdName() {
@@ -45,6 +43,11 @@ public class WhitelistwDelete implements IHeadsPlusCommand {
     }
 
     @Override
+    public boolean isCorrectUsage(String[] args, CommandSender sender) {
+        return false;
+    }
+
+    @Override
     public boolean isMainCommand() {
         return true;
     }
@@ -61,12 +64,12 @@ public class WhitelistwDelete implements IHeadsPlusCommand {
                         config.set("whitelistw", blacklist);
                         config.options().copyDefaults(true);
                         HeadsPlus.getInstance().saveConfig();
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("world-removed-wl").replaceAll("%w", args[1]))));
+                        sender.sendMessage(hpc.getString("world-removed-wl").replaceAll("%w", args[1]));
                     } else {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("world-a-removed-wl"))));
+                        sender.sendMessage(hpc.getString("world-a-removed-wl"));
                     }
                 } else {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("alpha-names"))));
+                    sender.sendMessage(hpc.getString("alpha-names"));
                 }
             } else {
                 sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());

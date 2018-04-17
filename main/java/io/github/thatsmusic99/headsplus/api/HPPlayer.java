@@ -8,6 +8,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class HPPlayer {
@@ -21,17 +22,20 @@ public class HPPlayer {
 
     public HPPlayer(OfflinePlayer p) {
         this.player = p;
-        this.xp = HeadsPlus.getInstance().hpchl.getConfig().getInt("player-data." + getPlayer().getUniqueId().toString() + ".profile.xp");
+        HeadsPlusChallenges hpchl = HeadsPlus.getInstance().getChallengeConfig();
+        HeadsPlusAPI hapi = HeadsPlus.getInstance().getAPI();
+        HashMap<Integer, Level> levels = HeadsPlus.getInstance().getLevels();
+        this.xp = hpchl.getConfig().getInt("player-data." + getPlayer().getUniqueId().toString() + ".profile.xp");
         List<Challenge> sc = new ArrayList<>();
-        for (String str : HeadsPlus.getInstance().hpchl.getConfig().getStringList("player-data." + getPlayer().getUniqueId().toString() + ".completed-challenges")) {
-            sc.add(HeadsPlus.getInstance().hapi.getChallengeByConfigName(str));
+        for (String str : hpchl.getConfig().getStringList("player-data." + getPlayer().getUniqueId().toString() + ".completed-challenges")) {
+            sc.add(hapi.getChallengeByConfigName(str));
         }
-        if (HeadsPlus.getInstance().hpchl.getConfig().getString("player-data." + getPlayer().getUniqueId().toString() + ".profile.level") == null) {
-            for (int i = HeadsPlus.getInstance().levels.size() - 1; i > 0; i--) {
-                if (HeadsPlus.getInstance().levels.get(i).getRequiredXP() <= getXp()) {
-                    level = HeadsPlus.getInstance().levels.get(i);
+        if (hpchl.getConfig().getString("player-data." + getPlayer().getUniqueId().toString() + ".profile.level") == null) {
+            for (int i = levels.size() - 1; i > 0; i--) {
+                if (levels.get(i).getRequiredXP() <= getXp()) {
+                    level = levels.get(i);
                     try {
-                        nextLevel = HeadsPlus.getInstance().levels.get(i + 1);
+                        nextLevel = levels.get(i + 1);
                     } catch (IndexOutOfBoundsException e) { // End of levels
                         nextLevel = null;
                     }
@@ -39,11 +43,11 @@ public class HPPlayer {
                 }
             }
         } else {
-            for (int i = HeadsPlus.getInstance().levels.size() - 1; i > 0; i--) {
-                if (HeadsPlus.getInstance().levels.get(i).getConfigName().equals(HeadsPlus.getInstance().hpchl.getConfig().getString("player-data." + getPlayer().getUniqueId().toString() + ".profile.level"))) {
-                    level = HeadsPlus.getInstance().levels.get(i);
+            for (int i = levels.size() - 1; i > 0; i--) {
+                if (levels.get(i).getConfigName().equals(hpchl.getConfig().getString("player-data." + getPlayer().getUniqueId().toString() + ".profile.level"))) {
+                    level = levels.get(i);
                     try {
-                        nextLevel = HeadsPlus.getInstance().levels.get(i + 1);
+                        nextLevel = levels.get(i + 1);
                     } catch (IndexOutOfBoundsException e) { // End of levels
                         nextLevel = null;
                     }
@@ -86,7 +90,7 @@ public class HPPlayer {
     }
 
     public void addCompleteChallenge(Challenge c) {
-        HeadsPlusChallenges hpc = HeadsPlus.getInstance().hpchl;
+        HeadsPlusChallenges hpc = HeadsPlus.getInstance().getChallengeConfig();
         List<String> str = hpc.getConfig().getStringList("player-data." + getPlayer().getUniqueId().toString() + ".completed-challenges");
         str.add(c.getConfigName());
         hpc.getConfig().set("player-data." + getPlayer().getUniqueId().toString() + ".completed-challenges", str);
@@ -94,7 +98,7 @@ public class HPPlayer {
     }
 
     public void addXp(int xp) {
-        HeadsPlusChallenges hpc = HeadsPlus.getInstance().hpchl;
+        HeadsPlusChallenges hpc = HeadsPlus.getInstance().getChallengeConfig();
         if (hpc.getConfig().getInt("player-data." + getPlayer().getUniqueId().toString() + ".profile.xp") <= 0) {
             hpc.getConfig().addDefault("player-data." + getPlayer().getUniqueId().toString() + ".profile.xp", xp);
         } else {
@@ -109,16 +113,16 @@ public class HPPlayer {
             if (nextLevel.getRequiredXP() <= getXp()) {
                 level = nextLevel;
                 for (Player p : Bukkit.getOnlinePlayers()) {
-                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().hpc.getConfig().getString("level-up")
+                    p.sendMessage(HeadsPlus.getInstance().getMessagesConfig().getString("level-up")
                             .replaceAll("%p", this.getPlayer().getName())
-                            .replaceAll("%lvl", level.getDisplayName())
-                            .replaceAll("%h", HeadsPlus.getInstance().hpc.getConfig().getString("prefix"))));
+                            .replaceAll("%lvl", level.getDisplayName()));
                 }
+                HashMap<Integer, Level> levels = HeadsPlus.getInstance().getLevels();
                 hpc.getConfig().set("player-data." + getPlayer().getUniqueId().toString() + ".profile.level", level.getConfigName());
-                for (int i = 1; i < HeadsPlus.getInstance().levels.size(); i++) {
-                    if (HeadsPlus.getInstance().levels.get(i) == level) {
+                for (int i = 1; i < levels.size(); i++) {
+                    if (levels.get(i) == level) {
                         try {
-                            nextLevel = HeadsPlus.getInstance().levels.get(i + 1);
+                            nextLevel = levels.get(i + 1);
                         } catch (IndexOutOfBoundsException e) { // End of levels
                             nextLevel = null;
                         }

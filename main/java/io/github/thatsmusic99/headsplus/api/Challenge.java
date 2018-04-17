@@ -5,6 +5,7 @@ import io.github.thatsmusic99.headsplus.config.challenges.HPChallengeRewardTypes
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeDifficulty;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeTypes;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
+import net.milkbowl.vault.permission.Permission;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -102,18 +103,18 @@ public class Challenge {
         if (getChallengeType() == HeadsPlusChallengeTypes.MISC) {
             return true;
         } else if (getChallengeType() == HeadsPlusChallengeTypes.CRAFTING) {
-            return HeadsPlus.getInstance().hapi.getPlayerInLeaderboards(p, getHeadType(), "headspluscraft") >= getRequiredHeadAmount();
+            return HeadsPlus.getInstance().getAPI().getPlayerInLeaderboards(p, getHeadType(), "headspluscraft") >= getRequiredHeadAmount();
         } else if (getChallengeType() == HeadsPlusChallengeTypes.LEADERBOARD) {
-            return HeadsPlus.getInstance().hapi.getPlayerInLeaderboards(p, getHeadType(), "headspluslb") >= getRequiredHeadAmount();
+            return HeadsPlus.getInstance().getAPI().getPlayerInLeaderboards(p, getHeadType(), "headspluslb") >= getRequiredHeadAmount();
         } else {
-            return HeadsPlus.getInstance().hapi.getPlayerInLeaderboards(p, getHeadType(), "headsplussh") >= getRequiredHeadAmount();
+            return HeadsPlus.getInstance().getAPI().getPlayerInLeaderboards(p, getHeadType(), "headsplussh") >= getRequiredHeadAmount();
         }
     }
 
     public boolean isComplete(Player p) {
-        FileConfiguration c = HeadsPlus.getInstance().hpchl.getConfig();
+        FileConfiguration c = HeadsPlus.getInstance().getChallengeConfig().getConfig();
         if (c.getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").size() <= 0) {
-            HeadsPlus.getInstance().hpchl.getConfig().addDefault("player-data." + p.getUniqueId().toString() + ".completed-challenges", new ArrayList<>());
+            HeadsPlus.getInstance().getChallengeConfig().getConfig().addDefault("player-data." + p.getUniqueId().toString() + ".completed-challenges", new ArrayList<>());
             return false;
         } else {
             return c.getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").contains(getConfigName());
@@ -164,9 +165,9 @@ public class Challenge {
         player.addXp(getGainedXP());
         reward(p);
         for (Player pl : Bukkit.getOnlinePlayers()) {
-            pl.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(HeadsPlus.getInstance().hpc.getConfig().getString("challenge-complete")
+            pl.sendMessage(HeadsPlus.getInstance().getMessagesConfig().getString("challenge-complete")
                     .replaceAll("%c", getMainName())
-                    .replaceAll("%p", p.getName()))));
+                    .replaceAll("%p", p.getName()));
         }
         p.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + LocaleManager.getLocale().getReward() + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + sb2.toString());
         p.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "XP: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + getGainedXP());
@@ -174,17 +175,18 @@ public class Challenge {
 
     private void reward(Player p) {
         HPChallengeRewardTypes re = getRewardType();
+        Permission perms = HeadsPlus.getInstance().getPermissions();
         if (re == HPChallengeRewardTypes.ECO) {
             if (HeadsPlus.getInstance().econ()) {
-                HeadsPlus.getInstance().econ.depositPlayer(p, Double.valueOf(String.valueOf(getRewardValue())));
+                HeadsPlus.getInstance().getEconomy().depositPlayer(p, Double.valueOf(String.valueOf(getRewardValue())));
             } else {
                 HeadsPlus.getInstance().getLogger().warning("Vault wasn't found upon startup! Can not add group.");
             }
 
         } else if (re == HPChallengeRewardTypes.ADD_GROUP) {
             if (HeadsPlus.getInstance().econ()) {
-                if (!HeadsPlus.getInstance().perms.playerInGroup(p, (String) getRewardValue())) {
-                    HeadsPlus.getInstance().perms.playerAddGroup(p, (String) getRewardValue());
+                if (!perms.playerInGroup(p, (String) getRewardValue())) {
+                    perms.playerAddGroup(p, (String) getRewardValue());
                 }
             } else {
                 HeadsPlus.getInstance().getLogger().warning("Vault wasn't found upon startup! Can not add group.");
@@ -192,8 +194,8 @@ public class Challenge {
 
         } else if (re == HPChallengeRewardTypes.REMOVE_GROUP) {
             if (HeadsPlus.getInstance().econ()) {
-                if (HeadsPlus.getInstance().perms.playerInGroup(p, (String) getRewardValue())) {
-                    HeadsPlus.getInstance().perms.playerRemoveGroup(p, (String) getRewardValue());
+                if (perms.playerInGroup(p, (String) getRewardValue())) {
+                    perms.playerRemoveGroup(p, (String) getRewardValue());
                 }
             } else {
                 HeadsPlus.getInstance().getLogger().warning("Vault wasn't found upon startup! Can not remove group.");

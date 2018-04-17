@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import io.github.thatsmusic99.headsplus.api.HeadCraftEvent;
+import io.github.thatsmusic99.headsplus.api.HeadsPlusAPI;
+import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -24,72 +26,70 @@ public class RecipePerms implements Listener {
 	public void onCraft(InventoryClickEvent e) {
 	    try {
             if (HeadsPlus.getInstance().getConfig().getBoolean("craftHeads")) {
+
                 Player player = (Player) e.getWhoClicked();
-                List<String> worlds = HeadsPlus.getInstance().getConfig().getStringList("blacklistw");
-                if ((!worlds.contains(player.getWorld().getName())) || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn") || player.hasPermission("headsplus.bypass.blacklistw")) {
-                    if (HeadsPlus.getInstance().getConfig().getStringList("whitelistw").contains(player.getWorld().getName())) {
-                        if ((player.hasPermission("headsplus.craft"))) {
-                            if (e.getInventory().getType().equals(InventoryType.CRAFTING) || e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
+                NMSManager nms = HeadsPlus.getInstance().getNMS();
+                HeadsPlusAPI hapi = HeadsPlus.getInstance().getAPI();
+
+                if (player.hasPermission("headsplus.craft")) {
+                    if (e.getInventory().getType().equals(InventoryType.CRAFTING) || e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
+                        List<String> worlds = HeadsPlus.getInstance().getConfig().getStringList("blacklistw");
+                        if ((!worlds.contains(player.getWorld().getName())) || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn") || player.hasPermission("headsplus.bypass.blacklistw")) {
+                            if (HeadsPlus.getInstance().getConfig().getStringList("whitelistw").contains(player.getWorld().getName())) {
                                 HeadCraftEvent event;
                                 int amount = shift(e);
-                                event = new HeadCraftEvent(((Player) e.getWhoClicked()).getPlayer(), e.getCurrentItem(), e.getWhoClicked().getWorld(), e.getWhoClicked().getLocation(), amount, HeadsPlus.getInstance().hapi.getSkullType(e.getCurrentItem()));
+                                event = new HeadCraftEvent(player, e.getCurrentItem(), e.getWhoClicked().getWorld(), e.getWhoClicked().getLocation(), amount, hapi.getSkullType(e.getCurrentItem()));
                                 Bukkit.getServer().getPluginManager().callEvent(event);
                                 if (!event.isCancelled()) {
-                                    e.setCurrentItem(HeadsPlus.getInstance().nms.addNBTTag(e.getCurrentItem()));
+                                    e.setCurrentItem(nms.addNBTTag(e.getCurrentItem()));
                                     return;
                                 } else {
                                     e.setCancelled(true);
                                 }
-                            }
-                            return;
-                        }
-                    } else if (player.hasPermission("headsplus.bypass.whitelistw")){
-                        if ((player.hasPermission("headsplus.craft"))) {
-                            if (e.getInventory().getType().equals(InventoryType.CRAFTING) || e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
+                                return;
+
+                            } else if (player.hasPermission("headsplus.bypass.whitelistw")){
                                 if (e.getCurrentItem() != null) {
                                     if (e.getCurrentItem().getItemMeta() instanceof SkullMeta) {
-                                        if (HeadsPlus.getInstance().hapi.getSkullType(e.getCurrentItem()) != null) {
+                                        if (hapi.getSkullType(e.getCurrentItem()) != null) {
                                             try {
                                                 HeadCraftEvent event;
-                                                int amount = shift(e);
-                                                event = new HeadCraftEvent(((Player) e.getWhoClicked()).getPlayer(), e.getCurrentItem(), e.getWhoClicked().getWorld(), e.getWhoClicked().getLocation(), amount, HeadsPlus.getInstance().hapi.getSkullType(e.getCurrentItem()));
+                                                    int amount = shift(e);
+                                                    event = new HeadCraftEvent(player, e.getCurrentItem(), e.getWhoClicked().getWorld(), e.getWhoClicked().getLocation(), amount, hapi.getSkullType(e.getCurrentItem()));
+                                                    Bukkit.getServer().getPluginManager().callEvent(event);
+                                                    if (!event.isCancelled()) {
+                                                        e.setCurrentItem(nms.addNBTTag(e.getCurrentItem()));
+                                                        return;
+                                                    } else {
+                                                        e.setCancelled(true);
+                                                    }
+                                                } catch (NullPointerException | ClassCastException ignored) {
 
-                                                Bukkit.getServer().getPluginManager().callEvent(event);
-                                                if (!event.isCancelled()) {
-                                                    e.setCurrentItem(HeadsPlus.getInstance().nms.addNBTTag(e.getCurrentItem()));
-                                                    return;
-                                                } else {
-                                                    e.setCancelled(true);
                                                 }
-                                            } catch (NullPointerException | ClassCastException ignored) {
-
                                             }
                                         }
                                     }
-                                }
-                            }
-                            return;
-                        }
-                    } else if (!HeadsPlus.getInstance().getConfig().getBoolean("whitelistwOn")) {
-                        if ((player.hasPermission("headsplus.craft"))) {
-                            if (e.getInventory().getType().equals(InventoryType.CRAFTING) || e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
 
+                                return;
+
+                            } else if (!HeadsPlus.getInstance().getConfig().getBoolean("whitelistwOn")) {
                                 HeadCraftEvent event;
                                 int amount = shift(e);
-                                event = new HeadCraftEvent(((Player) e.getWhoClicked()).getPlayer(), e.getCurrentItem(), e.getWhoClicked().getWorld(), e.getWhoClicked().getLocation(), amount, HeadsPlus.getInstance().hapi.getSkullType(e.getCurrentItem()));
+                                event = new HeadCraftEvent(player, e.getCurrentItem(), e.getWhoClicked().getWorld(), e.getWhoClicked().getLocation(), amount, hapi.getSkullType(e.getCurrentItem()));
                                 Bukkit.getServer().getPluginManager().callEvent(event);
                                 if (!event.isCancelled()) {
-                                    e.setCurrentItem(HeadsPlus.getInstance().nms.addNBTTag(e.getCurrentItem()));
+                                    nms.addNBTTag(e.getCurrentItem());
                                     return;
                                 } else {
                                     e.setCancelled(true);
                                 }
+                                return;
                             }
-                            return;
                         }
                     }
 
                 }
+
                 if (e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
                     if(e.getSlot() == 0){
                         if(e.getCurrentItem().getType() == Material.SKULL_ITEM){

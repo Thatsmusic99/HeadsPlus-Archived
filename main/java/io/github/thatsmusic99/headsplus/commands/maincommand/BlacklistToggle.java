@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 public class BlacklistToggle implements IHeadsPlusCommand {
 	
 	private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
-	private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+	private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
 	@Override
 	public String getCmdName() {
@@ -44,6 +44,11 @@ public class BlacklistToggle implements IHeadsPlusCommand {
 	}
 
 	@Override
+	public boolean isCorrectUsage(String[] args, CommandSender sender) {
+		return false;
+	}
+
+	@Override
 	public boolean isMainCommand() {
 		return true;
 	}
@@ -56,12 +61,12 @@ public class BlacklistToggle implements IHeadsPlusCommand {
 			        config.set("blacklistOn", false);
 			        config.options().copyDefaults(true);
 			        HeadsPlus.getInstance().saveConfig();
-			        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("bl-off"))));
+			        sender.sendMessage(hpc.getString("bl-off"));
 			    } else if (!config.getBoolean("blacklistOn")) {
 			        config.set("blacklistOn", true);
 			        config.options().copyDefaults(true);
 			        HeadsPlus.getInstance().saveConfig();
-			        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("bl-on"))));
+			        sender.sendMessage(hpc.getString("bl-on"));
 			    }
 			} else {
 				if (args[1].equalsIgnoreCase("on")) {
@@ -69,9 +74,9 @@ public class BlacklistToggle implements IHeadsPlusCommand {
 						config.set("blacklistOn", true);
 						config.options().copyDefaults(true);
 						HeadsPlus.getInstance().saveConfig();
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("bl-on"))));
+						sender.sendMessage(hpc.getString("bl-on"));
 					} else {
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("bl-a-on"))));
+						sender.sendMessage(hpc.getString("bl-a-on"));
 					}
 
 				} else if (args[1].equalsIgnoreCase("off")) {
@@ -79,16 +84,16 @@ public class BlacklistToggle implements IHeadsPlusCommand {
 						config.set("blacklistOn", false);
 						config.options().copyDefaults(true);
 						HeadsPlus.getInstance().saveConfig();
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("bl-off"))));
+						sender.sendMessage(hpc.getString("bl-off"));
 					} else {
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("bl-a-off"))));
+						sender.sendMessage(hpc.getString("bl-a-off"));
 					}
 				} else {
 					sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());
 				}
 			}
 		} catch (Exception e) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("bl-fail"))));
+            sender.sendMessage(hpc.getString("bl-fail"));
             if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
                 e.printStackTrace();
             }

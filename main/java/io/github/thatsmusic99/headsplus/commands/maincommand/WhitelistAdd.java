@@ -9,15 +9,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
 public class WhitelistAdd implements IHeadsPlusCommand {
-    private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
-    private final File configF = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
-    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().hpc;
+    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @Override
     public String getCmdName() {
@@ -45,6 +42,11 @@ public class WhitelistAdd implements IHeadsPlusCommand {
     }
 
     @Override
+    public boolean isCorrectUsage(String[] args, CommandSender sender) {
+        return false;
+    }
+
+    @Override
     public boolean isMainCommand() {
         return true;
     }
@@ -54,33 +56,20 @@ public class WhitelistAdd implements IHeadsPlusCommand {
         try {
             if (args.length > 1) {
                 if (args[1].matches("^[A-Za-z0-9_]+$")) {
-                    try {
-
-                        if  (!(configF.exists())) {
-                            HeadsPlus.getInstance().log.info("[HeadsPlus] Config not found, creating!");
-                            config.options().copyDefaults(true);
-                            HeadsPlus.getInstance().saveConfig();
-                            @SuppressWarnings("unused")
-                            File cfile = new File(HeadsPlus.getInstance().getDataFolder(), "config.yml");
-                        }
-                        List<String> wl = config.getStringList("whitelist");
-                        String aHead = args[1].toLowerCase();
-                        if (wl.contains(aHead)) {
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("head-a-add"))));
-                        } else {
-                            wl.add(aHead);
-                            config.set("whitelist", wl);
-                            config.options().copyDefaults(true);
-                            HeadsPlus.getInstance().saveConfig();
-
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("head-added-wl").replaceAll("%p", args[1]))));
-                        }
-                    } catch (Exception e) {
-                        HeadsPlus.getInstance().log.severe("[HeadsPlus] Failed to add head!");
-
+                    FileConfiguration config = HeadsPlus.getInstance().getConfig();
+                    List<String> wl = config.getStringList("whitelist");
+                    String aHead = args[1].toLowerCase();
+                    if (wl.contains(aHead)) {
+                        sender.sendMessage(hpc.getString("head-a-add"));
+                    } else {
+                        wl.add(aHead);
+                        config.set("whitelist", wl);
+                        config.options().copyDefaults(true);
+                        HeadsPlus.getInstance().saveConfig();
+                        sender.sendMessage(hpc.getString("head-added-wl").replaceAll("%p", args[1]));
                     }
                 } else {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("alpha-names"))));
+                    sender.sendMessage(hpc.getString("alpha-names"));
                 }
             } else {
                 sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());
@@ -89,7 +78,7 @@ public class WhitelistAdd implements IHeadsPlusCommand {
             if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
                 e.printStackTrace();
             }
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().translateMessages(hpc.getConfig().getString("wl-fail"))));
+            sender.sendMessage(hpc.getString("wl-fail"));
             if (HeadsPlus.getInstance().getConfig().getBoolean("debug.create-debug-files")) {
                 Logger log = HeadsPlus.getInstance().getLogger();
                 log.severe("HeadsPlus has failed to execute this command. An error report has been made in /plugins/HeadsPlus/debug");

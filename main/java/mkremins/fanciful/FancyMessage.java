@@ -56,11 +56,11 @@ public class FancyMessage implements JsonRepresentedObject, Cloneable, Iterable<
 	 *
 	 * @param firstPartText The existing text in the message.
 	 */
-	public FancyMessage(final String firstPartText) {
+    private FancyMessage(final String firstPartText) {
 		this(rawText(firstPartText));
 	}
 
-	public FancyMessage(final TextualComponent firstPartText) {
+	private FancyMessage(final TextualComponent firstPartText) {
 		messageParts = new ArrayList<>();
 		messageParts.add(new MessagePart(firstPartText));
 		jsonString = null;
@@ -236,7 +236,7 @@ public class FancyMessage implements JsonRepresentedObject, Cloneable, Iterable<
 	 * @param lines The lines of text which will be displayed to the client upon hovering.
 	 * @return This builder instance.
 	 */
-	public FancyMessage tooltip(final String... lines) {
+    private FancyMessage tooltip(final String... lines) {
 		StringBuilder builder = new StringBuilder();
 		for (int i = 0; i < lines.length; i++) {
 			builder.append(lines[i]);
@@ -255,7 +255,7 @@ public class FancyMessage implements JsonRepresentedObject, Cloneable, Iterable<
 	 * @param text The formatted text which will be displayed to the client upon hovering.
 	 * @return This builder instance.
 	 */
-	public FancyMessage formattedTooltip(FancyMessage text) {
+    private FancyMessage formattedTooltip(FancyMessage text) {
 		for (MessagePart component : text.messageParts) {
 			if (component.clickActionData != null && component.clickActionName != null) {
 				throw new IllegalArgumentException("The tooltip text cannot have click data.");
@@ -274,7 +274,7 @@ public class FancyMessage implements JsonRepresentedObject, Cloneable, Iterable<
 	 * @param lines The lines of formatted text which will be displayed to the client upon hovering.
 	 * @return This builder instance.
 	 */
-	public FancyMessage formattedTooltip(FancyMessage... lines) {
+    private FancyMessage formattedTooltip(FancyMessage... lines) {
 		if (lines.length < 1) {
 			onHover(null, null); // Clear tooltip
 			return this;
@@ -354,7 +354,7 @@ public class FancyMessage implements JsonRepresentedObject, Cloneable, Iterable<
 	 * @param replacements The replacements, in order, that will be used in the language-specific message.
 	 * @return This builder instance.
 	 */
-	public FancyMessage translationReplacements(final FancyMessage... replacements) {
+    private FancyMessage translationReplacements(final FancyMessage... replacements) {
 		Collections.addAll(latest().translationReplacements, replacements);
 
 		dirty = true;
@@ -390,7 +390,7 @@ public class FancyMessage implements JsonRepresentedObject, Cloneable, Iterable<
 	 * @param text The text which will populate the new message component.
 	 * @return This builder instance.
 	 */
-	public FancyMessage then(final TextualComponent text) {
+    private FancyMessage then(final TextualComponent text) {
 		if (!latest().hasText()) {
 			throw new IllegalStateException("previous message part has no text");
 		}
@@ -433,7 +433,7 @@ public class FancyMessage implements JsonRepresentedObject, Cloneable, Iterable<
 	 *
 	 * @return The JSON string representing this object.
 	 */
-	public String toJSONString() {
+    private String toJSONString() {
 		if (!dirty && jsonString != null) {
 			return jsonString;
 		}
@@ -510,7 +510,7 @@ public class FancyMessage implements JsonRepresentedObject, Cloneable, Iterable<
 	 *
 	 * @return A human-readable string representing limited formatting in addition to the core text of this message.
 	 */
-	public String toOldMessageFormat() {
+    private String toOldMessageFormat() {
 		StringBuilder result = new StringBuilder();
 		for (MessagePart part : this) {
 			result.append(part.color == null ? "" : part.color);
@@ -580,7 +580,7 @@ public class FancyMessage implements JsonRepresentedObject, Cloneable, Iterable<
 	 * @param json The JSON string which represents a fancy message.
 	 * @return A {@code FancyMessage} representing the parameterized JSON message.
 	 */
-	public static FancyMessage deserialize(String json) {
+	private static FancyMessage deserialize(String json) {
 		JsonObject serialized = _stringParser.parse(json).getAsJsonObject();
 		JsonArray extra = serialized.getAsJsonArray("extra"); // Get the extra component
 		FancyMessage returnVal = new FancyMessage();

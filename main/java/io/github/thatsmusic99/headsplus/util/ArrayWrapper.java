@@ -17,7 +17,7 @@ import java.util.Collection;
  * @author Glen Husman
  * @see Arrays
  */
-public final class ArrayWrapper<E> {
+final class ArrayWrapper<E> {
 
 	/**
 	 * Creates an array wrapper with some elements.

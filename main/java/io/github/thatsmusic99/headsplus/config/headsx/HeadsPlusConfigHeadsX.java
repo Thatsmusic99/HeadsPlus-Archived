@@ -3,6 +3,7 @@ package io.github.thatsmusic99.headsplus.config.headsx;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.ConfigSettings;
 import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import org.apache.commons.codec.binary.Base64;
@@ -149,26 +150,7 @@ public class HeadsPlusConfigHeadsX extends ConfigSettings {
         try {
             return getConfig().getString("heads." + st[1] + ".texture");
         } catch (Exception ex) {
-            HeadsPlus.getInstance().getLogger().log(Level.SEVERE, "Texture returning error. Please report to the developer if this consists!");
-            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
-                ex.printStackTrace();
-            }
-            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.create-debug-files")) {
-                try {
-                    Logger log = HeadsPlus.getInstance().getLogger();
-                    String ste = new DebugFileCreator().createReport(ex, "Event (EntityHeadDropEvent, LBEvents)");
-                    log.severe("Report name: " + ste);
-                    log.severe("Please submit this report to the developer at one of the following links:");
-                    log.severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
-                    log.severe("https://discord.gg/nbT7wC2");
-                    log.severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
-                } catch (IOException e1) {
-                    if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
-                        e1.printStackTrace();
-                    }
-                }
-            }
-
+            new DebugPrint(ex, "Startup (headsx.yml)", false, null);
             return "";
         }
     }

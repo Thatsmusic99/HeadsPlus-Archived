@@ -180,7 +180,7 @@ public class Challenge {
             if (HeadsPlus.getInstance().econ()) {
                 HeadsPlus.getInstance().getEconomy().depositPlayer(p, Double.valueOf(String.valueOf(getRewardValue())));
             } else {
-                HeadsPlus.getInstance().getLogger().warning("Vault wasn't found upon startup! Can not add group.");
+                HeadsPlus.getInstance().log.warning(HeadsPlus.getInstance().getMessagesConfig().getString("no-vault-2"));
             }
 
         } else if (re == HPChallengeRewardTypes.ADD_GROUP) {
@@ -189,7 +189,7 @@ public class Challenge {
                     perms.playerAddGroup(p, (String) getRewardValue());
                 }
             } else {
-                HeadsPlus.getInstance().getLogger().warning("Vault wasn't found upon startup! Can not add group.");
+                HeadsPlus.getInstance().log.warning(HeadsPlus.getInstance().getMessagesConfig().getString("no-vault-2"));
             }
 
         } else if (re == HPChallengeRewardTypes.REMOVE_GROUP) {
@@ -198,7 +198,7 @@ public class Challenge {
                     perms.playerRemoveGroup(p, (String) getRewardValue());
                 }
             } else {
-                HeadsPlus.getInstance().getLogger().warning("Vault wasn't found upon startup! Can not remove group.");
+                HeadsPlus.getInstance().log.warning(HeadsPlus.getInstance().getMessagesConfig().getString("no-vault-2"));
             }
         } else if (re == HPChallengeRewardTypes.GIVE_ITEM) {
             try {

@@ -25,11 +25,6 @@ public class hu_hu implements Locale {
     }
 
     @Override
-    public String getReloadFailMessage() {
-        return "%h &cA konfigot nem sikerült újratölteni!";
-    }
-
-    @Override
     public String getHeadInteractMessage() {
         return "&3Azaz &b%p &3feje!";
     }
@@ -62,11 +57,6 @@ public class hu_hu implements Locale {
     @Override
     public String getInvalidArguments() {
         return "&cÉrvénytelen argumentumok!";
-    }
-
-    @Override
-    public String getSellFail() {
-        return "&cNem tudod eladni a fejet!";
     }
 
     @Override
@@ -280,26 +270,6 @@ public class hu_hu implements Locale {
     }
 
     @Override
-    public String getBlacklistFail() {
-        return "%h &cNem sikerült felvenni a fejét a feketelistára!";
-    }
-
-    @Override
-    public String getWhitelistFail() {
-        return "%h &cNem sikerült felvenni a fejét a fehérlistára!";
-    }
-
-    @Override
-    public String getWBlacklistFail() {
-        return "%h &cNem sikerült hozzáadni a világot a feketelistához!";
-    }
-
-    @Override
-    public String getWWhitelistFail() {
-        return "%h &cNem sikerült hozzáadni a világot fehérlistához!";
-    }
-
-    @Override
     public String getDisabledCommand() {
         return "&cEz a parancs le van tiltva.";
     }
@@ -327,11 +297,6 @@ public class hu_hu implements Locale {
     @Override
     public String getBuySuccess() {
         return "&3Vettél egy fejre &b%l &3és most már &b%b!";
-    }
-
-    @Override
-    public String getBuyFail() {
-        return "&cNem vásárolhatsz fejet!";
     }
 
     @Override
@@ -572,5 +537,50 @@ public class hu_hu implements Locale {
     @Override
     public String contributors() {
         return "Közreműködők: ";
+    }
+
+    @Override
+    public String getPluginUpToDate() {
+        return "%h &3A bővítmény naprakész!";
+    }
+
+    @Override
+    public String getEnabled() {
+        return "%h &3A HeadsPlus engedélyezve volt!";
+    }
+
+    @Override
+    public String getErrorEnabled() {
+        return "%h &cA HeadsPlus nem indult megfelelően. Hibaüzenet készült a /plugins/HeadsPlus/debug";
+    }
+
+    @Override
+    public String getDisabled() {
+        return "%h &3A HeadsPlus letiltott!";
+    }
+
+    @Override
+    public String badTheme() {
+        return "%h &cHibás téma került be! Téma módosítása nem történik.";
+    }
+
+    @Override
+    public String getCommandFail() {
+        return "%h &cNem sikerült futtatni ezt a parancsot!";
+    }
+
+    @Override
+    public String noVault() {
+        return "%h &cA Vault nem található! A fejeket nem lehet eladni, és a kihívás jutalmak nem tudnak hozzáadni/eltávolítani a csoportokat.";
+    }
+
+    @Override
+    public String descDebug() {
+        return "Egy hibakereső fájlt bocsát ki.";
+    }
+
+    @Override
+    public String noVaultGroup() {
+        return "%h &cA Vault nem indult elindításkor! Csoport hozzáadása nem lehetséges.";
     }
 }

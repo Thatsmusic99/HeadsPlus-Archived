@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.events;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -35,25 +36,7 @@ public class PlaceEvent implements Listener {
                 }
             }
         } catch (Exception ex) {
-            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
-                ex.printStackTrace();
-            }
-            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.create-debug-files")) {
-                Logger log = HeadsPlus.getInstance().getLogger();
-                log.severe("HeadsPlus has failed to fire this event. An error report has been made in /plugins/HeadsPlus/debug");
-                try {
-                    String s = new DebugFileCreator().createReport(ex, "Event (PlaceEvent)");
-                    log.severe("Report name: " + s);
-                    log.severe("Please submit this report to the developer at one of the following links:");
-                    log.severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
-                    log.severe("https://discord.gg/nbT7wC2");
-                    log.severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
-                } catch (IOException e1) {
-                    if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
-                        e1.printStackTrace();
-                    }
-                }
-            }
+            new DebugPrint(ex, "Event (PlaceEvent)", false, null);
         }
     }
 }

@@ -13,10 +13,6 @@ public interface Locale {
     // This is different to reloading as it's saying the reload was successful.
     // English: "Config has reloaded!"
 
-    String getReloadFailMessage(); // Get the failed config message.
-    // This is used when the configuration fails to load.
-    // English: "Config failed to reload!"
-
     String getHeadInteractMessage(); // Returns a message when a player interacts with a head.
     // English: "That is <Player>'s head!"
     // Parameters:
@@ -46,9 +42,6 @@ public interface Locale {
 
     String getInvalidArguments(); // Returns a message when invalid arguments are provided in a command.
     // English: "Invalid arguments!"
-
-    String getSellFail(); // Returns a message when a head fails to be sold, likely due to plugin issues.
-    // English: "Couldn''t sell head!"
 
     String getFalseHead(); // Returns a message when a head can't be sold due to being invalid.
     // English: "&cThis head cannot be sold!"
@@ -137,14 +130,6 @@ public interface Locale {
 
     String getWWhitelistAlreadyOff();
 
-    String getBlacklistFail();
-
-    String getWhitelistFail();
-
-    String getWBlacklistFail();
-
-    String getWWhitelistFail();
-
     String getDisabledCommand();
 
     String getEmptyBlacklist();
@@ -156,8 +141,6 @@ public interface Locale {
     String getEmptyWWhitelist();
 
     String getBuySuccess();
-
-    String getBuyFail();
 
     String versionWord();
 
@@ -255,32 +238,22 @@ public interface Locale {
 
     String contributors();
 
-  //  String getPluginUpToDate();
+    String getPluginUpToDate();
 
-  //  String getEnabled();
+    String getEnabled();
 
-  //  String getErrorEnabled();
+    String getErrorEnabled();
 
-  //  String getDisabled();
+    String getDisabled();
 
-  //  String couldntCreateConfig();
+    String badTheme();
 
-  //  String badTheme();
+    String getCommandFail();
 
-  //  String configNotFound();
+    String noVault();
 
-  //  String headAddError();
+    String descDebug();
 
-  //  String headDelError();
-
-  //  String blacklistToggleFail();
-
-  //  String addWorldError();
-
-  //  String worldDelError();
-
-  //  String wBlacklistToggleFail();
-
-  //  String messagesNotFound();
+    String noVaultGroup();
 
 }

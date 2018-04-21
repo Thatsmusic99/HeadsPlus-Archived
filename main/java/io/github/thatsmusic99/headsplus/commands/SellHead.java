@@ -1,20 +1,17 @@
 package io.github.thatsmusic99.headsplus.commands;
 
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
-import java.util.logging.Logger;
-
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.SellHeadEvent;
+import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
-import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
+import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -24,12 +21,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
-
-import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.economy.EconomyResponse;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
 public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 	
@@ -239,25 +235,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                 sender.sendMessage("[HeadsPlus] You must be a player to run this command!");
             }
         } catch (Exception e) {
-		    if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
-                e.printStackTrace();
-            }
-		    if (HeadsPlus.getInstance().getConfig().getBoolean("debug.create-debug-files")) {
-		        Logger log = HeadsPlus.getInstance().getLogger();
-		        log.severe("HeadsPlus has failed to execute this command. An error report has been made in /plugins/HeadsPlus/debug");
-		        try {
-		            String s = new DebugFileCreator().createReport(e, "Command (sellhead)");
-		            log.severe("Report name: " + s);
-		            log.severe("Please submit this report to the developer at one of the following links:");
-		            log.severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
-		            log.severe("https://discord.gg/nbT7wC2");
-		            log.severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
-		        } catch (IOException e1) {
-                    if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
-                        e1.printStackTrace();
-                    }
-		        }
-		    }
+		    new DebugPrint(e, "Command (sellhead)", true, sender);
 		}
         return false;
 	}

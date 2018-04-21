@@ -95,26 +95,7 @@ public class BlacklistwToggle implements IHeadsPlusCommand {
                 }
             }
 		} catch (Exception e) {
-            sender.sendMessage(hpc.getString("blw-fail"));
-            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
-                e.printStackTrace();
-            }
-            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.create-debug-files")) {
-                Logger log = HeadsPlus.getInstance().getLogger();
-                log.severe("HeadsPlus has failed to execute this command. An error report has been made in /plugins/HeadsPlus/debug");
-                try {
-                    String s = new DebugFileCreator().createReport(e, "Subcommand (blacklistw)");
-                    log.severe("Report name: " + s);
-                    log.severe("Please submit this report to the developer at one of the following links:");
-                    log.severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
-                    log.severe("https://discord.gg/nbT7wC2");
-                    log.severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
-                } catch (IOException e1) {
-                    if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
-                        e1.printStackTrace();
-                    }
-                }
-            }
+            new DebugPrint(e, "Subcommand (blacklistw)", true, sender);
         }
         return true;
 	}

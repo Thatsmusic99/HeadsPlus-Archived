@@ -1,6 +1,8 @@
 package io.github.thatsmusic99.headsplus.commands;
 
+import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -24,11 +26,16 @@ public class HeadsPlusCommand implements CommandExecutor {
                         IHeadsPlusCommand command = getCommandByName(args[0]);
                         assert command != null;
                         if (sender.hasPermission(command.getPermission())) {
-                            if (command.isMainCommand()) {
-                                return command.fire(args, sender);
+                            if (command.isCorrectUsage(args, sender).get(true) != null) {
+                                if (command.isMainCommand()) {
+                                    return command.fire(args, sender);
+                                } else {
+                                    getCommandByName("help").fire(args, sender);
+                                }
                             } else {
-                                getCommandByName("help").fire(args, sender);
+                                sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + command.getUsage());
                             }
+
                         } else {
                             sender.sendMessage(noPerms);
                         }
@@ -42,25 +49,7 @@ public class HeadsPlusCommand implements CommandExecutor {
             }
             return false;
         } catch (Exception e) {
-            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
-                e.printStackTrace();
-            }
-            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.create-debug-files")) {
-                Logger l = HeadsPlus.getInstance().getLogger();
-                l.severe("HeadsPlus has failed to execute this command. An error report has been made in /plugins/HeadsPlus/debug");
-                try {
-                    String s = new DebugFileCreator().createReport(e, "Command (headsplus)");
-                    l.severe("Report name: " + s);
-                    l.severe("Please submit this report to the developer at one of the following links:");
-                    l.severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
-                    l.severe("https://discord.gg/nbT7wC2");
-                    l.severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
-                } catch (IOException e1) {
-                    if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
-                        e1.printStackTrace();
-                    }
-                }
-            }
+            new DebugPrint(e, "Command (headsplus)", true, sender);
         }
 		return false;
 	}

@@ -87,7 +87,13 @@ public class HeadsPlusConfig extends ConfigSettings {
         getConfig().addDefault("cant-view-data", "&cYou can't view your own data in console!");
         getConfig().addDefault("level-up", "%h &3%p has reached level %lvl&3!");
         getConfig().addDefault("cmd-fail","%h &cFailed to run this command!");
-        getConfig().addDefault("plugin-up-to-date", "");
+        getConfig().addDefault("plugin-up-to-date", "%h &3Plugin is up to date!");
+        getConfig().addDefault("plugin-enabled", "%h &3HeadsPlus has been enabled!");
+        getConfig().addDefault("plugin-fail", "%h &cHeadsPlus has failed to start up correctly. An error report has been made in /plugins/HeadsPlus/debug");
+        getConfig().addDefault("plugin-disabled", "%h &3HeadsPlus has been disabled!");
+        getConfig().addDefault("faulty-theme", "%h &3Faulty theme was put in! No theme changes will be made.");
+        getConfig().addDefault("no-vault", "%h &cVault not found! Heads cannot be sold and challenge rewards can not add/remove groups.");
+        getConfig().addDefault("no-vault-2", "Vault wasn't found upon startup! Can not add group.");
 
         if (!getConfig().getString("locale").equalsIgnoreCase(getConfig().getString("pLocale")) && !nullpoint) {
             getConfig().set("pLocale", getConfig().getString("locale"));
@@ -161,6 +167,12 @@ public class HeadsPlusConfig extends ConfigSettings {
 			getConfig().set("cant-view-data", LocaleManager.getLocale().cantViewData());
 			getConfig().set("level-up", LocaleManager.getLocale().getAchievedNextLevel());
 			getConfig().set("cmd-fail", LocaleManager.getLocale().getCommandFail());
+            getConfig().set("plugin-up-to-date", LocaleManager.getLocale().getPluginUpToDate());
+            getConfig().set("plugin-enabled", LocaleManager.getLocale().getEnabled());
+            getConfig().set("plugin-fail", LocaleManager.getLocale().getErrorEnabled());
+            getConfig().set("plugin-disabled", LocaleManager.getLocale().getDisabled());
+            getConfig().set("faulty-theme", LocaleManager.getLocale().badTheme());
+            getConfig().set("no-vault", LocaleManager.getLocale().noVault());
         }
 
 		getConfig().options().copyDefaults(true);

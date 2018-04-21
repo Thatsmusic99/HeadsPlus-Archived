@@ -23,11 +23,6 @@ public class en_uk implements Locale {
     }
 
     @Override
-    public String getReloadFailMessage() {
-        return "%h &cConfig failed to reload!";
-    }
-
-    @Override
     public String getHeadInteractMessage() {
         return "&3That is &b%p&3''s &3head!";
     }
@@ -60,11 +55,6 @@ public class en_uk implements Locale {
     @Override
     public String getInvalidArguments() {
         return "&cInvalid arguments!";
-    }
-
-    @Override
-    public String getSellFail() {
-        return "&cCouldn''t sell head!";
     }
 
     @Override
@@ -278,26 +268,6 @@ public class en_uk implements Locale {
     }
 
     @Override
-    public String getBlacklistFail() {
-        return "%h &cFailed to add head to blacklist!";
-    }
-
-    @Override
-    public String getWhitelistFail() {
-        return "%h &cFailed to add head to whitelist!";
-    }
-
-    @Override
-    public String getWBlacklistFail() {
-        return "%h &cFailed to add world to blacklist!";
-    }
-
-    @Override
-    public String getWWhitelistFail() {
-        return "%h &cFailed to add world to whitelist!";
-    }
-
-    @Override
     public String getDisabledCommand() {
         return "&cThis command is disabled.";
     }
@@ -325,11 +295,6 @@ public class en_uk implements Locale {
     @Override
     public String getBuySuccess() {
         return "&3You have bought a head for &b%l &3and now have &b%b!";
-    }
-
-    @Override
-    public String getBuyFail() {
-        return "&cCouldn''t buy head!";
     }
 
     @Override
@@ -570,5 +535,50 @@ public class en_uk implements Locale {
     @Override
     public String contributors() {
         return "Contributors: ";
+    }
+
+    @Override
+    public String getPluginUpToDate() {
+        return "%h &3Plugin is up to date!";
+    }
+
+    @Override
+    public String getEnabled() {
+        return "%h &3HeadsPlus has been enabled!";
+    }
+
+    @Override
+    public String getErrorEnabled() {
+        return "%h &cHeadsPlus has failed to start up correctly. An error report has been made in /plugins/HeadsPlus/debug";
+    }
+
+    @Override
+    public String getDisabled() {
+        return "%h &3HeadsPlus has been disabled!";
+    }
+
+    @Override
+    public String badTheme() {
+        return "%h &3Faulty theme was put in! No theme changes will be made.";
+    }
+
+    @Override
+    public String getCommandFail() {
+        return "%h &cFailed to run this command!";
+    }
+
+    @Override
+    public String noVault() {
+        return "%h &cVault not found! Heads cannot be sold and challenge rewards can not add/remove groups.";
+    }
+
+    @Override
+    public String descDebug() {
+        return "Dumps a debug file.";
+    }
+
+    @Override
+    public String noVaultGroup() {
+        return "%h &cVault wasn't found upon startup! Can not add group.";
     }
 }

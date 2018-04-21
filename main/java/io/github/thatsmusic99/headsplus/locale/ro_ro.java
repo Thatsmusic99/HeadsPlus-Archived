@@ -25,11 +25,6 @@ public class ro_ro implements Locale {
     }
 
     @Override
-    public String getReloadFailMessage() {
-        return "%h &cReincarcarea config-ului a esuat!";
-    }
-
-    @Override
     public String getHeadInteractMessage() {
         return "&3Acesta este capul lui &b%p&3!";
     }
@@ -64,10 +59,6 @@ public class ro_ro implements Locale {
         return "&cArgumente invalide!";
     }
 
-    @Override
-    public String getSellFail() {
-        return "&cImposibil de vandut!";
-    }
 
     @Override
     public String getFalseHead() {
@@ -280,26 +271,6 @@ public class ro_ro implements Locale {
     }
 
     @Override
-    public String getBlacklistFail() {
-        return "%h &cInterzicerea capului a esuat!";
-    }
-
-    @Override
-    public String getWhitelistFail() {
-        return "%h &cPermiterea capului a esuat!";
-    }
-
-    @Override
-    public String getWBlacklistFail() {
-        return "%h &cInterzicerea lumii a esuat!";
-    }
-
-    @Override
-    public String getWWhitelistFail() {
-        return "%h &cPermiterea lumii a esuat!";
-    }
-
-    @Override
     public String getDisabledCommand() {
         return "&cAceasta comanda este dezactivata.";
     }
@@ -327,11 +298,6 @@ public class ro_ro implements Locale {
     @Override
     public String getBuySuccess() {
         return "&3Ai cumparat cu succes acest cap pentru &b%l &3iar acum ai &b%b!";
-    }
-
-    @Override
-    public String getBuyFail() {
-        return "&cImposibil de cumparat!";
     }
 
     @Override
@@ -572,5 +538,50 @@ public class ro_ro implements Locale {
     @Override
     public String contributors() {
         return "Contribuabili: ";
+    }
+
+    @Override
+    public String getPluginUpToDate() {
+        return "%h &3Plugin-ul este actualizat!";
+    }
+
+    @Override
+    public String getEnabled() {
+        return "%h &3HeadsPlus a fost activat!";
+    }
+
+    @Override
+    public String getErrorEnabled() {
+        return "%h &3HeadsPlus nu a reușit sa porneasca corect. Un raport de eroare a fost facut in /plugins/HeadsPlus/debug";
+    }
+
+    @Override
+    public String getDisabled() {
+        return "%h &3HeadsPlus a fost dezactivat!";
+    }
+
+    @Override
+    public String badTheme() {
+        return "%h &cTema gresita a fost pusa! Nu se vor face modificari tematice.";
+    }
+
+    @Override
+    public String getCommandFail() {
+        return "%h &cEroare la rularea acestei comenzi!";
+    }
+
+    @Override
+    public String noVault() {
+        return "%h &cVault nu a fost gasit! Șefii nu pot fi vanduti si recompensele provocatoare nu pot adauga/elimina grupuri.";
+    }
+
+    @Override
+    public String descDebug() {
+        return "Inchide un fisier de depanare.";
+    }
+
+    @Override
+    public String noVaultGroup() {
+        return "%h &cVault nu a fost gasit la pornire! Grupul nu poate fi adaugat.";
     }
 }

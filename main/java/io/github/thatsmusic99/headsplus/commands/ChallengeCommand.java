@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.commands;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
@@ -10,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 public class ChallengeCommand implements CommandExecutor, IHeadsPlusCommand {
@@ -36,25 +38,7 @@ public class ChallengeCommand implements CommandExecutor, IHeadsPlusCommand {
                 cs.sendMessage(HeadsPlus.getInstance().getMessagesConfig().getString("disabled"));
             }
         } catch (Exception e) {
-            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
-                e.printStackTrace();
-            }
-            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.create-debug-files")) {
-                Logger log = HeadsPlus.getInstance().getLogger();
-                log.severe("HeadsPlus has failed to execute this command. An error report has been made in /plugins/HeadsPlus/debug");
-                try {
-                    String s = new DebugFileCreator().createReport(e, "Command (challenges)");
-                    log.severe("Report name: " + s);
-                    log.severe("Please submit this report to the developer at one of the following links:");
-                    log.severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
-                    log.severe("https://discord.gg/nbT7wC2");
-                    log.severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
-                } catch (IOException e1) {
-                    if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
-                        e1.printStackTrace();
-                    }
-                }
-            }
+            new DebugPrint(e, "Command (Challenges/HPC)", true, cs);
         }
 
         return true;
@@ -86,8 +70,10 @@ public class ChallengeCommand implements CommandExecutor, IHeadsPlusCommand {
     }
 
     @Override
-    public boolean isCorrectUsage(String[] args, CommandSender sender) {
-        return false;
+    public HashMap<Boolean, String> isCorrectUsage(String[] args, CommandSender sender) {
+        HashMap<Boolean, String> h = new HashMap<>();
+        h.put(true, "");
+        return h;
     }
 
     @Override

@@ -22,11 +22,6 @@ public class lolcat implements Locale {
     }
 
     @Override
-    public String getReloadFailMessage() {
-        return "%h &cuH OH teh confeeg feld!";
-    }
-
-    @Override
     public String getHeadInteractMessage() {
         return "&3Dat iz &b%p''s &3hed!";
     }
@@ -59,11 +54,6 @@ public class lolcat implements Locale {
     @Override
     public String getInvalidArguments() {
         return "&cBadz cmd stuff!";
-    }
-
-    @Override
-    public String getSellFail() {
-        return "&cOH NO eh cud nawt sell teh heds!";
     }
 
     @Override
@@ -277,26 +267,6 @@ public class lolcat implements Locale {
     }
 
     @Override
-    public String getBlacklistFail() {
-        return "%h &3Teh naughty list fel!";
-    }
-
-    @Override
-    public String getWhitelistFail() {
-        return "%h &3Teh nice list wentz 2 teh dark seyed!";
-    }
-
-    @Override
-    public String getWBlacklistFail() {
-        return "%h &3Teh naughty list 4 woldz fel!";
-    }
-
-    @Override
-    public String getWWhitelistFail() {
-        return "%h &3Teh nice list 4 woldz wentz bahd!";
-    }
-
-    @Override
     public String getDisabledCommand() {
         return "&cDis cmd is ded!";
     }
@@ -324,11 +294,6 @@ public class lolcat implements Locale {
     @Override
     public String getBuySuccess() {
         return "&3U smh gawt ah hed 4 &b%l &&3and nao haz &b%b!";
-    }
-
-    @Override
-    public String getBuyFail() {
-        return "&cSoz cudnt by hed";
     }
 
     @Override
@@ -569,5 +534,50 @@ public class lolcat implements Locale {
     @Override
     public String contributors() {
         return "Helprz: ";
+    }
+
+    @Override
+    public String getPluginUpToDate() {
+        return "%h &3oboi da plugeen iz up-2-d8!";
+    }
+
+    @Override
+    public String getEnabled() {
+        return "%h &3Angery mode on!!";
+    }
+
+    @Override
+    public String getErrorEnabled() {
+        return "%h &3Omg I faled D:";
+    }
+
+    @Override
+    public String getDisabled() {
+        return "%h Kittenz sleepin nao";
+    }
+
+    @Override
+    public String badTheme() {
+        return "%h bad theem alert, uglee won iz on";
+    }
+
+    @Override
+    public String getCommandFail() {
+        return "%h uh oh cmd thing faled";
+    }
+
+    @Override
+    public String noVault() {
+        return "%h eh cudnt oh-pen deh vault!!";
+    }
+
+    @Override
+    public String descDebug() {
+        return "Poopz sparkly dee-bug flies!";
+    }
+
+    @Override
+    public String noVaultGroup() {
+        return "%h &cDeh vault wazn't oh-penned, cud nawt giv/taik rank D:";
     }
 }

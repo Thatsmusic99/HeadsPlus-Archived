@@ -48,7 +48,7 @@ import java.util.logging.Logger;
 
 public class HeadsPlus extends JavaPlugin {
 
-    private final Logger log = Logger.getLogger("Minecraft");
+    public final Logger log = Logger.getLogger("Minecraft");
     private static HeadsPlus instance;
     private final PluginDescriptionFile pluginYml = getDescription();
     private final String author = pluginYml.getAuthors().toString();
@@ -109,7 +109,7 @@ public class HeadsPlus extends JavaPlugin {
                 getServer().getPluginManager().registerEvents(new RecipePerms(), this);
             }
             if (!(econ()) && (getConfig().getBoolean("sellHeads"))) {
-                log.warning(hpc.getString(""));
+                log.warning(hpc.getString("no-vault"));
             }
             if (econ()) {
                 setupPermissions();
@@ -127,7 +127,11 @@ public class HeadsPlus extends JavaPlugin {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        update = UpdateChecker.getUpdate();
+                        try {
+                            update = UpdateChecker.getUpdate();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         if (update != null) {
                             log.info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getUpdateFound())));
                             log.info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getCurrentVersion()))
@@ -139,32 +143,15 @@ public class HeadsPlus extends JavaPlugin {
                             log.info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getDescription())) + update[1]);
                             log.info("Download link: https://www.spigotmc.org/resources/headsplus-1-8-x-1-12-x.40265/");
                         } else {
-                            log.info("[HeadsPlus] Plugin is up to date!");
+                            log.info(hpc.getString("plugin-up-to-date"));
                         }
                     }
                 }.runTaskAsynchronously(this);
             }
-            log.info("[HeadsPlus] HeadsPlus has been enabled.");
+            log.info(hpc.getString("plugin-enabled"));
         } catch (Exception e) {
             try {
-                if (getConfig().getBoolean("debug.print-stacktraces-in-console")) {
-                    e.printStackTrace();
-                }
-                if (getConfig().getBoolean("debug.create-debug-files")) {
-                    log.severe("HeadsPlus has failed to start up correctly. An error report has been made in /plugins/HeadsPlus/debug");
-                    try {
-                        String s = new DebugFileCreator().createReport(e, "Startup");
-                        getLogger().severe("Report name: " + s);
-                        getLogger().severe("Please submit this report to the developer at one of the following links:");
-                        getLogger().severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
-                        getLogger().severe("https://discord.gg/nbT7wC2");
-                        getLogger().severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
-                    } catch (IOException e1) {
-                        if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
-                            e1.printStackTrace();
-                        }
-                    }
-                }
+                new DebugPrint(e, "Startup", false, null);
             } catch (Exception ex) {
                 getLogger().severe("HeadsPlus has failed to start up correctly and can not read the config. An error report has been made in /plugins/HeadsPlus/debug");
                 try {
@@ -183,7 +170,7 @@ public class HeadsPlus extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        log.info("[HeadsPlus] HeadsPlus has been disabled.");
+        log.info(hpc.getString("plugin-disabled"));
     }
 
     public static HeadsPlus getInstance() {

@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -44,8 +45,19 @@ public class BlacklistAdd implements IHeadsPlusCommand {
 	}
 
 	@Override
-	public boolean isCorrectUsage(String[] args, CommandSender sender) {
-		return false;
+	public HashMap<Boolean, String> isCorrectUsage(String[] args, CommandSender sender) {
+	    HashMap<Boolean, String> h = new HashMap<>();
+		if (args.length > 1) {
+            if (args[1].matches("^[A-Za-z0-9_]+$")) {
+                h.put(true, "");
+            } else {
+                h.put(false, hpc.getString("alpha-names"));
+            }
+		} else {
+		    h.put(false, hpc.getString("invalid-args"));
+        }
+
+		return h;
 	}
 
 	@Override
@@ -71,27 +83,6 @@ public class BlacklistAdd implements IHeadsPlusCommand {
                         sender.sendMessage(hpc.getString("head-added-bl").replaceAll("%p", args[1]));
                     }
                 } catch (Exception e) {
-					Logger log = HeadsPlus.getInstance().getLogger();
-					log.severe("Failed to add head!");
-					if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
-					    e.printStackTrace();
-					}
-					sender.sendMessage(hpc.getString("bl-fail"));
-					if (HeadsPlus.getInstance().getConfig().getBoolean("debug.create-debug-files")) {
-					    log.severe("HeadsPlus has failed to execute this command. An error report has been made in /plugins/HeadsPlus/debug");
-						try {
-							String s = new DebugFileCreator().createReport(e, "Subcommand (blacklistadd)");
-							log.severe("Report name: " + s);
-							log.severe("Please submit this report to the developer at one of the following links:");
-							log.severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
-							log.severe("https://discord.gg/nbT7wC2");
-							log.severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
-						} catch (IOException e1) {
-							if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
-                                e1.printStackTrace();
-							}
-						}
-					}
                 }
             } else {
                 sender.sendMessage(hpc.getString("alpha-names"));

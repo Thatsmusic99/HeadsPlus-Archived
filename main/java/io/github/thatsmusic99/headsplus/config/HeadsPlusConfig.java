@@ -2,7 +2,6 @@ package io.github.thatsmusic99.headsplus.config;
 
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
 
 public class HeadsPlusConfig extends ConfigSettings {
 
@@ -21,7 +20,6 @@ public class HeadsPlusConfig extends ConfigSettings {
 		getConfig().addDefault("pLocale", "en_uk");
 		getConfig().addDefault("reloading-message", "%h &3Reloading config...");
 		getConfig().addDefault("reload-message", "%h &3Config has reloaded!");
-		getConfig().addDefault("reload-fail", "%h &cConfig failed to reload.");
 		getConfig().addDefault("head-interact-message", "&3That is &b%p&3''s &3head!");
 		getConfig().addDefault("head-mhf-interact-message", "&3That is a &b%p&3''s head!");
 		getConfig().addDefault("head-mhf-interact-message-2", "&3That is an &b%p&3''s &3head!");
@@ -29,7 +27,6 @@ public class HeadsPlusConfig extends ConfigSettings {
 		getConfig().addDefault("not-enough-heads", "&cYou don't have enough heads!");
 		getConfig().addDefault("no-heads", "&cYou don't have any valid heads in your inventory!");
 		getConfig().addDefault("invalid-args", "&cInvalid arguments!");
-		getConfig().addDefault("sell-fail", "&cCouldn''t sell head!");
 		getConfig().addDefault("false-head", "&cThis head cannot be sold!");
 		getConfig().addDefault("false-item", "&cThis is not a head!");
 		getConfig().addDefault("blacklist-head", "&cThis head is blacklisted and cannot be used!");
@@ -72,17 +69,12 @@ public class HeadsPlusConfig extends ConfigSettings {
 		getConfig().addDefault("wlw-a-on", "%h &3The world whitelist is already enabled!");
 		getConfig().addDefault("wlw-off", "%h &3The world whitelist has been disabled!");
 		getConfig().addDefault("wlw-a-off", "%h &3The world whitelist is already disabled!");
-		getConfig().addDefault("bl-fail", "%h &cFailed to add head to blacklist!");
-        getConfig().addDefault("wl-fail", "%h &cFailed to add head to whitelist!");
-        getConfig().addDefault("blw-fail", "%h &cFailed to add world to blacklist!");
-        getConfig().addDefault("wlw-fail", "%h &cFailed to add world to whitelist!");
 		getConfig().addDefault("disabled", "&cThis command is disabled.");
 		getConfig().addDefault("empty-bl", "%h &cThe blacklist is empty!");
 		getConfig().addDefault("empty-blw", "%h &cThe world blacklist is empty!");
 		getConfig().addDefault("empty-wl", "%h &cThe whitelist is empty!");
 		getConfig().addDefault("empty-wlw", "%h &cThe world whitelist is empty!");
 		getConfig().addDefault("buy-success", "&3You have bought a head for &b%l &3and now have &b%b!");
-        getConfig().addDefault("buy-fail", "&cCouldn''t buy head!");
         getConfig().addDefault("update-found", "%h &3An update has been found for HeadsPlus!");
         getConfig().addDefault("xmas-denied", "&cIt isn't that date yet!");
         getConfig().addDefault("block-place-denied", "&cYou can not place sellable heads!");
@@ -94,13 +86,14 @@ public class HeadsPlusConfig extends ConfigSettings {
         getConfig().addDefault("already-complete-challenge", "&cYou've already completed that challenge!");
         getConfig().addDefault("cant-view-data", "&cYou can't view your own data in console!");
         getConfig().addDefault("level-up", "%h &3%p has reached level %lvl&3!");
+        getConfig().addDefault("cmd-fail","%h &cFailed to run this command!");
+        getConfig().addDefault("plugin-up-to-date", "");
 
         if (!getConfig().getString("locale").equalsIgnoreCase(getConfig().getString("pLocale")) && !nullpoint) {
             getConfig().set("pLocale", getConfig().getString("locale"));
             LocaleManager.getInstance().setupLocale();
             getConfig().set("reloading-message", LocaleManager.getLocale().getReloadingMessage());
             getConfig().set("reload-message", LocaleManager.getLocale().getReloadMessage());
-            getConfig().set("reload-fail", LocaleManager.getLocale().getReloadFailMessage());
             getConfig().set("head-interact-message", LocaleManager.getLocale().getHeadInteractMessage());
             getConfig().set("head-mhf-interact-message", LocaleManager.getLocale().getHeadMhfInteractMessage());
             getConfig().set("head-mhf-interact-message-2", LocaleManager.getLocale().getHeadMhfInteractMessage2());
@@ -108,7 +101,6 @@ public class HeadsPlusConfig extends ConfigSettings {
             getConfig().set("not-enough-heads", LocaleManager.getLocale().getNotEnoughHeads());
             getConfig().set("no-heads", LocaleManager.getLocale().getNoHeads());
             getConfig().set("invalid-args", LocaleManager.getLocale().getInvalidArguments());
-            getConfig().set("sell-fail", LocaleManager.getLocale().getSellFail());
             getConfig().set("false-head", LocaleManager.getLocale().getFalseHead());
             getConfig().set("false-item", LocaleManager.getLocale().getFalseItem());
             getConfig().set("blacklist-head", LocaleManager.getLocale().getBlacklistHead());
@@ -151,17 +143,12 @@ public class HeadsPlusConfig extends ConfigSettings {
             getConfig().set("wlw-a-on", LocaleManager.getLocale().getWWhitelistAlreadyOn());
             getConfig().set("wlw-off", LocaleManager.getLocale().getWWhitelistOff());
             getConfig().set("wlw-a-off", LocaleManager.getLocale().getWWhitelistAlreadyOff());
-            getConfig().set("bl-fail", LocaleManager.getLocale().getBlacklistFail());
-            getConfig().set("wl-fail", LocaleManager.getLocale().getWhitelistFail());
-            getConfig().set("blw-fail", LocaleManager.getLocale().getWBlacklistFail());
-            getConfig().set("wlw-fail", LocaleManager.getLocale().getWWhitelistFail());
             getConfig().set("disabled", LocaleManager.getLocale().getDisabledCommand());
             getConfig().set("empty-bl", LocaleManager.getLocale().getEmptyBlacklist());
             getConfig().set("empty-blw", LocaleManager.getLocale().getEmptyWBlacklist());
             getConfig().set("empty-wl", LocaleManager.getLocale().getEmptyWhitelist());
             getConfig().set("empty-wlw", LocaleManager.getLocale().getEmptyWWhitelist());
             getConfig().set("buy-success", LocaleManager.getLocale().getBuySuccess());
-            getConfig().set("buy-fail", LocaleManager.getLocale().getBuyFail());
             getConfig().set("xmas-denied", LocaleManager.getLocale().getChristmasDeniedMessage());
             getConfig().set("block-place-denied", LocaleManager.getLocale().getBlockPlaceDenied());
             getConfig().set("no-data-lb", LocaleManager.getLocale().getNoDataRecorded());
@@ -173,6 +160,7 @@ public class HeadsPlusConfig extends ConfigSettings {
 			getConfig().set("already-complete-challenge", LocaleManager.getLocale().alreadyCompleted());
 			getConfig().set("cant-view-data", LocaleManager.getLocale().cantViewData());
 			getConfig().set("level-up", LocaleManager.getLocale().getAchievedNextLevel());
+			getConfig().set("cmd-fail", LocaleManager.getLocale().getCommandFail());
         }
 
 		getConfig().options().copyDefaults(true);
@@ -189,10 +177,5 @@ public class HeadsPlusConfig extends ConfigSettings {
         return str;
     }
 
-    @Override
-    @Deprecated
-    public FileConfiguration getConfig() {
-	    return config;
-    }
 
 }

@@ -109,7 +109,7 @@ public class HeadsPlus extends JavaPlugin {
                 getServer().getPluginManager().registerEvents(new RecipePerms(), this);
             }
             if (!(econ()) && (getConfig().getBoolean("sellHeads"))) {
-                log.warning("[HeadsPlus] Vault not found! Heads cannot be sold and challenge rewards can not add/remove groups.");
+                log.warning(hpc.getString(""));
             }
             if (econ()) {
                 setupPermissions();
@@ -144,16 +144,14 @@ public class HeadsPlus extends JavaPlugin {
                     }
                 }.runTaskAsynchronously(this);
             }
-            log.info("[HeadsPlus] HeadsPlus has been enabled. As of v4.2.7, crafting will be set up when a player joins the game.");
+            log.info("[HeadsPlus] HeadsPlus has been enabled.");
         } catch (Exception e) {
-            log.severe("[HeadsPlus] Error enabling HeadsPlus!");
-
             try {
                 if (getConfig().getBoolean("debug.print-stacktraces-in-console")) {
                     e.printStackTrace();
                 }
                 if (getConfig().getBoolean("debug.create-debug-files")) {
-                    getLogger().severe("HeadsPlus has failed to start up correctly. An error report has been made in /plugins/HeadsPlus/debug");
+                    log.severe("HeadsPlus has failed to start up correctly. An error report has been made in /plugins/HeadsPlus/debug");
                     try {
                         String s = new DebugFileCreator().createReport(e, "Startup");
                         getLogger().severe("Report name: " + s);

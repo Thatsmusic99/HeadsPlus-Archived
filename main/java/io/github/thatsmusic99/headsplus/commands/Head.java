@@ -13,6 +13,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -130,8 +131,14 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
     }
 
     @Override
-    public boolean isCorrectUsage(String[] args, CommandSender sender) {
-        return false;
+    public HashMap<Boolean, String> isCorrectUsage(String[] args, CommandSender sender) {
+	    HashMap<Boolean, String> h = new HashMap<>();
+        if (args.length == 0) {
+
+        } else {
+            h.put(false, hpc.getString("invalid-args"));
+        }
+        return h;
     }
 
     @Override
@@ -150,11 +157,6 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
                     }
                     if ((args.length == 1) && !(args[0].matches("^[A-Za-z0-9_]+$"))) {
                         sender.sendMessage(hpc.getString("alpha-names"));
-                        return true;
-                    }
-                    if (args.length > 2) {
-                        sender.sendMessage(hpc.getString("too-many-args"));
-                        sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());
                         return true;
                     }
                     if (args[0].length() > 16) {

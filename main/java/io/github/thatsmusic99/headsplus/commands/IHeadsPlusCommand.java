@@ -2,6 +2,8 @@ package io.github.thatsmusic99.headsplus.commands;
 
 import org.bukkit.command.CommandSender;
 
+import java.util.HashMap;
+
 public interface IHeadsPlusCommand {
 
     String getCmdName();
@@ -14,7 +16,7 @@ public interface IHeadsPlusCommand {
 
     String getUsage();
 
-    boolean isCorrectUsage(String[] args, CommandSender sender);
+    HashMap<Boolean, String> isCorrectUsage(String[] args, CommandSender sender);
 
     boolean isMainCommand();
 

@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -44,8 +45,10 @@ public class BlacklistwList implements IHeadsPlusCommand {
 	}
 
     @Override
-    public boolean isCorrectUsage(String[] args, CommandSender sender) {
-        return false;
+    public HashMap<Boolean, String> isCorrectUsage(String[] args, CommandSender sender) {
+        HashMap<Boolean, String> h = new HashMap<>();
+        h.put(true, "");
+        return h;
     }
 
     @Override

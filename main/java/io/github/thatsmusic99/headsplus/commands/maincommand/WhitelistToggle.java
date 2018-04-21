@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 public class WhitelistToggle implements IHeadsPlusCommand {
@@ -43,8 +44,10 @@ public class WhitelistToggle implements IHeadsPlusCommand {
     }
 
     @Override
-    public boolean isCorrectUsage(String[] args, CommandSender sender) {
-        return false;
+    public HashMap<Boolean, String> isCorrectUsage(String[] args, CommandSender sender) {
+        HashMap<Boolean, String> h = new HashMap<>();
+        h.put(true, "");
+        return h;
     }
 
     @Override

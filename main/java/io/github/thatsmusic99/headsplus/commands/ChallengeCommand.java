@@ -27,7 +27,7 @@ public class ChallengeCommand implements CommandExecutor, IHeadsPlusCommand {
                         im.setSection("Menu");
                         p.openInventory(im.changePage(true, true, (Player) cs, "Menu"));
                     } else {
-                        cs.sendMessage(new HeadsPlusCommand().noPerms);
+                        cs.sendMessage(HeadsPlus.getInstance().getMessagesConfig().getString("no-perms"));
                     }
                 } else {
                     cs.sendMessage("[HeadsPlus] You have to be a player to run this command!");

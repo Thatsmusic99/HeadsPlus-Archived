@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 public class ProfileCommand implements IHeadsPlusCommand {
@@ -63,8 +64,10 @@ public class ProfileCommand implements IHeadsPlusCommand {
     }
 
     @Override
-    public boolean isCorrectUsage(String[] args, CommandSender sender) {
-        return false;
+    public HashMap<Boolean, String> isCorrectUsage(String[] args, CommandSender sender) {
+        HashMap<Boolean, String> h = new HashMap<>();
+        h.put(true, "");
+        return h;
     }
 
     @Override

@@ -800,9 +800,21 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
         return "/sellhead [All|Entity|#]";
     }
 
+    // TODO
     @Override
-    public boolean isCorrectUsage(String[] args, CommandSender sender) {
-        return false;
+    public HashMap<Boolean, String> isCorrectUsage(String[] args, CommandSender sender) {
+        HashMap<Boolean, String> h = new HashMap<>();
+        if (args.length > 1) {
+            if (args[1].matches("^[A-Za-z0-9_]+$")) {
+                h.put(true, "");
+            } else {
+                h.put(false, hpc.getString("alpha-names"));
+            }
+        } else {
+            h.put(false, hpc.getString("invalid-args"));
+        }
+
+        return h;
     }
 
     @Override

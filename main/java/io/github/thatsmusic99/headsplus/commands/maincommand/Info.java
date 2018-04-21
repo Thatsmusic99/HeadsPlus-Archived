@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 public class Info implements IHeadsPlusCommand {
@@ -39,8 +40,10 @@ public class Info implements IHeadsPlusCommand {
 	}
 
 	@Override
-	public boolean isCorrectUsage(String[] args, CommandSender sender) {
-		return true;
+	public HashMap<Boolean, String> isCorrectUsage(String[] args, CommandSender sender) {
+		HashMap<Boolean, String> h = new HashMap<>();
+		h.put(true, "");
+		return h;
 	}
 
 	@Override

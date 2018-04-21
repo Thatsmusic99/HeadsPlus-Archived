@@ -12,6 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 public class MCReload implements IHeadsPlusCommand{
@@ -41,10 +42,12 @@ public class MCReload implements IHeadsPlusCommand{
 		return "/hp reload";
 	}
 
-    @Override
-    public boolean isCorrectUsage(String[] args, CommandSender sender) {
-        return false;
-    }
+	@Override
+	public HashMap<Boolean, String> isCorrectUsage(String[] args, CommandSender sender) {
+		HashMap<Boolean, String> h = new HashMap<>();
+		h.put(true, "");
+		return h;
+	}
 
     @Override
 	public boolean isMainCommand() {

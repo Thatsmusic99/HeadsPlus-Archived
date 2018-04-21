@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus.events;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
+import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.ConfigSettings;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.crafting.RecipeEnumUser;
@@ -49,7 +50,7 @@ public class JoinEvent implements Listener {
                             HeadsPlus.getInstance().saveConfig();
                             HPPlayer.players.clear();
                         }
-                    }.runTaskLaterAsynchronously(HeadsPlus.getInstance(), 2);
+                    }.runTaskAsynchronously(HeadsPlus.getInstance());
 
 			    } catch (Exception ex) {
 					if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {

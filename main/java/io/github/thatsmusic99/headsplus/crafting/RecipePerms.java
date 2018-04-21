@@ -25,14 +25,12 @@ public class RecipePerms implements Listener {
 	@EventHandler
 	public void onCraft(InventoryClickEvent e) {
 	    try {
-            if (HeadsPlus.getInstance().getConfig().getBoolean("craftHeads")) {
-
+            if (e.getInventory().getType().equals(InventoryType.CRAFTING) || e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
                 Player player = (Player) e.getWhoClicked();
                 NMSManager nms = HeadsPlus.getInstance().getNMS();
                 HeadsPlusAPI hapi = HeadsPlus.getInstance().getAPI();
-
-                if (player.hasPermission("headsplus.craft")) {
-                    if (e.getInventory().getType().equals(InventoryType.CRAFTING) || e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
+                if (HeadsPlus.getInstance().getConfig().getBoolean("craftHeads")) {
+                    if (player.hasPermission("headsplus.craft")) {
                         List<String> worlds = HeadsPlus.getInstance().getConfig().getStringList("blacklistw");
                         if ((!worlds.contains(player.getWorld().getName())) || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn") || player.hasPermission("headsplus.bypass.blacklistw")) {
                             if (HeadsPlus.getInstance().getConfig().getStringList("whitelistw").contains(player.getWorld().getName())) {
@@ -85,28 +83,26 @@ public class RecipePerms implements Listener {
                                 }
                                 return;
                             }
+                        } else {
+                            if (e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
+                                if(e.getSlot() == 0){
+                                    if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
+                                        e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
+                                        e.setCancelled(true);
+                                    }
+
+                                }
+                            } else if (e.getInventory().getType().equals(InventoryType.CRAFTING)){
+                                if (e.getRawSlot() == 0) {
+                                    if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
+                                        e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
+                                        e.setCancelled(true);
+                                    }
+                                }
+                            }
                         }
                     }
-
                 }
-
-                if (e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
-                    if(e.getSlot() == 0){
-                        if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
-                            e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
-                            e.setCancelled(true);
-                        }
-
-                    }
-                } else if (e.getInventory().getType().equals(InventoryType.CRAFTING)){
-                    if (e.getRawSlot() == 0) {
-                        if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
-                            e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
-                            e.setCancelled(true);
-                        }
-                    }
-                }
-            } else {
                 if (e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
                     if(e.getSlot() == 0){
                         if(e.getCurrentItem().getType() == Material.SKULL_ITEM){

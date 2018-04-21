@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus.events;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.Challenge;
+import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeDifficulty;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsXSections;
@@ -137,14 +138,14 @@ public class InventoryEvent implements Listener {
                             } catch (NumberFormatException ex) {
                                 HeadsPlus.getInstance().getLogger().log(Level.SEVERE, "[HeadsPlus] HeadsX.yml fault! Please check your config, and make sure the price value for your heads are set to a double value, or 'Free' or 'default'!");
                                 HeadsPlus.getInstance().getLogger().log(Level.SEVERE, "Value: " + e.getCurrentItem().getItemMeta().getLore().get(0).split(" ")[1]);
-                                String fail = hpc.getString("buy-fail");
+                                String fail = hpc.getString("cmd-fail");
                                 e.getWhoClicked().sendMessage(fail);
                                 e.setCancelled(true);
                                 return;
                             }
                             EconomyResponse er = HeadsPlus.getInstance().getEconomy().withdrawPlayer(p, price);
                             String success = hpc.getString("buy-success").replaceAll("%l", Double.toString(er.amount)).replaceAll("%b", Double.toString(er.balance));
-                            String fail = hpc.getString("buy-fail");
+                            String fail = hpc.getString("cmd-fail");
                             if (er.transactionSuccess()) {
                                 e.getWhoClicked().sendMessage(success);
                                 e.getWhoClicked().getInventory().addItem(e.getCurrentItem());
@@ -221,25 +222,7 @@ public class InventoryEvent implements Listener {
                                         event.getPlayer().openInventory(im.changePage(false, true, event.getPlayer(), "search:" + event.getName()));
                                     }
                                 } catch (Exception ex) {
-                                    if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
-                                        ex.printStackTrace();
-                                    }
-                                    if (HeadsPlus.getInstance().getConfig().getBoolean("debug.create-debug-files")) {
-                                        Logger log = HeadsPlus.getInstance().getLogger();
-                                        log.severe("HeadsPlus has failed to fire this event. An error report has been made in /plugins/HeadsPlus/debug");
-                                        try {
-                                            String st = new DebugFileCreator().createReport(ex, "Event (InventoryInteractEvent)");
-                                            log.severe("Report name: " + st);
-                                            log.severe("Please submit this report to the developer at one of the following links:");
-                                            log.severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
-                                            log.severe("https://discord.gg/nbT7wC2");
-                                            log.severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
-                                        } catch (IOException e1) {
-                                            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
-                                                e1.printStackTrace();
-                                            }
-                                        }
-                                    }
+                                    new DebugPrint(ex, "Event (InventoryEvent)", false, null);
                                 }
 
                                 ev.setCancelled(true);
@@ -307,25 +290,7 @@ public class InventoryEvent implements Listener {
                 }
             }
         } catch (Exception ex) {
-            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
-                ex.printStackTrace();
-            }
-            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.create-debug-files")) {
-                Logger log = HeadsPlus.getInstance().getLogger();
-                log.severe("HeadsPlus has failed to fire this event. An error report has been made in /plugins/HeadsPlus/debug");
-                try {
-                    String s = new DebugFileCreator().createReport(ex, "Event (InventoryInteractEvent)");
-                    log.severe("Report name: " + s);
-                    log.severe("Please submit this report to the developer at one of the following links:");
-                    log.severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
-                    log.severe("https://discord.gg/nbT7wC2");
-                    log.severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
-                } catch (IOException e1) {
-                    if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
-                        e1.printStackTrace();
-                    }
-                }
-            }
+            new DebugPrint(ex, "Event (InventoryInteractEvent)", false, null);
         }
     }
 }

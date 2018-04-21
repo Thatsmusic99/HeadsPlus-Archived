@@ -2,7 +2,6 @@ package io.github.thatsmusic99.headsplus.commands;
 
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
-import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -12,11 +11,9 @@ import org.bukkit.inventory.meta.SkullMeta;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

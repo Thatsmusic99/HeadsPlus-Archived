@@ -2,7 +2,6 @@ package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
-import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -10,9 +9,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.logging.Logger;
 
 public class BlacklistToggle implements IHeadsPlusCommand {
 	

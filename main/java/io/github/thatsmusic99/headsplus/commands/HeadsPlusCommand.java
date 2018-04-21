@@ -1,17 +1,12 @@
 package io.github.thatsmusic99.headsplus.commands;
 
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
-import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-
-import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
-
-import java.io.IOException;
-import java.util.logging.Logger;
 
 public class HeadsPlusCommand implements CommandExecutor {
 

@@ -5,7 +5,6 @@ import com.mojang.authlib.properties.Property;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.ConfigSettings;
-import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import org.apache.commons.codec.binary.Base64;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -14,12 +13,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class HeadsPlusConfigHeadsX extends ConfigSettings {
 

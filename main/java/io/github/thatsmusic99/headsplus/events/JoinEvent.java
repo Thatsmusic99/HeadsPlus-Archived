@@ -7,16 +7,12 @@ import io.github.thatsmusic99.headsplus.config.ConfigSettings;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.crafting.RecipeEnumUser;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
-import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import mkremins.fanciful.FancyMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.io.IOException;
-import java.util.logging.Logger;
 
 public class JoinEvent implements Listener { 
 	

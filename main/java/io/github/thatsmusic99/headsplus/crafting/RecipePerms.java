@@ -1,14 +1,11 @@
 package io.github.thatsmusic99.headsplus.crafting;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.logging.Logger;
 
 import io.github.thatsmusic99.headsplus.api.HeadCraftEvent;
 import io.github.thatsmusic99.headsplus.api.HeadsPlusAPI;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
-import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

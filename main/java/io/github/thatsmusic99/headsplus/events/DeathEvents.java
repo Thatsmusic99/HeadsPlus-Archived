@@ -1,8 +1,6 @@
 package io.github.thatsmusic99.headsplus.events;
 
-import java.io.IOException;
 import java.util.*;
-import java.util.logging.Logger;
 
 import io.github.thatsmusic99.headsplus.api.EntityHeadDropEvent;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
@@ -10,7 +8,6 @@ import io.github.thatsmusic99.headsplus.api.PlayerHeadDropEvent;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
-import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;

@@ -3,7 +3,6 @@ package io.github.thatsmusic99.headsplus.commands;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
-import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 
 import org.bukkit.command.Command;
@@ -11,9 +10,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.logging.Logger;
 
 public class Heads implements CommandExecutor, IHeadsPlusCommand {
 

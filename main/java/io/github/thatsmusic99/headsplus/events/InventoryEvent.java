@@ -7,7 +7,6 @@ import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeDiff
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsXSections;
 import io.github.thatsmusic99.headsplus.nms.SearchGUI;
-import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 
 import io.github.thatsmusic99.headsplus.nms.v1_12_NMS.SearchGUI1_12;
@@ -21,10 +20,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class InventoryEvent implements Listener {
 

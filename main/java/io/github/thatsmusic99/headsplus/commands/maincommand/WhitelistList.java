@@ -4,15 +4,12 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
-import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import io.github.thatsmusic99.headsplus.util.PagedLists;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class WhitelistList implements IHeadsPlusCommand {
 

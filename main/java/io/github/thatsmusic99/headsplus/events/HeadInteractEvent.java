@@ -1,7 +1,6 @@
 package io.github.thatsmusic99.headsplus.events;
 
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
-import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.block.BlockState;
@@ -12,9 +11,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
-
-import java.io.IOException;
-import java.util.logging.Logger;
 
 public final class HeadInteractEvent implements Listener {
 

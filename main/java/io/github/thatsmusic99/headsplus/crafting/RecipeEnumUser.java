@@ -58,7 +58,6 @@ public class RecipeEnumUser {
                 nms.setSkullOwner(nms.getOfflinePlayer("MHF_" + WordUtils.capitalize(key.str)), im);
             }
             i.setItemMeta(ims);
-            i.setItemMeta(im); // Beating the hell out of it twice because otherwise it doesn't set textures
             i = RecipeListeners.makeSell(i);
 	        ShapelessRecipe recipe = nms.getRecipe(i, "hp" + key.name());
 	        List<String> ingrs = new ArrayList<>();
@@ -87,7 +86,6 @@ public class RecipeEnumUser {
                 SkullMeta ims = (SkullMeta) i.getItemMeta();
                 nms.setSkullOwner(nms.getOfflinePlayer(heads.getStringList(key.str + ".name").get(0)), ims);
                 i.setItemMeta(ims);
-                i.setItemMeta(im);
                 i = RecipeListeners.makeSell(i);
 	            ShapelessRecipe recipe = nms.getRecipe(i, "hp" + key.name());
 	            List<String> ingrs = new ArrayList<>();

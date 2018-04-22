@@ -203,15 +203,7 @@ public class InventoryManager {
                         s.put(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', hpchx.getConfig().getString("heads." + str + ".displayname"))).replace("[", "").replace("]", ""), str);
                     }
                  }
-                Iterator<Map.Entry<String, String>> m = s.entrySet().iterator();
-                while (m.hasNext()) {
-                    if (!c.contains(m.next().getKey())) {
-                        m.remove();
-                    }
-                }
-
-
-
+                s.entrySet().removeIf(stringStringEntry -> !c.contains(stringStringEntry.getKey()));
                 heads = s.size();
 
                 ls = new PagedLists<>(new ArrayList<>(s.values()), 28);

@@ -64,29 +64,22 @@ public class BlacklistAdd implements IHeadsPlusCommand {
 
 	@Override
 	public boolean fire(String[] args, CommandSender sender) {
-	    if (args.length > 1) {
-            if (args[1].matches("^[A-Za-z0-9_]+$")) {
-                try {
-                    List<String> blacklist = config.getStringList("blacklist");
-                    String aHead = args[1].toLowerCase();
-                    if (blacklist.contains(aHead)) {
-                        sender.sendMessage(hpc.getString("head-a-add"));
-                    } else {
-                        blacklist.add(aHead);
-                        config.set("blacklist", blacklist);
-                        config.options().copyDefaults(true);
-                        HeadsPlus.getInstance().saveConfig();
+		try {
+			List<String> blacklist = config.getStringList("blacklist");
+			String aHead = args[1].toLowerCase();
+			if (blacklist.contains(aHead)) {
+				sender.sendMessage(hpc.getString("head-a-add"));
+			} else {
+				blacklist.add(aHead);
+				config.set("blacklist", blacklist);
+				config.options().copyDefaults(true);
+				HeadsPlus.getInstance().saveConfig();
+				sender.sendMessage(hpc.getString("head-added-bl").replaceAll("%p", args[1]));
+			}
+		} catch (Exception e) {
+		    new DebugPrint(e, "Subcommand (blacklistadd)", true, sender);
+        }
 
-                        sender.sendMessage(hpc.getString("head-added-bl").replaceAll("%p", args[1]));
-                    }
-                } catch (Exception e) {
-                }
-            } else {
-                sender.sendMessage(hpc.getString("alpha-names"));
-            }
-        } else {
-			sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());
-		}
         return true;
 	}
 }

@@ -27,7 +27,9 @@ class UpdateChecker {
         try {
             versionsArray = (JSONArray) new JSONParser().parse(reader);
         } catch (ParseException | IOException e) {
-            e.printStackTrace();
+            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                e.printStackTrace();
+            }
         }
         Double lastVersion;
         try {
@@ -66,7 +68,9 @@ class UpdateChecker {
         try {
             updatesArray = (JSONArray) new JSONParser().parse(reader);
         } catch (ParseException | IOException e) {
-            e.printStackTrace();
+            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                e.printStackTrace();
+            }
         }
         if (lastVersion > currentVersion) {
 

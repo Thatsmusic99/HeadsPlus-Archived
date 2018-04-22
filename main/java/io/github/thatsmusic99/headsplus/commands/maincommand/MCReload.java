@@ -56,7 +56,6 @@ public class MCReload implements IHeadsPlusCommand{
 		HeadsPlusConfig m = HeadsPlus.getInstance().getMessagesConfig();
 		String reloadM = m.getString("reload-message");
 		String reloadingM = m.getString("reloading-message");
-		String reloadF =  m.getString("reload-fail");
 		sender.sendMessage(reloadingM);
 		try {
 			new BukkitRunnable() {

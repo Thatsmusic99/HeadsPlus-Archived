@@ -31,8 +31,11 @@ public class JoinEvent implements Listener {
                 }
             }
         }
-        new RecipeEnumUser();
-		if (!HeadsPlus.getInstance().isAutoReloadingOnFirstJoin()) return;
+
+		if (!HeadsPlus.getInstance().isAutoReloadingOnFirstJoin()) {
+			new RecipeEnumUser();
+			return;
+		}
 		if (!reloaded) {
 		    if (HeadsPlus.getInstance().getConfig().getBoolean("autoReloadOnFirstJoin")) {
 			    try {
@@ -45,9 +48,10 @@ public class JoinEvent implements Listener {
                             HeadsPlus.getInstance().getConfig().options().copyDefaults(true);
                             HeadsPlus.getInstance().saveConfig();
                             HPPlayer.players.clear();
+
                         }
                     }.runTaskAsynchronously(HeadsPlus.getInstance());
-
+                    new RecipeEnumUser();
 			    } catch (Exception ex) {
 					new DebugPrint(ex, "Event (JoinEvent)", false, e.getPlayer());
 			    }

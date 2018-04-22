@@ -325,6 +325,8 @@ public class HeadsPlus extends JavaPlugin {
         cs.add(hpch);
         hpchx = new HeadsPlusConfigHeadsX();
         cs.add(hpchx);
+        hpcr = new HeadsPlusCrafting();
+        cs.add(hpcr);
         de = new DeathEvents();
         hplb = new HeadsPlusLeaderboards();
         cs.add(hplb);

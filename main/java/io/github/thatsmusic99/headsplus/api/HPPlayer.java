@@ -3,6 +3,7 @@ package io.github.thatsmusic99.headsplus.api;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallenges;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
@@ -114,7 +115,7 @@ public class HPPlayer {
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     p.sendMessage(HeadsPlus.getInstance().getMessagesConfig().getString("level-up")
                             .replaceAll("%p", this.getPlayer().getName())
-                            .replaceAll("%lvl", level.getDisplayName()));
+                            .replaceAll("%lvl", ChatColor.translateAlternateColorCodes('&', level.getDisplayName())));
                 }
                 HashMap<Integer, Level> levels = HeadsPlus.getInstance().getLevels();
                 hpc.getConfig().set("player-data." + getPlayer().getUniqueId().toString() + ".profile.level", level.getConfigName());

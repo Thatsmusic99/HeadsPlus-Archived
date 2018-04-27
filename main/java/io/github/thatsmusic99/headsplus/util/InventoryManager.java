@@ -180,7 +180,7 @@ public class InventoryManager {
                     } else {
                         ItemStack is = new ItemStack(Material.SKULL_ITEM);
                         SkullMeta sm = (SkullMeta) is.getItemMeta();
-                        HeadsPlus.getInstance().getNMS().setSkullOwner(HeadsPlus.getInstance().getNMS().getOfflinePlayer(st), sm);
+                        sm = HeadsPlus.getInstance().getNMS().setSkullOwner(st, sm);
                         is.setItemMeta(sm);
                         i.setItem(pos()[timesSent], is);
                         timesSent++;

@@ -29,7 +29,7 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
 	private static void giveHead(Player p, String n) {
 		ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         SkullMeta meta = (SkullMeta) skull.getItemMeta();
-        HeadsPlus.getInstance().getNMS().setSkullOwner(HeadsPlus.getInstance().getNMS().getOfflinePlayer(n), meta);
+        meta = HeadsPlus.getInstance().getNMS().setSkullOwner(n, meta);
 
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().getHeadsConfig().getConfig().getString("player.display-name").replaceAll("%d", n)));
         skull.setItemMeta(meta);

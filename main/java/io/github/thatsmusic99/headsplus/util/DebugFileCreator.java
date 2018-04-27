@@ -2,15 +2,19 @@ package io.github.thatsmusic99.headsplus.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.mojang.authlib.GameProfile;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.io.*;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -65,6 +69,69 @@ public class DebugFileCreator {
             o4.put("Stacktrace", array);
             o1.put("Exception details", o4);
         }
+        Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
+        array1.add(o1);
+        String str = gson.toJson(array1);
+        OutputStreamWriter fw;
+        boolean cancelled = false;
+        File fr = null;
+        for (int i = 0; !cancelled; i++) {
+            File f2 = new File(HeadsPlus.getInstance().getDataFolder() + "/debug");
+            if (!f2.exists()) {
+                f2.mkdir();
+            }
+            File f = new File(HeadsPlus.getInstance().getDataFolder() + "/debug/", date.replaceAll(":", "_").replaceAll("/", ".") + "-REPORT-" + i + ".json");
+            if (!f.exists()) {
+                fr = f;
+                cancelled = true;
+            }
+        }
+        fw = new OutputStreamWriter(new FileOutputStream(fr), Charsets.UTF_8);
+        try {
+            fw.write(str.replace("\u0026", "&"));
+        } finally {
+            fw.flush();
+            fw.close();
+        }
+        return fr.getName();
+    }
+
+    public String createHeadReport(ItemStack s) throws NoSuchFieldException, IllegalAccessException, IOException {
+        JSONArray array1 = new JSONArray();
+        JSONObject o1 = new JSONObject();
+        String date = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new java.util.Date (System.currentTimeMillis()));
+        o1.put("Date", date);
+        o1.put("Special message", getErrorHeader());
+        try {
+            o1.put("HeadsPlus version", HeadsPlus.getInstance().getDescription().getVersion());
+            o1.put("NMS version", HeadsPlus.getInstance().getNMS().getClass().getSimpleName());
+            o1.put("Has Vault hooked", HeadsPlus.getInstance().econ());
+        } catch (NullPointerException ignored) {
+
+        }
+
+        o1.put("Server version", Bukkit.getVersion());
+        JSONObject o2 = new JSONObject();
+        o2.put("Amount", s.getAmount());
+        o2.put("Durability", s.getDurability());
+        o2.put("Display name", s.getItemMeta().getDisplayName());
+        o2.put("Localized name", s.getItemMeta().getLocalizedName());
+        try {
+            o2.put("Lore", new JSONArray().addAll(s.getItemMeta().getLore()));
+        } catch (NullPointerException ignored) {
+        }
+        try {
+            o2.put("Owning Player", ((SkullMeta) s.getItemMeta()).getOwner());
+        } catch (NullPointerException ignored) {
+        }
+        Field pro = ((SkullMeta) s.getItemMeta()).getClass().getDeclaredField("profile");
+        pro.setAccessible(true);
+        GameProfile gm = (GameProfile) pro.get(s.getItemMeta());
+        o2.put("Texture", gm.getProperties().get("textures").iterator().next().getValue());
+        o2.put("Can be sold", HeadsPlus.getInstance().getAPI().isSellable(s));
+        o2.put("Skull Type", HeadsPlus.getInstance().getAPI().getSkullType(s));
+
+        o1.put("Head details", o2);
         Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
         array1.add(o1);
         String str = gson.toJson(array1);

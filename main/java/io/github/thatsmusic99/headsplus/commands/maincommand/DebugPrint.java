@@ -5,7 +5,10 @@ import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -73,6 +76,20 @@ public class DebugPrint implements IHeadsPlusCommand {
         if (args.length > 1) {
             if(args[1].equalsIgnoreCase("dump")) {
                 h.put(true, "");
+            } else if (args[1].equalsIgnoreCase("head")) {
+                if (sender instanceof Player) {
+                    if (HeadsPlus.getInstance().getNMS().getItemInHand((Player) sender) != null) {
+                        if (HeadsPlus.getInstance().getNMS().getItemInHand((Player) sender).getType().equals(Material.SKULL_ITEM)) {
+                            h.put(true, "");
+                        } else {
+                            h.put(false, HeadsPlus.getInstance().getMessagesConfig().getString("false-head"));
+                        }
+                    } else {
+                        h.put(false, HeadsPlus.getInstance().getMessagesConfig().getString("false-head"));
+                    }
+                } else {
+                    h.put(false, "[HeadsPlus] You have to be a player to run this command!");
+                }
             } else {
                 h.put(false, HeadsPlus.getInstance().getMessagesConfig().getString("invalid-args"));
             }
@@ -90,9 +107,16 @@ public class DebugPrint implements IHeadsPlusCommand {
     @Override
     public boolean fire(String[] args, CommandSender sender) {
         try {
-            String s = new DebugFileCreator().createReport(null, "Debug command");
-            sender.sendMessage(ChatColor.GREEN + "Report name: " + s);
-        } catch (IOException e) {
+            if (args[1].equalsIgnoreCase("dump")) {
+                String s = new DebugFileCreator().createReport(null, "Debug command");
+                sender.sendMessage(ChatColor.GREEN + "Report name: " + s);
+            } else if (args[1].equalsIgnoreCase("head")) {
+                ItemStack is = HeadsPlus.getInstance().getNMS().getItemInHand((Player) sender);
+                String s = new DebugFileCreator().createHeadReport(is);
+                sender.sendMessage(ChatColor.GREEN + "Report name: " + s);
+            }
+
+        } catch (IOException | NoSuchFieldException | IllegalAccessException e) {
             if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
                 e.printStackTrace();
             }

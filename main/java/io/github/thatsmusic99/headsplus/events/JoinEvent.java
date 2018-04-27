@@ -52,6 +52,7 @@ public class JoinEvent implements Listener {
                         }
                     }.runTaskAsynchronously(HeadsPlus.getInstance());
                     new RecipeEnumUser();
+                    reloaded = true;
 			    } catch (Exception ex) {
 					new DebugPrint(ex, "Event (JoinEvent)", false, e.getPlayer());
 			    }

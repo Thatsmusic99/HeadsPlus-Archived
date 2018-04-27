@@ -5,7 +5,6 @@ import java.util.List;
 
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import io.github.thatsmusic99.headsplus.HeadsPlus;

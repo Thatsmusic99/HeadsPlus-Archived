@@ -29,35 +29,45 @@ public class RecipeEnumUser {
 	    for (RecipeEnums key : RecipeEnums.values()) {
 	        ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 	        SkullMeta im = (SkullMeta) i.getItemMeta();
-	        im.setDisplayName(ChatColor.translateAlternateColorCodes('&', heads.getString(key.str + ".display-name")));
+
 
 	        try {
 	            if (key.str.equalsIgnoreCase("sheep")) {
-	                nms.setSkullOwner(nms.getOfflinePlayer(heads.getStringList("sheep.name.default").get(0)), im);
+	            	if (heads.getStringList("sheep.name.default").get(0).equalsIgnoreCase("MHF_Sheep")) {
+	            	 //   im = (SkullMeta) HeadsPlus.getInstance().getAPI().createSkull(key.tex, "").getItemMeta();
+	            	    im = nms.setSkullOwner(heads.getStringList(key.str + ".name.default").get(0), im);
+                    } else {
+                        im = nms.setSkullOwner(heads.getStringList(key.str + ".name.default").get(0), im);
+                    }
 	            } else {
-                        nms.setSkullOwner(nms.getOfflinePlayer(heads.getStringList(key.str + ".name").get(0)), im);
+	                if (key.equals(RecipeEnums.IRONGOLEM)) {
+	                    if (heads.getStringList("irongolem.name").get(0).equalsIgnoreCase("MHF_Golem")) {
+                        //    im = (SkullMeta) HeadsPlus.getInstance().getAPI().createSkull(key.tex, "").getItemMeta();
+                            im = nms.setSkullOwner(heads.getStringList(key.str + ".name").get(0), im);
+                        }  else {
+                            im = nms.setSkullOwner(heads.getStringList(key.str + ".name").get(0), im);
+	                    }
+	                } else {
+                        if (heads.getStringList(key.str + ".name").get(0).equalsIgnoreCase("MHF_" + key.str)) {
+                        //    im = (SkullMeta) HeadsPlus.getInstance().getAPI().createSkull(key.tex, "").getItemMeta();
+                            im = nms.setSkullOwner(heads.getStringList(key.str + ".name").get(0), im);
+                        }  else {
+                            im = nms.setSkullOwner(heads.getStringList(key.str + ".name").get(0), im);
+                        }
+                    }
 	            }
 	        } catch (IndexOutOfBoundsException ex) {
 	            HeadsPlus.getInstance().getLogger().warning("There was an issue setting the crafting skull for " + key.str + "! Setting it to default...");
 	            HeadsPlus.getInstance().getLogger().warning("If your heads.yml was out of date, just let it update and then the config will automatically reload as soon as a player joins (if enabled).");
 	            HeadsPlus.getInstance().getLogger().warning("Otherwise, use /hp reload.");
-	            nms.setSkullOwner(nms.getOfflinePlayer("MHF_" + WordUtils.capitalize(key.str)), im);
+	            im = nms.setSkullOwner("MHF_" + WordUtils.capitalize(key.str), im);
 	        }
             i.setItemMeta(im);
             SkullMeta ims = (SkullMeta) i.getItemMeta();
-            try {
-                if (key.str.equalsIgnoreCase("sheep")) {
-                    nms.setSkullOwner(nms.getOfflinePlayer(heads.getStringList("sheep.name.default").get(0)), im);
-                } else {
-                    nms.setSkullOwner(nms.getOfflinePlayer(heads.getStringList(key.str + ".name").get(0)), im);
-                }
-            } catch (IndexOutOfBoundsException ex) {
-                HeadsPlus.getInstance().getLogger().warning("There was an issue setting the crafting skull for " + key.str + "! Setting it to default...");
-                HeadsPlus.getInstance().getLogger().warning("If your heads.yml was out of date, just let it update and then the config will automatically reload as soon as a player joins (if enabled).");
-                HeadsPlus.getInstance().getLogger().warning("Otherwise, use /hp reload.");
-                nms.setSkullOwner(nms.getOfflinePlayer("MHF_" + WordUtils.capitalize(key.str)), im);
-            }
+
             i.setItemMeta(ims);
+            im.setDisplayName(ChatColor.translateAlternateColorCodes('&', heads.getString(key.str + ".display-name")));
+            i.setItemMeta(im);
             i = RecipeListeners.makeSell(i);
 	        ShapelessRecipe recipe = nms.getRecipe(i, "hp" + key.name());
 	        List<String> ingrs = new ArrayList<>();
@@ -81,10 +91,12 @@ public class RecipeEnumUser {
 	        if (!(heads.getString(key.str + ".display-name").equals("")) && !(heads.getStringList(key.str + ".name").isEmpty())) {
 	            im.setDisplayName(ChatColor.translateAlternateColorCodes('&', heads.getString(key.str + ".display-name")));
 
-	            nms.setSkullOwner(nms.getOfflinePlayer(heads.getStringList(key.str + ".name").get(0)), im);
-	            i.setItemMeta(im);
-                SkullMeta ims = (SkullMeta) i.getItemMeta();
-                nms.setSkullOwner(nms.getOfflinePlayer(heads.getStringList(key.str + ".name").get(0)), ims);
+	            im = nms.setSkullOwner(heads.getStringList(key.str + ".name").get(0), im);
+
+                i.setItemMeta(im);
+                SkullMeta ims;
+                ims = nms.setSkullOwner(heads.getStringList(key.str + ".name").get(0), im);
+
                 i.setItemMeta(ims);
                 i = RecipeListeners.makeSell(i);
 	            ShapelessRecipe recipe = nms.getRecipe(i, "hp" + key.name());

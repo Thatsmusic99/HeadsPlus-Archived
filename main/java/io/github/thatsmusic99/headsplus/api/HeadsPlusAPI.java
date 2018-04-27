@@ -140,6 +140,7 @@ public class HeadsPlusAPI {
             }
         }
         sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', displayname));
+        s.setItemMeta(sm);
         return s;
     }
 

@@ -1,5 +1,6 @@
 package io.github.thatsmusic99.headsplus.nms;
 
+import com.mojang.authlib.GameProfile;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -14,7 +15,10 @@ public interface NMSManager {
 
     SearchGUI getSearchGUI(Player p, SearchGUI.AnvilClickEventHandler a);
 
-    void setSkullOwner(OfflinePlayer p, SkullMeta m);
+    default SkullMeta setSkullOwner(String s, SkullMeta m) {
+        m.setOwner(s);
+        return m;
+    }
 
     String getSkullOwnerName(SkullMeta m);
 
@@ -26,4 +30,7 @@ public interface NMSManager {
 
     RecipeManager getRecipeManager();
 
+    GameProfile getGameProfile(ItemStack s);
+
+    ItemStack getItemInHand(Player p);
 }

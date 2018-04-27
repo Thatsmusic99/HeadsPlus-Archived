@@ -1,11 +1,14 @@
 package io.github.thatsmusic99.headsplus.nms.v1_8_R2_NMS;
 
+import com.mojang.authlib.GameProfile;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.nms.RecipeManager;
 import io.github.thatsmusic99.headsplus.nms.SearchGUI;
+import net.minecraft.server.v1_8_R2.EntityPlayer;
 import net.minecraft.server.v1_8_R2.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.craftbukkit.v1_8_R2.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_8_R2.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -39,11 +42,6 @@ public class v1_8_R2_NMS implements NMSManager {
     }
 
     @Override
-    public void setSkullOwner(OfflinePlayer p, SkullMeta m) {
-        m.setOwner(p.getName());
-    }
-
-    @Override
     public String getSkullOwnerName(SkullMeta m) {
         return m.getOwner();
     }
@@ -66,5 +64,16 @@ public class v1_8_R2_NMS implements NMSManager {
     @Override
     public RecipeManager getRecipeManager() {
         return new RecipeManager();
+    }
+
+    @Override
+    public GameProfile getGameProfile(ItemStack s) {
+        EntityPlayer e = ((CraftPlayer) ((SkullMeta) s.getItemMeta()).getOwningPlayer().getPlayer()).getHandle();
+        return e.getProfile();
+    }
+
+    @Override
+    public ItemStack getItemInHand(Player p) {
+        return p.getItemInHand();
     }
 }

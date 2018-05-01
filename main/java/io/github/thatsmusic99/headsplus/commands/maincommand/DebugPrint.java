@@ -1,11 +1,14 @@
 package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -67,7 +70,7 @@ public class DebugPrint implements IHeadsPlusCommand {
 
     @Override
     public String getUsage() {
-        return "/hp debug <dump>";
+        return "/hp debug <dump|head|player> <Player IGN>";
     }
 
     @Override
@@ -89,6 +92,17 @@ public class DebugPrint implements IHeadsPlusCommand {
                     }
                 } else {
                     h.put(false, "[HeadsPlus] You have to be a player to run this command!");
+                }
+            } else if (args[1].equalsIgnoreCase("player")) {
+                if (args.length > 2) {
+                    HPPlayer pl = HPPlayer.getHPPlayer(Bukkit.getOfflinePlayer(args[2]));
+                    if (pl.getCompleteChallenges().size() > 0) {
+                        h.put(true, "");
+                    } else {
+                        h.put(false, HeadsPlus.getInstance().getMessagesConfig().getString("no-data"));
+                    }
+                } else {
+                    h.put(false, HeadsPlus.getInstance().getMessagesConfig().getString("invalid-args"));
                 }
             } else {
                 h.put(false, HeadsPlus.getInstance().getMessagesConfig().getString("invalid-args"));
@@ -114,8 +128,11 @@ public class DebugPrint implements IHeadsPlusCommand {
                 ItemStack is = HeadsPlus.getInstance().getNMS().getItemInHand((Player) sender);
                 String s = new DebugFileCreator().createHeadReport(is);
                 sender.sendMessage(ChatColor.GREEN + "Report name: " + s);
+            } else if (args[1].equalsIgnoreCase("player")) {
+                OfflinePlayer pl = Bukkit.getOfflinePlayer(args[2]);
+                String s = new DebugFileCreator().createPlayerReport(HPPlayer.getHPPlayer(pl));
+                sender.sendMessage(ChatColor.GREEN + "Report name: " + s);
             }
-
         } catch (IOException | NoSuchFieldException | IllegalAccessException e) {
             if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
                 e.printStackTrace();

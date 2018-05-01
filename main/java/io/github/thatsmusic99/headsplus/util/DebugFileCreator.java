@@ -159,6 +159,60 @@ public class DebugFileCreator {
         return fr.getName();
     }
 
+    public String createPlayerReport(HPPlayer player) throws IOException {
+        JSONArray array1 = new JSONArray();
+        JSONObject o1 = new JSONObject();
+        String date = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new java.util.Date (System.currentTimeMillis()));
+        o1.put("Date", date);
+        o1.put("Special message", getErrorHeader());
+        try {
+            o1.put("HeadsPlus version", HeadsPlus.getInstance().getDescription().getVersion());
+            o1.put("NMS version", HeadsPlus.getInstance().getNMS().getClass().getSimpleName());
+            o1.put("Has Vault hooked", HeadsPlus.getInstance().econ());
+            o1.put("MySQL is enabled", HeadsPlus.getInstance().isConnectedToMySQLDatabase());
+        } catch (NullPointerException ignored) {
+
+        }
+        JSONObject o2 = new JSONObject();
+        o2.put("Name", player.getPlayer().getName());
+        o2.put("UUID", player.getPlayer().getUniqueId());
+        o2.put("Banned", player.getPlayer().isBanned());
+        o2.put("Online", player.getPlayer().isOnline());
+        o2.put("XP", player.getXp());
+        List<String> ch = new ArrayList<>();
+        player.getCompleteChallenges().forEach(c -> ch.add(c.getConfigName()));
+        o2.put("Completed challenges", ch);
+        o2.put("Level", player.getLevel());
+        o2.put("Next level", player.getNextLevel());
+        o1.put("Server version", Bukkit.getVersion());
+        o1.put("Player details", o2);
+        Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
+        array1.add(o1);
+        String str = gson.toJson(array1);
+        OutputStreamWriter fw;
+        boolean cancelled = false;
+        File fr = null;
+        for (int i = 0; !cancelled; i++) {
+            File f2 = new File(HeadsPlus.getInstance().getDataFolder() + "/debug");
+            if (!f2.exists()) {
+                f2.mkdir();
+            }
+            File f = new File(HeadsPlus.getInstance().getDataFolder() + "/debug/", date.replaceAll(":", "_").replaceAll("/", ".") + "-REPORT-" + i + ".json");
+            if (!f.exists()) {
+                fr = f;
+                cancelled = true;
+            }
+        }
+        fw = new OutputStreamWriter(new FileOutputStream(fr), Charsets.UTF_8);
+        try {
+            fw.write(str.replace("\u0026", "&"));
+        } finally {
+            fw.flush();
+            fw.close();
+        }
+        return fr.getName();
+    }
+
     private String getErrorHeader() {
         List<String> msgs = new ArrayList<>();
         msgs.add("Oh sorry, did I hurt you?");

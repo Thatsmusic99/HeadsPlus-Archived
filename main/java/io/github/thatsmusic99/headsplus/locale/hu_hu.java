@@ -481,7 +481,7 @@ public class hu_hu implements Locale {
 
     @Override
     public String hard() {
-        return "Kemény";
+        return "Nehéz";
     }
 
     @Override
@@ -521,7 +521,7 @@ public class hu_hu implements Locale {
 
     @Override
     public String descHelpMenu() {
-        return "Megjeleníti a súgó menüt.";
+        return "Megjeleníti a segítség menüt.";
     }
 
     @Override
@@ -546,7 +546,7 @@ public class hu_hu implements Locale {
 
     @Override
     public String getEnabled() {
-        return "%h &3A HeadsPlus engedélyezve volt!";
+        return "%h &3A HeadsPlus engedélyezve!";
     }
 
     @Override
@@ -556,12 +556,12 @@ public class hu_hu implements Locale {
 
     @Override
     public String getDisabled() {
-        return "%h &3A HeadsPlus letiltott!";
+        return "%h &3A HeadsPlus letiltva!";
     }
 
     @Override
     public String badTheme() {
-        return "%h &cHibás téma került be! Téma módosítása nem történik.";
+        return "%h &cHibás téma került be! A téma módosítása nem történik.";
     }
 
     @Override
@@ -581,6 +581,6 @@ public class hu_hu implements Locale {
 
     @Override
     public String noVaultGroup() {
-        return "%h &cA Vault nem indult elindításkor! Csoport hozzáadása nem lehetséges.";
+        return "%h &cA Vault nem indult elindításkor! A csoport hozzáadása nem lehetséges.";
     }
 }

@@ -47,6 +47,8 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
     		getConfig().addDefault(key + ".display-name", "");
     		getConfig().addDefault(key + ".price", 0.00);
     		getConfig().addDefault(key + ".interact-name", WordUtils.capitalize(key));
+    		getConfig().addDefault(key + ".mask-effects", new ArrayList<>());
+    		getConfig().addDefault(key + ".mask-amplifiers", new ArrayList<>());
     	}
     }
     private void addMHFHeads() {
@@ -58,6 +60,8 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
     		    getConfig().addDefault(key + ".display-name", WordUtils.capitalize(key) + " Head");
     		    getConfig().addDefault(key + ".price", 10.00);
     		    getConfig().addDefault(key + ".interact-name", WordUtils.capitalize(key));
+    		    getConfig().addDefault(key + ".mask-effects", new ArrayList<>());
+                getConfig().addDefault(key + ".mask-amplifiers", new ArrayList<>());
     		    
     		} else if (key.equals("irongolem")) {
     			getConfig().addDefault("irongolem.name", new ArrayList<>(Collections.singleton("MHF_Golem")));
@@ -65,6 +69,8 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
     			getConfig().addDefault("irongolem.display-name", "Iron Golem Head");
     			getConfig().addDefault("irongolem.price", 10.00);
     		    getConfig().addDefault("irongolem.interact-name", "Iron Golem");
+    		    getConfig().addDefault("irongolem.mask-effects", new ArrayList<>());
+                getConfig().addDefault("irongolem.mask-amplifiers", new ArrayList<>());
     		} else {
     			getConfig().addDefault("sheep.name.default", new ArrayList<>(Collections.singleton("MHF_Sheep")));
     			for (DyeColor dc : DyeColor.values()) {
@@ -74,6 +80,8 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
                 getConfig().addDefault(key + ".display-name", WordUtils.capitalize(key) + " Head");
                 getConfig().addDefault(key + ".price", 10.00);
                 getConfig().addDefault(key + ".interact-name", WordUtils.capitalize(key));
+                getConfig().addDefault(key + ".mask-effects", new ArrayList<>());
+                getConfig().addDefault(key + ".mask-amplifiers", new ArrayList<>());
 			}
     	}
     }
@@ -81,6 +89,8 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
     	getConfig().addDefault("player.chance", 100);
     	getConfig().addDefault("player.display-name", "%d's head");
     	getConfig().addDefault("player.price", 10.00);
+        getConfig().addDefault("player.mask-effects", new ArrayList<>());
+        getConfig().addDefault("player.mask-amplifiers", new ArrayList<>());
     }
     private void addENHeads() {
     	for (String key : eHeads) {

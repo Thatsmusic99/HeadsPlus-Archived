@@ -6,8 +6,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,9 +20,11 @@ public class HPPlayer {
     private Level level;
     private List<Challenge> completeChallenges;
     private Level nextLevel;
+    private List<PotionEffect> activeMasks;
     public static List<HPPlayer> players = new ArrayList<>();
 
     public HPPlayer(OfflinePlayer p) {
+        activeMasks = new ArrayList<>();
         this.player = p;
         HeadsPlusChallenges hpchl = HeadsPlus.getInstance().getChallengeConfig();
         HeadsPlusAPI hapi = HeadsPlus.getInstance().getAPI();
@@ -58,6 +62,14 @@ public class HPPlayer {
         this.completeChallenges = sc;
     }
 
+    public void clearMask() {
+        activeMasks.clear();
+    }
+
+    public void addMask(PotionEffect... effects) {
+        activeMasks.addAll(Arrays.asList(effects));
+    }
+
     public int getXp() {
         return xp;
     }
@@ -87,6 +99,10 @@ public class HPPlayer {
         HPPlayer pl = new HPPlayer(p);
         players.add(pl);
         return pl;
+    }
+
+    public List<PotionEffect> getActiveMasks() {
+        return activeMasks;
     }
 
     public void addCompleteChallenge(Challenge c) {

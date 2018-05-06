@@ -36,6 +36,7 @@ theme: classic
 pTheme: classic
 gui-glass-color: SILVER
 challenges: true
+mask-powerups: true
 debug:
   create-debug-files: true
   print-stacktraces-in-console: true

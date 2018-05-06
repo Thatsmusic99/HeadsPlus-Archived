@@ -192,6 +192,7 @@ public class DebugFileCreator {
         OutputStreamWriter fw;
         boolean cancelled = false;
         File fr = null;
+
         for (int i = 0; !cancelled; i++) {
             File f2 = new File(HeadsPlus.getInstance().getDataFolder() + "/debug");
             if (!f2.exists()) {

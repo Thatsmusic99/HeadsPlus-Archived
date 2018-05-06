@@ -33,4 +33,8 @@ public interface NMSManager {
     GameProfile getGameProfile(ItemStack s);
 
     ItemStack getItemInHand(Player p);
+
+    ItemStack setType(String s, ItemStack i);
+
+    String getType(ItemStack i);
 }

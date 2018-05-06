@@ -76,4 +76,22 @@ public class v1_8_R2_NMS implements NMSManager {
     public ItemStack getItemInHand(Player p) {
         return p.getItemInHand();
     }
+
+    @Override
+    public org.bukkit.inventory.ItemStack setType(String s, org.bukkit.inventory.ItemStack i) {
+        net.minecraft.server.v1_8_R2.ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setString("headsplus-type", s);
+        return CraftItemStack.asBukkitCopy(is);
+    }
+
+    @Override
+    public String getType(org.bukkit.inventory.ItemStack i) {
+        if (CraftItemStack.asNMSCopy(i).getTag() != null) {
+            return CraftItemStack.asNMSCopy(i).getTag().getString("headsplus-type");
+        }
+        return "";
+    }
 }

@@ -79,4 +79,22 @@ public class v1_12_NMS implements NMSManager {
         return p.getInventory().getItemInMainHand();
     }
 
+    @Override
+    public org.bukkit.inventory.ItemStack setType(String s, org.bukkit.inventory.ItemStack i) {
+        ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setString("headsplus-type", s);
+        return CraftItemStack.asBukkitCopy(is);
+    }
+
+    @Override
+    public String getType(org.bukkit.inventory.ItemStack i) {
+        if (CraftItemStack.asNMSCopy(i).getTag() != null) {
+            return CraftItemStack.asNMSCopy(i).getTag().getString("headsplus-type");
+        }
+        return "";
+    }
+
 }

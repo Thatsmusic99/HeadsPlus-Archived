@@ -20,16 +20,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.potion.PotionEffectType;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class SellHead implements CommandExecutor, IHeadsPlusCommand {
-	
-	private boolean sold;
+
 	private final HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
 	private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 	private final HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().getHeadsXConfig();
@@ -41,77 +38,29 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 		try {
 			if (sender instanceof Player) {
 			    if (HeadsPlus.getInstance().canSellHeads()) {
-
 			        soldHeads.clear();
 			        hm.clear();
                     ItemStack invi = checkHand((Player) sender);
                     if (args.length == 0 && (checkHand((Player) sender).getType() == Material.SKULL_ITEM) && (sender.hasPermission("headsplus.sellhead"))) { // If sold via hand
-                        if (nms().getSkullOwnerName((SkullMeta) invi.getItemMeta()) == null || nms().getSkullOwnerName((SkullMeta) invi.getItemMeta()).equalsIgnoreCase("HPXHead")) {
-                            if (nms().isSellable(invi)) {
-                                for (String key : hpch.mHeads) {
-                                    if (!key.equalsIgnoreCase("sheep")) {
-                                        if (checkSkullForTexture((Player) sender, invi, hpch.getConfig().getStringList(key + ".name"), key, args)) {
-                                            return true; // Ends because head is already sold
-                                        }
-                                    } else {
-                                        if (checkColorSheep((Player) sender, args, invi)) {
-                                            return true;
-                                        }
-                                    }
-                                }
-                                for (String key : hpch.uHeads) {
-                                    if (checkSkullForTexture((Player) sender, invi, hpch.getConfig().getStringList(key + ".name"), key, args)) {
-                                        return true;
-                                    }
-                                }
-                            } else {
-                                sender.sendMessage(hpc.getString("false-head"));
-                                return true;
-                            }
-                        }
-                        SkullMeta skullM = (SkullMeta) invi.getItemMeta();
-                        String owner = nms().getSkullOwnerName(skullM);
-		                if (nms().isSellable(invi)) {
-                            Economy econ = HeadsPlus.getInstance().getEconomy();
-                            List<String> mHeads = hpch.mHeads;
-                            List<String> uHeads = hpch.uHeads;
-                            for (String key : mHeads) {
-                                if (key.equalsIgnoreCase("sheep")) {
-                                    for (String s : hpch.getConfig().getConfigurationSection("sheep.name").getKeys(false)) {
-                                        for (int i = 0; i < hpch.getConfig().getStringList("sheep.name." + s).size(); i++) {
-                                            if (owner.equalsIgnoreCase(hpch.getConfig().getStringList("sheep.name." + s).get(i))) {
-                                                a(invi, key, args, (Player) sender);
-                                            }
-                                        }
-                                    }
-                                } else {
-                                    for (int i = 0; i < hpch.getConfig().getStringList(key + ".name").size(); i++) {
-                                        if (owner.equalsIgnoreCase(hpch.getConfig().getStringList(key + ".name").get(i))) {
-                                            a(invi, key, args, (Player) sender);
-                                            return true;
-                                        } else if ((owner.matches(hpch.getConfig().getStringList("irongolem.name").get(i))) && (key.equalsIgnoreCase("irongolem"))) {
-                                            a(invi, key, args, (Player) sender);
-                                            return true;
-                                        }
-                                    }
-                                }
-                            }
-                            for (String key : uHeads) {
-                                if (owner.equalsIgnoreCase(hpch.getConfig().getString(key + ".name"))) {
-                                    Double price = hpch.getConfig().getDouble(key + ".price");
-                                    if (invi.getAmount() > 0) {
-                                        price = setPrice(price, args, invi, (Player) sender);
-                                        SellHeadEvent she = new SellHeadEvent(price, soldHeads, (Player) sender, econ.getBalance((Player) sender), econ.getBalance((Player) sender) + price, hm);
-                                        Bukkit.getServer().getPluginManager().callEvent(she);
-                                        if (!she.isCancelled()) {
-                                            EconomyResponse zr = econ.depositPlayer((Player) sender, price);
+                        if (nms().isSellable(invi)) {
+                            String s = nms().getType(invi).toLowerCase();
+                            if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {
+                                Double price;
+                                if (invi.getAmount() > 0) {
+                                    price = invi.getAmount() * hpch.getConfig().getDouble(s + ".price");
+                                    soldHeads.add(s);
+                                    hm.put(s, invi.getAmount());
+                                    SellHeadEvent she = new SellHeadEvent(price, soldHeads, (Player) sender, HeadsPlus.getInstance().getEconomy().getBalance((Player) sender), HeadsPlus.getInstance().getEconomy().getBalance((Player) sender) + price, hm);
+                                    Bukkit.getServer().getPluginManager().callEvent(she);
+                                    if (!she.isCancelled()) {
+                                        EconomyResponse zr = HeadsPlus.getInstance().getEconomy().depositPlayer((Player) sender, price);
                                             String success = hpc.getString("sell-success").replaceAll("%l", Double.toString(zr.amount)).replaceAll("%b", Double.toString(zr.balance));
                                             String fail = hpc.getString("sell-fail");
                                             if (zr.transactionSuccess()) {
                                                 if (price > 0) {
                                                     itemRemoval((Player) sender, args, invi);
                                                     sender.sendMessage(success);
-                                                    sold = true;
+
                                                 }
                                             } else {
                                                 sender.sendMessage(fail + ": " + zr.errorMessage);
@@ -119,32 +68,10 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                         }
                                     }
                                 }
-                            }
-                            if (!sold) {
-                                Double price = hpch.getConfig().getDouble("player.price");
-                                if (invi.getAmount() > 0) {
-                                    price = setPrice(price, args, invi, (Player) sender);
-                                }
-                                SellHeadEvent she = new SellHeadEvent(price, soldHeads, (Player) sender, econ.getBalance((Player) sender), econ.getBalance((Player) sender) + price, hm);
-                                Bukkit.getServer().getPluginManager().callEvent(she);
-                                if (!she.isCancelled()) {
-                                    EconomyResponse zr = econ.depositPlayer((Player) sender, price);
-                                    String success = hpc.getString("sell-success").replaceAll("%l", Double.toString(zr.amount)).replaceAll("%b", Double.toString(zr.balance));
-                                    String fail = hpc.getString("sell-fail");
-                                    if (zr.transactionSuccess()) {
-                                        itemRemoval((Player) sender, args, invi);
-                                        sender.sendMessage(success);
-                                        sold = true;
-                                    } else {
-                                        sender.sendMessage(fail + ": " + zr.errorMessage);
-                                    }
-                                }
-                            }
-                            if (!sold) {
-                                sender.sendMessage(hpc.getString("false-head"));
-                            }
+
                         } else {
                             sender.sendMessage(hpc.getString("false-head"));
+                            return true;
                         }
                     } else {
                         if (!sender.hasPermission("headsplus.sellhead")) {
@@ -356,188 +283,34 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 			if (!a[0].matches("^[0-9]+$")) { // More than one head
 				if (a[0].equalsIgnoreCase("all")) { // Sell everything
 					if (i.getType().equals(Material.SKULL_ITEM)) {
-						SkullMeta sm = (SkullMeta) i.getItemMeta();
-
                         if (nms().isSellable(i)) {
-							boolean found = false;
-							for (String s : hpch.mHeads) {
-							    if (s.equalsIgnoreCase("sheep")) {
-							        for (String st : hpch.getConfig().getConfigurationSection("sheep.name").getKeys(false)) {
-							            if (!Objects.equals(e(hpch.getConfig().getStringList(s + ".name." + st), p, s, sm, i), p)) {
-                                            p = e(hpch.getConfig().getStringList(s + ".name." + st), p, s, sm, i);
-                                            soldHeads.add(s);
-                                            i(s, i.getAmount());
-                                            found = true;
-                                            break;
-                                        }
-                                    }
-                                } else {
-                                    if (!Objects.equals(e(hpch.getConfig().getStringList(s + ".name"), p, s, sm, i), p)) {
-                                        p = e(hpch.getConfig().getStringList(s + ".name"), p, s, sm, i);
-                                        soldHeads.add(s);
-                                        i(s, i.getAmount());
-                                        found = true;
-                                        break;
-                                    }
-                                }
-						    }
-						    for (String s : hpch.uHeads) {
-                                if (!Objects.equals(e(hpch.getConfig().getStringList(s + ".name"), p, s, sm, i), p)) {
-                                    p = e(hpch.getConfig().getStringList(s + ".name"), p, s, sm, i);
-                                    soldHeads.add(s);
-                                    i(s, i.getAmount());
-                                    found = true;
-                                    break;
-                                }
-						    }
-                            if (!Objects.equals(e(hpch.getConfig().getStringList("irongolem.name"), p, "irongolem", sm, i), p)) {
-                                p = e(hpch.getConfig().getStringList("irongolem.name"), p, "irongolem", sm, i);
-                                soldHeads.add("irongolem");
-                                i("irongolem", i.getAmount());
-                                found = true;
+							String s = nms().getType(i).toLowerCase();
+							if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {
+							    soldHeads.add(s);
+							    i(s, i.getAmount());
+							    p += hpch.getConfig().getDouble(s + ".price");
                             }
-
-						    if (nms().getSkullOwnerName(sm).equalsIgnoreCase("HPXHead")) {
-                                for (String key : hpch.mHeads) {
-                                    if (key.equalsIgnoreCase("sheep")) {
-                                        for (String s : hpch.getConfig().getConfigurationSection("sheep.name").getKeys(false)) {
-                                            if (!b(p, key, hpch.getConfig().getStringList(key + ".name." + s), i, pl, a, false, true).equals(p)) {
-                                                p = b(p, key, hpch.getConfig().getStringList(key + ".name." + s), i, pl, a, false, true);
-                                                soldHeads.add(key);
-                                                i(key, i.getAmount());
-                                                found = true;
-                                                break;
-                                            }
-                                        }
-                                    } else {
-                                        if (!b(p, key, hpch.getConfig().getStringList(key + ".name"), i, pl, a, false, true).equals(p)) {
-                                            p = b(p, key, hpch.getConfig().getStringList(key + ".name"), i, pl, a, false, true);
-                                            soldHeads.add(key);
-                                            i(key, i.getAmount());
-                                            found = true;
-                                            break;
-                                        }
-                                    }
-
-                                }
-                                for (String key : hpch.uHeads) {
-                                    if (!b(p, key, hpch.getConfig().getStringList(key + ".name"), i, pl, a, false, true).equals(p)) {
-                                        p = b(p, key, hpch.getConfig().getStringList(key + ".name"), i, pl, a, false, true);
-                                        soldHeads.add(key);
-                                        i(key, i.getAmount());
-                                        found = true;
-                                        break;
-                                    }
-                                }
-                            }
-						    if (!found) {
-						    	p = p + (i.getAmount() * hpch.getConfig().getDouble("player.price"));
-						    	soldHeads.add("player");
-						    	i("player", i.getAmount());
-						    }
 						}
 					}
 				} else { // Selected mob
-					for (String s : hpch.mHeads) { // All mobs with defined head names
-						if (a[0].equalsIgnoreCase(s)) { // If the first arg e
-						    SkullMeta sm = (SkullMeta) i.getItemMeta();
-						    if (s.equalsIgnoreCase("sheep")) {
-						        for (String st : hpch.getConfig().getConfigurationSection("sheep.name").getKeys(false)) {
-                                    p = f(i, sm, p, s, hpch.getConfig().getStringList(s + ".name." + st));
-                                }
-                            } else {
-                                p = f(i, sm, p, s, hpch.getConfig().getStringList(s + ".name"));
-                            }
-						}
-					}
-					for (String s : hpch.uHeads) {
-                        SkullMeta sm = (SkullMeta) i.getItemMeta();
-						if (a[0].equalsIgnoreCase(s)) {
-                            p = f(i, sm, p, s, hpch.getConfig().getStringList(s + ".name"));
-                        }
-					}
-					if (a[0].equalsIgnoreCase("player")) {
-					    boolean player = true;
-					    SkullMeta sm = (SkullMeta) i.getItemMeta();
-					    for (String s : hpch.uHeads) {
-					        if (d(hpch.getConfig().getStringList(s + ".name"), sm)) {
-                                player = false;
-                                break;
-                            }
-                        }
-                        for (String s : hpch.mHeads) {
-					        if (s.equalsIgnoreCase("sheep")) {
-					            for (String st : hpch.getConfig().getConfigurationSection(s + ".name").getKeys(false)) {
-                                    if (d(hpch.getConfig().getStringList(s + ".name." + st), sm)) {
-                                        player = false;
-                                        break;
-                                    }
-                                }
-                            } else {
-                                if (d(hpch.getConfig().getStringList(s + ".name"), sm)) {
-                                    player = false;
-                                    break;
-                                }
-                            }
-                        }
-                        if (player) {
-					        p = p + (i.getAmount() * hpch.getConfig().getDouble("player.price"));
-					        soldHeads.add("player");
-					        i("player", i.getAmount());
-					    }
-                    }
-				}	
+				    p = f(i, p, a[0]);
+				}
 			} else {
-				if (Integer.parseInt(a[0]) <= i.getAmount()) {
-					SkullMeta sm = (SkullMeta) i.getItemMeta();
-					String s = null;
-					for (String str : hpch.mHeads) {
-                        if (str.equalsIgnoreCase("sheep")) {
-                            for (String st : hpch.getConfig().getConfigurationSection(s + ".name").getKeys(false)) {
-                                if (g(hpch.getConfig().getStringList(str + ".name." + st), sm)) {
-                                    s = str;
-                                }
-                            }
-                        } else {
-                            if (g(hpch.getConfig().getStringList(str + ".name"), sm)) {
-                                s = str;
-                            }
+			    if (Integer.parseInt(a[0]) <= i.getAmount()) {
+					if (nms().isSellable(i)) {
+					    String s = nms().getType(i);
+					    if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {
+                            p = hpch.getConfig().getDouble(s + ".price") * Integer.parseInt(a[0]);
+                            soldHeads.add(s);
+                            i(s, i.getAmount());
                         }
-					}
-					p = hpch.getConfig().getDouble(s + ".price") * Integer.parseInt(a[0]);
-                    soldHeads.add(s);
-                    i(s, i.getAmount());
+                    }
+
 				} else {
 					pl.sendMessage(hpc.getString("not-enough-heads"));
 				}
 			}
-		} else {
-			SkullMeta sm = (SkullMeta) i.getItemMeta();
-			String s = null;
-			for (String str : hpch.mHeads) {
-                if (str.equalsIgnoreCase("sheep")) {
-                    for (String st : hpch.getConfig().getConfigurationSection(str + ".name").getKeys(false)) {
-                        if (g(hpch.getConfig().getStringList(str + ".name." + st), sm)) {
-                            s = str;
-                        }
-                    }
-                } else {
-                    if (g(hpch.getConfig().getStringList(str + ".name"), sm)) {
-                        s = str;
-                    }
-                }
-			}
-            for (String str : hpch.uHeads) {
-			    if (g(hpch.getConfig().getStringList(str + ".name"), sm)) {
-			        s = str;
-                }
-			}
-            if (s == null) {
-			    s = "player";
-            }
-			 p = hpch.getConfig().getDouble(s + ".price") * i.getAmount();
-            soldHeads.add(s);
-	    }
+		}
 		return p;
 	}
 	private void sellAll(Player p, String[] a, ItemStack i) throws NoSuchFieldException, IllegalAccessException {
@@ -577,65 +350,11 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
             if (zr.transactionSuccess()) {
                 itemRemoval(p, a, i);
                 p.sendMessage(success);
-                sold = true;
             } else {
                 p.sendMessage(fail + ": " + zr.errorMessage);
             }
         }
 	}
-
-	private boolean checkColorSheep(Player sender, String[] args, ItemStack invi) throws NoSuchFieldException, IllegalAccessException {
-	    for (String s : hpch.getConfig().getConfigurationSection( "sheep.name").getKeys(false)) {
-	        for (int i = 0; i < hpch.getConfig().getStringList("sheep.name." + s).size(); i++) {
-                if (hpchx.isHPXSkull(hpch.getConfig().getStringList("sheep.name." + s).get(i))) {
-                    Field pro = ((SkullMeta) invi.getItemMeta()).getClass().getDeclaredField("profile");
-                    pro.setAccessible(true);
-                    GameProfile gm = (GameProfile) pro.get(invi.getItemMeta());
-                    for (Property p : gm.getProperties().get("textures")) {
-                        if (p.getValue().equals(hpchx.getTextures(hpch.getConfig().getStringList("sheep.name." + s).get(i)))) {
-                            Double price = hpch.getConfig().getDouble("sheep.price");
-                            if (invi.getAmount() > 0) {
-                                price *= invi.getAmount();
-                            }
-                            pay(sender, args, invi, price);
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        return false;
-    }
-    private boolean checkSkullForTexture(Player pl, ItemStack is, List<String> list, String key, String[] args) throws NoSuchFieldException, IllegalAccessException {
-        for (int i = 0; i < list.size(); i++) {
-            if (hpchx.isHPXSkull(list.get(i))) {
-                Field pro = ((SkullMeta) is.getItemMeta()).getClass().getDeclaredField("profile");
-                pro.setAccessible(true);
-                GameProfile gm = (GameProfile) pro.get(is.getItemMeta());
-                for (Property p : gm.getProperties().get("textures")) {
-                    if (p.getValue().equals(hpchx.getTextures(hpch.getConfig().getStringList(key + ".name").get(i)))) {
-                        Double price = hpch.getConfig().getDouble(key + ".price");
-                        if (is.getAmount() > 0) {
-                            price *= is.getAmount();
-                        }
-                        pay(pl, args, is, price);
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    private void a(ItemStack is, String key, String[] args, Player p) throws NoSuchFieldException, IllegalAccessException {
-        Double price = hpch.getConfig().getDouble(key + ".price");
-        soldHeads.add(key);
-        i(key, is.getAmount());
-        if (is.getAmount() > 0) {
-            price = setPrice(price, args, is, p);
-        }
-        pay(p, args, is, price);
-    }
 
     private Double b(Double price, String key, List<String> ls, ItemStack i, Player p, String[] args, boolean e, boolean f) throws NoSuchFieldException, IllegalAccessException {
         for (String l : ls) {
@@ -683,43 +402,14 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
         }
         return false;
     }
-    private Double e(List<String> ls, Double p, String s, SkullMeta sm, ItemStack i) {
-        for (String l : ls) {
-            if (nms().getSkullOwnerName(sm).equals(l)) {
+
+    private Double f(ItemStack i, Double p, String s) {
+	    String st = nms().getType(i).toLowerCase();
+	    if (nms().isSellable(i)) {
+	        if (st.equalsIgnoreCase(s)) {
+	            soldHeads.add(s);
+	            i(s, i.getAmount());
                 p = p + (i.getAmount() * hpch.getConfig().getDouble(s + ".price"));
-                return p;
-            }
-        }
-        return p;
-    }
-
-    private Double f(ItemStack i, SkullMeta sm, Double p, String s, List<String> ls2) throws NoSuchFieldException, IllegalAccessException {
-        for (String aLs2 : ls2) {
-
-            if (nms().getSkullOwnerName(sm).equalsIgnoreCase(aLs2)) {
-
-                if (nms().isSellable(i)) {
-                    soldHeads.add(s);
-                    i(s, i.getAmount());
-                    p = p + (i.getAmount() * hpch.getConfig().getDouble(s + ".price"));
-                }
-            } else if (nms().getSkullOwnerName(sm).equalsIgnoreCase("HPXHead")) {
-                if (hpchx.isHPXSkull(aLs2)) {
-
-                    GameProfile gm = h(i);
-                    for (Property pr : gm.getProperties().get("textures")) {
-                        if (pr.getValue().equals(hpchx.getTextures(aLs2))) {
-                            if (i.getAmount() > 0) {
-                                if (nms().isSellable(i)) {
-                                    soldHeads.add(s);
-                                    i(s, i.getAmount());
-                                    p = p + (i.getAmount() * hpch.getConfig().getDouble(s + ".price"));
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
             }
         }
         return p;

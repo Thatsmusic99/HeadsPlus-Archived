@@ -98,12 +98,12 @@ public class DeathEvents implements Listener {
                             }
                         }
                         head.setItemMeta(headM);
-                        nms.addNBTTag(head);
                         Location entityLoc = ep.getEntity().getLocation();
                         double entityLocY = entityLoc.getY() + 1;
                         entityLoc.setY(entityLocY);
                         World world = ep.getEntity().getWorld();
                         head = nms.addNBTTag(head);
+                        head = nms.setType("player", head);
                         PlayerHeadDropEvent event = new PlayerHeadDropEvent(ep.getEntity(), ep.getEntity().getKiller(), head, world, entityLoc);
                         Bukkit.getServer().getPluginManager().callEvent(event);
                         if (!event.isCancelled()) {
@@ -188,12 +188,12 @@ public class DeathEvents implements Listener {
             sm.setLore(ls);
         }
         i.setItemMeta(sm);
-
         Location entityLoc = e.getLocation();
         double entityLocY = entityLoc.getY() + 1;
         entityLoc.setY(entityLocY);
         World world = e.getWorld();
         i = HeadsPlus.getInstance().getNMS().addNBTTag(i);
+        i = HeadsPlus.getInstance().getNMS().setType(e.getType().name().replaceAll("_", "").toLowerCase(), i);
         EntityHeadDropEvent event = new EntityHeadDropEvent(k, i, world, entityLoc, e.getType());
         Bukkit.getServer().getPluginManager().callEvent(event);
         if (!event.isCancelled()) {

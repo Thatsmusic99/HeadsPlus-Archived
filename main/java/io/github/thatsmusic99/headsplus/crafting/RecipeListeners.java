@@ -5,9 +5,10 @@ import org.bukkit.inventory.ItemStack;
 
 class RecipeListeners {
 	
-	public static ItemStack makeSell(ItemStack item) {
+	public static ItemStack makeSell(ItemStack item, String type) {
 		if ((HeadsPlus.getInstance().canSellHeads())) {
 			item = HeadsPlus.getInstance().getNMS().addNBTTag(item);
+			item = HeadsPlus.getInstance().getNMS().setType(type, item);
 		}
 		return item;
 	}

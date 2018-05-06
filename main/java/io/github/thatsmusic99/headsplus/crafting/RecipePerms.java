@@ -38,6 +38,7 @@ public class RecipePerms implements Listener {
                                 Bukkit.getServer().getPluginManager().callEvent(event);
                                 if (!event.isCancelled()) {
                                     e.setCurrentItem(nms.addNBTTag(e.getCurrentItem()));
+                                    e.setCurrentItem(nms.setType(hapi.getSkullType(e.getCurrentItem()), e.getCurrentItem()));
                                     return;
                                 } else {
                                     e.setCancelled(true);
@@ -55,6 +56,7 @@ public class RecipePerms implements Listener {
                                                     Bukkit.getServer().getPluginManager().callEvent(event);
                                                     if (!event.isCancelled()) {
                                                         e.setCurrentItem(nms.addNBTTag(e.getCurrentItem()));
+                                                        e.setCurrentItem(nms.setType(hapi.getSkullType(e.getCurrentItem()), e.getCurrentItem()));
                                                         return;
                                                     } else {
                                                         e.setCancelled(true);
@@ -74,7 +76,8 @@ public class RecipePerms implements Listener {
                                 event = new HeadCraftEvent(player, e.getCurrentItem(), e.getWhoClicked().getWorld(), e.getWhoClicked().getLocation(), amount, hapi.getSkullType(e.getCurrentItem()));
                                 Bukkit.getServer().getPluginManager().callEvent(event);
                                 if (!event.isCancelled()) {
-                                    nms.addNBTTag(e.getCurrentItem());
+                                    e.setCurrentItem(nms.addNBTTag(e.getCurrentItem()));
+                                    e.setCurrentItem(nms.setType(hapi.getSkullType(e.getCurrentItem()), e.getCurrentItem()));
                                     return;
                                 } else {
                                     e.setCancelled(true);

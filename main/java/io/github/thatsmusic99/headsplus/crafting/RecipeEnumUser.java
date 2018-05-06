@@ -68,7 +68,7 @@ public class RecipeEnumUser {
             i.setItemMeta(ims);
             im.setDisplayName(ChatColor.translateAlternateColorCodes('&', heads.getString(key.str + ".display-name")));
             i.setItemMeta(im);
-            i = RecipeListeners.makeSell(i);
+            i = RecipeListeners.makeSell(i, key.str);
 	        ShapelessRecipe recipe = nms.getRecipe(i, "hp" + key.name());
 	        List<String> ingrs = new ArrayList<>();
 	        for (String key2 : crafting.getStringList(key.str + "I")) {
@@ -98,7 +98,7 @@ public class RecipeEnumUser {
                 ims = nms.setSkullOwner(heads.getStringList(key.str + ".name").get(0), im);
 
                 i.setItemMeta(ims);
-                i = RecipeListeners.makeSell(i);
+                i = RecipeListeners.makeSell(i, key.str);
 	            ShapelessRecipe recipe = nms.getRecipe(i, "hp" + key.name());
 	            List<String> ingrs = new ArrayList<>();
 	            if (crafting.getStringList(key.str + "I") != null) {

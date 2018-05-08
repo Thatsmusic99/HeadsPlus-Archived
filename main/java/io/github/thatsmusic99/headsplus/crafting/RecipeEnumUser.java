@@ -64,7 +64,30 @@ public class RecipeEnumUser {
 	        }
             i.setItemMeta(im);
             SkullMeta ims = (SkullMeta) i.getItemMeta();
-
+			if (key.str.equalsIgnoreCase("sheep")) {
+				if (heads.getStringList("sheep.name.default").get(0).equalsIgnoreCase("MHF_Sheep")) {
+					//   im = (SkullMeta) HeadsPlus.getInstance().getAPI().createSkull(key.tex, "").getItemMeta();
+					ims = nms.setSkullOwner(heads.getStringList(key.str + ".name.default").get(0), ims);
+				} else {
+					ims = nms.setSkullOwner(heads.getStringList(key.str + ".name.default").get(0), ims);
+				}
+			} else {
+				if (key.equals(RecipeEnums.IRONGOLEM)) {
+					if (heads.getStringList("irongolem.name").get(0).equalsIgnoreCase("MHF_Golem")) {
+						//    im = (SkullMeta) HeadsPlus.getInstance().getAPI().createSkull(key.tex, "").getItemMeta();
+						ims = nms.setSkullOwner(heads.getStringList(key.str + ".name").get(0), ims);
+					}  else {
+						ims = nms.setSkullOwner(heads.getStringList(key.str + ".name").get(0), ims);
+					}
+				} else {
+					if (heads.getStringList(key.str + ".name").get(0).equalsIgnoreCase("MHF_" + key.str)) {
+						//    im = (SkullMeta) HeadsPlus.getInstance().getAPI().createSkull(key.tex, "").getItemMeta();
+						ims = nms.setSkullOwner(heads.getStringList(key.str + ".name").get(0), ims);
+					}  else {
+						ims = nms.setSkullOwner(heads.getStringList(key.str + ".name").get(0), ims);
+					}
+				}
+			}
             i.setItemMeta(ims);
             im.setDisplayName(ChatColor.translateAlternateColorCodes('&', heads.getString(key.str + ".display-name")));
             i.setItemMeta(im);

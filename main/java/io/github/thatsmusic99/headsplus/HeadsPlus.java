@@ -9,6 +9,7 @@ import io.github.thatsmusic99.headsplus.config.*;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallenges;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.config.levels.*;
+import io.github.thatsmusic99.headsplus.crafting.RecipeEnumUser;
 import io.github.thatsmusic99.headsplus.crafting.RecipePerms;
 import io.github.thatsmusic99.headsplus.events.*;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
@@ -89,6 +90,7 @@ public class HeadsPlus extends JavaPlugin {
     @Override
     public void onEnable() {
         try {
+
             instance = this;
             setupNMS();
             setUpMConfig();

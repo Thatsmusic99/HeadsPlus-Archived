@@ -181,6 +181,7 @@ public class HeadsPlusConfig extends ConfigSettings {
 
 	public String getString(String path) {
 	    String str = getConfig().getString(path);
+	    if (str == null) return "";
 	    str = str.replaceAll("%h", getConfig().getString("prefix"));
 	    str = str.replaceAll("''", "'");
 	    str = str.replaceAll("^'", "");

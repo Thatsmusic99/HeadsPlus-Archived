@@ -55,7 +55,6 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                     if (!she.isCancelled()) {
                                         EconomyResponse zr = HeadsPlus.getInstance().getEconomy().depositPlayer((Player) sender, price);
                                             String success = hpc.getString("sell-success").replaceAll("%l", Double.toString(zr.amount)).replaceAll("%b", Double.toString(zr.balance));
-                                            String fail = hpc.getString("sell-fail");
                                             if (zr.transactionSuccess()) {
                                                 if (price > 0) {
                                                     itemRemoval((Player) sender, args, invi);
@@ -63,7 +62,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 
                                                 }
                                             } else {
-                                                sender.sendMessage(fail + ": " + zr.errorMessage);
+                                                sender.sendMessage(hpc.getString("cmd-fail"));
                                             }
                                         }
                                     }
@@ -346,12 +345,11 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 		if (!she.isCancelled()) {
             EconomyResponse zr = econ.depositPlayer(p, pr);
             String success = hpc.getString("sell-success").replaceAll("%l", Double.toString(zr.amount)).replaceAll("%b", Double.toString(zr.balance));
-            String fail = hpc.getString("sell-fail");
             if (zr.transactionSuccess()) {
                 itemRemoval(p, a, i);
                 p.sendMessage(success);
             } else {
-                p.sendMessage(fail + ": " + zr.errorMessage);
+                p.sendMessage(hpc.getString("cmd-fail"));
             }
         }
 	}

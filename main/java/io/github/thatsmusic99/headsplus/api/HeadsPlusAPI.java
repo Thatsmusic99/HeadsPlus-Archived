@@ -5,6 +5,7 @@ import com.mojang.authlib.properties.Property;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -142,6 +143,35 @@ public class HeadsPlusAPI {
         sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', displayname));
         s.setItemMeta(sm);
         return s;
+    }
+
+    public String getTexture(String owner) {
+        OfflinePlayer p = Bukkit.getOfflinePlayer(owner);
+        GameProfile gm = new GameProfile(p.getUniqueId(), owner);
+        return gm.getProperties().get("textures").iterator().next().getValue();
+    }
+
+    public SkullMeta setSkullMeta(SkullMeta m, String t) {
+        GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
+        gm.getProperties().put("textures", new Property("texture", t));
+
+        Field profileField = null;
+        try {
+            profileField = m.getClass().getDeclaredField("profile");
+        } catch (NoSuchFieldException | SecurityException e) {
+            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                e.printStackTrace();
+            }
+        }
+        profileField.setAccessible(true);
+        try {
+            profileField.set(m, gm);
+        } catch (IllegalArgumentException | IllegalAccessException e) {
+            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                e.printStackTrace();
+            }
+        }
+        return m;
     }
 
     public String getSkullType(ItemStack is) throws NoSuchFieldException, IllegalAccessException {

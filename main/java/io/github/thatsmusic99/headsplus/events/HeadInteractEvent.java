@@ -29,7 +29,7 @@ public final class HeadInteractEvent implements Listener {
 			        String owner;
 
 			    	owner = getSkullName(skull);
-			        String playerName = player.toString();
+			        String playerName = player.getName();
 			        if (TimesSent < 1) {
 			    	    for (HeadEnums key : HeadEnums.values()) {
 			    	    	if (key.name.contains(owner)) {

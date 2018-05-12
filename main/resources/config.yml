@@ -10,7 +10,6 @@ whitelistwOn: false
 sellHeads: true
 dropHeads: true
 craftHeads: false
-autoReloadOnFirstJoin: true
 disableCrafting: false
 headsDatabase: true
 themeColor1: DARK_BLUE
@@ -40,12 +39,8 @@ mask-powerups: true
 debug:
   create-debug-files: true
   print-stacktraces-in-console: true
-use-lore: false
-lore:
-- '&6&lThis head can be sold!'
-- '&6Do /sellhead to sell!'
 player-death-messages: false
 death-messages:
-- "&b%p &3was killed by &b%k &3and had their head removed!"
-- "&b%k &3finished the job and removed the worst part of &b%p&3: The head."
-- "&3The server owner screamed at &b%p &3\"OFF WITH HIS HEAD!\"&3. &b%k &3finished the job."
+- "&b{player} &3was killed by &b{killer} &3and had their head removed!"
+- "&b{killer} &3finished the job and removed the worst part of &b{player}&3: The head."
+- "&3The server owner screamed at &b{player} &3\"OFF WITH HIS HEAD!\"&3. &b{killer} &3finished the job."

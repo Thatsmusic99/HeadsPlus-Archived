@@ -39,15 +39,15 @@ public final class HeadInteractEvent implements Listener {
 				    	    	} else {
 				    		    	iMessage1 = hpc.getString("head-mhf-interact-message");
 				    	    	}
-				    	    	iMessage1 = iMessage1.replaceAll("%p", key.displayname).replaceAll("%m", playerName);
+				    	    	iMessage1 = iMessage1.replaceAll("\\{name}", key.displayname).replaceAll("\\{player}", playerName);
 				    	    	player.sendMessage(iMessage1);
 				    	    	TimesSent++;
 				    	    	return;
 			    		    }
 			    	    }
 			    	    String iMessage1 = hpc.getString("head-interact-message");
-		                iMessage1 = iMessage1.replaceAll("%p", owner);
-		    		    iMessage1 = iMessage1.replaceAll("%m", playerName);
+		                iMessage1 = iMessage1.replaceAll("\\{name}", owner);
+		    		    iMessage1 = iMessage1.replaceAll("\\{player}", playerName);
 		                player.sendMessage(iMessage1);
 		                TimesSent++;
 			        } else {

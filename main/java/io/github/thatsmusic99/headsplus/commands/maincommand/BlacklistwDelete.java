@@ -75,7 +75,7 @@ public class BlacklistwDelete implements IHeadsPlusCommand {
                         config.set("blacklistw", blacklist);
                         config.options().copyDefaults(true);
                         HeadsPlus.getInstance().saveConfig();
-                        sender.sendMessage(hpc.getString("world-removed-bl").replaceAll("%w", args[1]));
+                        sender.sendMessage(hpc.getString("world-removed-bl").replaceAll("\\{name}", args[1]));
                     } else {
                         sender.sendMessage(hpc.getString("world-a-removed-bl"));
 

@@ -72,7 +72,7 @@ public class WhitelistAdd implements IHeadsPlusCommand {
                 config.set("whitelist", wl);
                 config.options().copyDefaults(true);
                 HeadsPlus.getInstance().saveConfig();
-                sender.sendMessage(hpc.getString("head-added-wl").replaceAll("%p", args[1]));
+                sender.sendMessage(hpc.getString("head-added-wl").replaceAll("\\{name}", args[1]));
             }
         } catch (Exception e) {
             new DebugPrint(e, "Subcommand (whitelistadd)", true, sender);

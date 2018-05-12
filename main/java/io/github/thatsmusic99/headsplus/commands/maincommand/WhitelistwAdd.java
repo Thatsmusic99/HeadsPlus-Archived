@@ -77,7 +77,7 @@ public class WhitelistwAdd implements IHeadsPlusCommand {
                             config.set("whitelistw", blacklist);
                             config.options().copyDefaults(true);
                             HeadsPlus.getInstance().saveConfig();
-                            sender.sendMessage(hpc.getString("world-added-wl").replaceAll("%w", args[1]));
+                            sender.sendMessage(hpc.getString("world-added-wl").replaceAll("\\{name}", args[1]));
                         }
                 } else {
                     sender.sendMessage(hpc.getString("alpha-names"));

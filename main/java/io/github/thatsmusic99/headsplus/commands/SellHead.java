@@ -20,7 +20,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.potion.PotionEffectType;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -54,7 +53,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                     Bukkit.getServer().getPluginManager().callEvent(she);
                                     if (!she.isCancelled()) {
                                         EconomyResponse zr = HeadsPlus.getInstance().getEconomy().depositPlayer((Player) sender, price);
-                                            String success = hpc.getString("sell-success").replaceAll("%l", Double.toString(zr.amount)).replaceAll("%b", Double.toString(zr.balance));
+                                            String success = hpc.getString("sell-success").replaceAll("\\{price}", Double.toString(zr.amount)).replaceAll("\\{balance}", Double.toString(zr.balance));
                                             if (zr.transactionSuccess()) {
                                                 if (price > 0) {
                                                     itemRemoval((Player) sender, args, invi);
@@ -277,7 +276,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 			setHand(p, new ItemStack(Material.AIR));
 		}
 	}
-	private double setPrice(Double p, String[] a, ItemStack i, Player pl) throws NoSuchFieldException, IllegalAccessException {
+	private double setPrice(Double p, String[] a, ItemStack i, Player pl) {
 		if (a.length > 0) { // More than one argument
 			if (!a[0].matches("^[0-9]+$")) { // More than one head
 				if (a[0].equalsIgnoreCase("all")) { // Sell everything
@@ -344,7 +343,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 		Bukkit.getServer().getPluginManager().callEvent(she);
 		if (!she.isCancelled()) {
             EconomyResponse zr = econ.depositPlayer(p, pr);
-            String success = hpc.getString("sell-success").replaceAll("%l", Double.toString(zr.amount)).replaceAll("%b", Double.toString(zr.balance));
+            String success = hpc.getString("sell-success").replaceAll("\\{price}", Double.toString(zr.amount)).replaceAll("\\{balance}", Double.toString(zr.balance));
             if (zr.transactionSuccess()) {
                 itemRemoval(p, a, i);
                 p.sendMessage(success);
@@ -413,14 +412,6 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
         return p;
     }
 
-    private boolean g(List<String> ls, SkullMeta sm) {
-        for (String l : ls) {
-            if (nms().getSkullOwnerName(sm).equalsIgnoreCase(l)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     private GameProfile h(ItemStack i) throws NoSuchFieldException, IllegalAccessException {
         Field pro;
@@ -470,7 +461,6 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
         return "/sellhead [All|Entity|#]";
     }
 
-    // TODO
     @Override
     public HashMap<Boolean, String> isCorrectUsage(String[] args, CommandSender sender) {
         HashMap<Boolean, String> h = new HashMap<>();

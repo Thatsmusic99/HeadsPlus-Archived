@@ -141,7 +141,7 @@ public class InventoryEvent implements Listener {
                                 return;
                             }
                             EconomyResponse er = HeadsPlus.getInstance().getEconomy().withdrawPlayer(p, price);
-                            String success = hpc.getString("buy-success").replaceAll("%l", Double.toString(er.amount)).replaceAll("%b", Double.toString(er.balance));
+                            String success = hpc.getString("buy-success").replaceAll("\\{price}", Double.toString(er.amount)).replaceAll("\\{balance}", Double.toString(er.balance));
                             String fail = hpc.getString("cmd-fail");
                             if (er.transactionSuccess()) {
                                 e.getWhoClicked().sendMessage(success);

@@ -1,7 +1,11 @@
 package io.github.thatsmusic99.headsplus.config;
 
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import org.bukkit.ChatColor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HeadsPlusConfig extends ConfigSettings {
 
@@ -174,7 +178,7 @@ public class HeadsPlusConfig extends ConfigSettings {
             getConfig().set("faulty-theme", LocaleManager.getLocale().badTheme());
             getConfig().set("no-vault", LocaleManager.getLocale().noVault());
         }
-
+        updateMessages();
 		getConfig().options().copyDefaults(true);
 		save();
 	}
@@ -182,7 +186,7 @@ public class HeadsPlusConfig extends ConfigSettings {
 	public String getString(String path) {
 	    String str = getConfig().getString(path);
 	    if (str == null) return "";
-	    str = str.replaceAll("%h", getConfig().getString("prefix"));
+	    str = str.replaceAll("\\{header}", getConfig().getString("prefix"));
 	    str = str.replaceAll("''", "'");
 	    str = str.replaceAll("^'", "");
 	    str = str.replaceAll("'$", "");
@@ -190,5 +194,25 @@ public class HeadsPlusConfig extends ConfigSettings {
         return str;
     }
 
+    private void updateMessages() {
+	    for (String s : getConfig().getKeys(false)) {
+	        getConfig().set(s, getConfig().getString(s).replaceAll("%h", "{header}"));
+	        getConfig().set(s, getConfig().getString(s).replaceAll("%lvl", "{level}"));
+            getConfig().set(s, getConfig().getString(s).replaceAll("%p", "{name}"));
+            getConfig().set(s, getConfig().getString(s).replaceAll("%d", "{player}"));
+            getConfig().set(s, getConfig().getString(s).replaceAll("%l", "{price}"));
+	        getConfig().set(s, getConfig().getString(s).replaceAll("%b", "{balance}"));
+	        getConfig().set(s, getConfig().getString(s).replaceAll("%w", "{name}"));
+	        getConfig().set(s, getConfig().getString(s).replaceAll("%c", "{challenge}"));
+	        getConfig().set(s, getConfig().getString(s).replaceAll("%m", "{player}"));
+        }
+        List<String> a = new ArrayList<>();
+        for (String s : HeadsPlus.getInstance().getConfig().getStringList("death-messages")) {
+	        a.add(s.replaceAll("%p", "{player}").replaceAll("%k", "{killer}"));
+        }
+        HeadsPlus.getInstance().getConfig().set("death-messages", a);
+        HeadsPlus.getInstance().getConfig().options().copyDefaults(true);
+        HeadsPlus.getInstance().saveConfig();
+    }
 
 }

@@ -166,8 +166,8 @@ public class Challenge {
         reward(p);
         for (Player pl : Bukkit.getOnlinePlayers()) {
             pl.sendMessage(HeadsPlus.getInstance().getMessagesConfig().getString("challenge-complete")
-                    .replaceAll("%c", getMainName())
-                    .replaceAll("%p", p.getName()));
+                    .replaceAll("\\{challenge}", getMainName())
+                    .replaceAll("\\{name}", p.getName()));
         }
         p.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + LocaleManager.getLocale().getReward() + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + sb2.toString());
         p.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "XP: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + getGainedXP());

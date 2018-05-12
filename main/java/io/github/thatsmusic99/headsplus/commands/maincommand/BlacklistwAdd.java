@@ -78,7 +78,7 @@ public class BlacklistwAdd implements IHeadsPlusCommand {
                         config.options().copyDefaults(true);
                         HeadsPlus.getInstance().saveConfig();
 
-                        sender.sendMessage(hpc.getString("world-added-bl").replaceAll("%w", args[1]));
+                        sender.sendMessage(hpc.getString("world-added-bl").replaceAll("\\{name}", args[1]));
                     }
                 } catch (Exception e) {
                     new DebugPrint(e, "Subcommand (blacklistwadd)", true, sender);

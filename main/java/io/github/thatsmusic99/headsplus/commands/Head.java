@@ -31,7 +31,7 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
         SkullMeta meta = (SkullMeta) skull.getItemMeta();
         meta = HeadsPlus.getInstance().getNMS().setSkullOwner(n, meta);
 
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().getHeadsConfig().getConfig().getString("player.display-name").replaceAll("%d", n)));
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().getHeadsConfig().getConfig().getString("player.display-name").replaceAll("\\{player}", n)));
         skull.setItemMeta(meta);
         Location playerLoc = (p).getLocation();
         double playerLocY = playerLoc.getY() + 1;

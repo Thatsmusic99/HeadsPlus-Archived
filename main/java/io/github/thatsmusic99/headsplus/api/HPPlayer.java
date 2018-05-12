@@ -130,8 +130,8 @@ public class HPPlayer {
                 level = nextLevel;
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     p.sendMessage(HeadsPlus.getInstance().getMessagesConfig().getString("level-up")
-                            .replaceAll("%p", this.getPlayer().getName())
-                            .replaceAll("%lvl", ChatColor.translateAlternateColorCodes('&', level.getDisplayName())));
+                            .replaceAll("\\{name}", this.getPlayer().getName())
+                            .replaceAll("\\{level}", ChatColor.translateAlternateColorCodes('&', level.getDisplayName())));
                 }
                 HashMap<Integer, Level> levels = HeadsPlus.getInstance().getLevels();
                 hpc.getConfig().set("player-data." + getPlayer().getUniqueId().toString() + ".profile.level", level.getConfigName());

@@ -41,7 +41,6 @@ public class DebugFileCreator {
         JSONObject o3 = new JSONObject();
         try {
             o3.put("Droppable heads enabled", HeadsPlus.getInstance().isDropsEnabled());
-            o3.put("Auto reload on first join", HeadsPlus.getInstance().isAutoReloadingOnFirstJoin());
             o3.put("Uses heads selector", HeadsPlus.getInstance().isUsingHeadDatabase());
             o3.put("Uses leaderboards", HeadsPlus.getInstance().isUsingLeaderboards());
             o3.put("Stops placement of sellable heads", HeadsPlus.getInstance().isStoppingPlaceableHeads());

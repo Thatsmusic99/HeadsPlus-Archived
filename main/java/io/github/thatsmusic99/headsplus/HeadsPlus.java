@@ -9,7 +9,6 @@ import io.github.thatsmusic99.headsplus.config.*;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallenges;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.config.levels.*;
-import io.github.thatsmusic99.headsplus.crafting.RecipeEnumUser;
 import io.github.thatsmusic99.headsplus.crafting.RecipePerms;
 import io.github.thatsmusic99.headsplus.events.*;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
@@ -58,7 +57,6 @@ public class HeadsPlus extends JavaPlugin {
     private Economy econ;
     private Permission perms;
     private boolean drops;
-    private boolean arofj;
     private boolean db;
     private boolean lb;
     private boolean stopP;
@@ -198,24 +196,6 @@ public class HeadsPlus extends JavaPlugin {
         saveConfig();
     }
 
-    @Deprecated
-    public String translateMessages(String s) {
-        if (s == null) return "";
-        if (s.contains("''")) {
-            s = s.replaceAll("''", "'");
-        }
-        if (s.contains("^'")) {
-            s = s.replaceAll("^'", "");
-        }
-        if (s.contains("'$")) {
-            s = s.replaceAll("'$", "");
-        }
-        if (s.contains("%h")) {
-            s = s.replaceAll("%h", ChatColor.translateAlternateColorCodes('&', hpc.getConfig().getString("prefix")));
-        }
-        return s;
-    }
-
     public boolean econ() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
             return false;
@@ -298,7 +278,6 @@ public class HeadsPlus extends JavaPlugin {
 
     private void setPluginValues() {
         drops = getConfig().getBoolean("dropHeads");
-        arofj = getConfig().getBoolean("autoReloadOnFirstJoin");
         stopP = getConfig().getBoolean("stop-placement-of-sellable-heads");
         lb = getConfig().getBoolean("leaderboards");
         db = getConfig().getBoolean("headsDatabase");
@@ -407,10 +386,6 @@ public class HeadsPlus extends JavaPlugin {
 
     public String getVersion() {
         return version;
-    }
-
-    public boolean isAutoReloadingOnFirstJoin() {
-        return arofj;
     }
 
     public boolean isUsingHeadDatabase() {

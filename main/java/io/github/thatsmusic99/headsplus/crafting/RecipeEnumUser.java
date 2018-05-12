@@ -66,7 +66,6 @@ public class RecipeEnumUser {
             SkullMeta ims = (SkullMeta) i.getItemMeta();
 			if (key.str.equalsIgnoreCase("sheep")) {
 				if (heads.getStringList("sheep.name.default").get(0).equalsIgnoreCase("MHF_Sheep")) {
-					//   im = (SkullMeta) HeadsPlus.getInstance().getAPI().createSkull(key.tex, "").getItemMeta();
 					ims = nms.setSkullOwner(heads.getStringList(key.str + ".name.default").get(0), ims);
 				} else {
 					ims = nms.setSkullOwner(heads.getStringList(key.str + ".name.default").get(0), ims);
@@ -74,14 +73,12 @@ public class RecipeEnumUser {
 			} else {
 				if (key.equals(RecipeEnums.IRONGOLEM)) {
 					if (heads.getStringList("irongolem.name").get(0).equalsIgnoreCase("MHF_Golem")) {
-						//    im = (SkullMeta) HeadsPlus.getInstance().getAPI().createSkull(key.tex, "").getItemMeta();
 						ims = nms.setSkullOwner(heads.getStringList(key.str + ".name").get(0), ims);
 					}  else {
 						ims = nms.setSkullOwner(heads.getStringList(key.str + ".name").get(0), ims);
 					}
 				} else {
 					if (heads.getStringList(key.str + ".name").get(0).equalsIgnoreCase("MHF_" + key.str)) {
-						//    im = (SkullMeta) HeadsPlus.getInstance().getAPI().createSkull(key.tex, "").getItemMeta();
 						ims = nms.setSkullOwner(heads.getStringList(key.str + ".name").get(0), ims);
 					}  else {
 						ims = nms.setSkullOwner(heads.getStringList(key.str + ".name").get(0), ims);
@@ -90,6 +87,11 @@ public class RecipeEnumUser {
 			}
             i.setItemMeta(ims);
             im.setDisplayName(ChatColor.translateAlternateColorCodes('&', heads.getString(key.str + ".display-name")));
+            List<String> strs = new ArrayList<>();
+            for (String str : heads.getStringList(key.str + ".lore")) {
+                strs.add(ChatColor.translateAlternateColorCodes('&', str.replaceAll("\\{type}", key.str).replaceAll("\\{price}", String.valueOf(heads.getDouble(key.str + ".price")))));
+            }
+            im.setLore(strs);
             i.setItemMeta(im);
             i = RecipeListeners.makeSell(i, key.str);
 	        ShapelessRecipe recipe = nms.getRecipe(i, "hp" + key.name());

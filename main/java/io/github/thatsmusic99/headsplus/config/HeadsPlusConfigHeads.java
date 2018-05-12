@@ -49,6 +49,7 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
     		getConfig().addDefault(key + ".interact-name", WordUtils.capitalize(key));
     		getConfig().addDefault(key + ".mask-effects", new ArrayList<>());
     		getConfig().addDefault(key + ".mask-amplifiers", new ArrayList<>());
+    		getConfig().addDefault(key + ".lore", new ArrayList<>(Arrays.asList("&7Price: &6{price}", "&7Type: &a{type}")));
     	}
     }
     private void addMHFHeads() {
@@ -62,15 +63,17 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
     		    getConfig().addDefault(key + ".interact-name", WordUtils.capitalize(key));
     		    getConfig().addDefault(key + ".mask-effects", new ArrayList<>());
                 getConfig().addDefault(key + ".mask-amplifiers", new ArrayList<>());
+                getConfig().addDefault(key + ".lore", new ArrayList<>(Arrays.asList("&7Price: &6{price}", "&7Type: &a{type}")));
     		    
     		} else if (key.equals("irongolem")) {
-    			getConfig().addDefault("irongolem.name", new ArrayList<>(Collections.singleton("MHF_Golem")));
-    			getConfig().addDefault("irongolem.chance", 25);
-    			getConfig().addDefault("irongolem.display-name", "Iron Golem Head");
-    			getConfig().addDefault("irongolem.price", 10.00);
-    		    getConfig().addDefault("irongolem.interact-name", "Iron Golem");
-    		    getConfig().addDefault("irongolem.mask-effects", new ArrayList<>());
-                getConfig().addDefault("irongolem.mask-amplifiers", new ArrayList<>());
+    			getConfig().addDefault(key + ".name", new ArrayList<>(Collections.singleton("MHF_Golem")));
+    			getConfig().addDefault(key + ".chance", 25);
+    			getConfig().addDefault(key + ".display-name", "Iron Golem Head");
+    			getConfig().addDefault(key + ".price", 10.00);
+    		    getConfig().addDefault(key + ".interact-name", "Iron Golem");
+    		    getConfig().addDefault(key + ".mask-effects", new ArrayList<>());
+                getConfig().addDefault(key + ".mask-amplifiers", new ArrayList<>());
+                getConfig().addDefault(key + ".lore", new ArrayList<>(Arrays.asList("&7Price: &6{price}", "&7Type: &a{type}")));
     		} else {
     			getConfig().addDefault("sheep.name.default", new ArrayList<>(Collections.singleton("MHF_Sheep")));
     			for (DyeColor dc : DyeColor.values()) {
@@ -82,6 +85,7 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
                 getConfig().addDefault(key + ".interact-name", WordUtils.capitalize(key));
                 getConfig().addDefault(key + ".mask-effects", new ArrayList<>());
                 getConfig().addDefault(key + ".mask-amplifiers", new ArrayList<>());
+                getConfig().addDefault(key + ".lore", new ArrayList<>(Arrays.asList("&7Price: &6{price}", "&7Type: &a{type}")));
 			}
     	}
     }
@@ -91,6 +95,7 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
     	getConfig().addDefault("player.price", 10.00);
         getConfig().addDefault("player.mask-effects", new ArrayList<>());
         getConfig().addDefault("player.mask-amplifiers", new ArrayList<>());
+        getConfig().addDefault("player.lore", new ArrayList<>(Arrays.asList("&7Price: &6{price}", "&7Player: &a{player}")));
     }
     private void addENHeads() {
     	for (String key : eHeads) {

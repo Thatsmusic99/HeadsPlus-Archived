@@ -87,16 +87,12 @@ public class DeathEvents implements Listener {
                         ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
                         SkullMeta headM = (SkullMeta) head.getItemMeta();
                         headM = nms.setSkullOwner(ep.getEntity().getName(), headM);
-                        headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getConfig().getString("player.display-name").replaceAll("%d", ep.getEntity().getName())));
-                        if ((HeadsPlus.getInstance().canSellHeads()) && (ep.getEntity().getKiller().hasPermission("headsplus.sellhead"))) {
-                            if (HeadsPlus.getInstance().getConfig().getBoolean("use-lore")) {
-                                List<String> ls = new ArrayList<>();
-                                for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
-                                    ls.add(ChatColor.translateAlternateColorCodes('&', str));
-                                }
-                                headM.setLore(ls);
-                            }
+                        headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getConfig().getString("player.display-name").replaceAll("\\{player}", ep.getEntity().getName())));
+                        List<String> strs = new ArrayList<>();
+                        for (String str : hpch.getConfig().getStringList("player.lore")) {
+                            strs.add(ChatColor.translateAlternateColorCodes('&', str.replaceAll("\\{player}", ep.getEntity().getName()).replaceAll("\\{price}", String.valueOf(hpch.getConfig().getDouble("player.price")))));
                         }
+                        headM.setLore(strs);
                         head.setItemMeta(headM);
                         Location entityLoc = ep.getEntity().getLocation();
                         double entityLocY = entityLoc.getY() + 1;
@@ -180,13 +176,11 @@ public class DeathEvents implements Listener {
         }
 
         sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getConfig().getString(e.getType().name().replaceAll("_", "").toLowerCase() + ".display-name")));
-        List<String> ls = new ArrayList<>();
-        for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
-            ls.add(ChatColor.translateAlternateColorCodes('&', str));
+        List<String> strs = new ArrayList<>();
+        for (String str : hpch.getConfig().getStringList(e.getType().name().replaceAll("_", "").toLowerCase() + ".lore")) {
+            strs.add(ChatColor.translateAlternateColorCodes('&', str.replaceAll("\\{type}", e.getType().name().replaceAll("_", "").toLowerCase()).replaceAll("\\{price}", String.valueOf(hpch.getConfig().getDouble(e.getType().name().replaceAll("_", "").toLowerCase() + ".price")))));
         }
-        if (HeadsPlus.getInstance().getConfig().getBoolean("use-lore")) {
-            sm.setLore(ls);
-        }
+        sm.setLore(strs);
         i.setItemMeta(sm);
         Location entityLoc = e.getLocation();
         double entityLocY = entityLoc.getY() + 1;

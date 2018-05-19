@@ -1,12 +1,14 @@
 package io.github.thatsmusic99.headsplus.api;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallenges;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,8 +68,21 @@ public class HPPlayer {
         activeMasks.clear();
     }
 
-    public void addMask(PotionEffect... effects) {
-        activeMasks.addAll(Arrays.asList(effects));
+    public void addMask(String s) {
+        HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
+        List<PotionEffect> po = new ArrayList<>();
+        for (int i = 0; i < hpch.getConfig().getStringList(s + ".mask-effects").size(); i++) {
+            String is = hpch.getConfig().getStringList(s + ".mask-effects").get(i).toUpperCase();
+            int amp = hpch.getConfig().getIntegerList(s + ".mask-amplifiers").get(i);
+            try {
+                PotionEffect p = new PotionEffect(PotionEffectType.getByName(is), 1000000, amp);
+                p.apply((Player) this.getPlayer());
+                po.add(p);
+            } catch (IllegalArgumentException ex) {
+                HeadsPlus.getInstance().getLogger().severe("Invalid potion type detected. Please check your masks configuration in heads.yml!");
+            }
+        }
+        activeMasks.addAll(po);
     }
 
     public int getXp() {

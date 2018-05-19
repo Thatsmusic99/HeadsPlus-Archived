@@ -30,24 +30,8 @@ public class MaskEvent implements Listener {
                         HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
                         String s = nms.getType(ist).toLowerCase();
                         if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {
-                            List<PotionEffect> po = new ArrayList<>();
-                            for (int i = 0; i < hpch.getConfig().getStringList(s + ".mask-effects").size(); i++) {
-                                String is = hpch.getConfig().getStringList(s + ".mask-effects").get(i).toUpperCase();
-                                int amp = hpch.getConfig().getIntegerList(s + ".mask-amplifiers").get(i);
-                                try {
-                                    PotionEffect p = new PotionEffect(PotionEffectType.getByName(is), 1000000, amp);
-                                    p.apply(e.getWhoClicked());
-                                    po.add(p);
-                                } catch (IllegalArgumentException ex) {
-                                    HeadsPlus.getInstance().getLogger().severe("Invalid potion type detected. Please check your masks configuration in heads.yml!");
-                                }
-                            }
                             HPPlayer pl = HPPlayer.getHPPlayer((OfflinePlayer) e.getWhoClicked());
-                            PotionEffect[] pa = new PotionEffect[po.size()];
-                            for (int i = 0; i < po.size(); i++) {
-                                pa[i] = po.get(i);
-                            }
-                            pl.addMask(pa);
+                            pl.addMask(s);
                         }
                     } else {
                         if (e.getWhoClicked().getActivePotionEffects().size() > 0) {

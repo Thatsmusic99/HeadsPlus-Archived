@@ -10,6 +10,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.potion.PotionEffect;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -129,7 +130,6 @@ public class DebugFileCreator {
         o2.put("Texture", gm.getProperties().get("textures").iterator().next().getValue());
         o2.put("Can be sold", HeadsPlus.getInstance().getAPI().isSellable(s));
         o2.put("Skull Type", HeadsPlus.getInstance().getAPI().getSkullType(s));
-
         o1.put("Head details", o2);
         Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
         array1.add(o1);
@@ -183,6 +183,11 @@ public class DebugFileCreator {
         o2.put("Completed challenges", ch);
         o2.put("Level", player.getLevel());
         o2.put("Next level", player.getNextLevel());
+        JSONArray a = new JSONArray();
+        for (PotionEffect p : player.getActiveMasks()) {
+            a.add(p.getType().getName());
+        }
+        o2.put("Active effects from masks", a);
         o1.put("Server version", Bukkit.getVersion());
         o1.put("Player details", o2);
         Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();

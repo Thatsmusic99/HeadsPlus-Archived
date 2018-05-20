@@ -276,7 +276,7 @@ public class HeadsPlus extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new MaskEvent(), this);
     }
 
-    private void setPluginValues() {
+    public void setPluginValues() {
         drops = getConfig().getBoolean("dropHeads");
         stopP = getConfig().getBoolean("stop-placement-of-sellable-heads");
         lb = getConfig().getBoolean("leaderboards");

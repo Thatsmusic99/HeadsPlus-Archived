@@ -36,9 +36,14 @@ pTheme: classic
 gui-glass-color: SILVER
 challenges: true
 mask-powerups: true
+allow-looting-enchantment: true
 debug:
   create-debug-files: true
   print-stacktraces-in-console: true
+# players-lose-money-on-head-drop: true
+# lost-money:
+#  percentage: 0
+#  amount: 0
 player-death-messages: false
 death-messages:
 - "&b{player} &3was killed by &b{killer} &3and had their head removed!"

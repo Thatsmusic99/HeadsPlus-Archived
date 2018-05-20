@@ -9,6 +9,7 @@ import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import org.bukkit.*;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -84,7 +85,11 @@ public class DeathEvents implements Listener {
                     NMSManager nms = HeadsPlus.getInstance().getNMS();
                     if (chance1 == 0.0) return;
                     if (chance2 <= chance1) {
-                        ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+                        int a = 1;
+                        if (nms.getItemInHand(ep.getEntity().getKiller()).containsEnchantment(Enchantment.LOOT_BONUS_MOBS) && HeadsPlus.getInstance().getConfig().getBoolean("allow-looting-enchantment")) {
+                            a += nms.getItemInHand(ep.getEntity().getKiller()).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
+                        }
+                        ItemStack head = new ItemStack(Material.SKULL_ITEM, a, (short) 3);
                         SkullMeta headM = (SkullMeta) head.getItemMeta();
                         headM = nms.setSkullOwner(ep.getEntity().getName(), headM);
                         headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getConfig().getString("player.display-name").replaceAll("\\{player}", ep.getEntity().getName())));
@@ -103,6 +108,7 @@ public class DeathEvents implements Listener {
                         PlayerHeadDropEvent event = new PlayerHeadDropEvent(ep.getEntity(), ep.getEntity().getKiller(), head, world, entityLoc);
                         Bukkit.getServer().getPluginManager().callEvent(event);
                         if (!event.isCancelled()) {
+
                             world.dropItem(event.getLocation(), event.getSkull());
                         }
                     }
@@ -164,15 +170,21 @@ public class DeathEvents implements Listener {
         } catch (IndexOutOfBoundsException ex) {
 	        return;
         }
+        int a = 1;
+	    NMSManager nms = HeadsPlus.getInstance().getNMS();
+        if (nms.getItemInHand(k).containsEnchantment(Enchantment.LOOT_BONUS_MOBS)  && HeadsPlus.getInstance().getConfig().getBoolean("allow-looting-enchantment")) {
+            a += nms.getItemInHand(k).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
+        }
         SkullMeta sm;
         if (hpchx.isHPXSkull(s))  {
             i = hpchx.getSkull(s);
+            i.setAmount(a);
             sm = (SkullMeta) i.getItemMeta();
         } else {
-            i = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+            i = new ItemStack(Material.SKULL_ITEM, a, (short) 3);
 
             sm = (SkullMeta) i.getItemMeta();
-            sm = HeadsPlus.getInstance().getNMS().setSkullOwner(s, sm);
+            sm = nms.setSkullOwner(s, sm);
         }
 
         sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getConfig().getString(e.getType().name().replaceAll("_", "").toLowerCase() + ".display-name")));
@@ -186,8 +198,8 @@ public class DeathEvents implements Listener {
         double entityLocY = entityLoc.getY() + 1;
         entityLoc.setY(entityLocY);
         World world = e.getWorld();
-        i = HeadsPlus.getInstance().getNMS().addNBTTag(i);
-        i = HeadsPlus.getInstance().getNMS().setType(e.getType().name().replaceAll("_", "").toLowerCase(), i);
+        i = nms.addNBTTag(i);
+        i = nms.setType(e.getType().name().replaceAll("_", "").toLowerCase(), i);
         EntityHeadDropEvent event = new EntityHeadDropEvent(k, i, world, entityLoc, e.getType());
         Bukkit.getServer().getPluginManager().callEvent(event);
         if (!event.isCancelled()) {

@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.mojang.authlib.GameProfile;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
+import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.bukkit.Bukkit;
@@ -34,6 +35,8 @@ public class DebugFileCreator {
             o1.put("HeadsPlus version", HeadsPlus.getInstance().getDescription().getVersion());
             o1.put("NMS version", HeadsPlus.getInstance().getNMS().getClass().getSimpleName());
             o1.put("Has Vault hooked", HeadsPlus.getInstance().econ());
+            o1.put("MySQL is enabled", HeadsPlus.getInstance().isConnectedToMySQLDatabase());
+            o1.put("Locale", LocaleManager.getLocale().getLanguage());
         } catch (NullPointerException ignored) {
 
         }
@@ -47,9 +50,10 @@ public class DebugFileCreator {
             o3.put("Stops placement of sellable heads", HeadsPlus.getInstance().isStoppingPlaceableHeads());
             o3.put("MySQL is enabled", HeadsPlus.getInstance().isConnectedToMySQLDatabase());
             o3.put("Player death messages", HeadsPlus.getInstance().isDeathMessagesEnabled());
-            o3.put("Uses challenges", HeadsPlus.getInstance().hasChallengesEnabled());
             o3.put("Total challenges", HeadsPlus.getInstance().getChallenges().size());
             o3.put("Total levels", HeadsPlus.getInstance().getLevels().size());
+            o3.put("Masks enabled", HeadsPlus.getInstance().getConfig().getBoolean("mask-powerups"));
+            o3.put("Allows looting enchantment", HeadsPlus.getInstance().getConfig().getBoolean("allow-looting-enchantment"));
         } catch (NullPointerException ignored) {
 
         }
@@ -106,6 +110,7 @@ public class DebugFileCreator {
             o1.put("HeadsPlus version", HeadsPlus.getInstance().getDescription().getVersion());
             o1.put("NMS version", HeadsPlus.getInstance().getNMS().getClass().getSimpleName());
             o1.put("Has Vault hooked", HeadsPlus.getInstance().econ());
+            o1.put("Locale", LocaleManager.getLocale().getLanguage());
         } catch (NullPointerException ignored) {
 
         }
@@ -169,6 +174,7 @@ public class DebugFileCreator {
             o1.put("NMS version", HeadsPlus.getInstance().getNMS().getClass().getSimpleName());
             o1.put("Has Vault hooked", HeadsPlus.getInstance().econ());
             o1.put("MySQL is enabled", HeadsPlus.getInstance().isConnectedToMySQLDatabase());
+            o1.put("Locale", LocaleManager.getLocale().getLanguage());
         } catch (NullPointerException ignored) {
 
         }

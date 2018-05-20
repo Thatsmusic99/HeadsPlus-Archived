@@ -1,9 +1,12 @@
 package io.github.thatsmusic99.headsplus.locale;
 
 public class es_es implements Locale {
+
+    // Translated by AlansS53#0642 (Discord)
+
     @Override
     public boolean active() {
-        return false;
+        return true;
     }
 
     @Override
@@ -13,571 +16,571 @@ public class es_es implements Locale {
 
     @Override
     public String getReloadingMessage() {
-        return null;
+        return "{header} &3Recargando la configuración...";
     }
 
     @Override
     public String getReloadMessage() {
-        return null;
+        return "{header} ¡&3Configuración recargada!";
     }
 
     @Override
     public String getHeadInteractMessage() {
-        return null;
+        return "&3¡Cabeza de &b{name}&3!";
     }
 
     @Override
     public String getHeadMhfInteractMessage() {
-        return null;
+        return "&3¡Cabeza de &b{name}&3!";
     }
 
     @Override
     public String getHeadMhfInteractMessage2() {
-        return null;
+        return "&3¡Cabeza de &b{name}&3!";
     }
 
     @Override
     public String getSellSuccess() {
-        return null;
+        return "&3¡Has vendido la(s) cabeza(s) por &b{price} &3y ahora tienes &b{balance}!";
     }
 
     @Override
     public String getNotEnoughHeads() {
-        return null;
+        return "&c¡No tienes suficientes cabezas!";
     }
 
     @Override
     public String getNoHeads() {
-        return null;
+        return "&cNo tienes cabezas válidas en tu inventario.";
     }
 
     @Override
     public String getInvalidArguments() {
-        return null;
+        return "&cArgumentos inválidos.";
     }
 
     @Override
     public String getFalseHead() {
-        return null;
+        return "&c¡Esa cabeza no puede ser vendida!";
     }
 
     @Override
     public String getFalseItem() {
-        return null;
+        return "&c¡Eso no es una cabeza!";
     }
 
     @Override
     public String getBlacklistHead() {
-        return null;
+        return "&cEsa cabeza está bloqueada y no puede ser usada.";
     }
 
     @Override
     public String getWhitelistHead() {
-        return null;
+        return "&cEsa cabeza no está permitida y por lo tanto no puede ser usada.";
     }
 
     @Override
     public String getFullInventory() {
-        return null;
+        return "&c¡Tu inventario está lleno!";
     }
 
     @Override
     public String getAlphaNames() {
-        return null;
+        return "&cEse comando solo maneja nombres numéricos.";
     }
 
     @Override
     public String getTooManyArguments() {
-        return null;
+        return "&c¡Demasiados argumentos!";
     }
 
     @Override
     public String getHeadTooLong() {
-        return null;
+        return "&cEl nombre es demasiado largo, utiliza uno entre 3 y 16 carácteres.";
     }
 
     @Override
     public String getHeadTooShort() {
-        return null;
+        return "&cEl nombre es demasiado corto, utiliza uno entre 3 y 16 carácteres.";
     }
 
     @Override
     public String getInvalidPageNumber() {
-        return null;
+        return "%{header} &cNumero de página inválido.";
     }
 
     @Override
     public String getInvalidInputInteger() {
-        return null;
+        return "{header} &c¡Sólo puede usar enteros en este comando!";
     }
 
     @Override
     public String getNoPermissions() {
-        return null;
+        return "&cNo tienes permisos para usar ese comando.";
     }
 
     @Override
     public String getHeadAlreadyAdded() {
-        return null;
+        return "{header} &3¡Esa cabeza ya está añadida!";
     }
 
     @Override
     public String getHeadAddedBlacklist() {
-        return null;
+        return "{header} &3{price} ha sido añadida a la lista negra.";
     }
 
     @Override
     public String getHeadNotOnBlacklist() {
-        return null;
+        return "{header} &3Esa cabeza no está en la lista negra.";
     }
 
     @Override
     public String getHeadRemovedBlacklist() {
-        return null;
+        return "{header} &3{name} ha sido eliminada de la lista negra.";
     }
 
     @Override
     public String getHeadAddedWhitelist() {
-        return null;
+        return "{header} &3{name} ha sido añadida a la lista blanca.";
     }
 
     @Override
     public String getHeadNotOnWhitelist() {
-        return null;
+        return "{header} &3Esa cabeza no está en la lista blanca.";
     }
 
     @Override
     public String getHeadRemovedWhitelist() {
-        return null;
+        return "{header} &3{name} ha sido eliminada de la lista blanca.";
     }
 
     @Override
     public String getWorldAlreadyAdded() {
-        return null;
+        return "{header} &3Ese mundo ya esta añadido.";
     }
 
     @Override
     public String getWorldAddedBlacklist() {
-        return null;
+        return "{header} &3{name} ha sido añadido a la lista de mundos bloqueados.";
     }
 
     @Override
     public String getWorldNotOnBlacklist() {
-        return null;
+        return "{header} &3Ese mundo no está en la lista de bloqueados.";
     }
 
     @Override
     public String getWorldRemovedBlacklist() {
-        return null;
+        return "{header} &3{name} ha sido eliminado de la lista de mundos bloqueados";
     }
 
     @Override
     public String getWorldAddedWhitelist() {
-        return null;
+        return "{header} &3{name} ha sido añadido a la lista de mundos permitidos.";
     }
 
     @Override
     public String getWorldNotOnWhitelist() {
-        return null;
+        return "{header} &3Ese mundo no está en la lista de mundos permitidos.";
     }
 
     @Override
     public String getWorldRemovedWhitelist() {
-        return null;
+        return "{header} &3{name} ha sido eliminado de la lista de mundos permitidos.";
     }
 
     @Override
     public String getBlacklistOn() {
-        return null;
+        return "{header} &3¡La lista negra ha sido activada!";
     }
 
     @Override
     public String getBlacklistAlreadyOn() {
-        return null;
+        return "{header} &3La lista negra ya está activada.";
     }
 
     @Override
     public String getBlacklistOff() {
-        return null;
+        return "{header} &3La lista negra ha sido desactivada.";
     }
 
     @Override
     public String getBlacklistAlreadyOff() {
-        return null;
+        return "{header} &3La lista negra ya está desactivada.";
     }
 
     @Override
     public String getWBlacklistOn() {
-        return null;
+        return "{header} &3¡La lista de mundos bloqueados ha sido activada!";
     }
 
     @Override
     public String getWBlacklistAlreadyOn() {
-        return null;
+        return "{header} &3La lista de mundos bloqueados ya está activada.";
     }
 
     @Override
     public String getWBlacklistOff() {
-        return null;
+        return "{header} &3¡La lista de mundos bloqueados ha sido desactivada!";
     }
 
     @Override
     public String getWBlacklistAlreadyOff() {
-        return null;
+        return "{header} &3La lista de mundos bloqueados ya está desactivada.";
     }
 
     @Override
     public String getWhitelistOn() {
-        return null;
+        return "{header} &3¡La lista blanca ha sido activada!";
     }
 
     @Override
     public String getWhitelistAlreadyOn() {
-        return null;
+        return "{header} &3La lista blanca ya está activada.";
     }
 
     @Override
     public String getWhitelistOff() {
-        return null;
+        return "{header} &3¡La lista blanca ha sido desactivada!";
     }
 
     @Override
     public String getWhitelistAlreadyOff() {
-        return null;
+        return "{header} &3La lista blanca ya está desactivada.";
     }
 
     @Override
     public String getWWhitelistOn() {
-        return null;
+        return "{header} &3¡La lista de mundos permitidos ha sido activada!";
     }
 
     @Override
     public String getWWhitelistAlreadyOn() {
-        return null;
+        return "{header} &3La lista de mundos permitidos ya está activada.";
     }
 
     @Override
     public String getWWhitelistOff() {
-        return null;
+        return "{header} &3¡La lista de mundos permitidos ha sido desactivada!";
     }
 
     @Override
     public String getWWhitelistAlreadyOff() {
-        return null;
+        return "{header} &3La lista de mundos permitidos ya está desactivada.";
     }
 
     @Override
     public String getDisabledCommand() {
-        return null;
+        return "&cEse comando está desactivado.";
     }
 
     @Override
     public String getEmptyBlacklist() {
-        return null;
+        return "{header} &cLa lista negra está vacia.";
     }
 
     @Override
     public String getEmptyWBlacklist() {
-        return null;
+        return "{header} &cLa lista de mundos bloqueados está vacía.";
     }
 
     @Override
     public String getEmptyWhitelist() {
-        return null;
+        return "{header} &cLa lista blanca está vacía.";
     }
 
     @Override
     public String getEmptyWWhitelist() {
-        return null;
+        return "{header} &cLa lista de mundos permitidos está vacía.";
     }
 
     @Override
     public String getBuySuccess() {
-        return null;
+        return "&3Has comprado una cabeza por &b{price} &3y ahora tienes &b{balance}";
     }
 
     @Override
     public String versionWord() {
-        return null;
+        return "Versión: ";
     }
 
     @Override
     public String author() {
-        return null;
+        return "Autor: ";
     }
 
     @Override
     public String language() {
-        return null;
+        return "Lenguaje: ";
     }
 
     @Override
     public String descBlacklistAdd() {
-        return null;
+        return "Añade cabezas a la lista negra.";
     }
 
     @Override
     public String descBlacklistDelete() {
-        return null;
+        return "Elimina una cabeza de la lista negra.";
     }
 
     @Override
     public String descBlacklistList() {
-        return null;
+        return "Muestra todas las cabezas en la lista negra.";
     }
 
     @Override
     public String descBlacklistToggle() {
-        return null;
+        return "Activa o desactiva la lista negra.";
     }
 
     @Override
     public String descBlacklistwAdd() {
-        return null;
+        return "Añade un mundo de la lista negra de crafteos.";
     }
 
     @Override
     public String descBlacklistwDelete() {
-        return null;
+        return "Elimina un mundo de la lista negra de crafteos.";
     }
 
     @Override
     public String descBlacklistwList() {
-        return null;
+        return "Muestra los mundos en la lista negra.";
     }
 
     @Override
     public String descBlacklistwToggle() {
-        return null;
+        return "Activa o desactiva la lista negra de crafteos de encendido/apagado.";
     }
 
     @Override
     public String descInfo() {
-        return null;
+        return "Muestra información sobre el plugin.";
     }
 
     @Override
     public String descMCReload() {
-        return null;
+        return "Recarga los archivos de configuración.";
     }
 
     @Override
     public String descWhitelistAdd() {
-        return null;
+        return "Añade cabezas a la lista blanca.";
     }
 
     @Override
     public String descWhitelistDelete() {
-        return null;
+        return "Elimina una cabeza de la lista blanca.";
     }
 
     @Override
     public String descWhitelistList() {
-        return null;
+        return "Muestra las cabezas de la lista blanca.";
     }
 
     @Override
     public String descWhitelistToggle() {
-        return null;
+        return "Activa o desactiva la lsta blanca.";
     }
 
     @Override
     public String descWhitelistwAdd() {
-        return null;
+        return "Añade un mundo a la lista blanca de crafteos.";
     }
 
     @Override
     public String descWhitelistwDelete() {
-        return null;
+        return "Elimina un mundo de la lista blanca de crafteos.";
     }
 
     @Override
     public String descWhitelistwList() {
-        return null;
+        return "Muestra los mundos en la lista blanca.";
     }
 
     @Override
     public String descWhitelistwToggle() {
-        return null;
+        return "Activa o desactiva la lista blanca de crafteos";
     }
 
     @Override
     public String descHead() {
-        return null;
+        return "Obtiene una cabeza.";
     }
 
     @Override
     public String descSellhead() {
-        return null;
+        return "Vende la cabeza en tu mano, utiliza el parámetro numerico para la cantidad, el nombre de la entidad para un mob específico o All para venderlas todas.";
     }
 
     @Override
     public String descHeads() {
-        return null;
+        return "Muestra una seleccion de cabezas.";
     }
 
     @Override
     public String descMyHead() {
-        return null;
+        return "Obtén tu cabeza.";
     }
 
     @Override
     public String descHPLeaderboards() {
-        return null;
+        return "Muestra el top de cabezas.";
     }
 
     @Override
     public String getUpdateFound() {
-        return null;
+        return "{header} &3¡Se ha encontrado una nueva actualización para HeadsPlus! Desplace sobre el mensaje para mas info.";
     }
 
     @Override
     public String getCurrentVersion() {
-        return null;
+        return "&3Versión actual: &7";
     }
 
     @Override
     public String getNewVersion() {
-        return null;
+        return "&3Versión nueva: &7";
     }
 
     @Override
     public String getDescription() {
-        return null;
+        return "&3Descripción: &7";
     }
 
     @Override
     public String getChristmasDeniedMessage() {
-        return null;
+        return "&cTodavía no es esa fecha.";
     }
 
     @Override
     public String getBlockPlaceDenied() {
-        return null;
+        return "&cNo puedes colocar cabezas vendibles.";
     }
 
     @Override
     public String getNoDataRecorded() {
-        return null;
+        return "&cNo hay datos del top aún.";
     }
 
     @Override
     public String getPlayerOffline() {
-        return null;
+        return "&cEse jugador está desconectado.";
     }
 
     @Override
     public String easy() {
-        return null;
+        return "Facil";
     }
 
     @Override
     public String medium() {
-        return null;
+        return "Intermedio";
     }
 
     @Override
     public String hard() {
-        return null;
+        return "Dificil";
     }
 
     @Override
     public String getReward() {
-        return null;
+        return "Recompensa:";
     }
 
     @Override
     public String chCompleteMessage() {
-        return null;
+        return "{header} &3¡&b{name} &3ha completado el reto &b{challenge}&3!";
     }
 
     @Override
     public String descProfile() {
-        return null;
+        return "Muestra su perfil en el plugin.";
     }
 
     @Override
     public String noData() {
-        return null;
+        return "&cNo hay datos de ese jugador.";
     }
 
     @Override
     public String cantCompleteChallenge() {
-        return null;
+        return "&cNo puedes completar ese reto.";
     }
 
     @Override
     public String alreadyCompleted() {
-        return null;
+        return "&cYa has completado ese reto.";
     }
 
     @Override
     public String cantViewData() {
-        return null;
+        return "&cNo puedes ver tus datos si eres la consola...";
     }
 
     @Override
     public String descHelpMenu() {
-        return null;
+        return "Muestra el menú de ayuda.";
     }
 
     @Override
     public String descChallenges() {
-        return null;
+        return "Muestra los retos que has completado.";
     }
 
     @Override
     public String getAchievedNextLevel() {
-        return null;
+        return "{header} &3{name} ha alcanzado el nivel {level}&3!";
     }
 
     @Override
     public String contributors() {
-        return null;
+        return "Colaboradores: ";
     }
 
     @Override
     public String getPluginUpToDate() {
-        return null;
+        return "{header} &3El plugin está actualizado.";
     }
 
     @Override
     public String getEnabled() {
-        return null;
+        return "{header} &3HeadsPlus ha sido activado.";
     }
 
     @Override
     public String getErrorEnabled() {
-        return null;
+        return "{header} &cHeadsPlus no pudo iniciar correctamente. Se ha creado un informe en /plugins/HeadsPlus/debug";
     }
 
     @Override
     public String getDisabled() {
-        return null;
+        return "{header} &3HeadsPlus ha sido desactivado.";
     }
 
     @Override
     public String badTheme() {
-        return null;
+        return "{header} &3Se ha colocado un tema defecuoso, no se realizaran cambios en los temas.";
     }
 
     @Override
     public String getCommandFail() {
-        return null;
+        return "{header} &cError al ejecutar ese comando.";
     }
 
     @Override
     public String noVault() {
-        return null;
+        return "{header} &c¡Vault no detectado! Las cabezas no se pueden vender y los retos no pueden añadir/quitar grupos.";
     }
 
     @Override
     public String descDebug() {
-        return null;
+        return "Crea un archivo de depuración.";
     }
 
     @Override
     public String noVaultGroup() {
-        return null;
+        return "{header} &cVault no se encontró al iniciar, no se puede añadir grupos.";
     }
 }

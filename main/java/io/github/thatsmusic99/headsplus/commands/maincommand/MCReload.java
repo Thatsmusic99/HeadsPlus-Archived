@@ -66,6 +66,7 @@ public class MCReload implements IHeadsPlusCommand{
                     }
                     HeadsPlus.getInstance().getConfig().options().copyDefaults(true);
                     HeadsPlus.getInstance().saveConfig();
+                    HeadsPlus.getInstance().setPluginValues();
                     HPPlayer.players.clear();
                 }
             }.runTaskLaterAsynchronously(HeadsPlus.getInstance(), 2);

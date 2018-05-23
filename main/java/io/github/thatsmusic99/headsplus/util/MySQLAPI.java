@@ -125,6 +125,7 @@ public class MySQLAPI {
     public void addOntoValue(Player p, String section, String database, int shAmount) throws SQLException {
         if (HeadsPlus.getInstance().isConnectedToMySQLDatabase()) {
             try {
+
                 Connection c = HeadsPlus.getInstance().getConnection();
                 Statement s = c.createStatement();
                 ResultSet rs;

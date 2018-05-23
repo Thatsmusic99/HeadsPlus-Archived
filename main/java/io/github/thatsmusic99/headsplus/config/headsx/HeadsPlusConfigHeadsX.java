@@ -7,7 +7,6 @@ import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.ConfigSettings;
 import org.apache.commons.codec.binary.Base64;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -122,7 +121,7 @@ public class HeadsPlusConfigHeadsX extends ConfigSettings {
 
     public ItemStack getSkull(String s) throws NoSuchFieldException, IllegalAccessException {
         String st = s.split("#")[1];
-        ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+        ItemStack i = HeadsPlus.getInstance().getNMS().getSkullMaterial(1);
         SkullMeta sm = (SkullMeta) i.getItemMeta();
         GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
         if (getConfig().getBoolean("heads." + st + ".encode")) {

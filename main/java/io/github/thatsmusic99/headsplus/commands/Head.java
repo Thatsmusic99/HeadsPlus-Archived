@@ -27,7 +27,7 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
     }
 
 	private static void giveHead(Player p, String n) {
-		ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+		ItemStack skull = HeadsPlus.getInstance().getNMS().getSkullMaterial(1);
         SkullMeta meta = (SkullMeta) skull.getItemMeta();
         meta = HeadsPlus.getInstance().getNMS().setSkullOwner(n, meta);
 

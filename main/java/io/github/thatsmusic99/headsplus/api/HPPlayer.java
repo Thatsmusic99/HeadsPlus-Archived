@@ -28,6 +28,7 @@ public class HPPlayer {
     public HPPlayer(OfflinePlayer p) {
         activeMasks = new ArrayList<>();
         this.player = p;
+
         HeadsPlusChallenges hpchl = HeadsPlus.getInstance().getChallengeConfig();
         HeadsPlusAPI hapi = HeadsPlus.getInstance().getAPI();
         HashMap<Integer, Level> levels = HeadsPlus.getInstance().getLevels();

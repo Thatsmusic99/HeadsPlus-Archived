@@ -10,6 +10,7 @@ import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeDiff
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeEnums;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 
+import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import org.apache.commons.codec.binary.Base64;
 
 import org.apache.commons.lang.WordUtils;
@@ -243,7 +244,8 @@ public class InventoryManager {
             } catch (Exception e) {
                 dc = DyeColor.SILVER;
             }
-            ItemStack isi = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) dc.ordinal());
+            NMSManager nms = HeadsPlus.getInstance().getNMS();
+            ItemStack isi = nms.getColouredBlock(MaterialTranslator.BlockType.STAINED_GLASS_PANE, dc.ordinal());
             ItemMeta ims = isi.getItemMeta();
             ims.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6"));
             isi.setItemMeta(ims);
@@ -294,7 +296,8 @@ public class InventoryManager {
             } catch (Exception e) {
                 dc = DyeColor.SILVER;
             }
-            ItemStack isi = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) dc.ordinal());
+            NMSManager nms = HeadsPlus.getInstance().getNMS();
+            ItemStack isi = nms.getColouredBlock(MaterialTranslator.BlockType.STAINED_GLASS_PANE, dc.ordinal());
             ItemMeta ims = isi.getItemMeta();
             ims.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6"));
             isi.setItemMeta(ims);
@@ -303,7 +306,7 @@ public class InventoryManager {
             }
             if (cSection.equalsIgnoreCase("menu")) {
                 for (HeadsPlusChallengeDifficulty hpcd : HeadsPlusChallengeDifficulty.values()) {
-                    ItemStack is = new ItemStack(Material.STAINED_CLAY, 1, (short) hpcd.color.ordinal());
+                    ItemStack is = HeadsPlus.getInstance().getNMS().getColouredBlock(MaterialTranslator.BlockType.TERRACOTTA, hpcd.color.ordinal());
                     ItemMeta im = is.getItemMeta();
                     im.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpcd.dn));
                     is.setItemMeta(im);
@@ -335,9 +338,9 @@ public class InventoryManager {
                 for (Challenge c : pl.getContentsInPage(cPage)) {
                     ItemStack is;
                     if (c.isComplete(p)) {
-                        is = new ItemStack(Material.STAINED_CLAY, 1, (short) 13);
+                        is = nms.getColouredBlock(MaterialTranslator.BlockType.TERRACOTTA, 13);
                     } else {
-                        is = new ItemStack(Material.STAINED_CLAY, 1, (short) 14);
+                        is = nms.getColouredBlock(MaterialTranslator.BlockType.TERRACOTTA, 14);
                     }
                     ItemMeta im = is.getItemMeta();
                     im.setDisplayName(ChatColor.translateAlternateColorCodes('&', c.getChallengeHeader()));
@@ -394,7 +397,7 @@ public class InventoryManager {
     }
 
     private void skull(String str, Inventory i) throws NoSuchFieldException, IllegalAccessException {
-        ItemStack s = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+        ItemStack s = HeadsPlus.getInstance().getNMS().getSkullMaterial(1);
         SkullMeta sm = (SkullMeta) s.getItemMeta();
         GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
         if (hpchx.getConfig().getBoolean("heads." + str + ".encode")) {

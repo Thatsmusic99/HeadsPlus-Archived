@@ -5,6 +5,7 @@ import io.github.thatsmusic99.headsplus.config.challenges.HPChallengeRewardTypes
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeDifficulty;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeTypes;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
+import io.github.thatsmusic99.headsplus.util.MaterialTranslator;
 import net.milkbowl.vault.permission.Permission;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
@@ -124,7 +125,7 @@ public class Challenge {
     public void complete(Player p, Inventory i, int slot) {
         HPPlayer player = HPPlayer.getHPPlayer(p);
         player.addCompleteChallenge(this);
-        ItemStack is = new ItemStack(Material.STAINED_CLAY, 1, (short) 13);
+        ItemStack is = HeadsPlus.getInstance().getNMS().getColouredBlock(MaterialTranslator.BlockType.TERRACOTTA, 13);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.translateAlternateColorCodes('&', getChallengeHeader()));
         List<String> lore = new ArrayList<>();

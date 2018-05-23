@@ -27,7 +27,7 @@ public class RecipeEnumUser {
 	private void addEnumToConfig() {
 	    NMSManager nms = HeadsPlus.getInstance().getNMS();
 	    for (RecipeEnums key : RecipeEnums.values()) {
-	        ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+	        ItemStack i = nms.getSkullMaterial(1);
 	        SkullMeta im = (SkullMeta) i.getItemMeta();
 
 
@@ -111,7 +111,7 @@ public class RecipeEnumUser {
 	        }
 	    }
 	    for (RecipeUndefinedEnums key : RecipeUndefinedEnums.values()) {
-	        ItemStack i = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+	        ItemStack i = HeadsPlus.getInstance().getNMS().getSkullMaterial(1);
 	        SkullMeta im = (SkullMeta) i.getItemMeta();
 	        if (!(heads.getString(key.str + ".display-name").equals("")) && !(heads.getStringList(key.str + ".name").isEmpty())) {
 	            im.setDisplayName(ChatColor.translateAlternateColorCodes('&', heads.getString(key.str + ".display-name")));

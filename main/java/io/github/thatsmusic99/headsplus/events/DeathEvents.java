@@ -89,7 +89,7 @@ public class DeathEvents implements Listener {
                         if (nms.getItemInHand(ep.getEntity().getKiller()).containsEnchantment(Enchantment.LOOT_BONUS_MOBS) && HeadsPlus.getInstance().getConfig().getBoolean("allow-looting-enchantment")) {
                             a += nms.getItemInHand(ep.getEntity().getKiller()).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
                         }
-                        ItemStack head = new ItemStack(Material.SKULL_ITEM, a, (short) 3);
+                        ItemStack head = nms.getSkullMaterial(a);
                         SkullMeta headM = (SkullMeta) head.getItemMeta();
                         headM = nms.setSkullOwner(ep.getEntity().getName(), headM);
                         headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getConfig().getString("player.display-name").replaceAll("\\{player}", ep.getEntity().getName())));
@@ -181,8 +181,7 @@ public class DeathEvents implements Listener {
             i.setAmount(a);
             sm = (SkullMeta) i.getItemMeta();
         } else {
-            i = new ItemStack(Material.SKULL_ITEM, a, (short) 3);
-
+            i = nms.getSkullMaterial(a);
             sm = (SkullMeta) i.getItemMeta();
             sm = nms.setSkullOwner(s, sm);
         }

@@ -1,6 +1,8 @@
 package io.github.thatsmusic99.headsplus.nms;
 
 import com.mojang.authlib.GameProfile;
+import io.github.thatsmusic99.headsplus.util.MaterialTranslator;
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -28,8 +30,6 @@ public interface NMSManager {
 
     Player getPlayer(String name);
 
-    RecipeManager getRecipeManager();
-
     GameProfile getGameProfile(ItemStack s);
 
     ItemStack getItemInHand(Player p);
@@ -37,4 +37,17 @@ public interface NMSManager {
     ItemStack setType(String s, ItemStack i);
 
     String getType(ItemStack i);
+
+    default ItemStack getSkullMaterial(int amount) {
+        return new ItemStack(Material.SKULL_ITEM, amount, (byte) 3);
+    }
+
+    default ItemStack getColouredBlock(MaterialTranslator.BlockType b, int data) {
+        if (b.equals(MaterialTranslator.BlockType.TERRACOTTA)) {
+            return new ItemStack(Material.STAINED_CLAY, 1, (byte) data);
+        } else if (b.equals(MaterialTranslator.BlockType.STAINED_GLASS_PANE)) {
+            return new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) data);
+        }
+        return null;
+    }
 }

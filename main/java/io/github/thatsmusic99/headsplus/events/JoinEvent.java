@@ -55,12 +55,15 @@ public class JoinEvent implements Listener {
                 }
             }
         }.runTaskLater(HeadsPlus.getInstance(), 20);
+        if (!reloaded) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    new RecipeEnumUser();
+                }
+            }.runTaskLaterAsynchronously(HeadsPlus.getInstance(), 20);
+            reloaded = true;
+        }
 
-		new BukkitRunnable() {
-		    @Override
-            public void run() {
-		        new RecipeEnumUser();
-		    }
-		}.runTaskLater(HeadsPlus.getInstance(), 20);
 	}
 }

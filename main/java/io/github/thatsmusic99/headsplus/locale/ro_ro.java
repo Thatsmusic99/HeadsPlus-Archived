@@ -584,4 +584,49 @@ public class ro_ro implements Locale {
     public String noVaultGroup() {
         return "%h &cVault nu a fost gasit la pornire! Grupul nu poate fi adaugat.";
     }
+
+    @Override
+    public String noNameData() {
+        return "{header} &cNu exista date de nume pentru aceasta entitate!";
+    }
+
+    @Override
+    public String noLoreData() {
+        return "{header} &cNu exista date de lore pentru aceasta entitate!";
+    }
+
+    @Override
+    public String noMaskData() {
+        return "{header} &cNu exista date de masca pentru aceasta entitate!";
+    }
+
+    @Override
+    public String type() {
+        return "Tip:";
+    }
+
+    @Override
+    public String interactName() {
+        return "Interactati numele:";
+    }
+
+    @Override
+    public String displayName() {
+        return "Numele afisat:";
+    }
+
+    @Override
+    public String price() {
+        return "Pret";
+    }
+
+    @Override
+    public String chance() {
+        return "Sansa:";
+    }
+
+    @Override
+    public String descHeadView() {
+        return "Afiseaza informatii despre capul entitatii specifice.";
+    }
 }

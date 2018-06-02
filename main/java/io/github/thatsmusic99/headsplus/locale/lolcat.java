@@ -583,46 +583,46 @@ public class lolcat implements Locale {
 
     @Override
     public String noNameData() {
-        return null;
+        return "{header} UMG deres nu naim data D:";
     }
 
     @Override
     public String noLoreData() {
-        return null;
+        return "{header} AAAAAAA deres nu lore data D:";
     }
 
     @Override
     public String noMaskData() {
-        return null;
+        return "{header} soz but dere iz nu mAHsk data ;-;";
     }
 
     @Override
     public String type() {
-        return null;
+        return "Teyepe";
     }
 
     @Override
     public String interactName() {
-        return null;
+        return "Hit naim:";
     }
 
     @Override
     public String displayName() {
-        return null;
+        return "Disssplai naim:";
     }
 
     @Override
     public String price() {
-        return null;
+        return "Preyece:";
     }
 
     @Override
     public String chance() {
-        return null;
+        return "CHOOCHOOCHANS:";
     }
 
     @Override
     public String descHeadView() {
-        return null;
+        return "Shoez sum hed stuffz";
     }
 }

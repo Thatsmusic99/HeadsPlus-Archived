@@ -21,16 +21,15 @@ public class HeadsPlusCommand implements CommandExecutor {
                         IHeadsPlusCommand command = getCommandByName(args[0]);
                         assert command != null;
                         if (sender.hasPermission(command.getPermission())) {
-                            if (command.isCorrectUsage(args, sender).get(true) != null) {
-                                if (command.isMainCommand()) {
+                            if (command.isMainCommand()) {
+                                if (command.isCorrectUsage(args, sender).get(true) != null) {
                                     return command.fire(args, sender);
                                 } else {
-                                    getCommandByName("help").fire(args, sender);
+                                    sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + command.getUsage());
                                 }
                             } else {
-                                sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + command.getUsage());
+                                getCommandByName("help").fire(args, sender);
                             }
-
                         } else {
                             sender.sendMessage(noPerms);
                         }
@@ -52,7 +51,9 @@ public class HeadsPlusCommand implements CommandExecutor {
 	private IHeadsPlusCommand getCommandByName(String name) {
 	    for (IHeadsPlusCommand hpc : HeadsPlus.getInstance().getCommands()) {
 	        if (hpc.getCmdName().equalsIgnoreCase(name)) {
-	            return hpc;
+	            if (hpc.isMainCommand()){
+                    return hpc;
+                }
             }
         }
         return null;

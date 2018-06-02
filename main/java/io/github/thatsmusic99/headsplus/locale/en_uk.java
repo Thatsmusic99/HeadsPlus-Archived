@@ -549,27 +549,27 @@ public class en_uk implements Locale {
 
     @Override
     public String getErrorEnabled() {
-        return "%h &cHeadsPlus has failed to start up correctly. An error report has been made in /plugins/HeadsPlus/debug";
+        return "{header} &cHeadsPlus has failed to start up correctly. An error report has been made in /plugins/HeadsPlus/debug";
     }
 
     @Override
     public String getDisabled() {
-        return "%h &3HeadsPlus has been disabled!";
+        return "{header} &3HeadsPlus has been disabled!";
     }
 
     @Override
     public String badTheme() {
-        return "%h &3Faulty theme was put in! No theme changes will be made.";
+        return "{header} &3Faulty theme was put in! No theme changes will be made.";
     }
 
     @Override
     public String getCommandFail() {
-        return "%h &cFailed to run this command!";
+        return "{header} &cFailed to run this command!";
     }
 
     @Override
     public String noVault() {
-        return "%h &cVault not found! Heads cannot be sold and challenge rewards can not add/remove groups.";
+        return "{header} &cVault not found! Heads cannot be sold and challenge rewards can not add/remove groups.";
     }
 
     @Override
@@ -579,6 +579,51 @@ public class en_uk implements Locale {
 
     @Override
     public String noVaultGroup() {
-        return "%h &cVault wasn't found upon startup! Can not add group.";
+        return "{header} &cVault wasn't found upon startup! Can not add group.";
+    }
+
+    @Override
+    public String noNameData() {
+        return "{header} &cThere is no name data for this entity!";
+    }
+
+    @Override
+    public String noLoreData() {
+        return "{header} &cThere is no lore data for this entity!";
+    }
+
+    @Override
+    public String noMaskData() {
+        return "{header} &cThere is no mask data for this entity!";
+    }
+
+    @Override
+    public String type() {
+        return "Type:";
+    }
+
+    @Override
+    public String interactName() {
+        return "Interact name:";
+    }
+
+    @Override
+    public String displayName() {
+        return "Display name:";
+    }
+
+    @Override
+    public String price() {
+        return "Price:";
+    }
+
+    @Override
+    public String chance() {
+        return "Chance:";
+    }
+
+    @Override
+    public String descHeadView() {
+        return "Displays information about a specific entity's head.";
     }
 }

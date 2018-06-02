@@ -583,4 +583,49 @@ public class es_es implements Locale {
     public String noVaultGroup() {
         return "{header} &cVault no se encontró al iniciar, no se puede añadir grupos.";
     }
+
+    @Override
+    public String noNameData() {
+        return "{header} &c¡No hay datos de nombre para esta entidad!";
+    }
+
+    @Override
+    public String noLoreData() {
+        return "{header} &c¡No hay datos de lore para esta entidad!";
+    }
+
+    @Override
+    public String noMaskData() {
+        return "{header} &c¡No hay datos de máscara para esta entidad!";
+    }
+
+    @Override
+    public String type() {
+        return "Tipo:";
+    }
+
+    @Override
+    public String interactName() {
+        return "Nombre para Interact:";
+    }
+
+    @Override
+    public String displayName() {
+        return "Nombre para mostrar:";
+    }
+
+    @Override
+    public String price() {
+        return "Precio";
+    }
+
+    @Override
+    public String chance() {
+        return "Posibilidad:";
+    }
+
+    @Override
+    public String descHeadView() {
+        return "Muestra información sobre la cabeza de una entidad específica.";
+    }
 }

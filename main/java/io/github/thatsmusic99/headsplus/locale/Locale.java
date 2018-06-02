@@ -256,4 +256,22 @@ public interface Locale {
 
     String noVaultGroup();
 
+    String noNameData();
+
+    String noLoreData();
+
+    String noMaskData();
+
+    String type();
+
+    String interactName();
+
+    String displayName();
+
+    String price();
+
+    String chance();
+
+    String descHeadView();
+
 }

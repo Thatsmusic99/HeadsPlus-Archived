@@ -583,4 +583,49 @@ public class hu_hu implements Locale {
     public String noVaultGroup() {
         return "%h &cA Vault nem indult elindításkor! A csoport hozzáadása nem lehetséges.";
     }
+
+    @Override
+    public String noNameData() {
+        return "{header} &cNincs ilyen névadat ehhez az entitáshoz!";
+    }
+
+    @Override
+    public String noLoreData() {
+        return "{header} &cEhhez az entitáshoz nincsenek adatok!";
+    }
+
+    @Override
+    public String noMaskData() {
+        return "{header} &cNincsenek maszk adatok ehhez az entitáshoz!";
+    }
+
+    @Override
+    public String type() {
+        return "Típus";
+    }
+
+    @Override
+    public String interactName() {
+        return "Interaktus neve";
+    }
+
+    @Override
+    public String displayName() {
+        return "Megjelenítendő név";
+    }
+
+    @Override
+    public String price() {
+        return "Ár";
+    }
+
+    @Override
+    public String chance() {
+        return "Lehetőség:";
+    }
+
+    @Override
+    public String descHeadView() {
+        return "Megjeleníti az adott entitás fejével kapcsolatos információkat.";
+    }
 }

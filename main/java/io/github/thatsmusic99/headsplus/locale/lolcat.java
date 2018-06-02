@@ -580,4 +580,49 @@ public class lolcat implements Locale {
     public String noVaultGroup() {
         return "%h &cDeh vault wazn't oh-penned, cud nawt giv/taik rank D:";
     }
+
+    @Override
+    public String noNameData() {
+        return null;
+    }
+
+    @Override
+    public String noLoreData() {
+        return null;
+    }
+
+    @Override
+    public String noMaskData() {
+        return null;
+    }
+
+    @Override
+    public String type() {
+        return null;
+    }
+
+    @Override
+    public String interactName() {
+        return null;
+    }
+
+    @Override
+    public String displayName() {
+        return null;
+    }
+
+    @Override
+    public String price() {
+        return null;
+    }
+
+    @Override
+    public String chance() {
+        return null;
+    }
+
+    @Override
+    public String descHeadView() {
+        return null;
+    }
 }

@@ -189,6 +189,7 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
 
     private String printNameInfo(String type, int page) {
         try {
+            Locale l = LocaleManager.getLocale();
             HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
             if (type.equalsIgnoreCase("sheep")) {
                 List<Head> h = new ArrayList<>();
@@ -200,7 +201,7 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
                 PagedLists<Head> hs = new PagedLists<>(h, 8);
                 StringBuilder sb = new StringBuilder();
                 sb.append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1"))).append("===============").append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2"))).append(" HeadsPlus ").append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3"))).append(String.valueOf(page)).append("/").append(String.valueOf(hs.getTotalPages())).append(" ").append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1"))).append("===============\n");
-                sb.append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4"))).append("Type: ").append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3"))).append(type).append("\n");
+                sb.append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4"))).append(l.type()).append(" ").append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3"))).append(type).append("\n");
                 for (Head o : hs.getContentsInPage(page)) {
                     sb.append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3"))).append(o.type).append(" (").append(o.colour).append(")\n");
                 }
@@ -209,7 +210,7 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
                 PagedLists<String> names = new PagedLists<>(hpch.getConfig().getStringList(type + ".name"), 8);
                 StringBuilder sb = new StringBuilder();
                 sb.append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1"))).append("===============").append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2"))).append(" HeadsPlus ").append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3"))).append(String.valueOf(page)).append("/").append(String.valueOf(names.getTotalPages())).append(" ").append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1"))).append("===============\n");
-                sb.append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4"))).append("Type: ").append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3"))).append(type).append("\n");
+                sb.append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4"))).append(l.type()).append(" ").append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3"))).append(type).append("\n");
                 for (String s : names.getContentsInPage(page)) {
                     sb.append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3"))).append(s).append("\n");
                 }
@@ -225,6 +226,7 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
         try {
             HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
             List<Mask> m = new ArrayList<>();
+            Locale l = LocaleManager.getLocale();
             StringBuilder sb = new StringBuilder();
             if (hpch.getConfig().getStringList(type + ".mask-effects").size() < 1) {
                 return hpc.getString("no-mask-data");
@@ -242,7 +244,7 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
             }
             PagedLists<Mask> s = new PagedLists<>(m, 8);
             sb.append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1"))).append("===============").append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2"))).append(" HeadsPlus ").append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3"))).append(String.valueOf(page)).append("/").append(String.valueOf(s.getTotalPages())).append(" ").append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1"))).append("===============\n");
-            sb.append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4"))).append("Type: ").append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3"))).append(type).append("\n");
+            sb.append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4"))).append(l.type()).append(" ").append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3"))).append(type).append("\n");
             for (Mask sm : s.getContentsInPage(page)) {
                 sb.append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3"))).append(sm.effect).append(" (").append(sm.amplifier).append(")\n");
             }
@@ -255,10 +257,11 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
     private String printLoreInfo(String type, int page) {
         try {
             HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
+            Locale l = LocaleManager.getLocale();
             PagedLists<String> lore = new PagedLists<>(hpch.getConfig().getStringList(type + ".lore"), 8);
             StringBuilder sb = new StringBuilder();
             sb.append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1"))).append("===============").append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2"))).append(" HeadsPlus ").append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3"))).append(String.valueOf(page)).append("/").append(String.valueOf(lore.getTotalPages())).append(" ").append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1"))).append("===============\n");
-            sb.append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4"))).append("Type: ").append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3"))).append(type).append("\n");
+            sb.append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4"))).append(l.type()).append(" ").append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3"))).append(type).append("\n");
             for (String s : lore.getContentsInPage(page)) {
                 sb.append(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3"))).append(ChatColor.translateAlternateColorCodes('&', s));
             }

@@ -616,7 +616,7 @@ public class es_es implements Locale {
 
     @Override
     public String price() {
-        return "Precio";
+        return "Precio:";
     }
 
     @Override

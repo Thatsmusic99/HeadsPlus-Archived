@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus.config;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
+import io.github.thatsmusic99.headsplus.locale.en_uk;
 import org.bukkit.ChatColor;
 
 import java.util.ArrayList;
@@ -98,6 +99,9 @@ public class HeadsPlusConfig extends ConfigSettings {
         getConfig().addDefault("faulty-theme", "%h &3Faulty theme was put in! No theme changes will be made.");
         getConfig().addDefault("no-vault", "%h &cVault not found! Heads cannot be sold and challenge rewards can not add/remove groups.");
         getConfig().addDefault("no-vault-2", "Vault wasn't found upon startup! Can not add group.");
+        getConfig().addDefault("no-name-data", new en_uk().noNameData());
+        getConfig().addDefault("no-lore-data", new en_uk().noLoreData());
+        getConfig().addDefault("no-mask-data", new en_uk().noMaskData());
 
         if (!getConfig().getString("locale").equalsIgnoreCase(getConfig().getString("pLocale")) && !nullpoint) {
             getConfig().set("pLocale", getConfig().getString("locale"));
@@ -177,6 +181,10 @@ public class HeadsPlusConfig extends ConfigSettings {
             getConfig().set("plugin-disabled", LocaleManager.getLocale().getDisabled());
             getConfig().set("faulty-theme", LocaleManager.getLocale().badTheme());
             getConfig().set("no-vault", LocaleManager.getLocale().noVault());
+            getConfig().addDefault("no-vault-2", LocaleManager.getLocale().noVaultGroup());
+            getConfig().addDefault("no-name-data", LocaleManager.getLocale().noNameData());
+            getConfig().addDefault("no-lore-data", LocaleManager.getLocale().noLoreData());
+            getConfig().addDefault("no-mask-data", LocaleManager.getLocale().noMaskData());
         }
         updateMessages();
 		getConfig().options().copyDefaults(true);

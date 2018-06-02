@@ -2,15 +2,15 @@ package io.github.thatsmusic99.headsplus.util;
 
 import java.util.*;
 
-public class PagedHashmaps {
+public class PagedHashmaps<K, V> {
 
-    private LinkedHashMap<?, ?> hs;
+    private LinkedHashMap<K, V> hs;
     private int pages;
     private int contents;
     private int currentPage;
     private int contentsPerPage;
 
-    public PagedHashmaps(LinkedHashMap<?, ?> hs, int contentsPerPage) {
+    public PagedHashmaps(LinkedHashMap<K, V> hs, int contentsPerPage) {
         if (contentsPerPage < 1) {
             throw new IllegalArgumentException("The provided int must be bigger than 0 for contents per page!");
         }
@@ -39,11 +39,11 @@ public class PagedHashmaps {
         return currentPage;
     }
 
-    public LinkedHashMap<?, ?> getHs() {
+    public LinkedHashMap<K, V> getHs() {
         return hs;
     }
 
-    public LinkedHashMap<Object, Object> getContentsInPage(int page) {
+    public LinkedHashMap<K, V> getContentsInPage(int page) {
         if (page > getTotalPages()) {
             throw new IllegalArgumentException("The provided page is an int larger than the total number of pages!");
         } else if (page < 1) {
@@ -55,7 +55,7 @@ public class PagedHashmaps {
             eIndex = getHs().size();
         }
         setPage(page);
-        return splitHashmap(getHs(), sIndex, eIndex);
+        return (LinkedHashMap<K, V>) splitHashmap(getHs(), sIndex, eIndex);
     }
 
     private static LinkedHashMap<Object, Object> splitHashmap(HashMap<?, ?> passedMap, int sIndex, int eIndex) {

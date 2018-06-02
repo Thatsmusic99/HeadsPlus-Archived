@@ -44,7 +44,16 @@ public class BlacklistList implements IHeadsPlusCommand {
     @Override
     public HashMap<Boolean, String> isCorrectUsage(String[] args, CommandSender sender) {
         HashMap<Boolean, String> h = new HashMap<>();
-        h.put(true, "");
+        if (args.length > 1) {
+            if (args[1].matches("^[0-9]+$")) {
+                h.put(true, "");
+            } else {
+                h.put(false, hpc.getString("invalid-input-int"));
+            }
+        } else {
+            h.put(true, "");
+        }
+
         return h;
     }
 
@@ -56,45 +65,24 @@ public class BlacklistList implements IHeadsPlusCommand {
 	@Override
 	public boolean fire(String[] args, CommandSender sender) {
 	    try {
+	        int page;
             if (args.length == 1) {
-                int headsN = 1;
-                List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("blacklist");
-                int bls = bl.size();
-                if (bls < 1) {
-                    sender.sendMessage(hpc.getString("empty-bl"));
-                    return true;
-                }
-                while (bls > 8) {
-                    headsN++;
-                    bls = bls - 8;
-                }
-                sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "============ " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + "Blacklist: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + "1/" + headsN + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + " ==========" );
-                int TimesSent = 0;
-                for (String key : bl) {
-                    if (TimesSent <= 7) {
-                        sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + key);
-                        TimesSent++;
-                    }
-                }
+                page = 1;
             } else {
-                if (args[1].matches("^[0-9]+$")) {
-                    List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("blacklist");
-                    int page = Integer.parseInt(args[1]);
+                page = Integer.parseInt(args[1]);
+            }
 
-                    PagedLists<String> pl = new PagedLists<>(bl, 8);
+            List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("blacklist");
+            PagedLists<String> pl = new PagedLists<>(bl, 8);
+            if ((page > pl.getTotalPages()) || (0 >= page)) {
+                sender.sendMessage(hpc.getString("invalid-pg-no"));
+            } else {
+                sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "============ " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + "Blacklist: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + page + "/" + pl.getTotalPages() + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + " ==========");
 
-                    if ((page > pl.getTotalPages()) || (0 >= page)) {
-                        sender.sendMessage(hpc.getString("invalid-pg-no"));
-                    } else {
-                        sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "============ " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + "Blacklist: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + page + "/" + pl.getTotalPages() + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + " ==========");
+                for (Object keyz : pl.getContentsInPage(page)) {
+                    String key = (String) keyz;
+                    sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + key);
 
-                        for (Object keyz : pl.getContentsInPage(page)) {
-                            String key = (String) keyz;
-                            sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + key);
-                        }
-                    }
-                } else {
-                    sender.sendMessage(hpc.getString("invalid-input-int"));
                 }
             }
         } catch (Exception e) {

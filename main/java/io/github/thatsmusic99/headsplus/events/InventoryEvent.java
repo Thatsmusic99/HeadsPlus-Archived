@@ -6,10 +6,12 @@ import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeDifficulty;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsXSections;
+import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.nms.SearchGUI;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 
 import io.github.thatsmusic99.headsplus.nms.v1_12_NMS.SearchGUI1_12;
+import io.github.thatsmusic99.headsplus.util.SellheadInventory;
 import net.milkbowl.vault.economy.EconomyResponse;
 
 import org.bukkit.*;
@@ -211,7 +213,7 @@ public class InventoryEvent implements Listener {
                             final InventoryClickEvent ev = e;
                             SearchGUI s = HeadsPlus.getInstance().getNMS().getSearchGUI(p, event -> {
                                 try {
-                                    if (event.getSlot().equals(SearchGUI1_12.AnvilSlot.OUTPUT)) {
+                                    if (event.getSlot().equals(SearchGUI.AnvilSlot.OUTPUT)) {
                                         event.setWillClose(false);
                                         event.setWillDestroy(false);
                                         im.setSection("search:" + event.getName());
@@ -288,6 +290,39 @@ public class InventoryEvent implements Listener {
             }
         } catch (Exception ex) {
             new DebugPrint(ex, "Event (InventoryInteractEvent)", false, null);
+        }
+    }
+
+    @EventHandler
+    public void onClickSellhead(InventoryClickEvent e) {
+        if (!(e.getWhoClicked() instanceof Player)) return;
+        Player p = (Player) e.getWhoClicked();
+        if (SellheadInventory.getSI(p) == null) return;
+        if (e.getInventory().getName().equalsIgnoreCase("HeadsPlus Sellhead menu")) {
+            if (e.getCurrentItem() != null) {
+                NMSManager nms = HeadsPlus.getInstance().getNMS();
+                if (e.getCurrentItem().getType().equals(nms.getSkullMaterial(1).getType())) {
+                    if (!nms.getType(e.getCurrentItem()).isEmpty()) {
+                        e.setCancelled(true);
+                        p.performCommand("sellhead " + nms.getType(e.getCurrentItem()));
+                    }
+                } else if (e.getCurrentItem().getType().equals(Material.ARROW)) {
+                    if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Next Page")) {
+                        e.setCancelled(true);
+                        e.getWhoClicked().closeInventory();
+                        e.getWhoClicked().openInventory(SellheadInventory.getSI(p).changePage(true, false, p));
+                    } else if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Back")) {
+                        e.setCancelled(true);
+                        e.getWhoClicked().closeInventory();
+                        e.getWhoClicked().openInventory(SellheadInventory.getSI(p).changePage(false, false, p));
+                    }
+                } else if (e.getCurrentItem().getType().equals(Material.BARRIER)) {
+                    e.setCancelled(true);
+                    e.getWhoClicked().closeInventory();
+                } else {
+                    e.setCancelled(true);
+                }
+            }
         }
     }
 }

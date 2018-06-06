@@ -10,6 +10,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
+import io.github.thatsmusic99.headsplus.util.SellheadInventory;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
@@ -20,6 +21,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -37,11 +39,21 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 		try {
 			if (sender instanceof Player) {
 			    if (HeadsPlus.getInstance().canSellHeads()) {
+			        Player p = (Player) sender;
 			        soldHeads.clear();
 			        hm.clear();
-                    ItemStack invi = checkHand((Player) sender);
-                    if (args.length == 0 && (checkHand((Player) sender).getType() == Material.SKULL_ITEM) && (sender.hasPermission("headsplus.sellhead"))) { // If sold via hand
-                        if (nms().isSellable(invi)) {
+                    ItemStack invi = checkHand(p);
+                    if (args.length == 0 && (sender.hasPermission("headsplus.sellhead"))) { // If sold via hand
+                        SellheadInventory si = new SellheadInventory();
+                        SellheadInventory.setSI(p, si);
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                p.openInventory(si.changePage(false, true, p));
+                            }
+                        }.runTaskAsynchronously(HeadsPlus.getInstance());
+
+                        /*if (nms().isSellable(invi)) {
                             String s = nms().getType(invi).toLowerCase();
                             if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {
                                 Double price;
@@ -70,15 +82,15 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                         } else {
                             sender.sendMessage(hpc.getString("false-head"));
                             return true;
-                        }
+                        } */
                     } else {
                         if (!sender.hasPermission("headsplus.sellhead")) {
                             sender.sendMessage(hpc.getString("no-perm"));
                         } else if (args.length > 0) {
                             if (args[0].equalsIgnoreCase("all")) {
-                                sellAll((Player) sender, args, invi);
+                                sellAll(p, args, invi);
                             } else {
-                                Player p = (Player) sender;
+
                                 double price = 0.0;
                                 for (ItemStack i : p.getInventory()) {
                                     if (i != null) {

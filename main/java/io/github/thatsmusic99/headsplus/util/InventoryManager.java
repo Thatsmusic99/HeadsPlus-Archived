@@ -104,7 +104,7 @@ public class InventoryManager {
     }
 
     private int[] cColouredGlass() {
-        int[] a = new int[24];
+        int[] a = new int[25];
         a[0] = 0;
         a[1] = 1;
         a[2] = 2;
@@ -112,23 +112,24 @@ public class InventoryManager {
         a[4] = 5;
         a[5] = 6;
         a[6] = 7;
-        a[7] = 9;
-        a[8] = 17;
-        a[9] = 18;
-        a[10] = 26;
-        a[11] = 27;
-        a[12] = 35;
-        a[13] = 36;
-        a[14] = 44;
-        a[15] = 45;
-        a[16] = 46;
-        a[17] = 47;
-        a[18] = 48;
-        a[19] = 49;
-        a[20] = 50;
-        a[21] = 51;
-        a[22] = 52;
-        a[23] = 53;
+        a[7] = 8;
+        a[8] = 9;
+        a[9] = 17;
+        a[10] = 18;
+        a[11] = 26;
+        a[12] = 27;
+        a[13] = 35;
+        a[14] = 36;
+        a[15] = 44;
+        a[16] = 45;
+        a[17] = 46;
+        a[18] = 47;
+        a[19] = 48;
+        a[20] = 49;
+        a[21] = 50;
+        a[22] = 51;
+        a[23] = 52;
+        a[24] = 53;
         return a;
     }
 
@@ -320,7 +321,7 @@ public class InventoryManager {
                 List<String> lore = new ArrayList<>();
                 lore.add(ChatColor.GREEN + "Total challenges: " + HeadsPlusChallengeEnums.values().length);
                 lore.add(ChatColor.GREEN + "Total pages: " + pages);
-                lore.add(ChatColor.GREEN + "Total sections: 5") ;
+                lore.add(ChatColor.GREEN + "Total sections: " + sections) ;
                 lore.add(ChatColor.GREEN + "Completed challenges: " + cch);
                 lore.add(ChatColor.GREEN + "Current section: " + section);
                 im.setLore(lore);

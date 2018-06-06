@@ -42,19 +42,19 @@ public class InventoryEvent implements Listener {
                 try {
                     if (e.getCurrentItem().getType().equals(Material.BARRIER)) {
                         e.setCancelled(true);
-                        e.getWhoClicked().closeInventory();
+                        p.closeInventory();
                     } else if (e.getCurrentItem().getType().equals(Material.SKULL_ITEM)) {
                         if (im.getSection().equalsIgnoreCase("menu")) {
                             for (HeadsXSections h : HeadsXSections.values()) {
                                 if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', h.dn)))) {
                                     im.setSection(h.let);
-                                    e.getWhoClicked().openInventory(im.changePage(false, true, p, h.let));
+                                    p.openInventory(im.changePage(false, true, p, h.let));
                                     e.setCancelled(true);
                                     return;
                                 }
                             }
                             im.setSection("advent_calender");
-                            e.getWhoClicked().openInventory(im.changePage(false, true, p, "advent_calender"));
+                           p.openInventory(im.changePage(false, true, p, "advent_calender"));
                             e.setCancelled(true);
                             return;
                         } /* else if (InventoryManager.getSection().equalsIgnoreCase("advent_calender")) {
@@ -125,8 +125,8 @@ public class InventoryEvent implements Listener {
                         e.setCancelled(true);
                         return;
                     } */
-                        if (e.getWhoClicked().getInventory().firstEmpty() == -1) {
-                            e.getWhoClicked().sendMessage(hpc.getString("full-inv"));
+                        if (p.getInventory().firstEmpty() == -1) {
+                            p.sendMessage(hpc.getString("full-inv"));
                             e.setCancelled(true);
                             return;
                         }
@@ -138,7 +138,7 @@ public class InventoryEvent implements Listener {
                                 HeadsPlus.getInstance().getLogger().log(Level.SEVERE, "[HeadsPlus] HeadsX.yml fault! Please check your config, and make sure the price value for your heads are set to a double value, or 'Free' or 'default'!");
                                 HeadsPlus.getInstance().getLogger().log(Level.SEVERE, "Value: " + e.getCurrentItem().getItemMeta().getLore().get(0).split(" ")[1]);
                                 String fail = hpc.getString("cmd-fail");
-                                e.getWhoClicked().sendMessage(fail);
+                                p.sendMessage(fail);
                                 e.setCancelled(true);
                                 return;
                             }
@@ -146,8 +146,8 @@ public class InventoryEvent implements Listener {
                             String success = hpc.getString("buy-success").replaceAll("\\{price}", Double.toString(er.amount)).replaceAll("\\{balance}", Double.toString(er.balance));
                             String fail = hpc.getString("cmd-fail");
                             if (er.transactionSuccess()) {
-                                e.getWhoClicked().sendMessage(success);
-                                e.getWhoClicked().getInventory().addItem(e.getCurrentItem());
+                                p.sendMessage(success);
+                                p.getInventory().addItem(e.getCurrentItem());
                                 ItemStack i = new ItemStack(Material.PAPER);
                                 ItemMeta im = i.getItemMeta();
                                 im.setDisplayName(ChatColor.GOLD + "[" + ChatColor.YELLOW + "" + ChatColor.BOLD + "Stats" + ChatColor.GOLD + "]");
@@ -165,7 +165,7 @@ public class InventoryEvent implements Listener {
                                 e.setCancelled(true);
                                 return;
                             } else {
-                                e.getWhoClicked().sendMessage(fail + ": " + er.errorMessage);
+                                p.sendMessage(fail + ": " + er.errorMessage);
                                 e.setCancelled(true);
                                 return;
                             }
@@ -184,22 +184,22 @@ public class InventoryEvent implements Listener {
                         im.setLore(lore);
                         i.setItemMeta(im);
                         e.getInventory().setItem(4, i);
-                        e.getWhoClicked().getInventory().addItem(e.getCurrentItem());
+                        p.getInventory().addItem(e.getCurrentItem());
                         e.setCancelled(true);
                     } else if (e.getCurrentItem().getType().equals(Material.ARROW)) {
                         if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Next Page")) {
                             e.setCancelled(true);
-                            e.getWhoClicked().closeInventory();
-                            e.getWhoClicked().openInventory(this.im.changePage(true, false, p, this.im.getSection()));
+                            p.closeInventory();
+                            p.openInventory(this.im.changePage(true, false, p, this.im.getSection()));
                         } else if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Back")) {
                             e.setCancelled(true);
-                            e.getWhoClicked().closeInventory();
-                            e.getWhoClicked().openInventory(this.im.changePage(false, false, p, this.im.getSection()));
+                            p.closeInventory();
+                            p.openInventory(this.im.changePage(false, false, p, this.im.getSection()));
                         } else {
                             e.setCancelled(true);
-                            e.getWhoClicked().closeInventory();
+                            p.closeInventory();
                             this.im.setSection("Menu");
-                            e.getWhoClicked().openInventory(this.im.changePage(false, true, p, "Menu"));
+                            p.openInventory(this.im.changePage(false, true, p, "Menu"));
 
                         }
                     } else if (e.getCurrentItem().getType().equals(Material.PAPER)) {
@@ -209,7 +209,7 @@ public class InventoryEvent implements Listener {
                     } else if (e.getCurrentItem().getType().equals(Material.NAME_TAG)) {
                         if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("[Search Heads]")) {
                             e.setCancelled(true);
-                            e.getWhoClicked().closeInventory();
+                            p.closeInventory();
                             final InventoryClickEvent ev = e;
                             SearchGUI s = HeadsPlus.getInstance().getNMS().getSearchGUI(p, event -> {
                                 try {
@@ -246,9 +246,9 @@ public class InventoryEvent implements Listener {
                                 for (HeadsPlusChallengeDifficulty hpcd : HeadsPlusChallengeDifficulty.values()) {
                                     if (i.getDurability() == hpcd.color.ordinal()) {
                                         e.setCancelled(true);
-                                        e.getWhoClicked().closeInventory();
+                                        p.closeInventory();
                                         im.setSection(hpcd.key);
-                                        e.getWhoClicked().openInventory(this.im.changePage(false, true, p, this.im.getSection()));
+                                        p.openInventory(this.im.changePage(false, true, p, this.im.getSection()));
                                     }
                                 }
                             } else {
@@ -275,9 +275,9 @@ public class InventoryEvent implements Listener {
                                 } else if (e.getCurrentItem().getType().equals(Material.ARROW)) {
                                     if (!im.getSection().equalsIgnoreCase("menu")) {
                                         e.setCancelled(true);
-                                        e.getWhoClicked().closeInventory();
+                                        p.closeInventory();
                                         im.setSection("Menu");
-                                        e.getWhoClicked().openInventory(im.changePage(false, true, p, im.getSection()));
+                                        p.openInventory(im.changePage(false, true, p, im.getSection()));
                                     }
                                 }
                                 e.setCancelled(true);
@@ -309,16 +309,16 @@ public class InventoryEvent implements Listener {
                 } else if (e.getCurrentItem().getType().equals(Material.ARROW)) {
                     if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Next Page")) {
                         e.setCancelled(true);
-                        e.getWhoClicked().closeInventory();
-                        e.getWhoClicked().openInventory(SellheadInventory.getSI(p).changePage(true, false, p));
+                        p.closeInventory();
+                        p.openInventory(SellheadInventory.getSI(p).changePage(true, false, p));
                     } else if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Back")) {
                         e.setCancelled(true);
-                        e.getWhoClicked().closeInventory();
-                        e.getWhoClicked().openInventory(SellheadInventory.getSI(p).changePage(false, false, p));
+                        p.closeInventory();
+                        p.openInventory(SellheadInventory.getSI(p).changePage(false, false, p));
                     }
                 } else if (e.getCurrentItem().getType().equals(Material.BARRIER)) {
                     e.setCancelled(true);
-                    e.getWhoClicked().closeInventory();
+                    p.closeInventory();
                 } else {
                     e.setCancelled(true);
                 }

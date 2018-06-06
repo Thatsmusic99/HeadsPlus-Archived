@@ -21,16 +21,18 @@ public class MySQLAPI {
     private final HeadsPlusLeaderboards hpl;
     private final HeadsPlusChallenges hpc;
     private final DeathEvents de;
+    private final HeadsPlus hp;
 
     public MySQLAPI() {
-        hpl = HeadsPlus.getInstance().getLeaderboardsConfig();
-        hpc = HeadsPlus.getInstance().getChallengeConfig();
-        de = HeadsPlus.getInstance().getDeathEvents();
+        hp = HeadsPlus.getInstance();
+        hpl = hp.getLeaderboardsConfig();
+        hpc = hp.getChallengeConfig();
+        de = hp.getDeathEvents();
     }
 
     private void addNewPlayerValue(Player p, String section, String database, int shAmount) throws SQLException {
-        if (HeadsPlus.getInstance().isConnectedToMySQLDatabase()) {
-            Connection c = HeadsPlus.getInstance().getConnection();
+        if (hp.isConnectedToMySQLDatabase()) {
+            Connection c = hp.getConnection();
             Statement s;
             ResultSet rs;
             s = c.createStatement();
@@ -123,10 +125,10 @@ public class MySQLAPI {
     }
 
     public void addOntoValue(Player p, String section, String database, int shAmount) throws SQLException {
-        if (HeadsPlus.getInstance().isConnectedToMySQLDatabase()) {
+        if (hp.isConnectedToMySQLDatabase()) {
             try {
 
-                Connection c = HeadsPlus.getInstance().getConnection();
+                Connection c = hp.getConnection();
                 Statement s = c.createStatement();
                 ResultSet rs;
                 rs = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + p.getUniqueId().toString() + "'");
@@ -220,9 +222,9 @@ public class MySQLAPI {
     }
 
     public LinkedHashMap<OfflinePlayer, Integer> getScores(String section, String database) throws SQLException {
-        if (HeadsPlus.getInstance().isConnectedToMySQLDatabase()) {
+        if (hp.isConnectedToMySQLDatabase()) {
             LinkedHashMap<OfflinePlayer, Integer> hs = new LinkedHashMap<>();
-            Connection c = HeadsPlus.getInstance().getConnection();
+            Connection c = hp.getConnection();
             Statement s = c.createStatement();
             ResultSet rs = s.executeQuery("SELECT * FROM `" + database + "` ORDER BY id");
             while (rs.next()) {

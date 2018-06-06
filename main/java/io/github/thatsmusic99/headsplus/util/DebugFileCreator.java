@@ -26,16 +26,17 @@ import java.util.Random;
 public class DebugFileCreator {
 
     public String createReport(Exception e, String when) throws IOException {
+        HeadsPlus hp = HeadsPlus.getInstance();
         JSONArray array1 = new JSONArray();
         JSONObject o1 = new JSONObject();
         String date = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new java.util.Date (System.currentTimeMillis()));
         o1.put("Date", date);
         o1.put("Special message", getErrorHeader());
         try {
-            o1.put("HeadsPlus version", HeadsPlus.getInstance().getDescription().getVersion());
-            o1.put("NMS version", HeadsPlus.getInstance().getNMS().getClass().getSimpleName());
-            o1.put("Has Vault hooked", HeadsPlus.getInstance().econ());
-            o1.put("MySQL is enabled", HeadsPlus.getInstance().isConnectedToMySQLDatabase());
+            o1.put("HeadsPlus version", hp.getDescription().getVersion());
+            o1.put("NMS version", hp.getNMS().getClass().getSimpleName());
+            o1.put("Has Vault hooked", hp.econ());
+            o1.put("MySQL is enabled", hp.isConnectedToMySQLDatabase());
             o1.put("Locale", LocaleManager.getLocale().getLanguage());
         } catch (NullPointerException ignored) {
 
@@ -44,16 +45,16 @@ public class DebugFileCreator {
         o1.put("Server version", Bukkit.getVersion());
         JSONObject o3 = new JSONObject();
         try {
-            o3.put("Droppable heads enabled", HeadsPlus.getInstance().isDropsEnabled());
-            o3.put("Uses heads selector", HeadsPlus.getInstance().isUsingHeadDatabase());
-            o3.put("Uses leaderboards", HeadsPlus.getInstance().isUsingLeaderboards());
-            o3.put("Stops placement of sellable heads", HeadsPlus.getInstance().isStoppingPlaceableHeads());
-            o3.put("MySQL is enabled", HeadsPlus.getInstance().isConnectedToMySQLDatabase());
-            o3.put("Player death messages", HeadsPlus.getInstance().isDeathMessagesEnabled());
-            o3.put("Total challenges", HeadsPlus.getInstance().getChallenges().size());
-            o3.put("Total levels", HeadsPlus.getInstance().getLevels().size());
-            o3.put("Masks enabled", HeadsPlus.getInstance().getConfig().getBoolean("mask-powerups"));
-            o3.put("Allows looting enchantment", HeadsPlus.getInstance().getConfig().getBoolean("allow-looting-enchantment"));
+            o3.put("Droppable heads enabled", hp.isDropsEnabled());
+            o3.put("Uses heads selector", hp.isUsingHeadDatabase());
+            o3.put("Uses leaderboards", hp.isUsingLeaderboards());
+            o3.put("Stops placement of sellable heads", hp.isStoppingPlaceableHeads());
+            o3.put("MySQL is enabled", hp.isConnectedToMySQLDatabase());
+            o3.put("Player death messages", hp.isDeathMessagesEnabled());
+            o3.put("Total challenges", hp.getChallenges().size());
+            o3.put("Total levels", hp.getLevels().size());
+            o3.put("Masks enabled", hp.getConfig().getBoolean("mask-powerups"));
+            o3.put("Allows looting enchantment", hp.getConfig().getBoolean("allow-looting-enchantment"));
         } catch (NullPointerException ignored) {
 
         }
@@ -80,11 +81,11 @@ public class DebugFileCreator {
         boolean cancelled = false;
         File fr = null;
         for (int i = 0; !cancelled; i++) {
-            File f2 = new File(HeadsPlus.getInstance().getDataFolder() + "/debug");
+            File f2 = new File(hp.getDataFolder() + "/debug");
             if (!f2.exists()) {
                 f2.mkdir();
             }
-            File f = new File(HeadsPlus.getInstance().getDataFolder() + "/debug/", date.replaceAll(":", "_").replaceAll("/", ".") + "-REPORT-" + i + ".json");
+            File f = new File(hp.getDataFolder() + "/debug/", date.replaceAll(":", "_").replaceAll("/", ".") + "-REPORT-" + i + ".json");
             if (!f.exists()) {
                 fr = f;
                 cancelled = true;
@@ -101,15 +102,16 @@ public class DebugFileCreator {
     }
 
     public String createHeadReport(ItemStack s) throws NoSuchFieldException, IllegalAccessException, IOException {
+        HeadsPlus hp = HeadsPlus.getInstance();
         JSONArray array1 = new JSONArray();
         JSONObject o1 = new JSONObject();
         String date = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new java.util.Date (System.currentTimeMillis()));
         o1.put("Date", date);
         o1.put("Special message", getErrorHeader());
         try {
-            o1.put("HeadsPlus version", HeadsPlus.getInstance().getDescription().getVersion());
-            o1.put("NMS version", HeadsPlus.getInstance().getNMS().getClass().getSimpleName());
-            o1.put("Has Vault hooked", HeadsPlus.getInstance().econ());
+            o1.put("HeadsPlus version", hp.getDescription().getVersion());
+            o1.put("NMS version", hp.getNMS().getClass().getSimpleName());
+            o1.put("Has Vault hooked", hp.econ());
             o1.put("Locale", LocaleManager.getLocale().getLanguage());
         } catch (NullPointerException ignored) {
 
@@ -133,8 +135,8 @@ public class DebugFileCreator {
         pro.setAccessible(true);
         GameProfile gm = (GameProfile) pro.get(s.getItemMeta());
         o2.put("Texture", gm.getProperties().get("textures").iterator().next().getValue());
-        o2.put("Can be sold", HeadsPlus.getInstance().getAPI().isSellable(s));
-        o2.put("Skull Type", HeadsPlus.getInstance().getAPI().getSkullType(s));
+        o2.put("Can be sold", hp.getAPI().isSellable(s));
+        o2.put("Skull Type", hp.getAPI().getSkullType(s));
         o1.put("Head details", o2);
         Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
         array1.add(o1);
@@ -143,11 +145,11 @@ public class DebugFileCreator {
         boolean cancelled = false;
         File fr = null;
         for (int i = 0; !cancelled; i++) {
-            File f2 = new File(HeadsPlus.getInstance().getDataFolder() + "/debug");
+            File f2 = new File(hp.getDataFolder() + "/debug");
             if (!f2.exists()) {
                 f2.mkdir();
             }
-            File f = new File(HeadsPlus.getInstance().getDataFolder() + "/debug/", date.replaceAll(":", "_").replaceAll("/", ".") + "-REPORT-" + i + ".json");
+            File f = new File(hp.getDataFolder() + "/debug/", date.replaceAll(":", "_").replaceAll("/", ".") + "-REPORT-" + i + ".json");
             if (!f.exists()) {
                 fr = f;
                 cancelled = true;
@@ -165,15 +167,16 @@ public class DebugFileCreator {
 
     public String createPlayerReport(HPPlayer player) throws IOException {
         JSONArray array1 = new JSONArray();
+        HeadsPlus hp = HeadsPlus.getInstance();
         JSONObject o1 = new JSONObject();
         String date = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new java.util.Date (System.currentTimeMillis()));
         o1.put("Date", date);
         o1.put("Special message", getErrorHeader());
         try {
-            o1.put("HeadsPlus version", HeadsPlus.getInstance().getDescription().getVersion());
-            o1.put("NMS version", HeadsPlus.getInstance().getNMS().getClass().getSimpleName());
-            o1.put("Has Vault hooked", HeadsPlus.getInstance().econ());
-            o1.put("MySQL is enabled", HeadsPlus.getInstance().isConnectedToMySQLDatabase());
+            o1.put("HeadsPlus version", hp.getDescription().getVersion());
+            o1.put("NMS version", hp.getNMS().getClass().getSimpleName());
+            o1.put("Has Vault hooked", hp.econ());
+            o1.put("MySQL is enabled", hp.isConnectedToMySQLDatabase());
             o1.put("Locale", LocaleManager.getLocale().getLanguage());
         } catch (NullPointerException ignored) {
 
@@ -204,11 +207,11 @@ public class DebugFileCreator {
         File fr = null;
 
         for (int i = 0; !cancelled; i++) {
-            File f2 = new File(HeadsPlus.getInstance().getDataFolder() + "/debug");
+            File f2 = new File(hp.getDataFolder() + "/debug");
             if (!f2.exists()) {
                 f2.mkdir();
             }
-            File f = new File(HeadsPlus.getInstance().getDataFolder() + "/debug/", date.replaceAll(":", "_").replaceAll("/", ".") + "-REPORT-" + i + ".json");
+            File f = new File(hp.getDataFolder() + "/debug/", date.replaceAll(":", "_").replaceAll("/", ".") + "-REPORT-" + i + ".json");
             if (!f.exists()) {
                 fr = f;
                 cancelled = true;

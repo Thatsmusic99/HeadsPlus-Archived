@@ -28,6 +28,7 @@ import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -249,18 +250,19 @@ public class HeadsPlus extends JavaPlugin {
     }
 
     private void checkTheme() {
-        if (!getInstance().getConfig().getString("theme").equalsIgnoreCase(getInstance().getConfig().getString("pTheme"))) {
+        FileConfiguration fc = getInstance().getConfig();
+        if (!fc.getString("theme").equalsIgnoreCase(fc.getString("pTheme"))) {
             try {
-                MenuThemes mt = MenuThemes.valueOf(getInstance().getConfig().getString("theme").toUpperCase());
-                getInstance().getConfig().set("themeColor1", mt.c1);
-                getInstance().getConfig().set("themeColor2", mt.c2);
-                getInstance().getConfig().set("themeColor3", mt.c3);
-                getInstance().getConfig().set("themeColor4", mt.c4);
-                getInstance().getConfig().set("pTheme", mt.name());
-                getInstance().getConfig().options().copyDefaults(true);
-                getInstance().saveConfig();
+                MenuThemes mt = MenuThemes.valueOf(fc.getString("theme").toUpperCase());
+                fc.set("themeColor1", mt.c1);
+                fc.set("themeColor2", mt.c2);
+                fc.set("themeColor3", mt.c3);
+                fc.set("themeColor4", mt.c4);
+                fc.set("pTheme", mt.name());
+                fc.options().copyDefaults(true);
+                saveConfig();
             } catch (Exception ex) {
-                getInstance().log.warning("[HeadsPlus] Faulty theme was put in! No theme changes will be made.");
+                log.warning("[HeadsPlus] Faulty theme was put in! No theme changes will be made.");
             }
         }
     }
@@ -328,25 +330,26 @@ public class HeadsPlus extends JavaPlugin {
 
 
     private void setupNMS() {
+        String v = getServer().getVersion();
         for (String s : nms1_8) {
-            if (getServer().getVersion().contains(s)) {
+            if (v.contains(s)) {
                 nms = new v1_8_R3NMS();
                 return;
             }
         }
-        if (getServer().getVersion().contains("1.8.3")) {
+        if (v.contains("1.8.3")) {
             nms = new v1_8_R2_NMS();
-        } else if (getServer().getVersion().contains("1.8")) {
+        } else if (v.contains("1.8")) {
             nms = new v1_8_R1_NMS();
-        } else if (getServer().getVersion().contains("1.9.4")) {
+        } else if (v.contains("1.9.4")) {
             nms = new V1_9_NMS2();
-        } else if (getServer().getVersion().contains("1.9")) {
+        } else if (v.contains("1.9")) {
             nms = new v1_9_NMS();
-        } else if (getServer().getVersion().contains("1.10")) {
+        } else if (v.contains("1.10")) {
             nms = new v1_10_NMS();
-        } else if (getServer().getVersion().contains("1.11")) {
+        } else if (v.contains("1.11")) {
             nms = new v1_11_NMS();
-        } else if (getServer().getVersion().contains("1.12")) {
+        } else if (v.contains("1.12")) {
             nms = new v1_12_NMS();
         }
     }

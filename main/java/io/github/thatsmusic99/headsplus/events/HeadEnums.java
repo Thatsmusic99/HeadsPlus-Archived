@@ -67,7 +67,6 @@ public enum HeadEnums {
 
 	final String displayname;
 	final List<String> name;
-	
 	HeadEnums(String dn, List<String> n) {
 		this.displayname = dn;
 		this.name = n;

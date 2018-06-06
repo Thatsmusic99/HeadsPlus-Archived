@@ -34,17 +34,18 @@ public class DeathEvents implements Listener {
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent e) {
 	    try {
-	        if (!HeadsPlus.getInstance().isDropsEnabled()) return;
+	        HeadsPlus hp = HeadsPlus.getInstance();
+	        if (!hp.isDropsEnabled()) return;
             if (ableEntities.contains(e.getEntityType())) {
                 if (e.getEntity().getKiller() != null) {
-                    if (!HeadsPlus.getInstance().getConfig().getStringList("whitelistw").contains(e.getEntity().getWorld().getName())) {
+                    if (!hp.getConfig().getStringList("whitelistw").contains(e.getEntity().getWorld().getName())) {
                         if (!e.getEntity().getKiller().hasPermission("headsplus.bypass.whitelistw")) {
-                            if (HeadsPlus.getInstance().getConfig().getBoolean("whitelistwOn")) {
+                            if (hp.getConfig().getBoolean("whitelistwOn")) {
                                 return;
                             }
                         }
                     }
-                    if (!HeadsPlus.getInstance().getConfig().getStringList("blacklistw").contains(e.getEntity().getWorld().getName()) || e.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn")) {
+                    if (!hp.getConfig().getStringList("blacklistw").contains(e.getEntity().getWorld().getName()) || e.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !hp.getConfig().getBoolean("blacklistwOn")) {
                         String entity = e.getEntityType().toString().toLowerCase().replaceAll("_", "");
                         Random rand = new Random();
                         double chance1 = hpch.getConfig().getDouble(entity + ".chance");
@@ -69,24 +70,25 @@ public class DeathEvents implements Listener {
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent ep) {
 	    try {
-            if (!HeadsPlus.getInstance().isDropsEnabled()) return;
+            HeadsPlus hp = HeadsPlus.getInstance();
+            if (!hp.isDropsEnabled()) return;
             if (ep.getEntity().getKiller() != null) {
-                if (!HeadsPlus.getInstance().getConfig().getStringList("whitelistw").contains(ep.getEntity().getWorld().getName())) {
+                if (!hp.getConfig().getStringList("whitelistw").contains(ep.getEntity().getWorld().getName())) {
                     if (!ep.getEntity().getKiller().hasPermission("headsplus.bypass.whitelistw")) {
-                        if (HeadsPlus.getInstance().getConfig().getBoolean("whitelistwOn")) {
+                        if (hp.getConfig().getBoolean("whitelistwOn")) {
                             return;
                         }
                     }
                 }
-                if (!HeadsPlus.getInstance().getConfig().getStringList("blacklistw").contains(ep.getEntity().getWorld().getName()) || ep.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn")) {
+                if (!hp.getConfig().getStringList("blacklistw").contains(ep.getEntity().getWorld().getName()) || ep.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !hp.getConfig().getBoolean("blacklistwOn")) {
                     Random rand = new Random();
                     double chance1 = hpch.getConfig().getDouble("player.chance");
                     double chance2 = (double) rand.nextInt(100);
-                    NMSManager nms = HeadsPlus.getInstance().getNMS();
+                    NMSManager nms = hp.getNMS();
                     if (chance1 == 0.0) return;
                     if (chance2 <= chance1) {
                         int a = 1;
-                        if (nms.getItemInHand(ep.getEntity().getKiller()).containsEnchantment(Enchantment.LOOT_BONUS_MOBS) && HeadsPlus.getInstance().getConfig().getBoolean("allow-looting-enchantment")) {
+                        if (nms.getItemInHand(ep.getEntity().getKiller()).containsEnchantment(Enchantment.LOOT_BONUS_MOBS) && hp.getConfig().getBoolean("allow-looting-enchantment")) {
                             a += nms.getItemInHand(ep.getEntity().getKiller()).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
                         }
                         ItemStack head = nms.getSkullMaterial(a);

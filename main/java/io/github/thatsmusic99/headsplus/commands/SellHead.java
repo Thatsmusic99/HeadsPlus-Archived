@@ -90,71 +90,13 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                             if (args[0].equalsIgnoreCase("all")) {
                                 sellAll(p, args, invi);
                             } else {
-
                                 double price = 0.0;
                                 for (ItemStack i : p.getInventory()) {
                                     if (i != null) {
-                                        boolean found = false;
-                                        if (i.getType() == Material.SKULL_ITEM) {
-                                            if (i.getDurability() == 3) {
-                                                SkullMeta sm = (SkullMeta) i.getItemMeta();
-                                                for (String str : hpch.mHeads) {
-                                                    try {
-                                                        if (nms().getSkullOwnerName(sm) != null) {
-                                                            if (str.equalsIgnoreCase("sheep")) {
-                                                                for (String s : hpch.getConfig().getConfigurationSection(str + ".name").getKeys(false)) {
-                                                                    for (int in = 0; in < hpch.getConfig().getStringList(str + ".name." + s).size(); in++) {
-                                                                        if (nms().getSkullOwnerName(sm).equalsIgnoreCase(hpch.getConfig().getStringList(str + ".name." + s).get(in))) {
-                                                                            found = true;
-                                                                            price = setPrice(price, args, i, p);
-                                                                        }
-                                                                    }
-                                                                }
-                                                            } else {
-                                                                for (int in = 0; in < hpch.getConfig().getStringList(str + ".name").size(); in++) {
-                                                                    if (nms().getSkullOwnerName(sm).equalsIgnoreCase(hpch.getConfig().getStringList(str + ".name").get(in))) {
-                                                                        found = true;
-                                                                        price = setPrice(price, args, i, p);
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    } catch (NullPointerException ex) {
-                                                        //
-                                                    }
-                                                }
-                                                for (String str : hpch.uHeads) {
-                                                    try {
-                                                        if (nms().getSkullOwnerName(sm) != null) {
-                                                            if (nms().getSkullOwnerName(sm).equalsIgnoreCase(hpch.getConfig().getString(str + ".name"))) {
-                                                                found = true;
-                                                                price = setPrice(price, args, i, p);
-                                                            }
-                                                        }
-                                                    } catch (NullPointerException ex) {
-                                                        //
-                                                    }
-                                                }
-                                                if (!found) {
-                                                    if (nms().getSkullOwnerName(sm) != null) {
-                                                        if (args[0].equalsIgnoreCase("player")) {
-                                                            price = setPrice(price, args, i, p);
-                                                        } else if (nms().getSkullOwnerName(sm).equalsIgnoreCase("HPXHead")) {
-                                                            for (String key : hpch.mHeads) {
-                                                                if (!key.equalsIgnoreCase("sheep")) {
-                                                                    price = b(price, key, hpch.getConfig().getStringList(key + ".name"), i, (Player) sender, args, true, false);
-                                                                } else {
-                                                                    for (String s : hpch.getConfig().getConfigurationSection("sheep.name").getKeys(false)) {
-                                                                        price = b(price, key, hpch.getConfig().getStringList(key + ".name." + s), i, (Player) sender, args, true, false);
-                                                                    }
-                                                                }
-                                                            }
-                                                            for (String key : hpch.uHeads) {
-                                                                price = b(price, key, hpch.getConfig().getStringList(key + ".name"), i, (Player) sender, args, true, false);
-                                                            }
-                                                        }
-                                                    }
-                                                }
+                                    //    boolean found = false;
+                                        if (i.getType() == Material.SKULL_ITEM && i.getDurability() == 3) {
+                                            if (nms().isSellable(i)) {
+                                                price = setPrice(price, args, i, p);
                                             }
                                         }
                                     }

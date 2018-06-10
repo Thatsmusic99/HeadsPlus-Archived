@@ -34,66 +34,32 @@ public class TabComplete implements TabCompleter {
             List<String> f = new ArrayList<>();
             switch (args[0].toLowerCase()) {
                 case "blacklistadd":
-                    StringUtil.copyPartialMatches(args[1], players(), f);
-                    Collections.sort(f);
-                    return f;
                 case "blacklistdel":
-                    StringUtil.copyPartialMatches(args[1], players(), f);
-                    Collections.sort(f);
-                    return f;
-                case "blacklistl":
-                    return new ArrayList<>();
-                case "blacklist":
-                    StringUtil.copyPartialMatches(args[1], new ArrayList<>(Arrays.asList("on", "off")), f);
-                    Collections.sort(f);
-                    return f;
-                case "blacklistw":
-                    StringUtil.copyPartialMatches(args[1], new ArrayList<>(Arrays.asList("on", "off")), f);
-                    Collections.sort(f);
-                    return f;
-                case "blacklistwadd":
-                    StringUtil.copyPartialMatches(args[1], worlds(), f);
-                    Collections.sort(f);
-                    return f;
-                case "blacklistwdel":
-                    StringUtil.copyPartialMatches(args[1], worlds(), f);
-                    Collections.sort(f);
-                    return f;
-                case "blacklistwl":
-                    return new ArrayList<>();
-                case "info":
-                    return new ArrayList<>();
-                case "reload":
-                    return new ArrayList<>();
-                case "whitelist":
-                    StringUtil.copyPartialMatches(args[1], new ArrayList<>(Arrays.asList("on", "off")), f);
-                    Collections.sort(f);
-                    return f;
                 case "whitelistadd":
-                    StringUtil.copyPartialMatches(args[1], players(), f);
-                    Collections.sort(f);
-                    return f;
                 case "whitelistdel":
                     StringUtil.copyPartialMatches(args[1], players(), f);
-                    Collections.sort(f);
-                    return f;
-                case "whitelistl":
-                    return new ArrayList<>();
+                    break;
+                case "blacklist":
+                case "blacklistw":
+                case "whitelist":
                 case "whitelistw":
                     StringUtil.copyPartialMatches(args[1], new ArrayList<>(Arrays.asList("on", "off")), f);
-                    Collections.sort(f);
-                    return f;
+                    break;
+                case "blacklistwadd":
+                case "blacklistwdel":
                 case "whitelistwadd":
-                    StringUtil.copyPartialMatches(args[1], worlds(), f);
-                    Collections.sort(f);
-                    return f;
                 case "whitelistwdel":
                     StringUtil.copyPartialMatches(args[1], worlds(), f);
-                    Collections.sort(f);
-                    return f;
-                case "whitelistwl":
-                    return new ArrayList<>();
+                    break;
+                case "debug":
+                    StringUtil.copyPartialMatches(args[1], new ArrayList<>(Arrays.asList("dump", "head", "player")), f);
+                    break;
+                case "head":
+                    StringUtil.copyPartialMatches(args[1], new ArrayList<>(Collections.singletonList("view")), f);
+                    break;
             }
+            Collections.sort(f);
+            return f;
         }
         return players();
     }

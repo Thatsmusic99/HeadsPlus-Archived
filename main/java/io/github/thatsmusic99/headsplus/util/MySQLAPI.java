@@ -31,13 +31,15 @@ public class MySQLAPI {
     }
 
     private void addNewPlayerValue(Player p, String section, String database, int shAmount) throws SQLException {
+        String uuid = p.getUniqueId().toString();
         if (hp.isConnectedToMySQLDatabase()) {
             Connection c = hp.getConnection();
             Statement s;
             ResultSet rs;
             s = c.createStatement();
+
             try {
-                rs = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + p.getUniqueId().toString() + "'");
+                rs = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + uuid + "'");
                 Integer.parseInt(rs.getString(section)); // I don't care if it's ignored
             } catch (SQLException ex) {
                 StringBuilder sb2 = new StringBuilder();
@@ -53,21 +55,19 @@ public class MySQLAPI {
 
                 s.executeUpdate(sb2.toString());
 
-                rs = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + p.getUniqueId().toString() + "'");
-
+                rs = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + uuid + "'");
                 rs.next();
-
                 int val = Integer.parseInt(rs.getString(section));
 
                 val += shAmount;
-                s.executeUpdate("UPDATE `" + database + "` SET `" + section + "`='" + val + "' WHERE `uuid`='" + p.getUniqueId().toString() + "'");
+                s.executeUpdate("UPDATE `" + database + "` SET `" + section + "`='" + val + "' WHERE `uuid`='" + uuid + "'");
                 int val2;
-                ResultSet rs3 = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + p.getUniqueId().toString() + "'");
+                ResultSet rs3 = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + uuid + "'");
                 rs3.next();
                 val2 = Integer.parseInt(rs3.getString("total"));
 
                 val2 += shAmount;
-                s.executeUpdate("UPDATE `" + database + "` SET total='" + val2 + "' WHERE `uuid`='" + p.getUniqueId().toString() + "'");
+                s.executeUpdate("UPDATE `" + database + "` SET total='" + val2 + "' WHERE `uuid`='" + uuid + "'");
 
                 ResultSet rs4 = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='server-total'");
 
@@ -90,7 +90,7 @@ public class MySQLAPI {
             }
         } else {
             if (database.equalsIgnoreCase("headspluslb")) {
-                hpl.getConfig().addDefault("player-data." + p.getUniqueId().toString() + "." + section, 0);
+                hpl.getConfig().addDefault("player-data." + uuid + "." + section, 0);
                 int s = hpl.getConfig().getInt("server-total.total");
                 s++;
                 hpl.getConfig().set("server-total.total", s);
@@ -100,7 +100,7 @@ public class MySQLAPI {
                 hpl.getConfig().options().copyDefaults(true);
                 hpl.save();
             } else if (database.equalsIgnoreCase("headsplussh")) {
-                hpc.getConfig().addDefault("player-data." + p.getUniqueId().toString() + ".sellhead." + section, 0);
+                hpc.getConfig().addDefault("player-data." + uuid + ".sellhead." + section, 0);
                 int s = hpc.getConfig().getInt("server-total.sellhead.total");
                 s += shAmount;
                 hpc.getConfig().set("server-total.sellhead.total", s);
@@ -110,7 +110,7 @@ public class MySQLAPI {
                 hpc.getConfig().options().copyDefaults(true);
                 hpc.save();
             } else {
-                hpc.getConfig().addDefault("player-data." + p.getUniqueId().toString() + ".crafting." + section, 0);
+                hpc.getConfig().addDefault("player-data." + uuid + ".crafting." + section, 0);
                 int s = hpc.getConfig().getInt("server-total.crafting.total");
                 s += shAmount;
                 hpc.getConfig().set("server-total.crafting.total", s);
@@ -125,22 +125,23 @@ public class MySQLAPI {
     }
 
     public void addOntoValue(Player p, String section, String database, int shAmount) throws SQLException {
+        String uuid = p.getUniqueId().toString();
         if (hp.isConnectedToMySQLDatabase()) {
             try {
 
                 Connection c = hp.getConnection();
                 Statement s = c.createStatement();
                 ResultSet rs;
-                rs = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + p.getUniqueId().toString() + "'");
+                rs = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + uuid + "'");
                 rs.next();
                 int val = Integer.parseInt(rs.getString(section));
                 val += shAmount;
-                s.executeUpdate("UPDATE `" + database + "` SET `" + section + "`='" + val + "' WHERE `uuid`='" + p.getUniqueId().toString() + "'");
-                ResultSet rs3 = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + p.getUniqueId().toString() + "'");
+                s.executeUpdate("UPDATE `" + database + "` SET `" + section + "`='" + val + "' WHERE `uuid`='" + uuid + "'");
+                ResultSet rs3 = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + uuid + "'");
                 rs3.next();
                 int val2 = Integer.parseInt(rs3.getString("total"));
                 val2 += shAmount;
-                s.executeUpdate("UPDATE `" + database + "` SET `total`='" + val2 + "' WHERE `uuid`='" + p.getUniqueId().toString() + "'");
+                s.executeUpdate("UPDATE `" + database + "` SET `total`='" + val2 + "' WHERE `uuid`='" + uuid + "'");
                 ResultSet rs2;
                 rs2 = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='server-total'");
                 rs2.next();
@@ -159,12 +160,12 @@ public class MySQLAPI {
         } else {
             if (database.equalsIgnoreCase("headspluslb")) {
                 try {
-                    int i = hpl.getConfig().getInt("player-data." + p.getUniqueId().toString() + "." + section);
+                    int i = hpl.getConfig().getInt("player-data." + uuid + "." + section);
                     i++;
-                    hpl.getConfig().set("player-data." + p.getUniqueId().toString() + "." + section, i);
-                    int is = hpl.getConfig().getInt("player-data." + p.getUniqueId().toString() + ".total");
+                    hpl.getConfig().set("player-data." + uuid + "." + section, i);
+                    int is = hpl.getConfig().getInt("player-data." + uuid+ ".total");
                     is++;
-                    hpl.getConfig().set("player-data." + p.getUniqueId().toString() + ".total", is);
+                    hpl.getConfig().set("player-data." + uuid + ".total", is);
                     int s = hpl.getConfig().getInt("server-total." + section);
                     s++;
                     hpl.getConfig().set("server-total." + section, s);
@@ -180,12 +181,12 @@ public class MySQLAPI {
                 if (database.equalsIgnoreCase("headsplussh")) {
                     try {
                         FileConfiguration ch = hpc.getConfig();
-                        int i = ch.getInt("player-data." + p.getUniqueId().toString() + ".sellhead." + section);
+                        int i = ch.getInt("player-data." + uuid + ".sellhead." + section);
                         i += shAmount;
-                        ch.set("player-data." + p.getUniqueId().toString() + ".sellhead." + section, i);
-                        int is = ch.getInt("player-data." + p.getUniqueId().toString() + ".sellhead.total");
+                        ch.set("player-data." + uuid + ".sellhead." + section, i);
+                        int is = ch.getInt("player-data." + uuid + ".sellhead.total");
                         is += shAmount;
-                        ch.set("player-data." + p.getUniqueId().toString() + ".sellhead.total", is);
+                        ch.set("player-data." + uuid + ".sellhead.total", is);
                         int s = hpc.getConfig().getInt("server-total.sellhead.total");
                         s += shAmount;
                         hpc.getConfig().set("server-total.sellhead.total", s);
@@ -199,12 +200,12 @@ public class MySQLAPI {
                     }
                 } else {
                     try {
-                        int i = hpc.getConfig().getInt("player-data." + p.getUniqueId().toString() + ".crafting." + section);
+                        int i = hpc.getConfig().getInt("player-data." + uuid + ".crafting." + section);
                         i += shAmount;
-                        hpc.getConfig().set("player-data." + p.getUniqueId().toString() + ".crafting." + section, i);
-                        int is = hpc.getConfig().getInt("player-data." + p.getUniqueId().toString() + ".crafting.total");
+                        hpc.getConfig().set("player-data." + uuid + ".crafting." + section, i);
+                        int is = hpc.getConfig().getInt("player-data." + uuid + ".crafting.total");
                         is += shAmount;
-                        hpc.getConfig().set("player-data." + p.getUniqueId().toString() + ".crafting.total", is);
+                        hpc.getConfig().set("player-data." + uuid + ".crafting.total", is);
                         int s = hpc.getConfig().getInt("server-total.crafting.total");
                         s += shAmount;
                         hpc.getConfig().set("server-total.crafting.total", s);

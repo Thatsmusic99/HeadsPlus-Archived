@@ -41,18 +41,19 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
 	}
 
 	private void giveH(String[] args, Player sender, Player p) {
-        HeadsPlus.getInstance().saveConfig();
+	    HeadsPlus hp = HeadsPlus.getInstance();
+        hp.saveConfig();
         List<String> bl = new ArrayList<>();
-        for (String str : HeadsPlus.getInstance().getConfig().getStringList("blacklist")) {
+        for (String str : hp.getConfig().getStringList("blacklist")) {
             bl.add(str.toLowerCase());
         }
         List<String> wl = new ArrayList<>();
-        for (String str : HeadsPlus.getInstance().getConfig().getStringList("whitelist")) {
+        for (String str : hp.getConfig().getStringList("whitelist")) {
             wl.add(str.toLowerCase());
         }
 
-        boolean blacklistOn = HeadsPlus.getInstance().getConfig().getBoolean("blacklistOn");
-        boolean wlOn = HeadsPlus.getInstance().getConfig().getBoolean("whitelistOn");
+        boolean blacklistOn = hp.getConfig().getBoolean("blacklistOn");
+        boolean wlOn = hp.getConfig().getBoolean("whitelistOn");
         String head = args[0].toLowerCase();
         if (p.getInventory().firstEmpty() == -1) {
             sender.sendMessage(hpc.getString("full-inv"));

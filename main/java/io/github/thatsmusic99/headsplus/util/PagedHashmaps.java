@@ -55,24 +55,24 @@ public class PagedHashmaps<K, V> {
             eIndex = getHs().size();
         }
         setPage(page);
-        return (LinkedHashMap<K, V>) splitHashmap(getHs(), sIndex, eIndex);
+        return splitHashmap(sIndex, eIndex);
     }
 
-    private static LinkedHashMap<Object, Object> splitHashmap(HashMap<?, ?> passedMap, int sIndex, int eIndex) {
-        List<?> mapKeys = new ArrayList<>(passedMap.keySet());
-        List<?> mapValues = new ArrayList<>(passedMap.values());
+    private LinkedHashMap<K, V> splitHashmap(int sIndex, int eIndex) {
+        List<K> mapKeys = new ArrayList<>(hs.keySet());
+        List<V> mapValues = new ArrayList<>(hs.values());
         mapKeys = mapKeys.subList(sIndex, eIndex);
         mapValues = mapValues.subList(sIndex, eIndex);
 
-        LinkedHashMap<Object, Object> sortedMap =
+        LinkedHashMap<K, V> sortedMap =
                 new LinkedHashMap<>();
 
-        for (Object val : mapValues) {
-            Iterator<?> keyIt = mapKeys.iterator();
+        for (V val : mapValues) {
+            Iterator<K> keyIt = mapKeys.iterator();
 
             while (keyIt.hasNext()) {
-                Object key = keyIt.next();
-                Object comp1 = passedMap.get(key);
+                K key = keyIt.next();
+                V comp1 = hs.get(key);
 
                 if (comp1.equals(val)) {
                     keyIt.remove();

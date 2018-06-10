@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus.commands;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
+import io.github.thatsmusic99.headsplus.commands.maincommand.HelpMenu;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -28,16 +29,16 @@ public class HeadsPlusCommand implements CommandExecutor {
                                     sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + command.getUsage());
                                 }
                             } else {
-                                getCommandByName("help").fire(args, sender);
+                                new HelpMenu().fire(args, sender);
                             }
                         } else {
                             sender.sendMessage(noPerms);
                         }
                     } else {
-                        getCommandByName("help").fire(args, sender);
+                        new HelpMenu().fire(args, sender);
                     }
                 } else {
-                    getCommandByName("help").fire(args, sender);
+                    new HelpMenu().fire(args, sender);
                 }
 
             }

@@ -11,6 +11,7 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -31,18 +32,19 @@ public class MyHead implements CommandExecutor, IHeadsPlusCommand {
                     sender.sendMessage(ChatColor.RED + "You must be a player to run this command!");
                     return false;
                 }
+                FileConfiguration fc = HeadsPlus.getInstance().getConfig();
                 HeadsPlus.getInstance().saveConfig();
                 List<String> bl = new ArrayList<>();
-                for (String str : HeadsPlus.getInstance().getConfig().getStringList("blacklist")) {
+                for (String str : fc.getStringList("blacklist")) {
                     bl.add(str.toLowerCase());
                 }
                 List<String> wl = new ArrayList<>();
-                for (String str : HeadsPlus.getInstance().getConfig().getStringList("whitelist")) {
+                for (String str : fc.getStringList("whitelist")) {
                     wl.add(str.toLowerCase());
                 }
 
-                boolean blacklistOn = HeadsPlus.getInstance().getConfig().getBoolean("blacklistOn");
-                boolean wlOn = HeadsPlus.getInstance().getConfig().getBoolean("whitelistOn");
+                boolean blacklistOn = fc.getBoolean("blacklistOn");
+                boolean wlOn = fc.getBoolean("whitelistOn");
                 String head = sender.getName().toLowerCase();
                 if (((Player) sender).getInventory().firstEmpty() == -1) {
                     sender.sendMessage(hpc.getString("full-inv"));

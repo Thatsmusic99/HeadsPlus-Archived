@@ -113,32 +113,37 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
 
     @Override
     public boolean fire(String[] args, CommandSender sender) {
-        if (args[1].equalsIgnoreCase("view")) {
-            String type = args[2];
-            if (args.length > 3) {
-                if (args[3].equalsIgnoreCase("name")) {
-                    if (args.length > 4) {
-                        sender.sendMessage(printNameInfo(type, Integer.parseInt(args[4])));
-                    } else {
-                        sender.sendMessage(printNameInfo(type, 1));
+        try {
+            if (args[1].equalsIgnoreCase("view")) {
+                String type = args[2];
+                if (args.length > 3) {
+                    if (args[3].equalsIgnoreCase("name")) {
+                        if (args.length > 4) {
+                            sender.sendMessage(printNameInfo(type, Integer.parseInt(args[4])));
+                        } else {
+                            sender.sendMessage(printNameInfo(type, 1));
+                        }
+                    } else if (args[3].equalsIgnoreCase("mask")) {
+                        if (args.length > 4) {
+                            sender.sendMessage(printMaskInfo(type, Integer.parseInt(args[4])));
+                        } else {
+                            sender.sendMessage(printMaskInfo(type, 1));
+                        }
+                    } else if (args[3].equalsIgnoreCase("lore")) {
+                        if (args.length > 4) {
+                            sender.sendMessage(printLoreInfo(type, Integer.parseInt(args[4])));
+                        } else {
+                            sender.sendMessage(printLoreInfo(type, 1));
+                        }
                     }
-                } else if (args[3].equalsIgnoreCase("mask")) {
-                    if (args.length > 4) {
-                        sender.sendMessage(printMaskInfo(type, Integer.parseInt(args[4])));
-                    } else {
-                        sender.sendMessage(printMaskInfo(type, 1));
-                    }
-                } else if (args[3].equalsIgnoreCase("lore")) {
-                    if (args.length > 4) {
-                        sender.sendMessage(printLoreInfo(type, Integer.parseInt(args[4])));
-                    } else {
-                        sender.sendMessage(printLoreInfo(type, 1));
-                    }
+                } else {
+                    sender.sendMessage(printInfo(type));
                 }
-            } else {
-                sender.sendMessage(printInfo(type));
             }
-        } /*else if (args[1].equalsIgnoreCase("set")) {
+        } catch (Exception e) {
+            new DebugPrint(e, "Head View command", true, sender);
+        }
+         /*else if (args[1].equalsIgnoreCase("set")) {
             String type = args[2];
             HeadsPlusConfigHeads hpc = HeadsPlus.getInstance().getHeadsConfig();
             hpc.getConfig().set(type + "." + args[3], args[4]);

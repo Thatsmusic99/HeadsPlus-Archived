@@ -315,6 +315,8 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
             } else {
                 sender.sendMessage(printInfo(type));
             }
+        } catch (IndexOutOfBoundsException ex) {
+            sender.sendMessage(hpc.getString("invalid-args"));
         } catch (Exception e) {
             new DebugPrint(e, "Head Information command", true, sender);
         }

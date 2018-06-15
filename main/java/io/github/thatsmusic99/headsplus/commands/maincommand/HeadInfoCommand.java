@@ -297,6 +297,8 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
                 hpch.getConfig().options().copyDefaults(true);
                 hpch.save();
                 return true;
+            } else {
+                sender.sendMessage(printInfo(type));
             }
         } catch (Exception e) {
             new DebugPrint(e, "Head Information command", true, sender);

@@ -248,24 +248,28 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
                         if (args.length > 5) {
                             List<String> s = hpch.getConfig().getStringList(type + ".name." + args[5].toUpperCase());
                             s.add(args[4]);
+                            hpch.getConfig().set(type + ".name." + args[5].toUpperCase(), s);
 
                         } else {
                             List<String> s = hpch.getConfig().getStringList(type + ".name.default");
                             s.add(args[4]);
+                            hpch.getConfig().set(type + ".name.default", s);
                         }
                     } else {
                         if (args[3].equalsIgnoreCase("mask")) {
+                            List<Integer> st = hpch.getConfig().getIntegerList(type + ".mask-amplifiers");
                             if (args.length > 5) {
-                                List<Integer> st = hpch.getConfig().getIntegerList(type + ".mask-amplifiers");
                                 st.add(Integer.parseInt(args[5]));
                             } else {
-                                List<Integer> st = hpch.getConfig().getIntegerList(type + ".mask-amplifiers");
                                 st.add(1);
                             }
+                            hpch.getConfig().set(type + ".mask-amplifiers", st);
                         }
                         List<String> s = hpch.getConfig().getStringList(type + "." + args[3]);
                         s.add(args[4]);
+                        hpch.getConfig().set(type + "." + args[3], s);
                     }
+
                     sender.sendMessage(hpc.getString("add-value")
                             .replaceAll("\\{value}", args[4])
                             .replaceAll("\\{entity}", type)
@@ -274,21 +278,32 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
                 } else if (args[1].equalsIgnoreCase("remove")) {
                     List<String> s;
                     int p = Integer.parseInt(args[4]);
+                    String value;
                     if (type.equalsIgnoreCase("sheep") && args[3].equalsIgnoreCase("name")) {
                         if (args.length > 5) {
                             s = hpch.getConfig().getStringList(type + ".name." + args[5].toUpperCase());
+                            value = s.get(p);
+                            s.remove(p);
+                            hpch.getConfig().set(type + ".name." + args[5].toUpperCase(), s);
                         } else {
                             s = hpch.getConfig().getStringList(type + ".name.default");
+                            value = s.get(p);
+                            s.remove(p);
+                            hpch.getConfig().set(type + ".name.default", s);
                         }
                     } else {
                         s = hpch.getConfig().getStringList(type + "." + args[3]);
                         if (args[3].equalsIgnoreCase("mask")) {
                             List<Integer> st = hpch.getConfig().getIntegerList(type + ".mask-amplifiers");
                             st.remove(p);
+                            hpch.getConfig().set(type + ".mask-amplifiers", st);
                         }
+                        value = s.get(p);
+                        s.remove(p);
+                        hpch.getConfig().set(type + "." + args[3], s);
+
                     }
-                    String value = s.get(p);
-                    s.remove(p);
+
                     sender.sendMessage(hpc.getString("remove-value")
                             .replaceAll("\\{value}", value)
                             .replaceAll("\\{entity}", type)

@@ -76,7 +76,7 @@ public class HelpMenu implements IHeadsPlusCommand {
                     cs.sendMessage(ChatColor.valueOf(fc.getString("themeColor3"))+ "Permission: " + ChatColor.valueOf(fc.getString("themeColor4")) + pe.getPermission());
                 }
                 if (pe.advancedUsages().length != 0) {
-                    cs.sendMessage(fc.getString("themeColor3") + "Further Usage:");
+                    cs.sendMessage(ChatColor.valueOf(fc.getString("themeColor3")) + "Further Usage:");
                     for (String s : pe.advancedUsages()) {
                         cs.sendMessage(ChatColor.valueOf(fc.getString("themeColor4")) + s);
                     }

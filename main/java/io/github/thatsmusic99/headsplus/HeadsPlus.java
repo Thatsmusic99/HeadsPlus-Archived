@@ -149,6 +149,7 @@ public class HeadsPlus extends JavaPlugin {
                     }
                 }.runTaskAsynchronously(this);
             }
+
             log.info(hpc.getString("plugin-enabled"));
         } catch (Exception e) {
             try {

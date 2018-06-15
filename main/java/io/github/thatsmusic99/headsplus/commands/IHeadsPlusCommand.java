@@ -21,4 +21,8 @@ public interface IHeadsPlusCommand {
     boolean isMainCommand();
 
     boolean fire(String[] args, CommandSender sender);
+
+    default String[] advancedUsages() {
+        return new String[0];
+    }
 }

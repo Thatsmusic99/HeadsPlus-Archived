@@ -13,6 +13,7 @@ import org.bukkit.command.CommandSender;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
+import org.bukkit.configuration.file.FileConfiguration;
 
 public class HelpMenu implements IHeadsPlusCommand {
 
@@ -66,12 +67,19 @@ public class HelpMenu implements IHeadsPlusCommand {
                     break;
                 }
             }
+            FileConfiguration fc = HeadsPlus.getInstance().getConfig();
             if (pe != null) {
-                cs.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + " HeadsPlus " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============");
-                cs.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + "Usage: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + pe.getUsage());
-                cs.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + "Description: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + pe.getCmdDescription());
+                cs.sendMessage(ChatColor.valueOf(fc.getString("themeColor1")) + "===============" + ChatColor.valueOf(fc.getString("themeColor2")) + " HeadsPlus " + ChatColor.valueOf(fc.getString("themeColor1")) + "===============");
+                cs.sendMessage(ChatColor.valueOf(fc.getString("themeColor3")) + "Usage: " + ChatColor.valueOf(fc.getString("themeColor4")) + pe.getUsage());
+                cs.sendMessage(ChatColor.valueOf(fc.getString("themeColor3")) + "Description: " + ChatColor.valueOf(fc.getString("themeColor4")) + pe.getCmdDescription());
                 if (cs.hasPermission("headsplus.help.viewperms")) {
-                    cs.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3"))+ "Permission: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + pe.getPermission());
+                    cs.sendMessage(ChatColor.valueOf(fc.getString("themeColor3"))+ "Permission: " + ChatColor.valueOf(fc.getString("themeColor4")) + pe.getPermission());
+                }
+                if (pe.advancedUsages().length != 0) {
+                    cs.sendMessage(fc.getString("themeColor3") + "Further Usage:");
+                    for (String s : pe.advancedUsages()) {
+                        cs.sendMessage(ChatColor.valueOf(fc.getString("themeColor4")) + s);
+                    }
                 }
             } else {
                 helpNoArgs(cs);

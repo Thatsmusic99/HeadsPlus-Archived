@@ -626,6 +626,21 @@ public class es_es implements Locale {
 
     @Override
     public String descHeadView() {
-        return "Muestra información sobre la cabeza de una entidad específica.";
+        return "Muestra/Modifica información sobre la cabeza de una entidad específica.";
+    }
+
+    @Override
+    public String setValue() {
+        return "{header} &3¡{entity} {setting} ha sido cambiado a {value}!";
+    }
+
+    @Override
+    public String addedValue() {
+        return "{header} &3¡{value} ha sido agregado a la {entity} {setting}!";
+    }
+
+    @Override
+    public String removedValue() {
+        return "{header} &3¡{value} se ha eliminado de {entity} {setting}!";
     }
 }

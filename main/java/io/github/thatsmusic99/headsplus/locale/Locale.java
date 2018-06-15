@@ -274,4 +274,10 @@ public interface Locale {
 
     String descHeadView();
 
+    String setValue();
+
+    String addedValue();
+
+    String removedValue();
+
 }

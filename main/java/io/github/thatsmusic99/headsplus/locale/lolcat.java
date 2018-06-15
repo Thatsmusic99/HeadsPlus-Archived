@@ -623,6 +623,6 @@ public class lolcat implements Locale {
 
     @Override
     public String descHeadView() {
-        return "Shoez sum hed stuffz";
+        return "Shoez ore chaingez sum hed stuffz";
     }
 }

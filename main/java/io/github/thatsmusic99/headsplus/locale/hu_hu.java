@@ -626,6 +626,21 @@ public class hu_hu implements Locale {
 
     @Override
     public String descHeadView() {
-        return "Megjeleníti az adott entitás fejével kapcsolatos információkat.";
+        return "Megjeleníti/módosítja az adott entitás fejével kapcsolatos információkat.";
+    }
+
+    @Override
+    public String setValue() {
+        return "{header} &3{entity}'s {setting} {value} értékre változott!";
+    }
+
+    @Override
+    public String addedValue() {
+        return "{header} &3{value} hozzáadva {entity} {setting} beállításához!";
+    }
+
+    @Override
+    public String removedValue() {
+        return "{header} &3{value} eltávolítva {entity} {setting} beállításából!";
     }
 }

@@ -627,6 +627,21 @@ public class ro_ro implements Locale {
 
     @Override
     public String descHeadView() {
-        return "Afiseaza informatii despre capul entitatii specifice.";
+        return "Afiseaza/modifica informatii despre capul entitatii specifice.";
+    }
+
+    @Override
+    public String setValue() {
+        return "{header} &3{entity} {setting} a fost modificată la {value}!";
+    }
+
+    @Override
+    public String addedValue() {
+        return "{header} &3{value} a fost adăugat la setarea {setting} a {entity}!";
+    }
+
+    @Override
+    public String removedValue() {
+        return "{header} &3{value} a fost eliminat din setarea {setting} a {entity}!";
     }
 }

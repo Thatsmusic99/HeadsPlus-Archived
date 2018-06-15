@@ -625,4 +625,19 @@ public class lolcat implements Locale {
     public String descHeadView() {
         return "Shoez ore chaingez sum hed stuffz";
     }
+
+    @Override
+    public String setValue() {
+        return "{header} &3{entity}'z {setting} haz bin chainge'd 2 {value}!!!";
+    }
+
+    @Override
+    public String addedValue() {
+        return "{header} &3{value} haz bin +1'd 2 {entity}'z {setting}!";
+    }
+
+    @Override
+    public String removedValue() {
+        return "{header} &3{value} haz bin -1'd 2 {entity}'z {setting}!";
+    }
 }

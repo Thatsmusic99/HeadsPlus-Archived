@@ -56,10 +56,6 @@ public class FancyMessage implements JsonRepresentedObject, Cloneable, Iterable<
 	 *
 	 * @param firstPartText The existing text in the message.
 	 */
-    private FancyMessage(final String firstPartText) {
-		this(rawText(firstPartText));
-	}
-
 	private FancyMessage(final TextualComponent firstPartText) {
 		messageParts = new ArrayList<>();
 		messageParts.add(new MessagePart(firstPartText));
@@ -71,7 +67,7 @@ public class FancyMessage implements JsonRepresentedObject, Cloneable, Iterable<
 	 * Creates a JSON message without text.
 	 */
 	public FancyMessage() {
-		this((TextualComponent) null);
+		this(null);
 	}
 
 	/**

@@ -60,31 +60,27 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
     public HashMap<Boolean, String> isCorrectUsage(String[] args, CommandSender sender) {
         HashMap<Boolean, String> g = new HashMap<>();
         HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
-        if (args.length > 1) {
+        if (args.length > 2) {
             if (args[1].equalsIgnoreCase("view")) {
-                if (args.length > 2) {
-                    if (hpch.mHeads.contains(args[2].toLowerCase())
-                            || hpch.uHeads.contains(args[2].toLowerCase())
-                            || args[2].equalsIgnoreCase("player")) {
-                        if (args.length > 3) {
-                            if (args[3].equalsIgnoreCase("name") || args[3].equalsIgnoreCase("lore") || args[3].equalsIgnoreCase("mask")) {
-                                if (args.length > 4) {
-                                    if (args[4].matches("^[0-9]+$")) {
-                                        g.put(true, "");
-                                    } else {
-                                        g.put(false, hpc.getString("invalid-input-int"));
-                                    }
-                                } else {
+                if (hpch.mHeads.contains(args[2].toLowerCase())
+                        || hpch.uHeads.contains(args[2].toLowerCase())
+                        || args[2].equalsIgnoreCase("player")) {
+                    if (args.length > 3) {
+                        if (args[3].equalsIgnoreCase("name") || args[3].equalsIgnoreCase("lore") || args[3].equalsIgnoreCase("mask")) {
+                            if (args.length > 4) {
+                                if (args[4].matches("^[0-9]+$")) {
                                     g.put(true, "");
+                                } else {
+                                    g.put(false, hpc.getString("invalid-input-int"));
                                 }
                             } else {
-                                g.put(false, hpc.getString("invalid-args"));
+                                g.put(true, "");
                             }
                         } else {
-                            g.put(true, "");
+                            g.put(false, hpc.getString("invalid-args"));
                         }
                     } else {
-                        g.put(false, hpc.getString("invalid-args"));
+                        g.put(true, "");
                     }
                 } else {
                     g.put(false, hpc.getString("invalid-args"));
@@ -207,8 +203,9 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
     @Override
     public boolean fire(String[] args, CommandSender sender) {
         try {
+            String type = args[2];
             if (args.length > 3) {
-                String type = args[2];
+
                 HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
                 if (args[1].equalsIgnoreCase("view")) {
                     if (args[3].equalsIgnoreCase("name")) {

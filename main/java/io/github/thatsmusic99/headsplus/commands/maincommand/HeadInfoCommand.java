@@ -266,12 +266,13 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
                             }
                             hpch.getConfig().set(type + ".mask-amplifiers", st);
                             s = hpch.getConfig().getStringList(type + ".mask-effects");
+                            s.add(args[4]);
+                            hpch.getConfig().set(type + ".mask-effects", s);
                         } else {
                             s = hpch.getConfig().getStringList(type + "." + args[3]);
+                            s.add(args[4]);
+                            hpch.getConfig().set(type + "." + args[3], s);
                         }
-
-                        s.add(args[4]);
-                        hpch.getConfig().set(type + "." + args[3], s);
                     }
 
                     sender.sendMessage(hpc.getString("add-value")
@@ -302,12 +303,15 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
                             List<Integer> st = hpch.getConfig().getIntegerList(type + ".mask-amplifiers");
                             st.remove(p);
                             hpch.getConfig().set(type + ".mask-amplifiers", st);
+                            value = s.get(p);
+                            s.remove(p);
+                            hpch.getConfig().set(type + ".mask-effects", s);
                         } else {
                             s = hpch.getConfig().getStringList(type + "." + args[3]);
+                            value = s.get(p);
+                            s.remove(p);
+                            hpch.getConfig().set(type + "." + args[3], s);
                         }
-                        value = s.get(p);
-                        s.remove(p);
-                        hpch.getConfig().set(type + "." + args[3], s);
 
                     }
 

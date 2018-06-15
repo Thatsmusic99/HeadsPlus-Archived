@@ -8,7 +8,10 @@ import io.github.thatsmusic99.headsplus.locale.Locale;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.util.PagedLists;
 import org.bukkit.ChatColor;
+import org.bukkit.DyeColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,6 +46,15 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
         return "/hp head <view> <Entity Type> [Name|Mask|Lore] [Page]";
     }
 
+    @Override
+    public String[] advancedUsages() {
+        String[] s = new String[4];
+        s[0] = "/hp head view <Entity Type> [Name|Mask|Lore] [Page]";
+        s[1] = "/hp head set <Entity Type> <Chance|Price|Display-name|Interact-name> <Value>";
+        s[2] = "/hp head add <Entity Type> <Name|Mask|Lore> <Value|Effect> [Colour|Amplifier]";
+        s[3] = "/hp head remove <Entity Type> <Name|Mask|Lore> <Index> [Colour]";
+        return s;
+    }
 
     @Override
     public HashMap<Boolean, String> isCorrectUsage(String[] args, CommandSender sender) {
@@ -77,12 +89,15 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
                 } else {
                     g.put(false, hpc.getString("invalid-args"));
                 }
-            }/* else if (args[1].equalsIgnoreCase("set")) {
+            } else if (args[1].equalsIgnoreCase("set")) {
                 if (args.length > 4) {
                     if (hpch.mHeads.contains(args[2].toLowerCase())
                             || hpch.uHeads.contains(args[2].toLowerCase())
                             || args[2].equalsIgnoreCase("player")) {
-                        if (args[3].equalsIgnoreCase("chance") || args[3].equalsIgnoreCase("price") || args[3].equalsIgnoreCase("display-name") || args[3].equalsIgnoreCase("interact-name")) {
+                        if (args[3].equalsIgnoreCase("chance")
+                                || args[3].equalsIgnoreCase("price")
+                                || args[3].equalsIgnoreCase("display-name")
+                                || args[3].equalsIgnoreCase("interact-name")) {
                             if (isValueValid(args[3], args[4])) {
                                 g.put(true, "");
                             } else {
@@ -96,8 +111,86 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
                     g.put(false, hpc.getString("invalid-args"));
                 }
             } else if (args[1].equalsIgnoreCase("add")) {
-
-            } */ else {
+                if (args.length > 4) {
+                    if (hpch.mHeads.contains(args[2].toLowerCase())
+                            || hpch.uHeads.contains(args[2].toLowerCase())
+                            || args[2].equalsIgnoreCase("player")) {
+                        if (args[3].equalsIgnoreCase("name")
+                                || args[3].equalsIgnoreCase("lore")
+                                || args[3].equalsIgnoreCase("mask")) {
+                            if (args[3].equalsIgnoreCase("mask")) {
+                                if (PotionEffectType.getByName(args[4]) != null) {
+                                    if (args.length > 5) {
+                                        if (args[5].matches("^[0-9]+$")) {
+                                            g.put(true, "");
+                                        } else {
+                                            g.put(false, hpc.getString("invalid-args"));
+                                        }
+                                    } else {
+                                        g.put(true, "");
+                                    }
+                                } else {
+                                    g.put(false, hpc.getString("invalid-args"));
+                                }
+                            } else if (args[2].equalsIgnoreCase("sheep") && args[3].equalsIgnoreCase("name")) {
+                                if (args.length > 5) {
+                                    try {
+                                        DyeColor.valueOf(args[5]);
+                                        g.put(true, "");
+                                    } catch (Exception e) {
+                                        g.put(false, hpc.getString("invalid-args"));
+                                    }
+                                } else {
+                                    g.put(true, "");
+                                }
+                            } else {
+                                g.put(true, "");
+                            }
+                        } else {
+                            g.put(false, hpc.getString("invalid-args"));
+                        }
+                    } else {
+                        g.put(false, hpc.getString("invalid-args"));
+                    }
+                } else {
+                    g.put(false, hpc.getString("invalid-args"));
+                }
+            } else if (args[1].equalsIgnoreCase("remove")) {
+                if (args.length > 4) {
+                    if (hpch.mHeads.contains(args[2].toLowerCase())
+                            || hpch.uHeads.contains(args[2].toLowerCase())
+                            || args[2].equalsIgnoreCase("player")) {
+                        if (args[3].equalsIgnoreCase("name")
+                                || args[3].equalsIgnoreCase("lore")
+                                || args[3].equalsIgnoreCase("mask")) {
+                            if (args[4].matches("^[0-9]+$")) {
+                                if (args[2].equalsIgnoreCase("sheep") && args[3].equalsIgnoreCase("name")) {
+                                    if (args.length > 6) {
+                                        try {
+                                            DyeColor.valueOf(args[6]);
+                                            g.put(true, "");
+                                        } catch (Exception e) {
+                                            g.put(false, hpc.getString("invalid-args"));
+                                        }
+                                    } else {
+                                        g.put(true, "");
+                                    }
+                                } else {
+                                    g.put(true, "");
+                                }
+                            } else {
+                                g.put(false, hpc.getString("invalid-args"));
+                            }
+                        } else {
+                            g.put(false, hpc.getString("invalid-args"));
+                        }
+                    } else {
+                        g.put(false, hpc.getString("invalid-args"));
+                    }
+                } else {
+                    g.put(false, hpc.getString("invalid-args"));
+                }
+            } else {
                 g.put(false, hpc.getString("invalid-args"));
             }
         } else {
@@ -114,9 +207,9 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
     @Override
     public boolean fire(String[] args, CommandSender sender) {
         try {
-            if (args[1].equalsIgnoreCase("view")) {
+            if (args.length > 3) {
                 String type = args[2];
-                if (args.length > 3) {
+                if (args[1].equalsIgnoreCase("view")) {
                     if (args[3].equalsIgnoreCase("name")) {
                         if (args.length > 4) {
                             sender.sendMessage(printNameInfo(type, Integer.parseInt(args[4])));
@@ -135,34 +228,61 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
                         } else {
                             sender.sendMessage(printLoreInfo(type, 1));
                         }
+                    } else {
+                        sender.sendMessage(printInfo(type));
                     }
-                } else {
-                    sender.sendMessage(printInfo(type));
+                } else if (args[1].equalsIgnoreCase("set")) {
+                    HeadsPlusConfigHeads hpc = HeadsPlus.getInstance().getHeadsConfig();
+                    hpc.getConfig().set(type + "." + args[3], args[4]);
+                    hpc.getConfig().options().copyDefaults(true);
+                    hpc.save();
+                } else if (args[1].equalsIgnoreCase("add")) {
+                    HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
+                    if (type.equalsIgnoreCase("sheep") && args[3].equalsIgnoreCase("name")) {
+                        if (args.length > 5) {
+                            List<String> s = hpch.getConfig().getStringList(type + ".name." + args[5].toUpperCase());
+                            s.add(args[4]);
+
+                        } else {
+                            List<String> s = hpch.getConfig().getStringList(type + ".name.default");
+                            s.add(args[4]);
+                        }
+                    } else {
+                        if (args[3].equalsIgnoreCase("mask")) {
+
+                        }
+                        List<String> s = hpch.getConfig().getStringList(type + "." + args[4]);
+                        s.add(args[4]);
+                    }
+                    hpch.getConfig().options().copyDefaults(true);
+                    hpch.save();
+                } else if (args[1].equalsIgnoreCase("remove")) {
+                    HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
+                    String value;
+                    if (type.equalsIgnoreCase("sheep") && args[3].equalsIgnoreCase("name")) {
+                        if (args.length > 5) {
+                            List<String> s = hpch.getConfig().getStringList(type + ".name." + args[5].toUpperCase());
+                            value = s.get(Integer.parseInt(args[4]));
+                            s.remove(Integer.parseInt(args[4]));
+
+                        } else {
+                            List<String> s = hpch.getConfig().getStringList(type + ".name.default");
+                            value = s.get(Integer.parseInt(args[4]));
+                            s.remove(Integer.parseInt(args[4]));
+                        }
+                    } else {
+                        List<String> s = hpch.getConfig().getStringList(type + "." + args[4]);
+                        value = s.get(Integer.parseInt(args[4]));
+                        s.remove(Integer.parseInt(args[4]));
+                    }
+                    hpch.getConfig().options().copyDefaults(true);
+                    hpch.save();
                 }
             }
         } catch (Exception e) {
             new DebugPrint(e, "Head View command", true, sender);
         }
-         /*else if (args[1].equalsIgnoreCase("set")) {
-            String type = args[2];
-            HeadsPlusConfigHeads hpc = HeadsPlus.getInstance().getHeadsConfig();
-            hpc.getConfig().set(type + "." + args[3], args[4]);
-            hpc.getConfig().options().copyDefaults(true);
-            hpc.save();
-        } else if (args[1].equalsIgnoreCase("add")) {
-            String type = args[2];
-            if (type.equalsIgnoreCase("sheep")) {
 
-            } else {
-
-            }
-            HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
-            List<String> s = hpch.getConfig().getStringList(type + "." + args[4]);
-            s.add(args[4]);
-
-            hpch.getConfig().options().copyDefaults(true);
-            hpch.save();
-        } */
         return false;
     }
 

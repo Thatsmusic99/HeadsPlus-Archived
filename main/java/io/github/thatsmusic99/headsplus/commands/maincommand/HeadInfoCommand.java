@@ -256,6 +256,7 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
                             hpch.getConfig().set(type + ".name.default", s);
                         }
                     } else {
+                        List<String> s;
                         if (args[3].equalsIgnoreCase("mask")) {
                             List<Integer> st = hpch.getConfig().getIntegerList(type + ".mask-amplifiers");
                             if (args.length > 5) {
@@ -264,8 +265,11 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
                                 st.add(1);
                             }
                             hpch.getConfig().set(type + ".mask-amplifiers", st);
+                            s = hpch.getConfig().getStringList(type + ".mask-effects");
+                        } else {
+                            s = hpch.getConfig().getStringList(type + "." + args[3]);
                         }
-                        List<String> s = hpch.getConfig().getStringList(type + "." + args[3]);
+
                         s.add(args[4]);
                         hpch.getConfig().set(type + "." + args[3], s);
                     }
@@ -292,11 +296,14 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
                             hpch.getConfig().set(type + ".name.default", s);
                         }
                     } else {
-                        s = hpch.getConfig().getStringList(type + "." + args[3]);
+
                         if (args[3].equalsIgnoreCase("mask")) {
+                            s = hpch.getConfig().getStringList(type + ".mask-effects");
                             List<Integer> st = hpch.getConfig().getIntegerList(type + ".mask-amplifiers");
                             st.remove(p);
                             hpch.getConfig().set(type + ".mask-amplifiers", st);
+                        } else {
+                            s = hpch.getConfig().getStringList(type + "." + args[3]);
                         }
                         value = s.get(p);
                         s.remove(p);

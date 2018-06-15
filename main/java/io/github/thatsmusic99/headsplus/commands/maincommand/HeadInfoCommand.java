@@ -234,7 +234,14 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
                     }
                     return true;
                 } else if (args[1].equalsIgnoreCase("set")) {
-                    hpch.getConfig().set(type + "." + args[3], args[4]);
+                    if (args[3].equalsIgnoreCase("price")) {
+                        hpch.getConfig().set(type + "." + args[3], Double.valueOf(args[4]));
+                    } else if (args[3].equalsIgnoreCase("chance")) {
+                        hpch.getConfig().set(type + "." + args[3], Integer.parseInt(args[4]));
+                    } else {
+                        hpch.getConfig().set(type + "." + args[3], args[4]);
+                    }
+
                     sender.sendMessage(hpc.getString("set-value")
                             .replaceAll("\\{value}", args[4])
                             .replaceAll("\\{entity}", type)

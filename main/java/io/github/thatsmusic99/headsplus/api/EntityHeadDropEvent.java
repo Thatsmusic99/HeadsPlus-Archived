@@ -52,14 +52,7 @@ public class EntityHeadDropEvent extends Event implements Cancellable {
     }
 
     public String getSkullKey() {
-        try {
-            return new HeadsPlusAPI().getSkullType(skull);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
-                e.printStackTrace();
-            }
-        }
-        return "unknown";
+        return HeadsPlus.getInstance().getNMS().getType(skull);
     }
 
     public Location getLocation() {

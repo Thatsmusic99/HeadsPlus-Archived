@@ -131,7 +131,7 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
                             } else if (args[2].equalsIgnoreCase("sheep") && args[3].equalsIgnoreCase("name")) {
                                 if (args.length > 5) {
                                     try {
-                                        DyeColor.valueOf(args[5]);
+                                        DyeColor.valueOf(args[5].toUpperCase());
                                         g.put(true, "");
                                     } catch (Exception e) {
                                         g.put(false, hpc.getString("invalid-args"));

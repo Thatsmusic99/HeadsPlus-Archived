@@ -23,7 +23,7 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
 
     @Override
     public String getCmdName() {
-        return "head";
+        return "headinfo";
     }
 
     @Override
@@ -38,21 +38,21 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
 
     @Override
     public String getSubCommand() {
-        return "head";
+        return "headinfo";
     }
 
     @Override
     public String getUsage() {
-        return "/hp head <view> <Entity Type> [Name|Mask|Lore] [Page]";
+        return "/hp headinfo <view> <Entity Type> [Name|Mask|Lore] [Page]";
     }
 
     @Override
     public String[] advancedUsages() {
         String[] s = new String[4];
-        s[0] = "/hp head view <Entity Type> [Name|Mask|Lore] [Page]";
-        s[1] = "/hp head set <Entity Type> <Chance|Price|Display-name|Interact-name> <Value>";
-        s[2] = "/hp head add <Entity Type> <Name|Mask|Lore> <Value|Effect> [Colour|Amplifier]";
-        s[3] = "/hp head remove <Entity Type> <Name|Mask|Lore> <Index> [Colour]";
+        s[0] = "/hp headinfo view <Entity Type> [Name|Mask|Lore] [Page]";
+        s[1] = "/hp headinfo set <Entity Type> <Chance|Price|Display-name|Interact-name> <Value>";
+        s[2] = "/hp headinfo add <Entity Type> <Name|Mask|Lore> <Value|Effect> [Colour|Amplifier]";
+        s[3] = "/hp headinfo remove <Entity Type> <Name|Mask|Lore> <Index> [Colour]";
         return s;
     }
 

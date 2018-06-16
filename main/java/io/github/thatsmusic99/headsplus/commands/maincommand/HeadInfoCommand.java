@@ -28,7 +28,7 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
 
     @Override
     public String getPermission() {
-        return "headsplus.maincommand.head";
+        return "headsplus.maincommand.headinfo";
     }
 
     @Override

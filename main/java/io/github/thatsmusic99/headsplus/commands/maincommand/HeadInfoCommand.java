@@ -10,7 +10,6 @@ import io.github.thatsmusic99.headsplus.util.PagedLists;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
@@ -96,16 +95,13 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
                                 || args[3].equalsIgnoreCase("interact-name")) {
                             if (isValueValid(args[3], args[4])) {
                                 g.put(true, "");
-                            } else {
-                                g.put(false, hpc.getString("invalid-args"));
+                                return g;
                             }
-                        } else {
-                            g.put(false, hpc.getString("invalid-args"));
                         }
                     }
-                } else {
-                    g.put(false, hpc.getString("invalid-args"));
                 }
+                g.put(false, hpc.getString("invalid-args"));
+                return g;
             } else if (args[1].equalsIgnoreCase("add")) {
                 if (args.length > 4) {
                     if (hpch.mHeads.contains(args[2].toLowerCase())
@@ -352,13 +348,13 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
         StringBuilder sb = new StringBuilder();
         HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
         Locale l = LocaleManager.getLocale();
-        FileConfiguration fc = HeadsPlus.getInstance().getConfig();
-        sb.append(ChatColor.valueOf(fc.getString("themeColor1"))).append("===============").append(ChatColor.valueOf(fc.getString("themeColor2"))).append(" HeadsPlus ").append(ChatColor.valueOf(fc.getString("themeColor1"))).append("===============");
-        sb.append(ChatColor.valueOf(fc.getString("themeColor4"))).append("\n").append(l.type()).append(" ").append(ChatColor.valueOf(fc.getString("themeColor3"))).append(type);
-        sb.append(ChatColor.valueOf(fc.getString("themeColor4"))).append("\n").append(l.displayName()).append(" ").append(ChatColor.valueOf(fc.getString("themeColor3"))).append(hpch.getConfig().getString(type + ".display-name"));
-        sb.append(ChatColor.valueOf(fc.getString("themeColor4"))).append("\n").append(l.price()).append(" ").append(ChatColor.valueOf(fc.getString("themeColor3"))).append(hpch.getConfig().getDouble(type + ".price"));
-        sb.append(ChatColor.valueOf(fc.getString("themeColor4"))).append("\n").append(l.interactName()).append(" ").append(ChatColor.valueOf(fc.getString("themeColor3"))).append(hpch.getConfig().getString(type + ".interact-name"));
-        sb.append(ChatColor.valueOf(fc.getString("themeColor4"))).append("\n").append(l.chance()).append(" ").append(ChatColor.valueOf(fc.getString("themeColor3"))).append(hpch.getConfig().getDouble(type + ".chance"));
+        HeadsPlus hp = HeadsPlus.getInstance();
+        sb.append(hp.getThemeColour(1)).append("===============").append(hp.getThemeColour(2)).append(" HeadsPlus ").append(hp.getThemeColour(1)).append("===============");
+        sb.append(hp.getThemeColour(4)).append("\n").append(l.type()).append(" ").append(hp.getThemeColour(3)).append(type);
+        sb.append(hp.getThemeColour(4)).append("\n").append(l.displayName()).append(" ").append(hp.getThemeColour(3)).append(hpch.getConfig().getString(type + ".display-name"));
+        sb.append(hp.getThemeColour(4)).append("\n").append(l.price()).append(" ").append(hp.getThemeColour(3)).append(hpch.getConfig().getDouble(type + ".price"));
+        sb.append(hp.getThemeColour(4)).append("\n").append(l.interactName()).append(" ").append(hp.getThemeColour(3)).append(hpch.getConfig().getString(type + ".interact-name"));
+        sb.append(hp.getThemeColour(4)).append("\n").append(l.chance()).append(" ").append(hp.getThemeColour(3)).append(hpch.getConfig().getDouble(type + ".chance"));
         return sb.toString();
     }
 
@@ -366,7 +362,7 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
         try {
             Locale l = LocaleManager.getLocale();
             HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
-            FileConfiguration fc = HeadsPlus.getInstance().getConfig();
+            HeadsPlus hp = HeadsPlus.getInstance();
             if (type.equalsIgnoreCase("sheep")) {
                 List<Head> h = new ArrayList<>();
                 for (String t : hpch.getConfig().getConfigurationSection("sheep.name").getKeys(false)) {
@@ -376,19 +372,19 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
                 }
                 PagedLists<Head> hs = new PagedLists<>(h, 8);
                 StringBuilder sb = new StringBuilder();
-                sb.append(ChatColor.valueOf(fc.getString("themeColor1"))).append("===============").append(ChatColor.valueOf(fc.getString("themeColor2"))).append(" HeadsPlus ").append(ChatColor.valueOf(fc.getString("themeColor3"))).append(String.valueOf(page)).append("/").append(String.valueOf(hs.getTotalPages())).append(" ").append(fc.getString("themeColor1")).append("===============\n");
-                sb.append(ChatColor.valueOf(fc.getString("themeColor4"))).append(l.type()).append(" ").append(ChatColor.valueOf(fc.getString("themeColor3"))).append(type).append("\n");
+                sb.append(hp.getThemeColour(1)).append("===============").append(hp.getThemeColour(2)).append(" HeadsPlus ").append(hp.getThemeColour(3)).append(page).append("/").append(hs.getTotalPages()).append(" ").append(hp.getThemeColour(1)).append("===============\n");
+                sb.append(hp.getThemeColour(4)).append(l.type()).append(" ").append(hp.getThemeColour(3)).append(type).append("\n");
                 for (Head o : hs.getContentsInPage(page)) {
-                    sb.append(ChatColor.valueOf(fc.getString("themeColor3"))).append(o.type).append(" (").append(o.colour).append(")\n");
+                    sb.append(hp.getThemeColour(3)).append(o.type).append(" (").append(o.colour).append(")\n");
                 }
                 return sb.toString();
             } else {
                 PagedLists<String> names = new PagedLists<>(hpch.getConfig().getStringList(type + ".name"), 8);
                 StringBuilder sb = new StringBuilder();
-                sb.append(ChatColor.valueOf(fc.getString("themeColor1"))).append("===============").append(ChatColor.valueOf(fc.getString("themeColor2"))).append(" HeadsPlus ").append(ChatColor.valueOf(fc.getString("themeColor3"))).append(String.valueOf(page)).append("/").append(String.valueOf(names.getTotalPages())).append(" ").append(ChatColor.valueOf(fc.getString("themeColor1"))).append("===============\n");
-                sb.append(ChatColor.valueOf(fc.getString("themeColor4"))).append(l.type()).append(" ").append(ChatColor.valueOf(fc.getString("themeColor3"))).append(type).append("\n");
+                sb.append(hp.getThemeColour(1)).append("===============").append(hp.getThemeColour(2)).append(" HeadsPlus ").append(hp.getThemeColour(3)).append(page).append("/").append(names.getTotalPages()).append(" ").append(hp.getThemeColour(1)).append("===============\n");
+                sb.append(hp.getThemeColour(4)).append(l.type()).append(" ").append(hp.getThemeColour(3)).append(type).append("\n");
                 for (String s : names.getContentsInPage(page)) {
-                    sb.append(ChatColor.valueOf(fc.getString("themeColor3"))).append(s).append("\n");
+                    sb.append(hp.getThemeColour(3)).append(s).append("\n");
                 }
                 return sb.toString();
             }
@@ -404,7 +400,7 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
             List<Mask> m = new ArrayList<>();
             Locale l = LocaleManager.getLocale();
             StringBuilder sb = new StringBuilder();
-            FileConfiguration fc = HeadsPlus.getInstance().getConfig();
+            HeadsPlus hp = HeadsPlus.getInstance();
             if (hpch.getConfig().getStringList(type + ".mask-effects").size() < 1) {
                 return hpc.getString("no-mask-data");
             }
@@ -420,10 +416,10 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
 
             }
             PagedLists<Mask> s = new PagedLists<>(m, 8);
-            sb.append(ChatColor.valueOf(fc.getString("themeColor1"))).append("===============").append(ChatColor.valueOf(fc.getString("themeColor2"))).append(" HeadsPlus ").append(ChatColor.valueOf(fc.getString("themeColor3"))).append(String.valueOf(page)).append("/").append(String.valueOf(s.getTotalPages())).append(" ").append(ChatColor.valueOf(fc.getString("themeColor1"))).append("===============\n");
-            sb.append(ChatColor.valueOf(fc.getString("themeColor4"))).append(l.type()).append(" ").append(ChatColor.valueOf(fc.getString("themeColor3"))).append(type).append("\n");
+            sb.append(hp.getThemeColour(1)).append("===============").append(hp.getThemeColour(2)).append(" HeadsPlus ").append(hp.getThemeColour(3)).append(page).append("/").append(s.getTotalPages()).append(" ").append(hp.getThemeColour(1)).append("===============\n");
+            sb.append(hp.getThemeColour(4)).append(l.type()).append(" ").append(hp.getThemeColour(3)).append(type).append("\n");
             for (Mask sm : s.getContentsInPage(page)) {
-                sb.append(ChatColor.valueOf(fc.getString("themeColor3"))).append(sm.effect).append(" (").append(sm.amplifier).append(")\n");
+                sb.append(hp.getThemeColour(3)).append(sm.effect).append(" (").append(sm.amplifier).append(")\n");
             }
             return sb.toString();
         } catch (IllegalArgumentException ex) {
@@ -433,15 +429,15 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
 
     private String printLoreInfo(String type, int page) {
         try {
-            FileConfiguration fc = HeadsPlus.getInstance().getConfig();
+            HeadsPlus hp = HeadsPlus.getInstance();
             HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
             Locale l = LocaleManager.getLocale();
             PagedLists<String> lore = new PagedLists<>(hpch.getConfig().getStringList(type + ".lore"), 8);
             StringBuilder sb = new StringBuilder();
-            sb.append(ChatColor.valueOf(fc.getString("themeColor1"))).append("===============").append(ChatColor.valueOf(fc.getString("themeColor2"))).append(" HeadsPlus ").append(ChatColor.valueOf(fc.getString("themeColor3"))).append(String.valueOf(page)).append("/").append(String.valueOf(lore.getTotalPages())).append(" ").append(ChatColor.valueOf(fc.getString("themeColor1"))).append("===============\n");
-            sb.append(ChatColor.valueOf(fc.getString("themeColor4"))).append(l.type()).append(" ").append(ChatColor.valueOf(fc.getString("themeColor3"))).append(type).append("\n");
+            sb.append(hp.getThemeColour(1)).append("===============").append(hp.getThemeColour(2)).append(" HeadsPlus ").append(hp.getThemeColour(3)).append(page).append("/").append(lore.getTotalPages()).append(" ").append(hp.getThemeColour(1)).append("===============\n");
+            sb.append(hp.getThemeColour(4)).append(l.type()).append(" ").append(hp.getThemeColour(3)).append(type).append("\n");
             for (String s : lore.getContentsInPage(page)) {
-                sb.append(ChatColor.valueOf(fc.getString("themeColor3"))).append(ChatColor.translateAlternateColorCodes('&', s));
+                sb.append(hp.getThemeColour(3)).append(ChatColor.translateAlternateColorCodes('&', s));
             }
             return sb.toString();
         } catch (IllegalArgumentException ex) {

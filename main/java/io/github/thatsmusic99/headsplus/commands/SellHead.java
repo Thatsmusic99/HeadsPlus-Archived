@@ -210,15 +210,15 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                     for (String key : hpch.mHeads) {
                                         if (key.equalsIgnoreCase("sheep")) {
                                             for (String s : hpch.getConfig().getConfigurationSection("sheep.name").getKeys(false)) {
-                                                b(0.0, key, hpch.getConfig().getStringList(key + ".name." + s), is, p, a, false, false);
+                                                b(hpch.getConfig().getStringList(key + ".name." + s), is, p);
                                             }
                                         } else {
-                                            b(0.0, key, hpch.getConfig().getStringList(key + ".name"), is, p, a, false, false);
+                                            b(hpch.getConfig().getStringList(key + ".name"), is, p);
                                         }
 
                                     }
                                     for (String key : hpch.uHeads) {
-                                        b(0.0, key, hpch.getConfig().getStringList(key + ".name"), is, p, a, false, false);
+                                        b(hpch.getConfig().getStringList(key + ".name"), is, p);
                                     }
                                 }
 							}
@@ -307,30 +307,19 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
         }
 	}
 
-    private Double b(Double price, String key, List<String> ls, ItemStack i, Player p, String[] args, boolean e, boolean f) throws NoSuchFieldException, IllegalAccessException {
+    private void b(List<String> ls, ItemStack i, Player p) throws NoSuchFieldException, IllegalAccessException {
         for (String l : ls) {
             if (hpchx.isHPXSkull(l)) {
                 GameProfile gm = h(i);
                 for (Property pr : gm.getProperties().get("textures")) {
                     if (pr.getValue().equals(hpchx.getTextures(l))) {
                         if (i.getAmount() > 0) {
-                            if (e) {
-                                price = setPrice(price, args, i, p);
-                                return price;
-                            } else if (f) {
-                                soldHeads.add(key);
-                                i(key, i.getAmount());
-                                price = price + (i.getAmount() * hpch.getConfig().getDouble(key + ".price"));
-                                return price;
-                            } else {
-                                p.getInventory().remove(i);
-                            }
+                            p.getInventory().remove(i);
                         }
                     }
                 }
             }
         }
-        return price;
     }
 
     private boolean c(String s, String[] a, ItemStack is, List<String> ls, Player p) {

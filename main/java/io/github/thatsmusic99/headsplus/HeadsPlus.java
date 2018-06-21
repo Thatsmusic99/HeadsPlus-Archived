@@ -504,4 +504,8 @@ public class HeadsPlus extends JavaPlugin {
     public DeathEvents getDeathEvents() {
         return de;
     }
+
+    public ChatColor getThemeColour(int i) {
+        return ChatColor.valueOf(getConfig().getString("themeColor" + i));
+    }
 }

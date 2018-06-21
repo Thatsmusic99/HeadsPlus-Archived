@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Objects;
 
 class UpdateChecker {
 
@@ -32,10 +33,11 @@ class UpdateChecker {
             }
         }
         Double lastVersion;
+        int size = Objects.requireNonNull(versionsArray).size();
         try {
-            lastVersion = Double.parseDouble(((JSONObject) versionsArray.get(versionsArray.size() - 1)).get("name").toString());
+            lastVersion = Double.parseDouble(((JSONObject) versionsArray.get(size - 1)).get("name").toString());
         } catch (NumberFormatException e) {
-            String[] s = ((JSONObject) versionsArray.get(versionsArray.size() - 1)).get("name").toString().split("\\.");
+            String[] s = ((JSONObject) versionsArray.get(size - 1)).get("name").toString().split("\\.");
             StringBuilder v = new StringBuilder();
             for (int i = 1; i < s.length; i++) {
                 if (s[i].matches("^[0-9]+$")) {
@@ -74,7 +76,7 @@ class UpdateChecker {
         }
         if (lastVersion > currentVersion) {
 
-            String updateName = ((JSONObject) updatesArray.get(updatesArray.size() - 1)).get("title").toString();
+            String updateName = ((JSONObject) updatesArray.get(Objects.requireNonNull(updatesArray).size() - 1)).get("title").toString();
             return new Object[]{lastVersion, updateName, latestVersionString};
         }
         return null;

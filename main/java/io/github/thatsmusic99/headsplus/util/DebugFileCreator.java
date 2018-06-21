@@ -128,7 +128,7 @@ public class DebugFileCreator {
         } catch (NullPointerException ignored) {
         }
         try {
-            o2.put("Owning Player", ((SkullMeta) s.getItemMeta()).getOwner());
+            o2.put("Owning Player", hp.getNMS().getSkullOwnerName((SkullMeta) s.getItemMeta()));
         } catch (NullPointerException ignored) {
         }
         Field pro = ((SkullMeta) s.getItemMeta()).getClass().getDeclaredField("profile");

@@ -14,6 +14,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.util.Objects;
+
 @SuppressWarnings("deprecation")
 public class V1_9_NMS2 implements NMSManager {
 
@@ -30,7 +32,7 @@ public class V1_9_NMS2 implements NMSManager {
     @Override
     public boolean isSellable(Object i) {
         if (CraftItemStack.asNMSCopy((org.bukkit.inventory.ItemStack) i).getTag() != null) {
-            return CraftItemStack.asNMSCopy((org.bukkit.inventory.ItemStack) i).getTag().getBoolean("headsplus-sell");
+            return Objects.requireNonNull(CraftItemStack.asNMSCopy((org.bukkit.inventory.ItemStack) i).getTag()).getBoolean("headsplus-sell");
         }
         return false;
     }
@@ -84,7 +86,7 @@ public class V1_9_NMS2 implements NMSManager {
     @Override
     public String getType(org.bukkit.inventory.ItemStack i) {
         if (CraftItemStack.asNMSCopy(i).getTag() != null) {
-            return CraftItemStack.asNMSCopy(i).getTag().getString("headsplus-type");
+            return Objects.requireNonNull(CraftItemStack.asNMSCopy(i).getTag()).getString("headsplus-type");
         }
         return "";
     }

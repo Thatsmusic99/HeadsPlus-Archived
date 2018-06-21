@@ -1,6 +1,8 @@
 package io.github.thatsmusic99.headsplus.events;
 
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.block.BlockState;
@@ -11,6 +13,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class HeadInteractEvent implements Listener {
 
@@ -30,16 +35,24 @@ public final class HeadInteractEvent implements Listener {
 
 			    	owner = getSkullName(skull);
 			        String playerName = player.getName();
+                    HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
+                    FileConfiguration fc = hpch.getConfig();
+			        List<String> names = new ArrayList<>();
+			        names.addAll(hpch.mHeads);
+			        names.addAll(hpch.uHeads);
+			        names.addAll(hpch.eHeads);
+			        names.addAll(hpch.ieHeads);
 			        if (TimesSent < 1) {
-			    	    for (HeadEnums key : HeadEnums.values()) {
-			    	    	if (key.name.contains(owner)) {
+			    	    for (String n : names) {
+			    	    	if (fc.getStringList(n + ".name").contains(owner)) {
 			    		    	String iMessage1;
-				    	    	if (key.displayname.startsWith("a") || key.displayname.startsWith("e") || key.displayname.startsWith("i") || key.displayname.startsWith("o") || key.displayname.startsWith("u") || key.displayname.startsWith("A") || key.displayname.startsWith("E") || key.displayname.startsWith("I") || key.displayname.startsWith("O") || key.displayname.startsWith("U")) {
+			    		    	String dn = fc.getString(n + ".display-name").toLowerCase();
+				    	    	if (dn.startsWith("a") || dn.startsWith("e") || dn.startsWith("i") || dn.startsWith("o") || dn.startsWith("u")) {
 				    	    		iMessage1 = hpc.getString("head-mhf-interact-message-2");
 				    	    	} else {
 				    		    	iMessage1 = hpc.getString("head-mhf-interact-message");
 				    	    	}
-				    	    	iMessage1 = iMessage1.replaceAll("\\{name}", key.displayname).replaceAll("\\{player}", playerName);
+				    	    	iMessage1 = iMessage1.replaceAll("\\{name}", dn).replaceAll("\\{player}", playerName);
 				    	    	player.sendMessage(iMessage1);
 				    	    	TimesSent++;
 				    	    	return;

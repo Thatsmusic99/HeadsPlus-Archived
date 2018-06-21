@@ -8,36 +8,36 @@ import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.util.PagedLists;
 import mkremins.fanciful.FancyMessage;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
-import org.bukkit.configuration.file.FileConfiguration;
 
 public class HelpMenu implements IHeadsPlusCommand {
 
 	private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
 	private void helpNoArgs(CommandSender sender) {
+	    HeadsPlus hp = HeadsPlus.getInstance();
         List<IHeadsPlusCommand> headPerms = new ArrayList<>();
-        for (IHeadsPlusCommand key : HeadsPlus.getInstance().getCommands()) {
+        for (IHeadsPlusCommand key : hp.getCommands()) {
             if (sender.hasPermission(key.getPermission())) {
                 headPerms.add(key);
             }
         }
         PagedLists<IHeadsPlusCommand> pl = new PagedLists<>(headPerms, 8);
-        sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + " HeadsPlus " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + "1/" + pl.getTotalPages() + " " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============");
+        sender.sendMessage(hp.getThemeColour(1) + "===============" + hp.getThemeColour(2) + " HeadsPlus " + hp.getThemeColour(3) + "1/" + pl.getTotalPages() + " " + hp.getThemeColour(1) + "===============");
         for (IHeadsPlusCommand key2 : pl.getContentsInPage(1)) {
             new FancyMessage()
-                    .text(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + key2.getUsage() + " - " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + key2.getCmdDescription())
+                    .text(hp.getThemeColour(3) + key2.getUsage() + " - " + hp.getThemeColour(4) + key2.getCmdDescription())
                     .command("/hp help " + key2.getSubCommand())
                     .send(sender);
         }
 	}
 	private void helpNo(CommandSender sender, String str) {
+        HeadsPlus hp = HeadsPlus.getInstance();
         List<IHeadsPlusCommand> headPerms = new ArrayList<>();
-        for (IHeadsPlusCommand key : HeadsPlus.getInstance().getCommands()) {
+        for (IHeadsPlusCommand key : hp.getCommands()) {
             if (sender.hasPermission(key.getPermission())) {
                 headPerms.add(key);
             }
@@ -48,10 +48,10 @@ public class HelpMenu implements IHeadsPlusCommand {
         if ((page > pl.getTotalPages()) || (0 >= page)) {
             sender.sendMessage(hpc.getString("invalid-pg-no"));
         } else {
-            sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + " HeadsPlus " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + String.valueOf(page) + "/" + String.valueOf(pl.getTotalPages()) + " " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============");
+            sender.sendMessage(hp.getThemeColour(1) + "===============" + hp.getThemeColour(2) + " HeadsPlus " + hp.getThemeColour(3) + page + "/" + pl.getTotalPages() + " " + hp.getThemeColour(1) + "===============");
             for (IHeadsPlusCommand key : pl.getContentsInPage(page)) {
                 new FancyMessage()
-                        .text(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + key.getUsage() + " - " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + key.getCmdDescription())
+                        .text(hp.getThemeColour(3) + key.getUsage() + " - " + hp.getThemeColour(4) + key.getCmdDescription())
                         .command("/hp help " + key.getSubCommand())
                         .send(sender);
             }
@@ -67,18 +67,18 @@ public class HelpMenu implements IHeadsPlusCommand {
                     break;
                 }
             }
-            FileConfiguration fc = HeadsPlus.getInstance().getConfig();
+            HeadsPlus hp = HeadsPlus.getInstance();
             if (pe != null) {
-                cs.sendMessage(ChatColor.valueOf(fc.getString("themeColor1")) + "===============" + ChatColor.valueOf(fc.getString("themeColor2")) + " HeadsPlus " + ChatColor.valueOf(fc.getString("themeColor1")) + "===============");
-                cs.sendMessage(ChatColor.valueOf(fc.getString("themeColor3")) + "Usage: " + ChatColor.valueOf(fc.getString("themeColor4")) + pe.getUsage());
-                cs.sendMessage(ChatColor.valueOf(fc.getString("themeColor3")) + "Description: " + ChatColor.valueOf(fc.getString("themeColor4")) + pe.getCmdDescription());
+                cs.sendMessage(hp.getThemeColour(1) + "===============" + hp.getThemeColour(2) + " HeadsPlus " + hp.getThemeColour(1) + "===============");
+                cs.sendMessage(hp.getThemeColour(3) + "Usage: " + hp.getThemeColour(4) + pe.getUsage());
+                cs.sendMessage(hp.getThemeColour(3) + "Description: " + hp.getThemeColour(4) + pe.getCmdDescription());
                 if (cs.hasPermission("headsplus.help.viewperms")) {
-                    cs.sendMessage(ChatColor.valueOf(fc.getString("themeColor3"))+ "Permission: " + ChatColor.valueOf(fc.getString("themeColor4")) + pe.getPermission());
+                    cs.sendMessage(hp.getThemeColour(3) + "Permission: " + hp.getThemeColour(4) + pe.getPermission());
                 }
                 if (pe.advancedUsages().length != 0) {
-                    cs.sendMessage(ChatColor.valueOf(fc.getString("themeColor3")) + "Further Usage:");
+                    cs.sendMessage(hp.getThemeColour(3) + "Further Usage:");
                     for (String s : pe.advancedUsages()) {
-                        cs.sendMessage(ChatColor.valueOf(fc.getString("themeColor4")) + s);
+                        cs.sendMessage(hp.getThemeColour(4) + s);
                     }
                 }
             } else {

@@ -110,15 +110,20 @@ public class MySQLAPI {
                 hpc.getConfig().options().copyDefaults(true);
                 hpc.save();
             } else {
-                hpc.getConfig().addDefault("player-data." + uuid + ".crafting." + section, 0);
-                int s = hpc.getConfig().getInt("server-total.crafting.total");
-                s += shAmount;
-                hpc.getConfig().set("server-total.crafting.total", s);
-                int is = hpc.getConfig().getInt("server-total.crafting." + section);
-                is += shAmount;
-                hpc.getConfig().set("server-total.crafting." + section, is);
-                hpc.getConfig().options().copyDefaults(true);
-                hpc.save();
+                try {
+                    hpc.getConfig().addDefault("player-data." + uuid + ".crafting." + section, 0);
+                    int s = hpc.getConfig().getInt("server-total.crafting.total");
+                    s += shAmount;
+                    hpc.getConfig().set("server-total.crafting.total", s);
+                    int is = hpc.getConfig().getInt("server-total.crafting." + section);
+                    is += shAmount;
+                    hpc.getConfig().set("server-total.crafting." + section, is);
+                    hpc.getConfig().options().copyDefaults(true);
+                    hpc.save();
+                } catch (IllegalArgumentException ignored) { // Idk why the hell this happens????
+
+                }
+
             }
 
         }

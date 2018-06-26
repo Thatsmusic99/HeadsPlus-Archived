@@ -37,6 +37,7 @@ gui-glass-color: SILVER
 challenges: true
 mask-powerups: true
 allow-looting-enchantment: true
+enable-levels: true
 debug:
   create-debug-files: true
   print-stacktraces-in-console: true

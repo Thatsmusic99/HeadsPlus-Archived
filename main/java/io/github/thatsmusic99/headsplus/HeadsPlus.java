@@ -22,6 +22,7 @@ import io.github.thatsmusic99.headsplus.nms.v1_8_R2_NMS.v1_8_R2_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_8_R3_NMS.v1_8_R3NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_9_NMS.v1_9_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_9_R2_NMS.V1_9_NMS2;
+// import io.github.thatsmusic99.headsplus.storage.Favourites;
 import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import io.github.thatsmusic99.headsplus.util.MySQLAPI;
 import net.milkbowl.vault.economy.Economy;
@@ -54,18 +55,11 @@ public class HeadsPlus extends JavaPlugin {
     private final PluginDescriptionFile pluginYml = getDescription();
     private final String author = pluginYml.getAuthors().toString();
     private final String version = pluginYml.getVersion();
-    private boolean sellable;
     private Economy econ;
     private Permission perms;
-    private boolean drops;
-    private boolean db;
-    private boolean lb;
-    private boolean stopP;
     private static Object[] update = null;
     private Connection connection;
     private boolean con = false;
-    private boolean dm;
-    private boolean chal;
     private HeadsPlusConfig hpc;
     private HeadsPlusConfigHeads hpch;
     private HeadsPlusConfigHeadsX hpchx;
@@ -82,6 +76,7 @@ public class HeadsPlus extends JavaPlugin {
     private HashMap<Integer, Level> levels = new HashMap<>();
     private final List<String> nms1_8 = new ArrayList<>(Arrays.asList("1.8.4", "1.8.5", "1.8.6", "1.8.7", "1.8.8"));
     private List<ConfigSettings> cs = new ArrayList<>();
+   // private Favourites favourites;
 
     @SuppressWarnings("unused")
     private File messagesF;
@@ -115,7 +110,6 @@ public class HeadsPlus extends JavaPlugin {
             if (econ()) {
                 setupPermissions();
             }
-            setPluginValues();
 
             registerEvents();
             registerCommands();
@@ -279,16 +273,6 @@ public class HeadsPlus extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new MaskEvent(), this);
     }
 
-    public void setPluginValues() {
-        drops = getConfig().getBoolean("dropHeads");
-        stopP = getConfig().getBoolean("stop-placement-of-sellable-heads");
-        lb = getConfig().getBoolean("leaderboards");
-        db = getConfig().getBoolean("headsDatabase");
-        dm = getConfig().getBoolean("player-death-messages");
-        sellable = (econ()) && (getConfig().getBoolean("sellHeads"));
-        chal = getConfig().getBoolean("challenges");
-    }
-
     private void registerCommands() {
         this.getCommand("headsplus").setExecutor(new HeadsPlusCommand());
         this.getCommand("hp").setExecutor(new HeadsPlusCommand());
@@ -328,6 +312,11 @@ public class HeadsPlus extends JavaPlugin {
         perms = rsp.getProvider();
         return perms != null;
     }
+
+   // private void setupJSON() throws IOException {
+   //     favourites = new Favourites();
+   //     favourites.create();
+   // }
 
 
     private void setupNMS() {
@@ -389,16 +378,20 @@ public class HeadsPlus extends JavaPlugin {
     // GETTERS
 
 
+    //public Favourites getFavourites() {
+    //    return favourites;
+   // }
+
     public String getVersion() {
         return version;
     }
 
     public boolean isUsingHeadDatabase() {
-        return db;
+        return getConfig().getBoolean("headsDatabase");
     }
 
     public boolean hasChallengesEnabled() {
-        return chal;
+        return getConfig().getBoolean("challenges");
     }
 
     public boolean isConnectedToMySQLDatabase() {
@@ -406,15 +399,15 @@ public class HeadsPlus extends JavaPlugin {
     }
 
     public boolean isDeathMessagesEnabled() {
-        return dm;
+        return getConfig().getBoolean("player-death-messages");
     }
 
     public boolean isDropsEnabled() {
-        return drops;
+        return getConfig().getBoolean("dropHeads");
     }
 
     public boolean canSellHeads() {
-        return sellable;
+        return (econ()) && (getConfig().getBoolean("sellHeads"));
     }
 
     public Connection getConnection() {
@@ -422,7 +415,7 @@ public class HeadsPlus extends JavaPlugin {
     }
 
     public boolean isStoppingPlaceableHeads() {
-        return stopP;
+        return getConfig().getBoolean("stop-placement-of-sellable-heads");
     }
 
     public HashMap<Integer, Level> getLevels() {
@@ -430,7 +423,7 @@ public class HeadsPlus extends JavaPlugin {
     }
 
     public boolean isUsingLeaderboards() {
-        return lb;
+        return getConfig().getBoolean("leaderboards");
     }
 
     public Economy getEconomy() {
@@ -495,6 +488,10 @@ public class HeadsPlus extends JavaPlugin {
 
     public List<ConfigSettings> getConfigs() {
         return cs;
+    }
+
+    public boolean usingLevels() {
+        return getConfig().getBoolean("enable-levels");
     }
 
     public static Object[] getUpdate() {

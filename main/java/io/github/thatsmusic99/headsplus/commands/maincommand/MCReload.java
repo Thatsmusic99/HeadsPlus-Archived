@@ -1,5 +1,6 @@
 package io.github.thatsmusic99.headsplus.commands.maincommand;
 
+import com.google.common.base.Charsets;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
@@ -66,7 +67,6 @@ public class MCReload implements IHeadsPlusCommand{
                     }
                     HeadsPlus.getInstance().getConfig().options().copyDefaults(true);
                     HeadsPlus.getInstance().saveConfig();
-                    HeadsPlus.getInstance().setPluginValues();
                     HPPlayer.players.clear();
                 }
             }.runTaskLaterAsynchronously(HeadsPlus.getInstance(), 2);

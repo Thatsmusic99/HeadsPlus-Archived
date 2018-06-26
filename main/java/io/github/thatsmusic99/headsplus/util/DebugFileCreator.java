@@ -55,6 +55,7 @@ public class DebugFileCreator {
             o3.put("Total levels", hp.getLevels().size());
             o3.put("Masks enabled", hp.getConfig().getBoolean("mask-powerups"));
             o3.put("Allows looting enchantment", hp.getConfig().getBoolean("allow-looting-enchantment"));
+            o3.put("Levels enabled", hp.usingLevels());
         } catch (NullPointerException ignored) {
 
         }
@@ -145,11 +146,11 @@ public class DebugFileCreator {
         boolean cancelled = false;
         File fr = null;
         for (int i = 0; !cancelled; i++) {
-            File f2 = new File(hp.getDataFolder() + "/debug");
+            File f2 = new File(hp.getDataFolder() + File.separator + "debug");
             if (!f2.exists()) {
                 f2.mkdir();
             }
-            File f = new File(hp.getDataFolder() + "/debug/", date.replaceAll(":", "_").replaceAll("/", ".") + "-REPORT-" + i + ".json");
+            File f = new File(hp.getDataFolder() + File.separator + "debug" + File.separator, date.replaceAll(":", "_").replaceAll("/", ".") + "-REPORT-" + i + ".json");
             if (!f.exists()) {
                 fr = f;
                 cancelled = true;

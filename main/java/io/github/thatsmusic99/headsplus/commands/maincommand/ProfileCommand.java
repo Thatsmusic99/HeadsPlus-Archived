@@ -18,17 +18,18 @@ public class ProfileCommand implements IHeadsPlusCommand {
 
     private String prof(OfflinePlayer p) throws SQLException {
         try {
+            HeadsPlus hp = HeadsPlus.getInstance();
             HPPlayer pl = HPPlayer.getHPPlayer(p);
-            HeadsPlusAPI api = HeadsPlus.getInstance().getAPI();
-            return String.valueOf(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1"))) + "===============" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + " HeadsPlus " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "===============" +
-                    "\n" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "Player: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + p.getName() +
-                    "\n" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "XP: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + pl.getXp() +
-                    "\n" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "Completed challenges: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + pl.getCompleteChallenges().size() +
-                    "\n" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "Total heads dropped: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + api.getPlayerInLeaderboards(p, "total", "headspluslb") +
-                    "\n" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "Total heads sold: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + api.getPlayerInLeaderboards(p, "total", "headsplussh") +
-                    "\n" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "Total heads crafted: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + api.getPlayerInLeaderboards(p, "total", "headspluscraft") +
-                    "\n" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "Current level: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + ChatColor.translateAlternateColorCodes('&', pl.getLevel().getDisplayName()) +
-                    "\n" + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + "XP until next level: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + String.valueOf(pl.getNextLevel() != null ? (pl.getNextLevel().getRequiredXP() - pl.getXp()) : 0);
+            HeadsPlusAPI api = hp.getAPI();
+            return String.valueOf(hp.getThemeColour(1) + "===============" + hp.getThemeColour(2) + " HeadsPlus " + hp.getThemeColour(1) + "===============" +
+                    "\n" + hp.getThemeColour(4) + "Player: " + hp.getThemeColour(2) + p.getName() +
+                    "\n" + hp.getThemeColour(4) + "XP: " + hp.getThemeColour(2) + pl.getXp() +
+                    "\n" + hp.getThemeColour(4) + "Completed challenges: " + hp.getThemeColour(2) + pl.getCompleteChallenges().size() +
+                    "\n" + hp.getThemeColour(4) + "Total heads dropped: " + hp.getThemeColour(2) + api.getPlayerInLeaderboards(p, "total", "headspluslb") +
+                    "\n" + hp.getThemeColour(4) + "Total heads sold: " + hp.getThemeColour(2) + api.getPlayerInLeaderboards(p, "total", "headsplussh") +
+                    "\n" + hp.getThemeColour(4) + "Total heads crafted: " + hp.getThemeColour(2) + api.getPlayerInLeaderboards(p, "total", "headspluscraft") +
+                    (hp.usingLevels() ? ("\n" + hp.getThemeColour(4) + "Current level: " + hp.getThemeColour(2) + ChatColor.translateAlternateColorCodes('&', pl.getLevel().getDisplayName()) +
+                    "\n" + hp.getThemeColour(4) + "XP until next level: " + hp.getThemeColour(2) + (pl.getNextLevel() != null ? (pl.getNextLevel().getRequiredXP() - pl.getXp()) : 0)) : ""));
 
         } catch (NullPointerException ex) {
             return HeadsPlus.getInstance().getMessagesConfig().getString("no-data");
@@ -75,8 +76,9 @@ public class ProfileCommand implements IHeadsPlusCommand {
     @Override
     public boolean fire(String[] args, CommandSender cs) {
         try {
+            HeadsPlus hp = HeadsPlus.getInstance();
             OfflinePlayer p;
-            NMSManager nms = HeadsPlus.getInstance().getNMS();
+            NMSManager nms = hp.getNMS();
             if (args.length == 1) {
                 p = nms.getOfflinePlayer(cs.getName());
             } else {
@@ -89,12 +91,12 @@ public class ProfileCommand implements IHeadsPlusCommand {
                     if (cs.hasPermission("headsplus.maincommand.profile.others")) {
                         cs.sendMessage(prof(p));
                     } else {
-                        cs.sendMessage(HeadsPlus.getInstance().getMessagesConfig().getString("no-perm"));
+                        cs.sendMessage(hp.getMessagesConfig().getString("no-perm"));
                     }
                 }
             } else {
                 if (cs.getName().equalsIgnoreCase(p.getName())) {
-                    cs.sendMessage(HeadsPlus.getInstance().getMessagesConfig().getString("cant-view-data"));
+                    cs.sendMessage(hp.getMessagesConfig().getString("cant-view-data"));
                 } else {
                     cs.sendMessage(prof(p));
                 }

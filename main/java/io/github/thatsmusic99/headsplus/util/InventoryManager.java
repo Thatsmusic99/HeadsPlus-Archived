@@ -414,30 +414,26 @@ public class InventoryManager {
         profileField.setAccessible(true);
         profileField.set(sm, gm);
         sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpchx.getConfig().getString("heads." + str + ".displayname")));
+        List<String> price = new ArrayList<>();
         if (HeadsPlus.getInstance().econ()) {
             if (hpchx.getConfig().get("heads." + str + ".price") instanceof String) {
                 if (!((String) hpchx.getConfig().get("heads." + str + ".price")).equalsIgnoreCase("free")) {
                     if (((String) hpchx.getConfig().get("heads." + str + ".price")).equalsIgnoreCase("default")) {
                         if (!hpchx.getConfig().get("options.default-price").equals("free")) {
-                            List<String> price = new ArrayList<>();
                             price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + hpchx.getConfig().get("options.default-price")));
-                            sm.setLore(price);
+
                         }
                     } else {
-                        List<String> price = new ArrayList<>();
                         price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + hpchx.getConfig().get("heads." + str + ".price")));
-                        sm.setLore(price);
                     }
                 }
             } else {
                 if (!(((Double) hpchx.getConfig().get("heads." + str + ".price")) == 0.0)) {
-                    List<String> price = new ArrayList<>();
                     price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + hpchx.getConfig().get("heads." + str + ".price")));
-                    sm.setLore(price);
                 }
-
             }
         }
+        sm.setLore(price);
         s.setItemMeta(sm);
         i.setItem(pos()[timesSent], s);
         timesSent++;

@@ -1,11 +1,10 @@
 package io.github.thatsmusic99.headsplus.commands.maincommand;
 
-import com.google.common.base.Charsets;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.ConfigSettings;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 
 import org.bukkit.command.CommandSender;
@@ -54,7 +53,7 @@ public class MCReload implements IHeadsPlusCommand{
 
 	@Override
 	public boolean fire(String[] args, CommandSender sender) {
-		HeadsPlusConfig m = HeadsPlus.getInstance().getMessagesConfig();
+		HeadsPlusMessagesConfig m = HeadsPlus.getInstance().getMessagesConfig();
 		String reloadM = m.getString("reload-message");
 		String reloadingM = m.getString("reloading-message");
 		sender.sendMessage(reloadingM);
@@ -65,8 +64,6 @@ public class MCReload implements IHeadsPlusCommand{
                     for (ConfigSettings cs : HeadsPlus.getInstance().getConfigs()) {
                         cs.reloadC(false);
                     }
-                    HeadsPlus.getInstance().getConfig().options().copyDefaults(true);
-                    HeadsPlus.getInstance().saveConfig();
                     HPPlayer.players.clear();
                 }
             }.runTaskLaterAsynchronously(HeadsPlus.getInstance(), 2);

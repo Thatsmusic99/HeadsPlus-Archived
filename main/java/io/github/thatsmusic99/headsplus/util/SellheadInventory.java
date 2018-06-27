@@ -88,6 +88,7 @@ public class SellheadInventory {
     public int getPage() { return page; }
 
     public Inventory changePage(boolean next, boolean start, Player p) {
+        HeadsPlus hp = HeadsPlus.getInstance();
         Inventory i;
         if (next) {
             page++;
@@ -98,7 +99,7 @@ public class SellheadInventory {
             page = 1;
         }
         i = Bukkit.createInventory(null, 54, "HeadsPlus Sellhead menu");
-        HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
+        HeadsPlusConfigHeads hpch = hp.getHeadsConfig();
         List<String> s = new ArrayList<>();
         for (String o : hpch.mHeads) {
             if (!hpch.getConfig().getStringList(o + ".name").isEmpty()) {
@@ -113,8 +114,9 @@ public class SellheadInventory {
         PagedLists<String> ps = new PagedLists<>(s, 28);
         pages = ps.getTotalPages();
         int io = 0;
+        NMSManager nms = hp.getNMS();
         for (String o : ps.getContentsInPage(page)) {
-            NMSManager nms = HeadsPlus.getInstance().getNMS();
+
             ItemStack it = nms.getSkullMaterial(1);
             SkullMeta sm = (SkullMeta) it.getItemMeta();
             sm = nms.setSkullOwner(hpch.getConfig().getStringList(o + ".name").get(0), sm);
@@ -131,11 +133,10 @@ public class SellheadInventory {
         }
         DyeColor dc;
         try {
-            dc = DyeColor.valueOf(HeadsPlus.getInstance().getConfig().getString("gui-glass-color").toUpperCase());
+            dc = DyeColor.valueOf(hp.getConfiguration().getMechanics().getString("gui-glass-color").toUpperCase());
         } catch (Exception e) {
             dc = DyeColor.SILVER;
         }
-        NMSManager nms = HeadsPlus.getInstance().getNMS();
         ItemStack isi = nms.getColouredBlock(MaterialTranslator.BlockType.STAINED_GLASS_PANE, dc.ordinal());
         ItemMeta ims = isi.getItemMeta();
         ims.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6"));
@@ -159,8 +160,8 @@ public class SellheadInventory {
         im.setDisplayName(ChatColor.GOLD + "[" + ChatColor.YELLOW + "" + ChatColor.BOLD + "Stats" + ChatColor.GOLD + "]");
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.GREEN + "Total pages: " + pages);
-        if (HeadsPlus.getInstance().econ()) {
-            lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().getEconomy().getBalance(p));
+        if (hp.econ()) {
+            lore.add(ChatColor.GREEN + "Current balance: " + hp.getEconomy().getBalance(p));
         }
         im.setLore(lore);
         is2.setItemMeta(im);

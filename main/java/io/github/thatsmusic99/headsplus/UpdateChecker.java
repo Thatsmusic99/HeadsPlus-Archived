@@ -20,6 +20,7 @@ class UpdateChecker {
     static Object[] getUpdate() throws IOException {
 
         URL url = new URL(versionURL);
+        HeadsPlus hp = HeadsPlus.getInstance();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.addRequestProperty("User-Agent", "HeadsPlusPluginAgent");
         InputStream inputStream = connection.getInputStream();
@@ -28,7 +29,7 @@ class UpdateChecker {
         try {
             versionsArray = (JSONArray) new JSONParser().parse(reader);
         } catch (ParseException | IOException e) {
-            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+            if (hp.getConfiguration().getMechanics().getBoolean("debug.print-stacktraces-in-console")) {
                 e.printStackTrace();
             }
         }
@@ -48,9 +49,9 @@ class UpdateChecker {
         }
         Double currentVersion;
         try {
-            currentVersion = Double.parseDouble(HeadsPlus.getInstance().getDescription().getVersion());
+            currentVersion = Double.parseDouble(hp.getDescription().getVersion());
         } catch (NumberFormatException e) {
-            String[] s = HeadsPlus.getInstance().getDescription().getVersion().split("\\.");
+            String[] s = hp.getDescription().getVersion().split("\\.");
             StringBuilder v = new StringBuilder();
             for (int i = 1; i < s.length; i++) {
                 if (s[i].matches("^[0-9]+$")) {
@@ -70,7 +71,7 @@ class UpdateChecker {
         try {
             updatesArray = (JSONArray) new JSONParser().parse(reader);
         } catch (ParseException | IOException e) {
-            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+            if (hp.getConfiguration().getMechanics().getBoolean("debug.print-stacktraces-in-console")) {
                 e.printStackTrace();
             }
         }

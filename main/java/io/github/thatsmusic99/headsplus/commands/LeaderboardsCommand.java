@@ -2,17 +2,15 @@ package io.github.thatsmusic99.headsplus.commands;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.events.DeathEvents;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.util.PagedHashmaps;
 import org.apache.commons.lang.WordUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.EntityType;
 
 import java.sql.SQLException;
@@ -23,7 +21,7 @@ import java.util.Set;
 public class LeaderboardsCommand implements CommandExecutor, IHeadsPlusCommand {
 
     private PagedHashmaps<OfflinePlayer, Integer> ph;
-    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
+    private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @Override
     public boolean onCommand(CommandSender cs, Command command, String s, String[] args) {
@@ -85,16 +83,16 @@ public class LeaderboardsCommand implements CommandExecutor, IHeadsPlusCommand {
 
     private String getLeaderboard(String sec, int page) throws SQLException {
         try {
-            FileConfiguration fc = HeadsPlus.getInstance().getConfig();
+            HeadsPlus hp = HeadsPlus.getInstance();
             StringBuilder sb = new StringBuilder();
             ph = new PagedHashmaps<>(HeadsPlus.getInstance().getMySQLAPI().getScores(sec, "headspluslb"), 8);
 
-            sb.append(ChatColor.valueOf(fc.getString("themeColor1"))).append("=======").append(ChatColor.valueOf(fc.getString("themeColor2"))).append(" HeadsPlus Leaderboards: ").append(WordUtils.capitalize(sec)).append(" ").append(ChatColor.valueOf(fc.getString("themeColor3"))).append(page).append("/").append(String.valueOf(ph.getTotalPages())).append(" ").append(ChatColor.valueOf(fc.getString("themeColor1"))).append("=======");
+            sb.append(hp.getThemeColour(1)).append("=======").append(hp.getThemeColour(2)).append(" HeadsPlus Leaderboards: ").append(WordUtils.capitalize(sec)).append(" ").append(hp.getThemeColour(3)).append(page).append("/").append(ph.getTotalPages()).append(" ").append(hp.getThemeColour(1)).append("=======");
             Set<OfflinePlayer> it = ph.getContentsInPage(page).keySet();
             Collection<Integer> it2 = ph.getContentsInPage(page).values();
             for (int i = 0; i < it.size(); i++) {
                 int in = i + (ph.getContentsPerPage() * (ph.getCurrentPage() - 1));
-                sb.append("\n").append(ChatColor.valueOf(fc.getString("themeColor4"))).append(in + 1).append(". ").append(ChatColor.valueOf(fc.getString("themeColor2"))).append(((OfflinePlayer)it.toArray()[i]).getName()).append(ChatColor.valueOf(fc.getString("themeColor3"))).append(" - ").append(ChatColor.valueOf(fc.getString("themeColor2"))).append(it2.toArray()[i]);
+                sb.append("\n").append(hp.getThemeColour(4)).append(in + 1).append(". ").append(hp.getThemeColour(2)).append(((OfflinePlayer)it.toArray()[i]).getName()).append(hp.getThemeColour(3)).append(" - ").append(hp.getThemeColour(2)).append(it2.toArray()[i]);
             }
             return sb.toString();
         } catch (IllegalArgumentException ex) {

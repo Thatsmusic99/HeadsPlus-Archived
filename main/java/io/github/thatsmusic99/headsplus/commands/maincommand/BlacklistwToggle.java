@@ -1,20 +1,21 @@
 package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 
 import java.util.HashMap;
 
 public class BlacklistwToggle implements IHeadsPlusCommand {
 	
-	private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
-	private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
+	private final HeadsPlus hp = HeadsPlus.getInstance();
+	private final HeadsPlusMessagesConfig hpc = hp.getMessagesConfig();
 
 	@Override
 	public String getCmdName() {
@@ -56,33 +57,30 @@ public class BlacklistwToggle implements IHeadsPlusCommand {
 	@Override
 	public boolean fire(String[] args, CommandSender sender) {
 		try {
+            HeadsPlusMainConfig config = hp.getConfiguration();
             if (args.length == 1) {
-                if (config.getBoolean("blacklistwOn")) {
-                    config.set("blacklistwOn", false);
-                    config.options().copyDefaults(true);
-                    HeadsPlus.getInstance().saveConfig();
+                if (config.getBlacklist("world").getBoolean("enabled")) {
+                    config.getBlacklist("world").set("enabled", false);
+                    config.save();
                     sender.sendMessage(hpc.getString("blw-off"));
-                } else if (!config.getBoolean("blacklistwOn")) {
-                    config.set("blacklistwOn", true);
-                    config.options().copyDefaults(true);
-                    HeadsPlus.getInstance().saveConfig();
+                } else if (!config.getBlacklist("world").getBoolean("enabled")) {
+                    config.getBlacklist("world").set("enabled", true);
+                    config.save();
                     sender.sendMessage(hpc.getString("blw-on"));
                 }
             } else {
                 if (args[1].equalsIgnoreCase("on")) {
-                    if (!config.getBoolean("blacklistwOn")) {
-                        config.set("blacklistwOn", true);
-                        config.options().copyDefaults(true);
-                        HeadsPlus.getInstance().saveConfig();
+                    if (!config.getBlacklist("world").getBoolean("enabled")) {
+                        config.getBlacklist("world").set("enabled", true);
+                        config.save();
                         sender.sendMessage(hpc.getString("blw-on"));
                     } else {
                         sender.sendMessage(hpc.getString("blw-a-on"));
                     }
                 } else if (args[1].equalsIgnoreCase("off")) {
-                    if (config.getBoolean("blacklistwOn")) {
-                        config.set("blacklistwOn", false);
-                        config.options().copyDefaults(true);
-                        HeadsPlus.getInstance().saveConfig();
+                    if (config.getBlacklist("world").getBoolean("enabled")) {
+                        config.getBlacklist("world").set("enabled", false);
+                        config.save();
                         sender.sendMessage(hpc.getString("blw-off"));
                     } else {
                         sender.sendMessage(hpc.getString("blw-a-off"));

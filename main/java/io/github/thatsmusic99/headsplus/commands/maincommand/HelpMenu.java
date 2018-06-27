@@ -5,17 +5,17 @@ import java.util.HashMap;
 import java.util.List;
 
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.util.PagedLists;
 import mkremins.fanciful.FancyMessage;
 import org.bukkit.command.CommandSender;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 public class HelpMenu implements IHeadsPlusCommand {
 
-	private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
+	private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
 	private void helpNoArgs(CommandSender sender) {
 	    HeadsPlus hp = HeadsPlus.getInstance();

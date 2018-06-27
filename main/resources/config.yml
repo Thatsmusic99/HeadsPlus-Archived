@@ -2,51 +2,7 @@
 # Plugin by Thatsmusic99
 # Disclaimer: sellHeads and craftHeads will not take immediate effect when /hp reload is used. Because they are event or command related, they cannot be undone once the server starts. I will include a fix for this soon however.
 # Thanks in advance, and thank you for using HeadsPlus. ~
-
-blacklistOn: true
-blacklistwOn: true
-whitelistOn: false
-whitelistwOn: false
-sellHeads: true
-dropHeads: true
-craftHeads: false
-disableCrafting: false
-headsDatabase: true
-themeColor1: DARK_BLUE
-themeColor2: GOLD
-themeColor3: GRAY
-themeColor4: DARK_AQUA
-blacklistw: []
-blacklist: []
-whitelist: []
-whitelistw: []
-update-checker: true
-update-notify: true
-stop-placement-of-sellable-heads: false
-mysql-host: localhost
-mysql-port: 3306
-mysql-database: db
-mysql-username: username
-mysql-password: password
-mysql-usage: false
-leaderboards: true
-smite-player-if-they-get-a-head: false
-theme: classic
-pTheme: classic
-gui-glass-color: SILVER
-challenges: true
-mask-powerups: true
-allow-looting-enchantment: true
-enable-levels: true
-debug:
-  create-debug-files: true
-  print-stacktraces-in-console: true
 # players-lose-money-on-head-drop: true
 # lost-money:
 #  percentage: 0
 #  amount: 0
-player-death-messages: false
-death-messages:
-- "&b{player} &3was killed by &b{killer} &3and had their head removed!"
-- "&b{killer} &3finished the job and removed the worst part of &b{player}&3: The head."
-- "&3The server owner screamed at &b{player} &3\"OFF WITH HIS HEAD!\"&3. &b{killer} &3finished the job."

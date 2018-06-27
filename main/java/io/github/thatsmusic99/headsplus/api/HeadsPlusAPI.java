@@ -21,8 +21,9 @@ import java.util.UUID;
 
 public class HeadsPlusAPI {
 
-    private final HeadsPlusConfigHeadsX hpcHeadsX = HeadsPlus.getInstance().getHeadsXConfig();
-    private final HeadsPlusConfigHeads hpcHeads = HeadsPlus.getInstance().getHeadsConfig();
+    private HeadsPlus hp = HeadsPlus.getInstance();
+    private final HeadsPlusConfigHeadsX hpcHeadsX = hp.getHeadsXConfig();
+    private final HeadsPlusConfigHeads hpcHeads = hp.getHeadsConfig();
 
     public ItemStack getHead(String option) throws NoSuchFieldException, IllegalAccessException {
         return hpcHeadsX.getSkull(option);
@@ -30,13 +31,13 @@ public class HeadsPlusAPI {
 
     public boolean isSellable(ItemStack is) {
         if (is.getType() == Material.SKULL_ITEM) {
-            return HeadsPlus.getInstance().getNMS().isSellable(is);
+            return hp.getNMS().isSellable(is);
         }
         return false;
     }
 
     public ItemStack createSkull(String texture, String displayname) {
-        NMSManager nms = HeadsPlus.getInstance().getNMS();
+        NMSManager nms = hp.getNMS();
         ItemStack s = nms.getSkullMaterial(1);
         SkullMeta sm = (SkullMeta) s.getItemMeta();
         GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
@@ -46,7 +47,7 @@ public class HeadsPlusAPI {
         try {
             profileField = sm.getClass().getDeclaredField("profile");
         } catch (NoSuchFieldException | SecurityException e) {
-            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+            if (hp.getConfiguration().getMechanics().getBoolean("debug.print-stacktraces-in-console")) {
                 e.printStackTrace();
             }
         }
@@ -54,7 +55,7 @@ public class HeadsPlusAPI {
         try {
             profileField.set(sm, gm);
         } catch (IllegalArgumentException | IllegalAccessException e) {
-            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+            if (hp.getConfiguration().getMechanics().getBoolean("debug.print-stacktraces-in-console")) {
                 e.printStackTrace();
             }
         }
@@ -77,7 +78,7 @@ public class HeadsPlusAPI {
         try {
             profileField = m.getClass().getDeclaredField("profile");
         } catch (NoSuchFieldException | SecurityException e) {
-            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+            if (hp.getConfiguration().getMechanics().getBoolean("debug.print-stacktraces-in-console")) {
                 e.printStackTrace();
             }
         }
@@ -85,7 +86,7 @@ public class HeadsPlusAPI {
         try {
             profileField.set(m, gm);
         } catch (IllegalArgumentException | IllegalAccessException e) {
-            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+            if (hp.getConfiguration().getMechanics().getBoolean("debug.print-stacktraces-in-console")) {
                 e.printStackTrace();
             }
         }
@@ -93,33 +94,33 @@ public class HeadsPlusAPI {
     }
 
     public String getSkullType(ItemStack is) {
-        return HeadsPlus.getInstance().getNMS().getType(is);
+        return hp.getNMS().getType(is);
     }
 
     @Deprecated
     public int getPlayerInLeaderboards(OfflinePlayer p, String section) throws SQLException {
-        return HeadsPlus.getInstance().getLeaderboardsConfig().getScores(section).get(p);
+        return hp.getLeaderboardsConfig().getScores(section).get(p);
     }
 
     @Deprecated
     public LinkedHashMap<OfflinePlayer, Integer> getScores(String section) throws SQLException {
-        return HeadsPlus.getInstance().getLeaderboardsConfig().getScores(section);
+        return hp.getLeaderboardsConfig().getScores(section);
     }
 
     public int getPlayerInLeaderboards(OfflinePlayer p, String section, String database) throws SQLException {
         try {
-            return HeadsPlus.getInstance().getMySQLAPI().getScores(section, database).get(p);
+            return hp.getMySQLAPI().getScores(section, database).get(p);
         } catch (NullPointerException ex) {
             return 0;
         }
     }
 
     public LinkedHashMap<OfflinePlayer, Integer> getScores(String section, String database) throws SQLException {
-        return HeadsPlus.getInstance().getMySQLAPI().getScores(section, database);
+        return hp.getMySQLAPI().getScores(section, database);
     }
 
     public List<Challenge> getChallenges() {
-        return HeadsPlus.getInstance().getChallenges();
+        return hp.getChallenges();
     }
 
     public Challenge getChallenge(String challengeName) {

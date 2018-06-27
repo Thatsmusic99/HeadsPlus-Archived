@@ -9,9 +9,9 @@ import org.bukkit.ChatColor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HeadsPlusConfig extends ConfigSettings {
+public class HeadsPlusMessagesConfig extends ConfigSettings {
 
-	public HeadsPlusConfig(boolean nullpoint) {
+	public HeadsPlusMessagesConfig(boolean nullpoint) {
 	    this.conName = "messages";
         enable(nullpoint);
     }
@@ -223,12 +223,12 @@ public class HeadsPlusConfig extends ConfigSettings {
 	        getConfig().set(s, getConfig().getString(s).replaceAll("%m", "{player}"));
         }
         List<String> a = new ArrayList<>();
-        for (String s : HeadsPlus.getInstance().getConfig().getStringList("death-messages")) {
+	    HeadsPlus hp = HeadsPlus.getInstance();
+        for (String s : hp.getConfiguration().getPerks().getStringList("death-messages")) {
 	        a.add(s.replaceAll("%p", "{player}").replaceAll("%k", "{killer}"));
         }
-        HeadsPlus.getInstance().getConfig().set("death-messages", a);
-        HeadsPlus.getInstance().getConfig().options().copyDefaults(true);
-        HeadsPlus.getInstance().saveConfig();
+        hp.getConfiguration().getPerks().set("death-messages", a);
+        hp.getConfiguration().save();
     }
 
 }

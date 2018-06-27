@@ -16,13 +16,14 @@ public class MaskEvent implements Listener {
 
     @EventHandler
     public void onMaskPutOn(InventoryClickEvent e) {
-        if (HeadsPlus.getInstance().getConfig().getBoolean("mask-powerups")) {
+        HeadsPlus hp = HeadsPlus.getInstance();
+        if (hp.getConfiguration().getPerks().getBoolean("mask-powerups")) {
             if (e.getSlot() == 39) {
                 ItemStack ist = e.getCursor();
                 if (ist != null) {
                     if (ist.getType().equals(Material.SKULL_ITEM)) {
-                        NMSManager nms = HeadsPlus.getInstance().getNMS();
-                        HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
+                        NMSManager nms = hp.getNMS();
+                        HeadsPlusConfigHeads hpch = hp.getHeadsConfig();
                         String s = nms.getType(ist).toLowerCase();
                         if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {
                             HPPlayer pl = HPPlayer.getHPPlayer((OfflinePlayer) e.getWhoClicked());

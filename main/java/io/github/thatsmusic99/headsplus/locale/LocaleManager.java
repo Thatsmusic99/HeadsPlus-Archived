@@ -1,8 +1,9 @@
 package io.github.thatsmusic99.headsplus.locale;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
+import org.bukkit.configuration.ConfigurationSection;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -12,7 +13,7 @@ public class LocaleManager {
 
     private static LocaleManager instance;
     private static Locale locale;
-    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
+    private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     public void setupLocale() {
         instance = this;
@@ -30,10 +31,11 @@ public class LocaleManager {
             } catch (InstantiationException | IllegalAccessException e) {
                 Logger log = HeadsPlus.getInstance().getLogger();
                 log.severe("Failed to load locale!");
-                if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                ConfigurationSection c = HeadsPlus.getInstance().getConfiguration().getMechanics();
+                if (c.getBoolean("debug.print-stacktraces-in-console")) {
                     e.printStackTrace();
                 }
-                if (HeadsPlus.getInstance().getConfig().getBoolean("debug.create-debug-files")) {
+                if (c.getBoolean("debug.create-debug-files")) {
                     log.severe("HeadsPlus has failed to set the locale. An error report has been made in /plugins/HeadsPlus/debug");
                     try {
                         String s = new DebugFileCreator().createReport(e, "Locale setup");
@@ -43,7 +45,7 @@ public class LocaleManager {
                         log.severe("https://discord.gg/nbT7wC2");
                         log.severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
                     } catch (IOException e1) {
-                        if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                        if (c.getBoolean("debug.print-stacktraces-in-console")) {
                             e1.printStackTrace();
                         }
                     }

@@ -2,10 +2,9 @@ package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.util.PagedLists;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import java.util.HashMap;
@@ -13,7 +12,7 @@ import java.util.List;
 
 public class WhitelistwList implements IHeadsPlusCommand {
 
-    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
+    private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @Override
     public String getCmdName() {
@@ -55,33 +54,34 @@ public class WhitelistwList implements IHeadsPlusCommand {
     @Override
     public boolean fire(String[] args, CommandSender sender) {
         try {
+            HeadsPlus hp = HeadsPlus.getInstance();
+            List<String> bl = hp.getConfiguration().getWhitelist("world").getStringList("list");
             if (args.length == 1) {
-                List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("whitelistw");
+
                 if (bl.size() < 1) {
                     sender.sendMessage(hpc.getString("empty-wlw"));
                     return true;
                 }
                 PagedLists<String> pl = new PagedLists<>(bl, 8);
-                sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "============ " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + "World Whitelist: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + "1/" + pl.getTotalPages() + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + " ==========" );
+                sender.sendMessage(hp.getThemeColour(1) + "============ " + hp.getThemeColour(2) + "World Whitelist: " + hp.getThemeColour(3) + "1/" + pl.getTotalPages() + hp.getThemeColour(1) + " ==========" );
 
                 for (String key : pl.getContentsInPage(1)) {
-                    sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + key);
+                    sender.sendMessage(hp.getThemeColour(4) + key);
                 }
             } else {
                 if (args[1].matches("^[0-9]+$")) {
-                    List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("whitelistw");
                     int page = Integer.parseInt(args[1]);
                     PagedLists<String> pl = new PagedLists<>(bl, 8);
 
                     if ((page > pl.getTotalPages()) || (0 >= page)) {
                         sender.sendMessage(hpc.getString("invalid-pg-no"));
                     } else {
-                        sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "============ " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + "World Whitelist: "
-                                + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + page + "/" + pl.getTotalPages()
-                                + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + " ==========");
+                        sender.sendMessage(hp.getThemeColour(1) + "============ " + hp.getThemeColour(2) + "World Whitelist: "
+                                + hp.getThemeColour(3) + page + "/" + pl.getTotalPages()
+                                + hp.getThemeColour(1) + " ==========");
 
                         for (String key : pl.getContentsInPage(page)) {
-                            sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + key);
+                            sender.sendMessage(hp.getThemeColour(4) + key);
                         }
                     }
                 } else {

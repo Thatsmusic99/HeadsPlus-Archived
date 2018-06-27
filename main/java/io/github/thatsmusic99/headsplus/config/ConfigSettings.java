@@ -15,7 +15,6 @@ public class ConfigSettings {
 
     protected void enable(boolean nullp) {
         reloadC(nullp);
-        load(nullp);
     }
 
     protected void load(boolean nullp) {
@@ -39,7 +38,7 @@ public class ConfigSettings {
         try {
             config.save(configF);
         } catch (IOException e) {
-            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+            if (HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("debug.print-stacktraces-in-console")) {
                 e.printStackTrace();
             }
         }

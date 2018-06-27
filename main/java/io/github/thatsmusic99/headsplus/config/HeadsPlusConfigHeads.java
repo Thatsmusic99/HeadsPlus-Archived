@@ -34,7 +34,7 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
 		    getConfig().options().copyDefaults(true);
 		    save();
 		} catch (Exception e) {
-			if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+			if (HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("debug.print-stacktraces-in-console")) {
 				e.printStackTrace();
 			}
 		}

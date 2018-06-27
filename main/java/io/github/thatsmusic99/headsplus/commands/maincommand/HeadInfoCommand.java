@@ -2,7 +2,7 @@ package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.locale.Locale;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
@@ -18,7 +18,7 @@ import java.util.List;
 
 public class HeadInfoCommand implements IHeadsPlusCommand {
 
-    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
+    private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @Override
     public String getCmdName() {

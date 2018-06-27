@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
+import java.util.List;
 import java.util.Random;
 
 public class PlayerDeathEvent implements Listener {
@@ -16,13 +17,16 @@ public class PlayerDeathEvent implements Listener {
     @EventHandler
     public void onDeath(PlayerHeadDropEvent e) {
         try {
-            if (HeadsPlus.getInstance().isDeathMessagesEnabled()) {
+            HeadsPlus hp = HeadsPlus.getInstance();
+            if (hp.isDeathMessagesEnabled()) {
                 if (e.getKiller() != null) {
                     Random r = new Random();
-                    int thing = r.nextInt(HeadsPlus.getInstance().getConfig().getStringList("death-messages").size());
+                    List<String> s = hp.getConfiguration().getPerks().getStringList("death-messages");
+                    int thing = r.nextInt(s.size());
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        if (!p.hasPermission("headplus.death.ignore")) {
-                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().getConfig().getStringList("death-messages").get(thing).replaceAll("%h", HeadsPlus.getInstance().getMessagesConfig().getString("prefix")).replaceAll("\\{killer}", e.getKiller().getName()).replaceAll("\\{player}", e.getDeadPlayer().getName())));
+                        if (!p.hasPermission("headsplus.death.ignore")) {
+                            p.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                    s.get(thing).replaceAll("\\{header}", hp.getMessagesConfig().getString("prefix")).replaceAll("\\{killer}", e.getKiller().getName()).replaceAll("\\{player}", e.getDeadPlayer().getName())));
                         }
                     }
                 }

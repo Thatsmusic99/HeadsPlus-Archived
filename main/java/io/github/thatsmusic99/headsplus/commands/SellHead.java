@@ -5,7 +5,7 @@ import com.mojang.authlib.properties.Property;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.SellHeadEvent;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
@@ -29,7 +29,7 @@ import java.util.*;
 public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 
 	private final HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
-	private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
+	private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 	private final HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().getHeadsXConfig();
 	private final List<String> soldHeads = new ArrayList<>();
 	private final HashMap<String, Integer> hm = new HashMap<>();

@@ -2,16 +2,18 @@ package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.HashMap;
 import java.util.List;
 
 public class WhitelistAdd implements IHeadsPlusCommand {
-    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
+
+    private final HeadsPlusMainConfig config = HeadsPlus.getInstance().getConfiguration();
+    private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @Override
     public String getCmdName() {
@@ -62,16 +64,14 @@ public class WhitelistAdd implements IHeadsPlusCommand {
     @Override
     public boolean fire(String[] args, CommandSender sender) {
         try {
-            FileConfiguration config = HeadsPlus.getInstance().getConfig();
-            List<String> wl = config.getStringList("whitelist");
+            List<String> whitelist = config.getWhitelist("default").getStringList("list");
             String aHead = args[1].toLowerCase();
-            if (wl.contains(aHead)) {
+            if (whitelist.contains(aHead)) {
                 sender.sendMessage(hpc.getString("head-a-add"));
             } else {
-                wl.add(aHead);
-                config.set("whitelist", wl);
-                config.options().copyDefaults(true);
-                HeadsPlus.getInstance().saveConfig();
+                whitelist.add(aHead);
+                config.getWhitelist("default").set("list", whitelist);
+                config.save();
                 sender.sendMessage(hpc.getString("head-added-wl").replaceAll("\\{name}", args[1]));
             }
         } catch (Exception e) {

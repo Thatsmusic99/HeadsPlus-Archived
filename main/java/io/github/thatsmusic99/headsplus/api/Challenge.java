@@ -1,7 +1,7 @@
 package io.github.thatsmusic99.headsplus.api;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.config.challenges.HPChallengeRewardTypes;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeDifficulty;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeTypes;
@@ -125,9 +125,10 @@ public class Challenge {
     }
 
     public void complete(Player p, Inventory i, int slot) {
+        HeadsPlus hp = HeadsPlus.getInstance();
         HPPlayer player = HPPlayer.getHPPlayer(p);
         player.addCompleteChallenge(this);
-        ItemStack is = HeadsPlus.getInstance().getNMS().getColouredBlock(MaterialTranslator.BlockType.TERRACOTTA, 13);
+        ItemStack is = hp.getNMS().getColouredBlock(MaterialTranslator.BlockType.TERRACOTTA, 13);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.translateAlternateColorCodes('&', getChallengeHeader()));
         List<String> lore = new ArrayList<>();
@@ -167,20 +168,19 @@ public class Challenge {
         i.setItem(slot, is);
         player.addXp(getGainedXP());
         reward(p);
-        FileConfiguration fc = HeadsPlus.getInstance().getConfig();
         for (Player pl : Bukkit.getOnlinePlayers()) {
-            pl.sendMessage(HeadsPlus.getInstance().getMessagesConfig().getString("challenge-complete")
+            pl.sendMessage(hp.getMessagesConfig().getString("challenge-complete")
                     .replaceAll("\\{challenge}", getMainName())
                     .replaceAll("\\{name}", p.getName()));
         }
-        p.sendMessage(ChatColor.valueOf(fc.getString("themeColor4")) + LocaleManager.getLocale().getReward() + ChatColor.valueOf(fc.getString("themeColor2")) + sb2.toString());
-        p.sendMessage(ChatColor.valueOf(fc.getString("themeColor4")) + "XP: " + ChatColor.valueOf(fc.getString("themeColor2")) + getGainedXP());
+        p.sendMessage(hp.getThemeColour(4) + LocaleManager.getLocale().getReward() + hp.getThemeColour(2) + sb2.toString());
+        p.sendMessage(hp.getThemeColour(4) + "XP: " + hp.getThemeColour(2) + getGainedXP());
     }
 
     private void reward(Player p) {
         HPChallengeRewardTypes re = getRewardType();
         HeadsPlus hp = HeadsPlus.getInstance();
-        HeadsPlusConfig hpc = hp.getMessagesConfig();
+        HeadsPlusMessagesConfig hpc = hp.getMessagesConfig();
         Permission perms = hp.getPermissions();
 
         if (re == HPChallengeRewardTypes.ECO) {

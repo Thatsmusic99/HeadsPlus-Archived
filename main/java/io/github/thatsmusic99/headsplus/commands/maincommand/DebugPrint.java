@@ -10,6 +10,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -21,14 +22,15 @@ public class DebugPrint implements IHeadsPlusCommand {
 
     public DebugPrint(Exception e, String name, boolean command, CommandSender sender) {
         Logger log = HeadsPlus.getInstance().getLogger();
-        if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+        ConfigurationSection cs = HeadsPlus.getInstance().getConfiguration().getMechanics();
+        if (cs.getBoolean("debug.print-stacktraces-in-console")) {
             e.printStackTrace();
         }
         if (command) {
             sender.sendMessage(HeadsPlus.getInstance().getMessagesConfig().getString("cmd-fail"));
         }
 
-        if (HeadsPlus.getInstance().getConfig().getBoolean("debug.create-debug-files")) {
+        if (cs.getBoolean("debug.create-debug-files")) {
             log.severe("HeadsPlus has failed to execute this task. An error report has been made in /plugins/HeadsPlus/debug");
             try {
                 String s = new DebugFileCreator().createReport(e, name);
@@ -38,7 +40,7 @@ public class DebugPrint implements IHeadsPlusCommand {
                 log.severe("https://discord.gg/nbT7wC2");
                 log.severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
             } catch (IOException e1) {
-                if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+                if (cs.getBoolean("debug.print-stacktraces-in-console")) {
                     e1.printStackTrace();
                 }
             }
@@ -134,7 +136,7 @@ public class DebugPrint implements IHeadsPlusCommand {
                 sender.sendMessage(ChatColor.GREEN + "Report name: " + s);
             }
         } catch (IOException | NoSuchFieldException | IllegalAccessException e) {
-            if (HeadsPlus.getInstance().getConfig().getBoolean("debug.print-stacktraces-in-console")) {
+            if (HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("debug.print-stacktraces-in-console")) {
                 e.printStackTrace();
             }
         }

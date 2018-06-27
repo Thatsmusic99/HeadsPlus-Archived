@@ -242,7 +242,7 @@ public class InventoryManager {
             }
             DyeColor dc;
             try {
-                dc = DyeColor.valueOf(hp.getConfig().getString("gui-glass-color").toUpperCase());
+                dc = DyeColor.valueOf(hp.getConfiguration().getMechanics().getString("gui-glass-color").toUpperCase());
             } catch (Exception e) {
                 dc = DyeColor.SILVER;
             }
@@ -294,7 +294,7 @@ public class InventoryManager {
             i = create("HeadsPlus challenges: " + cSection);
             DyeColor dc;
             try {
-                dc = DyeColor.valueOf(hp.getConfig().getString("gui-glass-color").toUpperCase());
+                dc = DyeColor.valueOf(hp.getConfiguration().getMechanics().getString("gui-glass-color").toUpperCase());
             } catch (Exception e) {
                 dc = DyeColor.SILVER;
             }

@@ -1,15 +1,16 @@
 package io.github.thatsmusic99.headsplus.commands;
 
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +21,7 @@ import org.bukkit.command.CommandExecutor;
 
 public class Head implements CommandExecutor, IHeadsPlusCommand {
 
-    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
+    private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         return fire(args, sender);
@@ -41,19 +42,19 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
 	}
 
 	private void giveH(String[] args, Player sender, Player p) {
-	    HeadsPlus hp = HeadsPlus.getInstance();
-        hp.saveConfig();
+	    ConfigurationSection blacklist = HeadsPlus.getInstance().getConfiguration().getBlacklist("default");
+        ConfigurationSection whitelist = HeadsPlus.getInstance().getConfiguration().getWhitelist("default");
         List<String> bl = new ArrayList<>();
-        for (String str : hp.getConfig().getStringList("blacklist")) {
+        for (String str : blacklist.getStringList("list")) {
             bl.add(str.toLowerCase());
         }
         List<String> wl = new ArrayList<>();
-        for (String str : hp.getConfig().getStringList("whitelist")) {
+        for (String str : whitelist.getStringList("list")) {
             wl.add(str.toLowerCase());
         }
 
-        boolean blacklistOn = hp.getConfig().getBoolean("blacklistOn");
-        boolean wlOn = hp.getConfig().getBoolean("whitelistOn");
+        boolean blacklistOn = blacklist.getBoolean("enabled");
+        boolean wlOn = whitelist.getBoolean("enabled");
         String head = args[0].toLowerCase();
         if (p.getInventory().firstEmpty() == -1) {
             sender.sendMessage(hpc.getString("full-inv"));

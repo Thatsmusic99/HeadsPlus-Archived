@@ -5,6 +5,7 @@ import java.util.List;
 import io.github.thatsmusic99.headsplus.api.HeadCraftEvent;
 import io.github.thatsmusic99.headsplus.api.HeadsPlusAPI;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -25,13 +26,15 @@ public class RecipePerms implements Listener {
 	    try {
             if (e.getInventory().getType().equals(InventoryType.CRAFTING) || e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
                 Player player = (Player) e.getWhoClicked();
-                NMSManager nms = HeadsPlus.getInstance().getNMS();
-                HeadsPlusAPI hapi = HeadsPlus.getInstance().getAPI();
-                if (HeadsPlus.getInstance().getConfig().getBoolean("craftHeads")) {
+                HeadsPlus hp = HeadsPlus.getInstance();
+                NMSManager nms = hp.getNMS();
+                HeadsPlusAPI hapi = hp.getAPI();
+                HeadsPlusMainConfig c = hp.getConfiguration();
+                if (c.getPerks().getBoolean("craft-heads")) {
                     if (player.hasPermission("headsplus.craft")) {
-                        List<String> worlds = HeadsPlus.getInstance().getConfig().getStringList("blacklistw");
-                        if ((!worlds.contains(player.getWorld().getName())) || !HeadsPlus.getInstance().getConfig().getBoolean("blacklistwOn") || player.hasPermission("headsplus.bypass.blacklistw")) {
-                            if (HeadsPlus.getInstance().getConfig().getStringList("whitelistw").contains(player.getWorld().getName())) {
+                        List<String> worlds = c.getBlacklist("world").getStringList("list");
+                        if ((!worlds.contains(player.getWorld().getName())) || !c.getBlacklist("world").getBoolean("enabled") || player.hasPermission("headsplus.bypass.blacklistw")) {
+                            if (c.getWhitelist("world").getStringList("list").contains(player.getWorld().getName())) {
                                 HeadCraftEvent event;
                                 int amount = shift(e);
                                 event = new HeadCraftEvent(player, e.getCurrentItem(), e.getWhoClicked().getWorld(), e.getWhoClicked().getLocation(), amount, hapi.getSkullType(e.getCurrentItem()));
@@ -70,7 +73,7 @@ public class RecipePerms implements Listener {
 
                                 return;
 
-                            } else if (!HeadsPlus.getInstance().getConfig().getBoolean("whitelistwOn")) {
+                            } else if (!c.getWhitelist("world").getBoolean("enabled")) {
                                 HeadCraftEvent event;
                                 int amount = shift(e);
                                 event = new HeadCraftEvent(player, e.getCurrentItem(), e.getWhoClicked().getWorld(), e.getWhoClicked().getLocation(), amount, hapi.getSkullType(e.getCurrentItem()));

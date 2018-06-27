@@ -2,7 +2,7 @@ package io.github.thatsmusic99.headsplus.commands;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import org.bukkit.ChatColor;
@@ -11,7 +11,7 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -22,7 +22,7 @@ import java.util.List;
 
 public class MyHead implements CommandExecutor, IHeadsPlusCommand {
 
-    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
+    private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String l, String[] strings) {
@@ -32,19 +32,20 @@ public class MyHead implements CommandExecutor, IHeadsPlusCommand {
                     sender.sendMessage(ChatColor.RED + "You must be a player to run this command!");
                     return false;
                 }
-                FileConfiguration fc = HeadsPlus.getInstance().getConfig();
+                ConfigurationSection blacklist = HeadsPlus.getInstance().getConfiguration().getBlacklist("default");
+                ConfigurationSection whitelist = HeadsPlus.getInstance().getConfiguration().getWhitelist("default");
                 HeadsPlus.getInstance().saveConfig();
                 List<String> bl = new ArrayList<>();
-                for (String str : fc.getStringList("blacklist")) {
+                for (String str : blacklist.getStringList("list")) {
                     bl.add(str.toLowerCase());
                 }
                 List<String> wl = new ArrayList<>();
-                for (String str : fc.getStringList("whitelist")) {
+                for (String str : whitelist.getStringList("list")) {
                     wl.add(str.toLowerCase());
                 }
 
-                boolean blacklistOn = fc.getBoolean("blacklistOn");
-                boolean wlOn = fc.getBoolean("whitelistOn");
+                boolean blacklistOn = blacklist.getBoolean("enabled");
+                boolean wlOn = whitelist.getBoolean("enabled");
                 String head = sender.getName().toLowerCase();
                 if (((Player) sender).getInventory().firstEmpty() == -1) {
                     sender.sendMessage(hpc.getString("full-inv"));

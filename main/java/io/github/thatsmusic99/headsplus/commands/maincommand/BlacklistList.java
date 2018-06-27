@@ -4,17 +4,19 @@ import java.util.HashMap;
 import java.util.List;
 
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.util.PagedLists;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 
 public class BlacklistList implements IHeadsPlusCommand {
 
-	private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
+    private HeadsPlus hp = HeadsPlus.getInstance();
+	private final HeadsPlusMessagesConfig hpc = hp.getMessagesConfig();
+	private HeadsPlusMainConfig config = hp.getConfiguration();
 
 	@Override
 	public String getCmdName() {
@@ -72,16 +74,16 @@ public class BlacklistList implements IHeadsPlusCommand {
                 page = Integer.parseInt(args[1]);
             }
 
-            List<String> bl = HeadsPlus.getInstance().getConfig().getStringList("blacklist");
+            List<String> bl = config.getBlacklist("default").getStringList("blacklist");
             PagedLists<String> pl = new PagedLists<>(bl, 8);
             if ((page > pl.getTotalPages()) || (0 >= page)) {
                 sender.sendMessage(hpc.getString("invalid-pg-no"));
             } else {
-                sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + "============ " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor2")) + "Blacklist: " + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor3")) + page + "/" + pl.getTotalPages() + ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor1")) + " ==========");
+                sender.sendMessage(hp.getThemeColour(1) + "============ " + hp.getThemeColour(2) + "Blacklist: " + hp.getThemeColour(3) + page + "/" + pl.getTotalPages() + hp.getThemeColour(1) + " ==========");
 
                 for (Object keyz : pl.getContentsInPage(page)) {
                     String key = (String) keyz;
-                    sender.sendMessage(ChatColor.valueOf(HeadsPlus.getInstance().getConfig().getString("themeColor4")) + key);
+                    sender.sendMessage(hp.getThemeColour(4) + key);
 
                 }
             }

@@ -3,8 +3,8 @@ package io.github.thatsmusic99.headsplus.events;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.Challenge;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeDifficulty;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsXSections;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.nms.SearchGUI;
@@ -28,7 +28,7 @@ import java.util.logging.Level;
 public class InventoryEvent implements Listener {
 
     private InventoryManager im;
-    private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
+    private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @EventHandler
     public void onClickEvent(InventoryClickEvent e) {
@@ -105,7 +105,7 @@ public class InventoryEvent implements Listener {
                                         return;
                                     } else {
                                         if (e.getWhoClicked().getInventory().firstEmpty() == -1) {
-                                            e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getConfig().getString("full-inv")));
+                                            e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusMessagesConfig.getConfig().getString("full-inv")));
                                             e.setCancelled(true);
                                             return;
                                         }
@@ -114,14 +114,14 @@ public class InventoryEvent implements Listener {
                                         return;
                                     }
                                 } else {
-                                    e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getConfig().getString("xmas-denied")));
+                                    e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusMessagesConfig.getConfig().getString("xmas-denied")));
                                     e.setCancelled(true);
                                     return;
                                 }
                             }
                         }
 
-                        e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusConfig.getConfig().getString("xmas-denied")));
+                        e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusMessagesConfig.getConfig().getString("xmas-denied")));
                         e.setCancelled(true);
                         return;
                     } */

@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus.events;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -19,15 +20,9 @@ public class PlaceEvent implements Listener {
             if (HeadsPlus.getInstance().isStoppingPlaceableHeads()) {
                 if (e.getItemInHand().getType() == Material.SKULL || e.getItemInHand().getType() == Material.SKULL_ITEM) {
                     if (!e.getPlayer().hasPermission("headsplus.bypass.preventplacement")) {
-                        if (e.getItemInHand().getItemMeta().getLore() != null) {
-                            List<String> ls = new ArrayList<>();
-                            for (String str : HeadsPlus.getInstance().getConfig().getStringList("lore")) {
-                                ls.add(ChatColor.translateAlternateColorCodes('&', ChatColor.stripColor(str)));
-                            }
-                            if (e.getItemInHand().getItemMeta().getLore().equals(ls)) {
-                                e.setCancelled(true);
-                                e.getPlayer().sendMessage(HeadsPlus.getInstance().getMessagesConfig().getString("block-place-denied"));
-                            }
+                        if (HeadsPlus.getInstance().getNMS().isSellable(e.getItemInHand())) {
+                            e.setCancelled(true);
+                            e.getPlayer().sendMessage(HeadsPlus.getInstance().getMessagesConfig().getString("block-place-denied"));
                         }
                     }
                 }

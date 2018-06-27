@@ -4,18 +4,19 @@ import java.util.HashMap;
 import java.util.List;
 
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 
 public class BlacklistwDelete implements IHeadsPlusCommand {
 	
-	private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
-	private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
+	private final HeadsPlusMainConfig config = HeadsPlus.getInstance().getConfiguration();
+	private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
 	@Override
 	public String getCmdName() {
@@ -68,13 +69,12 @@ public class BlacklistwDelete implements IHeadsPlusCommand {
 		if (args.length > 1) {
 			if (args[1].matches("^[A-Za-z0-9_]+$")) {
                 try {
-                    List<String> blacklist = config.getStringList("blacklistw");
+                    List<String> blacklist = config.getBlacklist("world").getStringList("list");
                     String rHead = args[1].toLowerCase();
                     if (blacklist.contains(rHead)) {
                         blacklist.remove(rHead);
-                        config.set("blacklistw", blacklist);
-                        config.options().copyDefaults(true);
-                        HeadsPlus.getInstance().saveConfig();
+                        config.getBlacklist("world").set("blacklistw", blacklist);
+                        config.save();
                         sender.sendMessage(hpc.getString("world-removed-bl").replaceAll("\\{name}", args[1]));
                     } else {
                         sender.sendMessage(hpc.getString("world-a-removed-bl"));

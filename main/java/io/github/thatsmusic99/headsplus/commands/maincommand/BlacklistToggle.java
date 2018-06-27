@@ -1,20 +1,23 @@
 package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfig;
 
 import java.util.HashMap;
 
 public class BlacklistToggle implements IHeadsPlusCommand {
 	
-	private final FileConfiguration config = HeadsPlus.getInstance().getConfig();
-	private final HeadsPlusConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
+	private final HeadsPlusMainConfig config = HeadsPlus.getInstance().getConfiguration();
+	private final ConfigurationSection blacklist = config.getBlacklist("default");
+	private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
 	@Override
 	public String getCmdName() {
@@ -57,33 +60,29 @@ public class BlacklistToggle implements IHeadsPlusCommand {
 	public boolean fire(String[] args, CommandSender sender) {
 		try {
 			if (args.length == 1) {
-			    if (config.getBoolean("blacklistOn")) {
-			        config.set("blacklistOn", false);
-			        config.options().copyDefaults(true);
-			        HeadsPlus.getInstance().saveConfig();
+			    if (blacklist.getBoolean("enabled")) {
+			        blacklist.set("enabled", false);
+			        config.save();
 			        sender.sendMessage(hpc.getString("bl-off"));
-			    } else if (!config.getBoolean("blacklistOn")) {
-			        config.set("blacklistOn", true);
-			        config.options().copyDefaults(true);
-			        HeadsPlus.getInstance().saveConfig();
+			    } else {
+			        blacklist.set("enabled", true);
+			        config.save();
 			        sender.sendMessage(hpc.getString("bl-on"));
 			    }
 			} else {
 				if (args[1].equalsIgnoreCase("on")) {
-					if (!config.getBoolean("blacklistOn")) {
-						config.set("blacklistOn", true);
-						config.options().copyDefaults(true);
-						HeadsPlus.getInstance().saveConfig();
+					if (!blacklist.getBoolean("enabled")) {
+						blacklist.set("enabled", true);
+						config.save();
 						sender.sendMessage(hpc.getString("bl-on"));
 					} else {
 						sender.sendMessage(hpc.getString("bl-a-on"));
 					}
 
 				} else if (args[1].equalsIgnoreCase("off")) {
-					if (config.getBoolean("blacklistOn")) {
-						config.set("blacklistOn", false);
-						config.options().copyDefaults(true);
-						HeadsPlus.getInstance().saveConfig();
+					if (blacklist.getBoolean("enabled")) {
+						blacklist.set("enabled", false);
+						config.save();
 						sender.sendMessage(hpc.getString("bl-off"));
 					} else {
 						sender.sendMessage(hpc.getString("bl-a-off"));

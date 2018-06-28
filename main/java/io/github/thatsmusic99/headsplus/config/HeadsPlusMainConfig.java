@@ -14,6 +14,7 @@ public class HeadsPlusMainConfig extends ConfigSettings {
 
     @Override
     protected void load(boolean nullp) {
+
         if (getConfig().get("blacklistOn") instanceof Boolean) {
             configF.delete();
             reloadC(false);
@@ -61,6 +62,8 @@ public class HeadsPlusMainConfig extends ConfigSettings {
         getConfig().addDefault("plugin.mechanics.stop-placement-of-sellable-heads", false);
         getConfig().addDefault("plugin.mechanics.debug.create-debug-files", true);
         getConfig().addDefault("plugin.mechanics.debug.print-stacktraces-in-console", true);
+        getConfig().options().copyDefaults(true);
+        save();
     }
 
     public ConfigurationSection getMechanics() {

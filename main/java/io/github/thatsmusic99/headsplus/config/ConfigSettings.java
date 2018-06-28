@@ -15,6 +15,7 @@ public class ConfigSettings {
 
     protected void enable(boolean nullp) {
         reloadC(nullp);
+        load(nullp);
     }
 
     protected void load(boolean nullp) {

@@ -194,7 +194,7 @@ public class HeadsPlusMessagesConfig extends ConfigSettings {
             getConfig().addDefault("add-value", LocaleManager.getLocale().addedValue());
             getConfig().addDefault("remove-value", LocaleManager.getLocale().removedValue());
         }
-        updateMessages();
+        updateMessages(nullpoint);
 		getConfig().options().copyDefaults(true);
 		save();
 	}
@@ -210,7 +210,7 @@ public class HeadsPlusMessagesConfig extends ConfigSettings {
         return str;
     }
 
-    private void updateMessages() {
+    private void updateMessages(boolean npe) {
 	    for (String s : getConfig().getKeys(false)) {
 	        getConfig().set(s, getConfig().getString(s).replaceAll("%h", "{header}"));
 	        getConfig().set(s, getConfig().getString(s).replaceAll("%lvl", "{level}"));
@@ -224,11 +224,13 @@ public class HeadsPlusMessagesConfig extends ConfigSettings {
         }
         List<String> a = new ArrayList<>();
 	    HeadsPlus hp = HeadsPlus.getInstance();
-        for (String s : hp.getConfiguration().getPerks().getStringList("death-messages")) {
-	        a.add(s.replaceAll("%p", "{player}").replaceAll("%k", "{killer}"));
+	    if (!npe) {
+            for (String s : hp.getConfiguration().getPerks().getStringList("death-messages")) {
+                a.add(s.replaceAll("%p", "{player}").replaceAll("%k", "{killer}"));
+            }
+            hp.getConfiguration().getPerks().set("death-messages", a);
+            hp.getConfiguration().save();
         }
-        hp.getConfiguration().getPerks().set("death-messages", a);
-        hp.getConfiguration().save();
-    }
+	}
 
 }

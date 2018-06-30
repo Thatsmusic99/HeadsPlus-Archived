@@ -65,6 +65,21 @@ public class v1_13_NMS implements NewNMSManager {
         return null;
     }
 
+    @Override
+    public ItemStack addDatabaseHead(ItemStack is, String id, double price) {
+        return null;
+    }
+
+    @Override
+    public double getPrice(ItemStack is) {
+        return 0;
+    }
+
+    @Override
+    public String getId(ItemStack id) {
+        return null;
+    }
+
  /*   @Override
     public ItemStack getSkullMaterial(int amount) {
         return new ItemStack(Material.PLAYER_HEAD, amount);

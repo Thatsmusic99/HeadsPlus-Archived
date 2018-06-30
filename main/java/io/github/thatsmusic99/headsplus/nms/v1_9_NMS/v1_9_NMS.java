@@ -14,6 +14,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.util.Objects;
+
 @SuppressWarnings("deprecation")
 public class v1_9_NMS implements NMSManager {
 
@@ -85,6 +87,35 @@ public class v1_9_NMS implements NMSManager {
     public String getType(org.bukkit.inventory.ItemStack i) {
         if (CraftItemStack.asNMSCopy(i).getTag() != null) {
             return CraftItemStack.asNMSCopy(i).getTag().getString("headsplus-type");
+        }
+        return "";
+    }
+
+    @Override
+    public org.bukkit.inventory.ItemStack addDatabaseHead(org.bukkit.inventory.ItemStack is, String id, double price) {
+        ItemStack i = CraftItemStack.asNMSCopy(is);
+        if (i.getTag() == null) {
+            i.setTag(new NBTTagCompound());
+        }
+        i.getTag().setString("head-id", id);
+        i.getTag().setDouble("head-price", price);
+        return CraftItemStack.asBukkitCopy(i);
+    }
+
+    @Override
+    public double getPrice(org.bukkit.inventory.ItemStack is) {
+        ItemStack i = CraftItemStack.asNMSCopy(is);
+        if (i.getTag() != null) {
+            return Objects.requireNonNull(CraftItemStack.asNMSCopy(is).getTag()).getDouble("head-price");
+        }
+        return -1;
+    }
+
+    @Override
+    public String getId(org.bukkit.inventory.ItemStack id) {
+        ItemStack i = CraftItemStack.asNMSCopy(id);
+        if (i.getTag() != null) {
+            return Objects.requireNonNull(CraftItemStack.asNMSCopy(id).getTag()).getString("head-id");
         }
         return "";
     }

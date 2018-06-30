@@ -14,11 +14,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.util.Objects;
+
 @SuppressWarnings("deprecation")
 public class v1_8_R2_NMS implements NMSManager {
 
     @Override
-    public org.bukkit.inventory.ItemStack addNBTTag(Object i) {
+    public ItemStack addNBTTag(Object i) {
         net.minecraft.server.v1_8_R2.ItemStack is = CraftItemStack.asNMSCopy((ItemStack) i);
         if (is.getTag() == null) {
             is.setTag(new NBTTagCompound());
@@ -29,7 +31,7 @@ public class v1_8_R2_NMS implements NMSManager {
 
     @Override
     public boolean isSellable(Object i) {
-        if (CraftItemStack.asNMSCopy((org.bukkit.inventory.ItemStack) i).getTag() != null) {
+        if (CraftItemStack.asNMSCopy((ItemStack) i).getTag() != null) {
             return CraftItemStack.asNMSCopy((ItemStack) i).getTag().getBoolean("headsplus-sell");
         }
         return false;
@@ -72,7 +74,7 @@ public class v1_8_R2_NMS implements NMSManager {
     }
 
     @Override
-    public org.bukkit.inventory.ItemStack setType(String s, org.bukkit.inventory.ItemStack i) {
+    public ItemStack setType(String s, ItemStack i) {
         net.minecraft.server.v1_8_R2.ItemStack is = CraftItemStack.asNMSCopy(i);
         if (is.getTag() == null) {
             is.setTag(new NBTTagCompound());
@@ -82,9 +84,38 @@ public class v1_8_R2_NMS implements NMSManager {
     }
 
     @Override
-    public String getType(org.bukkit.inventory.ItemStack i) {
+    public String getType(ItemStack i) {
         if (CraftItemStack.asNMSCopy(i).getTag() != null) {
             return CraftItemStack.asNMSCopy(i).getTag().getString("headsplus-type");
+        }
+        return "";
+    }
+
+    @Override
+    public ItemStack addDatabaseHead(ItemStack is, String id, double price) {
+        net.minecraft.server.v1_8_R2.ItemStack i = CraftItemStack.asNMSCopy(is);
+        if (i.getTag() == null) {
+            i.setTag(new NBTTagCompound());
+        }
+        i.getTag().setString("head-id", id);
+        i.getTag().setDouble("head-price", price);
+        return CraftItemStack.asBukkitCopy(i);
+    }
+
+    @Override
+    public double getPrice(ItemStack is) {
+        net.minecraft.server.v1_8_R2.ItemStack i = CraftItemStack.asNMSCopy(is);
+        if (i.getTag() != null) {
+            return Objects.requireNonNull(CraftItemStack.asNMSCopy(is).getTag()).getDouble("head-price");
+        }
+        return -1;
+    }
+
+    @Override
+    public String getId(ItemStack id) {
+        net.minecraft.server.v1_8_R2.ItemStack i = CraftItemStack.asNMSCopy(id);
+        if (i.getTag() != null) {
+            return Objects.requireNonNull(CraftItemStack.asNMSCopy(id).getTag()).getString("head-id");
         }
         return "";
     }

@@ -90,4 +90,33 @@ public class v1_10_NMS implements NMSManager {
         }
         return "";
     }
+
+    @Override
+    public org.bukkit.inventory.ItemStack addDatabaseHead(org.bukkit.inventory.ItemStack is, String id, double price) {
+        ItemStack i = CraftItemStack.asNMSCopy(is);
+        if (i.getTag() == null) {
+            i.setTag(new NBTTagCompound());
+        }
+        i.getTag().setString("head-id", id);
+        i.getTag().setDouble("head-price", price);
+        return CraftItemStack.asBukkitCopy(i);
+    }
+
+    @Override
+    public double getPrice(org.bukkit.inventory.ItemStack is) {
+        ItemStack i = CraftItemStack.asNMSCopy(is);
+        if (i.getTag() != null) {
+            return Objects.requireNonNull(CraftItemStack.asNMSCopy(is).getTag()).getDouble("head-price");
+        }
+        return -1;
+    }
+
+    @Override
+    public String getId(org.bukkit.inventory.ItemStack id) {
+        ItemStack i = CraftItemStack.asNMSCopy(id);
+        if (i.getTag() != null) {
+            return Objects.requireNonNull(CraftItemStack.asNMSCopy(id).getTag()).getString("head-id");
+        }
+        return "";
+    }
 }

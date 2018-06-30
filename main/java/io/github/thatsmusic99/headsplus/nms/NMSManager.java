@@ -50,4 +50,10 @@ public interface NMSManager {
         }
         return null;
     }
+
+    ItemStack addDatabaseHead(ItemStack is, String id, double price);
+
+    double getPrice(ItemStack is);
+
+    String getId(ItemStack id);
 }

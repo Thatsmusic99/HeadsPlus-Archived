@@ -88,7 +88,7 @@ public class SearchGUI {
     }
 
     public interface AnvilClickEventHandler {
-        void onAnvilClick(AnvilClickEvent event);
+        void onAnvilClick(AnvilClickEvent event) throws NoSuchFieldException, IllegalAccessException;
     }
 
     private Player player;
@@ -107,7 +107,7 @@ public class SearchGUI {
 
         this.listener = new Listener() {
             @EventHandler
-            public void onInventoryClick(InventoryClickEvent event) {
+            public void onInventoryClick(InventoryClickEvent event) throws NoSuchFieldException, IllegalAccessException {
                 if (event.getWhoClicked() instanceof Player) {
                     Player clicker = (Player) event.getWhoClicked();
 

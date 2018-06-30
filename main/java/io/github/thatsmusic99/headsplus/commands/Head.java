@@ -133,8 +133,20 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
     @Override
     public HashMap<Boolean, String> isCorrectUsage(String[] args, CommandSender sender) {
 	    HashMap<Boolean, String> h = new HashMap<>();
-        if (args.length == 0) {
-
+        if (args.length != 0) {
+            if ((args[0].matches("^[A-Za-z0-9_]+$"))) {
+                if (args[0].length() < 16) {
+                    if (args[0].length() > 3) {
+                       h.put(true, "");
+                    } else {
+                        h.put(false, hpc.getString("too-short-head"));
+                    }
+                } else {
+                    sender.sendMessage(hpc.getString("head-too-long"));
+                }
+            } else {
+                h.put(false, hpc.getString("alpha-names"));
+            }
         } else {
             h.put(false, hpc.getString("invalid-args"));
         }
@@ -151,23 +163,7 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
 	    try {
             if (sender instanceof Player){
                 if (sender.hasPermission("headsplus.head")) {
-                    if (args.length == 0) {
-                        sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());
-                        return true;
-                    }
-                    if ((args.length == 1) && !(args[0].matches("^[A-Za-z0-9_]+$"))) {
-                        sender.sendMessage(hpc.getString("alpha-names"));
-                        return true;
-                    }
-                    if (args[0].length() > 16) {
-                        sender.sendMessage(hpc.getString("head-too-long"));
-                        return true;
-                    }
-                    if (args[0].length() < 3) {
-                        sender.sendMessage(hpc.getString("too-short-head"));
-                        return true;
-                    }
-                    if (args.length == 2) {
+                    if (args.length >= 2) {
                         if (sender.hasPermission("headsplus.head.others")) {
                             if (HeadsPlus.getInstance().getNMS().getPlayer(args[0]) != null) {
                                 if (args[1].matches("^[A-Za-z0-9_]+$") && (3 < args[1].length()) && (args[1].length() < 16)) {

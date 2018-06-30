@@ -22,7 +22,7 @@ import io.github.thatsmusic99.headsplus.nms.v1_8_R2_NMS.v1_8_R2_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_8_R3_NMS.v1_8_R3NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_9_NMS.v1_9_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_9_R2_NMS.V1_9_NMS2;
-// import io.github.thatsmusic99.headsplus.storage.Favourites;
+import io.github.thatsmusic99.headsplus.storage.Favourites;
 import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import io.github.thatsmusic99.headsplus.util.MySQLAPI;
 import net.milkbowl.vault.economy.Economy;
@@ -35,6 +35,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.json.simple.parser.ParseException;
 
 import java.io.File;
 import java.io.IOException;
@@ -77,7 +78,7 @@ public class HeadsPlus extends JavaPlugin {
     private HashMap<Integer, Level> levels = new HashMap<>();
     private final List<String> nms1_8 = new ArrayList<>(Arrays.asList("1.8.4", "1.8.5", "1.8.6", "1.8.7", "1.8.8"));
     private List<ConfigSettings> cs = new ArrayList<>();
-   // private Favourites favourites;
+    private Favourites favourites;
 
     @SuppressWarnings("unused")
     private File messagesF;
@@ -97,6 +98,7 @@ public class HeadsPlus extends JavaPlugin {
             }
             createInstances();
             checkTheme();
+            setupJSON();
             if (getConfiguration().getMySQL().getBoolean("enabled")) {
                 openConnection();
             }
@@ -166,6 +168,11 @@ public class HeadsPlus extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        try {
+            favourites.save();
+        } catch (IOException e) {
+            new DebugPrint(e, "Disabling (saving favourites)", false, null);
+        }
         log.info(hpc.getString("plugin-disabled"));
     }
 
@@ -298,10 +305,11 @@ public class HeadsPlus extends JavaPlugin {
         return perms != null;
     }
 
-   // private void setupJSON() throws IOException {
-   //     favourites = new Favourites();
-   //     favourites.create();
-   // }
+    private void setupJSON() throws IOException, ParseException {
+        favourites = new Favourites();
+        favourites.create();
+        favourites.read();
+    }
 
 
     private void setupNMS() {
@@ -363,9 +371,9 @@ public class HeadsPlus extends JavaPlugin {
     // GETTERS
 
 
-    //public Favourites getFavourites() {
-    //    return favourites;
-   // }
+    public Favourites getFavourites() {
+        return favourites;
+    }
 
     public String getVersion() {
         return version;
@@ -492,6 +500,6 @@ public class HeadsPlus extends JavaPlugin {
     }
 
     public ChatColor getThemeColour(int i) {
-        return ChatColor.valueOf(getConfiguration().getConfig().getString("theme-color." + i));
+        return ChatColor.valueOf(getConfiguration().getConfig().getString("theme-colours." + i));
     }
 }

@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus.events;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.Challenge;
+import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeDifficulty;
@@ -23,7 +24,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
-import java.util.logging.Level;
 
 public class InventoryEvent implements Listener {
 
@@ -54,7 +54,7 @@ public class InventoryEvent implements Listener {
                                 }
                             }
                             im.setSection("advent_calender");
-                           p.openInventory(im.changePage(false, true, p, "advent_calender"));
+                            p.openInventory(im.changePage(false, true, p, "advent_calender"));
                             e.setCancelled(true);
                             return;
                         } /* else if (InventoryManager.getSection().equalsIgnoreCase("advent_calender")) {
@@ -125,67 +125,81 @@ public class InventoryEvent implements Listener {
                         e.setCancelled(true);
                         return;
                     } */
-                        if (p.getInventory().firstEmpty() == -1) {
-                            p.sendMessage(hpc.getString("full-inv"));
-                            e.setCancelled(true);
-                            return;
-                        }
-                        if (e.getCurrentItem().getItemMeta().getLore() != null) {
-                            Double price;
-                            try {
-                                price = Double.valueOf(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getLore().get(0).split(" ")[1]));
-                            } catch (NumberFormatException ex) {
-                                HeadsPlus.getInstance().getLogger().log(Level.SEVERE, "[HeadsPlus] HeadsX.yml fault! Please check your config, and make sure the price value for your heads are set to a double value, or 'Free' or 'default'!");
-                                HeadsPlus.getInstance().getLogger().log(Level.SEVERE, "Value: " + e.getCurrentItem().getItemMeta().getLore().get(0).split(" ")[1]);
-                                String fail = hpc.getString("cmd-fail");
-                                p.sendMessage(fail);
-                                e.setCancelled(true);
-                                return;
-                            }
-                            EconomyResponse er = HeadsPlus.getInstance().getEconomy().withdrawPlayer(p, price);
-                            String success = hpc.getString("buy-success").replaceAll("\\{price}", Double.toString(er.amount)).replaceAll("\\{balance}", Double.toString(er.balance));
-                            String fail = hpc.getString("cmd-fail");
-                            if (er.transactionSuccess()) {
-                                p.sendMessage(success);
-                                p.getInventory().addItem(e.getCurrentItem());
-                                ItemStack i = new ItemStack(Material.PAPER);
-                                ItemMeta im = i.getItemMeta();
-                                im.setDisplayName(ChatColor.GOLD + "[" + ChatColor.YELLOW + "" + ChatColor.BOLD + "Stats" + ChatColor.GOLD + "]");
-                                List<String> lore = new ArrayList<>();
-                                lore.add(ChatColor.GREEN + "Total heads: " + this.im.getHeads());
-                                lore.add(ChatColor.GREEN + "Total pages: " + this.im.getPages());
-                                lore.add(ChatColor.GREEN + "Total sections: " + this.im.getSections());
-                                if (HeadsPlus.getInstance().econ()) {
-                                    lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().getEconomy().getBalance(p));
-                                }
-                                lore.add(ChatColor.GREEN + "Current section: " + this.im.getSection());
-                                im.setLore(lore);
-                                i.setItemMeta(im);
-                                e.getInventory().setItem(4, i);
-                                e.setCancelled(true);
-                                return;
+                        if (e.getClick().isRightClick()) {
+                            HPPlayer hpp = HPPlayer.getHPPlayer(p);
+                            String id = HeadsPlus.getInstance().getNMS().getId(e.getCurrentItem());
+                            if (hpp.hasHeadFavourited(id)) {
+                                hpp.removeFavourite(id);
+                                ItemMeta im = e.getCurrentItem().getItemMeta();
+                                List<String> s = im.getLore();
+                                s.remove(s.size() - 1);
+                                im.setLore(s);
+                                e.getCurrentItem().setItemMeta(im);
+                                e.getInventory().setItem(e.getSlot(), e.getCurrentItem());
                             } else {
-                                p.sendMessage(fail + ": " + er.errorMessage);
+                                hpp.addFavourite(id);
+                                ItemMeta im = e.getCurrentItem().getItemMeta();
+                                List<String> s = im.getLore();
+                                s.add(ChatColor.GOLD + "Favourite!");
+                                im.setLore(s);
+                                e.getCurrentItem().setItemMeta(im);
+                                e.getInventory().setItem(e.getSlot(), e.getCurrentItem());
+                            }
+                            e.setCancelled(true);
+                        } else {
+                            if (p.getInventory().firstEmpty() == -1) {
+                                p.sendMessage(hpc.getString("full-inv"));
                                 e.setCancelled(true);
                                 return;
                             }
+                            if (e.getCurrentItem().getItemMeta().getLore() != null) {
+                                Double price = HeadsPlus.getInstance().getNMS().getPrice(e.getCurrentItem());
+                                EconomyResponse er = HeadsPlus.getInstance().getEconomy().withdrawPlayer(p, price);
+                                String success = hpc.getString("buy-success").replaceAll("\\{price}", Double.toString(er.amount)).replaceAll("\\{balance}", Double.toString(er.balance));
+                                String fail = hpc.getString("cmd-fail");
+                                if (er.transactionSuccess()) {
+                                    p.sendMessage(success);
+                                    p.getInventory().addItem(e.getCurrentItem());
+                                    ItemStack i = new ItemStack(Material.PAPER);
+                                    ItemMeta im = i.getItemMeta();
+                                    im.setDisplayName(ChatColor.GOLD + "[" + ChatColor.YELLOW + "" + ChatColor.BOLD + "Stats" + ChatColor.GOLD + "]");
+                                    List<String> lore = new ArrayList<>();
+                                    lore.add(ChatColor.GREEN + "Total heads: " + this.im.getHeads());
+                                    lore.add(ChatColor.GREEN + "Total pages: " + this.im.getPages());
+                                    lore.add(ChatColor.GREEN + "Total sections: " + this.im.getSections());
+                                    if (HeadsPlus.getInstance().econ()) {
+                                        lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().getEconomy().getBalance(p));
+                                    }
+                                    lore.add(ChatColor.GREEN + "Current section: " + this.im.getSection());
+                                    im.setLore(lore);
+                                    i.setItemMeta(im);
+                                    e.getInventory().setItem(4, i);
+                                    e.setCancelled(true);
+                                    return;
+                                } else {
+                                    p.sendMessage(fail + ": " + er.errorMessage);
+                                    e.setCancelled(true);
+                                    return;
+                                }
+                            }
+                            ItemStack i = new ItemStack(Material.PAPER);
+                            ItemMeta im = i.getItemMeta();
+                            im.setDisplayName(ChatColor.GOLD + "[" + ChatColor.YELLOW + "" + ChatColor.BOLD + "Stats" + ChatColor.GOLD + "]");
+                            List<String> lore = new ArrayList<>();
+                            lore.add(ChatColor.GREEN + "Total heads: " + this.im.getHeads());
+                            lore.add(ChatColor.GREEN + "Total pages: " + this.im.getPages());
+                            lore.add(ChatColor.GREEN + "Total sections: " + this.im.getSections());
+                            if (HeadsPlus.getInstance().econ()) {
+                                lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().getEconomy().getBalance(p));
+                            }
+                            lore.add(ChatColor.GREEN + "Current section: " + this.im.getSection());
+                            im.setLore(lore);
+                            i.setItemMeta(im);
+                            e.getInventory().setItem(4, i);
+                            p.getInventory().addItem(e.getCurrentItem());
+                            e.setCancelled(true);
                         }
-                        ItemStack i = new ItemStack(Material.PAPER);
-                        ItemMeta im = i.getItemMeta();
-                        im.setDisplayName(ChatColor.GOLD + "[" + ChatColor.YELLOW + "" + ChatColor.BOLD + "Stats" + ChatColor.GOLD + "]");
-                        List<String> lore = new ArrayList<>();
-                        lore.add(ChatColor.GREEN + "Total heads: " + this.im.getHeads());
-                        lore.add(ChatColor.GREEN + "Total pages: " + this.im.getPages());
-                        lore.add(ChatColor.GREEN + "Total sections: " + this.im.getSections());
-                        if (HeadsPlus.getInstance().econ()) {
-                            lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().getEconomy().getBalance(p));
-                        }
-                        lore.add(ChatColor.GREEN + "Current section: " + this.im.getSection());
-                        im.setLore(lore);
-                        i.setItemMeta(im);
-                        e.getInventory().setItem(4, i);
-                        p.getInventory().addItem(e.getCurrentItem());
-                        e.setCancelled(true);
+
                     } else if (e.getCurrentItem().getType().equals(Material.ARROW)) {
                         if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Next Page")) {
                             e.setCancelled(true);
@@ -211,8 +225,9 @@ public class InventoryEvent implements Listener {
                             e.setCancelled(true);
                             p.closeInventory();
                             final InventoryClickEvent ev = e;
-                            SearchGUI s = HeadsPlus.getInstance().getNMS().getSearchGUI(p, event -> {
-                                try {
+                            try {
+                                SearchGUI s = HeadsPlus.getInstance().getNMS().getSearchGUI(p, event -> {
+
                                     if (event.getSlot().equals(SearchGUI.AnvilSlot.OUTPUT)) {
                                         event.setWillClose(false);
                                         event.setWillDestroy(false);
@@ -220,19 +235,22 @@ public class InventoryEvent implements Listener {
                                         event.getPlayer().closeInventory();
                                         event.getPlayer().openInventory(im.changePage(false, true, event.getPlayer(), "search:" + event.getName()));
                                     }
-                                } catch (Exception ex) {
-                                    new DebugPrint(ex, "Event (InventoryEvent)", false, null);
-                                }
+
 
                                 ev.setCancelled(true);
                             });
-                            s.setSlot(SearchGUI1_12.AnvilSlot.INPUT_LEFT, new ItemStack(Material.NAME_TAG));
-                            s.open();
+                                s.setSlot(SearchGUI1_12.AnvilSlot.INPUT_LEFT, new ItemStack(Material.NAME_TAG));
+                                s.open();
+                            } catch (Exception ex) {
+                                new DebugPrint(ex, "Event (InventoryEvent)", false, null);
+                            }
                         }
-                    }
-
-                    else if (e.getCurrentItem().getType().equals(Material.STAINED_GLASS_PANE)) {
+                    } else if (e.getCurrentItem().getType().equals(Material.STAINED_GLASS_PANE)) {
                         e.setCancelled(true);
+                    } else if (e.getCurrentItem().getType().equals(Material.DIAMOND)) {
+                        e.setCancelled(true);
+                        p.closeInventory();
+                        p.openInventory(this.im.changePage(false, true, p, "favourites"));
                     }
                 } catch (NullPointerException ex) {
                     e.setCancelled(true);

@@ -5,6 +5,7 @@ import com.mojang.authlib.properties.Property;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.Challenge;
+import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.config.challenges.HPChallengeRewardTypes;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeDifficulty;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeEnums;
@@ -75,61 +76,30 @@ public class InventoryManager {
         return a;
     }
     private int[] glass() {
-        int[] a = new int[24];
-        a[0] = 0;
-        a[1] = 1;
-        a[2] = 2;
-        a[3] = 3;
-        a[4] = 5;
-        a[5] = 6;
-        a[6] = 7;
-        a[7] = 9;
-        a[8] = 17;
-        a[9] = 18;
-        a[10] = 26;
-        a[11] = 27;
-        a[12] = 35;
-        a[13] = 36;
-        a[14] = 44;
-        a[15] = 45;
-        a[16] = 46;
-        a[17] = 47;
-        a[18] = 48;
-        a[19] = 49;
-        a[20] = 50;
-        a[21] = 51;
-        a[22] = 52;
-        a[23] = 53;
-        return a;
-    }
-
-    private int[] cColouredGlass() {
-        int[] a = new int[25];
-        a[0] = 0;
-        a[1] = 1;
-        a[2] = 2;
-        a[3] = 3;
-        a[4] = 5;
-        a[5] = 6;
-        a[6] = 7;
-        a[7] = 8;
-        a[8] = 9;
-        a[9] = 17;
-        a[10] = 18;
-        a[11] = 26;
-        a[12] = 27;
-        a[13] = 35;
-        a[14] = 36;
-        a[15] = 44;
-        a[16] = 45;
-        a[17] = 46;
-        a[18] = 47;
-        a[19] = 48;
-        a[20] = 49;
-        a[21] = 50;
-        a[22] = 51;
-        a[23] = 52;
-        a[24] = 53;
+        int[] a = new int[23];
+        a[0] = 1;
+        a[1] = 2;
+        a[2] = 3;
+        a[3] = 5;
+        a[4] = 6;
+        a[5] = 7;
+        a[6] = 9;
+        a[7] = 17;
+        a[8] = 18;
+        a[9] = 26;
+        a[10] = 27;
+        a[11] = 35;
+        a[12] = 36;
+        a[13] = 44;
+        a[14] = 45;
+        a[15] = 46;
+        a[16] = 47;
+        a[17] = 48;
+        a[18] = 49;
+        a[19] = 50;
+        a[20] = 51;
+        a[21] = 52;
+        a[22] = 53;
         return a;
     }
 
@@ -148,6 +118,7 @@ public class InventoryManager {
     }
 
     public Inventory changePage(boolean next, boolean start, Player p, String section) throws NoSuchFieldException, IllegalAccessException {
+        cSection = section;
         HeadsPlus hp = HeadsPlus.getInstance();
         Inventory i;
         if (next) {
@@ -213,11 +184,18 @@ public class InventoryManager {
                 i = create("HeadsPlus Head selector: " + cPage + "/" + ls.getTotalPages());
                 for (Object str : ls.getContentsInPage(cPage)) {
                     if (hpchx.getConfig().getBoolean("heads." + str + ".database")) {
-                        skull(String.valueOf(str), i);
+                        skull(String.valueOf(str), i, p);
                     }
                 }
-
-
+            } else if (section.equalsIgnoreCase("favourites")) {
+                HPPlayer hps = HPPlayer.getHPPlayer(p);
+                ls = new PagedLists<>(hps.getFavouriteHeads(), 28);
+                i = create("HeadsPlus Head selector: " + cPage + "/" + ls.getTotalPages());
+                for (Object str : ls.getContentsInPage(cPage)) {
+                    if (hpchx.getConfig().getBoolean("heads." + str + ".database")) {
+                        skull(String.valueOf(str), i, p);
+                    }
+                }
             } else {
                 List<String> l = new ArrayList<>();
                 // if (!section.equalsIgnoreCase("advent_calender")) {
@@ -228,10 +206,11 @@ public class InventoryManager {
                 }
                 heads = l.size();
                 ls = new PagedLists<>(l, 28);
+                System.out.println(heads);
                 i = create("HeadsPlus Head selector: " + cPage + "/" + ls.getTotalPages());
                 for (Object str : ls.getContentsInPage(cPage)) {
                     if (hpchx.getConfig().getBoolean("heads." + str + ".database")) {
-                        skull(String.valueOf(str), i);
+                        skull(String.valueOf(str), i, p);
                     }
                 }
                 // } else {
@@ -240,6 +219,11 @@ public class InventoryManager {
                 //}
 
             }
+            ItemStack fav = new ItemStack(Material.DIAMOND, 1);
+            ItemMeta im3 = fav.getItemMeta();
+            im3.setDisplayName(ChatColor.AQUA + "" + ChatColor.BOLD + "Favourites");
+            fav.setItemMeta(im3);
+            i.setItem(0, fav);
             DyeColor dc;
             try {
                 dc = DyeColor.valueOf(hp.getConfiguration().getMechanics().getString("gui-glass-color").toUpperCase());
@@ -303,7 +287,7 @@ public class InventoryManager {
             ItemMeta ims = isi.getItemMeta();
             ims.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6"));
             isi.setItemMeta(ims);
-            for (int in : cColouredGlass()) {
+            for (int in : glass()) {
                 i.setItem(in, isi);
             }
             if (cSection.equalsIgnoreCase("menu")) {
@@ -398,8 +382,9 @@ public class InventoryManager {
         }
     }
 
-    private void skull(String str, Inventory i) throws NoSuchFieldException, IllegalAccessException {
-        ItemStack s = HeadsPlus.getInstance().getNMS().getSkullMaterial(1);
+    private void skull(String str, Inventory i, Player p) throws NoSuchFieldException, IllegalAccessException {
+        NMSManager nms = HeadsPlus.getInstance().getNMS();
+        ItemStack s = nms.getSkullMaterial(1);
         SkullMeta sm = (SkullMeta) s.getItemMeta();
         GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
         if (hpchx.getConfig().getBoolean("heads." + str + ".encode")) {
@@ -415,26 +400,33 @@ public class InventoryManager {
         profileField.set(sm, gm);
         sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpchx.getConfig().getString("heads." + str + ".displayname")));
         List<String> price = new ArrayList<>();
+        double pr = 0.0;
         if (HeadsPlus.getInstance().econ()) {
             if (hpchx.getConfig().get("heads." + str + ".price") instanceof String) {
                 if (!((String) hpchx.getConfig().get("heads." + str + ".price")).equalsIgnoreCase("free")) {
                     if (((String) hpchx.getConfig().get("heads." + str + ".price")).equalsIgnoreCase("default")) {
                         if (!hpchx.getConfig().get("options.default-price").equals("free")) {
-                            price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + hpchx.getConfig().get("options.default-price")));
-
+                            pr = hpchx.getConfig().getDouble("options.default-price");
                         }
                     } else {
-                        price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + hpchx.getConfig().get("heads." + str + ".price")));
+                        pr = hpchx.getConfig().getDouble("heads." + str + ".price");
                     }
                 }
             } else {
                 if (!(((Double) hpchx.getConfig().get("heads." + str + ".price")) == 0.0)) {
-                    price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + hpchx.getConfig().get("heads." + str + ".price")));
+                    pr = hpchx.getConfig().getDouble("heads." + str + ".price");
                 }
             }
         }
+        price.add(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + "[" + ChatColor.YELLOW + "Price" + ChatColor.GOLD + "] " + ChatColor.GREEN + pr));
+
+        HPPlayer hps = HPPlayer.getHPPlayer(p);
+        if (hps.hasHeadFavourited(str) && !(cSection.equalsIgnoreCase("menu"))) {
+            price.add(ChatColor.GOLD + "Favourite!");
+        }
         sm.setLore(price);
         s.setItemMeta(sm);
+        s = nms.addDatabaseHead(s, str, pr);
         i.setItem(pos()[timesSent], s);
         timesSent++;
     }

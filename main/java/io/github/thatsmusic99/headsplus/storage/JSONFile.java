@@ -4,8 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import org.apache.commons.io.Charsets;
-import org.bukkit.entity.Player;
+import org.bukkit.OfflinePlayer;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.*;
 
@@ -14,12 +16,8 @@ public interface JSONFile {
     String getName();
 
     default void create() throws IOException {
-        File f = new File(HeadsPlus.getInstance().getDataFolder() + File.separator + "storage");
+        File f = new File(HeadsPlus.getInstance().getDataFolder() + File.separator + "storage" + File.separator + getName() + ".json");
         if (!f.exists()) {
-            f.mkdirs();
-        }
-        File jsonfile = new File(f + File.separator, getName() + ".json");
-        if (!jsonfile.exists()) {
             JSONObject o = new JSONObject();
             Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
             String s = gson.toJson(o);
@@ -33,7 +31,12 @@ public interface JSONFile {
         }
     }
 
-    void writeData(Player p, Object... values);
+    default void read() throws IOException, ParseException {
+        File f = new File(HeadsPlus.getInstance().getDataFolder() + File.separator + "storage" + File.separator + getName() + ".json");
+        setJSON((JSONObject) new JSONParser().parse(new InputStreamReader(new FileInputStream(f))));
+    }
+
+    void writeData(OfflinePlayer p, Object... values);
 
     default void save() throws IOException {
         File f = new File(HeadsPlus.getInstance().getDataFolder() + File.separator + "storage");
@@ -60,4 +63,6 @@ public interface JSONFile {
     JSONObject getJSON();
 
     Object getData(Object key);
+
+    void setJSON(JSONObject s);
 }

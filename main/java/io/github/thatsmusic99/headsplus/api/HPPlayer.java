@@ -24,13 +24,18 @@ public class HPPlayer {
     private Level nextLevel = null;
     private List<PotionEffect> activeMasks;
     public static List<HPPlayer> players = new ArrayList<>();
-    //private List<String> favouriteHeads;
+    private List<String> favouriteHeads;
 
     public HPPlayer(OfflinePlayer p) {
         activeMasks = new ArrayList<>();
-    //    favouriteHeads = new ArrayList<>();
+        favouriteHeads = new ArrayList<>();
         this.player = p;
-    //    favouriteHeads.addAll(((JSONArray) HeadsPlus.getInstance().getFavourites().getData(p.getUniqueId().toString())));
+        try {
+            for (Object o : (JSONArray) HeadsPlus.getInstance().getFavourites().getJSON().get(p.getUniqueId().toString())) {
+                favouriteHeads.add(String.valueOf(o));
+            }
+        } catch (NullPointerException ignored) {
+        }
         HeadsPlus hp = HeadsPlus.getInstance();
         HeadsPlusChallenges hpchl = hp.getChallengeConfig();
         HeadsPlusAPI hapi = hp.getAPI();
@@ -175,7 +180,21 @@ public class HPPlayer {
         hpc.save();
     }
 
-   // public boolean hasHeadFavourited(String s) {
-   //     return favouriteHeads.contains(s);
-   // }
+    public boolean hasHeadFavourited(String s) {
+        return favouriteHeads.contains(s);
+    }
+
+    public void addFavourite(String s) {
+        favouriteHeads.add(s);
+        HeadsPlus.getInstance().getFavourites().writeData(player, s);
+    }
+
+    public void removeFavourite(String s) {
+        favouriteHeads.remove(s);
+        HeadsPlus.getInstance().getFavourites().removeHead(player, s);
+    }
+
+    public List<String> getFavouriteHeads() {
+        return favouriteHeads;
+    }
 }

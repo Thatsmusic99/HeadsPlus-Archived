@@ -6,6 +6,7 @@ import io.github.thatsmusic99.headsplus.nms.SearchGUI;
 import net.minecraft.server.v1_8_R1.EntityPlayer;
 import net.minecraft.server.v1_8_R1.NBTTagCompound;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_8_R1.inventory.CraftItemStack;
@@ -118,5 +119,9 @@ public class v1_8_R1_NMS implements NMSManager {
             return Objects.requireNonNull(CraftItemStack.asNMSCopy(id).getTag()).getString("head-id");
         }
         return "";
+    }
+
+    public ItemStack getOffHand(Player p) {
+        return new ItemStack(Material.AIR);
     }
 }

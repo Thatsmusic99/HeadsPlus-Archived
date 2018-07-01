@@ -76,6 +76,9 @@ public class HPPlayer {
     }
 
     public void clearMask() {
+        for (PotionEffect p : getActiveMasks()) {
+            ((Player) getPlayer()).removePotionEffect(p.getType());
+        }
         activeMasks.clear();
     }
 

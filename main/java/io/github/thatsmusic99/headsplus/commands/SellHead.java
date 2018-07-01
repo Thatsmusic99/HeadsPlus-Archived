@@ -3,6 +3,7 @@ package io.github.thatsmusic99.headsplus.commands;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.api.SellHeadEvent;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
@@ -91,6 +92,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                 sellAll(p, args, invi);
                             } else {
                                 double price = 0.0;
+
                                 for (ItemStack i : p.getInventory()) {
                                     if (i != null) {
                                     //    boolean found = false;
@@ -139,13 +141,27 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 			p.getInventory().setItemInMainHand(i);
 		}
 	}
-	private void itemRemoval(Player p, String[] a, ItemStack i) throws NoSuchFieldException, IllegalAccessException {
-		if (a.length > 0) { 
+	private void itemRemoval(Player p, String[] a, ItemStack i) {
+		if (a.length > 0) {
 			if (a[0].equalsIgnoreCase("all")) {
 				for (ItemStack is : p.getInventory()) {
 					if (is != null) {
 						if (is.getType() == Material.SKULL_ITEM) {
                             if (nms().isSellable(is)) {
+                                if (p.getInventory().getHelmet() != null) {
+                                    if (p.getInventory().getHelmet().isSimilar(is)) {
+                                        p.getInventory().setHelmet(new ItemStack(Material.AIR));
+                                        HPPlayer hp = HPPlayer.getHPPlayer(p);
+                                        hp.clearMask();
+                                        continue;
+                                    }
+                                }
+                                if (nms().getOffHand(p) != null) {
+                                    if (nms().getOffHand(p).isSimilar(is)) {
+                                        p.getInventory().setItemInOffHand(new ItemStack(Material.AIR));
+                                        continue;
+                                    }
+                                }
                                 p.getInventory().remove(is);
                             }
 					    }
@@ -161,66 +177,22 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 		    	for (ItemStack is : p.getInventory()) {
 		    		if (is != null) {
 		    			if (is.getType() == Material.SKULL_ITEM) {
-		    				SkullMeta sm = (SkullMeta) is.getItemMeta();
                             if (nms().isSellable(is)) {
-								boolean found = false;
-								for (String s : hpch.mHeads) {
-								    if (s.equalsIgnoreCase("sheep")) {
-                                        for (String st : hpch.getConfig().getConfigurationSection("sheep.name").getKeys(false)) {
-                                            found = c(s, a, is, hpch.getConfig().getStringList(s + ".name." + st), p);
-                                        }
-                                    } else {
-                                        found = c(s, a, is, hpch.getConfig().getStringList(s + ".name"), p);
-                                    }
-							    }
-							    for (String s : hpch.uHeads) {
-                                    found = c(s, a, is, hpch.getConfig().getStringList(s + ".name"), p);
-                                }
-                                if (!found && a[0].equalsIgnoreCase("player")) {
-                                    boolean player = true;
-                                    SkullMeta sms = (SkullMeta) is.getItemMeta();
-                                    for (String s : hpch.uHeads) {
-                                        if (d(hpch.getConfig().getStringList(s + ".name"), sms)) {
-                                            player = false;
-                                            break;
-                                        }
-                                    }
-                                    for (String s : hpch.mHeads) {
-                                        if (s.equalsIgnoreCase("sheep")) {
-                                            for (String st : hpch.getConfig().getConfigurationSection("sheep.name").getKeys(false)) {
-                                                if (d(hpch.getConfig().getStringList(s + ".name." + st), sms)) {
-                                                    player = false;
-                                                    break;
-                                                }
-                                            }
-                                        } else {
-                                            if (d(hpch.getConfig().getStringList(s + ".name"), sms)) {
-                                                player = false;
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    if (player) {
-
-                                        if (nms().isSellable(is)){
-                                            p.getInventory().remove(is);
-                                        }
-                                    }
-							    } else if (nms().getSkullOwnerName(sm).equalsIgnoreCase("HPXHead")) {
-                                    for (String key : hpch.mHeads) {
-                                        if (key.equalsIgnoreCase("sheep")) {
-                                            for (String s : hpch.getConfig().getConfigurationSection("sheep.name").getKeys(false)) {
-                                                b(hpch.getConfig().getStringList(key + ".name." + s), is, p);
-                                            }
-                                        } else {
-                                            b(hpch.getConfig().getStringList(key + ".name"), is, p);
-                                        }
-
-                                    }
-                                    for (String key : hpch.uHeads) {
-                                        b(hpch.getConfig().getStringList(key + ".name"), is, p);
+                                if (p.getInventory().getHelmet() != null) {
+                                    if (p.getInventory().getHelmet().isSimilar(is)) {
+                                        p.getInventory().setHelmet(new ItemStack(Material.AIR));
+                                        HPPlayer hp = HPPlayer.getHPPlayer(p);
+                                        hp.clearMask();
+                                        continue;
                                     }
                                 }
+                                if (nms().getOffHand(p) != null) {
+                                    if (nms().getOffHand(p).isSimilar(is)) {
+                                        p.getInventory().setItemInOffHand(new ItemStack(Material.AIR));
+                                        continue;
+                                    }
+                                }
+                                p.getInventory().remove(is);
 							}
 		    			}
 		    		}

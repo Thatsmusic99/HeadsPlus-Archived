@@ -9,6 +9,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public interface NMSManager {
 
     ItemStack addNBTTag(Object item);
@@ -56,4 +60,8 @@ public interface NMSManager {
     double getPrice(ItemStack is);
 
     String getId(ItemStack id);
+
+    default ItemStack getOffHand(Player p) {
+        return p.getInventory().getItemInOffHand();
+    }
 }

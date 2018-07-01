@@ -32,9 +32,7 @@ public class MaskEvent implements Listener {
                     } else {
                         if (e.getWhoClicked().getActivePotionEffects().size() > 0) {
                             HPPlayer pl = HPPlayer.getHPPlayer((OfflinePlayer) e.getWhoClicked());
-                            for (PotionEffect p : pl.getActiveMasks()) {
-                                e.getWhoClicked().removePotionEffect(p.getType());
-                            }
+                            pl.clearMask();
                         }
                     }
                 }

@@ -21,18 +21,19 @@ import org.bukkit.command.CommandExecutor;
 
 public class Head implements CommandExecutor, IHeadsPlusCommand {
 
-    private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
+    private final HeadsPlus hp = HeadsPlus.getInstance();
+    private final HeadsPlusMessagesConfig hpc = hp.getMessagesConfig();
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         return fire(args, sender);
     }
 
-	private static void giveHead(Player p, String n) {
-		ItemStack skull = HeadsPlus.getInstance().getNMS().getSkullMaterial(1);
+	private void giveHead(Player p, String n) {
+		ItemStack skull = hp.getNMS().getSkullMaterial(1);
         SkullMeta meta = (SkullMeta) skull.getItemMeta();
-        meta = HeadsPlus.getInstance().getNMS().setSkullOwner(n, meta);
+        meta = hp.getNMS().setSkullOwner(n, meta);
 
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().getHeadsConfig().getConfig().getString("player.display-name").replaceAll("\\{player}", n)));
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', hp.getHeadsConfig().getConfig().getString("player.display-name").replaceAll("\\{player}", n)));
         skull.setItemMeta(meta);
         Location playerLoc = (p).getLocation();
         double playerLocY = playerLoc.getY() + 1;
@@ -42,8 +43,8 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
 	}
 
 	private void giveH(String[] args, Player sender, Player p) {
-	    ConfigurationSection blacklist = HeadsPlus.getInstance().getConfiguration().getBlacklist("default");
-        ConfigurationSection whitelist = HeadsPlus.getInstance().getConfiguration().getWhitelist("default");
+	    ConfigurationSection blacklist = hp.getConfiguration().getBlacklist("default");
+        ConfigurationSection whitelist = hp.getConfiguration().getWhitelist("default");
         List<String> bl = new ArrayList<>();
         for (String str : blacklist.getStringList("list")) {
             bl.add(str.toLowerCase());
@@ -165,12 +166,12 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
                 if (sender.hasPermission("headsplus.head")) {
                     if (args.length >= 2) {
                         if (sender.hasPermission("headsplus.head.others")) {
-                            if (HeadsPlus.getInstance().getNMS().getPlayer(args[0]) != null) {
+                            if (hp.getNMS().getPlayer(args[0]) != null) {
                                 if (args[1].matches("^[A-Za-z0-9_]+$") && (2 < args[1].length()) && (args[1].length() < 17)) {
                                     String[] s = new String[2];
                                     s[0] = args[1];
                                     s[1] = args[0];
-                                    giveH(s, (Player) sender, HeadsPlus.getInstance().getNMS().getPlayer(args[0]));
+                                    giveH(s, (Player) sender, hp.getNMS().getPlayer(args[0]));
                                     return true;
                                 } else if (!args[1].matches("^[A-Za-z0-9_]+$")) {
                                     sender.sendMessage(hpc.getString("alpha-names"));

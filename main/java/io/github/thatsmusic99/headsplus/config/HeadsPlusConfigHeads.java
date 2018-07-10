@@ -91,7 +91,7 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
     }
     private void addPlayerHeads() {
     	getConfig().addDefault("player.chance", 100);
-    	getConfig().addDefault("player.display-name", "%d's head");
+    	getConfig().addDefault("player.display-name", "{player}'s head");
     	getConfig().addDefault("player.price", 10.00);
         getConfig().addDefault("player.mask-effects", new ArrayList<>());
         getConfig().addDefault("player.mask-amplifiers", new ArrayList<>());

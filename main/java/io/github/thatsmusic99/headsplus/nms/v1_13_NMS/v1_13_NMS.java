@@ -80,6 +80,16 @@ public class v1_13_NMS implements NewNMSManager {
         return null;
     }
 
+    @Override
+    public ItemStack addSection(ItemStack is, String sec) {
+        return null;
+    }
+
+    @Override
+    public String getSection(ItemStack is) {
+        return null;
+    }
+
  /*   @Override
     public ItemStack getSkullMaterial(int amount) {
         return new ItemStack(Material.PLAYER_HEAD, amount);

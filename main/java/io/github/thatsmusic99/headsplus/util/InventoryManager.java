@@ -149,13 +149,16 @@ public class InventoryManager {
                         SkullMeta im = (SkullMeta) is.getItemMeta();
                         im.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpchx.getConfig().getString("sections." + st + ".display-name")));
                         is.setItemMeta(im);
+                        is = hp.getNMS().addSection(is, st);
                         i.setItem(pos()[timesSent], is);
                         timesSent++;
                     } else {
                         ItemStack is = new ItemStack(Material.SKULL_ITEM);
+
                         SkullMeta sm = (SkullMeta) is.getItemMeta();
                         sm = hp.getNMS().setSkullOwner(st, sm);
                         is.setItemMeta(sm);
+                        is = hp.getNMS().addSection(is, st);
                         i.setItem(pos()[timesSent], is);
                         timesSent++;
                     }
@@ -206,7 +209,6 @@ public class InventoryManager {
                 }
                 heads = l.size();
                 ls = new PagedLists<>(l, 28);
-                System.out.println(heads);
                 i = create("HeadsPlus Head selector: " + cPage + "/" + ls.getTotalPages());
                 for (Object str : ls.getContentsInPage(cPage)) {
                     if (hpchx.getConfig().getBoolean("heads." + str + ".database")) {

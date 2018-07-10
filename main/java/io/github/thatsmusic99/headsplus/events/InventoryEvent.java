@@ -45,16 +45,9 @@ public class InventoryEvent implements Listener {
                         p.closeInventory();
                     } else if (e.getCurrentItem().getType().equals(Material.SKULL_ITEM)) {
                         if (im.getSection().equalsIgnoreCase("menu")) {
-                            for (HeadsXSections h : HeadsXSections.values()) {
-                                if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', h.dn)))) {
-                                    im.setSection(h.let);
-                                    p.openInventory(im.changePage(false, true, p, h.let));
-                                    e.setCancelled(true);
-                                    return;
-                                }
-                            }
-                            im.setSection("advent_calender");
-                            p.openInventory(im.changePage(false, true, p, "advent_calender"));
+                            String section = HeadsPlus.getInstance().getNMS().getSection(e.getCurrentItem());
+                            im.setSection(section);
+                            p.openInventory(im.changePage(false, true, p, section));
                             e.setCancelled(true);
                             return;
                         } /* else if (InventoryManager.getSection().equalsIgnoreCase("advent_calender")) {

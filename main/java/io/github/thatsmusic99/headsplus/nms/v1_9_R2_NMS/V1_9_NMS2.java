@@ -119,4 +119,23 @@ public class V1_9_NMS2 implements NMSManager {
         }
         return "";
     }
+
+    @Override
+    public org.bukkit.inventory.ItemStack addSection(org.bukkit.inventory.ItemStack i, String sec) {
+        ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setString("head-section", sec);
+        return CraftItemStack.asBukkitCopy(is);
+    }
+
+    @Override
+    public String getSection(org.bukkit.inventory.ItemStack is) {
+        ItemStack i = CraftItemStack.asNMSCopy(is);
+        if (i.getTag() != null) {
+            return Objects.requireNonNull(i.getTag()).getString("head-section");
+        }
+        return "";
+    }
 }

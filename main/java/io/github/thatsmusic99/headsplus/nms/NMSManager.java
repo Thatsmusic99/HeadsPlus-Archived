@@ -64,4 +64,8 @@ public interface NMSManager {
     default ItemStack getOffHand(Player p) {
         return p.getInventory().getItemInOffHand();
     }
+
+    ItemStack addSection(ItemStack is, String sec);
+
+    String getSection(ItemStack is);
 }

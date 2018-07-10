@@ -135,8 +135,8 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
 	    HashMap<Boolean, String> h = new HashMap<>();
         if (args.length != 0) {
             if ((args[0].matches("^[A-Za-z0-9_]+$"))) {
-                if (args[0].length() < 16) {
-                    if (args[0].length() > 3) {
+                if (args[0].length() < 17) {
+                    if (args[0].length() > 2) {
                        h.put(true, "");
                     } else {
                         h.put(false, hpc.getString("too-short-head"));
@@ -166,7 +166,7 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
                     if (args.length >= 2) {
                         if (sender.hasPermission("headsplus.head.others")) {
                             if (HeadsPlus.getInstance().getNMS().getPlayer(args[0]) != null) {
-                                if (args[1].matches("^[A-Za-z0-9_]+$") && (3 < args[1].length()) && (args[1].length() < 16)) {
+                                if (args[1].matches("^[A-Za-z0-9_]+$") && (2 < args[1].length()) && (args[1].length() < 17)) {
                                     String[] s = new String[2];
                                     s[0] = args[1];
                                     s[1] = args[0];
@@ -191,7 +191,7 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
                             return false;
                         }
                     }
-                    if (args[0].matches("^[A-Za-z0-9_]+$") && (3 < args[0].length()) && (args[0].length() < 16)) {
+                    if (args[0].matches("^[A-Za-z0-9_]+$") && (2 < args[0].length()) && (args[0].length() < 17)) {
                         giveH(args, (Player) sender, (Player) sender);
                         return true;
                     }

@@ -12,12 +12,13 @@ public class PlaceEvent implements Listener {
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent e) {
         try {
-            if (HeadsPlus.getInstance().isStoppingPlaceableHeads()) {
-                if (e.getItemInHand().getType() == Material.SKULL || e.getItemInHand().getType() == Material.SKULL_ITEM) {
+            HeadsPlus hp = HeadsPlus.getInstance();
+            if (hp.isStoppingPlaceableHeads()) {
+                if (e.getItemInHand().getType() == hp.getNMS().getSkullMaterial(1).getType() ) {
                     if (!e.getPlayer().hasPermission("headsplus.bypass.preventplacement")) {
-                        if (HeadsPlus.getInstance().getNMS().isSellable(e.getItemInHand())) {
+                        if (hp.getNMS().isSellable(e.getItemInHand())) {
                             e.setCancelled(true);
-                            e.getPlayer().sendMessage(HeadsPlus.getInstance().getMessagesConfig().getString("block-place-denied"));
+                            e.getPlayer().sendMessage(hp.getMessagesConfig().getString("block-place-denied"));
                         }
                     }
                 }

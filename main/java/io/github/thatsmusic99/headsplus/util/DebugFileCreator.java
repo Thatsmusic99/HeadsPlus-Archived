@@ -123,7 +123,6 @@ public class DebugFileCreator {
         o2.put("Amount", s.getAmount());
         o2.put("Durability", s.getDurability());
         o2.put("Display name", s.getItemMeta().getDisplayName());
-        o2.put("Localized name", s.getItemMeta().getLocalizedName());
         try {
             o2.put("Lore", new JSONArray().addAll(s.getItemMeta().getLore()));
         } catch (NullPointerException ignored) {

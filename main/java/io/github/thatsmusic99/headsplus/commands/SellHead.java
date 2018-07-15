@@ -11,6 +11,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
+import io.github.thatsmusic99.headsplus.nms.NewNMSManager;
 import io.github.thatsmusic99.headsplus.util.SellheadInventory;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
@@ -39,33 +40,35 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		try {
 			if (sender instanceof Player) {
-			    if (HeadsPlus.getInstance().canSellHeads()) {
+			    HeadsPlus hp = HeadsPlus.getInstance();
+			    if (hp.canSellHeads()) {
 			        Player p = (Player) sender;
 			        soldHeads.clear();
 			        hm.clear();
-                    ItemStack invi = checkHand(p);
+			        ItemStack invi = checkHand(p);
                     if (args.length == 0 && (sender.hasPermission("headsplus.sellhead"))) { // If sold via hand
-                        SellheadInventory si = new SellheadInventory();
-                        SellheadInventory.setSI(p, si);
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                p.openInventory(si.changePage(false, true, p));
-                            }
-                        }.runTaskAsynchronously(HeadsPlus.getInstance());
-
-                        /*if (nms().isSellable(invi)) {
-                            String s = nms().getType(invi).toLowerCase();
-                            if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {
-                                Double price;
-                                if (invi.getAmount() > 0) {
-                                    price = invi.getAmount() * hpch.getConfig().getDouble(s + ".price");
-                                    soldHeads.add(s);
-                                    hm.put(s, invi.getAmount());
-                                    SellHeadEvent she = new SellHeadEvent(price, soldHeads, (Player) sender, HeadsPlus.getInstance().getEconomy().getBalance((Player) sender), HeadsPlus.getInstance().getEconomy().getBalance((Player) sender) + price, hm);
-                                    Bukkit.getServer().getPluginManager().callEvent(she);
-                                    if (!she.isCancelled()) {
-                                        EconomyResponse zr = HeadsPlus.getInstance().getEconomy().depositPlayer((Player) sender, price);
+                        if (hp.getConfiguration().getMechanics().getBoolean("sellhead-gui")) {
+                            SellheadInventory si = new SellheadInventory();
+                            SellheadInventory.setSI(p, si);
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    p.openInventory(si.changePage(false, true, p));
+                                }
+                            }.runTaskAsynchronously(HeadsPlus.getInstance());
+                        } else {
+                            if (nms().isSellable(invi)) {
+                                String s = nms().getType(invi).toLowerCase();
+                                if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {
+                                    Double price;
+                                    if (invi.getAmount() > 0) {
+                                        price = invi.getAmount() * hpch.getConfig().getDouble(s + ".price");
+                                        soldHeads.add(s);
+                                        hm.put(s, invi.getAmount());
+                                        SellHeadEvent she = new SellHeadEvent(price, soldHeads, (Player) sender, HeadsPlus.getInstance().getEconomy().getBalance((Player) sender), HeadsPlus.getInstance().getEconomy().getBalance((Player) sender) + price, hm);
+                                        Bukkit.getServer().getPluginManager().callEvent(she);
+                                        if (!she.isCancelled()) {
+                                            EconomyResponse zr = HeadsPlus.getInstance().getEconomy().depositPlayer((Player) sender, price);
                                             String success = hpc.getString("sell-success").replaceAll("\\{price}", Double.toString(zr.amount)).replaceAll("\\{balance}", Double.toString(zr.balance));
                                             if (zr.transactionSuccess()) {
                                                 if (price > 0) {
@@ -80,10 +83,11 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                     }
                                 }
 
-                        } else {
-                            sender.sendMessage(hpc.getString("false-head"));
-                            return true;
-                        } */
+                            } else {
+                                sender.sendMessage(hpc.getString("false-head"));
+                                return true;
+                            }
+                        }
                     } else {
                         if (!sender.hasPermission("headsplus.sellhead")) {
                             sender.sendMessage(hpc.getString("no-perm"));
@@ -96,7 +100,8 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                 for (ItemStack i : p.getInventory()) {
                                     if (i != null) {
                                     //    boolean found = false;
-                                        if (i.getType() == Material.SKULL_ITEM && i.getDurability() == 3) {
+                                        if (i.getType() == nms().getSkullMaterial(1).getType()
+                                                && (nms() instanceof NewNMSManager || i.getDurability() == 3)) {
                                             if (nms().isSellable(i)) {
                                                 price = setPrice(price, args, i, p);
                                             }
@@ -146,7 +151,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 			if (a[0].equalsIgnoreCase("all")) {
 				for (ItemStack is : p.getInventory()) {
 					if (is != null) {
-						if (is.getType() == Material.SKULL_ITEM) {
+						if (is.getType() == nms().getSkullMaterial(1).getType()) {
                             if (nms().isSellable(is)) {
                                 if (p.getInventory().getHelmet() != null) {
                                     if (p.getInventory().getHelmet().isSimilar(is)) {
@@ -176,7 +181,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 		    } else {
 		    	for (ItemStack is : p.getInventory()) {
 		    		if (is != null) {
-		    			if (is.getType() == Material.SKULL_ITEM) {
+		    			if (is.getType() == nms().getSkullMaterial(1).getType()) {
                             if (nms().isSellable(is)) {
                                 if (p.getInventory().getHelmet() != null) {
                                     if (p.getInventory().getHelmet().isSimilar(is)) {
@@ -206,7 +211,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 		if (a.length > 0) { // More than one argument
 			if (!a[0].matches("^[0-9]+$")) { // More than one head
 				if (a[0].equalsIgnoreCase("all")) { // Sell everything
-					if (i.getType().equals(Material.SKULL_ITEM)) {
+					if (i.getType().equals(nms().getSkullMaterial(1).getType())) {
                         if (nms().isSellable(i)) {
 							String s = nms().getType(i).toLowerCase();
 							if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {
@@ -241,7 +246,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 		Double price = 0.0;
 		for (ItemStack is : p.getInventory()) {
             if (is != null) {
-                if (is.getType().equals(Material.SKULL_ITEM)) {
+                if (is.getType().equals(nms().getSkullMaterial(1).getType())) {
                     price = setPrice(price, a, is, p);
                 }
             }

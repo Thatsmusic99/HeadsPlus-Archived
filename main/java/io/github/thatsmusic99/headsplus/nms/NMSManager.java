@@ -9,10 +9,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public interface NMSManager {
 
     ItemStack addNBTTag(Object item);
@@ -43,14 +39,16 @@ public interface NMSManager {
     String getType(ItemStack i);
 
     default ItemStack getSkullMaterial(int amount) {
-        return new ItemStack(Material.SKULL_ITEM, amount, (byte) 3);
+        return new ItemStack(Material.getMaterial("SKULL_ITEM"), amount, (byte) 3);
     }
 
     default ItemStack getColouredBlock(MaterialTranslator.BlockType b, int data) {
         if (b.equals(MaterialTranslator.BlockType.TERRACOTTA)) {
-            return new ItemStack(Material.STAINED_CLAY, 1, (byte) data);
+            return new ItemStack(Material.getMaterial("STAINED_CLAY"), 1, (byte) data);
         } else if (b.equals(MaterialTranslator.BlockType.STAINED_GLASS_PANE)) {
-            return new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) data);
+            return new ItemStack(Material.getMaterial("STAINED_GLASS_PANE"), 1, (byte) data);
+        } else if (b.equals(MaterialTranslator.BlockType.WOOL)) {
+            return new ItemStack(Material.getMaterial("WOOL"), 1, (byte) data);
         }
         return null;
     }
@@ -68,4 +66,18 @@ public interface NMSManager {
     ItemStack addSection(ItemStack is, String sec);
 
     String getSection(ItemStack is);
+
+    default Material getNewItems(MaterialTranslator.ChangedMaterials b) {
+        if (b == MaterialTranslator.ChangedMaterials.FIREWORK_CHARGE) {
+            return Material.getMaterial("FIREWORK_CHARGE");
+        } else if (b == MaterialTranslator.ChangedMaterials.PORK) {
+            return Material.getMaterial("PORK");
+        } else if (b == MaterialTranslator.ChangedMaterials.SULPHUR){
+            return Material.getMaterial("SULPHUR");
+        } else if (b == MaterialTranslator.ChangedMaterials.GRILLED_PORK){
+            return Material.getMaterial("GRILLED_PORK");
+        } else {
+            return Material.getMaterial("INK_SACK");
+        }
+    }
 }

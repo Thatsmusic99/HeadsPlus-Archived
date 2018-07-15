@@ -30,7 +30,7 @@ public class HeadsPlusAPI {
     }
 
     public boolean isSellable(ItemStack is) {
-        if (is.getType() == Material.SKULL_ITEM) {
+        if (is.getType() == hp.getNMS().getSkullMaterial(1).getType()) {
             return hp.getNMS().isSellable(is);
         }
         return false;

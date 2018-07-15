@@ -1,97 +1,142 @@
 package io.github.thatsmusic99.headsplus.nms.v1_13_NMS;
 
 import com.mojang.authlib.GameProfile;
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.nms.NewNMSManager;
 import io.github.thatsmusic99.headsplus.nms.SearchGUI;
+import net.minecraft.server.v1_13_R1.EntityPlayer;
+import net.minecraft.server.v1_13_R1.NBTTagCompound;
+import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.craftbukkit.v1_13_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_13_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.util.Objects;
+
 public class v1_13_NMS implements NewNMSManager {
     @Override
-    public ItemStack addNBTTag(Object item) {
-        return null;
+    public org.bukkit.inventory.ItemStack addNBTTag(Object i) {
+        net.minecraft.server.v1_13_R1.ItemStack is = CraftItemStack.asNMSCopy((org.bukkit.inventory.ItemStack) i);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setBoolean("headsplus-sell", true);
+        return CraftItemStack.asBukkitCopy(is);
     }
 
     @Override
-    public boolean isSellable(Object item) {
+    public boolean isSellable(Object i) {
+        if (CraftItemStack.asNMSCopy((org.bukkit.inventory.ItemStack) i).getTag() != null) {
+            return Objects.requireNonNull(CraftItemStack.asNMSCopy((org.bukkit.inventory.ItemStack) i).getTag()).getBoolean("headsplus-sell");
+        }
         return false;
     }
 
     @Override
     public SearchGUI getSearchGUI(Player p, SearchGUI.AnvilClickEventHandler a) {
-        return null;
+        return new SearchGUI1_13(p, a);
     }
 
     @Override
     public String getSkullOwnerName(SkullMeta m) {
-        return null;
+        return m.getOwner();
     }
 
     @Override
-    public ShapelessRecipe getRecipe(ItemStack i, String name) {
-        return null;
+    public ShapelessRecipe getRecipe(org.bukkit.inventory.ItemStack i, String name) {
+        return new ShapelessRecipe(new NamespacedKey(HeadsPlus.getInstance(), "HeadsPlus_" + name), i);
     }
 
     @Override
     public OfflinePlayer getOfflinePlayer(String name) {
-        return null;
+        return Bukkit.getOfflinePlayer(name);
     }
 
     @Override
     public Player getPlayer(String name) {
-        return null;
+        return Bukkit.getPlayer(name);
     }
 
     @Override
     public GameProfile getGameProfile(ItemStack s) {
-        return null;
+        EntityPlayer e = ((CraftPlayer) ((SkullMeta) s.getItemMeta()).getOwningPlayer().getPlayer()).getHandle();
+        return e.getProfile();
     }
 
     @Override
     public ItemStack getItemInHand(Player p) {
-        return null;
+        return p.getInventory().getItemInMainHand();
     }
 
     @Override
     public ItemStack setType(String s, ItemStack i) {
-        return null;
+        net.minecraft.server.v1_13_R1.ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setString("headsplus-type", s);
+        return CraftItemStack.asBukkitCopy(is);
     }
 
     @Override
     public String getType(ItemStack i) {
-        return null;
+        if (CraftItemStack.asNMSCopy(i).getTag() != null) {
+            return Objects.requireNonNull(CraftItemStack.asNMSCopy(i).getTag()).getString("headsplus-type");
+        }
+        return "";
     }
 
     @Override
-    public ItemStack addDatabaseHead(ItemStack is, String id, double price) {
-        return null;
+    public ItemStack addDatabaseHead(ItemStack i, String id, double price) {
+        net.minecraft.server.v1_13_R1.ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setString("head-id", id);
+        is.getTag().setDouble("head-price", price);
+        return CraftItemStack.asBukkitCopy(is);
     }
 
     @Override
     public double getPrice(ItemStack is) {
-        return 0;
+        net.minecraft.server.v1_13_R1.ItemStack i = CraftItemStack.asNMSCopy(is);
+        if (i.getTag() != null) {
+            return Objects.requireNonNull(CraftItemStack.asNMSCopy(is).getTag()).getDouble("head-price");
+        }
+        return -1;
     }
 
     @Override
     public String getId(ItemStack id) {
-        return null;
+        net.minecraft.server.v1_13_R1.ItemStack i = CraftItemStack.asNMSCopy(id);
+        if (i.getTag() != null) {
+            return Objects.requireNonNull(CraftItemStack.asNMSCopy(id).getTag()).getString("head-id");
+        }
+        return "";
     }
 
     @Override
-    public ItemStack addSection(ItemStack is, String sec) {
-        return null;
+    public ItemStack addSection(ItemStack i, String sec) {
+        net.minecraft.server.v1_13_R1.ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setString("head-section", sec);
+        return CraftItemStack.asBukkitCopy(is);
     }
 
     @Override
     public String getSection(ItemStack is) {
-        return null;
+        net.minecraft.server.v1_13_R1.ItemStack i = CraftItemStack.asNMSCopy(is);
+        if (i.getTag() != null) {
+            return Objects.requireNonNull(i.getTag()).getString("head-section");
+        }
+        return "";
     }
 
- /*   @Override
-    public ItemStack getSkullMaterial(int amount) {
-        return new ItemStack(Material.PLAYER_HEAD, amount);
-    } */
 }

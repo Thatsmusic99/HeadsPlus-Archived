@@ -6,12 +6,12 @@ import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeDifficulty;
-import io.github.thatsmusic99.headsplus.config.headsx.HeadsXSections;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.nms.SearchGUI;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 
 import io.github.thatsmusic99.headsplus.nms.v1_12_NMS.SearchGUI1_12;
+import io.github.thatsmusic99.headsplus.util.MaterialTranslator;
 import io.github.thatsmusic99.headsplus.util.SellheadInventory;
 import net.milkbowl.vault.economy.EconomyResponse;
 
@@ -37,13 +37,14 @@ public class InventoryEvent implements Listener {
             Player p = (Player) e.getWhoClicked();
             if (InventoryManager.getIM(p) == null) return;
             im = InventoryManager.getIM(p);
+            NMSManager nms = HeadsPlus.getInstance().getNMS();
             // int month = Calendar.getInstance().get(Calendar.MONTH);
             if (e.getInventory().getName().equalsIgnoreCase("HeadsPlus Head selector: " + im.getPage() + "/" + im.getPages())) {
                 try {
                     if (e.getCurrentItem().getType().equals(Material.BARRIER)) {
                         e.setCancelled(true);
                         p.closeInventory();
-                    } else if (e.getCurrentItem().getType().equals(Material.SKULL_ITEM)) {
+                    } else if (e.getCurrentItem().getType().equals(nms.getSkullMaterial(1).getType())) {
                         if (im.getSection().equalsIgnoreCase("menu")) {
                             String section = HeadsPlus.getInstance().getNMS().getSection(e.getCurrentItem());
                             im.setSection(section);
@@ -238,7 +239,7 @@ public class InventoryEvent implements Listener {
                                 new DebugPrint(ex, "Event (InventoryEvent)", false, null);
                             }
                         }
-                    } else if (e.getCurrentItem().getType().equals(Material.STAINED_GLASS_PANE)) {
+                    } else if (e.getCurrentItem().getType().equals(HeadsPlus.getInstance().getNMS().getColouredBlock(MaterialTranslator.BlockType.STAINED_GLASS_PANE, 0).getType())) {
                         e.setCancelled(true);
                     } else if (e.getCurrentItem().getType().equals(Material.DIAMOND)) {
                         e.setCancelled(true);
@@ -253,7 +254,7 @@ public class InventoryEvent implements Listener {
                     try {
                         if (im.getSection().equalsIgnoreCase("menu")) {
                             ItemStack i = e.getCurrentItem();
-                            if (i.getType().equals(Material.STAINED_CLAY)) {
+                            if (i.getType().equals(nms.getColouredBlock(MaterialTranslator.BlockType.TERRACOTTA, 0).getType())) {
                                 for (HeadsPlusChallengeDifficulty hpcd : HeadsPlusChallengeDifficulty.values()) {
                                     if (i.getDurability() == hpcd.color.ordinal()) {
                                         e.setCancelled(true);
@@ -267,7 +268,7 @@ public class InventoryEvent implements Listener {
                             }
                         } else {
                             if (im != null) {
-                                if (e.getCurrentItem().getType().equals(Material.STAINED_CLAY)) {
+                                if (e.getCurrentItem().getType().equals(nms.getColouredBlock(MaterialTranslator.BlockType.TERRACOTTA, 0).getType())) {
                                     Challenge challenge = HeadsPlus.getInstance().getAPI().getChallenge(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()));
                                     try {
                                         if (challenge != null) {

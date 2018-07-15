@@ -38,8 +38,9 @@ public class JoinEvent implements Listener {
             @Override
             public void run() {
                 if (e.getPlayer().getInventory().getArmorContents()[3] != null) {
-                    if (e.getPlayer().getInventory().getArmorContents()[3].getType().equals(Material.SKULL_ITEM)) {
-                        NMSManager nms = HeadsPlus.getInstance().getNMS();
+                    NMSManager nms = HeadsPlus.getInstance().getNMS();
+                    if (e.getPlayer().getInventory().getArmorContents()[3].getType().equals(nms.getSkullMaterial(1).getType())) {
+
                         HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
                         String s = nms.getType(e.getPlayer().getInventory().getArmorContents()[3]).toLowerCase();
                         if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {

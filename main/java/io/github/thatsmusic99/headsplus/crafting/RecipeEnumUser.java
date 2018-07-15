@@ -63,10 +63,15 @@ public class RecipeEnumUser {
 	        ShapelessRecipe recipe = nms.getRecipe(i, "hp" + key);
 	        List<String> ingrs = new ArrayList<>();
 	        for (String key2 : crafting.getStringList(key + "I")) {
-	            recipe.addIngredient(Material.getMaterial(key2));
-	            ingrs.add(key2);
+	            try {
+                    recipe.addIngredient(Material.getMaterial(key2));
+                    ingrs.add(key2);
+                } catch (IllegalArgumentException ex) {
+	                HeadsPlus.getInstance().getLogger().warning("Received an error trying to add " + key2 + " as in ingredient for " + key + "'s recipe. If you're on 1.13, please update your material names, or restart the configuration.");
+                }
+
 	        }
-	        recipe.addIngredient(Material.SKULL_ITEM);
+	        recipe.addIngredient(nms.getSkullMaterial(1).getType());
 	        if (ingrs.size() > 0) {
 	            try {
 	                Bukkit.addRecipe(recipe);
@@ -97,7 +102,7 @@ public class RecipeEnumUser {
 	                    recipe.addIngredient(Material.getMaterial(key2));
 	                }
 	                if (ingrs.size() > 0) {
-	                    recipe.addIngredient(Material.SKULL_ITEM);
+	                    recipe.addIngredient(nms.getSkullMaterial(1).getType());
 	                }
 	            } else {
 	                crafting.addDefault(key + "I", ingrs);

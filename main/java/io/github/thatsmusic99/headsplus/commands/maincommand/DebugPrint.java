@@ -4,10 +4,10 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
+import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
@@ -83,8 +83,9 @@ public class DebugPrint implements IHeadsPlusCommand {
                 h.put(true, "");
             } else if (args[1].equalsIgnoreCase("head")) {
                 if (sender instanceof Player) {
-                    if (HeadsPlus.getInstance().getNMS().getItemInHand((Player) sender) != null) {
-                        if (HeadsPlus.getInstance().getNMS().getItemInHand((Player) sender).getType().equals(Material.SKULL_ITEM)) {
+                    NMSManager nms = HeadsPlus.getInstance().getNMS();
+                    if (nms.getItemInHand((Player) sender) != null) {
+                        if (nms.getItemInHand((Player) sender).getType().equals(nms.getSkullMaterial(1).getType())) {
                             h.put(true, "");
                         } else {
                             h.put(false, HeadsPlus.getInstance().getMessagesConfig().getString("false-head"));

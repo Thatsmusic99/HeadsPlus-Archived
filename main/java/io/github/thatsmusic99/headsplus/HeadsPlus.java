@@ -17,6 +17,7 @@ import io.github.thatsmusic99.headsplus.nms.*;
 import io.github.thatsmusic99.headsplus.nms.v1_10_NMS.v1_10_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_11_NMS.v1_11_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_12_NMS.v1_12_NMS;
+import io.github.thatsmusic99.headsplus.nms.v1_13_NMS.v1_13_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_8_R1_NMS.v1_8_R1_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_8_R2_NMS.v1_8_R2_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_8_R3_NMS.v1_8_R3NMS;
@@ -334,6 +335,8 @@ public class HeadsPlus extends JavaPlugin {
             nms = new v1_11_NMS();
         } else if (v.contains("1.12")) {
             nms = new v1_12_NMS();
+        } else if (v.contains("1.13")) {
+            nms = new v1_13_NMS();
         }
     }
 

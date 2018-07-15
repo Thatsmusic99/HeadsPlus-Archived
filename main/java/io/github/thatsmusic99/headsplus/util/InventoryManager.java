@@ -153,7 +153,7 @@ public class InventoryManager {
                         i.setItem(pos()[timesSent], is);
                         timesSent++;
                     } else {
-                        ItemStack is = new ItemStack(Material.SKULL_ITEM);
+                        ItemStack is = hp.getNMS().getSkullMaterial(1);
 
                         SkullMeta sm = (SkullMeta) is.getItemMeta();
                         sm = hp.getNMS().setSkullOwner(st, sm);

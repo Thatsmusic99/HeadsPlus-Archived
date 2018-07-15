@@ -18,6 +18,7 @@ public interface JSONFile {
     default void create() throws IOException {
         File f = new File(HeadsPlus.getInstance().getDataFolder() + File.separator + "storage" + File.separator + getName() + ".json");
         if (!f.exists()) {
+            f.createNewFile();
             JSONObject o = new JSONObject();
             Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
             String s = gson.toJson(o);

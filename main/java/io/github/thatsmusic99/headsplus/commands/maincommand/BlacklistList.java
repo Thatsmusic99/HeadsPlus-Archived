@@ -75,6 +75,9 @@ public class BlacklistList implements IHeadsPlusCommand {
             }
 
             List<String> bl = config.getBlacklist("default").getStringList("blacklist");
+            if (bl.size() == 0) {
+                sender.sendMessage(hpc.getString("empty-bl"));
+            }
             PagedLists<String> pl = new PagedLists<>(bl, 8);
             if ((page > pl.getTotalPages()) || (0 >= page)) {
                 sender.sendMessage(hpc.getString("invalid-pg-no"));

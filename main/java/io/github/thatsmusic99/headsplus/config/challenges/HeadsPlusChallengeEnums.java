@@ -1,5 +1,7 @@
 package io.github.thatsmusic99.headsplus.config.challenges;
 
+import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.util.MaterialTranslator;
 import org.bukkit.Material;
 
 import java.util.Arrays;
@@ -22,7 +24,7 @@ public enum HeadsPlusChallengeEnums {
     JAB_BLOODTHIRSTY("jab_bloodthirsty", "Just a bit bloodthirsty", "&8[&c&lJust a bit bloodthirsty...&8]", Arrays.asList("&7Get a total of", "&730 heads!"), 30, HeadsPlusChallengeTypes.LEADERBOARD, HPChallengeRewardTypes.ECO, 350, 0, HeadsPlusChallengeDifficulty.EASY_MEDIUM, "total", 400, 0.0),
     TOWN_MARKET_OWNER("town_market_owner", "Town Market Owner", "&8[&a&lTown Market Owner&8]", Arrays.asList("&7Sell a total of", "&725 heads!"), 25, HeadsPlusChallengeTypes.SELLHEAD, HPChallengeRewardTypes.GIVE_ITEM, Material.IRON_INGOT, 2, HeadsPlusChallengeDifficulty.EASY_MEDIUM, "total", 350, 0.0),
     DR_FRANKENSTEIN("dr_frankenstein", "Dr. Frankenstein", "&8[&e&lDr. Frankenstein&8]", Arrays.asList("&7Craft a total", "&7of 30 zombie heads!"), 30, HeadsPlusChallengeTypes.CRAFTING, HPChallengeRewardTypes.ECO, 400, 0, HeadsPlusChallengeDifficulty.MEDIUM, "zombie", 400, 0.0),
-    BUTCHER("butcher", "Butcher", "&8[&c&lButcher&8]", Arrays.asList("&7Get a total of", "&725 pig heads!"), 25, HeadsPlusChallengeTypes.LEADERBOARD, HPChallengeRewardTypes.GIVE_ITEM, Material.GRILLED_PORK, 10, HeadsPlusChallengeDifficulty.MEDIUM, "pig", 450, 0.0),
+    BUTCHER("butcher", "Butcher", "&8[&c&lButcher&8]", Arrays.asList("&7Get a total of", "&725 pig heads!"), 25, HeadsPlusChallengeTypes.LEADERBOARD, HPChallengeRewardTypes.GIVE_ITEM, HeadsPlus.getInstance().getNMS().getNewItems(MaterialTranslator.ChangedMaterials.GRILLED_PORK), 10, HeadsPlusChallengeDifficulty.MEDIUM, "pig", 450, 0.0),
     EVIL_LAUGH("evil_laugh", "\"Nyehehe...\"", "&8[&c&lNyehehe...&8]", Arrays.asList("&7Get a total", "&7of 60 heads!"), 60, HeadsPlusChallengeTypes.LEADERBOARD, HPChallengeRewardTypes.GIVE_ITEM, Material.DIAMOND, 2, HeadsPlusChallengeDifficulty.MEDIUM, "total", 500, 0.0),
     START_BUSINESS("start_business", "Starting a Business", "&8[&a&lStarting a Business&8]", Arrays.asList("&7Sell a total", "&7of 40 heads!"), 40, HeadsPlusChallengeTypes.SELLHEAD, HPChallengeRewardTypes.ECO, 350, 0, HeadsPlusChallengeDifficulty.MEDIUM, "total", 400, 0.0),
     DONT_NEED("dont_need", "I don't need this", "&8[&a&lI don't need this!&8]", Arrays.asList("&7Sell 20 creeper", "&7heads, they may", "&7explode if you don't..."), 20, HeadsPlusChallengeTypes.SELLHEAD, HPChallengeRewardTypes.ECO, 300, 0, HeadsPlusChallengeDifficulty.MEDIUM, "creeper", 400, 0.0),

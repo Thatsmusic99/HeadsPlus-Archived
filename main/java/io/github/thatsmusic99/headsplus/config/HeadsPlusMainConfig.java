@@ -60,6 +60,7 @@ public class HeadsPlusMainConfig extends ConfigSettings {
         getConfig().addDefault("plugin.mechanics.update.notify", true);
         getConfig().addDefault("plugin.mechanics.allow-looting-enchantment", true);
         getConfig().addDefault("plugin.mechanics.stop-placement-of-sellable-heads", false);
+        getConfig().addDefault("plugin.mechanics.sellhead-gui", true);
         getConfig().addDefault("plugin.mechanics.debug.create-debug-files", true);
         getConfig().addDefault("plugin.mechanics.debug.print-stacktraces-in-console", true);
         getConfig().options().copyDefaults(true);

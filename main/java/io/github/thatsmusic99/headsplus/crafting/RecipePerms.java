@@ -30,6 +30,7 @@ public class RecipePerms implements Listener {
                 NMSManager nms = hp.getNMS();
                 HeadsPlusAPI hapi = hp.getAPI();
                 HeadsPlusMainConfig c = hp.getConfiguration();
+                Material m = nms.getSkullMaterial(1).getType();
                 if (c.getPerks().getBoolean("craft-heads")) {
                     if (player.hasPermission("headsplus.craft")) {
                         List<String> worlds = c.getBlacklist("world").getStringList("list");
@@ -90,7 +91,7 @@ public class RecipePerms implements Listener {
                         } else {
                             if (e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
                                 if(e.getSlot() == 0){
-                                    if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
+                                    if(e.getCurrentItem().getType() == m){
                                         e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
                                         e.setCancelled(true);
                                     }
@@ -98,7 +99,7 @@ public class RecipePerms implements Listener {
                                 }
                             } else if (e.getInventory().getType().equals(InventoryType.CRAFTING)){
                                 if (e.getRawSlot() == 0) {
-                                    if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
+                                    if(e.getCurrentItem().getType() == m){
                                         e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
                                         e.setCancelled(true);
                                     }
@@ -109,7 +110,7 @@ public class RecipePerms implements Listener {
                 }
                 if (e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
                     if(e.getSlot() == 0){
-                        if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
+                        if(e.getCurrentItem().getType() == m){
                             e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
                             e.setCancelled(true);
                         }
@@ -117,7 +118,7 @@ public class RecipePerms implements Listener {
                     }
                 } else if (e.getInventory().getType().equals(InventoryType.CRAFTING)){
                     if (e.getRawSlot() == 0) {
-                        if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
+                        if(e.getCurrentItem().getType() == m){
                             e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
                             e.setCancelled(true);
                         }

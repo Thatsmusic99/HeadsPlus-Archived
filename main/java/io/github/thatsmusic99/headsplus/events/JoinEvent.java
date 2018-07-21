@@ -30,7 +30,7 @@ public class JoinEvent implements Listener {
                     new FancyMessage().text(hpc.getString("update-found"))
                     .tooltip(ChatColor.translateAlternateColorCodes('&', l.getCurrentVersion() + HeadsPlus.getInstance().getDescription().getVersion())
 							+ "\n" + ChatColor.translateAlternateColorCodes('&', l.getNewVersion() + HeadsPlus.getUpdate()[2])
-							+ "\n" + ChatColor.translateAlternateColorCodes('&', l.getDescription() + HeadsPlus.getUpdate()[1])).link("https://www.spigotmc.org/resources/headsplus-1-8-x-1-12-x.40265/updates/").send(e.getPlayer());
+							+ "\n" + ChatColor.translateAlternateColorCodes('&', l.getDescription() + HeadsPlus.getUpdate()[1])).link("https://www.spigotmc.org/resources/headsplus-1-8-x-1-13-x.40265/updates/").send(e.getPlayer());
                 }
             }
         }

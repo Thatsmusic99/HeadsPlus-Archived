@@ -13,9 +13,6 @@ public class MaterialTranslator {
 
         DyeColor dye = DyeColor.values()[data];
         String name = dye.name();
-        if (name.equalsIgnoreCase("SILVER")) {
-            name = "LIGHT_GRAY";
-        }
         return Material.valueOf(name + "_" + type.name());
     }
 

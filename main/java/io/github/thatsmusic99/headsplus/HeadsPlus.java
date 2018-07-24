@@ -114,6 +114,7 @@ public class HeadsPlus extends JavaPlugin {
                 setupPermissions();
             }
 
+
             registerEvents();
             registerCommands();
             registerSubCommands();

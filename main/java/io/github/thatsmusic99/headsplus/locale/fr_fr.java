@@ -14,17 +14,17 @@ public class fr_fr implements Locale {
 
     @Override
     public String getReloadingMessage() {
-        return null;
+        return "%h &3Recharge le fichier config...";
     }
 
     @Override
     public String getReloadMessage() {
-        return null;
+        return "%h &3Rechargé le fichier config!";
     }
 
     @Override
     public String getHeadInteractMessage() {
-        return null;
+        return "&3C'est la tête de &b%p&3!";
     }
 
     @Override

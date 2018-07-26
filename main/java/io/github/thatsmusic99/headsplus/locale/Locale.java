@@ -280,4 +280,8 @@ public interface Locale {
 
     String removedValue();
 
+    String getNotEnoughMoney();
+
+    String inputChat();
+
 }

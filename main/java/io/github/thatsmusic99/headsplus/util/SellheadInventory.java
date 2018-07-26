@@ -135,7 +135,7 @@ public class SellheadInventory {
         try {
             dc = DyeColor.valueOf(hp.getConfiguration().getMechanics().getString("gui-glass-color").toUpperCase());
         } catch (Exception e) {
-            dc = DyeColor.SILVER;
+            dc = DyeColor.values()[8];
         }
         ItemStack isi = nms.getColouredBlock(MaterialTranslator.BlockType.STAINED_GLASS_PANE, dc.ordinal());
         ItemMeta ims = isi.getItemMeta();

@@ -9,10 +9,10 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public class Close extends ItemStack implements Icon {
+public class Menu extends ItemStack implements Icon {
     @Override
     public String getIconName() {
-        return "close";
+        return "main_menu";
     }
 
     @Override

@@ -643,4 +643,14 @@ public class es_es implements Locale {
     public String removedValue() {
         return "{header} &3¡{value} se ha eliminado de {entity} {setting}!";
     }
+
+    @Override
+    public String getNotEnoughMoney() {
+        return "{header} &c¡No tienes suficiente dinero!";
+    }
+
+    @Override
+    public String inputChat() {
+        return "&bEscriba el término que desea buscar.";
+    }
 }

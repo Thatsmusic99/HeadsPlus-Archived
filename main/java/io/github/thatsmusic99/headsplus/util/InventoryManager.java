@@ -230,7 +230,7 @@ public class InventoryManager {
             try {
                 dc = DyeColor.valueOf(hp.getConfiguration().getMechanics().getString("gui-glass-color").toUpperCase());
             } catch (Exception e) {
-                dc = DyeColor.SILVER;
+                dc = DyeColor.values()[8];
             }
             NMSManager nms = hp.getNMS();
             ItemStack isi = nms.getColouredBlock(MaterialTranslator.BlockType.STAINED_GLASS_PANE, dc.ordinal());
@@ -282,7 +282,7 @@ public class InventoryManager {
             try {
                 dc = DyeColor.valueOf(hp.getConfiguration().getMechanics().getString("gui-glass-color").toUpperCase());
             } catch (Exception e) {
-                dc = DyeColor.SILVER;
+                dc = DyeColor.values()[8];
             }
             NMSManager nms = HeadsPlus.getInstance().getNMS();
             ItemStack isi = nms.getColouredBlock(MaterialTranslator.BlockType.STAINED_GLASS_PANE, dc.ordinal());

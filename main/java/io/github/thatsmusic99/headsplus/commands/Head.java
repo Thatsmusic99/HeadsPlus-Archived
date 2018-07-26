@@ -134,7 +134,7 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
     @Override
     public HashMap<Boolean, String> isCorrectUsage(String[] args, CommandSender sender) {
 	    HashMap<Boolean, String> h = new HashMap<>();
-        if (args.length != 0) {
+        if (args.length > 0) {
             if ((args[0].matches("^[A-Za-z0-9_]+$"))) {
                 if (args[0].length() < 17) {
                     if (args[0].length() > 2) {
@@ -191,11 +191,15 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
                             sender.sendMessage(hpc.getString("no-perms"));
                             return false;
                         }
+                    } else if (args.length > 0) {
+                        if (args[0].matches("^[A-Za-z0-9_]+$") && (2 < args[0].length()) && (args[0].length() < 17)) {
+                            giveH(args, (Player) sender, (Player) sender);
+                            return true;
+                        }
+                    } else {
+                        sender.sendMessage(hpc.getString("invalid-args"));
                     }
-                    if (args[0].matches("^[A-Za-z0-9_]+$") && (2 < args[0].length()) && (args[0].length() < 17)) {
-                        giveH(args, (Player) sender, (Player) sender);
-                        return true;
-                    }
+
                 } else {
                     sender.sendMessage(hpc.getString("no-perms"));
                     return false;

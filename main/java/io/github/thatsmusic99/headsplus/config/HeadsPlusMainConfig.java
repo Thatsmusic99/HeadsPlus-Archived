@@ -63,6 +63,7 @@ public class HeadsPlusMainConfig extends ConfigSettings {
         getConfig().addDefault("plugin.mechanics.sellhead-gui", true);
         getConfig().addDefault("plugin.mechanics.debug.create-debug-files", true);
         getConfig().addDefault("plugin.mechanics.debug.print-stacktraces-in-console", true);
+        getConfig().addDefault("plugin.mechanics.anvil-menu-search", false);
         getConfig().options().copyDefaults(true);
         save();
     }

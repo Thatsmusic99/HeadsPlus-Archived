@@ -643,4 +643,14 @@ public class hu_hu implements Locale {
     public String removedValue() {
         return "{header} &3{value} eltávolítva {entity} {setting} beállításából!";
     }
+
+    @Override
+    public String getNotEnoughMoney() {
+        return "{header} &cNincs elég pénzed!";
+    }
+
+    @Override
+    public String inputChat() {
+        return "&bÍrja be azt a kifejezést, amelyet keresni szeretne.";
+    }
 }

@@ -8,11 +8,13 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeDifficulty;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.nms.SearchGUI;
+import io.github.thatsmusic99.headsplus.util.ChatListenerUtil;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 
 import io.github.thatsmusic99.headsplus.nms.v1_12_NMS.SearchGUI1_12;
 import io.github.thatsmusic99.headsplus.util.MaterialTranslator;
 import io.github.thatsmusic99.headsplus.util.SellheadInventory;
+import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 
 import org.bukkit.*;
@@ -35,12 +37,16 @@ public class InventoryEvent implements Listener {
         try {
             if (!(e.getWhoClicked() instanceof Player)) return;
             Player p = (Player) e.getWhoClicked();
+            if (e.getRawSlot() > 53) return;
             if (InventoryManager.getIM(p) == null) return;
             im = InventoryManager.getIM(p);
             NMSManager nms = HeadsPlus.getInstance().getNMS();
             // int month = Calendar.getInstance().get(Calendar.MONTH);
             if (e.getInventory().getName().equalsIgnoreCase("HeadsPlus Head selector: " + im.getPage() + "/" + im.getPages())) {
                 try {
+                    if (e.getRawSlot() < 54) {
+                        e.setCancelled(true);
+                    }
                     if (e.getCurrentItem().getType().equals(Material.BARRIER)) {
                         e.setCancelled(true);
                         p.closeInventory();
@@ -147,7 +153,12 @@ public class InventoryEvent implements Listener {
                                 return;
                             }
                             if (e.getCurrentItem().getItemMeta().getLore() != null) {
+                                Economy ef = HeadsPlus.getInstance().getEconomy();
                                 Double price = HeadsPlus.getInstance().getNMS().getPrice(e.getCurrentItem());
+                                if (price > ef.getBalance(p)) {
+                                    p.sendMessage(hpc.getString("not-enough-money"));
+                                    return;
+                                }
                                 EconomyResponse er = HeadsPlus.getInstance().getEconomy().withdrawPlayer(p, price);
                                 String success = hpc.getString("buy-success").replaceAll("\\{price}", Double.toString(er.amount)).replaceAll("\\{balance}", Double.toString(er.balance));
                                 String fail = hpc.getString("cmd-fail");
@@ -220,21 +231,32 @@ public class InventoryEvent implements Listener {
                             p.closeInventory();
                             final InventoryClickEvent ev = e;
                             try {
-                                SearchGUI s = HeadsPlus.getInstance().getNMS().getSearchGUI(p, event -> {
+                                if (HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("anvil-menu-search")) {
+                                    SearchGUI s = HeadsPlus.getInstance().getNMS().getSearchGUI(p, event -> {
 
-                                    if (event.getSlot().equals(SearchGUI.AnvilSlot.OUTPUT)) {
-                                        event.setWillClose(false);
-                                        event.setWillDestroy(false);
-                                        im.setSection("search:" + event.getName());
+                                        if (event.getSlot().equals(SearchGUI.AnvilSlot.OUTPUT)) {
+                                            event.setWillClose(false);
+                                            event.setWillDestroy(false);
+                                            im.setSection("search:" + event.getName());
+                                            event.getPlayer().closeInventory();
+                                            event.getPlayer().openInventory(im.changePage(false, true, event.getPlayer(), "search:" + event.getName()));
+                                        }
+
+
+                                        ev.setCancelled(true);
+                                    });
+                                    s.setSlot(SearchGUI1_12.AnvilSlot.INPUT_LEFT, new ItemStack(Material.NAME_TAG));
+                                    s.open();
+                                } else {
+                                    new ChatListenerUtil(p, event -> {
+                                        im.setSection(event.getInput());
                                         event.getPlayer().closeInventory();
-                                        event.getPlayer().openInventory(im.changePage(false, true, event.getPlayer(), "search:" + event.getName()));
-                                    }
+                                        event.getPlayer().openInventory(im.changePage(false, true, event.getPlayer(), "search:" + event.getInput()));
 
+                                    });
+                                    p.sendMessage(hpc.getString("chat-input"));
+                                }
 
-                                ev.setCancelled(true);
-                            });
-                                s.setSlot(SearchGUI1_12.AnvilSlot.INPUT_LEFT, new ItemStack(Material.NAME_TAG));
-                                s.open();
                             } catch (Exception ex) {
                                 new DebugPrint(ex, "Event (InventoryEvent)", false, null);
                             }

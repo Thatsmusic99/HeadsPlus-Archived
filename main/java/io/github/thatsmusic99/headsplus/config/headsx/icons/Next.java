@@ -9,10 +9,15 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public class Close extends ItemStack implements Icon {
+public class Next extends ItemStack implements Icon {
+
+    public Next() {
+
+    }
+
     @Override
     public String getIconName() {
-        return "close";
+        return "Next Page";
     }
 
     @Override
@@ -27,7 +32,7 @@ public class Close extends ItemStack implements Icon {
 
     @Override
     public Material getDefaultMaterial() {
-        return null;
+        return Material.ARROW;
     }
 
     @Override
@@ -39,4 +44,5 @@ public class Close extends ItemStack implements Icon {
     public String getDefaultDisplayName() {
         return null;
     }
+
 }

@@ -641,4 +641,14 @@ public class fr_fr implements Locale {
     public String removedValue() {
         return null;
     }
+
+    @Override
+    public String getNotEnoughMoney() {
+        return null;
+    }
+
+    @Override
+    public String inputChat() {
+        return null;
+    }
 }

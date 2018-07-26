@@ -644,4 +644,14 @@ public class ro_ro implements Locale {
     public String removedValue() {
         return "{header} &3{value} a fost eliminat din setarea {setting} a {entity}!";
     }
+
+    @Override
+    public String getNotEnoughMoney() {
+        return "{header} &cNu aveti destui bani!";
+    }
+
+    @Override
+    public String inputChat() {
+        return "&bIntroduceti un termen pe care doriti sa il cautați.";
+    }
 }

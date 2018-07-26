@@ -640,4 +640,14 @@ public class lolcat implements Locale {
     public String removedValue() {
         return "{header} &3{value} haz bin -1'd 2 {entity}'z {setting}!";
     }
+
+    @Override
+    public String getNotEnoughMoney() {
+        return "{header} &clol ur broke";
+    }
+
+    @Override
+    public String inputChat() {
+        return "&bTeyepe sumthin 2 look 4";
+    }
 }

@@ -17,4 +17,8 @@ public interface NewNMSManager extends NMSManager {
     default Material getNewItems(MaterialTranslator.ChangedMaterials b) {
         return MaterialTranslator.getItem(b);
     }
+
+    default Material getWallSkull() {
+        return Material.PLAYER_WALL_HEAD;
+    }
 }

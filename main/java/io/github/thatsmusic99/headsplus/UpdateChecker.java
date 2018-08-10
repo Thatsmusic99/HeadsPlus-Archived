@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Objects;
 
 class UpdateChecker {
@@ -33,33 +34,9 @@ class UpdateChecker {
                 e.printStackTrace();
             }
         }
-        Double lastVersion;
         int size = Objects.requireNonNull(versionsArray).size();
-        try {
-            lastVersion = Double.parseDouble(((JSONObject) versionsArray.get(size - 1)).get("name").toString());
-        } catch (NumberFormatException e) {
-            String[] s = ((JSONObject) versionsArray.get(size - 1)).get("name").toString().split("\\.");
-            StringBuilder v = new StringBuilder();
-            for (int i = 1; i < s.length; i++) {
-                if (s[i].matches("^[0-9]+$")) {
-                    v.append(s[i]);
-                }
-            }
-            lastVersion = Double.valueOf(s[0] + "." + v.toString());
-        }
-        Double currentVersion;
-        try {
-            currentVersion = Double.parseDouble(hp.getDescription().getVersion());
-        } catch (NumberFormatException e) {
-            String[] s = hp.getDescription().getVersion().split("\\.");
-            StringBuilder v = new StringBuilder();
-            for (int i = 1; i < s.length; i++) {
-                if (s[i].matches("^[0-9]+$")) {
-                    v.append(s[i]);
-                }
-            }
-            currentVersion = Double.valueOf(s[0] + "." + v.toString());
-        }
+        String[] lastVersion = ((JSONObject) versionsArray.get(size - 1)).get("name").toString().split("\\.");
+        String[] currentVersion = hp.getDescription().getVersion().split("\\.");
         String latestVersionString = ((JSONObject) versionsArray.get(versionsArray.size() - 1)).get("name").toString();
 
         url = new URL(descriptionURL);
@@ -75,7 +52,7 @@ class UpdateChecker {
                 e.printStackTrace();
             }
         }
-        if (lastVersion > currentVersion) {
+        if (!Arrays.asList(lastVersion).toString().equals(Arrays.asList(currentVersion).toString())) {
 
             String updateName = ((JSONObject) updatesArray.get(Objects.requireNonNull(updatesArray).size() - 1)).get("title").toString();
             return new Object[]{lastVersion, updateName, latestVersionString};

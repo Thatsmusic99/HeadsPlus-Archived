@@ -13,31 +13,42 @@ import java.util.HashMap;
 
 public class ChallengeCommand implements CommandExecutor, IHeadsPlusCommand {
 
+    private final HashMap<String, Boolean> tests = new HashMap<>();
+
     @Override
     public boolean onCommand(CommandSender cs, Command c, String l, String[] args) {
+        tests.clear();
         try {
             if (HeadsPlus.getInstance().hasChallengesEnabled()) {
+                tests.put("Challenges enabled", true);
                 if (cs instanceof Player) {
+                    tests.put("Instance of Player", true);
                     Player p = (Player) cs;
                     if (cs.hasPermission("headsplus.challenges")) {
+                        tests.put("Has permission", true);
                         InventoryManager im2 = new InventoryManager("chal");
                         InventoryManager.pls.put(p, im2);
                         InventoryManager im = InventoryManager.getIM(p);
                         im.setSection("Menu");
                         p.openInventory(im.changePage(true, true, (Player) cs, "Menu"));
+                        printDebugResults(tests, true);
+                        return true;
                     } else {
+                        tests.put("Has permission", false);
                         cs.sendMessage(HeadsPlus.getInstance().getMessagesConfig().getString("no-perms"));
                     }
                 } else {
+                    tests.put("Instance of Player", false);
                     cs.sendMessage("[HeadsPlus] You have to be a player to run this command!");
                 }
             } else {
+                tests.put("Challenges enabled", false);
                 cs.sendMessage(HeadsPlus.getInstance().getMessagesConfig().getString("disabled"));
             }
         } catch (Exception e) {
             new DebugPrint(e, "Command (Challenges/HPC)", true, cs);
         }
-
+        printDebugResults(tests, false);
         return true;
     }
 

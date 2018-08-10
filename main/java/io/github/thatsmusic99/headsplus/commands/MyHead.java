@@ -23,6 +23,7 @@ import java.util.List;
 public class MyHead implements CommandExecutor, IHeadsPlusCommand {
 
     private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
+    private final HashMap<String, Boolean> tests = new HashMap<>();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String l, String[] strings) {
@@ -51,6 +52,12 @@ public class MyHead implements CommandExecutor, IHeadsPlusCommand {
                     sender.sendMessage(hpc.getString("full-inv"));
                     return true;
                 }
+                tests.put("Whitelist enabled", wlOn);
+                tests.put("Blacklist enabled", blacklistOn);
+                tests.put("Whitelist contains head", wl.contains(head));
+                tests.put("Blacklist contains head", bl.contains(head));
+                tests.put("Can bypass blacklist", sender.hasPermission("headsplus.bypass.blacklist"));
+                tests.put("Can bypass whitelist", sender.hasPermission("headsplus.bypass.whitelist"));
                 if (wlOn) {
                     if (blacklistOn) {
                         if (wl.contains(head)) {
@@ -112,6 +119,7 @@ public class MyHead implements CommandExecutor, IHeadsPlusCommand {
         } catch (Exception e) {
             new DebugPrint(e, "Command (myhead)", true, sender);
         }
+        printDebugResults(tests, true);
 
         return false;
     }

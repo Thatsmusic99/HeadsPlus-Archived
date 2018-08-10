@@ -7,17 +7,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Next extends ItemStack implements Icon {
-
-    public Next() {
-
-    }
-
+public class Head extends ItemStack implements Icon {
     @Override
     public String getIconName() {
-        return "Next Page";
+        return null;
     }
 
     @Override
@@ -27,7 +23,7 @@ public class Next extends ItemStack implements Icon {
 
     @Override
     public Material getDefaultMaterial() {
-        return Material.ARROW;
+        return null;
     }
 
     @Override
@@ -39,5 +35,4 @@ public class Next extends ItemStack implements Icon {
     public String getDefaultDisplayName() {
         return null;
     }
-
 }

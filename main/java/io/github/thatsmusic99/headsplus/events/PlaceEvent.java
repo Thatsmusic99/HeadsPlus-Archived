@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus.events;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
+import io.github.thatsmusic99.headsplus.nms.NewNMSManager;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,6 +15,16 @@ public class PlaceEvent implements Listener {
         try {
             HeadsPlus hp = HeadsPlus.getInstance();
             if (hp.isStoppingPlaceableHeads()) {
+                if (hp.getNMS() instanceof NewNMSManager) {
+                    if (e.getItemInHand().getType() == ((NewNMSManager) hp.getNMS()).getWallSkull()) {
+                        if (!e.getPlayer().hasPermission("headsplus.bypass.preventplacement")) {
+                            if (hp.getNMS().isSellable(e.getItemInHand())) {
+                                e.setCancelled(true);
+                                e.getPlayer().sendMessage(hp.getMessagesConfig().getString("block-place-denied"));
+                            }
+                        }
+                    }
+                }
                 if (e.getItemInHand().getType() == hp.getNMS().getSkullMaterial(1).getType() ) {
                     if (!e.getPlayer().hasPermission("headsplus.bypass.preventplacement")) {
                         if (hp.getNMS().isSellable(e.getItemInHand())) {

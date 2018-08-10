@@ -32,7 +32,7 @@ public class HeadsPlusMainConfig extends ConfigSettings {
         getConfig().addDefault("mysql.port", "3306");
         getConfig().addDefault("mysql.database", "db");
         getConfig().addDefault("mysql.username", "username");
-        getConfig().addDefault("mysql.passworld", "password");
+        getConfig().addDefault("mysql.password", "password");
         getConfig().addDefault("mysql.enabled", false);
         getConfig().addDefault("theme-colours.1", "DARK_BLUE");
         getConfig().addDefault("theme-colours.2", "GOLD");
@@ -63,7 +63,10 @@ public class HeadsPlusMainConfig extends ConfigSettings {
         getConfig().addDefault("plugin.mechanics.sellhead-gui", true);
         getConfig().addDefault("plugin.mechanics.debug.create-debug-files", true);
         getConfig().addDefault("plugin.mechanics.debug.print-stacktraces-in-console", true);
+        getConfig().addDefault("plugin.mechanics.debug.console.enabled", false);
+        getConfig().addDefault("plugin.mechanics.debug.console.level", 1);
         getConfig().addDefault("plugin.mechanics.anvil-menu-search", false);
+        getConfig().set("mysql.passworld", null);
         getConfig().options().copyDefaults(true);
         save();
     }

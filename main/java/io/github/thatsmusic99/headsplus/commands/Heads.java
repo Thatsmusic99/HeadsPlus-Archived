@@ -14,9 +14,15 @@ import java.util.HashMap;
 
 public class Heads implements CommandExecutor, IHeadsPlusCommand {
 
+    private final HashMap<String, Boolean> tests = new HashMap<>();
+
     @Override
     public boolean onCommand(CommandSender cs, Command cmd, String l, String[] args) {
+        tests.clear();
         try {
+            tests.put("Heads enabled", HeadsPlus.getInstance().isUsingHeadDatabase());
+            tests.put("Instance of Player", cs instanceof Player);
+            tests.put("No permission", cs.hasPermission("headsplus.heads"));
             if (HeadsPlus.getInstance().isUsingHeadDatabase()) {
                 if (cs instanceof Player) {
                     Player p = (Player) cs;
@@ -26,6 +32,8 @@ public class Heads implements CommandExecutor, IHeadsPlusCommand {
                         InventoryManager im = InventoryManager.getIM(p);
                         im.setSection("Menu");
                         p.openInventory(im.changePage(true, true, (Player) cs, "Menu"));
+                        printDebugResults(tests, true);
+                        return true;
                     } else {
                         cs.sendMessage(HeadsPlus.getInstance().getMessagesConfig().getString("no-perms"));
                     }
@@ -38,8 +46,8 @@ public class Heads implements CommandExecutor, IHeadsPlusCommand {
         } catch (Exception e) {
             new DebugPrint(e, "Command (heads)", true, cs);
         }
-
-        return true;
+        printDebugResults(tests, false);
+        return false;
     }
 
     @Override

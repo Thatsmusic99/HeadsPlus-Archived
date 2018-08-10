@@ -21,11 +21,6 @@ public class Close extends ItemStack implements Icon {
     }
 
     @Override
-    public int getDefaultPosition() {
-        return 0;
-    }
-
-    @Override
     public Material getDefaultMaterial() {
         return null;
     }

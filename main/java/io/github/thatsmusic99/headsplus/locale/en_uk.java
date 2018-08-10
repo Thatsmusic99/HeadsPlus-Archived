@@ -104,12 +104,12 @@ public class en_uk implements Locale {
 
     @Override
     public String getInvalidPageNumber() {
-        return "%h &cInvalid page number!";
+        return "{header} &cInvalid page number!";
     }
 
     @Override
     public String getInvalidInputInteger() {
-        return "%h &cYou can only use integers in this command!";
+        return "{header} &cYou can only use integers in this command!";
     }
 
     @Override
@@ -119,32 +119,32 @@ public class en_uk implements Locale {
 
     @Override
     public String getHeadAlreadyAdded() {
-        return "%h &3This head is already added!";
+        return "{header} &3This head is already added!";
     }
 
     @Override
     public String getHeadAddedBlacklist() {
-        return "%h &3%p has been added to the blacklist!";
+        return "{header} &3%p has been added to the blacklist!";
     }
 
     @Override
     public String getHeadNotOnBlacklist() {
-        return "%h &3This head is not on the blacklist!";
+        return "{header} &3This head is not on the blacklist!";
     }
 
     @Override
     public String getHeadRemovedBlacklist() {
-        return "%h &3%p has been removed from the blacklist!";
+        return "{header} &3%p has been removed from the blacklist!";
     }
 
     @Override
     public String getHeadAddedWhitelist() {
-        return "%h &3%p has been added to the whitelist!";
+        return "{header} &3%p has been added to the whitelist!";
     }
 
     @Override
     public String getHeadNotOnWhitelist() {
-        return "%h &3This head is not on the whitelist!";
+        return "{header} &3This head is not on the whitelist!";
     }
 
     @Override
@@ -259,12 +259,12 @@ public class en_uk implements Locale {
 
     @Override
     public String getWWhitelistOff() {
-        return "%h &3The world whitelist has been disabled!";
+        return "{header} &3The world whitelist has been disabled!";
     }
 
     @Override
     public String getWWhitelistAlreadyOff() {
-        return "%h &3The world whitelist is already disabled!";
+        return "{header} &3The world whitelist is already disabled!";
     }
 
     @Override
@@ -274,7 +274,7 @@ public class en_uk implements Locale {
 
     @Override
     public String getEmptyBlacklist() {
-        return "%h &cThe blacklist is empty!";
+        return "{header} &cThe blacklist is empty!";
     }
 
     @Override
@@ -489,7 +489,7 @@ public class en_uk implements Locale {
 
     @Override
     public String chCompleteMessage() {
-        return "%h &b%p &3has completed the &b%c &3challenge!";
+        return "{header} &b%p &3has completed the &b{challenge} &3challenge!";
     }
 
     @Override
@@ -529,7 +529,7 @@ public class en_uk implements Locale {
 
     @Override
     public String getAchievedNextLevel() {
-        return "%h &3%p has reached level %lvl&3!";
+        return "{header} &3%p has reached level %lvl&3!";
     }
 
     @Override
@@ -539,12 +539,12 @@ public class en_uk implements Locale {
 
     @Override
     public String getPluginUpToDate() {
-        return "%h &3Plugin is up to date!";
+        return "{header} &3Plugin is up to date!";
     }
 
     @Override
     public String getEnabled() {
-        return "%h &3HeadsPlus has been enabled!";
+        return "{header} &3HeadsPlus has been enabled!";
     }
 
     @Override

@@ -9,21 +9,33 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+import java.util.HashMap;
+
 public class HeadsPlusCommand implements CommandExecutor {
+
+    private final HashMap<String, Boolean> tests = new HashMap<>();
 
     private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 	private final String noPerms = hpc.getString("no-perm");
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	    tests.clear();
         try {
             if ((cmd.getName().equalsIgnoreCase("headsplus")) || (cmd.getName().equalsIgnoreCase("hp"))) {
+                tests.put("Subcommand", args.length > 0);
+
                 if (args.length > 0) {
+                    tests.put("Valid subcommand", getCommandByName(args[0]) != null);
                     if (getCommandByName(args[0]) != null) {
                         IHeadsPlusCommand command = getCommandByName(args[0]);
                         assert command != null;
+                        tests.put("No Permission", !sender.hasPermission(command.getPermission()));
+                        tests.put("Main command", command.isMainCommand());
+                        tests.put("Correct Usage", command.isCorrectUsage(args, sender).get(true) != null);
                         if (sender.hasPermission(command.getPermission())) {
                             if (command.isMainCommand()) {
                                 if (command.isCorrectUsage(args, sender).get(true) != null) {
+                                    command.printDebugResults(tests, true);
                                     return command.fire(args, sender);
                                 } else {
                                     sender.sendMessage(command.isCorrectUsage(args, sender).get(false));
@@ -49,6 +61,7 @@ public class HeadsPlusCommand implements CommandExecutor {
                 }
 
             }
+
             return false;
         } catch (Exception e) {
             new DebugPrint(e, "Command (headsplus)", true, sender);

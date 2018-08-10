@@ -1,14 +1,11 @@
 package io.github.thatsmusic99.headsplus.commands;
 
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.api.SellHeadEvent;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
-import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.nms.NewNMSManager;
@@ -22,31 +19,34 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.lang.reflect.Field;
 import java.util.*;
 
 public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 
 	private final HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
 	private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
-	private final HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().getHeadsXConfig();
 	private final List<String> soldHeads = new ArrayList<>();
 	private final HashMap<String, Integer> hm = new HashMap<>();
     private final String disabled = hpc.getString("disabled");
+    private final HashMap<String, Boolean> tests = new HashMap<>();
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		try {
+            HeadsPlus hp = HeadsPlus.getInstance();
+		    tests.clear();
+            hp.debug("- Starting tests for command: sellhead!", 1);
 			if (sender instanceof Player) {
-			    HeadsPlus hp = HeadsPlus.getInstance();
+                tests.put("Instance of Player", true);
 			    if (hp.canSellHeads()) {
+			        tests.put("Enabled", true);
 			        Player p = (Player) sender;
 			        soldHeads.clear();
 			        hm.clear();
 			        ItemStack invi = checkHand(p);
                     if (args.length == 0 && (sender.hasPermission("headsplus.sellhead"))) { // If sold via hand
+                        tests.put("No arguments", true);
                         if (hp.getConfiguration().getMechanics().getBoolean("sellhead-gui")) {
                             SellheadInventory si = new SellheadInventory();
                             SellheadInventory.setSI(p, si);
@@ -89,12 +89,19 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                             }
                         }
                     } else {
+
                         if (!sender.hasPermission("headsplus.sellhead")) {
+                            tests.put("No permission", true);
                             sender.sendMessage(hpc.getString("no-perm"));
                         } else if (args.length > 0) {
+                            tests.put("No permission", false);
+                            tests.put("No arguments", false);
                             if (args[0].equalsIgnoreCase("all")) {
+
+                                tests.put("Selling all", true);
                                 sellAll(p, args, invi);
                             } else {
+                                tests.put("Selling all", false);
                                 double price = 0.0;
 
                                 for (ItemStack i : p.getInventory()) {
@@ -108,12 +115,18 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                         }
                                     }
                                 } if (price == 0.0) {
+                                    tests.put("Any heads", false);
                                     sender.sendMessage(hpc.getString("no-heads"));
+                                    printDebugResults(tests, false);
                                     return true;
                                 }
+                                tests.put("Any heads", true);
                                 pay(p, args, new ItemStack(Material.AIR), price);
+                                return true;
                             }
                         } else {
+                            tests.put("No permission", false);
+                            tests.put("No arguments", true);
                             String falseItem = hpc.getString("false-item");
                             sender.sendMessage(falseItem);
                         }
@@ -122,11 +135,13 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                     sender.sendMessage(disabled);
                 }
             } else {
+                tests.put("Instance of Player", false);
                 sender.sendMessage("[HeadsPlus] You must be a player to run this command!");
             }
         } catch (Exception e) {
 		    new DebugPrint(e, "Command (sellhead)", true, sender);
 		}
+		printDebugResults(tests, false);
         return false;
 	}
 
@@ -154,6 +169,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 						if (is.getType() == nms().getSkullMaterial(1).getType()) {
                             if (nms().isSellable(is)) {
                                 if (p.getInventory().getHelmet() != null) {
+                                    tests.put("Remove helmet", p.getInventory().getHelmet().isSimilar(is));
                                     if (p.getInventory().getHelmet().isSimilar(is)) {
                                         p.getInventory().setHelmet(new ItemStack(Material.AIR));
                                         HPPlayer hp = HPPlayer.getHPPlayer(p);
@@ -162,6 +178,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                     }
                                 }
                                 if (nms().getOffHand(p) != null) {
+                                    tests.put("Off hand", nms().getOffHand(p).isSimilar(is));
                                     if (nms().getOffHand(p).isSimilar(is)) {
                                         p.getInventory().setItemInOffHand(new ItemStack(Material.AIR));
                                         continue;
@@ -184,6 +201,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 		    			if (is.getType() == nms().getSkullMaterial(1).getType()) {
                             if (nms().isSellable(is)) {
                                 if (p.getInventory().getHelmet() != null) {
+                                    tests.put("Remove helmet", p.getInventory().getHelmet().isSimilar(is));
                                     if (p.getInventory().getHelmet().isSimilar(is)) {
                                         p.getInventory().setHelmet(new ItemStack(Material.AIR));
                                         HPPlayer hp = HPPlayer.getHPPlayer(p);
@@ -192,6 +210,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                     }
                                 }
                                 if (nms().getOffHand(p) != null) {
+                                    tests.put("Off hand", nms().getOffHand(p).isSimilar(is));
                                     if (nms().getOffHand(p).isSimilar(is)) {
                                         p.getInventory().setItemInOffHand(new ItemStack(Material.AIR));
                                         continue;
@@ -242,7 +261,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 		}
 		return p;
 	}
-	private void sellAll(Player p, String[] a, ItemStack i) throws NoSuchFieldException, IllegalAccessException {
+	private void sellAll(Player p, String[] a, ItemStack i) {
 		Double price = 0.0;
 		for (ItemStack is : p.getInventory()) {
             if (is != null) {
@@ -268,57 +287,27 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 
 		pay(p, a, i, price);
 	}
-	private void pay(Player p, String[] a, ItemStack i, double pr) throws NoSuchFieldException, IllegalAccessException {
+	private void pay(Player p, String[] a, ItemStack i, double pr) {
 		Economy econ = HeadsPlus.getInstance().getEconomy();
 		SellHeadEvent she = new SellHeadEvent(pr, soldHeads, p, econ.getBalance(p), econ.getBalance(p) + pr, hm);
 		Bukkit.getServer().getPluginManager().callEvent(she);
+		tests.put("Event cancelled", she.isCancelled());
 		if (!she.isCancelled()) {
+
             EconomyResponse zr = econ.depositPlayer(p, pr);
             String success = hpc.getString("sell-success").replaceAll("\\{price}", Double.toString(zr.amount)).replaceAll("\\{balance}", Double.toString(zr.balance));
+
             if (zr.transactionSuccess()) {
+                tests.put("Transaction success", true);
                 itemRemoval(p, a, i);
                 p.sendMessage(success);
             } else {
+                tests.put("Transaction success", false);
                 p.sendMessage(hpc.getString("cmd-fail"));
+                printDebugResults(tests, false);
             }
         }
 	}
-
-    private void b(List<String> ls, ItemStack i, Player p) throws NoSuchFieldException, IllegalAccessException {
-        for (String l : ls) {
-            if (hpchx.isHPXSkull(l)) {
-                GameProfile gm = h(i);
-                for (Property pr : gm.getProperties().get("textures")) {
-                    if (pr.getValue().equals(hpchx.getTextures(l))) {
-                        if (i.getAmount() > 0) {
-                            p.getInventory().remove(i);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private boolean c(String s, String[] a, ItemStack is, List<String> ls, Player p) {
-        for (String l : ls) {
-            if (a[0].equalsIgnoreCase(s)) {
-                if (nms().getSkullOwnerName((SkullMeta) is.getItemMeta()).equals(l)) {
-                    p.getInventory().remove(is);
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private boolean d(List<String> ls, SkullMeta sms) {
-        for (String l : ls) {
-            if (nms().getSkullOwnerName(sms).equalsIgnoreCase(l)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     private Double f(ItemStack i, Double p, String s) {
 	    String st = nms().getType(i).toLowerCase();
@@ -330,16 +319,6 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
             }
         }
         return p;
-    }
-
-
-    private GameProfile h(ItemStack i) throws NoSuchFieldException, IllegalAccessException {
-        Field pro;
-        pro = ((SkullMeta) i.getItemMeta()).getClass().getDeclaredField("profile");
-        pro.setAccessible(true);
-        GameProfile gm;
-        gm = (GameProfile) pro.get(i.getItemMeta());
-        return gm;
     }
 
     private void i(String s, int amount) {

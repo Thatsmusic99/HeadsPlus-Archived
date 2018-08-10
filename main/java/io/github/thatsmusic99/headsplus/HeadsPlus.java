@@ -98,13 +98,16 @@ public class HeadsPlus extends JavaPlugin {
                 LocaleManager.class.newInstance().setupLocale();
             }
             createInstances();
+            debug("- Checking plugin theme.", 1);
             checkTheme();
+            debug("- Setting up favourites.json.", 1);
             setupJSON();
             if (getConfiguration().getMySQL().getBoolean("enabled")) {
+                debug("- MySQL is to be enabled. Opening connection...", 1);
                 openConnection();
             }
             if (!getConfiguration().getPerks().getBoolean("disable-crafting")) {
-                hpcr = new HeadsPlusCrafting();
+                debug("- Recipes may be added. Creating...", 1);
                 getServer().getPluginManager().registerEvents(new RecipePerms(), this);
             }
             if (!(econ()) && (getConfiguration().getPerks().getBoolean("sellHeads"))) {
@@ -115,18 +118,24 @@ public class HeadsPlus extends JavaPlugin {
             }
 
 
+            debug("- Registering events!", 1);
             registerEvents();
+            debug("- Registering commands!", 1);
             registerCommands();
+            debug("- Registering subcommands!", 1);
             registerSubCommands();
             JoinEvent.reloaded = false;
+            debug("- Creating Metrics!", 1);
             Metrics metrics = new Metrics(this);
             metrics.addCustomChart(new Metrics.SimplePie("languages", () -> LocaleManager.getLocale().getLanguage()));
             metrics.addCustomChart(new Metrics.SimplePie("theme", () -> WordUtils.capitalize(getConfiguration().getMechanics().getString("plugin-theme-dont-change").toLowerCase())));
+            debug("- Metrics complete, can be found at https://bstats.org/plugin/bukkit/HeadsPlus", 2);
             if (getConfiguration().getMechanics().getBoolean("update.check")) {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
                         try {
+                            debug("- Checking for update...", 1);
                             update = UpdateChecker.getUpdate();
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -208,9 +217,9 @@ public class HeadsPlus extends JavaPlugin {
             ConfigurationSection mysql = getConfiguration().getMySQL();
             connection = DriverManager.getConnection("jdbc:mysql://" + mysql.getString("host") + ":" + mysql.getString("port") + "/" + mysql.getString("database") + "?useSSL=false", mysql.getString("username"), mysql.getString("password"));
             Statement st = connection.createStatement();
-            StringBuilder sb = new StringBuilder();
             for (String str : Arrays.asList("headspluslb", "headsplussh", "headspluscraft")) {
-
+                debug("- Creating database for " + str + "...", 2);
+                StringBuilder sb = new StringBuilder();
                 sb.append("CREATE TABLE IF NOT EXISTS `").append(str).append("` (").append("`id` INT NOT NULL AUTO_INCREMENT,").append("`uuid` VARCHAR(45),").append("`total` VARCHAR(45)");
                 for (EntityType e : de.ableEntities) {
                     sb.append(", `").append(e.name()).append("` VARCHAR(45)");
@@ -233,6 +242,7 @@ public class HeadsPlus extends JavaPlugin {
 
             }
             con = true;
+            debug("- Connected to MySQL!", 2);
         }
     }
 
@@ -248,6 +258,7 @@ public class HeadsPlus extends JavaPlugin {
                 fc.getMechanics().set("plugin-theme-dont-change", mt.name());
                 fc.getConfig().options().copyDefaults(true);
                 fc.save();
+                debug("- Theme set to " + mt.name() + "!", 1);
             } catch (Exception ex) {
                 log.warning("[HeadsPlus] Faulty theme was put in! No theme changes will be made.");
             }
@@ -255,50 +266,83 @@ public class HeadsPlus extends JavaPlugin {
     }
 
     private void registerEvents() {
+        debug("- Registering InventoryEvent...", 3);
         getServer().getPluginManager().registerEvents(new InventoryEvent(), this);
+        debug("- Registering HeadInteractEvent...", 3);
         getServer().getPluginManager().registerEvents(new HeadInteractEvent(), this);
+        debug("- Registering DeathEvents...", 3);
         getServer().getPluginManager().registerEvents(de, this);
+        debug("- Registering JoinEvent...", 3);
         getServer().getPluginManager().registerEvents(new JoinEvent(), this);
+        debug("- Registering PlaceEvent...", 3);
         getServer().getPluginManager().registerEvents(new PlaceEvent(), this);
+        debug("- Registering LBEvents...", 3);
         getServer().getPluginManager().registerEvents(new LBEvents(), this);
+        debug("- Registering PlayerDeathEvent...", 3);
         getServer().getPluginManager().registerEvents(new PlayerDeathEvent(), this);
+        debug("- Registering MaskEvent...", 3);
         getServer().getPluginManager().registerEvents(new MaskEvent(), this);
+        debug("- Finished registering events!", 2);
     }
 
     private void registerCommands() {
+        debug("- Registering /headsplus...", 3);
         getCommand("headsplus").setExecutor(new HeadsPlusCommand());
+        debug("- Registering /hp...", 3);
         getCommand("hp").setExecutor(new HeadsPlusCommand());
+        debug("- Registering /hp's tab completer..", 3);
         getCommand("hp").setTabCompleter(new TabComplete());
+        debug("- Registering /head...", 3);
         getCommand("head").setExecutor(new Head());
+        debug("- Registering /heads...", 3);
         getCommand("heads").setExecutor(new Heads());
+        debug("- Registering /myhead...", 3);
         getCommand("myhead").setExecutor(new MyHead());
+        debug("- Registering /hplb...", 3);
         getCommand("hplb").setExecutor(new LeaderboardsCommand());
+        debug("- Registering /hplb's tab completer..", 3);
         getCommand("hplb").setTabCompleter(new TabCompleteLB());
+        debug("- Registering /sellhead...", 3);
         getCommand("sellhead").setExecutor(new SellHead());
+        debug("- Registering /sellhead's tab completer...", 3);
         getCommand("sellhead").setTabCompleter(new TabCompleteSellhead());
+        debug("- Registering /hpc...", 3);
         getCommand("hpc").setExecutor(new ChallengeCommand());
+        debug("- Finished registering commands!", 2);
     }
 
     private void createInstances() {
         config = new HeadsPlusMainConfig();
         cs.add(config);
+        debug("- Instance for HeadsPlusMainConfig created!", 3);
         hpc = new HeadsPlusMessagesConfig(false);
         cs.add(hpc);
+        debug("- Instance for HeadsPlusMessagesConfig created!", 3);
         hpch = new HeadsPlusConfigHeads();
         cs.add(hpch);
+        debug("- Instance for HeadsPlusConfigHeads created!", 3);
         hpchx = new HeadsPlusConfigHeadsX();
         cs.add(hpchx);
+        debug("- Instance for HeadsPlusConfigHeadsX created!", 3);
         hpcr = new HeadsPlusCrafting();
         cs.add(hpcr);
+        debug("- Instance for HeadsPlusCrafting created!", 3);
         de = new DeathEvents();
+        debug("- Instance for DeathEvents created!", 3);
         hplb = new HeadsPlusLeaderboards();
         cs.add(hplb);
+        debug("- Instance for HeadsPlusLeaderboards created!", 3);
         hpchl = new HeadsPlusChallenges();
         cs.add(hpchl);
+        debug("- Instance for HeadsPlusChallenges created!", 3);
         hapi = new HeadsPlusAPI();
+        debug("- Instance for HeadsPlus's API created!", 3);
         mySQLAPI = new MySQLAPI();
+        debug("- Instance for MySQL created!", 3);
         hpl = new HeadsPlusLevels();
         cs.add(hpl);
+        debug("- Instance for HeadsPlusLevels created!", 3);
+        debug("Instances created.", 1);
     }
 
     private boolean setupPermissions() {
@@ -505,5 +549,15 @@ public class HeadsPlus extends JavaPlugin {
 
     public ChatColor getThemeColour(int i) {
         return ChatColor.valueOf(getConfiguration().getConfig().getString("theme-colours." + i));
+    }
+
+    public void debug(String message, int l) {
+        if (getConfiguration().getMechanics().getBoolean("debug.console.enabled")) {
+            int level = getConfiguration().getMechanics().getInt("debug.console.level");
+            if (l <= level) {
+                getLogger().info("Debug: " + message);
+            }
+        }
+
     }
 }

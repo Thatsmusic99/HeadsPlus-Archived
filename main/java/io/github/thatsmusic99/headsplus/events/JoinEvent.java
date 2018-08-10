@@ -24,7 +24,7 @@ public class JoinEvent implements Listener {
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e) {
 		if (e.getPlayer().hasPermission("headsplus.notify")) {
-		    if (HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("update-notify")) {
+		    if (HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("update.notify")) {
                 if (HeadsPlus.getUpdate() != null) {
                     Locale l = LocaleManager.getLocale();
                     new FancyMessage().text(hpc.getString("update-found"))

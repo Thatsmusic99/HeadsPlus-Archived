@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface Icon {
@@ -12,8 +13,6 @@ public interface Icon {
     String getIconName();
 
     void onClick(Player p, InventoryManager im, InventoryClickEvent e);
-
-    int getDefaultPosition();
 
     Material getDefaultMaterial();
 

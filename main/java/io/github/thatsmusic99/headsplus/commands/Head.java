@@ -23,6 +23,7 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
 
     private final HeadsPlus hp = HeadsPlus.getInstance();
     private final HeadsPlusMessagesConfig hpc = hp.getMessagesConfig();
+    private final HashMap<String, Boolean> tests = new HashMap<>();
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         return fire(args, sender);
@@ -61,6 +62,12 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
             sender.sendMessage(hpc.getString("full-inv"));
             return;
         }
+        tests.put("Whitelist enabled", wlOn);
+        tests.put("Blacklist enabled", blacklistOn);
+        tests.put("Whitelist contains head", wl.contains(head));
+        tests.put("Blacklist contains head", bl.contains(head));
+        tests.put("Can bypass blacklist", sender.hasPermission("headsplus.bypass.blacklist"));
+        tests.put("Can bypass whitelist", sender.hasPermission("headsplus.bypass.whitelist"));
         if (wlOn) {
             if (blacklistOn) {
                 if (wl.contains(head)) {
@@ -161,39 +168,48 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
 
     @Override
     public boolean fire(String[] args, CommandSender sender) {
+	    tests.clear();
 	    try {
+	        tests.put("Instance of Player", sender instanceof Player);
             if (sender instanceof Player){
+                tests.put("No permission", !sender.hasPermission("headsplus.head"));
                 if (sender.hasPermission("headsplus.head")) {
+                    tests.put("More than 1 arg", args.length >= 2);
                     if (args.length >= 2) {
+                        tests.put("No Other permission", !sender.hasPermission("headsplus.head.others"));
                         if (sender.hasPermission("headsplus.head.others")) {
+                            tests.put("Player Found", hp.getNMS().getPlayer(args[0]) != null);
                             if (hp.getNMS().getPlayer(args[0]) != null) {
-                                if (args[1].matches("^[A-Za-z0-9_]+$") && (2 < args[1].length()) && (args[1].length() < 17)) {
+                                boolean b = args[1].matches("^[A-Za-z0-9_]+$") && (2 < args[1].length()) && (args[1].length() < 17);
+                                tests.put("Valid name", b);
+                                if (b) {
                                     String[] s = new String[2];
                                     s[0] = args[1];
                                     s[1] = args[0];
                                     giveH(s, (Player) sender, hp.getNMS().getPlayer(args[0]));
+                                    printDebugResults(tests, true);
                                     return true;
                                 } else if (!args[1].matches("^[A-Za-z0-9_]+$")) {
                                     sender.sendMessage(hpc.getString("alpha-names"));
-                                    return true;
                                 } else if (args[1].length() < 3) {
                                     sender.sendMessage(hpc.getString("too-short-head"));
-                                    return true;
                                 } else {
                                     sender.sendMessage(hpc.getString("head-too-long"));
-                                    return true;
                                 }
                             } else {
                                 sender.sendMessage(hpc.getString("player-offline"));
-                                return true;
                             }
+                            printDebugResults(tests, false);
+                            return true;
                         } else {
                             sender.sendMessage(hpc.getString("no-perms"));
-                            return false;
                         }
                     } else if (args.length > 0) {
-                        if (args[0].matches("^[A-Za-z0-9_]+$") && (2 < args[0].length()) && (args[0].length() < 17)) {
+                        boolean b = args[0].matches("^[A-Za-z0-9_]+$") && (2 < args[0].length()) && (args[0].length() < 17);
+                        tests.put("Valid name", b);
+                        if (b) {
                             giveH(args, (Player) sender, (Player) sender);
+                            printDebugResults(tests, true);
                             return true;
                         }
                     } else {
@@ -202,16 +218,14 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
 
                 } else {
                     sender.sendMessage(hpc.getString("no-perms"));
-                    return false;
                 }
             } else {
                 sender.sendMessage(ChatColor.RED + "You must be a player to run this command!");
-                return false;
             }
         } catch (Exception e) {
 	        new DebugPrint(e, "Command (head)", true, sender);
         }
-
+        printDebugResults(tests, false);
         return false;
     }
 }

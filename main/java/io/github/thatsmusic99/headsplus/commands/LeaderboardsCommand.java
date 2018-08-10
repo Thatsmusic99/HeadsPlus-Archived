@@ -22,49 +22,73 @@ public class LeaderboardsCommand implements CommandExecutor, IHeadsPlusCommand {
 
     private PagedHashmaps<OfflinePlayer, Integer> ph;
     private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
+    private final HashMap<String, Boolean> tests = new HashMap<>();
 
     @Override
     public boolean onCommand(CommandSender cs, Command command, String s, String[] args) {
         try {
+            tests.put("No permission", !cs.hasPermission("headsplus.leaderboards"));
+            tests.put("Arguments", args.length > 0);
             if (cs.hasPermission("headsplus.leaderboards")) {
                 if (args.length > 0) {
                     try {
-                        if (new DeathEvents().ableEntities.contains(EntityType.valueOf(args[0].toUpperCase()))) {
+                        boolean b = HeadsPlus.getInstance().getDeathEvents().ableEntities.contains(EntityType.valueOf(args[0].toUpperCase()));
+                        tests.put("Valid Entity", b);
+                        if (b) {
                             if (args.length > 1) {
                                 if (args[1].matches("^[0-9]+$")) {
                                     cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1])));
+                                } else {
+                                    cs.sendMessage(getLeaderboard(args[0], 1));
                                 }
                             } else {
                                 cs.sendMessage(getLeaderboard(args[0], 1));
                             }
+                            printDebugResults(tests, true);
+                            return true;
                         } else if (args[0].equalsIgnoreCase("player")) {
                             if (args.length > 1) {
                                 if (args[1].matches("^[0-9]+$")) {
                                     cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1])));
+                                } else {
+                                    cs.sendMessage(getLeaderboard(args[0], 1));
                                 }
                             } else {
                                 cs.sendMessage(getLeaderboard(args[0], 1));
                             }
+                            printDebugResults(tests, true);
+                            return true;
                         }
                     } catch (IllegalArgumentException ex) {
+                        tests.put("Valid Entity", false);
                         if (args[0].equalsIgnoreCase("total")) {
                             if (args.length > 1) {
                                 if (args[1].matches("^[0-9]+$")) {
                                     cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1])));
+                                } else {
+                                    cs.sendMessage(getLeaderboard(args[0], 1));
                                 }
                             } else {
                                 cs.sendMessage(getLeaderboard(args[0], 1));
                             }
+                            printDebugResults(tests, true);
+                            return true;
                         } else if (args[0].matches("^[0-9]+$")) {
                             cs.sendMessage(getLeaderboard("total", Integer.parseInt(args[0])));
+                            printDebugResults(tests, true);
+                            return true;
                         } else if (args[0].equalsIgnoreCase("player")) {
                             if (args.length > 1) {
                                 if (args[1].matches("^[0-9]+$")) {
                                     cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1])));
+                                } else {
+                                    cs.sendMessage(getLeaderboard(args[0], 1));
                                 }
                             } else {
                                 cs.sendMessage(getLeaderboard(args[0], 1));
                             }
+                            printDebugResults(tests, true);
+                            return true;
                         } else {
                             cs.sendMessage(hpc.getString("invalid-args"));
                         }
@@ -72,12 +96,14 @@ public class LeaderboardsCommand implements CommandExecutor, IHeadsPlusCommand {
 
                 } else {
                     cs.sendMessage(getLeaderboard("total", 1));
+                    printDebugResults(tests, true);
+                    return true;
                 }
             }
         } catch (Exception e) {
             new DebugPrint(e, "Command (leaderboard)", true, cs);
         }
-
+        printDebugResults(tests, false);
         return false;
     }
 

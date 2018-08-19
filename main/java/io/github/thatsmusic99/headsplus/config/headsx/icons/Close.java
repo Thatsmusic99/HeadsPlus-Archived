@@ -17,7 +17,8 @@ public class Close extends ItemStack implements Icon {
 
     @Override
     public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
-
+        e.setCancelled(true);
+        p.closeInventory();
     }
 
     @Override

@@ -155,11 +155,30 @@ public class InventoryEvent implements Listener {
                             if (e.getCurrentItem().getItemMeta().getLore() != null) {
                                 Economy ef = HeadsPlus.getInstance().getEconomy();
                                 Double price = HeadsPlus.getInstance().getNMS().getPrice(e.getCurrentItem());
+                                if (ef == null) {
+                                    p.getInventory().addItem(e.getCurrentItem());
+                                    ItemStack i = new ItemStack(Material.PAPER);
+                                    ItemMeta im = i.getItemMeta();
+                                    im.setDisplayName(ChatColor.GOLD + "[" + ChatColor.YELLOW + "" + ChatColor.BOLD + "Stats" + ChatColor.GOLD + "]");
+                                    List<String> lore = new ArrayList<>();
+                                    lore.add(ChatColor.GREEN + "Total heads: " + this.im.getHeads());
+                                    lore.add(ChatColor.GREEN + "Total pages: " + this.im.getPages());
+                                    lore.add(ChatColor.GREEN + "Total sections: " + this.im.getSections());
+                                    if (HeadsPlus.getInstance().econ()) {
+                                        lore.add(ChatColor.GREEN + "Current balance: " + HeadsPlus.getInstance().getEconomy().getBalance(p));
+                                    }
+                                    lore.add(ChatColor.GREEN + "Current section: " + this.im.getSection());
+                                    im.setLore(lore);
+                                    i.setItemMeta(im);
+                                    e.getInventory().setItem(4, i);
+                                    e.setCancelled(true);
+                                    return;
+                                }
                                 if (price > ef.getBalance(p)) {
                                     p.sendMessage(hpc.getString("not-enough-money"));
                                     return;
                                 }
-                                EconomyResponse er = HeadsPlus.getInstance().getEconomy().withdrawPlayer(p, price);
+                                EconomyResponse er = ef.withdrawPlayer(p, price);
                                 String success = hpc.getString("buy-success").replaceAll("\\{price}", Double.toString(er.amount)).replaceAll("\\{balance}", Double.toString(er.balance));
                                 String fail = hpc.getString("cmd-fail");
                                 if (er.transactionSuccess()) {

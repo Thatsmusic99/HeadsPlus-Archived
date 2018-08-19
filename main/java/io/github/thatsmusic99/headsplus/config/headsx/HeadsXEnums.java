@@ -253,7 +253,17 @@ public enum HeadsXEnums {
     IRON_ORE("iron_ore", "&8[&fIron ore&8]", HPStrings.wood + "MTAxODQzZWM0M2YwODhjOTYzZmZjM2UyZjcxYzY2ZTMxNTU5NDNiMTc3YTFhMzU5ODJiMTIwZjZmNjQ4MjJiYyJ9fX0", "blocks", 1.6),
     EMERALD_ORE("emerald_ore", "&8[&aEmerald Ore&8]", HPStrings.wood + "NDA1Mzg1MTUyN2M0YzllZjMwYTYxZmIwNjdlYmNlOTU3YzcyNmUxNjg3ZjhiNTMwZmI0YTZiZWViYTQzOGJkIn19fQ", "blocks", 1.6),
     END_STONE("end_stone", "&8[&eEnd Stone&8]", HPStrings.wood + "MTlmMjFmNWQ4ODMzMTZmZDY1YTkzNjZmMzJhMzMwMTMxODJlMzM4MWRlYzIxYzE3Yzc4MzU1ZDliZjRmMCJ9fX0", "blocks", 1.6),
-    OAK_LOG("oak_log", "&8[&6Oak Log&8]", HPStrings.wood + "NTRhYWRhNGQ5ZmNlZGE5MDE4NjkxOGQ2Y2EzNWI5YTBlYWQ4ZTRiMTRjOWQ5NDI3MTU3ZWU5YjkzMzlkN2IxIn19fQ", "blocks", 1.6);
+    OAK_LOG("oak_log", "&8[&6Oak Log&8]", HPStrings.wood + "NTRhYWRhNGQ5ZmNlZGE5MDE4NjkxOGQ2Y2EzNWI5YTBlYWQ4ZTRiMTRjOWQ5NDI3MTU3ZWU5YjkzMzlkN2IxIn19fQ", "blocks", 1.6),
+    DIAMOND_BLOCK_2("diamond_block_2", "&8[&bDiamond Block&8]", HPStrings.wood + "M2E0MzgxYTVhYjRhY2M2ZGU4ZDRlZWU3NjllYmE2YmFkYjJmMmI0ZTkzNDJhY2FlMjc1MDI5NWU2MDYwNGE1NyJ9fX0", "blocks", 1.7),
+    EMERALD_BLOCK_2("emerald_block_2", "&8[&aEmerald Block&8]", HPStrings.wood + "YjcyYzA1ZGQ3NjI4OGY0MzI4YTI0MzkxYmY0NzI1ZmQyMjYwNTkyZGIzY2Y5YjJiYzIwMzJkZDA1OTZjZjQ0MCJ9fX0", "blocks", 1.7),
+    GOLD_BLOCK_2("gold_block_2", "&8[&eGold Block&8]", HPStrings.wood + "YTU2NGU1NTM4MGQzOTkwMDJlMDFjZjBiMTI3NzRjZGE2YTdhMjZkODZiNTliZjg2MjkyODRlZjFhMzg3ZDRkMCJ9fX0", "blocks", 1.7),
+    RED_MUSHROOM("red_mushroom", "&8[&cRed Mushroom Block&8]", HPStrings.wood + "ODJlNjQyYmE2N2IwYmFkNWY3YWU5NTlhMjQ3YzlhZDFlYzRhOGM2MjQxNGJkZTU2YTgxMDY0Y2Q4YWY2OTE4YSJ9fX0", "blocks", 1.7),
+    MISSING_TEXTURE("missing_texture", "&8[&dMissing Texture&8]", HPStrings.wood + "YmNjMTEzZGNjZTE1ZmE0NTRjODQ1ZTk5MDk2MmY1ZjE2YTJhOTZmOTk2NTkwYzE2ZTVlMjQ0M2U0ZjgwMTVjNCJ9fX0", "blocks", 1.7),
+    BRAIN_CORAL("brain_coral", "&8[&dBrain Coral&8]", HPStrings.wood + "OTU3ZGQ0M2U4ZjFjZDEzNzI2YzBmOTlhYzQwNDcxNTA0N2QxMmViNDJhMjhmZmM2YWU5YmZiM2I3MGQ3NjQwYSJ9fX0", "blocks", 1.7),
+    BUBBLE_CORAL("bubble_coral", "&8[&dBubble Coral&8]", HPStrings.wood + "MTNmMTgwNWVkY2QzMmI5N2FiMmYxOWEwM2JhYWIxZjhkNGRjNGRiOGVjN2EwMDRiMTRlYjY2NmQwOWZiODdmMiJ9fX0", "blocks", 1.7),
+    FIRE_CORAL("fire_coral", "&8[&cFire Coral&8]", HPStrings.wood + "OWZlOGRlZDNjNzRlYWNkNzg0MTJhOTAzYjkwNGY1NTc3ODUwZDFlMjBkMzQ4NzhmZDc3NTk3YWQxNjMzYmY3NCJ9fX0", "blocks", 1.7),
+    HORN_CORAL("horn_coral", "&8[&eHorn Coral&8]", HPStrings.wood + "MzQ5MWI2ZTZhZTk0NTFjNDdlMDliZjFmZjIzZDUwZmZmODdiYTU5MjdhNTFmNDZmZmVkZjkyNmM1Y2JkZTc3ZiJ9fX0", "blocks", 1.7),
+    TUBE_CORAL("tube_coral", "&8[&9Tube Coral&8]", HPStrings.wood + "MzlmYzNjZjU1MDhkNDBjMTQ2OTlkNWJmN2YyNTI3NTllMTk1NmFmOWE2NmQxNWE2YzM4NTQzNzhjNjFmNmQ5YSJ9fX0", "blocks", 1.7);
 
     final String name;
     final String dn;

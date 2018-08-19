@@ -7,14 +7,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class Search extends ItemStack implements Icon {
+public class Favourites extends ItemStack implements Icon {
     @Override
     public String getIconName() {
-        return "search";
+        return "favourites";
     }
 
     @Override
@@ -24,16 +22,16 @@ public class Search extends ItemStack implements Icon {
 
     @Override
     public Material getDefaultMaterial() {
-        return Material.NAME_TAG;
+        return null;
     }
 
     @Override
     public List<String> getDefaultLore() {
-        return new ArrayList<>();
+        return null;
     }
 
     @Override
     public String getDefaultDisplayName() {
-        return "";
+        return null;
     }
 }

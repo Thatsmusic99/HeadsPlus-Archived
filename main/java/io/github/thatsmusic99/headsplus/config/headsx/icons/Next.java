@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Next extends ItemStack implements Icon {
@@ -32,12 +33,12 @@ public class Next extends ItemStack implements Icon {
 
     @Override
     public List<String> getDefaultLore() {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
     public String getDefaultDisplayName() {
-        return null;
+        return "&a&lNext";
     }
 
 }

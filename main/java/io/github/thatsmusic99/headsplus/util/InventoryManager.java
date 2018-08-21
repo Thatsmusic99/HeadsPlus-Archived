@@ -175,9 +175,10 @@ public class InventoryManager {
                 List<String> c = new ArrayList<>();
                 HashMap<String, String> s = new HashMap<>();
                 for (String str : hpchx.getConfig().getConfigurationSection("heads").getKeys(false)) {
-                    if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', hpchx.getConfig().getString("heads." + str + ".displayname"))).replace("[", "").replace("]", "").contains(term)) {
-                        c.add(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', hpchx.getConfig().getString("heads." + str + ".displayname"))).replace("[", "").replace("]", ""));
-                        s.put(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', hpchx.getConfig().getString("heads." + str + ".displayname"))).replace("[", "").replace("]", ""), str);
+                    String sr = ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', hpchx.getConfig().getString("heads." + str + ".displayname"))).replace("[", "").replace("]", "");
+                    if (sr.contains(term)) {
+                        c.add(sr);
+                        s.put(sr, str);
                     }
                  }
                 s.entrySet().removeIf(stringStringEntry -> !c.contains(stringStringEntry.getKey()));

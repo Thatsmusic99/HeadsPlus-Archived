@@ -8,13 +8,12 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class Search extends ItemStack implements Icon {
+public class Back extends ItemStack implements Icon {
     @Override
     public String getIconName() {
-        return "search";
+        return "back";
     }
 
     @Override
@@ -24,7 +23,7 @@ public class Search extends ItemStack implements Icon {
 
     @Override
     public Material getDefaultMaterial() {
-        return Material.NAME_TAG;
+        return Material.ARROW;
     }
 
     @Override
@@ -34,6 +33,6 @@ public class Search extends ItemStack implements Icon {
 
     @Override
     public String getDefaultDisplayName() {
-        return "&6[&e&lSearch Heads&6]";
+        return "&a&lNext";
     }
 }

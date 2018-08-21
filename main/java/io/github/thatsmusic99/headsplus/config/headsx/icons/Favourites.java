@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Favourites extends ItemStack implements Icon {
@@ -22,16 +23,16 @@ public class Favourites extends ItemStack implements Icon {
 
     @Override
     public Material getDefaultMaterial() {
-        return null;
+        return Material.DIAMOND;
     }
 
     @Override
     public List<String> getDefaultLore() {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
     public String getDefaultDisplayName() {
-        return null;
+        return "&b&lFavourites";
     }
 }

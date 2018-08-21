@@ -3,10 +3,10 @@ package io.github.thatsmusic99.headsplus.config.headsx.inventories;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadInventory;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 
-public class SellheadMenu extends HeadInventory {
+public class ChallengesMenu extends HeadInventory {
     @Override
     protected String getDefaultTitle() {
-        return "HeadsPlus Sellhead menu";
+        return null;
     }
 
     @Override
@@ -16,6 +16,6 @@ public class SellheadMenu extends HeadInventory {
 
     @Override
     public String getDefaultId() {
-        return "sellheadmenu";
+        return null;
     }
 }

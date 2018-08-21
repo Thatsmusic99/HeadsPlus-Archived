@@ -10,7 +10,6 @@ public class HeadMenu extends HeadInventory {
 
     private Inventory inventory;
 
-
     @Override
     protected String getDefaultTitle() {
         return null;
@@ -58,12 +57,27 @@ public class HeadMenu extends HeadInventory {
         s[36] = new Glass();
         s[37] = new Head();
         s[38] = new Head();
+        s[39] = new Head();
+        s[40] = new Head();
+        s[41] = new Head();
+        s[42] = new Head();
+        s[43] = new Head();
+        s[44] = new Glass();
+        s[45] = new Glass();
+        s[46] = new Glass();
+        s[47] = new Glass();
+        s[48] = new Back();
+        s[49] = new Close();
+        s[50] = new Next();
+        s[51] = new Glass();
+        s[52] = new Glass();
+        s[53] = new Glass();
 
         return s;
     }
 
     @Override
     public String getDefaultId() {
-        return null;
+        return "menu";
     }
 }

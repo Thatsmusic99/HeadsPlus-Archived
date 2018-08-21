@@ -1,5 +1,6 @@
 package io.github.thatsmusic99.headsplus.config.headsx.icons;
 
+import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import org.bukkit.Material;
@@ -23,7 +24,13 @@ public class Next extends ItemStack implements Icon {
 
     @Override
     public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
-
+        e.setCancelled(true);
+        p.closeInventory();
+        try {
+            p.openInventory(im.changePage(true, false, p, im.getSection()));
+        } catch (NoSuchFieldException | IllegalAccessException e1) {
+            new DebugPrint(e1, "Changing page (next)", false, p);
+        }
     }
 
     @Override

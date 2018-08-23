@@ -7,8 +7,8 @@ import io.github.thatsmusic99.headsplus.config.headsx.icons.*;
 public class HeadSection extends HeadInventory
 {
     @Override
-    protected String getDefaultTitle() {
-        return null;
+    public String getDefaultTitle() {
+        return "HeadsPlus Head Selector: {page}/{pages}";
     }
 
     @Override
@@ -69,11 +69,16 @@ public class HeadSection extends HeadInventory
         s[52] = new Glass();
         s[53] = new Glass();
 
-        return new Icon[0];
+        return s;
     }
 
     @Override
     public String getDefaultId() {
         return "section:{section}";
+    }
+
+    @Override
+    public String getName() {
+        return "headsection";
     }
 }

@@ -90,4 +90,9 @@ public class Head extends ItemStack implements Icon {
     public String getDefaultDisplayName() {
         return "{head-name}";
     }
+
+    @Override
+    public Icon getReplacementIcon() {
+        return new Air();
+    }
 }

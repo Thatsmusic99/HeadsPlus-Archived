@@ -54,4 +54,8 @@ public interface Icon {
         return Material.getMaterial(HeadsPlus.getInstance().getItems().getConfig().getString("icons." + getIconName() + ".material"));
     }
 
+    default List<String> getLore() {
+        return HeadsPlus.getInstance().getItems().getConfig().getStringList("icons." + getIconName() + ".lore");
+    }
+
 }

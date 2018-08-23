@@ -38,6 +38,14 @@ public class HeadsPlusConfigItems extends ConfigSettings {
                     getConfig().addDefault("icons." + i.getIconName() + ".data-value", 3);
                 } else if (i instanceof ChallengeSection.Easy) {
                     getConfig().addDefault("icons." + i.getIconName() + ".data-value", 13);
+                } else if (i instanceof ChallengeSection.EasyMedium) {
+                    getConfig().addDefault("icons." + i.getIconName() + ".data-value", 5);
+                } else if (i instanceof ChallengeSection.Medium) {
+                    getConfig().addDefault("icons." + i.getIconName() + ".data-value", 4);
+                } else if (i instanceof ChallengeSection.MediumHard) {
+                    getConfig().addDefault("icons." + i.getIconName() + ".data-value", 1);
+                } else if (i instanceof ChallengeSection.Hard) {
+                    getConfig().addDefault("icons." + i.getIconName() + ".data-value", 14);
                 } else {
                     getConfig().addDefault("icons." + i.getIconName() + ".data-value", 0);
                 }

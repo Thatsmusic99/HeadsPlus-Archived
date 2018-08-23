@@ -8,11 +8,9 @@ import org.bukkit.inventory.ItemStack;
 
 public class HeadMenu extends HeadInventory {
 
-    private Inventory inventory;
-
     @Override
     public String getDefaultTitle() {
-        return "";
+        return "HeadsPlus Head Selector: {page}/{pages}";
     }
 
     @Override
@@ -79,5 +77,10 @@ public class HeadMenu extends HeadInventory {
     @Override
     public String getDefaultId() {
         return "menu";
+    }
+
+    @Override
+    public String getName() {
+        return "headmenu";
     }
 }

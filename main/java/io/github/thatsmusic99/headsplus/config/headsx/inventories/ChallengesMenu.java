@@ -51,6 +51,11 @@ public class ChallengesMenu extends HeadInventory {
         s[36] = new Glass();
         s[37] = new Air();
         s[38] = new Air();
+        s[39] = new Air();
+        s[40] = new Air();
+        s[41] = new Air();
+        s[42] = new Air();
+        s[43] = new Air();
         s[44] = new Glass();
         s[45] = new Glass();
         s[46] = new Glass();
@@ -66,7 +71,7 @@ public class ChallengesMenu extends HeadInventory {
 
     @Override
     public String getDefaultId() {
-        return null;
+        return "challenges-menu";
     }
 
     @Override

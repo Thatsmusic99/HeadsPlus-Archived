@@ -5,8 +5,9 @@ import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.config.headsx.icons.*;
 
 public class FavouritesMenu extends HeadInventory {
+
     @Override
-    protected String getDefaultTitle() {
+    public String getDefaultTitle() {
         return "HeadsPlus Head selector: {page}/{pages}";
     }
 
@@ -72,6 +73,11 @@ public class FavouritesMenu extends HeadInventory {
 
     @Override
     public String getDefaultId() {
+        return "favourites";
+    }
+
+    @Override
+    public String getName() {
         return "favourites";
     }
 }

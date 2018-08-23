@@ -17,7 +17,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class Challenge implements Icon {
+
     private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
+
     @Override
     public String getIconName() {
         return "challenge";
@@ -61,5 +63,10 @@ io.github.thatsmusic99.headsplus.api.Challenge challenge = HeadsPlus.getInstance
     @Override
     public String getDefaultDisplayName() {
         return "{challenge-name}";
+    }
+
+    @Override
+    public Icon getReplacementIcon() {
+        return new Air();
     }
 }

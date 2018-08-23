@@ -73,6 +73,7 @@ public class HeadsPlus extends JavaPlugin {
     private HeadsPlusAPI hapi;
     private HeadsPlusLevels hpl;
     private HeadsPlusMainConfig config;
+    private HeadsPlusConfigItems items;
     private final List<Challenge> challenges = new ArrayList<>();
     private NMSManager nms;
     private final List<IHeadsPlusCommand> commands = new ArrayList<>();
@@ -342,6 +343,9 @@ public class HeadsPlus extends JavaPlugin {
         hpl = new HeadsPlusLevels();
         cs.add(hpl);
         debug("- Instance for HeadsPlusLevels created!", 3);
+        items = new HeadsPlusConfigItems();
+        cs.add(items);
+        debug("- Instance for HeadsPlusConfigItems created!", 3);
         debug("Instances created.", 1);
     }
 
@@ -545,6 +549,10 @@ public class HeadsPlus extends JavaPlugin {
 
     public HeadsPlusMainConfig getConfiguration() {
         return config;
+    }
+
+    public HeadsPlusConfigItems getItems() {
+        return items;
     }
 
     public ChatColor getThemeColour(int i) {

@@ -31,23 +31,18 @@ public class Head extends ItemStack implements Icon {
         if (e.getClick().isRightClick()) {
             HPPlayer hpp = HPPlayer.getHPPlayer(p);
             String id = HeadsPlus.getInstance().getNMS().getId(e.getCurrentItem());
+            ItemMeta im2 = e.getCurrentItem().getItemMeta();
+            List<String> s = im2.getLore();
             if (hpp.hasHeadFavourited(id)) {
                 hpp.removeFavourite(id);
-                ItemMeta im2 = e.getCurrentItem().getItemMeta();
-                List<String> s = im2.getLore();
                 s.remove(s.size() - 1);
-                im2.setLore(s);
-                e.getCurrentItem().setItemMeta(im2);
-                e.getInventory().setItem(e.getSlot(), e.getCurrentItem());
             } else {
                 hpp.addFavourite(id);
-                ItemMeta im2 = e.getCurrentItem().getItemMeta();
-                List<String> s = im2.getLore();
                 s.add(ChatColor.GOLD + "Favourite!");
-                im2.setLore(s);
-                e.getCurrentItem().setItemMeta(im2);
-                e.getInventory().setItem(e.getSlot(), e.getCurrentItem());
             }
+            im2.setLore(s);
+            e.getCurrentItem().setItemMeta(im2);
+            e.getInventory().setItem(e.getSlot(), e.getCurrentItem());
             e.setCancelled(true);
         } else {
             if (p.getInventory().firstEmpty() == -1) {

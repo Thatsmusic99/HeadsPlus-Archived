@@ -1,7 +1,9 @@
 package io.github.thatsmusic99.headsplus.config.headsx;
 
 
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.headsx.inventories.*;
+import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,5 +36,26 @@ public abstract class HeadInventory {
     }
 
     public abstract String getName();
+
+    public int getDefaultSize() {
+        return 54;
+    }
+
+    public Icon[] getIconArray() {
+        FileConfiguration fc = HeadsPlus.getInstance().getItems().getConfig();
+        Icon[] icons = new Icon[getSize()];
+        for (int i = 0; i < getSize(); i++) {
+            icons[i] = Icon.getIconFromName(fc.getStringList("inventories." + getName() + ".icons").get(i));
+        }
+        return icons;
+    }
+
+    public String getTitle() {
+        return HeadsPlus.getInstance().getItems().getConfig().getString("inventories." + getName() + ".title");
+    }
+
+    public int getSize() {
+        return HeadsPlus.getInstance().getItems().getConfig().getInt("inventories." + getName() + ".size");
+    }
 
 }

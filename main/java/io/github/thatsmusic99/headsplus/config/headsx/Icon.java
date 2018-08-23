@@ -1,5 +1,6 @@
 package io.github.thatsmusic99.headsplus.config.headsx;
 
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.headsx.icons.*;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import org.bukkit.Material;
@@ -48,4 +49,9 @@ public interface Icon {
         icons.add(new Stats());
         return icons;
     }
+
+    default Material getMaterial() {
+        return Material.getMaterial(HeadsPlus.getInstance().getItems().getConfig().getString("icons." + getIconName() + ".material"));
+    }
+
 }

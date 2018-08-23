@@ -11,8 +11,8 @@ public class HeadMenu extends HeadInventory {
     private Inventory inventory;
 
     @Override
-    protected String getDefaultTitle() {
-        return null;
+    public String getDefaultTitle() {
+        return "";
     }
 
     @Override

@@ -58,4 +58,8 @@ public interface Icon {
         return HeadsPlus.getInstance().getItems().getConfig().getStringList("icons." + getIconName() + ".lore");
     }
 
+    default String getDisplayName() {
+        return HeadsPlus.getInstance().getItems().getConfig().getString("icons." + getIconName() + ".display-name");
+    }
+
 }

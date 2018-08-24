@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.nms.v1_8_R2_NMS;
 
 import com.mojang.authlib.GameProfile;
+import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.nms.SearchGUI;
 import net.minecraft.server.v1_8_R2.EntityPlayer;
@@ -142,5 +143,24 @@ public class v1_8_R2_NMS implements NMSManager {
             return Objects.requireNonNull(i.getTag()).getString("head-section");
         }
         return "";
+    }
+
+    @Override
+    public ItemStack setIcon(ItemStack i, Icon o) {
+        net.minecraft.server.v1_8_R2.ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setString("icon", o.getIconName());
+        return CraftItemStack.asBukkitCopy(is);
+    }
+
+    @Override
+    public Icon getIcon(ItemStack is) {
+        net.minecraft.server.v1_8_R2.ItemStack i = CraftItemStack.asNMSCopy(is);
+        if (i.getTag() != null) {
+            return Icon.getIconFromName(Objects.requireNonNull(i.getTag()).getString("icon"));
+        }
+        return null;
     }
 }

@@ -59,7 +59,7 @@ public class FavouritesMenu extends HeadInventory {
         s[42] = new Head();
         s[43] = new Head();
         s[44] = new Glass();
-        s[45] = new Glass();
+        s[45] = new Menu();
         s[46] = new Glass();
         s[47] = new Glass();
         s[48] = new Back();

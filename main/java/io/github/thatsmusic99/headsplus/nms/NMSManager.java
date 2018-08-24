@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.nms;
 
 import com.mojang.authlib.GameProfile;
+import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.util.MaterialTranslator;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -80,4 +81,8 @@ public interface NMSManager {
             return Material.getMaterial("INK_SACK");
         }
     }
+
+    ItemStack setIcon(ItemStack i, Icon o);
+
+    Icon getIcon(ItemStack i);
 }

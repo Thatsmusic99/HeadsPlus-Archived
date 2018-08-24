@@ -38,7 +38,9 @@ public class Head extends ItemStack implements Icon {
                 s.remove(s.size() - 1);
             } else {
                 hpp.addFavourite(id);
-                s.add(ChatColor.GOLD + "Favourite!");
+                for (String r : getLore()) {
+
+                }
             }
             im2.setLore(s);
             e.getCurrentItem().setItemMeta(im2);

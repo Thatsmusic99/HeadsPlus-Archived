@@ -11,6 +11,10 @@ import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeDiff
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeEnums;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 
+import io.github.thatsmusic99.headsplus.config.headsx.inventories.ChallengesMenu;
+import io.github.thatsmusic99.headsplus.config.headsx.inventories.FavouritesMenu;
+import io.github.thatsmusic99.headsplus.config.headsx.inventories.HeadMenu;
+import io.github.thatsmusic99.headsplus.config.headsx.inventories.HeadSection;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import org.apache.commons.codec.binary.Base64;
 
@@ -27,6 +31,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class InventoryManager {
 
@@ -136,33 +141,31 @@ public class InventoryManager {
 
 
             if (section.equalsIgnoreCase("menu")) {
+                HeadMenu headmenu = new HeadMenu();
                 // if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("options.advent-calender")) {
                 //     sections++;
                 // }
-
+                List<ItemStack> heads = new ArrayList<>();
                 ls = new PagedLists<>(new ArrayList<>(hpchx.getConfig().getConfigurationSection("sections").getKeys(false)), 27);
-                i = create("HeadsPlus Head selector: " + cPage + "/" + ls.getTotalPages());
-                for (Object str : ls.getContentsInPage(cPage)) {
-                    String st = (String) str;
-                    if (hpchx.isHPXSkull(hpchx.getConfig().getString("sections." + st + ".texture"))) {
-                        ItemStack is = hpchx.getSkull(hpchx.getConfig().getString("sections." + st + ".texture"));
+                for (String str : ls.getContentsInPage(cPage)) {
+                    if (hpchx.isHPXSkull(hpchx.getConfig().getString("sections." + str + ".texture"))) {
+                        ItemStack is = hpchx.getSkull(hpchx.getConfig().getString("sections." + str + ".texture"));
                         SkullMeta im = (SkullMeta) is.getItemMeta();
-                        im.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpchx.getConfig().getString("sections." + st + ".display-name")));
+                        im.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpchx.getConfig().getString("sections." + str + ".display-name")));
                         is.setItemMeta(im);
-                        is = hp.getNMS().addSection(is, st);
-                        i.setItem(pos()[timesSent], is);
-                        timesSent++;
+                        is = hp.getNMS().addSection(is, str);
+                        heads.add(is);
                     } else {
                         ItemStack is = hp.getNMS().getSkullMaterial(1);
 
                         SkullMeta sm = (SkullMeta) is.getItemMeta();
-                        sm = hp.getNMS().setSkullOwner(st, sm);
+                        sm = hp.getNMS().setSkullOwner(str, sm);
                         is.setItemMeta(sm);
-                        is = hp.getNMS().addSection(is, st);
-                        i.setItem(pos()[timesSent], is);
-                        timesSent++;
+                        is = hp.getNMS().addSection(is, str);
+                        heads.add(is);
                     }
                 }
+                return headmenu.build(new PagedLists<>(heads, hp.getItems().getConfig().getStringList("inventories.headmenu.icons").stream().filter(l -> !l.equalsIgnoreCase("head")).collect(Collectors.toList()).size()), p, this);
                 //  if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("options.advent-calender")) {
                 //   ItemStack is = HeadsPlusConfigHeadsX.getSkull("HP#snowman_head");
                 //   SkullMeta sm = (SkullMeta) is.getItemMeta();
@@ -183,23 +186,24 @@ public class InventoryManager {
                  }
                 s.entrySet().removeIf(stringStringEntry -> !c.contains(stringStringEntry.getKey()));
                 heads = s.size();
-
+                List<ItemStack> heads = new ArrayList<>();
                 ls = new PagedLists<>(new ArrayList<>(s.values()), 28);
-                i = create("HeadsPlus Head selector: " + cPage + "/" + ls.getTotalPages());
                 for (Object str : ls.getContentsInPage(cPage)) {
                     if (hpchx.getConfig().getBoolean("heads." + str + ".database")) {
-                        skull(String.valueOf(str), i, p);
+                        heads.add(skull(String.valueOf(str), p));
                     }
                 }
+                return new HeadSection().build(new PagedLists<>(heads, hp.getItems().getConfig().getStringList("inventories.headsection.icons").stream().filter(l -> !l.equalsIgnoreCase("head")).collect(Collectors.toList()).size()), p, this);
             } else if (section.equalsIgnoreCase("favourites")) {
                 HPPlayer hps = HPPlayer.getHPPlayer(p);
                 ls = new PagedLists<>(hps.getFavouriteHeads(), 28);
-                i = create("HeadsPlus Head selector: " + cPage + "/" + ls.getTotalPages());
+                List<ItemStack> heads = new ArrayList<>();
                 for (Object str : ls.getContentsInPage(cPage)) {
                     if (hpchx.getConfig().getBoolean("heads." + str + ".database")) {
-                        skull(String.valueOf(str), i, p);
+                        heads.add(skull(String.valueOf(str), p));
                     }
                 }
+                return new FavouritesMenu().build(new PagedLists<>(heads, hp.getItems().getConfig().getStringList("inventories.headsection.icons").stream().filter(l -> !l.equalsIgnoreCase("head")).collect(Collectors.toList()).size()), p, this);
             } else {
                 List<String> l = new ArrayList<>();
                 // if (!section.equalsIgnoreCase("advent_calender")) {
@@ -210,19 +214,20 @@ public class InventoryManager {
                 }
                 heads = l.size();
                 ls = new PagedLists<>(l, 28);
-                i = create("HeadsPlus Head selector: " + cPage + "/" + ls.getTotalPages());
+                List<ItemStack> items = new ArrayList<>();
                 for (Object str : ls.getContentsInPage(cPage)) {
                     if (hpchx.getConfig().getBoolean("heads." + str + ".database")) {
-                        skull(String.valueOf(str), i, p);
+                        items.add(skull(String.valueOf(str), p));
                     }
                 }
+                return new HeadSection().build(new PagedLists<>(items, hp.getItems().getConfig().getStringList("inventories.headsection.icons").stream().filter(lst -> !lst.equalsIgnoreCase("head")).collect(Collectors.toList()).size()), p, this);
                 // } else {
                 //  i = create(54, "HeadsPlus Head selector: page " + cPage + "/" + pages);
                 //  skullChristmas(i, p.getPlayer());
                 //}
 
             }
-            ItemStack fav = new ItemStack(Material.DIAMOND, 1);
+         /*   ItemStack fav = new ItemStack(Material.DIAMOND, 1);
             ItemMeta im3 = fav.getItemMeta();
             im3.setDisplayName(ChatColor.AQUA + "" + ChatColor.BOLD + "Favourites");
             fav.setItemMeta(im3);
@@ -276,7 +281,7 @@ public class InventoryManager {
             is2.setItemMeta(im);
             i.setItem(4, is2);
             timesSent = 0;
-            return i;
+            return i; */
         } else {
             i = create("HeadsPlus challenges: " + cSection);
             DyeColor dc;
@@ -294,27 +299,7 @@ public class InventoryManager {
                 i.setItem(in, isi);
             }
             if (cSection.equalsIgnoreCase("menu")) {
-                for (HeadsPlusChallengeDifficulty hpcd : HeadsPlusChallengeDifficulty.values()) {
-                    ItemStack is = hp.getNMS().getColouredBlock(MaterialTranslator.BlockType.TERRACOTTA, hpcd.color.ordinal());
-                    ItemMeta im = is.getItemMeta();
-                    im.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpcd.dn));
-                    is.setItemMeta(im);
-                    i.setItem(hpcd.i, is);
-                }
-                int cch = hp.getChallengeConfig().getConfig().getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").size();
-                i.setItem(8, isi);
-                ItemStack is2 = new ItemStack(Material.PAPER);
-                ItemMeta im = is2.getItemMeta();
-                im.setDisplayName(ChatColor.GOLD + "[" + ChatColor.YELLOW + "" + ChatColor.BOLD + "Stats" + ChatColor.GOLD + "]");
-                List<String> lore = new ArrayList<>();
-                lore.add(ChatColor.GREEN + "Total challenges: " + HeadsPlusChallengeEnums.values().length);
-                lore.add(ChatColor.GREEN + "Total pages: " + pages);
-                lore.add(ChatColor.GREEN + "Total sections: " + sections) ;
-                lore.add(ChatColor.GREEN + "Completed challenges: " + cch);
-                lore.add(ChatColor.GREEN + "Current section: " + section);
-                im.setLore(lore);
-                is2.setItemMeta(im);
-                i.setItem(4, is2);
+                return new ChallengesMenu().build(null, p, this);
             } else {
                 List<Challenge> cs = new ArrayList<>();
                 for (Challenge c : hp.getChallenges()) {
@@ -385,7 +370,7 @@ public class InventoryManager {
         }
     }
 
-    private void skull(String str, Inventory i, Player p) throws NoSuchFieldException, IllegalAccessException {
+    private ItemStack skull(String str, Player p) throws NoSuchFieldException, IllegalAccessException {
         NMSManager nms = HeadsPlus.getInstance().getNMS();
         ItemStack s = nms.getSkullMaterial(1);
         SkullMeta sm = (SkullMeta) s.getItemMeta();
@@ -430,8 +415,7 @@ public class InventoryManager {
         sm.setLore(price);
         s.setItemMeta(sm);
         s = nms.addDatabaseHead(s, str, pr);
-        i.setItem(pos()[timesSent], s);
-        timesSent++;
+        return s;
     }
 
 

@@ -13,6 +13,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -57,7 +58,7 @@ io.github.thatsmusic99.headsplus.api.Challenge challenge = HeadsPlus.getInstance
 
     @Override
     public List<String> getDefaultLore() {
-        return new ArrayList<>(Collections.singleton("{challenge-lore}"));
+        return new ArrayList<>(Arrays.asList("{challenge-lore}", "{challenge-reward}", "{completed}"));
     }
 
     @Override

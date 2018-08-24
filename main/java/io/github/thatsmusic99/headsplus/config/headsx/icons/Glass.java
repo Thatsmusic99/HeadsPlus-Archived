@@ -24,6 +24,8 @@ public class Glass extends ItemStack implements Icon {
         }
         ItemMeta im = getItemMeta();
         im.setLore(getLore());
+        im.setDisplayName(getDisplayName());
+        setItemMeta(im);
     }
 
     @Override

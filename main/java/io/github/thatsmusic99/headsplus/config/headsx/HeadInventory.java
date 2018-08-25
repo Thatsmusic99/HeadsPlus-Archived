@@ -3,13 +3,16 @@ package io.github.thatsmusic99.headsplus.config.headsx;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
+import io.github.thatsmusic99.headsplus.config.challenges.HPChallengeRewardTypes;
 import io.github.thatsmusic99.headsplus.config.headsx.icons.*;
 import io.github.thatsmusic99.headsplus.config.headsx.inventories.*;
 import io.github.thatsmusic99.headsplus.nms.NewNMSManager;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import io.github.thatsmusic99.headsplus.util.PagedLists;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -90,12 +93,43 @@ public abstract class HeadInventory {
                 i.setItem(o, list.getContentsInPage(inv.getPage()).get(h));
                 h++;
             } else if (getIconArray()[o] instanceof Challenge) {
-                ItemStack is = list.getContentsInPage(inv.getPage()).get(h);
+                ItemStack is = list.getContentsInPage(inv.getPage()).get(h); // Already set
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(getIconArray()[o].getDisplayName().replaceAll("\\{challenge-name}", is.getItemMeta().getDisplayName()));
-                for (int z = 0; z < im.getLore().size(); z++) {
-                    if (!im.getLore().get(z).contains("{challenge-lore}")) {
-                        im.setLore(getIconArray()[o].getLore());
+                List<String> lore = new ArrayList<>();
+                io.github.thatsmusic99.headsplus.api.Challenge c = HeadsPlus.getInstance().getNMS().getChallenge(is);
+                for (int z = 0; z < getIconArray()[o].getLore().size(); z++) {
+                    if (getIconArray()[o].getLore().get(z).contains("{challenge-lore}")) {
+                        for (String s : c.getDescription()) {
+                            lore.add(ChatColor.translateAlternateColorCodes('&', s));
+                        }
+                    }
+                    if (getIconArray()[o].getLore().get(z).contains("{challenge-reward}")) {
+                        StringBuilder sb = new StringBuilder();
+                        HPChallengeRewardTypes re = c.getRewardType();
+                        if (re == HPChallengeRewardTypes.ECO) {
+                            sb.append("$").append(c.getRewardValue().toString());
+                        } else if (re == HPChallengeRewardTypes.GIVE_ITEM) {
+                            try {
+                                Material.valueOf(c.getRewardValue().toString());
+                                sb.append(c.getRewardItemAmount()).append(" ").append(WordUtils.capitalize(c.getRewardValue().toString().toLowerCase().replaceAll("_", " "))).append("(s)");
+                            } catch (IllegalArgumentException ignored) {
+
+                            }
+                        } else if (re == HPChallengeRewardTypes.ADD_GROUP) {
+                            sb.append("Group ").append(c.getRewardValue().toString()).append(" addition");
+                        } else {
+                            sb.append("Group ").append(c.getRewardValue().toString()).append(" removal");
+                        }
+                        lore.add(ChatColor.translateAlternateColorCodes('&', getIconArray()[o].getLore().get(z).replaceAll("\\{challenge-reward}", sb.toString())));
+                    }
+                    if (getIconArray()[o].getLore().get(z).contains("{completed}")) {
+                        if (c.isComplete(sender)) {
+                            lore.add(ChatColor.GOLD + "Complete!");
+                        }
+                    }
+                    if (getIconArray()[o].getLore().get(z).contains("{challenge-xp}")) {
+                        lore.add(ChatColor.translateAlternateColorCodes('&', getIconArray()[o].getLore().get(z).replaceAll("\\{challenge-xp}", String.valueOf(c.getGainedXP()))));
                     }
                 }
                 is.setItemMeta(im);

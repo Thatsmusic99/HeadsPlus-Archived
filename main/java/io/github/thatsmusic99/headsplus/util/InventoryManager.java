@@ -11,10 +11,8 @@ import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeDiff
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeEnums;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 
-import io.github.thatsmusic99.headsplus.config.headsx.inventories.ChallengesMenu;
-import io.github.thatsmusic99.headsplus.config.headsx.inventories.FavouritesMenu;
-import io.github.thatsmusic99.headsplus.config.headsx.inventories.HeadMenu;
-import io.github.thatsmusic99.headsplus.config.headsx.inventories.HeadSection;
+import io.github.thatsmusic99.headsplus.config.headsx.Icon;
+import io.github.thatsmusic99.headsplus.config.headsx.inventories.*;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import org.apache.commons.codec.binary.Base64;
 
@@ -283,21 +281,7 @@ public class InventoryManager {
             timesSent = 0;
             return i; */
         } else {
-            i = create("HeadsPlus challenges: " + cSection);
-            DyeColor dc;
-            try {
-                dc = DyeColor.valueOf(hp.getConfiguration().getMechanics().getString("gui-glass-color").toUpperCase());
-            } catch (Exception e) {
-                dc = DyeColor.values()[8];
-            }
             NMSManager nms = HeadsPlus.getInstance().getNMS();
-            ItemStack isi = nms.getColouredBlock(MaterialTranslator.BlockType.STAINED_GLASS_PANE, dc.ordinal());
-            ItemMeta ims = isi.getItemMeta();
-            ims.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6"));
-            isi.setItemMeta(ims);
-            for (int in : glass()) {
-                i.setItem(in, isi);
-            }
             if (cSection.equalsIgnoreCase("menu")) {
                 return new ChallengesMenu().build(null, p, this);
             } else {
@@ -307,16 +291,18 @@ public class InventoryManager {
                         cs.add(c);
                     }
                 }
-                PagedLists<Challenge> pl = new PagedLists<>(cs, 27);
+                int a = hp.getItems().getConfig().getStringList("inventories.challengesection.icons").stream().filter(lst -> !lst.equalsIgnoreCase("challenge")).collect(Collectors.toList()).size();
+                PagedLists<Challenge> pl = new PagedLists<>(cs, a);
                 int in = 0;
+                List<ItemStack> items = new ArrayList<>();
                 for (Challenge c : pl.getContentsInPage(cPage)) {
                     ItemStack is;
                     if (c.isComplete(p)) {
-                        is = nms.getColouredBlock(MaterialTranslator.BlockType.TERRACOTTA, 13);
+                        is = new ItemStack(((io.github.thatsmusic99.headsplus.config.headsx.icons.Challenge)Icon.getIconFromName("challenge")).getCompleteMaterial(), 1, (byte) hp.getItems().getConfig().getInt("icons.challenge.complete-data-value"));
                     } else {
-                        is = nms.getColouredBlock(MaterialTranslator.BlockType.TERRACOTTA, 14);
+                        is = new ItemStack(Icon.getIconFromName("challenge").getMaterial(), 1, (byte) hp.getItems().getConfig().getInt("icons.challenge.data-value"));
                     }
-                    ItemMeta im = is.getItemMeta();
+                  /*  ItemMeta im = is.getItemMeta();
                     im.setDisplayName(ChatColor.translateAlternateColorCodes('&', c.getChallengeHeader()));
                     List<String> lore = new ArrayList<>();
                     for (String st : c.getDescription()) {
@@ -345,14 +331,14 @@ public class InventoryManager {
                         lore.add(ChatColor.GREEN + "Completed!");
                     }
                     im.setLore(lore);
-                    is.setItemMeta(im);
-                    i.setItem(pos()[in], is);
+                    is.setItemMeta(im); */
+                    is = nms.setChallenge(is, c);
+                    items.add(is);
                     in++;
                 }
 
-                int ch = hp.getChallenges().size();
+           /*     int ch = hp.getChallenges().size();
                 int cch = hp.getChallengeConfig().getConfig().getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").size();
-                setItem(i, "Back", 8);
                 ItemStack is2 = new ItemStack(Material.PAPER);
                 ItemMeta im = is2.getItemMeta();
                 im.setDisplayName(ChatColor.GOLD + "[" + ChatColor.YELLOW + "" + ChatColor.BOLD + "Stats" + ChatColor.GOLD + "]");
@@ -363,10 +349,9 @@ public class InventoryManager {
                 lore.add(ChatColor.GREEN + "Completed challenges: " + cch);
                 lore.add(ChatColor.GREEN + "Current section: " + section);
                 im.setLore(lore);
-                is2.setItemMeta(im);
-                i.setItem(4, is2);
+                is2.setItemMeta(im); */
+                return new ChallengeSection().build(new PagedLists<>(items, hp.getItems().getConfig().getStringList("inventories.challengesection.icons").stream().filter(lst -> !lst.equalsIgnoreCase("challenge")).collect(Collectors.toList()).size()), p, this);
             }
-            return i;
         }
     }
 

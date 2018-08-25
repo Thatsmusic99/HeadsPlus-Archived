@@ -568,4 +568,13 @@ public class HeadsPlus extends JavaPlugin {
         }
 
     }
+
+    public Challenge getChallengeByName(String name) {
+        for (Challenge c : getChallenges()) {
+            if (c.getConfigName().equalsIgnoreCase(name)) {
+                return c;
+            }
+        }
+        return null;
+    }
 }

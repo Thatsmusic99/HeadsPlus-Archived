@@ -28,7 +28,7 @@ public class Challenge implements Icon {
 
     @Override
     public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
-io.github.thatsmusic99.headsplus.api.Challenge challenge = HeadsPlus.getInstance().getAPI().getChallenge(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()));
+io.github.thatsmusic99.headsplus.api.Challenge challenge = HeadsPlus.getInstance().getNMS().getChallenge(e.getCurrentItem());
         try {
             if (challenge != null) {
                 if (!challenge.isComplete(p)) {
@@ -58,7 +58,7 @@ io.github.thatsmusic99.headsplus.api.Challenge challenge = HeadsPlus.getInstance
 
     @Override
     public List<String> getDefaultLore() {
-        return new ArrayList<>(Arrays.asList("{challenge-lore}", "{challenge-reward}", "{completed}"));
+        return new ArrayList<>(Arrays.asList("{challenge-lore}", "&6Reward: &a{challenge-reward}", "&6XP: {challenge-xp}", "{completed}"));
     }
 
     @Override

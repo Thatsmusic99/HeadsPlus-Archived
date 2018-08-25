@@ -6,6 +6,7 @@ import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeDifficulty;
+import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.nms.SearchGUI;
 import io.github.thatsmusic99.headsplus.util.ChatListenerUtil;
@@ -42,12 +43,14 @@ public class InventoryEvent implements Listener {
             im = InventoryManager.getIM(p);
             NMSManager nms = HeadsPlus.getInstance().getNMS();
             // int month = Calendar.getInstance().get(Calendar.MONTH);
-            if (e.getInventory().getName().equalsIgnoreCase("HeadsPlus Head selector: " + im.getPage() + "/" + im.getPages())) {
-                try {
+            if (im.getType().equalsIgnoreCase("heads")) {
+               // try {
                     if (e.getRawSlot() < 54) {
                         e.setCancelled(true);
                     }
-                    if (e.getCurrentItem().getType().equals(Material.BARRIER)) {
+                    Icon i = nms.getIcon(e.getCurrentItem());
+                    i.onClick(p, im, e);
+                /*    if (e.getCurrentItem().getType().equals(Material.BARRIER)) {
                         e.setCancelled(true);
                         p.closeInventory();
                     } else if (e.getCurrentItem().getType().equals(nms.getSkullMaterial(1).getType())) {
@@ -57,7 +60,7 @@ public class InventoryEvent implements Listener {
                             p.openInventory(im.changePage(false, true, p, section));
                             e.setCancelled(true);
                             return;
-                        } /* else if (InventoryManager.getSection().equalsIgnoreCase("advent_calender")) {
+                        } else if (InventoryManager.getSection().equalsIgnoreCase("advent_calender")) {
                         if (!(month == 11)) { // TODO Change for testing
                             e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getChristmasDeniedMessage()));
                             e.setCancelled(true);
@@ -124,7 +127,7 @@ public class InventoryEvent implements Listener {
                         e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlusMessagesConfig.getConfig().getString("xmas-denied")));
                         e.setCancelled(true);
                         return;
-                    } */
+                    }
                         if (e.getClick().isRightClick()) {
                             HPPlayer hpp = HPPlayer.getHPPlayer(p);
                             String id = HeadsPlus.getInstance().getNMS().getId(e.getCurrentItem());
@@ -289,10 +292,11 @@ public class InventoryEvent implements Listener {
                     }
                 } catch (NullPointerException ex) {
                     e.setCancelled(true);
-                }
+                } */
             } else if (im.getType().equalsIgnoreCase("chal")) {
-                if (e.getInventory().getName().startsWith("HeadsPlus")) {
-                    try {
+                Icon i = nms.getIcon(e.getCurrentItem());
+                i.onClick(p, im, e);
+               /*     try {
                         if (im.getSection().equalsIgnoreCase("menu")) {
                             ItemStack i = e.getCurrentItem();
                             if (i.getType().equals(nms.getColouredBlock(MaterialTranslator.BlockType.TERRACOTTA, 0).getType())) {
@@ -338,8 +342,8 @@ public class InventoryEvent implements Listener {
                         }
                     } catch (NullPointerException ex) {
                         e.setCancelled(true);
-                    }
-                }
+                    } */
+
             }
         } catch (Exception ex) {
             new DebugPrint(ex, "Event (InventoryInteractEvent)", false, null);

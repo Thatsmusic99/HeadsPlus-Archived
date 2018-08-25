@@ -55,7 +55,6 @@ public class HeadsPlusMainConfig extends ConfigSettings {
         getConfig().addDefault("plugin.perks.mask-powerups", true);
         getConfig().addDefault("plugin.mechanics.theme", "classic");
         getConfig().addDefault("plugin.mechanics.plugin-theme-dont-change", "classic");
-        getConfig().addDefault("plugin.mechanics.gui-glass-color", "SILVER");
         getConfig().addDefault("plugin.mechanics.update.check", true);
         getConfig().addDefault("plugin.mechanics.update.notify", true);
         getConfig().addDefault("plugin.mechanics.allow-looting-enchantment", true);

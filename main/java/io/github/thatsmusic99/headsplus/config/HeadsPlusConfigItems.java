@@ -62,5 +62,8 @@ public class HeadsPlusConfigItems extends ConfigSettings {
              getConfig().addDefault("inventories." + inv.getName() + ".icons", icons);
              getConfig().addDefault("inventories." + inv.getName() + ".size", 54);
         }
+
+        getConfig().options().copyDefaults(true);
+        save();
     }
 }

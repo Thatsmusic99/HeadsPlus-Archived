@@ -22,12 +22,12 @@ public class HeadsPlusConfigItems extends ConfigSettings {
     @Override
     protected void load(boolean nullp) {
         for (Icon i : Icon.getIcons()) {
-            getConfig().addDefault("icons." + i.getIconName() + ".material", i.getDefaultMaterial());
+            getConfig().addDefault("icons." + i.getIconName() + ".material", i.getDefaultMaterial().name());
             getConfig().addDefault("icons." + i.getIconName() + ".display-name", i.getDefaultDisplayName());
             getConfig().addDefault("icons." + i.getIconName() + ".lore", i.getDefaultLore());
             getConfig().addDefault("icons." + i.getIconName() + ".replacement", i.getReplacementIcon().getIconName());
             if (i instanceof Challenge) {
-                getConfig().addDefault("icons." + i.getIconName() + ".complete-material", ((Challenge) i).getCompleteMaterial());
+                getConfig().addDefault("icons." + i.getIconName() + ".complete-material", ((Challenge) i).getCompleteMaterial().name());
             }
             if (!(HeadsPlus.getInstance().getNMS() instanceof NewNMSManager)) {
                 if (i instanceof Challenge) {

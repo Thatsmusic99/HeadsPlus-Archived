@@ -34,6 +34,7 @@ public class ChallengesMenu extends HeadInventory {
         s[16] = new Air();
         s[17] = new Glass();
         s[18] = new Glass();
+        s[19] = new Air();
         s[20] = new ChallengeSection.Easy();
         s[21] = new Air();
         s[22] = new ChallengeSection.EasyMedium();
@@ -47,6 +48,8 @@ public class ChallengesMenu extends HeadInventory {
         s[30] = new ChallengeSection.MediumHard();
         s[31] = new Air();
         s[32] = new ChallengeSection.Hard();
+        s[33] = new Air();
+        s[34] = new Air();
         s[35] = new Glass();
         s[36] = new Glass();
         s[37] = new Air();

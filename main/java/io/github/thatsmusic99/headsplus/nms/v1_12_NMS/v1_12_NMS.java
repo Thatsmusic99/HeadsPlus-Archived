@@ -2,6 +2,8 @@ package io.github.thatsmusic99.headsplus.nms.v1_12_NMS;
 
 import com.mojang.authlib.GameProfile;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.api.Challenge;
+import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.nms.SearchGUI;
 import net.minecraft.server.v1_12_R1.EntityPlayer;
@@ -139,5 +141,43 @@ public class v1_12_NMS implements NMSManager {
             return Objects.requireNonNull(i.getTag()).getString("head-section");
         }
         return "";
+    }
+
+    @Override
+    public org.bukkit.inventory.ItemStack setIcon(org.bukkit.inventory.ItemStack i, Icon o) {
+        ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setString("icon", o.getIconName());
+        return CraftItemStack.asBukkitCopy(is);
+    }
+
+    @Override
+    public Icon getIcon(org.bukkit.inventory.ItemStack is) {
+        ItemStack i = CraftItemStack.asNMSCopy(is);
+        if (i.getTag() != null) {
+            return Icon.getIconFromName(Objects.requireNonNull(i.getTag()).getString("icon"));
+        }
+        return null;
+    }
+
+    @Override
+    public org.bukkit.inventory.ItemStack setChallenge(org.bukkit.inventory.ItemStack i, Challenge a) {
+        ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setString("challenge", a.getConfigName());
+        return CraftItemStack.asBukkitCopy(is);
+    }
+
+    @Override
+    public Challenge getChallenge(org.bukkit.inventory.ItemStack is) {
+        ItemStack i = CraftItemStack.asNMSCopy(is);
+        if (i.getTag() != null) {
+            return HeadsPlus.getInstance().getChallengeByName(Objects.requireNonNull(i.getTag()).getString("challenge"));
+        }
+        return null;
     }
 }

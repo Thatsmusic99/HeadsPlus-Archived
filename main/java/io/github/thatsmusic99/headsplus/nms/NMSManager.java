@@ -1,6 +1,8 @@
 package io.github.thatsmusic99.headsplus.nms;
 
 import com.mojang.authlib.GameProfile;
+import io.github.thatsmusic99.headsplus.api.Challenge;
+import io.github.thatsmusic99.headsplus.config.challenges.HPChallengeRewardTypes;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.util.MaterialTranslator;
 import org.bukkit.Material;
@@ -85,4 +87,9 @@ public interface NMSManager {
     ItemStack setIcon(ItemStack i, Icon o);
 
     Icon getIcon(ItemStack i);
+
+    ItemStack setChallenge(ItemStack i, Challenge a);
+
+    Challenge getChallenge(ItemStack is);
+
 }

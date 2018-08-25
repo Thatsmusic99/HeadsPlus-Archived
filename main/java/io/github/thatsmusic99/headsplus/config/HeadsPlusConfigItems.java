@@ -56,6 +56,7 @@ public class HeadsPlusConfigItems extends ConfigSettings {
              getConfig().addDefault("inventories." + inv.getName() + ".title", inv.getDefaultTitle());
              List<String> icons = new ArrayList<>();
              for (Icon i : inv.getDefaultItems()) {
+                 System.out.println(inv.getName());
                  icons.add(i.getIconName());
              }
              getConfig().addDefault("inventories." + inv.getName() + ".icons", icons);

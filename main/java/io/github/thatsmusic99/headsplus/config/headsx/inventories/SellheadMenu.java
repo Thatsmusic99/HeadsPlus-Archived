@@ -67,6 +67,7 @@ public class SellheadMenu extends HeadInventory {
         s[50] = new Glass();
         s[51] = new Glass();
         s[52] = new Glass();
+        s[53] = new Glass();
         return s;
     }
 

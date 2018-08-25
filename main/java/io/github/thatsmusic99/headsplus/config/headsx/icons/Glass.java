@@ -17,17 +17,6 @@ import java.util.List;
 
 public class Glass extends ItemStack implements Icon {
 
-    public Glass() {
-        setType(getMaterial());
-        if (!(HeadsPlus.getInstance().getNMS() instanceof NewNMSManager)) {
-            setDurability((short) HeadsPlus.getInstance().getItems().getConfig().getInt("icons.glass.data-value"));
-        }
-        ItemMeta im = getItemMeta();
-        im.setLore(getLore());
-        im.setDisplayName(getDisplayName());
-        setItemMeta(im);
-    }
-
     @Override
     public String getIconName() {
         return "glass";

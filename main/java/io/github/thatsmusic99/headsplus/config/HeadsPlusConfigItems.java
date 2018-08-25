@@ -16,6 +16,7 @@ public class HeadsPlusConfigItems extends ConfigSettings {
 
     public HeadsPlusConfigItems() {
         conName = "inventories";
+        enable(false);
     }
 
     @Override

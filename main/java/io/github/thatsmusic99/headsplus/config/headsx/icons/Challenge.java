@@ -14,7 +14,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class Challenge implements Icon {
@@ -58,7 +57,7 @@ io.github.thatsmusic99.headsplus.api.Challenge challenge = HeadsPlus.getInstance
 
     @Override
     public List<String> getDefaultLore() {
-        return new ArrayList<>(Arrays.asList("{challenge-lore}", "&6Reward: &a{challenge-reward}", "&6XP: {challenge-xp}", "{completed}"));
+        return new ArrayList<>(Arrays.asList("{challenge-lore}", "&6Reward: &a{challenge-reward}", "&6XP: &a{challenge-xp}", "{completed}"));
     }
 
     @Override
@@ -69,5 +68,11 @@ io.github.thatsmusic99.headsplus.api.Challenge challenge = HeadsPlus.getInstance
     @Override
     public Icon getReplacementIcon() {
         return new Air();
+    }
+
+    @Override
+    public List<String> getLore() {
+        System.out.println("icons." + getIconName() + ".lore");
+        return HeadsPlus.getInstance().getItems().getConfig().getStringList("icons." + getIconName() + ".lore");
     }
 }

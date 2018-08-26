@@ -1,5 +1,6 @@
 package io.github.thatsmusic99.headsplus.config.headsx.icons;
 
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
@@ -41,5 +42,10 @@ public class Favourites extends ItemStack implements Icon {
     @Override
     public String getDefaultDisplayName() {
         return "&b&lFavourites";
+    }
+
+    @Override
+    public List<String> getLore() {
+        return HeadsPlus.getInstance().getItems().getConfig().getStringList("icons." + getIconName() + ".lore");
     }
 }

@@ -45,10 +45,12 @@ public class InventoryEvent implements Listener {
             // int month = Calendar.getInstance().get(Calendar.MONTH);
             if (im.getType().equalsIgnoreCase("heads")) {
                // try {
+                    Icon i = nms.getIcon(e.getCurrentItem());
+                    if (i == null) return;
                     if (e.getRawSlot() < 54) {
                         e.setCancelled(true);
                     }
-                    Icon i = nms.getIcon(e.getCurrentItem());
+
                     i.onClick(p, im, e);
                 /*    if (e.getCurrentItem().getType().equals(Material.BARRIER)) {
                         e.setCancelled(true);

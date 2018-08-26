@@ -1,5 +1,6 @@
 package io.github.thatsmusic99.headsplus.config.headsx.icons;
 
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import org.bukkit.Material;
@@ -35,5 +36,11 @@ public class Air implements Icon {
     public String getDefaultDisplayName() {
         // DOESN'T EVEN HAVE A DISPLAY NAME
         return "";
+    }
+
+    @Override
+    public List<String> getLore() {
+        System.out.println("icons." + getIconName() + ".lore");
+        return HeadsPlus.getInstance().getItems().getConfig().getStringList("icons." + getIconName() + ".lore");
     }
 }

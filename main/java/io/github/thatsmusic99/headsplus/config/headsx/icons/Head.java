@@ -97,4 +97,10 @@ public class Head extends ItemStack implements Icon {
     public Icon getReplacementIcon() {
         return new Air();
     }
+
+    @Override
+    public List<String> getLore() {
+        System.out.println("icons." + getIconName() + ".lore");
+        return HeadsPlus.getInstance().getItems().getConfig().getStringList("icons." + getIconName() + ".lore");
+    }
 }

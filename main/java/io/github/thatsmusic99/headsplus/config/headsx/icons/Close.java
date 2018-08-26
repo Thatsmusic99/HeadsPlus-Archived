@@ -1,5 +1,6 @@
 package io.github.thatsmusic99.headsplus.config.headsx.icons;
 
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import org.bukkit.Material;
@@ -35,5 +36,10 @@ public class Close extends ItemStack implements Icon {
     @Override
     public String getDefaultDisplayName() {
         return "&c&lClose Menu";
+    }
+
+    @Override
+    public List<String> getLore() {
+        return HeadsPlus.getInstance().getItems().getConfig().getStringList("icons." + getIconName() + ".lore");
     }
 }

@@ -76,4 +76,10 @@ public class Search extends ItemStack implements Icon {
     public String getDefaultDisplayName() {
         return "&6[&e&lSearch Heads&6]";
     }
+
+    @Override
+    public List<String> getLore() {
+        System.out.println("icons." + getIconName() + ".lore");
+        return HeadsPlus.getInstance().getItems().getConfig().getStringList("icons." + getIconName() + ".lore");
+    }
 }

@@ -186,5 +186,11 @@ public class ChallengeSection {
         public String getDefaultDisplayName() {
             return "&8[&c&lHard&8]";
         }
+
+        @Override
+        public List<String> getLore() {
+            System.out.println("icons." + getIconName() + ".lore");
+            return HeadsPlus.getInstance().getItems().getConfig().getStringList("icons." + getIconName() + ".lore");
+        }
     }
 }

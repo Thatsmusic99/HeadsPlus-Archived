@@ -1,5 +1,6 @@
 package io.github.thatsmusic99.headsplus.config.headsx.icons;
 
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import org.bukkit.ChatColor;
@@ -42,4 +43,9 @@ public class Stats extends ItemStack implements Icon {
     public String getDefaultDisplayName() {
         return "&6&l[&e&lStats&6&l]";
     }
+    @Override
+    public List<String> getLore() {
+        return HeadsPlus.getInstance().getItems().getConfig().getStringList("icons." + getIconName() + ".lore");
+    }
+
 }

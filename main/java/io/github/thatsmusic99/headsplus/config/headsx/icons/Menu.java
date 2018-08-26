@@ -1,5 +1,6 @@
 package io.github.thatsmusic99.headsplus.config.headsx.icons;
 
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
@@ -42,5 +43,11 @@ public class Menu extends ItemStack implements Icon {
     @Override
     public String getDefaultDisplayName() {
         return "&a&lMain Menu";
+    }
+
+    @Override
+    public List<String> getLore() {
+        System.out.println("icons." + getIconName() + ".lore");
+        return HeadsPlus.getInstance().getItems().getConfig().getStringList("icons." + getIconName() + ".lore");
     }
 }

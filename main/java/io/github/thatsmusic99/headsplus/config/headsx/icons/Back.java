@@ -41,7 +41,7 @@ public class Back extends ItemStack implements Icon {
 
     @Override
     public String getDefaultDisplayName() {
-        return "&a&lNext";
+        return "&a&lBack";
     }
 
     @Override

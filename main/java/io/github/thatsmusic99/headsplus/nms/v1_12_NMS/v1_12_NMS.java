@@ -180,4 +180,14 @@ public class v1_12_NMS implements NMSManager {
         }
         return null;
     }
+
+    @Override
+    public org.bukkit.inventory.ItemStack removeIcon(org.bukkit.inventory.ItemStack i) {
+        ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setString("icon", "");
+        return CraftItemStack.asBukkitCopy(is);
+    }
 }

@@ -184,4 +184,14 @@ public class v1_8_R1_NMS implements NMSManager {
         }
         return null;
     }
+
+    @Override
+    public ItemStack removeIcon(ItemStack i) {
+        net.minecraft.server.v1_8_R1.ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setString("icon", "");
+        return CraftItemStack.asBukkitCopy(is);
+    }
 }

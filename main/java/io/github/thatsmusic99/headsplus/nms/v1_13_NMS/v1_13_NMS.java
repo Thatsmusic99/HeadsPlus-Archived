@@ -179,4 +179,14 @@ public class v1_13_NMS implements NewNMSManager {
         return null;
     }
 
+    @Override
+    public ItemStack removeIcon(ItemStack i) {
+        net.minecraft.server.v1_13_R1.ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setString("icon", "");
+        return CraftItemStack.asBukkitCopy(is);
+    }
+
 }

@@ -92,4 +92,6 @@ public interface NMSManager {
 
     Challenge getChallenge(ItemStack is);
 
+    ItemStack removeIcon(ItemStack i);
+
 }

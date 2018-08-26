@@ -169,4 +169,14 @@ public class V1_9_NMS2 implements NMSManager {
     public Challenge getChallenge(org.bukkit.inventory.ItemStack is) {
         return null;
     }
+
+    @Override
+    public org.bukkit.inventory.ItemStack removeIcon(org.bukkit.inventory.ItemStack i) {
+        ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setString("icon", "");
+        return CraftItemStack.asBukkitCopy(is);
+    }
 }

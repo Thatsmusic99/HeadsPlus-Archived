@@ -44,6 +44,7 @@ public abstract class HeadInventory {
     public static List<HeadInventory> getInventories() {
         List<HeadInventory> inventories = new ArrayList<>();
         inventories.add(new ChallengesMenu());
+        inventories.add(new ChallengeSection());
         inventories.add(new FavouritesMenu());
         inventories.add(new HeadMenu());
         inventories.add(new HeadSection());

@@ -48,6 +48,12 @@ public interface Icon {
         icons.add(new Search());
         icons.add(new Stats());
         icons.add(new Air());
+        icons.add(new HeadSection());
+        icons.add(new ChallengeSection.Easy());
+        icons.add(new ChallengeSection.EasyMedium());
+        icons.add(new ChallengeSection.Medium());
+        icons.add(new ChallengeSection.MediumHard());
+        icons.add(new ChallengeSection.Hard());
         return icons;
     }
 

@@ -4,6 +4,7 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
+import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
@@ -32,13 +33,21 @@ public class Head extends ItemStack implements Icon {
             HPPlayer hpp = HPPlayer.getHPPlayer(p);
             String id = HeadsPlus.getInstance().getNMS().getId(e.getCurrentItem());
             ItemMeta im2 = e.getCurrentItem().getItemMeta();
-            List<String> s = im2.getLore();
+            List<String> s = new ArrayList<>();
             if (hpp.hasHeadFavourited(id)) {
                 hpp.removeFavourite(id);
-                s.remove(s.size() - 1);
+                NMSManager nms = HeadsPlus.getInstance().getNMS();
+                for (String r : getLore()) {
+                    s.add(ChatColor.translateAlternateColorCodes('&', r.replaceAll("\\{price}", String.valueOf(nms.getPrice(e.getCurrentItem())))
+                            .replaceAll("\\{favourite}", HPPlayer.getHPPlayer(p).hasHeadFavourited(nms.getId(e.getCurrentItem())) ? ChatColor.GOLD + "Favourite!" : "")));
+
+                }
             } else {
                 hpp.addFavourite(id);
+                NMSManager nms = HeadsPlus.getInstance().getNMS();
                 for (String r : getLore()) {
+                    s.add(ChatColor.translateAlternateColorCodes('&', r.replaceAll("\\{price}", String.valueOf(nms.getPrice(e.getCurrentItem())))
+                            .replaceAll("\\{favourite}", HPPlayer.getHPPlayer(p).hasHeadFavourited(nms.getId(e.getCurrentItem())) ? ChatColor.GOLD + "Favourite!" : "")));
 
                 }
             }
@@ -64,7 +73,7 @@ public class Head extends ItemStack implements Icon {
                 String fail = hpc.getString("cmd-fail");
                 if (er.transactionSuccess()) {
                     p.sendMessage(success);
-                    p.getInventory().addItem(e.getCurrentItem());
+                    p.getInventory().addItem(HeadsPlus.getInstance().getNMS().removeIcon(e.getCurrentItem()));
                     e.setCancelled(true);
                     return;
                 } else {

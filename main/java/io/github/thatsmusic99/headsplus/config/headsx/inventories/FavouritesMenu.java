@@ -22,8 +22,8 @@ public class FavouritesMenu extends HeadInventory {
         s[5] = new Glass();
         s[6] = new Glass();
         s[7] = new Glass();
-        s[8] = new Glass();
-        s[9] = new Search();
+        s[8] = new Search();
+        s[9] = new Glass();
         s[10] = new Head();
         s[11] = new Head();
         s[12] = new Head();

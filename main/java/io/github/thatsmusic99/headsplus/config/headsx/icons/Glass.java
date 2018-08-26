@@ -44,7 +44,6 @@ public class Glass extends ItemStack implements Icon {
 
     @Override
     public List<String> getLore() {
-        System.out.println("icons." + getIconName() + ".lore");
         return HeadsPlus.getInstance().getItems().getConfig().getStringList("icons." + getIconName() + ".lore");
     }
 }

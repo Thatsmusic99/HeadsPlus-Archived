@@ -72,7 +72,6 @@ io.github.thatsmusic99.headsplus.api.Challenge challenge = HeadsPlus.getInstance
 
     @Override
     public List<String> getLore() {
-        System.out.println("icons." + getIconName() + ".lore");
         return HeadsPlus.getInstance().getItems().getConfig().getStringList("icons." + getIconName() + ".lore");
     }
 }

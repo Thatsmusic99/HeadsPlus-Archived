@@ -6,6 +6,7 @@ import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.config.challenges.HPChallengeRewardTypes;
 import io.github.thatsmusic99.headsplus.config.headsx.icons.*;
 import io.github.thatsmusic99.headsplus.config.headsx.inventories.*;
+import io.github.thatsmusic99.headsplus.config.headsx.inventories.ChallengeSection;
 import io.github.thatsmusic99.headsplus.config.headsx.inventories.HeadSection;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.nms.NewNMSManager;
@@ -84,14 +85,14 @@ public abstract class HeadInventory {
         NMSManager nms = hp.getNMS();
         int h = 0;
         for (int o = 0; o < getSize(); o++) {
-            if (getIconArray()[o] instanceof Head) {
+            if (getIconArray()[o] instanceof Head || getIconArray()[o] instanceof io.github.thatsmusic99.headsplus.config.headsx.icons.HeadSection) {
                 try {
                     ItemStack is = list.getContentsInPage(inv.getPage()).get(h);
                     ItemMeta im = is.getItemMeta();
                     im.setDisplayName(getIconArray()[o].getDisplayName().replaceAll("\\{head-name}", is.getItemMeta().getDisplayName()));
                     List<String> l = new ArrayList<>();
                     for (String s : getIconArray()[o].getLore()) {
-                        l.add(s.replaceAll("\\{price}", String.valueOf(nms.getPrice(is))
+                        l.add(ChatColor.translateAlternateColorCodes('&', s.replaceAll("\\{price}", String.valueOf(nms.getPrice(is)))
                                 .replaceAll("\\{favourite}", HPPlayer.getHPPlayer(sender).hasHeadFavourited(nms.getId(is)) ? ChatColor.GOLD + "Favourite!" : "")));
                     }
                     im.setLore(l);
@@ -164,10 +165,14 @@ public abstract class HeadInventory {
                     ItemStack is = new ItemStack(ic.getMaterial(), 1, (byte) hp.getItems().getConfig().getInt("icons." + ic.getIconName() + ".data-value"));
                     try {
                         ItemMeta im = is.getItemMeta();
-                        im.setDisplayName(ic.getDisplayName());
-                        im.setLore(ic.getLore());
+                        im.setDisplayName(ChatColor.translateAlternateColorCodes('&', ic.getDisplayName()));
+                        List<String> ls = new ArrayList<>();
+                        for (String s : ic.getLore()) {
+                            ls.add(ChatColor.translateAlternateColorCodes('&', s));
+                        }
+                        im.setLore(ls);
                         is.setItemMeta(im);
-                    } catch (NullPointerException ignored) {
+                    } catch (NullPointerException ignored) { // Air
 
                     }
                     is = nms.setIcon(is, ic);
@@ -184,14 +189,14 @@ public abstract class HeadInventory {
                             (byte) hp.getItems().getConfig().getInt("icons.stats.data-value"));
                 }
                 ItemMeta im = is.getItemMeta();
-                im.setDisplayName(getIconArray()[o].getDisplayName());
+                im.setDisplayName(ChatColor.translateAlternateColorCodes('&', getIconArray()[o].getDisplayName()));
                 List<String> ls = new ArrayList<>();
                 for (String s : getIconArray()[o].getLore()) {
-                    ls.add(s.replaceAll("\\{heads}",String.valueOf(inv.getHeads()))
+                    ls.add(ChatColor.translateAlternateColorCodes('&', s.replaceAll("\\{heads}",String.valueOf(inv.getHeads()))
                             .replaceAll("\\{pages}", String.valueOf(list.getTotalPages()))
                             .replaceAll("\\{sections}", String.valueOf(inv.getSections()))
                             .replaceAll("\\{balance}", (hp.econ() ? String.valueOf(hp.getEconomy().getBalance(sender)) : ""))
-                            .replaceAll("\\{section}", inv.getSection()));
+                            .replaceAll("\\{section}", inv.getSection()) ));
                 }
                 im.setLore(ls);
                 is.setItemMeta(im);
@@ -203,6 +208,8 @@ public abstract class HeadInventory {
                 ItemStack is;
                 Icon oof;
                 if (getIconArray()[o] instanceof Next) {
+                    System.out.println(inv.getPages());
+                    System.out.println(inv.getPage());
                     if (inv.getPages() == inv.getPage()) {
                         oof = getIconArray()[o].getReplacementIcon();
                     } else {
@@ -233,31 +240,38 @@ public abstract class HeadInventory {
 
                 }
                 ItemMeta im = is.getItemMeta();
-                im.setDisplayName(oof.getDisplayName());
+                im.setDisplayName(ChatColor.translateAlternateColorCodes('&', oof.getDisplayName()));
                 List<String> ls = new ArrayList<>();
                 for (String s : oof.getLore()) {
-                    ls.add(s.replaceAll("\\{heads}",String.valueOf(inv.getHeads()))
+                    ls.add(ChatColor.translateAlternateColorCodes('&', s.replaceAll("\\{heads}",String.valueOf(inv.getHeads()))
                             .replaceAll("\\{pages}", String.valueOf(list.getTotalPages()))
                             .replaceAll("\\{sections}", String.valueOf(inv.getSections()))
                             .replaceAll("\\{balance}", String.valueOf(hp.getEconomy().getBalance(sender)))
-                            .replaceAll("\\{section}", inv.getSection()));
+                            .replaceAll("\\{section}", inv.getSection())));
                 }
                 im.setLore(ls);
                 is.setItemMeta(im);
                 is = nms.setIcon(is, oof);
                 i.setItem(o, is);
             } else {
-                ItemStack is = new ItemStack(getIconArray()[o].getMaterial(), 1, (byte) hp.getItems().getConfig().getInt("icons." + getIconArray()[o].getIconName() + ".data-value"));
+                System.out.println(getIconArray()[o]);
+                System.out.println(getIconArray()[o].getIconName());
                 try {
+                    ItemStack is = new ItemStack(getIconArray()[o].getMaterial(), 1, (byte) hp.getItems().getConfig().getInt("icons." + getIconArray()[o].getIconName() + ".data-value"));
                     ItemMeta im = is.getItemMeta();
-                    im.setDisplayName(getIconArray()[o].getDisplayName());
-                    im.setLore(getIconArray()[o].getLore());
+                    im.setDisplayName(ChatColor.translateAlternateColorCodes('&', getIconArray()[o].getDisplayName() ));
+                    List<String> ls = new ArrayList<>();
+                    for (String s : getIconArray()[o].getLore()) {
+                        ls.add(ChatColor.translateAlternateColorCodes('&', s));
+                    }
+                    im.setLore(ls);
                     is.setItemMeta(im);
+                    is = nms.setIcon(is, getIconArray()[o]);
+                    i.setItem(o, is);
                 } catch (NullPointerException ignored) {
 
                 }
-                is = nms.setIcon(is, getIconArray()[o]);
-                i.setItem(o, is);
+
             }
         }
         return i;

@@ -9,7 +9,7 @@ import io.github.thatsmusic99.headsplus.config.headsx.icons.Glass;
 public class ChallengesMenu extends HeadInventory {
     @Override
     public String getDefaultTitle() {
-        return null;
+        return "HeadsPlus Challenges: Menu";
     }
 
     @Override

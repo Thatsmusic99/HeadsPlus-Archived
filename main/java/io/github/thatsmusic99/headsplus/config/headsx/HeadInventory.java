@@ -6,6 +6,8 @@ import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.config.challenges.HPChallengeRewardTypes;
 import io.github.thatsmusic99.headsplus.config.headsx.icons.*;
 import io.github.thatsmusic99.headsplus.config.headsx.inventories.*;
+import io.github.thatsmusic99.headsplus.config.headsx.inventories.HeadSection;
+import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.nms.NewNMSManager;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import io.github.thatsmusic99.headsplus.util.PagedLists;
@@ -72,78 +74,113 @@ public abstract class HeadInventory {
         return HeadsPlus.getInstance().getItems().getConfig().getInt("inventories." + getName() + ".size");
     }
 
-    public Inventory build(PagedLists<ItemStack> list, Player sender, InventoryManager inv) {
+    public Inventory build(PagedLists<ItemStack> list, Player sender) {
+        InventoryManager inv = InventoryManager.getIM(sender);
         Inventory i = Bukkit.createInventory(null, getSize(), getTitle()
                 .replaceAll("\\{page}", String.valueOf(inv.getPage()))
-                .replaceAll("\\{pages}", String.valueOf(list.getTotalPages())));
+                .replaceAll("\\{pages}", list == null ? "" : String.valueOf(list.getTotalPages())));
+        HeadsPlus hp = HeadsPlus.getInstance();
+        NMSManager nms = hp.getNMS();
         int h = 0;
         for (int o = 0; o < getSize(); o++) {
             if (getIconArray()[o] instanceof Head) {
-                ItemStack is = list.getContentsInPage(inv.getPage()).get(h);
-                ItemMeta im = is.getItemMeta();
-                im.setDisplayName(getIconArray()[o].getDisplayName().replaceAll("\\{head-name}", is.getItemMeta().getDisplayName()));
-                List<String> l = im.getLore();
-                for (String s : is.getItemMeta().getLore()) {
-                    l.add(s.replaceAll("\\{price}", String.valueOf(HeadsPlus.getInstance().getNMS().getPrice(is))
-                    .replaceAll("\\{favourite}", HPPlayer.getHPPlayer(sender).hasHeadFavourited(HeadsPlus.getInstance().getNMS().getId(is)) ? ChatColor.GOLD + "Favourite!" : "")));
-                }
-                im.setLore(l);
-                is.setItemMeta(im);
-                is = HeadsPlus.getInstance().getNMS().setIcon(is, getIconArray()[o]);
-                i.setItem(o, list.getContentsInPage(inv.getPage()).get(h));
-                h++;
-            } else if (getIconArray()[o] instanceof Challenge) {
-                ItemStack is = list.getContentsInPage(inv.getPage()).get(h); // Already set
-                ItemMeta im = is.getItemMeta();
-                im.setDisplayName(getIconArray()[o].getDisplayName().replaceAll("\\{challenge-name}", is.getItemMeta().getDisplayName()));
-                List<String> lore = new ArrayList<>();
-                io.github.thatsmusic99.headsplus.api.Challenge c = HeadsPlus.getInstance().getNMS().getChallenge(is);
-                for (int z = 0; z < getIconArray()[o].getLore().size(); z++) {
-                    if (getIconArray()[o].getLore().get(z).contains("{challenge-lore}")) {
-                        for (String s : c.getDescription()) {
-                            lore.add(ChatColor.translateAlternateColorCodes('&', s));
-                        }
+                try {
+                    ItemStack is = list.getContentsInPage(inv.getPage()).get(h);
+                    ItemMeta im = is.getItemMeta();
+                    im.setDisplayName(getIconArray()[o].getDisplayName().replaceAll("\\{head-name}", is.getItemMeta().getDisplayName()));
+                    List<String> l = new ArrayList<>();
+                    for (String s : getIconArray()[o].getLore()) {
+                        l.add(s.replaceAll("\\{price}", String.valueOf(nms.getPrice(is))
+                                .replaceAll("\\{favourite}", HPPlayer.getHPPlayer(sender).hasHeadFavourited(nms.getId(is)) ? ChatColor.GOLD + "Favourite!" : "")));
                     }
-                    if (getIconArray()[o].getLore().get(z).contains("{challenge-reward}")) {
-                        StringBuilder sb = new StringBuilder();
-                        HPChallengeRewardTypes re = c.getRewardType();
-                        if (re == HPChallengeRewardTypes.ECO) {
-                            sb.append("$").append(c.getRewardValue().toString());
-                        } else if (re == HPChallengeRewardTypes.GIVE_ITEM) {
-                            try {
-                                Material.valueOf(c.getRewardValue().toString());
-                                sb.append(c.getRewardItemAmount()).append(" ").append(WordUtils.capitalize(c.getRewardValue().toString().toLowerCase().replaceAll("_", " "))).append("(s)");
-                            } catch (IllegalArgumentException ignored) {
+                    im.setLore(l);
+                    is.setItemMeta(im);
+                    is = nms.setIcon(is, getIconArray()[o]);
+                    i.setItem(o, is);
+                    h++;
+                } catch (IndexOutOfBoundsException ex) {
+                    Icon ic = getIconArray()[o].getReplacementIcon();
+                    ItemStack is = new ItemStack(ic.getMaterial(), 1, (byte) hp.getItems().getConfig().getInt("icons." + ic.getIconName() + ".data-value"));
+                    try {
+                        ItemMeta im = is.getItemMeta();
+                        im.setDisplayName(ic.getDisplayName());
+                        im.setLore(ic.getLore());
+                        is.setItemMeta(im);
+                    } catch (NullPointerException ignored) {
 
-                            }
-                        } else if (re == HPChallengeRewardTypes.ADD_GROUP) {
-                            sb.append("Group ").append(c.getRewardValue().toString()).append(" addition");
-                        } else {
-                            sb.append("Group ").append(c.getRewardValue().toString()).append(" removal");
-                        }
-                        lore.add(ChatColor.translateAlternateColorCodes('&', getIconArray()[o].getLore().get(z).replaceAll("\\{challenge-reward}", sb.toString())));
                     }
-                    if (getIconArray()[o].getLore().get(z).contains("{completed}")) {
-                        if (c.isComplete(sender)) {
-                            lore.add(ChatColor.GOLD + "Complete!");
-                        }
-                    }
-                    if (getIconArray()[o].getLore().get(z).contains("{challenge-xp}")) {
-                        lore.add(ChatColor.translateAlternateColorCodes('&', getIconArray()[o].getLore().get(z).replaceAll("\\{challenge-xp}", String.valueOf(c.getGainedXP()))));
-                    }
+                    is = nms.setIcon(is, ic);
+                    i.setItem(o, is);
                 }
-                is.setItemMeta(im);
-                is = HeadsPlus.getInstance().getNMS().setIcon(is, getIconArray()[o]);
-                i.setItem(o, is);
-                h++;
+            } else if (getIconArray()[o] instanceof Challenge) {
+                try {
+                    ItemStack is = list.getContentsInPage(inv.getPage()).get(h); // Already set
+                    ItemMeta im = is.getItemMeta();
+                    im.setDisplayName(getIconArray()[o].getDisplayName().replaceAll("\\{challenge-name}", is.getItemMeta().getDisplayName()));
+                    List<String> lore = new ArrayList<>();
+                    io.github.thatsmusic99.headsplus.api.Challenge c = nms.getChallenge(is);
+                    for (int z = 0; z < getIconArray()[o].getLore().size(); z++) {
+                        if (getIconArray()[o].getLore().get(z).contains("{challenge-lore}")) {
+                            for (String s : c.getDescription()) {
+                                lore.add(ChatColor.translateAlternateColorCodes('&', s));
+                            }
+                        }
+                        if (getIconArray()[o].getLore().get(z).contains("{challenge-reward}")) {
+                            StringBuilder sb = new StringBuilder();
+                            HPChallengeRewardTypes re = c.getRewardType();
+                            if (re == HPChallengeRewardTypes.ECO) {
+                                sb.append("$").append(c.getRewardValue().toString());
+                            } else if (re == HPChallengeRewardTypes.GIVE_ITEM) {
+                                try {
+                                    Material.valueOf(c.getRewardValue().toString());
+                                    sb.append(c.getRewardItemAmount()).append(" ").append(WordUtils.capitalize(c.getRewardValue().toString().toLowerCase().replaceAll("_", " "))).append("(s)");
+                                } catch (IllegalArgumentException ignored) {
+
+                                }
+                            } else if (re == HPChallengeRewardTypes.ADD_GROUP) {
+                                sb.append("Group ").append(c.getRewardValue().toString()).append(" addition");
+                            } else {
+                                sb.append("Group ").append(c.getRewardValue().toString()).append(" removal");
+                            }
+                            lore.add(ChatColor.translateAlternateColorCodes('&', getIconArray()[o].getLore().get(z).replaceAll("\\{challenge-reward}", sb.toString())));
+                        }
+                        if (getIconArray()[o].getLore().get(z).contains("{completed}")) {
+                            if (c.isComplete(sender)) {
+                                lore.add(ChatColor.GOLD + "Complete!");
+                            }
+                        }
+                        if (getIconArray()[o].getLore().get(z).contains("{challenge-xp}")) {
+                            lore.add(ChatColor.translateAlternateColorCodes('&', getIconArray()[o].getLore().get(z).replaceAll("\\{challenge-xp}", String.valueOf(c.getGainedXP()))));
+                        }
+                    }
+                    im.setLore(lore);
+                    is.setItemMeta(im);
+                    is = nms.setIcon(is, getIconArray()[o]);
+                    i.setItem(o, is);
+                    h++;
+                } catch (IndexOutOfBoundsException ex) {
+                    Icon ic = getIconArray()[o].getReplacementIcon();
+                    ItemStack is = new ItemStack(ic.getMaterial(), 1, (byte) hp.getItems().getConfig().getInt("icons." + ic.getIconName() + ".data-value"));
+                    try {
+                        ItemMeta im = is.getItemMeta();
+                        im.setDisplayName(ic.getDisplayName());
+                        im.setLore(ic.getLore());
+                        is.setItemMeta(im);
+                    } catch (NullPointerException ignored) {
+
+                    }
+                    is = nms.setIcon(is, ic);
+                    i.setItem(o, is);
+                }
+
             } else if (getIconArray()[o] instanceof Stats) {
 
                 ItemStack is;
-                if (HeadsPlus.getInstance().getNMS() instanceof NewNMSManager) {
+                if (nms instanceof NewNMSManager) {
                     is = new ItemStack(getIconArray()[o].getMaterial(), 1);
                 } else {
                     is = new ItemStack(getIconArray()[o].getMaterial(), 1,
-                            (byte) HeadsPlus.getInstance().getItems().getConfig().getInt("icons.stats.data-value"));
+                            (byte) hp.getItems().getConfig().getInt("icons.stats.data-value"));
                 }
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(getIconArray()[o].getDisplayName());
@@ -152,12 +189,12 @@ public abstract class HeadInventory {
                     ls.add(s.replaceAll("\\{heads}",String.valueOf(inv.getHeads()))
                             .replaceAll("\\{pages}", String.valueOf(list.getTotalPages()))
                             .replaceAll("\\{sections}", String.valueOf(inv.getSections()))
-                            .replaceAll("\\{balance}", String.valueOf(HeadsPlus.getInstance().getEconomy().getBalance(sender)))
+                            .replaceAll("\\{balance}", (hp.econ() ? String.valueOf(hp.getEconomy().getBalance(sender)) : ""))
                             .replaceAll("\\{section}", inv.getSection()));
                 }
                 im.setLore(ls);
                 is.setItemMeta(im);
-                is = HeadsPlus.getInstance().getNMS().setIcon(is, getIconArray()[o]);
+                is = nms.setIcon(is, getIconArray()[o]);
                 i.setItem(o, is);
             } else if ((getIconArray()[o] instanceof Next)
                     || (getIconArray()[o] instanceof Back)
@@ -190,7 +227,7 @@ public abstract class HeadInventory {
                     is = new ItemStack(oof.getMaterial(), 1);
                 } else {
                     is = new ItemStack(oof.getMaterial(), 1,
-                                (byte) HeadsPlus.getInstance().getItems().getConfig().getInt("icons." + oof.getReplacementIcon().getMaterial() + ".data-value"));
+                                (byte) hp.getItems().getConfig().getInt("icons." + oof.getIconName() + ".data-value"));
 
 
                 }
@@ -201,20 +238,25 @@ public abstract class HeadInventory {
                     ls.add(s.replaceAll("\\{heads}",String.valueOf(inv.getHeads()))
                             .replaceAll("\\{pages}", String.valueOf(list.getTotalPages()))
                             .replaceAll("\\{sections}", String.valueOf(inv.getSections()))
-                            .replaceAll("\\{balance}", String.valueOf(HeadsPlus.getInstance().getEconomy().getBalance(sender)))
+                            .replaceAll("\\{balance}", String.valueOf(hp.getEconomy().getBalance(sender)))
                             .replaceAll("\\{section}", inv.getSection()));
                 }
                 im.setLore(ls);
                 is.setItemMeta(im);
-                is = HeadsPlus.getInstance().getNMS().setIcon(is, oof);
+                is = nms.setIcon(is, oof);
                 i.setItem(o, is);
             } else {
-                ItemStack is = list.getContentsInPage(inv.getPage()).get(h);
-                ItemMeta im = is.getItemMeta();
-                im.setDisplayName(getIconArray()[o].getDisplayName());
-                im.setLore(getIconArray()[o].getLore());
-                is.setItemMeta(im);
-                is = HeadsPlus.getInstance().getNMS().setIcon(is, getIconArray()[o]);
+                System.out.println(getIconArray()[o].getIconName());
+                ItemStack is = new ItemStack(getIconArray()[o].getMaterial(), 1, (byte) hp.getItems().getConfig().getInt("icons." + getIconArray()[o].getIconName() + ".data-value"));
+                try {
+                    ItemMeta im = is.getItemMeta();
+                    im.setDisplayName(getIconArray()[o].getDisplayName());
+                    im.setLore(getIconArray()[o].getLore());
+                    is.setItemMeta(im);
+                } catch (NullPointerException ignored) {
+
+                }
+                is = nms.setIcon(is, getIconArray()[o]);
                 i.setItem(o, is);
             }
         }

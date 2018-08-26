@@ -62,7 +62,7 @@ public class PagedLists<T> {
         this.currentPage = page;
     }
 
-    private int getContentsPerPage() {
+    public int getContentsPerPage() {
         return contentsPerPage;
     }
 

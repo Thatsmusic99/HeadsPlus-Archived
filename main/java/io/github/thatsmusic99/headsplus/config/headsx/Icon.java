@@ -47,6 +47,7 @@ public interface Icon {
         icons.add(new Next());
         icons.add(new Search());
         icons.add(new Stats());
+        icons.add(new Air());
         return icons;
     }
 

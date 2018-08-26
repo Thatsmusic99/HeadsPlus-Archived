@@ -85,7 +85,7 @@ public class Head extends ItemStack implements Icon {
 
     @Override
     public List<String> getDefaultLore() {
-        return new ArrayList<>(Arrays.asList("&6[&ePrice&6] &a{price}", "{favorite}"));
+        return new ArrayList<>(Arrays.asList("&6[&ePrice&6] &a{price}", "{favourite}"));
     }
 
     @Override

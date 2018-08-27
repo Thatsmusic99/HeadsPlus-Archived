@@ -49,7 +49,7 @@ public abstract class HeadInventory {
         inventories.add(new FavouritesMenu());
         inventories.add(new HeadMenu());
         inventories.add(new HeadSection());
-        inventories.add(new SellheadMenu());
+    //    inventories.add(new SellheadMenu());
         return inventories;
     }
 
@@ -80,7 +80,8 @@ public abstract class HeadInventory {
         InventoryManager inv = InventoryManager.getIM(sender);
         Inventory i = Bukkit.createInventory(null, getSize(), getTitle()
                 .replaceAll("\\{page}", String.valueOf(inv.getPage()))
-                .replaceAll("\\{pages}", list == null ? "" : String.valueOf(list.getTotalPages())));
+                .replaceAll("\\{pages}", list == null ? "" : String.valueOf(list.getTotalPages()))
+                .replaceAll("\\{section}", inv.getSection()));
         HeadsPlus hp = HeadsPlus.getInstance();
         NMSManager nms = hp.getNMS();
         int h = 0;
@@ -118,7 +119,7 @@ public abstract class HeadInventory {
                 try {
                     ItemStack is = list.getContentsInPage(inv.getPage()).get(h); // Already set
                     ItemMeta im = is.getItemMeta();
-                    im.setDisplayName(getIconArray()[o].getDisplayName().replaceAll("\\{challenge-name}", is.getItemMeta().getDisplayName()));
+                    im.setDisplayName(getIconArray()[o].getDisplayName().replaceAll("(\\{challenge-name})", is.getItemMeta().getDisplayName()));
                     List<String> lore = new ArrayList<>();
                     io.github.thatsmusic99.headsplus.api.Challenge c = nms.getChallenge(is);
                     for (int z = 0; z < getIconArray()[o].getLore().size(); z++) {
@@ -144,7 +145,7 @@ public abstract class HeadInventory {
                             } else {
                                 sb.append("Group ").append(c.getRewardValue().toString()).append(" removal");
                             }
-                            lore.add(ChatColor.translateAlternateColorCodes('&', getIconArray()[o].getLore().get(z).replaceAll("\\{challenge-reward}", sb.toString())));
+                            lore.add(ChatColor.translateAlternateColorCodes('&', getIconArray()[o].getLore().get(z).replace("{challenge-reward}", sb.toString())));
                         }
                         if (getIconArray()[o].getLore().get(z).contains("{completed}")) {
                             if (c.isComplete(sender)) {
@@ -152,7 +153,7 @@ public abstract class HeadInventory {
                             }
                         }
                         if (getIconArray()[o].getLore().get(z).contains("{challenge-xp}")) {
-                            lore.add(ChatColor.translateAlternateColorCodes('&', getIconArray()[o].getLore().get(z).replaceAll("\\{challenge-xp}", String.valueOf(c.getGainedXP()))));
+                            lore.add(ChatColor.translateAlternateColorCodes('&', getIconArray()[o].getLore().get(z).replace("{challenge-xp}", String.valueOf(c.getGainedXP()))));
                         }
                     }
                     im.setLore(lore);
@@ -208,8 +209,6 @@ public abstract class HeadInventory {
                 ItemStack is;
                 Icon oof;
                 if (getIconArray()[o] instanceof Next) {
-                    System.out.println(inv.getPages());
-                    System.out.println(inv.getPage());
                     if (inv.getPages() == inv.getPage()) {
                         oof = getIconArray()[o].getReplacementIcon();
                     } else {
@@ -254,8 +253,6 @@ public abstract class HeadInventory {
                 is = nms.setIcon(is, oof);
                 i.setItem(o, is);
             } else {
-                System.out.println(getIconArray()[o]);
-                System.out.println(getIconArray()[o].getIconName());
                 try {
                     ItemStack is = new ItemStack(getIconArray()[o].getMaterial(), 1, (byte) hp.getItems().getConfig().getInt("icons." + getIconArray()[o].getIconName() + ".data-value"));
                     ItemMeta im = is.getItemMeta();

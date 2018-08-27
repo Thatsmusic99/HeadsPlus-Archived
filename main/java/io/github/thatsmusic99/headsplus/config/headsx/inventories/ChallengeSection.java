@@ -2,8 +2,7 @@ package io.github.thatsmusic99.headsplus.config.headsx.inventories;
 
 import io.github.thatsmusic99.headsplus.config.headsx.HeadInventory;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
-import io.github.thatsmusic99.headsplus.config.headsx.icons.Challenge;
-import io.github.thatsmusic99.headsplus.config.headsx.icons.Glass;
+import io.github.thatsmusic99.headsplus.config.headsx.icons.*;
 
 public class ChallengeSection extends HeadInventory {
 
@@ -60,12 +59,12 @@ public class ChallengeSection extends HeadInventory {
         s[42] = new Challenge();
         s[43] = new Challenge();
         s[44] = new Glass();
-        s[45] = new Glass();
+        s[45] = new Menu();
         s[46] = new Glass();
         s[47] = new Glass();
-        s[48] = new Glass();
-        s[49] = new Glass();
-        s[50] = new Glass();
+        s[48] = new Back();
+        s[49] = new Close();
+        s[50] = new Next();
         s[51] = new Glass();
         s[52] = new Glass();
         s[53] = new Glass();

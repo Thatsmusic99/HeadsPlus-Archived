@@ -28,7 +28,7 @@ public interface Icon {
 
     static Icon getIconFromName(String s) {
         for (Icon i : getIcons()) {
-            if (i.getIconName().equalsIgnoreCase(s)) {
+            if (i.getIconName().equalsIgnoreCase(s) && !(i instanceof Air)) {
                 return i;
             }
         }

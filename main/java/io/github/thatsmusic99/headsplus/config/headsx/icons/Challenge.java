@@ -40,6 +40,7 @@ io.github.thatsmusic99.headsplus.api.Challenge challenge = HeadsPlus.getInstance
                     p.sendMessage(hpc.getString("already-complete-challenge"));
                 }
             }
+            e.setCancelled(true);
         }catch (NullPointerException ignored) {
         } catch (SQLException ex) {
             new DebugPrint(ex, "Completing challenge", false, p);
@@ -48,7 +49,7 @@ io.github.thatsmusic99.headsplus.api.Challenge challenge = HeadsPlus.getInstance
 
     @Override
     public Material getDefaultMaterial() {
-        return HeadsPlus.getInstance().getNMS().getColouredBlock(MaterialTranslator.BlockType.TERRACOTTA, 15).getType();
+        return HeadsPlus.getInstance().getNMS().getColouredBlock(MaterialTranslator.BlockType.TERRACOTTA, 14).getType();
     }
 
     public Material getCompleteMaterial() {

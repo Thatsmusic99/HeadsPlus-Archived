@@ -5,6 +5,7 @@ import com.mojang.authlib.properties.Property;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.Challenge;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.config.headsx.inventories.*;
@@ -115,6 +116,7 @@ public class InventoryManager {
     public Inventory changePage(boolean next, boolean start, Player p, String section) throws NoSuchFieldException, IllegalAccessException {
         cSection = section;
         HeadsPlus hp = HeadsPlus.getInstance();
+        PagedLists<ItemStack> paged;
         if (next) {
             cPage++;
         } else {
@@ -135,8 +137,7 @@ public class InventoryManager {
                 //     sections++;
                 // }
                 List<ItemStack> heads = new ArrayList<>();
-                ls = new PagedLists<>(new ArrayList<>(hpchx.getConfig().getConfigurationSection("sections").getKeys(false)), 27);
-                for (String str : ls.getContentsInPage(cPage)) {
+                 for (String str : new ArrayList<>(hpchx.getConfig().getConfigurationSection("sections").getKeys(false))) {
                     if (hpchx.isHPXSkull(hpchx.getConfig().getString("sections." + str + ".texture"))) {
                         ItemStack is = hpchx.getSkull(hpchx.getConfig().getString("sections." + str + ".texture"));
                         SkullMeta im = (SkullMeta) is.getItemMeta();
@@ -154,7 +155,9 @@ public class InventoryManager {
                         heads.add(is);
                     }
                 }
-                return headmenu.build(new PagedLists<>(heads, hp.getItems().getConfig().getStringList("inventories.headmenu.icons").stream().filter(l -> !l.equalsIgnoreCase("head")).collect(Collectors.toList()).size()), p);
+                paged = new PagedLists<>(heads, hp.getItems().getConfig().getStringList("inventories.headmenu.icons").stream().filter(l -> l.equalsIgnoreCase("headsection")).collect(Collectors.toList()).size());
+                pages = paged.getTotalPages();
+                return headmenu.build(paged, p);
                 //  if (HeadsPlusConfigHeadsX.getHeadsX().getBoolean("options.advent-calender")) {
                 //   ItemStack is = HeadsPlusConfigHeadsX.getSkull("HP#snowman_head");
                 //   SkullMeta sm = (SkullMeta) is.getItemMeta();
@@ -176,23 +179,25 @@ public class InventoryManager {
                 s.entrySet().removeIf(stringStringEntry -> !c.contains(stringStringEntry.getKey()));
                 heads = s.size();
                 List<ItemStack> heads = new ArrayList<>();
-                ls = new PagedLists<>(new ArrayList<>(s.values()), 28);
-                for (Object str : ls.getContentsInPage(cPage)) {
+                for (Object str : new ArrayList<>(s.values())) {
                     if (hpchx.getConfig().getBoolean("heads." + str + ".database")) {
                         heads.add(skull(String.valueOf(str), p));
                     }
                 }
-                return new HeadSection().build(new PagedLists<>(heads, hp.getItems().getConfig().getStringList("inventories.headsection.icons").stream().filter(l -> !l.equalsIgnoreCase("head")).collect(Collectors.toList()).size()), p);
+                paged = new PagedLists<>(heads, hp.getItems().getConfig().getStringList("inventories.headsection.icons").stream().filter(l -> l.equalsIgnoreCase("head")).collect(Collectors.toList()).size());
+                pages = paged.getTotalPages();
+                return new HeadSection().build(paged, p);
             } else if (section.equalsIgnoreCase("favourites")) {
                 HPPlayer hps = HPPlayer.getHPPlayer(p);
-                ls = new PagedLists<>(hps.getFavouriteHeads(), 28);
                 List<ItemStack> heads = new ArrayList<>();
-                for (Object str : ls.getContentsInPage(cPage)) {
+                for (Object str : hps.getFavouriteHeads()) {
                     if (hpchx.getConfig().getBoolean("heads." + str + ".database")) {
                         heads.add(skull(String.valueOf(str), p));
                     }
                 }
-                return new FavouritesMenu().build(new PagedLists<>(heads, hp.getItems().getConfig().getStringList("inventories.headsection.icons").stream().filter(l -> !l.equalsIgnoreCase("head")).collect(Collectors.toList()).size()), p);
+                paged = new PagedLists<>(heads, hp.getItems().getConfig().getStringList("inventories.favourites.icons").stream().filter(l -> l.equalsIgnoreCase("head")).collect(Collectors.toList()).size());
+                pages = paged.getTotalPages();
+                return new FavouritesMenu().build(paged, p);
             } else {
                 List<String> l = new ArrayList<>();
                 // if (!section.equalsIgnoreCase("advent_calender")) {
@@ -202,14 +207,15 @@ public class InventoryManager {
                     }
                 }
                 heads = l.size();
-                ls = new PagedLists<>(l, 28);
                 List<ItemStack> items = new ArrayList<>();
-                for (Object str : ls.getContentsInPage(cPage)) {
+                for (Object str : l) {
                     if (hpchx.getConfig().getBoolean("heads." + str + ".database")) {
                         items.add(skull(String.valueOf(str), p));
                     }
                 }
-                return new HeadSection().build(new PagedLists<>(items, hp.getItems().getConfig().getStringList("inventories.headsection.icons").stream().filter(lst -> !lst.equalsIgnoreCase("head")).collect(Collectors.toList()).size()), p);
+                paged = new PagedLists<>(items, hp.getItems().getConfig().getStringList("inventories.headsection.icons").stream().filter(lst -> lst.equalsIgnoreCase("head")).collect(Collectors.toList()).size());
+                pages = paged.getTotalPages();
+                return new HeadSection().build(paged, p);
                 // } else {
                 //  i = create(54, "HeadsPlus Head selector: page " + cPage + "/" + pages);
                 //  skullChristmas(i, p.getPlayer());
@@ -271,8 +277,9 @@ public class InventoryManager {
             i.setItem(4, is2);
             timesSent = 0;
             return i; */
-        } else {
+        } else if (type.equalsIgnoreCase("chal")) {
             NMSManager nms = HeadsPlus.getInstance().getNMS();
+            List<ItemStack> items = new ArrayList<>();
             if (cSection.equalsIgnoreCase("menu")) {
                 return new ChallengesMenu().build(null, p);
             } else {
@@ -282,11 +289,8 @@ public class InventoryManager {
                         cs.add(c);
                     }
                 }
-                int a = hp.getItems().getConfig().getStringList("inventories.challengesection.icons").stream().filter(lst -> !lst.equalsIgnoreCase("challenge")).collect(Collectors.toList()).size();
-                PagedLists<Challenge> pl = new PagedLists<>(cs, a);
-                int in = 0;
-                List<ItemStack> items = new ArrayList<>();
-                for (Challenge c : pl.getContentsInPage(cPage)) {
+                int a = hp.getItems().getConfig().getStringList("inventories.challenge-section.icons").stream().filter(lst -> lst.equalsIgnoreCase("challenge")).collect(Collectors.toList()).size();
+                for (Challenge c : cs) {
                     ItemStack is;
                     if (c.isComplete(p)) {
                         is = new ItemStack(((io.github.thatsmusic99.headsplus.config.headsx.icons.Challenge)Icon.getIconFromName("challenge")).getCompleteMaterial(), 1, (byte) hp.getItems().getConfig().getInt("icons.challenge.complete-data-value"));
@@ -325,7 +329,6 @@ public class InventoryManager {
                     is.setItemMeta(im); */
                     is = nms.setChallenge(is, c);
                     items.add(is);
-                    in++;
                 }
 
            /*     int ch = hp.getChallenges().size();
@@ -341,8 +344,44 @@ public class InventoryManager {
                 lore.add(ChatColor.GREEN + "Current section: " + section);
                 im.setLore(lore);
                 is2.setItemMeta(im); */
-                return new ChallengeSection().build(new PagedLists<>(items, hp.getItems().getConfig().getStringList("inventories.challengesection.icons").stream().filter(lst -> !lst.equalsIgnoreCase("challenge")).collect(Collectors.toList()).size()), p);
+                paged = new PagedLists<>(items, hp.getItems().getConfig().getStringList("inventories.challenge-section.icons").stream().filter(l -> l.equalsIgnoreCase("challenge")).collect(Collectors.toList()).size());
+                pages = paged.getTotalPages();
+                return new ChallengeSection().build(paged, p);
             }
+        } else {
+            HeadsPlusConfigHeads hpch = hp.getHeadsConfig();
+            List<String> s = new ArrayList<>();
+            for (String o : hpch.mHeads) {
+                if (!hpch.getConfig().getStringList(o + ".name").isEmpty()) {
+                    s.add(o);
+                }
+            }
+            for (String o : hpch.uHeads) {
+                if (!hpch.getConfig().getStringList(o + ".name").isEmpty()) {
+                    s.add(o);
+                }
+            }
+
+            List<ItemStack> items = new ArrayList<>();
+            NMSManager nms = hp.getNMS();
+            for (String o : s) {
+
+                ItemStack it = nms.getSkullMaterial(1);
+                SkullMeta sm = (SkullMeta) it.getItemMeta();
+                sm = nms.setSkullOwner(hpch.getConfig().getStringList(o + ".name").get(0), sm);
+                sm.setDisplayName(hpch.getConfig().getString(o + ".display-name"));
+                List<String> d = new ArrayList<>();
+                for (String a : hpch.getConfig().getStringList(o + ".lore")) {
+                    d.add(ChatColor.translateAlternateColorCodes('&', a).replaceAll("\\{price}", String.valueOf(hpch.getConfig().getDouble(o + ".price"))).replaceAll("\\{type}", o));
+                }
+                sm.setLore(d);
+                it.setItemMeta(sm);
+                it = nms.setType(o, it);
+                items.add(it);
+            }
+            PagedLists<ItemStack> ps = new PagedLists<>(items, hp.getItems().getConfig().getStringList("inventories.sellheadmenu.icons").stream().filter(lst -> lst.equalsIgnoreCase("head")).collect(Collectors.toList()).size());
+            pages = ps.getTotalPages();
+            return new SellheadMenu().build(ps, p);
         }
     }
 

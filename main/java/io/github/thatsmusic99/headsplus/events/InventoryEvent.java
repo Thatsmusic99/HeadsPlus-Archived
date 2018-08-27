@@ -50,7 +50,6 @@ public class InventoryEvent implements Listener {
                     if (e.getRawSlot() < 54) {
                         e.setCancelled(true);
                     }
-
                     i.onClick(p, im, e);
                 /*    if (e.getCurrentItem().getType().equals(Material.BARRIER)) {
                         e.setCancelled(true);
@@ -297,6 +296,7 @@ public class InventoryEvent implements Listener {
                 } */
             } else if (im.getType().equalsIgnoreCase("chal")) {
                 Icon i = nms.getIcon(e.getCurrentItem());
+                if (i == null) return;
                 i.onClick(p, im, e);
                /*     try {
                         if (im.getSection().equalsIgnoreCase("menu")) {

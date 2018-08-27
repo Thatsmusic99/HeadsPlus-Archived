@@ -24,7 +24,7 @@ public class ChallengeSection {
         public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
             e.setCancelled(true);
             p.closeInventory();
-            im.setSection("challenges:easy");
+            im.setSection("easy");
             try {
                 p.openInventory(im.changePage(false, true, p, im.getSection()));
             } catch (NoSuchFieldException | IllegalAccessException e1) {
@@ -59,7 +59,7 @@ public class ChallengeSection {
         public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
             e.setCancelled(true);
             p.closeInventory();
-            im.setSection("challenges:easy-medium");
+            im.setSection("easy_medium");
             try {
                 p.openInventory(im.changePage(false, true, p, im.getSection()));
             } catch (NoSuchFieldException | IllegalAccessException e1) {
@@ -94,7 +94,7 @@ public class ChallengeSection {
         public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
             e.setCancelled(true);
             p.closeInventory();
-            im.setSection("challenges:medium");
+            im.setSection("medium");
             try {
                 p.openInventory(im.changePage(false, true, p, im.getSection()));
             } catch (NoSuchFieldException | IllegalAccessException e1) {
@@ -129,7 +129,7 @@ public class ChallengeSection {
         public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
             e.setCancelled(true);
             p.closeInventory();
-            im.setSection("challenges:medium-hard");
+            im.setSection("medium_hard");
             try {
                 p.openInventory(im.changePage(false, true, p, im.getSection()));
             } catch (NoSuchFieldException | IllegalAccessException e1) {
@@ -164,7 +164,7 @@ public class ChallengeSection {
         public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
             e.setCancelled(true);
             p.closeInventory();
-            im.setSection("challenges:hard");
+            im.setSection("hard");
             try {
                 p.openInventory(im.changePage(false, true, p, im.getSection()));
             } catch (NoSuchFieldException | IllegalAccessException e1) {
@@ -189,7 +189,6 @@ public class ChallengeSection {
 
         @Override
         public List<String> getLore() {
-            System.out.println("icons." + getIconName() + ".lore");
             return HeadsPlus.getInstance().getItems().getConfig().getStringList("icons." + getIconName() + ".lore");
         }
     }

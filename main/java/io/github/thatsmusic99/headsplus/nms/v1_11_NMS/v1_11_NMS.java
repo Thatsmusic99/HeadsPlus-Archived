@@ -187,7 +187,7 @@ public class v1_11_NMS implements NMSManager {
         if (is.getTag() == null) {
             is.setTag(new NBTTagCompound());
         }
-        is.getTag().setString("icon", "");
+        is.getTag().remove("icon");
         return CraftItemStack.asBukkitCopy(is);
     }
 }

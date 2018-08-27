@@ -39,7 +39,7 @@ public class Glass extends ItemStack implements Icon {
 
     @Override
     public String getDefaultDisplayName() {
-        return "";
+        return "&c";
     }
 
     @Override

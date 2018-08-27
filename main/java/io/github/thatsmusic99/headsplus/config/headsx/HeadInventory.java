@@ -119,9 +119,10 @@ public abstract class HeadInventory {
                 try {
                     ItemStack is = list.getContentsInPage(inv.getPage()).get(h); // Already set
                     ItemMeta im = is.getItemMeta();
-                    im.setDisplayName(getIconArray()[o].getDisplayName().replaceAll("(\\{challenge-name})", is.getItemMeta().getDisplayName()));
+
                     List<String> lore = new ArrayList<>();
                     io.github.thatsmusic99.headsplus.api.Challenge c = nms.getChallenge(is);
+                    im.setDisplayName(ChatColor.translateAlternateColorCodes('&', getIconArray()[o].getDisplayName().replaceAll("(\\{challenge-name})", c.getChallengeHeader())));
                     for (int z = 0; z < getIconArray()[o].getLore().size(); z++) {
                         if (getIconArray()[o].getLore().get(z).contains("{challenge-lore}")) {
                             for (String s : c.getDescription()) {
@@ -266,7 +267,6 @@ public abstract class HeadInventory {
                     is = nms.setIcon(is, getIconArray()[o]);
                     i.setItem(o, is);
                 } catch (NullPointerException ignored) {
-
                 }
 
             }

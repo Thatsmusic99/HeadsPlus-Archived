@@ -150,6 +150,7 @@ public class v1_8_R2_NMS implements NMSManager {
     @Override
     public ItemStack setIcon(ItemStack i, Icon o) {
         net.minecraft.server.v1_8_R2.ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is == null) return i;
         if (is.getTag() == null) {
             is.setTag(new NBTTagCompound());
         }
@@ -160,6 +161,7 @@ public class v1_8_R2_NMS implements NMSManager {
     @Override
     public Icon getIcon(ItemStack is) {
         net.minecraft.server.v1_8_R2.ItemStack i = CraftItemStack.asNMSCopy(is);
+        if (i == null) return null;
         if (i.getTag() != null) {
             return Icon.getIconFromName(Objects.requireNonNull(i.getTag()).getString("icon"));
         }

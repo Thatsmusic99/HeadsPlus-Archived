@@ -150,6 +150,7 @@ public class v1_8_R3NMS implements NMSManager {
     @Override
     public org.bukkit.inventory.ItemStack setIcon(org.bukkit.inventory.ItemStack i, Icon o) {
         ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is == null) return i;
         if (is.getTag() == null) {
             is.setTag(new NBTTagCompound());
         }
@@ -160,6 +161,7 @@ public class v1_8_R3NMS implements NMSManager {
     @Override
     public Icon getIcon(org.bukkit.inventory.ItemStack is) {
         ItemStack i = CraftItemStack.asNMSCopy(is);
+        if (i == null) return null;
         if (i.getTag() != null) {
             return Icon.getIconFromName(Objects.requireNonNull(i.getTag()).getString("icon"));
         }

@@ -78,6 +78,7 @@ public class V1_9_NMS2 implements NMSManager {
     @Override
     public org.bukkit.inventory.ItemStack setType(String s, org.bukkit.inventory.ItemStack i) {
         ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is == null) return i;
         if (is.getTag() == null) {
             is.setTag(new NBTTagCompound());
         }
@@ -87,6 +88,7 @@ public class V1_9_NMS2 implements NMSManager {
 
     @Override
     public String getType(org.bukkit.inventory.ItemStack i) {
+        if (CraftItemStack.asNMSCopy(i) == null) return null;
         if (CraftItemStack.asNMSCopy(i).getTag() != null) {
             return Objects.requireNonNull(CraftItemStack.asNMSCopy(i).getTag()).getString("headsplus-type");
         }

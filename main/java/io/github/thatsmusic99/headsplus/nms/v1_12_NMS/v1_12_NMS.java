@@ -156,6 +156,7 @@ public class v1_12_NMS implements NMSManager {
     @Override
     public Icon getIcon(org.bukkit.inventory.ItemStack is) {
         ItemStack i = CraftItemStack.asNMSCopy(is);
+        if (i == null) return null;
         if (i.getTag() != null) {
             return Icon.getIconFromName(Objects.requireNonNull(i.getTag()).getString("icon"));
         }
@@ -165,6 +166,7 @@ public class v1_12_NMS implements NMSManager {
     @Override
     public org.bukkit.inventory.ItemStack setChallenge(org.bukkit.inventory.ItemStack i, Challenge a) {
         ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is == null) return i;
         if (is.getTag() == null) {
             is.setTag(new NBTTagCompound());
         }

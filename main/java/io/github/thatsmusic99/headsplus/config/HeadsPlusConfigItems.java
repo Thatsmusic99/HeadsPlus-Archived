@@ -3,10 +3,7 @@ package io.github.thatsmusic99.headsplus.config;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadInventory;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
-import io.github.thatsmusic99.headsplus.config.headsx.icons.Challenge;
-import io.github.thatsmusic99.headsplus.config.headsx.icons.ChallengeSection;
-import io.github.thatsmusic99.headsplus.config.headsx.icons.Glass;
-import io.github.thatsmusic99.headsplus.config.headsx.icons.Head;
+import io.github.thatsmusic99.headsplus.config.headsx.icons.*;
 import io.github.thatsmusic99.headsplus.nms.NewNMSManager;
 
 import java.util.ArrayList;
@@ -35,7 +32,7 @@ public class HeadsPlusConfigItems extends ConfigSettings {
                     getConfig().addDefault("icons." + i.getIconName() + ".data-value", 14);
                 } else if (i instanceof Glass) {
                     getConfig().addDefault("icons." + i.getIconName() + ".data-value", 8);
-                } else if (i instanceof Head){
+                } else if (i instanceof Head || i instanceof HeadSection){
                     getConfig().addDefault("icons." + i.getIconName() + ".data-value", 3);
                 } else if (i instanceof ChallengeSection.Easy) {
                     getConfig().addDefault("icons." + i.getIconName() + ".data-value", 13);

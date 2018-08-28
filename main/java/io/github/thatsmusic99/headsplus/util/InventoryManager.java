@@ -293,9 +293,9 @@ public class InventoryManager {
                 for (Challenge c : cs) {
                     ItemStack is;
                     if (c.isComplete(p)) {
-                        is = new ItemStack(((io.github.thatsmusic99.headsplus.config.headsx.icons.Challenge)Icon.getIconFromName("challenge")).getCompleteMaterial(), 1, (byte) hp.getItems().getConfig().getInt("icons.challenge.complete-data-value"));
+                        is = new ItemStack(new io.github.thatsmusic99.headsplus.config.headsx.icons.Challenge().getCompleteMaterial(), 1, (byte) hp.getItems().getConfig().getInt("icons.challenge.complete-data-value"));
                     } else {
-                        is = new ItemStack(Icon.getIconFromName("challenge").getMaterial(), 1, (byte) hp.getItems().getConfig().getInt("icons.challenge.data-value"));
+                        is = new ItemStack(new io.github.thatsmusic99.headsplus.config.headsx.icons.Challenge().getMaterial(), 1, (byte) hp.getItems().getConfig().getInt("icons.challenge.data-value"));
                     }
                   /*  ItemMeta im = is.getItemMeta();
                     im.setDisplayName(ChatColor.translateAlternateColorCodes('&', c.getChallengeHeader()));
@@ -344,7 +344,7 @@ public class InventoryManager {
                 lore.add(ChatColor.GREEN + "Current section: " + section);
                 im.setLore(lore);
                 is2.setItemMeta(im); */
-                paged = new PagedLists<>(items, hp.getItems().getConfig().getStringList("inventories.challenge-section.icons").stream().filter(l -> l.equalsIgnoreCase("challenge")).collect(Collectors.toList()).size());
+                paged = new PagedLists<>(items, a);
                 pages = paged.getTotalPages();
                 return new ChallengeSection().build(paged, p);
             }

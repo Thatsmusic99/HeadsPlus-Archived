@@ -18,6 +18,7 @@ import io.github.thatsmusic99.headsplus.nms.v1_10_NMS.v1_10_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_11_NMS.v1_11_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_12_NMS.v1_12_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_13_NMS.v1_13_NMS;
+import io.github.thatsmusic99.headsplus.nms.v1_13_R2_NMS.v1_13_R2_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_8_R1_NMS.v1_8_R1_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_8_R2_NMS.v1_8_R2_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_8_R3_NMS.v1_8_R3NMS;
@@ -78,7 +79,6 @@ public class HeadsPlus extends JavaPlugin {
     private NMSManager nms;
     private final List<IHeadsPlusCommand> commands = new ArrayList<>();
     private HashMap<Integer, Level> levels = new HashMap<>();
-    private final List<String> nms1_8 = new ArrayList<>(Arrays.asList("1.8.4", "1.8.5", "1.8.6", "1.8.7", "1.8.8"));
     private List<ConfigSettings> cs = new ArrayList<>();
     private Favourites favourites;
 
@@ -363,29 +363,30 @@ public class HeadsPlus extends JavaPlugin {
 
 
     private void setupNMS() {
-        String v = getServer().getVersion();
-        for (String s : nms1_8) {
-            if (v.contains(s)) {
-                nms = new v1_8_R3NMS();
-                return;
+        List<NMSManager> managers = new ArrayList<>();
+        managers.add(new v1_8_R1_NMS());
+        managers.add(new v1_8_R2_NMS());
+        managers.add(new v1_8_R3NMS());
+        managers.add(new v1_9_NMS());
+        managers.add(new V1_9_NMS2());
+        managers.add(new v1_10_NMS());
+        managers.add(new v1_11_NMS());
+        managers.add(new v1_12_NMS());
+        managers.add(new v1_13_NMS());
+        managers.add(new v1_13_R2_NMS());
+        String a = getServer().getClass().getPackage().getName();
+        String version = a.substring(a.lastIndexOf('.') + 1);
+        for (NMSManager nms : managers) {
+            if (nms.getNMSVersion().equalsIgnoreCase(version)) {
+                this.nms = nms;
             }
         }
-        if (v.contains("1.8.3")) {
-            nms = new v1_8_R2_NMS();
-        } else if (v.contains("1.8")) {
-            nms = new v1_8_R1_NMS();
-        } else if (v.contains("1.9.4")) {
-            nms = new V1_9_NMS2();
-        } else if (v.contains("1.9")) {
-            nms = new v1_9_NMS();
-        } else if (v.contains("1.10")) {
-            nms = new v1_10_NMS();
-        } else if (v.contains("1.11")) {
-            nms = new v1_11_NMS();
-        } else if (v.contains("1.12")) {
-            nms = new v1_12_NMS();
-        } else if (v.contains("1.13")) {
-            nms = new v1_13_NMS();
+        if (this.nms == null) {
+            getLogger().severe("ERROR: HeadsPlus does not support this version (" + version + ")!");
+            getLogger().severe("If this is not known of, let the developer know in one of these places:");
+            getLogger().severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
+            getLogger().severe("https://discord.gg/nbT7wC2");
+            getLogger().severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-13-x.237088/");
         }
     }
 

@@ -191,4 +191,9 @@ public class v1_10_NMS implements NMSManager {
         is.getTag().remove("icon");
         return CraftItemStack.asBukkitCopy(is);
     }
+
+    @Override
+    public String getNMSVersion() {
+        return "v1_10_R1";
+    }
 }

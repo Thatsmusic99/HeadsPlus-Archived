@@ -193,4 +193,9 @@ public class V1_9_NMS2 implements NMSManager {
         is.getTag().remove("icon");
         return CraftItemStack.asBukkitCopy(is);
     }
+
+    @Override
+    public String getNMSVersion() {
+        return "v1_9_R2";
+    }
 }

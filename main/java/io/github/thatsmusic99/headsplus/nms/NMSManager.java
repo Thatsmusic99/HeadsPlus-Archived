@@ -94,4 +94,6 @@ public interface NMSManager {
 
     ItemStack removeIcon(ItemStack i);
 
+    String getNMSVersion();
+
 }

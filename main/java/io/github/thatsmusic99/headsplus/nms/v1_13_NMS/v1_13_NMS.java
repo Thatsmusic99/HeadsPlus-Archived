@@ -191,4 +191,9 @@ public class v1_13_NMS implements NewNMSManager {
         return CraftItemStack.asBukkitCopy(is);
     }
 
+    @Override
+    public String getNMSVersion() {
+        return "v1_13_R1";
+    }
+
 }

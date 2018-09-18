@@ -40,6 +40,7 @@ public class HeadsPlusMainConfig extends ConfigSettings {
         getConfig().addDefault("theme-colours.4", "DARK_AQUA");
         getConfig().addDefault("plugin.perks.sell-heads", true);
         getConfig().addDefault("plugin.perks.drop-heads", true);
+        getConfig().addDefault("plugin.perks.drops.ignore-players", new ArrayList<>());
         getConfig().addDefault("plugin.perks.craft-heads", false);
         getConfig().addDefault("plugin.perks.disable-crafting", false);
         getConfig().addDefault("plugin.perks.heads-selector", true);
@@ -47,7 +48,7 @@ public class HeadsPlusMainConfig extends ConfigSettings {
         getConfig().addDefault("plugin.perks.leaderboards", true);
         getConfig().addDefault("plugin.perks.levels", true);
         getConfig().addDefault("plugin.perks.player-death-messages", false);
-        getConfig().addDefault("plugin.perks.death-messagees",
+        getConfig().addDefault("plugin.perks.death-messages",
                 new ArrayList<>(Arrays.asList("&b{player} &3was killed by &b{killer} &3and had their head removed!",
                         "&b{killer} &3finished the job and removed the worst part of &b{player}&3: The head.",
                         "&3The server owner screamed at &b{player} &3\"OFF WITH HIS HEAD!\"&3. &b{killer} &3finished the job.")));
@@ -65,7 +66,7 @@ public class HeadsPlusMainConfig extends ConfigSettings {
         getConfig().addDefault("plugin.mechanics.debug.console.enabled", false);
         getConfig().addDefault("plugin.mechanics.debug.console.level", 1);
         getConfig().addDefault("plugin.mechanics.anvil-menu-search", false);
-        getConfig().set("mysql.passworld", null);
+        getConfig().set("mysql.passworld", null); // I still love this
         getConfig().options().copyDefaults(true);
         save();
     }

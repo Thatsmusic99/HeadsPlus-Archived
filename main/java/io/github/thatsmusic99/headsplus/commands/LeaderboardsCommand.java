@@ -3,7 +3,6 @@ package io.github.thatsmusic99.headsplus.commands;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
-import io.github.thatsmusic99.headsplus.events.DeathEvents;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.util.PagedHashmaps;
 import org.apache.commons.lang.WordUtils;
@@ -34,27 +33,37 @@ public class LeaderboardsCommand implements CommandExecutor, IHeadsPlusCommand {
                     try {
                         boolean b = HeadsPlus.getInstance().getDeathEvents().ableEntities.contains(EntityType.valueOf(args[0].toUpperCase()));
                         tests.put("Valid Entity", b);
-                        if (b) {
+                        if (b || args[0].equalsIgnoreCase("player")) {
                             if (args.length > 1) {
                                 if (args[1].matches("^[0-9]+$")) {
-                                    cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1])));
+                                    if (args.length > 2) {
+                                        if (args[2].equalsIgnoreCase("crafting")
+                                                || args[2].equalsIgnoreCase("selling")
+                                                || args[2].equalsIgnoreCase("hunting")) {
+                                            cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1]), args[2]));
+                                        } else {
+                                            cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1]), "hunting"));
+                                        }
+                                    } else {
+                                        cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1]), "hunting"));
+                                    }
+                                } else if (args[1].equalsIgnoreCase("crafting")
+                                        || args[1].equalsIgnoreCase("selling")
+                                        || args[1].equalsIgnoreCase("hunting")) {
+                                    if (args.length > 2) {
+                                        if (args[2].matches("^[0-9]+$")) {
+                                            cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[2]), args[1]));
+                                        } else {
+                                            cs.sendMessage(getLeaderboard(args[0], 1, args[1]));
+                                        }
+                                    } else {
+                                        cs.sendMessage(getLeaderboard(args[0], 1, args[1]));
+                                    }
                                 } else {
-                                    cs.sendMessage(getLeaderboard(args[0], 1));
+                                    cs.sendMessage(getLeaderboard(args[0], 1, "hunting"));
                                 }
                             } else {
-                                cs.sendMessage(getLeaderboard(args[0], 1));
-                            }
-                            printDebugResults(tests, true);
-                            return true;
-                        } else if (args[0].equalsIgnoreCase("player")) {
-                            if (args.length > 1) {
-                                if (args[1].matches("^[0-9]+$")) {
-                                    cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1])));
-                                } else {
-                                    cs.sendMessage(getLeaderboard(args[0], 1));
-                                }
-                            } else {
-                                cs.sendMessage(getLeaderboard(args[0], 1));
+                                cs.sendMessage(getLeaderboard(args[0], 1, "hunting"));
                             }
                             printDebugResults(tests, true);
                             return true;
@@ -64,38 +73,85 @@ public class LeaderboardsCommand implements CommandExecutor, IHeadsPlusCommand {
                         if (args[0].equalsIgnoreCase("total")) {
                             if (args.length > 1) {
                                 if (args[1].matches("^[0-9]+$")) {
-                                    cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1])));
+                                    if (args.length > 2) {
+                                        if (args[2].equalsIgnoreCase("crafting")
+                                                || args[2].equalsIgnoreCase("selling")
+                                                || args[2].equalsIgnoreCase("hunting")) {
+                                            cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1]), args[2]));
+                                        } else {
+                                            cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1]), "hunting"));
+                                        }
+                                    } else {
+                                        cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1]), "hunting"));
+                                    }
+                                } else if (args[1].equalsIgnoreCase("crafting")
+                                        || args[1].equalsIgnoreCase("selling")
+                                        || args[1].equalsIgnoreCase("hunting")) {
+                                    cs.sendMessage(getLeaderboard(args[0], 1, args[1]));
                                 } else {
-                                    cs.sendMessage(getLeaderboard(args[0], 1));
+                                    cs.sendMessage(getLeaderboard(args[0], 1, "hunting"));
                                 }
                             } else {
-                                cs.sendMessage(getLeaderboard(args[0], 1));
+                                cs.sendMessage(getLeaderboard(args[0], 1, "hunting"));
                             }
                             printDebugResults(tests, true);
                             return true;
                         } else if (args[0].matches("^[0-9]+$")) {
-                            cs.sendMessage(getLeaderboard("total", Integer.parseInt(args[0])));
+                            cs.sendMessage(getLeaderboard("total", Integer.parseInt(args[0]), "hunting"));
                             printDebugResults(tests, true);
                             return true;
                         } else if (args[0].equalsIgnoreCase("player")) {
                             if (args.length > 1) {
                                 if (args[1].matches("^[0-9]+$")) {
-                                    cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1])));
+                                    if (args.length > 2) {
+                                        if (args[2].equalsIgnoreCase("crafting")
+                                                || args[2].equalsIgnoreCase("selling")
+                                                || args[2].equalsIgnoreCase("hunting")) {
+                                            cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1]), args[2]));
+                                        } else {
+                                            cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1]), "hunting"));
+                                        }
+                                    } else {
+                                        cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1]), "hunting"));
+                                    }
                                 } else {
-                                    cs.sendMessage(getLeaderboard(args[0], 1));
+                                    if (args.length > 2) {
+                                        if (args[2].equalsIgnoreCase("crafting")
+                                                || args[2].equalsIgnoreCase("selling")
+                                                || args[2].equalsIgnoreCase("hunting")) {
+                                            cs.sendMessage(getLeaderboard(args[0], 1, args[2]));
+                                        } else {
+                                            cs.sendMessage(getLeaderboard(args[0], 1, "hunting"));
+                                        }
+                                    } else {
+                                        cs.sendMessage(getLeaderboard(args[0], 1, "hunting"));
+                                    }
                                 }
+
                             } else {
-                                cs.sendMessage(getLeaderboard(args[0], 1));
+                                cs.sendMessage(getLeaderboard(args[0], 1, "hunting"));
                             }
                             printDebugResults(tests, true);
                             return true;
+                        }  else if (args[0].equalsIgnoreCase("crafting")
+                                || args[0].equalsIgnoreCase("selling")
+                                || args[0].equalsIgnoreCase("hunting")) {
+                            if (args.length > 1) {
+                                if (args[1].matches("^[0-9]+$")) {
+                                    cs.sendMessage(getLeaderboard("total", Integer.parseInt(args[1]), args[0]));
+                                } else {
+                                    cs.sendMessage(getLeaderboard("total", 1, args[0]));
+                                }
+                            }
+
+
                         } else {
-                            cs.sendMessage(hpc.getString("invalid-args"));
+                            cs.sendMessage(getLeaderboard("total", 1, "hunting"));
                         }
                     }
 
                 } else {
-                    cs.sendMessage(getLeaderboard("total", 1));
+                    cs.sendMessage(getLeaderboard("total", 1, "hunting"));
                     printDebugResults(tests, true);
                     return true;
                 }
@@ -107,11 +163,20 @@ public class LeaderboardsCommand implements CommandExecutor, IHeadsPlusCommand {
         return false;
     }
 
-    private String getLeaderboard(String sec, int page) throws SQLException {
+    private String getLeaderboard(String sec, int page, String part) throws SQLException {
         try {
             HeadsPlus hp = HeadsPlus.getInstance();
             StringBuilder sb = new StringBuilder();
-            ph = new PagedHashmaps<>(HeadsPlus.getInstance().getMySQLAPI().getScores(sec, "headspluslb"), 8);
+            String database = "headspluslb";
+            switch (part.toLowerCase()) {
+                case "selling":
+                    database = "headsplussh";
+                    break;
+                case "crafting":
+                    database = "headspluscraft";
+                    break;
+            }
+            ph = new PagedHashmaps<>(HeadsPlus.getInstance().getMySQLAPI().getScores(sec, database), 8);
 
             sb.append(hp.getThemeColour(1)).append("=======").append(hp.getThemeColour(2)).append(" HeadsPlus Leaderboards: ").append(WordUtils.capitalize(sec)).append(" ").append(hp.getThemeColour(3)).append(page).append("/").append(ph.getTotalPages()).append(" ").append(hp.getThemeColour(1)).append("=======");
             Set<OfflinePlayer> it = ph.getContentsInPage(page).keySet();
@@ -154,7 +219,7 @@ public class LeaderboardsCommand implements CommandExecutor, IHeadsPlusCommand {
 
     @Override
     public String getUsage() {
-        return "/hplb [Entity|Page No.] [Page No.]";
+        return "/hplb [Entity|Page No.] [Page No.] [Hunting|Selling|Crafting]";
     }
 
     @Override

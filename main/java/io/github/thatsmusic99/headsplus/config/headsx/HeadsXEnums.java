@@ -263,7 +263,15 @@ public enum HeadsXEnums {
     BUBBLE_CORAL("bubble_coral", "&8[&dBubble Coral&8]", HPStrings.wood + "MTNmMTgwNWVkY2QzMmI5N2FiMmYxOWEwM2JhYWIxZjhkNGRjNGRiOGVjN2EwMDRiMTRlYjY2NmQwOWZiODdmMiJ9fX0", "blocks", 1.7),
     FIRE_CORAL("fire_coral", "&8[&cFire Coral&8]", HPStrings.wood + "OWZlOGRlZDNjNzRlYWNkNzg0MTJhOTAzYjkwNGY1NTc3ODUwZDFlMjBkMzQ4NzhmZDc3NTk3YWQxNjMzYmY3NCJ9fX0", "blocks", 1.7),
     HORN_CORAL("horn_coral", "&8[&eHorn Coral&8]", HPStrings.wood + "MzQ5MWI2ZTZhZTk0NTFjNDdlMDliZjFmZjIzZDUwZmZmODdiYTU5MjdhNTFmNDZmZmVkZjkyNmM1Y2JkZTc3ZiJ9fX0", "blocks", 1.7),
-    TUBE_CORAL("tube_coral", "&8[&9Tube Coral&8]", HPStrings.wood + "MzlmYzNjZjU1MDhkNDBjMTQ2OTlkNWJmN2YyNTI3NTllMTk1NmFmOWE2NmQxNWE2YzM4NTQzNzhjNjFmNmQ5YSJ9fX0", "blocks", 1.7);
+    TUBE_CORAL("tube_coral", "&8[&9Tube Coral&8]", HPStrings.wood + "MzlmYzNjZjU1MDhkNDBjMTQ2OTlkNWJmN2YyNTI3NTllMTk1NmFmOWE2NmQxNWE2YzM4NTQzNzhjNjFmNmQ5YSJ9fX0", "blocks", 1.7),
+    OAK_PLANKS("oak_planks", "&8[&6Oak Planks&8]", HPStrings.wood + "MWIwZTExMzcwNGZjMjdjODhmOWU1MWFlODJlN2IwNWY3MDExYzQxMGYyMWUxOTEyMDViZWYyNTVhYTBkNmYzMSJ9fX0", "blocks", 1.8),
+    BIRCH_PLANKS("birch_planks", "&8[&eBirch Planks&8]", HPStrings.wood + "MWMzMmYxMGUwOTY1MGI2Zjk4NWFjZTk5MDYzNjA5N2JhOWE4NzZmNDljNWQ2MjZmMjkyYzNiMDhlYmY4MmMyMyJ9fX0", "blocks", 1.8),
+    SPRUCE_PLANKS("spruce_planks", "&8[&6Spruce Planks&8]", HPStrings.wood + "MTg2M2Y5MmI2ZDY2MzA1MjJhMTgwZWM0MjkxODY5YzFlNzAwZTUyNmM4NTRiZWUwNzM1NTcwOWVmM2I3NTk2YiJ9fX0", "blocks", 1.8),
+    JUNGLE_PLANKS("jungle_planks", "&8[&cJungle Planks&8]", HPStrings.wood + "NThiYzNlN2FkYTM3NDE4ZWM1YzYwNzlkMTJjMThhZGViNjQ4ZGM0NWRlMzYwMWNjYWE1YmYyMDVjOTAxNTk2YSJ9fX0", "blocks", 1.8),
+    ACACIA_PLANKS("acacia_planks", "&8[&cAcacia Planks&8]", HPStrings.wood + "MjZmYjc4NGRmZjFhNzYxNjNiNGE3MTc2ZjBiZDY2MjMwZWE5MDZiODJmODVlNDA5NGY0MTM0YTUwYzU5OTI4MSJ9fX0", "blocks", 1.8),
+    DARK_OAK_PLANKS("dark_oak_planks", "&8[&7Dark Oak Planks&8]", HPStrings.wood + "MjZmYjc4NGRmZjFhNzYxNjNiNGE3MTc2ZjBiZDY2MjMwZWE5MDZiODJmODVlNDA5NGY0MTM0YTUwYzU5OTI4MSJ9fX0", "blocks", 1.8),
+    BONE_BLOCK("bone_block", "&8[&fBone Block&8]", HPStrings.wood + "YjQzMGFiNTQ1YjE0MjgyN2I5MzVmYzdlMzBmZDFhMTczZmE5MWI5M2NhYmJhNDVmODVmMjJhZWVkMGFlZmFjNyJ9fX0", "blocks", 1.8),
+    SNOWBALL("snowball", "&8[&fSnowball&8]", HPStrings.wood + "MWRmZDc3MjRjNjlhMDI0ZGNmYzYwYjE2ZTAwMzM0YWI1NzM4ZjRhOTJiYWZiOGZiYzc2Y2YxNTMyMmVhMDI5MyJ9fX0", "blocks", 1.8);
 
     final String name;
     final String dn;

@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus;
 
 import io.github.thatsmusic99.headsplus.api.Challenge;
+import io.github.thatsmusic99.headsplus.api.CommunicateEvent;
 import io.github.thatsmusic99.headsplus.api.HeadsPlusAPI;
 import io.github.thatsmusic99.headsplus.api.Level;
 import io.github.thatsmusic99.headsplus.commands.*;
@@ -27,9 +28,13 @@ import io.github.thatsmusic99.headsplus.nms.v1_9_R2_NMS.V1_9_NMS2;
 import io.github.thatsmusic99.headsplus.storage.Favourites;
 import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import io.github.thatsmusic99.headsplus.util.MySQLAPI;
+import io.github.thatsmusic99.og.OreGenerator;
+import io.github.thatsmusic99.pg.Core;
+import io.github.thatsmusic99.specprotect.CoreClass;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.apache.commons.lang.WordUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.EntityType;
@@ -154,9 +159,11 @@ public class HeadsPlus extends JavaPlugin {
                         } else {
                             log.info(hpc.getString("plugin-up-to-date"));
                         }
+                        checkForMutuals();
                     }
                 }.runTaskAsynchronously(this);
             }
+
 
             log.info(hpc.getString("plugin-enabled"));
         } catch (Exception e) {
@@ -387,6 +394,8 @@ public class HeadsPlus extends JavaPlugin {
             getLogger().severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
             getLogger().severe("https://discord.gg/nbT7wC2");
             getLogger().severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-13-x.237088/");
+            getLogger().severe("To prevent any further damage, the plugin is being disabled...");
+            setEnabled(false);
         }
     }
 
@@ -577,5 +586,22 @@ public class HeadsPlus extends JavaPlugin {
             }
         }
         return null;
+    }
+
+    public void checkForMutuals() {
+        if (Bukkit.getServer().getPluginManager().getPlugin("ProjectPG-PRO") instanceof Core) {
+            getLogger().info("I think I see ProjectPG here... are you ready, Aaron?");
+            Bukkit.getPluginManager().callEvent(new CommunicateEvent("ProjectPG"));
+        }
+        if (Bukkit.getServer().getPluginManager().getPlugin("AdvancedOreGenerator") instanceof OreGenerator) {
+            getLogger().info("What're we gonna do, AOG?");
+            Bukkit.getPluginManager().callEvent(new CommunicateEvent("AOG"));
+        }
+        if (Bukkit.getPluginManager().getPlugin("SpectateProtection") instanceof CoreClass) {
+            getLogger().info("'Ello SpectateProtection! What's up??");
+            Bukkit.getPluginManager().callEvent(new CommunicateEvent("SpectateProtection"));
+        }
+
+
     }
 }

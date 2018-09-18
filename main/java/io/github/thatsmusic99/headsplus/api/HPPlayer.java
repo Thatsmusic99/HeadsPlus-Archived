@@ -93,7 +93,7 @@ public class HPPlayer {
                 p.apply((Player) this.getPlayer());
                 po.add(p);
             } catch (IllegalArgumentException ex) {
-                HeadsPlus.getInstance().getLogger().severe("Invalid potion type detected. Please check your masks configuration in heads.yml!");
+                HeadsPlus.getInstance().getLogger().severe("Invalid potion type detected. Please check your masks configuration in headsa.yml!");
             }
         }
         activeMasks.addAll(po);

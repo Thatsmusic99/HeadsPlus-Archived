@@ -39,7 +39,7 @@ public class RecipeEnumUser {
 	            }
 	        } catch (IndexOutOfBoundsException ex) {
 	            HeadsPlus.getInstance().getLogger().warning("There was an issue setting the crafting skull for " + key + "! Setting it to default...");
-	            HeadsPlus.getInstance().getLogger().warning("If your heads.yml was out of date, just let it update and then the config will automatically reload as soon as a player joins (if enabled).");
+	            HeadsPlus.getInstance().getLogger().warning("If your headsa.yml was out of date, just let it update and then the config will automatically reload as soon as a player joins (if enabled).");
 	            HeadsPlus.getInstance().getLogger().warning("Otherwise, use /hp reload.");
 	            im = nms.setSkullOwner("MHF_" + WordUtils.capitalize(key), im);
 	        }

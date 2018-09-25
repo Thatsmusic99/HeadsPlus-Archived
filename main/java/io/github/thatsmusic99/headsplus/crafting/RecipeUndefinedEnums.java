@@ -2,27 +2,34 @@ package io.github.thatsmusic99.headsplus.crafting;
 
 public enum RecipeUndefinedEnums {
 	
-	BAT("bat"), 
-	DONKEY("donkey"), 
+	BAT("bat"),
+    DOLPHIN("dolphin"),
+	DONKEY("donkey"),
+    DROWNED("drowned"),
 	ENDERDRAGON("enderdragon"), 
 	ELDERGUARDIAN("elderguardian"), 
 	ENDERMITE("endermite"), 
 	EVOKER("evoker"), 
-	HORSE("horse"), 
+	HORSE("horse"),
+    HUSK("husk"),
 	LLAMA("llama"), 
 	MAGMACUBE("magmacube"), 
-	MULE("mule"), 
-	POLARBEAR("polarbear"), 
-	RABBIT("rabbit"), 
-	SHULKER("shulker"), 
+	MULE("mule"),
+    PARROT("parrot"),
+	POLARBEAR("polarbear"),
+	SALMON("salmon"),
 	SILVERFISH("silverfish"), 
 	SKELETONHORSE("skeletonhorse"), 
 	SNOWMAN("snowman"), 
-	STRAY("stray"), 
+	STRAY("stray"),
+    TROPICALFISH("tropicalfish"),
 	VEX("vex"), 
 	VINDICATOR("vindicator"), 
-	WITHER("wither"), 
-	WITHERSKELETON("witherskeleton");
+	WITHER("wither"),
+	WITHERSKELETON("witherskeleton"),
+    WOLF("wolf"),
+    ZOMBIEHORSE("zombiehorse"),
+    ZOMBIEVILLAGER("zombievillager");
 	public final String str;
 	
 	RecipeUndefinedEnums(String str) {

@@ -66,8 +66,7 @@ public class RecipeEnumUser {
 	            try {
                     recipe.addIngredient(Material.getMaterial(key2));
                     ingrs.add(key2);
-                } catch (IllegalArgumentException ex) {
-	                HeadsPlus.getInstance().getLogger().warning("Received an error trying to add " + key2 + " as in ingredient for " + key + "'s recipe. If you're on 1.13, please update your material names, or restart the configuration.");
+                } catch (IllegalArgumentException ignored) {
                 }
 
 	        }
@@ -99,7 +98,12 @@ public class RecipeEnumUser {
 	            if (crafting.getStringList(key + "I") != null) {
 	                ingrs = crafting.getStringList(key + "I");
 	                for (String key2 : ingrs) {
-	                    recipe.addIngredient(Material.getMaterial(key2));
+						try {
+							recipe.addIngredient(Material.getMaterial(key2));
+						} catch (IllegalArgumentException ignored) {
+
+						}
+
 	                }
 	                if (ingrs.size() > 0) {
 	                    recipe.addIngredient(nms.getSkullMaterial(1).getType());

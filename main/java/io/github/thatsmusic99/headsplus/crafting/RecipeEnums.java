@@ -2,34 +2,39 @@ package io.github.thatsmusic99.headsplus.crafting;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.util.MaterialTranslator;
-import org.bukkit.Material;
 
 public enum RecipeEnums {
 	
-	BLAZE(Material.BLAZE_POWDER, "blaze"), 
-	CAVESPIDER(Material.FERMENTED_SPIDER_EYE, "cavespider"), 
-	CHICKEN(Material.FEATHER, "chicken"), 
-	COW(Material.LEATHER, "cow"), 
-	CREEPER(HeadsPlus.getInstance().getNMS().getNewItems(MaterialTranslator.ChangedMaterials.SULPHUR), "creeper"),
-	ENDERMAN(Material.ENDER_PEARL, "enderman"), 
-	GHAST(HeadsPlus.getInstance().getNMS().getNewItems(MaterialTranslator.ChangedMaterials.FIREWORK_CHARGE), "ghast"),
-	GUARDIAN(Material.PRISMARINE_SHARD, "guardian"), 
-    IRONGOLEM(Material.IRON_BLOCK, "irongolem"), 
-    MUSHROOMCOW(Material.RED_MUSHROOM, "mushroomcow"), 
-    PIG(HeadsPlus.getInstance().getNMS().getNewItems(MaterialTranslator.ChangedMaterials.PORK), "pig"),
-    SHEEP(HeadsPlus.getInstance().getNMS().getColouredBlock(MaterialTranslator.BlockType.WOOL, 0).getType(), "sheep"),
-    SKELETON(Material.BONE, "skeleton"), 
-    SLIME(Material.SLIME_BALL, "slime"), 
-    SPIDER(Material.SPIDER_EYE, "spider"), 
-    SQUID(HeadsPlus.getInstance().getNMS().getNewItems(MaterialTranslator.ChangedMaterials.INK_SAC), "squid"),
-    VILLAGER(Material.EMERALD, "villager"), 
-    WITCH(Material.POTION, "witch"), 
-    ZOMBIE(Material.ROTTEN_FLESH, "zombie");
+	BLAZE("BLAZE_POWDER", "blaze"),
+	CAVESPIDER("FERMENTED_SPIDER_EYE", "cavespider"),
+	CHICKEN("FEATHER", "chicken"),
+    COD(HeadsPlus.getInstance().getNMS().getNewItems(MaterialTranslator.ChangedMaterials.RAW_FISH).name(), "cod"),
+    COW("Material.LEATHER", "cow"),
+	CREEPER(HeadsPlus.getInstance().getNMS().getNewItems(MaterialTranslator.ChangedMaterials.SULPHUR).name(), "creeper"),
+	ENDERMAN("ENDER_PEARL", "enderman"),
+	GHAST(HeadsPlus.getInstance().getNMS().getNewItems(MaterialTranslator.ChangedMaterials.FIREWORK_CHARGE).name(), "ghast"),
+	GUARDIAN("PRISMARINE_SHARD", "guardian"),
+    IRONGOLEM("IRON_BLOCK", "irongolem"),
+    MUSHROOMCOW("RED_MUSHROOM", "mushroomcow"),
+    PHANTOM("PHANTOM_MEMBRANE", "phantom"),
+    PIG(HeadsPlus.getInstance().getNMS().getNewItems(MaterialTranslator.ChangedMaterials.PORK).name(), "pig"),
+    PUFFERFISH("PUFFERFISH", "pufferfish"),
+    RABBIT("RABBIT_FOOT", "rabbit"),
+    SHEEP(HeadsPlus.getInstance().getNMS().getColouredBlock(MaterialTranslator.BlockType.WOOL, 0).getType().name(), "sheep"),
+    SHULKER("SHULKER_SHELL", "shulker"),
+    SKELETON("BONE", "skeleton"),
+    SLIME("SLIME_BALL", "slime"),
+    SPIDER("SPIDER_EYE", "spider"),
+    SQUID(HeadsPlus.getInstance().getNMS().getNewItems(MaterialTranslator.ChangedMaterials.INK_SAC).name(), "squid"),
+    TURTLE("TURTLE_HELMET", "turtle"),
+    VILLAGER("EMERALD", "villager"),
+    WITCH("POTION", "witch"),
+    ZOMBIE("ROTTEN_FLESH", "zombie");
 	
-    public final Material mat;
+    public final String mat;
     public final String str;
 	
-	RecipeEnums(Material mat, String str) {
+	RecipeEnums(String mat, String str) {
 		this.mat = mat;
 		this.str = str;
 	}

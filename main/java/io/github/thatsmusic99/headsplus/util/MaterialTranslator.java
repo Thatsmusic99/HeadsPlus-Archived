@@ -25,6 +25,8 @@ public class MaterialTranslator {
             return Material.GUNPOWDER;
         } else if (type == ChangedMaterials.GRILLED_PORK) {
             return Material.COOKED_PORKCHOP;
+        } else if (type == ChangedMaterials.RAW_FISH){
+            return Material.COD;
         } else {
             return Material.INK_SAC;
         }
@@ -48,6 +50,7 @@ public class MaterialTranslator {
         SULPHUR,
         PORK,
         GRILLED_PORK,
-        INK_SAC
+        INK_SAC,
+        RAW_FISH
     }
 }

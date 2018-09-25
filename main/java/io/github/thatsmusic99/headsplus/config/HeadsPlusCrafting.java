@@ -36,7 +36,7 @@ public class HeadsPlusCrafting extends ConfigSettings {
 
 	private void checkCrafting() {
 		for (RecipeEnums key : RecipeEnums.values()) {
-			getConfig().addDefault(key.str + "I", new ArrayList<>(Collections.singletonList(key.mat.toString())));
+			getConfig().addDefault(key.str + "I", new ArrayList<>(Collections.singletonList(key.mat)));
 			List<String> keyl = getConfig().getStringList(key.str + "I");
 			if (keyl.size() > 9) {
 				getConfig().getStringList(key.str + "I").clear();

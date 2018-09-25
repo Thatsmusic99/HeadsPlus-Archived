@@ -1,5 +1,6 @@
 package io.github.thatsmusic99.headsplus;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException;
 import io.github.thatsmusic99.headsplus.api.Challenge;
 import io.github.thatsmusic99.headsplus.api.CommunicateEvent;
 import io.github.thatsmusic99.headsplus.api.HeadsPlusAPI;
@@ -46,10 +47,7 @@ import org.json.simple.parser.ParseException;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -246,7 +244,34 @@ public class HeadsPlus extends JavaPlugin {
                 }
                 sb2.append(", '0'");
                 sb2.append(")");
-                st.executeUpdate(sb2.toString());
+                try {
+                    st.executeUpdate(sb2.toString());
+                } catch (MySQLSyntaxErrorException ex) {
+                    debug("- MySQL error thrown. Must be old database. No worries - I'm on it.", 1);
+                    for (EntityType e : de.ableEntities) {
+                        ResultSet rs2 = st.executeQuery("SELECT * FROM `" + str + "` WHERE `uuid`='server-total'");
+                        rs2.next();
+                        try {
+                            rs2.getString(e.name());
+                        } catch (SQLException owowhatsthis) {
+                            st.executeUpdate("ALTER TABLE `" + str + "` ADD COLUMN `" + e.name() + "` VARCHAR(45)");
+                            st.executeUpdate("INSERT INTO `" + str + "` (" + e.name() + ") VALUES('0')");
+                        }
+                    }
+                  /*  getLogger().severe("MYSQL ERROR: If you're migrating from an old HeadsPlus version, please reset all of the HeadsPlus tables. If this error persists after you've reset the tables, a report has been made for you to send.");
+                    try {
+                        String s = new DebugFileCreator().createReport(ex, "Startup");
+                        log.severe("Report name: " + s);
+                        log.severe("If the issue persists, please send to one of the following links (I WILL ASK IF YOU'VE RESET YOUR MYSQL TABLES):");
+                        log.severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
+                        log.severe("https://discord.gg/nbT7wC2");
+                        log.severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
+                        break;
+                    } catch (IOException ignored) {
+
+                    } */
+                }
+
 
             }
             con = true;
@@ -591,6 +616,16 @@ public class HeadsPlus extends JavaPlugin {
     public void checkForMutuals() {
         if (Bukkit.getServer().getPluginManager().getPlugin("ProjectPG-PRO") instanceof Core) {
             getLogger().info("I think I see ProjectPG here... are you ready, Aaron?");
+            // Although I have my suspicions about those lot.
+            // Here's my reason.
+            // Error is dead, right?
+            // Or at least... TM's alive. But that AI isn't running...
+            // The only ones running are the SE1s.
+            // Although I think in 2019... something is going to happen.
+            // I'm not looking forward to it.
+            // Let's see though, let's see.
+            //
+            // ProjectPG - SE1, where it all begins.
             Bukkit.getPluginManager().callEvent(new CommunicateEvent("ProjectPG"));
         }
         if (Bukkit.getServer().getPluginManager().getPlugin("AdvancedOreGenerator") instanceof OreGenerator) {

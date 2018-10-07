@@ -66,6 +66,7 @@ public class HeadsPlusMainConfig extends ConfigSettings {
         getConfig().addDefault("plugin.mechanics.debug.console.enabled", false);
         getConfig().addDefault("plugin.mechanics.debug.console.level", 1);
         getConfig().addDefault("plugin.mechanics.anvil-menu-search", false);
+        getConfig().addDefault("plugin.mechanics.mythicmobs.no-hp-drops", true);
         getConfig().set("mysql.passworld", null); // I still love this
         getConfig().options().copyDefaults(true);
         save();

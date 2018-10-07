@@ -80,7 +80,7 @@ public class LBEvents implements Listener {
             if (!e.isCancelled()) {
                 if (hp.hasChallengesEnabled()) {
                     if (e.getEntityType() != null) {
-                        if (!e.getEntityType().equalsIgnoreCase("invalid")) {
+                        if (!(e.getEntityType().equalsIgnoreCase("invalid") || e.getEntityType().isEmpty())) {
                             HPPlayer.getHPPlayer(e.getPlayer()).addXp(30 * e.getHeadsCrafted());
                             hp.getMySQLAPI().addOntoValue(e.getPlayer(), e.getEntityType(), "headspluscraft", e.getHeadsCrafted());
                         }

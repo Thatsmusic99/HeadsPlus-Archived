@@ -21,7 +21,7 @@ public class HeadsPlusMessagesConfig extends ConfigSettings {
 
 		getConfig().options().header("HeadsPlus by Thatsmusic99 \nPlease do NOT change pLocale! This will be used to change the plugin's language in the future!");
 
-		getConfig().addDefault("prefix", "&1[&6HeadsPlus&1]");
+		getConfig().addDefault("prefix", "&0[&6HeadsPlus&0]");
 		getConfig().addDefault("locale", "en_uk");
 		getConfig().addDefault("pLocale", "en_uk");
 		getConfig().addDefault("reloading-message", "%h &3Reloading config...");

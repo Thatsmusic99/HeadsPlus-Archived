@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus.util;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
+import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -117,9 +118,23 @@ public class SellheadInventory {
         NMSManager nms = hp.getNMS();
         for (String o : ps.getContentsInPage(page)) {
 
-            ItemStack it = nms.getSkullMaterial(1);
-            SkullMeta sm = (SkullMeta) it.getItemMeta();
-            sm = nms.setSkullOwner(hpch.getConfig().getStringList(o + ".name").get(0), sm);
+            ItemStack it;
+            SkullMeta sm;
+            HeadsPlusConfigHeadsX hpchx = hp.getHeadsXConfig();
+            if (hpchx.isHPXSkull(hpch.getConfig().getStringList(o + ".name").get(0))) {
+                try {
+                    it = hp.getHeadsXConfig().getSkull(hpch.getConfig().getStringList(o + ".name").get(0));
+                    sm = (SkullMeta) it.getItemMeta();
+                } catch (NoSuchFieldException | IllegalAccessException e) {
+                    e.printStackTrace();
+                    it = null;
+                    sm = null;
+                }
+            } else {
+                it = nms.getSkullMaterial(1);
+                sm = (SkullMeta) it.getItemMeta();
+                sm = nms.setSkullOwner(hpch.getConfig().getStringList(o + ".name").get(0), sm);
+            }
             sm.setDisplayName(hpch.getConfig().getString(o + ".display-name"));
             List<String> d = new ArrayList<>();
             for (String a : hpch.getConfig().getStringList(o + ".lore")) {

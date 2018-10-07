@@ -9,6 +9,7 @@ import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
+import io.lumine.xikage.mythicmobs.MythicMobs;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
@@ -28,7 +29,7 @@ public class DeathEvents implements Listener {
         createList();
     }
 	
-	public final List<EntityType> ableEntities = new ArrayList<>(Arrays.asList(EntityType.BAT, EntityType.BLAZE, EntityType.CAVE_SPIDER, EntityType.CHICKEN, EntityType.COW, EntityType.CREEPER, EntityType.ENDER_DRAGON, EntityType.ENDERMAN, EntityType.ENDERMITE, EntityType.GHAST, EntityType.GUARDIAN, EntityType.HORSE, EntityType.IRON_GOLEM, EntityType.MAGMA_CUBE, EntityType.MUSHROOM_COW, EntityType.OCELOT, EntityType.PIG, EntityType.PIG_ZOMBIE, EntityType.RABBIT, EntityType.SHEEP, EntityType.SILVERFISH, EntityType.SKELETON, EntityType.SLIME, EntityType.SNOWMAN, EntityType.SPIDER, EntityType.SQUID, EntityType.VILLAGER, EntityType.WITCH, EntityType.WITHER, EntityType.ZOMBIE));
+	public final List<EntityType> ableEntities = new ArrayList<>(Arrays.asList(EntityType.BAT, EntityType.BLAZE, EntityType.CAVE_SPIDER, EntityType.CHICKEN, EntityType.COW, EntityType.CREEPER, EntityType.ENDER_DRAGON, EntityType.ENDERMAN, EntityType.ENDERMITE, EntityType.GHAST, EntityType.GUARDIAN, EntityType.HORSE, EntityType.IRON_GOLEM, EntityType.MAGMA_CUBE, EntityType.MUSHROOM_COW, EntityType.OCELOT, EntityType.PIG, EntityType.PIG_ZOMBIE, EntityType.RABBIT, EntityType.SHEEP, EntityType.SILVERFISH, EntityType.SKELETON, EntityType.SLIME, EntityType.SNOWMAN, EntityType.SPIDER, EntityType.SQUID, EntityType.VILLAGER, EntityType.WITCH, EntityType.WITHER, EntityType.ZOMBIE, EntityType.WOLF));
     private final HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().getHeadsXConfig();
     private final HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
 
@@ -37,6 +38,7 @@ public class DeathEvents implements Listener {
 	    try {
 	        HeadsPlus hp = HeadsPlus.getInstance();
 	        if (!hp.isDropsEnabled()) return;
+	        if (checkForMythicMob(e.getEntity())) return;
             HeadsPlusMainConfig c = hp.getConfiguration();
             if (ableEntities.contains(e.getEntityType())) {
                 if (e.getEntity().getKiller() != null) {
@@ -213,5 +215,16 @@ public class DeathEvents implements Listener {
             world.dropItem(event.getLocation(), event.getSkull());
             HPPlayer.getHPPlayer(k).addXp(10);
         }
+    }
+
+    public boolean checkForMythicMob(Entity e) {
+	    HeadsPlus hp = HeadsPlus.getInstance();
+	    if (hp.getConfiguration().getMechanics().getBoolean("mythicmobs.no-hp-drops")) {
+            if (hp.getServer().getPluginManager().getPlugin("MythicMobs") != null) {
+                return MythicMobs.inst().getMobManager().isActiveMob(e.getUniqueId());
+            }
+        }
+
+        return false;
     }
 }

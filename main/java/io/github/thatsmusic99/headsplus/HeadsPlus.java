@@ -233,6 +233,8 @@ public class HeadsPlus extends JavaPlugin {
                 sb.append(", `PLAYER` VARCHAR(45)");
                 sb.append(", PRIMARY KEY (`id`))");
                 st.executeUpdate(sb.toString());
+
+
                 StringBuilder sb2 = new StringBuilder();
                 sb2.append("INSERT INTO `").append(str).append("` (uuid, total");
                 for (EntityType e : de.ableEntities) {
@@ -254,8 +256,13 @@ public class HeadsPlus extends JavaPlugin {
                         try {
                             rs2.getString(e.name());
                         } catch (SQLException owowhatsthis) {
-                            st.executeUpdate("ALTER TABLE `" + str + "` ADD COLUMN `" + e.name() + "` VARCHAR(45)");
-                            st.executeUpdate("INSERT INTO `" + str + "` (" + e.name() + ") VALUES('0')");
+                            try {
+                                st.executeUpdate("ALTER TABLE `" + str + "` ADD COLUMN `" + e.name() + "` VARCHAR(45)");
+                                st.executeUpdate("INSERT INTO `" + str + "` (" + e.name() + ") VALUES('0')");
+                            } catch (MySQLSyntaxErrorException ignored) { // huh
+
+                            }
+
                         }
                     }
                   /*  getLogger().severe("MYSQL ERROR: If you're migrating from an old HeadsPlus version, please reset all of the HeadsPlus tables. If this error persists after you've reset the tables, a report has been made for you to send.");

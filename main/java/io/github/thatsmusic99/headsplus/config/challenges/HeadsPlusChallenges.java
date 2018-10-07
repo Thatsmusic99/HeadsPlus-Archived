@@ -12,7 +12,6 @@ import java.util.List;
 
 public class HeadsPlusChallenges extends ConfigSettings {
 
-
     public HeadsPlusChallenges() {
         this.conName = "challenges";
         enable(false);
@@ -46,18 +45,25 @@ public class HeadsPlusChallenges extends ConfigSettings {
                 "\nItem Amount - If using GIVE_ITEM as a reward type, you can set an it" +
                 "\nHead type - The head type required to complete the challenge, use \"total\" for all types." +
                 "\nXP - Amount of XP (HeadsPlus levels) that will be received.");
-
+        getConfig().addDefault("challenges.options.current-version", 1.0);
+        double v = getConfig().getDouble("challenges.options.current-version");
+        if (v < 1.0) {
+            getConfig().set("challenges.current-version", 1.0);
+            v = 1.0;
+        }
         for (HeadsPlusChallengeEnums hpc : HeadsPlusChallengeEnums.values()) {
-            getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".name", hpc.dName);
-            getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".header", hpc.h);
-            getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".description", hpc.d);
-            getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".type", hpc.p.name());
-            getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".min", hpc.m);
-            getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".reward-type", hpc.r.name());
-            getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".reward-value", hpc.o instanceof Material ? ((Material) hpc.o).name() : hpc.o);
-            getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".item-amount", hpc.a);
-            getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".head-type", hpc.t);
-            getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".xp", hpc.exp);
+            if (hpc.v > v) {
+                getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".name", hpc.dName);
+                getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".header", hpc.h);
+                getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".description", hpc.d);
+                getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".type", hpc.p.name());
+                getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".min", hpc.m);
+                getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".reward-type", hpc.r.name());
+                getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".reward-value", hpc.o instanceof Material ? ((Material) hpc.o).name() : hpc.o);
+                getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".item-amount", hpc.a);
+                getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".head-type", hpc.t);
+                getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".xp", hpc.exp);
+            }
         }
         if (!HeadsPlus.getInstance().isConnectedToMySQLDatabase()) {
             getConfig().addDefault("server-total.sellhead.total", 0);

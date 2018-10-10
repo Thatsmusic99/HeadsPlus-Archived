@@ -85,9 +85,6 @@ public class HeadsPlus extends JavaPlugin {
     private List<ConfigSettings> cs = new ArrayList<>();
     private Favourites favourites;
 
-    @SuppressWarnings("unused")
-    private File messagesF;
-
     @Override
     public void onEnable() {
         try {

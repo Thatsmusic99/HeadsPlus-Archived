@@ -27,7 +27,7 @@ public class RecipeEnumUser {
 	    NMSManager nms = HeadsPlus.getInstance().getNMS();
 	    for (String key : HeadsPlus.getInstance().getHeadsConfig().mHeads) {
 	  //  for (RecipeEnums key : RecipeEnums.values()) {
-	        ItemStack i = nms.getSkullMaterial(1);
+	        ItemStack i = new ItemStack(nms.getSkullMaterial(1));
 	        SkullMeta im = (SkullMeta) i.getItemMeta();
 
 
@@ -70,7 +70,7 @@ public class RecipeEnumUser {
                 }
 
 	        }
-	        recipe.addIngredient(nms.getSkullMaterial(1).getType());
+	        recipe.addIngredient(nms.getSkull0());
 	        if (ingrs.size() > 0) {
 	            try {
 	                Bukkit.addRecipe(recipe);
@@ -106,7 +106,7 @@ public class RecipeEnumUser {
 
 	                }
 	                if (ingrs.size() > 0) {
-	                    recipe.addIngredient(nms.getSkullMaterial(1).getType());
+	                    recipe.addIngredient(nms.getSkull0());
 	                }
 	            } else {
 	                crafting.addDefault(key + "I", ingrs);

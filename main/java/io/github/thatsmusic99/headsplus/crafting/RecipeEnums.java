@@ -9,7 +9,7 @@ public enum RecipeEnums {
 	CAVESPIDER("FERMENTED_SPIDER_EYE", "cavespider"),
 	CHICKEN("FEATHER", "chicken"),
     COD(HeadsPlus.getInstance().getNMS().getNewItems(MaterialTranslator.ChangedMaterials.RAW_FISH).name(), "cod"),
-    COW("Material.LEATHER", "cow"),
+    COW("LEATHER", "cow"),
 	CREEPER(HeadsPlus.getInstance().getNMS().getNewItems(MaterialTranslator.ChangedMaterials.SULPHUR).name(), "creeper"),
 	ENDERMAN("ENDER_PEARL", "enderman"),
 	GHAST(HeadsPlus.getInstance().getNMS().getNewItems(MaterialTranslator.ChangedMaterials.FIREWORK_CHARGE).name(), "ghast"),

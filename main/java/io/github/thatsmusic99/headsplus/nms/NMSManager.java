@@ -96,4 +96,8 @@ public interface NMSManager {
 
     String getNMSVersion();
 
+    default Material getSkull0() {
+        return Material.getMaterial("SKULL_ITEM");
+    }
+
 }

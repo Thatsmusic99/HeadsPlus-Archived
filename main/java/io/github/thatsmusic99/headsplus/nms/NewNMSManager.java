@@ -21,4 +21,8 @@ public interface NewNMSManager extends NMSManager {
     default Material getWallSkull() {
         return Material.PLAYER_WALL_HEAD;
     }
+
+    default Material getSkull0() {
+        return Material.SKELETON_SKULL;
+    }
 }

@@ -50,12 +50,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                         if (hp.getConfiguration().getMechanics().getBoolean("sellhead-gui")) {
                             SellheadInventory si = new SellheadInventory();
                             SellheadInventory.setSI(p, si);
-                            new BukkitRunnable() {
-                                @Override
-                                public void run() {
-                                    p.openInventory(si.changePage(false, true, p));
-                                }
-                            }.runTaskAsynchronously(HeadsPlus.getInstance());
+                            p.openInventory(si.changePage(false, true, p));
                         } else {
                             if (nms().isSellable(invi)) {
                                 String s = nms().getType(invi).toLowerCase();

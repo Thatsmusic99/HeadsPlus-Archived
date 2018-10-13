@@ -3,6 +3,9 @@ package io.github.thatsmusic99.headsplus.config;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.DyeColor;
+import org.bukkit.entity.Horse;
+import org.bukkit.entity.Llama;
+import org.bukkit.entity.Parrot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,11 +45,54 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
 	}
     private void addUndefinedHeads() {
     	for (String key : uHeads) {
-    		getConfig().addDefault(key + ".name", new ArrayList<>());
+    	    if (key.equals("llama")) {
+                if (getConfig().get("llama.name") instanceof List) {
+                    List<String> h = getConfig().getStringList("llama.name");
+                    getConfig().set("llama.name", null);
+                    getConfig().addDefault("llama.name.default", h);
+                }
+    	        getConfig().addDefault("llama.name.default", new ArrayList<>());
+    	        for  (Llama.Color color : Llama.Color.values()) {
+    	            getConfig().addDefault("llama.name." + color.name(), new ArrayList<>());
+    	        }
+    	        getConfig().addDefault(key + ".display-name", WordUtils.capitalize(key) + " Head");
+    	        getConfig().addDefault(key + ".price", 10.00);
+    	        getConfig().addDefault(key + ".interact-name", WordUtils.capitalize(key));
+    	    } else if (key.equals("parrot")) {
+                if (getConfig().get("parrot.name") instanceof List) {
+                    List<String> h = getConfig().getStringList("parrot.name");
+                    getConfig().set("parrot.name", null);
+                    getConfig().addDefault("parrot.name.default", h);
+                }
+    	        getConfig().addDefault("parrot.name.default", new ArrayList<>());
+    	        for (Parrot.Variant variant : Parrot.Variant.values()) {
+    	            getConfig().addDefault("parrot.name." + variant.name(), new ArrayList<>());
+    	        }
+    	        getConfig().addDefault(key + ".display-name", WordUtils.capitalize(key) + " Head");
+    	        getConfig().addDefault(key + ".price", 10.00);
+    	        getConfig().addDefault(key + ".interact-name", WordUtils.capitalize(key));
+    	    } else if (key.equals("horse")){
+                if (getConfig().get("horse.name") instanceof List) {
+                    List<String> h = getConfig().getStringList("horse.name");
+                    getConfig().set("horse.name", null);
+                    getConfig().addDefault("horse.name.default", h);
+                }
+                getConfig().addDefault("horse.name.default", new ArrayList<>());
+                for (Horse.Color variant : Horse.Color.values()) {
+                    getConfig().addDefault("horse.name." + variant.name(), new ArrayList<>());
+                }
+                getConfig().addDefault(key + ".display-name", WordUtils.capitalize(key) + " Head");
+                getConfig().addDefault(key + ".price", 10.00);
+                getConfig().addDefault(key + ".interact-name", WordUtils.capitalize(key));
+            } else {
+    	        getConfig().addDefault(key + ".name", new ArrayList<>());
+    	        getConfig().addDefault(key + ".display-name", "");
+    	        getConfig().addDefault(key + ".price", 0.00);
+    	    }
+
     		getConfig().addDefault(key + ".chance", 0);
-    		getConfig().addDefault(key + ".display-name", "");
-    		getConfig().addDefault(key + ".price", 0.00);
-    		getConfig().addDefault(key + ".interact-name", WordUtils.capitalize(key));
+
+            getConfig().addDefault(key + ".interact-name", WordUtils.capitalize(key));
     		getConfig().addDefault(key + ".mask-effects", new ArrayList<>());
     		getConfig().addDefault(key + ".mask-amplifiers", new ArrayList<>());
     		getConfig().addDefault(key + ".lore", new ArrayList<>(Arrays.asList("&7Price: &6{price}", "&7Type: &a{type}")));
@@ -55,15 +101,15 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
     private void addMHFHeads() {
     	
     	for (String key : mHeads) {
-    		if (!key.equals("irongolem") && !key.equals("sheep")) {
+    		if (!key.equals("irongolem")
+					&& !key.equals("sheep")
+                    && !key.equals("llama")
+                    && !key.equals("parrot")) {
     		    getConfig().addDefault(key + ".name", new ArrayList<>(Collections.singleton("MHF_" + WordUtils.capitalize(key))));
     		    getConfig().addDefault(key + ".chance", 25);
     		    getConfig().addDefault(key + ".display-name", WordUtils.capitalize(key) + " Head");
     		    getConfig().addDefault(key + ".price", 10.00);
     		    getConfig().addDefault(key + ".interact-name", WordUtils.capitalize(key));
-    		    getConfig().addDefault(key + ".mask-effects", new ArrayList<>());
-                getConfig().addDefault(key + ".mask-amplifiers", new ArrayList<>());
-                getConfig().addDefault(key + ".lore", new ArrayList<>(Arrays.asList("&7Price: &6{price}", "&7Type: &a{type}")));
     		    
     		} else if (key.equals("irongolem")) {
     			getConfig().addDefault(key + ".name", new ArrayList<>(Collections.singleton("MHF_Golem")));
@@ -71,10 +117,7 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
     			getConfig().addDefault(key + ".display-name", "Iron Golem Head");
     			getConfig().addDefault(key + ".price", 10.00);
     		    getConfig().addDefault(key + ".interact-name", "Iron Golem");
-    		    getConfig().addDefault(key + ".mask-effects", new ArrayList<>());
-                getConfig().addDefault(key + ".mask-amplifiers", new ArrayList<>());
-                getConfig().addDefault(key + ".lore", new ArrayList<>(Arrays.asList("&7Price: &6{price}", "&7Type: &a{type}")));
-    		} else {
+    		} else if (key.equals("sheep")){
     			getConfig().addDefault("sheep.name.default", new ArrayList<>(Collections.singleton("MHF_Sheep")));
     			for (DyeColor dc : DyeColor.values()) {
     			    getConfig().addDefault("sheep.name." + dc.name(), new ArrayList<>(Collections.singleton("HP#" + dc.name().toLowerCase() + "_sheep")));
@@ -83,10 +126,10 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
                 getConfig().addDefault(key + ".display-name", WordUtils.capitalize(key) + " Head");
                 getConfig().addDefault(key + ".price", 10.00);
                 getConfig().addDefault(key + ".interact-name", WordUtils.capitalize(key));
-                getConfig().addDefault(key + ".mask-effects", new ArrayList<>());
-                getConfig().addDefault(key + ".mask-amplifiers", new ArrayList<>());
-                getConfig().addDefault(key + ".lore", new ArrayList<>(Arrays.asList("&7Price: &6{price}", "&7Type: &a{type}")));
 			}
+            getConfig().addDefault(key + ".mask-effects", new ArrayList<>());
+            getConfig().addDefault(key + ".mask-amplifiers", new ArrayList<>());
+            getConfig().addDefault(key + ".lore", new ArrayList<>(Arrays.asList("&7Price: &6{price}", "&7Type: &a{type}")));
     	}
     }
     private void addPlayerHeads() {

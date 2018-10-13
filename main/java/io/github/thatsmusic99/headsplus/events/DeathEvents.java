@@ -57,7 +57,10 @@ public class DeathEvents implements Listener {
                         double chance2 = (double) rand.nextInt(100);
                         if (chance1 == 0.0) return;
                         if (chance2 <= chance1) {
-                            if (entity.equalsIgnoreCase("sheep")) {
+                            if (entity.equalsIgnoreCase("sheep") ||
+                                    entity.equalsIgnoreCase("parrot") ||
+                                    entity.equalsIgnoreCase("horse") ||
+                                    entity.equalsIgnoreCase("llama")) {
                                 dropHead(e.getEntity(), e.getEntity().getKiller());
                             } else {
                                 if (hpch.getConfig().getStringList(entity + ".name").isEmpty()) return;
@@ -154,6 +157,36 @@ public class DeathEvents implements Listener {
                     }
                 }
             }
+        } else if (e instanceof Llama) {
+            Llama llama = (Llama) e;
+            Llama.Color color = llama.getColor();
+            for (String str : hpch.getConfig().getConfigurationSection("llama.name").getKeys(false)) {
+                if (!str.equalsIgnoreCase("default")) {
+                    if (color.equals(Llama.Color.valueOf(str))) {
+                        return hpch.getConfig().getStringList("llama.name." + str);
+                    }
+                }
+            }
+        } else if (e instanceof Parrot) {
+            Parrot parrot = (Parrot) e;
+            Parrot.Variant va = parrot.getVariant();
+            for (String str : hpch.getConfig().getConfigurationSection("parrot.name").getKeys(false)) {
+                if (!str.equalsIgnoreCase("default")) {
+                    if (va.equals(Parrot.Variant.valueOf(str))) {
+                        return hpch.getConfig().getStringList("parrot.name." + str);
+                    }
+                }
+            }
+        } else if (e instanceof Horse) {
+            Horse horse = (Horse) e;
+            Horse.Color c = horse.getColor();
+            for (String str : hpch.getConfig().getConfigurationSection("horse.name").getKeys(false)) {
+                if (!str.equalsIgnoreCase("default")) {
+                    if (c.equals(Horse.Color.valueOf(str))) {
+                        return hpch.getConfig().getStringList("horse.name." + str);
+                    }
+                }
+            }
         }
         return null;
     }
@@ -163,15 +196,31 @@ public class DeathEvents implements Listener {
 	    int thing;
 	    String s;
 	    ItemStack i;
+	    List<String> af = hasColor(e);
 	    try {
-            if (hasColor(e) != null && !hasColor(e).isEmpty()) {
+            if (af != null && !af.isEmpty()) {
 
-                thing = r.nextInt(hasColor(e).size());
-                s = hasColor(e).get(thing);
+                thing = r.nextInt(af.size());
+                s = af.get(thing);
             } else {
                 if (e instanceof Sheep) {
+                    if (hpch.getConfig().getStringList("sheep.name.default").size() < 1) return;
                     thing = r.nextInt(hpch.getConfig().getStringList("sheep.name.default").size());
                     s = hpch.getConfig().getStringList("sheep.name.default").get(thing);
+                } else if (e instanceof Parrot){
+                    if (hpch.getConfig().getStringList("parrot.name.default").size() < 1) return;
+                    thing = r.nextInt(hpch.getConfig().getStringList("parrot.name.default").size());
+                    s = hpch.getConfig().getStringList("parrot.name.default").get(thing);
+                } else if (e instanceof Llama) {
+                    if (hpch.getConfig().getStringList("llama.name.default").size() < 1) return;
+                    thing = r.nextInt(hpch.getConfig().getStringList("llama.name.default").size());
+                    s = hpch.getConfig().getStringList("llama.name.default").get(thing);
+
+
+                } else if (e instanceof Horse) {
+                    if (hpch.getConfig().getStringList("horse.name.default").size() < 1) return;
+                    thing = r.nextInt(hpch.getConfig().getStringList("horse.name.default").size());
+                    s = hpch.getConfig().getStringList("horse.name.default").get(thing);
                 } else {
                     thing = r.nextInt(hpch.getConfig().getStringList(e.getType().name().replaceAll("_", "").toLowerCase() + ".name").size());
                     s = hpch.getConfig().getStringList(e.getType().name().replaceAll("_", "").toLowerCase() + ".name").get(thing);

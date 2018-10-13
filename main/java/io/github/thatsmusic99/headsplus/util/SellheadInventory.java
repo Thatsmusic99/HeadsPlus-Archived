@@ -103,11 +103,22 @@ public class SellheadInventory {
         HeadsPlusConfigHeads hpch = hp.getHeadsConfig();
         List<String> s = new ArrayList<>();
         for (String o : hpch.mHeads) {
-            if (!hpch.getConfig().getStringList(o + ".name").isEmpty()) {
+            if (o.equalsIgnoreCase("sheep")) {
+                if (!hpch.getConfig().getStringList(o + ".name.default").isEmpty()) {
+                    s.add(o);
+                }
+            } else if (!hpch.getConfig().getStringList(o + ".name").isEmpty()) {
                 s.add(o);
             }
         }
         for (String o : hpch.uHeads) {
+            if (o.equalsIgnoreCase("llama")
+                    || o.equalsIgnoreCase("horse")
+                    || o.equalsIgnoreCase("parrot")) {
+                if (!hpch.getConfig().getStringList(o + ".name.default").isEmpty()) {
+                    s.add(o);
+                }
+            }
             if (!hpch.getConfig().getStringList(o + ".name").isEmpty()) {
                 s.add(o);
             }
@@ -121,20 +132,38 @@ public class SellheadInventory {
             ItemStack it;
             SkullMeta sm;
             HeadsPlusConfigHeadsX hpchx = hp.getHeadsXConfig();
-            if (hpchx.isHPXSkull(hpch.getConfig().getStringList(o + ".name").get(0))) {
-                try {
-                    it = hp.getHeadsXConfig().getSkull(hpch.getConfig().getStringList(o + ".name").get(0));
+            try {
+                if (hpchx.isHPXSkull(hpch.getConfig().getStringList(o + ".name").get(0))) {
+                    try {
+                        it = hp.getHeadsXConfig().getSkull(hpch.getConfig().getStringList(o + ".name").get(0));
+                        sm = (SkullMeta) it.getItemMeta();
+                    } catch (NoSuchFieldException | IllegalAccessException e) {
+                        e.printStackTrace();
+                        it = null;
+                        sm = null;
+                    }
+                } else {
+                    it = nms.getSkullMaterial(1);
                     sm = (SkullMeta) it.getItemMeta();
-                } catch (NoSuchFieldException | IllegalAccessException e) {
-                    e.printStackTrace();
-                    it = null;
-                    sm = null;
+                    sm = nms.setSkullOwner(hpch.getConfig().getStringList(o + ".name").get(0), sm);
                 }
-            } else {
-                it = nms.getSkullMaterial(1);
-                sm = (SkullMeta) it.getItemMeta();
-                sm = nms.setSkullOwner(hpch.getConfig().getStringList(o + ".name").get(0), sm);
+            } catch (IndexOutOfBoundsException ex) {
+                if (hpchx.isHPXSkull(hpch.getConfig().getStringList(o + ".name.default").get(0))) {
+                    try {
+                        it = hp.getHeadsXConfig().getSkull(hpch.getConfig().getStringList(o + ".name.default").get(0));
+                        sm = (SkullMeta) it.getItemMeta();
+                    } catch (NoSuchFieldException | IllegalAccessException e) {
+                        e.printStackTrace();
+                        it = null;
+                        sm = null;
+                    }
+                } else {
+                    it = nms.getSkullMaterial(1);
+                    sm = (SkullMeta) it.getItemMeta();
+                    sm = nms.setSkullOwner(hpch.getConfig().getStringList(o + ".name.default").get(0), sm);
+                }
             }
+
             sm.setDisplayName(hpch.getConfig().getString(o + ".display-name"));
             List<String> d = new ArrayList<>();
             for (String a : hpch.getConfig().getStringList(o + ".lore")) {

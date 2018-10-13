@@ -45,7 +45,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.json.simple.parser.ParseException;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -99,6 +98,7 @@ public class HeadsPlus extends JavaPlugin {
                 LocaleManager.class.newInstance().setupLocale();
             }
             createInstances();
+
             debug("- Checking plugin theme.", 1);
             checkTheme();
             debug("- Setting up favourites.json.", 1);

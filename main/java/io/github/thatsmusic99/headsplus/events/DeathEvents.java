@@ -9,6 +9,9 @@ import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
+import io.github.thatsmusic99.headsplus.nms.v1_12_NMS.v1_12_NMS;
+import io.github.thatsmusic99.headsplus.nms.v1_13_NMS.v1_13_NMS;
+import io.github.thatsmusic99.headsplus.nms.v1_13_R2_NMS.v1_13_R2_NMS;
 import io.lumine.xikage.mythicmobs.MythicMobs;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
@@ -27,11 +30,13 @@ public class DeathEvents implements Listener {
 
     public DeathEvents() {
         createList();
+        setupHeads();
     }
 	
 	public final List<EntityType> ableEntities = new ArrayList<>(Arrays.asList(EntityType.BAT, EntityType.BLAZE, EntityType.CAVE_SPIDER, EntityType.CHICKEN, EntityType.COW, EntityType.CREEPER, EntityType.ENDER_DRAGON, EntityType.ENDERMAN, EntityType.ENDERMITE, EntityType.GHAST, EntityType.GUARDIAN, EntityType.HORSE, EntityType.IRON_GOLEM, EntityType.MAGMA_CUBE, EntityType.MUSHROOM_COW, EntityType.OCELOT, EntityType.PIG, EntityType.PIG_ZOMBIE, EntityType.RABBIT, EntityType.SHEEP, EntityType.SILVERFISH, EntityType.SKELETON, EntityType.SLIME, EntityType.SNOWMAN, EntityType.SPIDER, EntityType.SQUID, EntityType.VILLAGER, EntityType.WITCH, EntityType.WITHER, EntityType.ZOMBIE, EntityType.WOLF));
     private final HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().getHeadsXConfig();
     private final HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
+    private final HashMap<EntityType, HashMap<String, List<ItemStack>>> heads = new HashMap<>();
 
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent e) {
@@ -146,44 +151,130 @@ public class DeathEvents implements Listener {
         }
 	}
 
-	private List<String> hasColor(Entity e) {
+	private void setupHeads() {
+	    NMSManager nms = HeadsPlus.getInstance().getNMS();
+	    for (EntityType e : ableEntities) {
+            HashMap<String, List<ItemStack>> keys = new HashMap<>();
+            List<ItemStack> heads = new ArrayList<>();
+	        if (e == EntityType.SHEEP) {
+	            keys = a("sheep", keys);
+                this.heads.put(e, keys);
+	            continue;
+	        }
+	        if (nms instanceof v1_12_NMS
+                    || nms instanceof v1_13_NMS
+                    || nms instanceof v1_13_R2_NMS) {
+	            if (e == EntityType.LLAMA) {
+                    keys = a("llama", keys);
+                    this.heads.put(e, keys);
+                    continue;
+	            }
+	            if (e == EntityType.PARROT) {
+                    keys = a("parrot", keys);
+                    this.heads.put(e, keys);
+                    continue;
+	            }
+	        }
+	        if (e == EntityType.HORSE) {
+                keys = a("horse", keys);
+                this.heads.put(e, keys);
+                continue;
+	        }
+            for (String name : hpch.getConfig().getStringList(e.name().toLowerCase().replaceAll("_", "") + ".name")) {
+                ItemStack is = null;
+                if (hpchx.isHPXSkull(name)) {
+                    try {
+                        is = hpchx.getSkull(name);
+                    } catch (NoSuchFieldException | IllegalAccessException e1) {
+                        e1.printStackTrace();
+                    }
+                } else {
+
+                    is = nms.getSkullMaterial(1);
+                    SkullMeta sm = (SkullMeta) is.getItemMeta();
+                    sm = nms.setSkullOwner(name, sm);
+                    is.setItemMeta(sm);
+                }
+                heads.add(is);
+
+            }
+            keys.put("default", heads);
+        }
+    }
+
+    private HashMap<String, List<ItemStack>> a(String en,  HashMap<String, List<ItemStack>> keys) {
+
+        for (String str : hpch.getConfig().getConfigurationSection(en + ".name").getKeys(false)) {
+            List<ItemStack> heads = new ArrayList<>();
+            for (String name : hpch.getConfig().getStringList(en + ".name." + str)) {
+                ItemStack is = null;
+                if (HeadsPlus.getInstance().getHeadsXConfig().isHPXSkull(name)) {
+                    try {
+                        is = HeadsPlus.getInstance().getHeadsXConfig().getSkull(name);
+                    } catch (NoSuchFieldException | IllegalAccessException e1) {
+                        e1.printStackTrace();
+                    } catch (NullPointerException ex) {
+                        HeadsPlus.getInstance().getLogger().warning("WARNING: NPE thrown at " + str + ", " + name + ". If this is light_gray, please change HP#light_gray_sheep to HP#silver_sheep. If not, make sure your HP# head is valid.");
+                    }
+                } else {
+                    NMSManager nms = HeadsPlus.getInstance().getNMS();
+                    is = nms.getSkullMaterial(1);
+                    SkullMeta sm = (SkullMeta) is.getItemMeta();
+                    sm = nms.setSkullOwner(name, sm);
+                    is.setItemMeta(sm);
+                }
+                heads.add(is);
+
+            }
+            keys.put(str, heads);
+        }
+        return keys;
+    }
+
+	private List<ItemStack> hasColor(Entity e) {
         if (e instanceof Sheep) {
             Sheep sheep = (Sheep) e;
             DyeColor dc = sheep.getColor();
             for (String str : hpch.getConfig().getConfigurationSection("sheep.name").getKeys(false)) {
                 if (!str.equalsIgnoreCase("default")) {
                     if (dc.equals(DyeColor.valueOf(str))) {
-                        return hpch.getConfig().getStringList("sheep.name." + str);
+                        return heads.get(e.getType()).get(str);
                     }
                 }
             }
-        } else if (e instanceof Llama) {
-            Llama llama = (Llama) e;
-            Llama.Color color = llama.getColor();
-            for (String str : hpch.getConfig().getConfigurationSection("llama.name").getKeys(false)) {
-                if (!str.equalsIgnoreCase("default")) {
-                    if (color.equals(Llama.Color.valueOf(str))) {
-                        return hpch.getConfig().getStringList("llama.name." + str);
+        }
+        if (HeadsPlus.getInstance().getNMS() instanceof v1_12_NMS
+                || HeadsPlus.getInstance().getNMS() instanceof v1_13_NMS
+                || HeadsPlus.getInstance().getNMS() instanceof v1_13_R2_NMS) {
+            if (e instanceof Llama) {
+                Llama llama = (Llama) e;
+                Llama.Color color = llama.getColor();
+                for (String str : hpch.getConfig().getConfigurationSection("llama.name").getKeys(false)) {
+                    if (!str.equalsIgnoreCase("default")) {
+                        if (color.equals(Llama.Color.valueOf(str))) {
+                            return heads.get(e.getType()).get(str);
+                        }
+                    }
+                }
+            } else if (e instanceof Parrot) {
+                Parrot parrot = (Parrot) e;
+                Parrot.Variant va = parrot.getVariant();
+                for (String str : hpch.getConfig().getConfigurationSection("parrot.name").getKeys(false)) {
+                    if (!str.equalsIgnoreCase("default")) {
+                        if (va.equals(Parrot.Variant.valueOf(str))) {
+                            return heads.get(e.getType()).get(str);
+                        }
                     }
                 }
             }
-        } else if (e instanceof Parrot) {
-            Parrot parrot = (Parrot) e;
-            Parrot.Variant va = parrot.getVariant();
-            for (String str : hpch.getConfig().getConfigurationSection("parrot.name").getKeys(false)) {
-                if (!str.equalsIgnoreCase("default")) {
-                    if (va.equals(Parrot.Variant.valueOf(str))) {
-                        return hpch.getConfig().getStringList("parrot.name." + str);
-                    }
-                }
-            }
-        } else if (e instanceof Horse) {
+        }
+         if (e instanceof Horse) {
             Horse horse = (Horse) e;
             Horse.Color c = horse.getColor();
             for (String str : hpch.getConfig().getConfigurationSection("horse.name").getKeys(false)) {
                 if (!str.equalsIgnoreCase("default")) {
                     if (c.equals(Horse.Color.valueOf(str))) {
-                        return hpch.getConfig().getStringList("horse.name." + str);
+                        return heads.get(e.getType()).get(str);
                     }
                 }
             }
@@ -191,40 +282,39 @@ public class DeathEvents implements Listener {
         return null;
     }
 
-    private void dropHead(Entity e, Player k) throws NoSuchFieldException, IllegalAccessException {
+    private void dropHead(Entity e, Player k) {
 	    Random r = new Random();
 	    int thing;
-	    String s;
 	    ItemStack i;
-	    List<String> af = hasColor(e);
+	    List<ItemStack> af = hasColor(e);
 	    try {
             if (af != null && !af.isEmpty()) {
 
                 thing = r.nextInt(af.size());
-                s = af.get(thing);
+                i = af.get(thing);
             } else {
+                if (heads.get(e.getType()).get("default").size() < 1) return;
                 if (e instanceof Sheep) {
-                    if (hpch.getConfig().getStringList("sheep.name.default").size() < 1) return;
+
                     thing = r.nextInt(hpch.getConfig().getStringList("sheep.name.default").size());
-                    s = hpch.getConfig().getStringList("sheep.name.default").get(thing);
-                } else if (e instanceof Parrot){
-                    if (hpch.getConfig().getStringList("parrot.name.default").size() < 1) return;
-                    thing = r.nextInt(hpch.getConfig().getStringList("parrot.name.default").size());
-                    s = hpch.getConfig().getStringList("parrot.name.default").get(thing);
-                } else if (e instanceof Llama) {
-                    if (hpch.getConfig().getStringList("llama.name.default").size() < 1) return;
-                    thing = r.nextInt(hpch.getConfig().getStringList("llama.name.default").size());
-                    s = hpch.getConfig().getStringList("llama.name.default").get(thing);
 
 
                 } else if (e instanceof Horse) {
-                    if (hpch.getConfig().getStringList("horse.name.default").size() < 1) return;
                     thing = r.nextInt(hpch.getConfig().getStringList("horse.name.default").size());
-                    s = hpch.getConfig().getStringList("horse.name.default").get(thing);
+                } else if (HeadsPlus.getInstance().getNMS() instanceof v1_12_NMS
+                        || HeadsPlus.getInstance().getNMS() instanceof v1_13_NMS
+                        || HeadsPlus.getInstance().getNMS() instanceof v1_13_R2_NMS) {
+                    if (e instanceof Parrot) {
+                        thing = r.nextInt(hpch.getConfig().getStringList("parrot.name.default").size());
+                    } else if (e instanceof Llama) {
+                        thing = r.nextInt(hpch.getConfig().getStringList("llama.name.default").size());
+                    } else {
+                        thing = r.nextInt(hpch.getConfig().getStringList(e.getType().name().replaceAll("_", "").toLowerCase() + ".name").size());
+                    }
                 } else {
                     thing = r.nextInt(hpch.getConfig().getStringList(e.getType().name().replaceAll("_", "").toLowerCase() + ".name").size());
-                    s = hpch.getConfig().getStringList(e.getType().name().replaceAll("_", "").toLowerCase() + ".name").get(thing);
                 }
+                i = heads.get(e.getType()).get("default").get(thing);
             }
         } catch (IndexOutOfBoundsException ex) {
 	        return;
@@ -234,17 +324,8 @@ public class DeathEvents implements Listener {
         if (nms.getItemInHand(k).containsEnchantment(Enchantment.LOOT_BONUS_MOBS)  && HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("allow-looting-enchantment")) {
             a += nms.getItemInHand(k).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
         }
-        SkullMeta sm;
-        if (hpchx.isHPXSkull(s))  {
-            i = hpchx.getSkull(s);
-            i.setAmount(a);
-            sm = (SkullMeta) i.getItemMeta();
-        } else {
-            i = nms.getSkullMaterial(a);
-            sm = (SkullMeta) i.getItemMeta();
-            sm = nms.setSkullOwner(s, sm);
-        }
-
+        i.setAmount(a);
+        SkullMeta sm = (SkullMeta) i.getItemMeta();
         sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getConfig().getString(e.getType().name().replaceAll("_", "").toLowerCase() + ".display-name")));
         List<String> strs = new ArrayList<>();
         for (String str : hpch.getConfig().getStringList(e.getType().name().replaceAll("_", "").toLowerCase() + ".lore")) {
@@ -261,12 +342,13 @@ public class DeathEvents implements Listener {
         EntityHeadDropEvent event = new EntityHeadDropEvent(k, i, world, entityLoc, e.getType());
         Bukkit.getServer().getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
+        //    System.out.println(event.getSkull().toString());
             world.dropItem(event.getLocation(), event.getSkull());
             HPPlayer.getHPPlayer(k).addXp(10);
         }
     }
 
-    public boolean checkForMythicMob(Entity e) {
+    private boolean checkForMythicMob(Entity e) {
 	    HeadsPlus hp = HeadsPlus.getInstance();
 	    if (hp.getConfiguration().getMechanics().getBoolean("mythicmobs.no-hp-drops")) {
             if (hp.getServer().getPluginManager().getPlugin("MythicMobs") != null) {

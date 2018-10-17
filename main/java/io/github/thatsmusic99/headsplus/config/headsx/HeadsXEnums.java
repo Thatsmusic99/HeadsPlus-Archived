@@ -303,7 +303,12 @@ public enum HeadsXEnums {
     ZOMBIE_SMITH("zombie_smith", "&8[&aZombie Smith&8]", HPStrings.wood + "N2Q3ZjIyYTFjMzkyZWZjZTNiODVjOWE4YmIxMTY2YjNhYmZhNjdiOTVlYWNlMDRlYzVmMTY2ZDU0MzliNTljYyJ9fX0", "halloween", 2.0),
     ZOMBIE_HEAD_IN_JAR("zombie_head_in_jar", "&8[&aZombie Head in a Jar&8]", HPStrings.wood + "NTYxMjhlM2VjNDQwZDBjZmU1MjQxYTQyZjI3NjFmM2U1Yjg0NjZiOGY5MTM4YzRiZGQyYmQzN2E2Njg4MzY0NiJ9fX0", "halloween", 2.0),
     ZOMBIE_MINER("zombie_miner", "&8[&aZombie Miner&8]", HPStrings.wood + "OTI4NmVhYmE2MmNiZWEyZmRhMjg1ZWFkNWIxYTk4YjliNWI3NjQzOTg2N2Q3MzFjMWNhYzhmYmRjMWJjOTYxIn19fQ", "halloween", 2.0),
-    DROWNED("drowned", "&8[&bDrowned&8]", HPStrings.wood + "Yzg0ZGY3OWM0OTEwNGIxOThjZGFkNmQ5OWZkMGQwYmNmMTUzMWM5MmQ0YWI2MjY5ZTQwYjdkM2NiYmI4ZTk4YyJ9fX0", "halloween", 2.0);
+    DROWNED("drowned", "&8[&bDrowned&8]", HPStrings.wood + "Yzg0ZGY3OWM0OTEwNGIxOThjZGFkNmQ5OWZkMGQwYmNmMTUzMWM5MmQ0YWI2MjY5ZTQwYjdkM2NiYmI4ZTk4YyJ9fX0", "halloween", 2.0),
+    BLOOD_DONUT("blood_donut", "&8[&cBlood Donut&8]", HPStrings.wood + "ODk4OWRjOTY4MWI2Y2Y5ZDNiNGE4ZTJjNTU0ZWExYmNlNjMyNjc5ZDMxOTZhNDU0MDgzNWFjOGQzYWQzMTIifX19", "halloween", 2.1),
+    BERTIE_BOTTS("bertie_botts", "&8[&cBerty &6Botts &eEvery &aFlavour &bBeans&8]", HPStrings.wood + "OWJjYTlmODNlZDAxZGI3N2ZmZWYzMTFiYjE4YmMyMzJjYjYyOWQ0NTVjNTQ0Y2NiNGM0NTU3OWQwZjMifX19", "halloween", 2.1),
+    ZOMBIE_COCKTAIL("zombie_cocktail", "&8[&cZombie Cocktail&8]", HPStrings.wood + "MWRkZjZmZTAyZTVjYjM2YjE1OGFlNGMxZjQ0M2E0M2YzYTE2YmUxNzlhYTIwOGI1NjExNzM3ZjM1N2JlZTg3In19fQ", "halloween", 2.1),
+    GUMBALL("gumball", "&8[&aGumballs&8]", HPStrings.wood + "M2E5NDNiYWY3MTQ1ODU5NmFmZjRlYmE4NzlmOGFjNWQyYmEyNjdjOTgzODVlNjc2NzNmNDhlYmVhNWZhIn19fQ", "halloween", 2.1),
+    BLOOD_CAKE("blood_cake", "&8[&cBlood Cake&8]", HPStrings.wood + "NzU4NzM5YzRmMzQ4Y2Q2NjQyMzc5ZjlhZDY1NzhmYzE2YWZkNGU5MmQ1MjhiZWFiMDUzNWVjNzgyMjVjOTI3In19fQ", "halloween", 2.1);
 
     final String name;
     final String dn;

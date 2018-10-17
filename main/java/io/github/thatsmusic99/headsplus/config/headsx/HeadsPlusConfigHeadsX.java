@@ -19,7 +19,7 @@ import java.util.UUID;
 public class HeadsPlusConfigHeadsX extends ConfigSettings {
 
     public boolean s = false;
-    private double cVersion = 2.0;
+    private double cVersion = 2.1;
 
     public HeadsPlusConfigHeadsX() {
         this.conName = "headsx";
@@ -126,9 +126,9 @@ public class HeadsPlusConfigHeadsX extends ConfigSettings {
         GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
         if (getConfig().getBoolean("heads." + st + ".encode")) {
             byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", getConfig().getString(st + ".texture")).getBytes());
-            gm.getProperties().put("textures", new Property("texture", Arrays.toString(encodedData)));
+            gm.getProperties().put("textures", new Property("texture", Arrays.toString(encodedData).replaceAll("=", "")));
         } else {
-            gm.getProperties().put("textures", new Property("texture", getConfig().getString("heads." + st + ".texture")));
+            gm.getProperties().put("textures", new Property("texture", getConfig().getString("heads." + st + ".texture").replaceAll("=", "")));
         }
 
         Field profileField;

@@ -618,28 +618,33 @@ public class HeadsPlus extends JavaPlugin {
     }
 
     public void checkForMutuals() {
-        if (Bukkit.getServer().getPluginManager().getPlugin("ProjectPG-PRO") instanceof Core) {
-            getLogger().info("I think I see ProjectPG here... are you ready, Aaron?");
-            // Although I have my suspicions about those lot.
-            // Here's my reason.
-            // Error is dead, right?
-            // Or at least... TM's alive. But that AI isn't running...
-            // The only ones running are the SE1s.
-            // Although I think in 2019... something is going to happen.
-            // I'm not looking forward to it.
-            // Let's see though, let's see.
-            //
-            // ProjectPG - SE1, where it all begins.
-            Bukkit.getPluginManager().callEvent(new CommunicateEvent("ProjectPG"));
+        try {
+            if (Bukkit.getServer().getPluginManager().getPlugin("ProjectPG-PRO") instanceof Core) {
+                getLogger().info("I think I see ProjectPG here... are you ready, Aaron?");
+                // Although I have my suspicions about those lot.
+                // Here's my reason.
+                // Error is dead, right?
+                // Or at least... TM's alive. But that AI isn't running...
+                // The only ones running are the SE1s.
+                // Although I think in 2019... something is going to happen.
+                // I'm not looking forward to it.
+                // Let's see though, let's see.
+                //
+                // ProjectPG - SE1, where it all begins.
+                Bukkit.getPluginManager().callEvent(new CommunicateEvent("ProjectPG"));
+            }
+            if (Bukkit.getServer().getPluginManager().getPlugin("AdvancedOreGenerator") instanceof OreGenerator) {
+                getLogger().info("What're we gonna do, AOG?");
+                Bukkit.getPluginManager().callEvent(new CommunicateEvent("AOG"));
+            }
+            if (Bukkit.getPluginManager().getPlugin("SpectateProtection") instanceof CoreClass) {
+                getLogger().info("'Ello SpectateProtection! What's up??");
+                Bukkit.getPluginManager().callEvent(new CommunicateEvent("SpectateProtection"));
+            }
+        } catch (NoClassDefFoundError ignored) {
+
         }
-        if (Bukkit.getServer().getPluginManager().getPlugin("AdvancedOreGenerator") instanceof OreGenerator) {
-            getLogger().info("What're we gonna do, AOG?");
-            Bukkit.getPluginManager().callEvent(new CommunicateEvent("AOG"));
-        }
-        if (Bukkit.getPluginManager().getPlugin("SpectateProtection") instanceof CoreClass) {
-            getLogger().info("'Ello SpectateProtection! What's up??");
-            Bukkit.getPluginManager().callEvent(new CommunicateEvent("SpectateProtection"));
-        }
+
 
 
     }

@@ -1,6 +1,9 @@
 package io.github.thatsmusic99.headsplus.config;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.nms.v1_12_NMS.v1_12_NMS;
+import io.github.thatsmusic99.headsplus.nms.v1_13_R2_NMS.v1_13_R2_NMS;
+import io.github.thatsmusic99.headsplus.nms.v1_13_NMS.v1_13_NMS;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.Horse;
@@ -46,31 +49,41 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
     private void addUndefinedHeads() {
     	for (String key : uHeads) {
     	    if (key.equals("llama")) {
-                if (getConfig().get("llama.name") instanceof List) {
-                    List<String> h = getConfig().getStringList("llama.name");
-                    getConfig().set("llama.name", null);
-                    getConfig().addDefault("llama.name.default", h);
+                if (HeadsPlus.getInstance().getNMS() instanceof v1_12_NMS
+                        || HeadsPlus.getInstance().getNMS() instanceof v1_13_NMS
+                        || HeadsPlus.getInstance().getNMS() instanceof v1_13_R2_NMS) {
+                    if (getConfig().get("llama.name") instanceof List) {
+                        List<String> h = getConfig().getStringList("llama.name");
+                        getConfig().set("llama.name", null);
+                        getConfig().addDefault("llama.name.default", h);
+                    }
+                    getConfig().addDefault("llama.name.default", new ArrayList<>());
+                    for  (Llama.Color color : Llama.Color.values()) {
+                        getConfig().addDefault("llama.name." + color.name(), new ArrayList<>());
+                    }
+                    getConfig().addDefault(key + ".display-name", WordUtils.capitalize(key) + " Head");
+                    getConfig().addDefault(key + ".price", 10.00);
+                    getConfig().addDefault(key + ".interact-name", WordUtils.capitalize(key));
                 }
-    	        getConfig().addDefault("llama.name.default", new ArrayList<>());
-    	        for  (Llama.Color color : Llama.Color.values()) {
-    	            getConfig().addDefault("llama.name." + color.name(), new ArrayList<>());
-    	        }
-    	        getConfig().addDefault(key + ".display-name", WordUtils.capitalize(key) + " Head");
-    	        getConfig().addDefault(key + ".price", 10.00);
-    	        getConfig().addDefault(key + ".interact-name", WordUtils.capitalize(key));
+
     	    } else if (key.equals("parrot")) {
-                if (getConfig().get("parrot.name") instanceof List) {
-                    List<String> h = getConfig().getStringList("parrot.name");
-                    getConfig().set("parrot.name", null);
-                    getConfig().addDefault("parrot.name.default", h);
+                if (HeadsPlus.getInstance().getNMS() instanceof v1_12_NMS
+                        || HeadsPlus.getInstance().getNMS() instanceof v1_13_NMS
+                        || HeadsPlus.getInstance().getNMS() instanceof v1_13_R2_NMS) {
+                    if (getConfig().get("parrot.name") instanceof List) {
+                        List<String> h = getConfig().getStringList("parrot.name");
+                        getConfig().set("parrot.name", null);
+                        getConfig().addDefault("parrot.name.default", h);
+                    }
+                    getConfig().addDefault("parrot.name.default", new ArrayList<>());
+                    for (Parrot.Variant variant : Parrot.Variant.values()) {
+                        getConfig().addDefault("parrot.name." + variant.name(), new ArrayList<>());
+                    }
+                    getConfig().addDefault(key + ".display-name", WordUtils.capitalize(key) + " Head");
+                    getConfig().addDefault(key + ".price", 10.00);
+                    getConfig().addDefault(key + ".interact-name", WordUtils.capitalize(key));
                 }
-    	        getConfig().addDefault("parrot.name.default", new ArrayList<>());
-    	        for (Parrot.Variant variant : Parrot.Variant.values()) {
-    	            getConfig().addDefault("parrot.name." + variant.name(), new ArrayList<>());
-    	        }
-    	        getConfig().addDefault(key + ".display-name", WordUtils.capitalize(key) + " Head");
-    	        getConfig().addDefault(key + ".price", 10.00);
-    	        getConfig().addDefault(key + ".interact-name", WordUtils.capitalize(key));
+
     	    } else if (key.equals("horse")){
                 if (getConfig().get("horse.name") instanceof List) {
                     List<String> h = getConfig().getStringList("horse.name");

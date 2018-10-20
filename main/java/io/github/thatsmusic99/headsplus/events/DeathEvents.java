@@ -181,6 +181,7 @@ public class DeathEvents implements Listener {
                 continue;
 	        }
             for (String name : hpch.getConfig().getStringList(e.name().toLowerCase().replaceAll("_", "") + ".name")) {
+
                 ItemStack is = null;
                 if (hpchx.isHPXSkull(name)) {
                     try {
@@ -199,6 +200,7 @@ public class DeathEvents implements Listener {
 
             }
             keys.put("default", heads);
+	        this.heads.put(e, keys);
         }
     }
 
@@ -293,6 +295,8 @@ public class DeathEvents implements Listener {
                 thing = r.nextInt(af.size());
                 i = af.get(thing);
             } else {
+                if (heads.get(e.getType()) == null) return;
+                if (heads.get(e.getType()).get("default") == null) return;
                 if (heads.get(e.getType()).get("default").size() < 1) return;
                 if (e instanceof Sheep) {
 

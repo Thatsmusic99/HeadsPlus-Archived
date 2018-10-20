@@ -133,11 +133,16 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
     		} else if (key.equals("sheep")){
     			getConfig().addDefault("sheep.name.default", new ArrayList<>(Collections.singleton("MHF_Sheep")));
     			for (DyeColor dc : DyeColor.values()) {
-    			    if (dc == DyeColor.LIGHT_GRAY) {
+    			    try {
+                        if (dc == DyeColor.LIGHT_GRAY) {
+                            getConfig().addDefault("sheep.name." + dc.name(), new ArrayList<>(Collections.singleton("HP#silver_sheep")));
+                        } else {
+                            getConfig().addDefault("sheep.name." + dc.name(), new ArrayList<>(Collections.singleton("HP#" + dc.name().toLowerCase() + "_sheep")));
+                        }
+                    } catch (NoSuchFieldError ex) {
                         getConfig().addDefault("sheep.name." + dc.name(), new ArrayList<>(Collections.singleton("HP#silver_sheep")));
-                    } else {
-                        getConfig().addDefault("sheep.name." + dc.name(), new ArrayList<>(Collections.singleton("HP#" + dc.name().toLowerCase() + "_sheep")));
                     }
+
     			}
                 getConfig().addDefault(key + ".chance", 25);
                 getConfig().addDefault(key + ".display-name", WordUtils.capitalize(key) + " Head");

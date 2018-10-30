@@ -81,7 +81,8 @@ public class RecipeEnumUser {
                     }
                 }
 
-			} catch (Exception e) {
+			} catch (IndexOutOfBoundsException ignored) {
+            } catch (Exception e) {
 	    	    HeadsPlus.getInstance().getLogger().severe("Error thrown creating head for " + key + ". Please check the report for details.");
                 new DebugPrint(e, "Startup (Crafting)", false, null);
             }

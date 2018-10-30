@@ -142,15 +142,18 @@ public class HeadsPlus extends JavaPlugin {
                             e.printStackTrace();
                         }
                         if (update != null) {
-                            log.info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getUpdateFound())));
-                            log.info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getCurrentVersion()))
-                                    + getDescription().getVersion());
-                            log.info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getNewVersion() + update[2])));
-                            if (update[1].toString().length() > 50) {
-                                update[1] = update[1].toString().subSequence(0, 50) + "... (Check Spigot for more information)";
+                            if (!((String) update[2]).equalsIgnoreCase("5.1.10")) {
+                                log.info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getUpdateFound())));
+                                log.info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getCurrentVersion()))
+                                        + getDescription().getVersion());
+                                log.info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getNewVersion() + update[2])));
+                                if (update[1].toString().length() > 50) {
+                                    update[1] = update[1].toString().subSequence(0, 50) + "... (Check Spigot for more information)";
+                                }
+                                log.info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getDescription())) + update[1]);
+                                log.info("Download link: https://www.spigotmc.org/resources/headsplus-1-8-x-1-12-x.40265/");
+
                             }
-                            log.info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getDescription())) + update[1]);
-                            log.info("Download link: https://www.spigotmc.org/resources/headsplus-1-8-x-1-12-x.40265/");
                         } else {
                             log.info(hpc.getString("plugin-up-to-date"));
                         }

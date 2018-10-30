@@ -1,12 +1,10 @@
 package io.github.thatsmusic99.headsplus.storage;
 
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 public class Favourites implements JSONFile {
 

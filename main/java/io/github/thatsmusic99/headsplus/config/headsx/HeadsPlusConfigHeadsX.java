@@ -59,6 +59,7 @@ public class HeadsPlusConfigHeadsX extends ConfigSettings {
         config = YamlConfiguration.loadConfiguration(configF);
         getConfig().addDefault("options.version", cVersion);
         getConfig().addDefault("options.default-price", 10.00);
+        getConfig().addDefault("options.price-per-world.example-one", 15.00);
        // getHeadsX().addDefault("options.advent-calender", true);
        // if (getHeadsX().getBoolean("options.advent-calender")) {
         //    for (AdventCManager acm : AdventCManager.values()) {

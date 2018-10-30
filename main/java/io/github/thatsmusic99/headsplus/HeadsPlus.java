@@ -145,7 +145,7 @@ public class HeadsPlus extends JavaPlugin {
                             log.info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getUpdateFound())));
                             log.info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getCurrentVersion()))
                                     + getDescription().getVersion());
-                            log.info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getCurrentVersion() + update[2])));
+                            log.info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getNewVersion() + update[2])));
                             if (update[1].toString().length() > 50) {
                                 update[1] = update[1].toString().subSequence(0, 50) + "... (Check Spigot for more information)";
                             }

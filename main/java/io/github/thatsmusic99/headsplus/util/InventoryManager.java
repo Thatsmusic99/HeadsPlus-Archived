@@ -7,17 +7,13 @@ import io.github.thatsmusic99.headsplus.api.Challenge;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
-import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.config.headsx.inventories.*;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import org.apache.commons.codec.binary.Base64;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.lang.reflect.Field;
@@ -33,76 +29,11 @@ public class InventoryManager {
     private final String type;
     private int pages;
     private int heads;
-    private int timesSent = 0;
     private int cPage = 0;
     private int sections = 0;
     private String cSection = "menu";
     private final HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().getHeadsXConfig();
     public static final HashMap<Player, InventoryManager> pls = new HashMap<>();
-    private int[] pos() {
-        int[] a = new int[28];
-        a[0] = 10;
-        a[1] = 11;
-        a[2] = 12;
-        a[3] = 13;
-        a[4] = 14;
-        a[5] = 15;
-        a[6] = 16;
-        a[7] = 19;
-        a[8] = 20;
-        a[9] = 21;
-        a[10] = 22;
-        a[11] = 23;
-        a[12] = 24;
-        a[13] = 25;
-        a[14] = 28;
-        a[15] = 29;
-        a[16] = 30;
-        a[17] = 31;
-        a[18] = 32;
-        a[19] = 33;
-        a[20] = 34;
-        a[21] = 37;
-        a[22] = 38;
-        a[23] = 39;
-        a[24] = 40;
-        a[25] = 41;
-        a[26] = 42;
-        a[27] = 43;
-        return a;
-    }
-    private int[] glass() {
-        int[] a = new int[23];
-        a[0] = 1;
-        a[1] = 2;
-        a[2] = 3;
-        a[3] = 5;
-        a[4] = 6;
-        a[5] = 7;
-        a[6] = 9;
-        a[7] = 17;
-        a[8] = 18;
-        a[9] = 26;
-        a[10] = 27;
-        a[11] = 35;
-        a[12] = 36;
-        a[13] = 44;
-        a[14] = 45;
-        a[15] = 46;
-        a[16] = 47;
-        a[17] = 48;
-        a[18] = 49;
-        a[19] = 50;
-        a[20] = 51;
-        a[21] = 52;
-        a[22] = 53;
-        return a;
-    }
-
-    private Inventory create(String name) {
-        return Bukkit.createInventory(null, 54, name);
-    }
-
     public int getPages() { return pages; }
     public int getPage() { return cPage; }
     public int getHeads() { return heads; }
@@ -126,7 +57,6 @@ public class InventoryManager {
             cPage = 1;
         }
         if (type.equalsIgnoreCase("heads")) {
-            PagedLists<String> ls;
             sections = hpchx.getConfig().getConfigurationSection("sections").getKeys(false).size();
             heads = hpchx.getConfig().getConfigurationSection("heads").getKeys(false).size();
 
@@ -488,15 +418,6 @@ public class InventoryManager {
             }
         }
     } */
-
-
-    private void setItem(Inventory i, String s, int o) {
-        ItemStack item = new ItemStack(Material.ARROW);
-        ItemMeta im = item.getItemMeta();
-        im.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + s);
-        item.setItemMeta(im);
-        i.setItem(o, item);
-    }
 
     public static InventoryManager getIM(Player p) {
         return pls.get(p);

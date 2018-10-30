@@ -1,32 +1,19 @@
 package io.github.thatsmusic99.headsplus.events;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.api.Challenge;
-import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
-import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeDifficulty;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
-import io.github.thatsmusic99.headsplus.nms.SearchGUI;
-import io.github.thatsmusic99.headsplus.util.ChatListenerUtil;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 
-import io.github.thatsmusic99.headsplus.nms.v1_12_NMS.SearchGUI1_12;
-import io.github.thatsmusic99.headsplus.util.MaterialTranslator;
 import io.github.thatsmusic99.headsplus.util.SellheadInventory;
-import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.economy.EconomyResponse;
 
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.*;
 
 public class InventoryEvent implements Listener {
 

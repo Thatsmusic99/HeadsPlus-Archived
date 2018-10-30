@@ -2,7 +2,6 @@ package io.github.thatsmusic99.headsplus.nms;
 
 import com.mojang.authlib.GameProfile;
 import io.github.thatsmusic99.headsplus.api.Challenge;
-import io.github.thatsmusic99.headsplus.config.challenges.HPChallengeRewardTypes;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.util.MaterialTranslator;
 import org.bukkit.Material;

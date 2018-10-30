@@ -6,7 +6,6 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import io.github.thatsmusic99.headsplus.util.MaterialTranslator;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;

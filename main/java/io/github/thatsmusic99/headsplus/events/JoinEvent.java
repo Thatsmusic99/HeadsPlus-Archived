@@ -10,7 +10,6 @@ import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import mkremins.fanciful.FancyMessage;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;

@@ -5,6 +5,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class ConfigSettings {
@@ -39,6 +40,7 @@ public class ConfigSettings {
         try {
             config.save(configF);
         } catch (IOException e) {
+            HeadsPlus.getInstance().getLogger().severe("Error thrown when saving the config. If there's a second error below, ignore me and look at that instead.");
             if (HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("debug.print-stacktraces-in-console")) {
                 e.printStackTrace();
             }

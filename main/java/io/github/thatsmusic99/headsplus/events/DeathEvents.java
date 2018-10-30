@@ -154,53 +154,59 @@ public class DeathEvents implements Listener {
 	private void setupHeads() {
 	    NMSManager nms = HeadsPlus.getInstance().getNMS();
 	    for (EntityType e : ableEntities) {
-            HashMap<String, List<ItemStack>> keys = new HashMap<>();
-            List<ItemStack> heads = new ArrayList<>();
-	        if (e == EntityType.SHEEP) {
-	            keys = a("sheep", keys);
-                this.heads.put(e, keys);
-	            continue;
-	        }
-	        if (nms instanceof v1_12_NMS
-                    || nms instanceof v1_13_NMS
-                    || nms instanceof v1_13_R2_NMS) {
-	            if (e == EntityType.LLAMA) {
-                    keys = a("llama", keys);
+	        try {
+                HeadsPlus.getInstance().debug("Creating head for " + e.name() + "...", 3);
+                HashMap<String, List<ItemStack>> keys = new HashMap<>();
+                List<ItemStack> heads = new ArrayList<>();
+                if (e == EntityType.SHEEP) {
+                    keys = a("sheep", keys);
                     this.heads.put(e, keys);
                     continue;
-	            }
-	            if (e == EntityType.PARROT) {
-                    keys = a("parrot", keys);
-                    this.heads.put(e, keys);
-                    continue;
-	            }
-	        }
-	        if (e == EntityType.HORSE) {
-                keys = a("horse", keys);
-                this.heads.put(e, keys);
-                continue;
-	        }
-            for (String name : hpch.getConfig().getStringList(e.name().toLowerCase().replaceAll("_", "") + ".name")) {
-
-                ItemStack is = null;
-                if (hpchx.isHPXSkull(name)) {
-                    try {
-                        is = hpchx.getSkull(name);
-                    } catch (NoSuchFieldException | IllegalAccessException e1) {
-                        e1.printStackTrace();
-                    }
-                } else {
-
-                    is = nms.getSkullMaterial(1);
-                    SkullMeta sm = (SkullMeta) is.getItemMeta();
-                    sm = nms.setSkullOwner(name, sm);
-                    is.setItemMeta(sm);
                 }
-                heads.add(is);
+                if (nms instanceof v1_12_NMS
+                        || nms instanceof v1_13_NMS
+                        || nms instanceof v1_13_R2_NMS) {
+                    if (e == EntityType.LLAMA) {
+                        keys = a("llama", keys);
+                        this.heads.put(e, keys);
+                        continue;
+                    }
+                    if (e == EntityType.PARROT) {
+                        keys = a("parrot", keys);
+                        this.heads.put(e, keys);
+                        continue;
+                    }
+                }
+                if (e == EntityType.HORSE) {
+                    keys = a("horse", keys);
+                    this.heads.put(e, keys);
+                    continue;
+                }
+                for (String name : hpch.getConfig().getStringList(e.name().toLowerCase().replaceAll("_", "") + ".name")) {
 
+                    ItemStack is = null;
+                    if (hpchx.isHPXSkull(name)) {
+                        try {
+                            is = hpchx.getSkull(name);
+                        } catch (NoSuchFieldException | IllegalAccessException e1) {
+                            e1.printStackTrace();
+                        }
+                    } else {
+
+                        is = nms.getSkullMaterial(1);
+                        SkullMeta sm = (SkullMeta) is.getItemMeta();
+                        sm = nms.setSkullOwner(name, sm);
+                        is.setItemMeta(sm);
+                    }
+                    heads.add(is);
+
+                }
+                keys.put("default", heads);
+                this.heads.put(e, keys);
+            } catch (Exception ex) {
+	            HeadsPlus.getInstance().getLogger().severe("Error thrown when creating the head for " + e.name() + ". If it's a custom head, please double check the name.");
             }
-            keys.put("default", heads);
-	        this.heads.put(e, keys);
+
         }
     }
 

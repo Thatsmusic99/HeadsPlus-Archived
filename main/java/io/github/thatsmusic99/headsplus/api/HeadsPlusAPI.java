@@ -8,7 +8,6 @@ import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;

@@ -4,8 +4,6 @@ import io.github.thatsmusic99.headsplus.config.headsx.HeadInventory;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.config.headsx.icons.*;
 import io.github.thatsmusic99.headsplus.config.headsx.icons.HeadSection;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 public class HeadMenu extends HeadInventory {
 

@@ -1,0 +1,160 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>io.github.thatsmusic99</groupId>
+  <artifactId>HeadsPlus</artifactId>
+  <version>5.1.12</version>
+<build>
+   <plugins>
+       <plugin>
+           <groupId>org.apache.maven.plugins</groupId>
+           <artifactId>maven-compiler-plugin</artifactId>
+           <configuration>
+               <source>1.8</source>
+               <target>1.8</target>
+           </configuration>
+       </plugin>
+   </plugins>
+</build>  
+<dependencies>
+    <dependency>
+           <groupId>org.spigotmc</groupId>
+           <artifactId>spigot-10</artifactId>
+           <version>1.13</version>
+           <scope>system</scope>
+            <!-->Requires system path<\!-->
+           <systemPath></systemPath>
+    </dependency>
+    <dependency>
+           <groupId>net.milkbowl.vault</groupId>
+           <artifactId>VaultAPI</artifactId>
+           <version>1.6</version>
+           <scope>provided</scope>
+       </dependency>
+       <dependency>
+           <groupId>org.spigotmc</groupId>
+           <artifactId>spigot</artifactId>
+           <version>1.8.8-R0.1-SNAPSHOT</version>
+           <scope>system</scope>
+           <!-->Requires system path<\!-->
+           <systemPath></systemPath>
+       </dependency>
+       <dependency>
+           <groupId>org.spigotmc</groupId>
+           <artifactId>spigot-2</artifactId>
+           <version>1.10.2-R0.1-SNAPSHOT</version>
+           <scope>system</scope>
+           <!-->Requires system path<\!-->
+           <systemPath></systemPath>
+       </dependency>
+       <dependency>
+           <groupId>org.spigotmc</groupId>
+           <artifactId>spigot-3</artifactId>
+           <version>1.9-R0.1-SNAPSHOT</version>
+           <scope>system</scope>
+           <!-->Requires system path<\!-->
+           <systemPath></systemPath>
+       </dependency>
+    <dependency>
+        <groupId>org.spigotmc</groupId>
+        <artifactId>spigot-4</artifactId>
+        <version>1.9.4-R0.1-SNAPSHOT</version>
+        <scope>system</scope>
+        <!-->Requires system path<\!-->
+        <systemPath></systemPath>
+    </dependency>
+    <dependency>
+        <groupId>org.spigotmc</groupId>
+        <artifactId>spigot-5</artifactId>
+        <version>1.12-R0.1-SNAPSHOT</version>
+        <scope>system</scope>
+        <!-->Requires system path<\!-->
+        <systemPath></systemPath>
+    </dependency>
+    <dependency>
+        <groupId>org.spigotmc</groupId>
+        <artifactId>spigot-6</artifactId>
+        <version>1.11.2-R0.1-SNAPSHOT</version>
+        <scope>system</scope>
+        <!-->Requires system path<\!-->
+        <systemPath></systemPath>
+    </dependency>
+    <dependency>
+        <groupId>org.spigotmc</groupId>
+        <artifactId>spigot-7</artifactId>
+        <version>1.8-R0.1-SNAPSHOT</version>
+        <scope>system</scope>
+        <!-->Requires system path<\!-->
+        <systemPath></systemPath>
+    </dependency>
+    <dependency>
+        <groupId>org.spigotmc</groupId>
+        <artifactId>spigot-8</artifactId>
+        <version>1.8.3-R0.1-SNAPSHOT</version>
+        <scope>system</scope>
+        <!-->Requires system path<\!-->
+        <systemPath></systemPath>
+    </dependency>
+    <dependency>
+        <groupId>org.spigotmc</groupId>
+        <artifactId>spigot-9</artifactId>
+        <version>1.13.1-R0.1</version>
+        <scope>system</scope>
+        <!-->Requires system path<\!-->
+        <systemPath></systemPath>
+    </dependency>
+    <dependency>
+        <groupId>org.spigotmc</groupId>
+        <artifactId>spigot-11</artifactId>
+        <version>1.13.2-R0.1</version>
+        <scope>system</scope>
+        <!-->Requires system path<\!-->
+        <systemPath></systemPath>
+    </dependency>
+    <dependency>
+        <groupId>io.github.thatsmusic99</groupId>
+        <artifactId>projectpg</artifactId>
+        <version>alpha</version>
+        <scope>system</scope>
+        <!-->Download link - https://cdn.discordapp.com/attachments/269172690957369355/507140760286658580/ProjectPG-1.0-SNAPSHOT.jar <\!-->
+        <!-->THIS IS A HIGH RISK AND UNFINISHED PLUGIN, NOT RECOMMENDED TO RUN ON SERVERS.<\!-->
+        <systemPath></systemPath>
+    </dependency>
+    <dependency>
+        <groupId>io.github.thatsmusic99</groupId>
+        <artifactId>advancedoregenerator</artifactId>
+        <version>1.0.0</version>
+        <scope>system</scope>
+        <!--> https://www.spigotmc.org/resources/advancedoregenerator.51153/ </!-->
+        <systemPath></systemPath>
+    </dependency>
+    <dependency>
+        <groupId>io.github.thatsmusic99</groupId>
+        <artifactId>spectateprotection</artifactId>
+        <version>1.0.0</version>
+        <scope>system</scope>
+        <!--> https://www.spigotmc.org/resources/spectateprotection.54828/ </!-->
+        <systemPath></systemPath>
+    </dependency>
+    <dependency>
+        <!--> MythicMobs. Don't know the packages. </!-->
+        <groupId>de.aaah</groupId>
+        <artifactId>idk</artifactId>
+        <version>1.0.0</version>
+        <scope>system</scope>
+        <!--> https://www.mythicmobs.net/index.php?pages/download/&version=4.4.1 </!-->
+        <systemPath></systemPath>
+    </dependency>
+
+
+</dependencies>  
+<repositories>
+   <repository>
+     <id>spigot-repo</id>
+     <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+   </repository>
+   <repository>
+     <id>vault-repo</id>
+     <url>http://nexus.hc.to/content/repositories/pub_releases</url>
+   </repository>
+</repositories>
+</project>

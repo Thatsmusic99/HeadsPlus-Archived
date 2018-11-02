@@ -6,6 +6,7 @@ import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -16,34 +17,91 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeEnumUser {
-	
-	private final FileConfiguration crafting = HeadsPlus.getInstance().getCraftingConfig().getConfig();
-	private final FileConfiguration heads = HeadsPlus.getInstance().getHeadsConfig().getConfig();
+
+    private final HeadsPlus hp = HeadsPlus.getInstance();
+	private final FileConfiguration crafting = hp.getCraftingConfig().getConfig();
+	private final FileConfiguration heads = hp.getHeadsConfig().getConfig();
 
 	public RecipeEnumUser() {
 	    addEnumToConfig();
     }
 
 	private void addEnumToConfig() {
-	    NMSManager nms = HeadsPlus.getInstance().getNMS();
-	    for (String key : HeadsPlus.getInstance().getHeadsConfig().mHeads) {
+	    NMSManager nms = hp.getNMS();
+	    for (String key : hp.getHeadsConfig().mHeads) {
+            hp.debug("Checking head for " + key + "...", 3);
 	    	try {
-	    	    if (!(heads.getString(key + ".display-name").equals("")) && !(heads.getStringList(key + ".name").isEmpty())){
+	    	    if (key.equalsIgnoreCase("sheep")) {
+                    hp.debug("Crafting head for " + key + "...", 3);
+                    if (!(heads.getString(key + ".display-name").equals(""))) {
+                        for (DyeColor d : DyeColor.values()) {
+                            ItemStack i = new ItemStack(nms.getSkullMaterial(1));
+                            SkullMeta im = (SkullMeta) i.getItemMeta();
+
+
+                            try {
+                                if (heads.getStringList(key + ".name." + d.name()).get(0).startsWith("HP#")) {
+                                    i = HeadsPlus.getInstance().getHeadsXConfig().getSkull(heads.getStringList(key + ".name." + d.name()).get(0));
+                                    im = (SkullMeta) i.getItemMeta();
+                                } else {
+                                    im = nms.setSkullOwner(heads.getStringList(key + ".name." + d.name()).get(0), im);
+                                }
+
+                            } catch (IndexOutOfBoundsException ex) {
+                                if (heads.getStringList(key + ".name.default").get(0).startsWith("HP#")) {
+                                    i = HeadsPlus.getInstance().getHeadsXConfig().getSkull(heads.getStringList(key + ".name.default").get(0));
+                                    im = (SkullMeta) i.getItemMeta();
+                                } else {
+                                    im = nms.setSkullOwner(heads.getStringList(key + ".name.default").get(0), im);
+                                }
+                            }
+                            i.setItemMeta(im);
+                            SkullMeta ims = (SkullMeta) i.getItemMeta();
+                            try {
+                                ims = nms.setSkullOwner(heads.getStringList(key + ".name." + d.name()).get(0), ims);
+                            } catch (IndexOutOfBoundsException ex) {
+                                ims = nms.setSkullOwner(heads.getStringList(key + ".name.default").get(0), ims);
+                            }
+                            i.setItemMeta(ims);
+                            im.setDisplayName(ChatColor.translateAlternateColorCodes('&', heads.getString(key + ".display-name")));
+                            List<String> strs = new ArrayList<>();
+                            for (String str : heads.getStringList(key + ".lore")) {
+                                strs.add(ChatColor.translateAlternateColorCodes('&', str.replaceAll("\\{type}", key).replaceAll("\\{price}", String.valueOf(heads.getDouble(key + ".price")))));
+                            }
+                            im.setLore(strs);
+                            i.setItemMeta(im);
+                            i = makeSell(i, key);
+
+                            ShapelessRecipe recipe = nms.getRecipe(i, "hp" + d.name().toLowerCase() + key);
+                            List<String> ingrs = new ArrayList<>();
+                            for (String key2 : crafting.getStringList(key + "." + d.name() + ".ingredients")) {
+                                try {
+                                    recipe.addIngredient(Material.getMaterial(key2));
+                                    ingrs.add(key2);
+                                } catch (IllegalArgumentException e) {
+                                }
+                            }
+                            recipe.addIngredient(new ItemStack(Material.getMaterial(crafting.getString("base-item.material")), 1, (short) crafting.getInt("base-item.data")).getType());
+                            if (ingrs.size() > 0) {
+                                try {
+                                    Bukkit.addRecipe(recipe);
+                                } catch (IllegalStateException e) {
+
+                                }
+                            }
+                        }
+                    }
+                } else if (!(heads.getString(key + ".display-name").equals("")) && !(heads.getStringList(key + ".name").isEmpty())) {
+                    hp.debug("Crafting head for " + key + "...", 3);
                     ItemStack i = new ItemStack(nms.getSkullMaterial(1));
                     SkullMeta im = (SkullMeta) i.getItemMeta();
 
 
-                    try {
-                        if (key.equalsIgnoreCase("sheep")) {
-                            im = nms.setSkullOwner(heads.getStringList(key + ".name.default").get(0), im);
-                        } else {
-                            im = nms.setSkullOwner(heads.getStringList(key + ".name").get(0), im);
-                        }
-                    } catch (IndexOutOfBoundsException ex) {
-                        HeadsPlus.getInstance().getLogger().warning("There was an issue setting the crafting skull for " + key + "! Setting it to default...");
-                        HeadsPlus.getInstance().getLogger().warning("If your heads.yml was out of date, just let it update and then the config will automatically reload as soon as a player joins (if enabled).");
-                        HeadsPlus.getInstance().getLogger().warning("Otherwise, use /hp reload.");
-                        im = nms.setSkullOwner("MHF_" + WordUtils.capitalize(key), im);
+                    if (heads.getStringList(key + ".name").get(0).startsWith("HP#")) {
+                        i = HeadsPlus.getInstance().getHeadsXConfig().getSkull(heads.getStringList(key + ".name").get(0));
+                        im = (SkullMeta) i.getItemMeta();
+                    } else {
+                        im = nms.setSkullOwner(heads.getStringList(key + ".name").get(0), im);
                     }
                     i.setItemMeta(im);
                     SkullMeta ims = (SkullMeta) i.getItemMeta();
@@ -64,14 +122,14 @@ public class RecipeEnumUser {
                     i = makeSell(i, key);
                     ShapelessRecipe recipe = nms.getRecipe(i, "hp" + key);
                     List<String> ingrs = new ArrayList<>();
-                    for (String key2 : crafting.getStringList(key + "I")) {
+                    for (String key2 : crafting.getStringList(key + ".ingredients")) {
                         try {
                             recipe.addIngredient(Material.getMaterial(key2));
                             ingrs.add(key2);
                         } catch (IllegalArgumentException ignored) {
                         }
                     }
-                    recipe.addIngredient(nms.getSkull0());
+                    recipe.addIngredient(new ItemStack(Material.getMaterial(crafting.getString("base-item.material")), 1, (short) crafting.getInt("base-item.data")).getType());
                     if (ingrs.size() > 0) {
                         try {
                             Bukkit.addRecipe(recipe);
@@ -83,21 +141,27 @@ public class RecipeEnumUser {
 
 			} catch (IndexOutOfBoundsException ignored) {
             } catch (Exception e) {
-	    	    HeadsPlus.getInstance().getLogger().severe("Error thrown creating head for " + key + ". Please check the report for details.");
+	    	    hp.getLogger().severe("Error thrown creating head for " + key + ". Please check the report for details.");
                 new DebugPrint(e, "Startup (Crafting)", false, null);
             }
 	  //  for (RecipeEnums key : RecipeEnums.values()) {
 
 	    }
-	    for (String key : HeadsPlus.getInstance().getHeadsConfig().uHeads) {
+	    for (String key : hp.getHeadsConfig().uHeads) {
+	        hp.debug("Checking head for " + key + "...", 3);
 	        try {
-                ItemStack i = HeadsPlus.getInstance().getNMS().getSkullMaterial(1);
+                ItemStack i = hp.getNMS().getSkullMaterial(1);
                 SkullMeta im = (SkullMeta) i.getItemMeta();
                 if (!(heads.getString(key + ".display-name").equals("")) && !(heads.getStringList(key + ".name").isEmpty())) {
+                    hp.debug("Crafting head for " + key + "...", 3);
                     im.setDisplayName(ChatColor.translateAlternateColorCodes('&', heads.getString(key + ".display-name")));
 
-                    im = nms.setSkullOwner(heads.getStringList(key + ".name").get(0), im);
-
+                    if (heads.getStringList(key + ".name").get(0).startsWith("HP#")) {
+                        i = HeadsPlus.getInstance().getHeadsXConfig().getSkull(heads.getStringList(key + ".name").get(0));
+                        im = (SkullMeta) i.getItemMeta();
+                    } else {
+                        im = nms.setSkullOwner(heads.getStringList(key + ".name").get(0), im);
+                    }
                     i.setItemMeta(im);
                     SkullMeta ims;
                     ims = nms.setSkullOwner(heads.getStringList(key + ".name").get(0), im);
@@ -139,7 +203,6 @@ public class RecipeEnumUser {
 	}
 
 	private ItemStack makeSell(ItemStack item, String type) {
-	    HeadsPlus hp = HeadsPlus.getInstance();
         if (hp.canSellHeads()) {
             item = hp.getNMS().addNBTTag(item);
             item = hp.getNMS().setType(type, item);

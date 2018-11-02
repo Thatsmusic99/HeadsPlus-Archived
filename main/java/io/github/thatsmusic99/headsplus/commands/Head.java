@@ -43,7 +43,7 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
         world.dropItem(playerLoc, skull).setPickupDelay(0);
 	}
 
-	private void giveH(String[] args, Player sender, Player p) {
+	private void giveH(String[] args, CommandSender sender, Player p) {
 	    ConfigurationSection blacklist = hp.getConfiguration().getBlacklist("default");
         ConfigurationSection whitelist = hp.getConfiguration().getWhitelist("default");
         List<String> bl = new ArrayList<>();
@@ -135,7 +135,7 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
 
     @Override
     public String getUsage() {
-        return "/head <IGN|Player giving head to> [IGN]";
+        return "/head <IGN> [Player]";
     }
 
     @Override
@@ -170,58 +170,57 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
     public boolean fire(String[] args, CommandSender sender) {
 	    tests.clear();
 	    try {
-	        tests.put("Instance of Player", sender instanceof Player);
-            if (sender instanceof Player){
-                tests.put("No permission", !sender.hasPermission("headsplus.head"));
-                if (sender.hasPermission("headsplus.head")) {
-                    tests.put("More than 1 arg", args.length >= 2);
-                    if (args.length >= 2) {
-                        tests.put("No Other permission", !sender.hasPermission("headsplus.head.others"));
-                        if (sender.hasPermission("headsplus.head.others")) {
-                            tests.put("Player Found", hp.getNMS().getPlayer(args[0]) != null);
-                            if (hp.getNMS().getPlayer(args[0]) != null) {
-                                boolean b = args[1].matches("^[A-Za-z0-9_]+$") && (2 < args[1].length()) && (args[1].length() < 17);
-                                tests.put("Valid name", b);
-                                if (b) {
-                                    String[] s = new String[2];
-                                    s[0] = args[1];
-                                    s[1] = args[0];
-                                    giveH(s, (Player) sender, hp.getNMS().getPlayer(args[0]));
-                                    printDebugResults(tests, true);
-                                    return true;
-                                } else if (!args[1].matches("^[A-Za-z0-9_]+$")) {
-                                    sender.sendMessage(hpc.getString("alpha-names"));
-                                } else if (args[1].length() < 3) {
+	        tests.put("No permission", !sender.hasPermission("headsplus.head"));
+	        if (sender.hasPermission("headsplus.head")) {
+	            tests.put("More than 1 arg", args.length >= 2);
+	            if (args.length > 1) {
+	                tests.put("No Other permission", !sender.hasPermission("headsplus.head.others"));
+	                if (sender.hasPermission("headsplus.head.others")) {
+	                    tests.put("Player Found", hp.getNMS().getPlayer(args[1]) != null);
+	                    if (hp.getNMS().getPlayer(args[1]) != null) {
+	                        boolean b = args[0].matches("^[A-Za-z0-9_]+$") && (2 < args[0].length()) && (args[0].length() < 17);
+	                        tests.put("Valid name", b);
+	                        if (b) {
+	                            String[] s = new String[2];
+	                            s[0] = args[0];
+	                            s[1] = args[1];
+	                            giveH(s, sender, hp.getNMS().getPlayer(args[1]));
+	                            printDebugResults(tests, true);
+	                            return true;
+	                        } else if (!args[0].matches("^[A-Za-z0-9_]+$")) {
+	                            sender.sendMessage(hpc.getString("alpha-names"));
+                                } else if (args[0].length() < 3) {
                                     sender.sendMessage(hpc.getString("too-short-head"));
                                 } else {
                                     sender.sendMessage(hpc.getString("head-too-long"));
                                 }
-                            } else {
-                                sender.sendMessage(hpc.getString("player-offline"));
-                            }
-                            printDebugResults(tests, false);
-                            return true;
-                        } else {
-                            sender.sendMessage(hpc.getString("no-perms"));
-                        }
-                    } else if (args.length > 0) {
-                        boolean b = args[0].matches("^[A-Za-z0-9_]+$") && (2 < args[0].length()) && (args[0].length() < 17);
-                        tests.put("Valid name", b);
-                        if (b) {
-                            giveH(args, (Player) sender, (Player) sender);
-                            printDebugResults(tests, true);
-                            return true;
-                        }
-                    } else {
-                        sender.sendMessage(hpc.getString("invalid-args"));
-                    }
-
-                } else {
-                    sender.sendMessage(hpc.getString("no-perms"));
-                }
-            } else {
-                sender.sendMessage(ChatColor.RED + "You must be a player to run this command!");
-            }
+	                    } else {
+	                        sender.sendMessage(hpc.getString("player-offline"));
+	                    }
+	                    printDebugResults(tests, false);
+	                    return true;
+	                } else {
+	                    sender.sendMessage(hpc.getString("no-perms"));
+	                }
+	            } else if (args.length > 0) {
+	                tests.put("Instance of Player", sender instanceof Player);
+	                if (sender instanceof Player) {
+	                    boolean b = args[0].matches("^[A-Za-z0-9_]+$") && (2 < args[0].length()) && (args[0].length() < 17);
+	                    tests.put("Valid name", b);
+	                    if (b) {
+	                        giveH(args, sender, (Player) sender);
+	                        printDebugResults(tests, true);
+	                        return true;
+	                    }
+	                } else {
+	                    sender.sendMessage(ChatColor.RED + "You must be a player to give yourself a head!");
+	                }
+	            } else {
+	                sender.sendMessage(hpc.getString("invalid-args"));
+	            }
+	        } else {
+	            sender.sendMessage(hpc.getString("no-perms"));
+	        }
         } catch (Exception e) {
 	        new DebugPrint(e, "Command (head)", true, sender);
         }

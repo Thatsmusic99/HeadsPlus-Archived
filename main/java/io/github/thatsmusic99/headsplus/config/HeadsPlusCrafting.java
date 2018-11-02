@@ -3,6 +3,9 @@ package io.github.thatsmusic99.headsplus.config;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.crafting.RecipeEnums;
 import io.github.thatsmusic99.headsplus.crafting.RecipeUndefinedEnums;
+import io.github.thatsmusic99.headsplus.nms.NMSManager;
+import io.github.thatsmusic99.headsplus.util.MaterialTranslator;
+import org.bukkit.DyeColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -35,18 +38,44 @@ public class HeadsPlusCrafting extends ConfigSettings {
 	}
 
 	private void checkCrafting() {
+        NMSManager nms = HeadsPlus.getInstance().getNMS();
+	    getConfig().addDefault("base-item.material", nms.getSkull0().name());
+	    getConfig().addDefault("base-item.data", 0);
 		for (RecipeEnums key : RecipeEnums.values()) {
-			getConfig().addDefault(key.str + "I", new ArrayList<>(Collections.singletonList(key.mat)));
-			List<String> keyl = getConfig().getStringList(key.str + "I");
-			if (keyl.size() > 9) {
-				getConfig().getStringList(key.str + "I").clear();
-			}
+			if (key == RecipeEnums.SHEEP) {
+				for (DyeColor d : DyeColor.values()) {
+				    if (getConfig().getStringList(key.str + "I") != null) {
+                        getConfig().set(key.str + "I", null);
+                    }
+                    getConfig().addDefault(key.str + "." + d.name() + ".ingredients", new ArrayList<>(Collections.singletonList(nms.getColouredBlock(MaterialTranslator.BlockType.WOOL, d.ordinal()).getType().name())));
+                    List<String> keyl = getConfig().getStringList(key.str + "." + d.name() + ".ingredients");
+                    if (keyl.size() > 9) {
+                        getConfig().getStringList(key.str + "." + d.name() + ".ingredients").clear();
+                    }
+                }
+			} else {
+                if (getConfig().getStringList(key.str + "I") != null) {
+                    getConfig().set(key.str + "I", null);
+                }
+                getConfig().addDefault(key.str + ".ingredients", new ArrayList<>(Collections.singletonList(key.mat)));
+                List<String> keyl = getConfig().getStringList(key.str + ".ingredients");
+                if (keyl.size() > 9) {
+                    getConfig().getStringList(key.str + ".ingredients").clear();
+                }
+            }
+
 		}
 		for (RecipeUndefinedEnums key : RecipeUndefinedEnums.values()) {
-			getConfig().addDefault(key.str + "I", new ArrayList<String>());
-			List<String> keyl = getConfig().getStringList(key.str + "I");
+            List<String> a = new ArrayList<>();
+            if (getConfig().getStringList(key.str + "I") != null) {
+                a = getConfig().getStringList(key.str + "I");
+                getConfig().set(key.str + "I", null);
+            }
+
+			getConfig().addDefault(key.str + ".ingredients", a);
+			List<String> keyl = getConfig().getStringList(key.str + ".ingredients");
 			if (keyl.size() > 9) {
-				getConfig().getStringList(key.str + "I").clear();
+				getConfig().getStringList(key.str + ".ingredients").clear();
 			}
 		}
 	}

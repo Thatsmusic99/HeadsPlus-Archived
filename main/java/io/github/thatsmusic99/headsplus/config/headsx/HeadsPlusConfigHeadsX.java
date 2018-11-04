@@ -126,10 +126,10 @@ public class HeadsPlusConfigHeadsX extends ConfigSettings {
         SkullMeta sm = (SkullMeta) i.getItemMeta();
         GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
         if (getConfig().getBoolean("heads." + st + ".encode")) {
-            byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", getConfig().getString(st + ".texture")).getBytes());
+            byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", getTextures(s)).getBytes());
             gm.getProperties().put("textures", new Property("texture", Arrays.toString(encodedData).replaceAll("=", "")));
         } else {
-            gm.getProperties().put("textures", new Property("texture", getConfig().getString("heads." + st + ".texture").replaceAll("=", "")));
+            gm.getProperties().put("textures", new Property("texture", getTextures(s).replaceAll("=", "")));
         }
 
         Field profileField;

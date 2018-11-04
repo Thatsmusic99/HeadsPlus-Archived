@@ -11,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
@@ -76,6 +77,7 @@ public class RecipeEnumUser {
                             List<String> ingrs = new ArrayList<>();
                             for (String key2 : crafting.getStringList(key + "." + d.name() + ".ingredients")) {
                                 try {
+
                                     recipe.addIngredient(Material.getMaterial(key2));
                                     ingrs.add(key2);
                                 } catch (IllegalArgumentException e) {
@@ -86,7 +88,6 @@ public class RecipeEnumUser {
                                 try {
                                     Bukkit.addRecipe(recipe);
                                 } catch (IllegalStateException e) {
-
                                 }
                             }
                         }
@@ -97,21 +98,9 @@ public class RecipeEnumUser {
                     SkullMeta im = (SkullMeta) i.getItemMeta();
 
 
-                    if (heads.getStringList(key + ".name").get(0).startsWith("HP#")) {
-                        i = HeadsPlus.getInstance().getHeadsXConfig().getSkull(heads.getStringList(key + ".name").get(0));
-                        im = (SkullMeta) i.getItemMeta();
-                    } else {
-                        im = nms.setSkullOwner(heads.getStringList(key + ".name").get(0), im);
-                    }
-                    i.setItemMeta(im);
-                    SkullMeta ims = (SkullMeta) i.getItemMeta();
-                    if (key.equalsIgnoreCase("sheep")) {
-                        ims = nms.setSkullOwner(heads.getStringList(key + ".name.default").get(0), ims);
 
-                    } else {
-                        ims = nms.setSkullOwner(heads.getStringList(key + ".name").get(0), ims);
-                    }
-                    i.setItemMeta(ims);
+
+
                     im.setDisplayName(ChatColor.translateAlternateColorCodes('&', heads.getString(key + ".display-name")));
                     List<String> strs = new ArrayList<>();
                     for (String str : heads.getStringList(key + ".lore")) {
@@ -119,7 +108,23 @@ public class RecipeEnumUser {
                     }
                     im.setLore(strs);
                     i.setItemMeta(im);
+                    if (heads.getStringList(key + ".name").get(0).startsWith("HP#")) {
+                        i = HeadsPlus.getInstance().getHeadsXConfig().getSkull(heads.getStringList(key + ".name").get(0));
+                    } else {
+                        im = nms.setSkullOwner(heads.getStringList(key + ".name").get(0), im);
+                        i.setItemMeta(im);
+                        SkullMeta ims = (SkullMeta) i.getItemMeta();
+                        if (key.equalsIgnoreCase("sheep")) {
+                            ims = nms.setSkullOwner(heads.getStringList(key + ".name.default").get(0), ims);
+
+                        } else {
+                            ims = nms.setSkullOwner(heads.getStringList(key + ".name").get(0), ims);
+                        }
+                        i.setItemMeta(ims);
+                        i.setItemMeta(im);
+                    }
                     i = makeSell(i, key);
+
                     ShapelessRecipe recipe = nms.getRecipe(i, "hp" + key);
                     List<String> ingrs = new ArrayList<>();
                     for (String key2 : crafting.getStringList(key + ".ingredients")) {
@@ -154,24 +159,42 @@ public class RecipeEnumUser {
                 SkullMeta im = (SkullMeta) i.getItemMeta();
                 if (!(heads.getString(key + ".display-name").equals("")) && !(heads.getStringList(key + ".name").isEmpty())) {
                     hp.debug("Crafting head for " + key + "...", 3);
-                    im.setDisplayName(ChatColor.translateAlternateColorCodes('&', heads.getString(key + ".display-name")));
 
+                    im.setDisplayName(ChatColor.translateAlternateColorCodes('&', heads.getString(key + ".display-name")));
+                    List<String> strs = new ArrayList<>();
+                    for (String str : heads.getStringList(key + ".lore")) {
+                        strs.add(ChatColor.translateAlternateColorCodes('&', str.replaceAll("\\{type}", key).replaceAll("\\{price}", String.valueOf(heads.getDouble(key + ".price")))));
+                    }
+                    im.setLore(strs);
+                    i.setItemMeta(im);
                     if (heads.getStringList(key + ".name").get(0).startsWith("HP#")) {
                         i = HeadsPlus.getInstance().getHeadsXConfig().getSkull(heads.getStringList(key + ".name").get(0));
-                        im = (SkullMeta) i.getItemMeta();
+                        ItemMeta os = i.getItemMeta();
+                        os.setDisplayName(ChatColor.translateAlternateColorCodes('&', heads.getString(key + ".display-name")));
+                        List<String> strsz = new ArrayList<>();
+                        for (String str : heads.getStringList(key + ".lore")) {
+                            strsz.add(ChatColor.translateAlternateColorCodes('&', str.replaceAll("\\{type}", key).replaceAll("\\{price}", String.valueOf(heads.getDouble(key + ".price")))));
+                        }
+                        os.setLore(strsz);
+                        i.setItemMeta(os);
                     } else {
                         im = nms.setSkullOwner(heads.getStringList(key + ".name").get(0), im);
-                    }
-                    i.setItemMeta(im);
-                    SkullMeta ims;
-                    ims = nms.setSkullOwner(heads.getStringList(key + ".name").get(0), im);
+                        i.setItemMeta(im);
+                        SkullMeta ims = (SkullMeta) i.getItemMeta();
+                        if (key.equalsIgnoreCase("sheep")) {
+                            ims = nms.setSkullOwner(heads.getStringList(key + ".name.default").get(0), ims);
 
-                    i.setItemMeta(ims);
+                        } else {
+                            ims = nms.setSkullOwner(heads.getStringList(key + ".name").get(0), ims);
+                        }
+                        i.setItemMeta(ims);
+                        i.setItemMeta(im);
+                    }
                     i = makeSell(i, key);
                     ShapelessRecipe recipe = nms.getRecipe(i, "hp" + key);
                     List<String> ingrs = new ArrayList<>();
-                    if (crafting.getStringList(key + "I") != null) {
-                        ingrs = crafting.getStringList(key + "I");
+                    if (crafting.getStringList(key + ".ingredients") != null) {
+                        ingrs = crafting.getStringList(key + ".ingredients");
                         for (String key2 : ingrs) {
                             try {
                                 recipe.addIngredient(Material.getMaterial(key2));
@@ -184,7 +207,7 @@ public class RecipeEnumUser {
                             recipe.addIngredient(nms.getSkull0());
                         }
                     } else {
-                        crafting.addDefault(key + "I", ingrs);
+                        crafting.addDefault(key + ".ingredients", ingrs);
                     }
                     if (ingrs.size() > 0) {
                         try {

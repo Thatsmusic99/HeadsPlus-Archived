@@ -130,6 +130,7 @@ public class HeadsPlus extends JavaPlugin {
             Metrics metrics = new Metrics(this);
             metrics.addCustomChart(new Metrics.SimplePie("languages", () -> LocaleManager.getLocale().getLanguage()));
             metrics.addCustomChart(new Metrics.SimplePie("theme", () -> WordUtils.capitalize(getConfiguration().getMechanics().getString("plugin-theme-dont-change").toLowerCase())));
+            metrics.addCustomChart(new Metrics.SingleLineChart("christmas_hype", () -> getHeadsXConfig().getConfig().getInt("options.christmas-hype")));
             debug("- Metrics complete, can be found at https://bstats.org/plugin/bukkit/HeadsPlus", 2);
             if (getConfiguration().getMechanics().getBoolean("update.check")) {
                 new BukkitRunnable() {

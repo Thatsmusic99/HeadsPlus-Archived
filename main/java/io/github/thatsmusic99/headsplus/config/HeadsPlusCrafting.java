@@ -44,39 +44,38 @@ public class HeadsPlusCrafting extends ConfigSettings {
 		for (RecipeEnums key : RecipeEnums.values()) {
 			if (key == RecipeEnums.SHEEP) {
 				for (DyeColor d : DyeColor.values()) {
-				    if (getConfig().getStringList(key.str + "I") != null) {
-                        getConfig().set(key.str + "I", null);
-                    }
+				    checkForOldFormat(key.str);
                     getConfig().addDefault(key.str + "." + d.name() + ".ingredients", new ArrayList<>(Collections.singletonList(nms.getColouredBlock(MaterialTranslator.BlockType.WOOL, d.ordinal()).getType().name())));
-                    List<String> keyl = getConfig().getStringList(key.str + "." + d.name() + ".ingredients");
-                    if (keyl.size() > 9) {
-                        getConfig().getStringList(key.str + "." + d.name() + ".ingredients").clear();
-                    }
+                    checkOverload(key.str);
                 }
 			} else {
-                if (getConfig().getStringList(key.str + "I") != null) {
-                    getConfig().set(key.str + "I", null);
-                }
+                checkForOldFormat(key.str);
                 getConfig().addDefault(key.str + ".ingredients", new ArrayList<>(Collections.singletonList(key.mat)));
-                List<String> keyl = getConfig().getStringList(key.str + ".ingredients");
-                if (keyl.size() > 9) {
-                    getConfig().getStringList(key.str + ".ingredients").clear();
-                }
+                checkOverload(key.str);
             }
 
 		}
 		for (RecipeUndefinedEnums key : RecipeUndefinedEnums.values()) {
-            List<String> a = new ArrayList<>();
-            if (getConfig().getStringList(key.str + "I") != null) {
-                a = getConfig().getStringList(key.str + "I");
-                getConfig().set(key.str + "I", null);
-            }
+            List<String> a = checkForOldFormat(key.str);
 
 			getConfig().addDefault(key.str + ".ingredients", a);
-			List<String> keyl = getConfig().getStringList(key.str + ".ingredients");
-			if (keyl.size() > 9) {
-				getConfig().getStringList(key.str + ".ingredients").clear();
-			}
+            checkOverload(key.str);
 		}
 	}
+
+	private List<String> checkForOldFormat(String key) {
+        List<String> a = new ArrayList<>();
+        if (getConfig().getStringList(key + "I") != null) {
+            a = getConfig().getStringList(key + "I");
+            getConfig().set(key + "I", null);
+        }
+        return a;
+    }
+
+    private void checkOverload(String key) {
+        List<String> keyl = getConfig().getStringList(key + ".ingredients");
+        if (keyl.size() > 9) {
+            getConfig().getStringList(key + ".ingredients").clear();
+        }
+    }
 }

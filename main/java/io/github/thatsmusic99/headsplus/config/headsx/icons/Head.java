@@ -3,8 +3,11 @@ package io.github.thatsmusic99.headsplus.config.headsx.icons;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
+import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
+import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
+import io.github.thatsmusic99.headsplus.util.AdventCManager;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
@@ -15,8 +18,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class Head extends ItemStack implements Icon {
@@ -29,6 +35,50 @@ public class Head extends ItemStack implements Icon {
 
     @Override
     public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
+        NMSManager nms = HeadsPlus.getInstance().getNMS();
+        if (im.getSection().equalsIgnoreCase("advent-calendar")) {
+            if (nms.isOpen(e.getCurrentItem())) {
+                giveHead(p, e);
+                return;
+            } else {
+                Date date = new Date();
+                LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                int month = localDate.getMonthValue();
+                int day   = localDate.getDayOfMonth();
+                if (!(month == 12)) { // TODO Change for testing
+                    e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getChristmasDeniedMessage()));
+                    e.setCancelled(true);
+                    return;
+                }
+                AdventCManager a = nms.getCalendarValue(e.getCurrentItem());
+                if (day >= a.date) {
+                    HeadsPlusConfigHeadsX config = HeadsPlus.getInstance().getHeadsXConfig();
+                    ItemStack open = nms.setOpen(e.getCurrentItem(), true);
+                    ItemMeta meta = open.getItemMeta();
+                    meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', a.name));
+                    open.setItemMeta(meta);
+                    try {
+                        open = HeadsPlus.getInstance().getHeadsXConfig().setTexture(a.texture, open);
+                    } catch (IllegalAccessException | NoSuchFieldException e1) {
+                        e1.printStackTrace();
+                    }
+                    e.setCurrentItem(open);
+                    e.setCancelled(true);
+                    HeadsPlus.getInstance().getHeadsXConfig().addChristmasHype();
+                    List<String> list = config.getConfig().getStringList("advent-18." + a.name());
+                    list.add(e.getWhoClicked().getUniqueId().toString());
+                    config.getConfig().set("advent-18." + a.name(), list);
+                    config.save();
+                    return;
+                } else {
+                    e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&', HeadsPlus.getInstance().getMessagesConfig().getString("xmas-denied")));
+                    e.setCancelled(true);
+                    return;
+                }
+
+
+            }
+        }
         if (e.getClick().isRightClick()) {
             HPPlayer hpp = HPPlayer.getHPPlayer(p);
             String id = HeadsPlus.getInstance().getNMS().getId(e.getCurrentItem());
@@ -36,7 +86,6 @@ public class Head extends ItemStack implements Icon {
             List<String> s = new ArrayList<>();
             if (hpp.hasHeadFavourited(id)) {
                 hpp.removeFavourite(id);
-                NMSManager nms = HeadsPlus.getInstance().getNMS();
                 for (String r : getLore()) {
                     s.add(ChatColor.translateAlternateColorCodes('&', r.replaceAll("\\{price}", String.valueOf(nms.getPrice(e.getCurrentItem())))
                             .replaceAll("\\{favourite}", HPPlayer.getHPPlayer(p).hasHeadFavourited(nms.getId(e.getCurrentItem())) ? ChatColor.GOLD + "Favourite!" : "")));
@@ -44,7 +93,6 @@ public class Head extends ItemStack implements Icon {
                 }
             } else {
                 hpp.addFavourite(id);
-                NMSManager nms = HeadsPlus.getInstance().getNMS();
                 for (String r : getLore()) {
                     s.add(ChatColor.translateAlternateColorCodes('&', r.replaceAll("\\{price}", String.valueOf(nms.getPrice(e.getCurrentItem())))
                             .replaceAll("\\{favourite}", HPPlayer.getHPPlayer(p).hasHeadFavourited(nms.getId(e.getCurrentItem())) ? ChatColor.GOLD + "Favourite!" : "")));
@@ -56,35 +104,39 @@ public class Head extends ItemStack implements Icon {
             e.getInventory().setItem(e.getSlot(), e.getCurrentItem());
             e.setCancelled(true);
         } else {
-            if (p.getInventory().firstEmpty() == -1) {
-                p.sendMessage(hpc.getString("full-inv"));
+            giveHead(p, e);
+        }
+    }
+
+    private void giveHead(Player p, InventoryClickEvent e) {
+        if (p.getInventory().firstEmpty() == -1) {
+            p.sendMessage(hpc.getString("full-inv"));
+            e.setCancelled(true);
+            return;
+        }
+        if (e.getCurrentItem().getItemMeta().getLore() != null) {
+            Economy ef = HeadsPlus.getInstance().getEconomy();
+            Double price = HeadsPlus.getInstance().getNMS().getPrice(e.getCurrentItem());
+            if (price > ef.getBalance(p)) {
+                p.sendMessage(hpc.getString("not-enough-money"));
+                return;
+            }
+            EconomyResponse er = HeadsPlus.getInstance().getEconomy().withdrawPlayer(p, price);
+            String success = hpc.getString("buy-success").replaceAll("\\{price}", Double.toString(er.amount)).replaceAll("\\{balance}", Double.toString(er.balance));
+            String fail = hpc.getString("cmd-fail");
+            if (er.transactionSuccess()) {
+                p.sendMessage(success);
+                p.getInventory().addItem(HeadsPlus.getInstance().getNMS().removeIcon(e.getCurrentItem()));
+                e.setCancelled(true);
+                return;
+            } else {
+                p.sendMessage(fail + ": " + er.errorMessage);
                 e.setCancelled(true);
                 return;
             }
-            if (e.getCurrentItem().getItemMeta().getLore() != null) {
-                Economy ef = HeadsPlus.getInstance().getEconomy();
-                Double price = HeadsPlus.getInstance().getNMS().getPrice(e.getCurrentItem());
-                if (price > ef.getBalance(p)) {
-                    p.sendMessage(hpc.getString("not-enough-money"));
-                    return;
-                }
-                EconomyResponse er = HeadsPlus.getInstance().getEconomy().withdrawPlayer(p, price);
-                String success = hpc.getString("buy-success").replaceAll("\\{price}", Double.toString(er.amount)).replaceAll("\\{balance}", Double.toString(er.balance));
-                String fail = hpc.getString("cmd-fail");
-                if (er.transactionSuccess()) {
-                    p.sendMessage(success);
-                    p.getInventory().addItem(HeadsPlus.getInstance().getNMS().removeIcon(e.getCurrentItem()));
-                    e.setCancelled(true);
-                    return;
-                } else {
-                    p.sendMessage(fail + ": " + er.errorMessage);
-                    e.setCancelled(true);
-                    return;
-                }
-            }
-            p.getInventory().addItem(e.getCurrentItem());
-            e.setCancelled(true);
         }
+        p.getInventory().addItem(e.getCurrentItem());
+        e.setCancelled(true);
     }
 
     @Override

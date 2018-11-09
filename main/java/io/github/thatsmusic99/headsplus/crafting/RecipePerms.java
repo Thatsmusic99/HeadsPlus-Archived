@@ -27,26 +27,14 @@ public class RecipePerms implements Listener {
             if (e.getInventory().getType().equals(InventoryType.CRAFTING) || e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
                 Player player = (Player) e.getWhoClicked();
                 HeadsPlus hp = HeadsPlus.getInstance();
-                NMSManager nms = hp.getNMS();
                 HeadsPlusAPI hapi = hp.getAPI();
                 HeadsPlusMainConfig c = hp.getConfiguration();
-                Material m = nms.getSkullMaterial(1).getType();
                 if (c.getPerks().getBoolean("craft-heads")) {
                     if (player.hasPermission("headsplus.craft")) {
                         List<String> worlds = c.getBlacklist("world").getStringList("list");
                         if ((!worlds.contains(player.getWorld().getName())) || !c.getBlacklist("world").getBoolean("enabled") || player.hasPermission("headsplus.bypass.blacklistw")) {
                             if (c.getWhitelist("world").getStringList("list").contains(player.getWorld().getName())) {
-                                HeadCraftEvent event;
-                                int amount = shift(e);
-                                event = new HeadCraftEvent(player, e.getCurrentItem(), e.getWhoClicked().getWorld(), e.getWhoClicked().getLocation(), amount, hapi.getSkullType(e.getCurrentItem()));
-                                Bukkit.getServer().getPluginManager().callEvent(event);
-                                if (!event.isCancelled()) {
-                                    e.setCurrentItem(nms.addNBTTag(e.getCurrentItem()));
-                                    e.setCurrentItem(nms.setType(hapi.getSkullType(e.getCurrentItem()), e.getCurrentItem()));
-                                    return;
-                                } else {
-                                    e.setCancelled(true);
-                                }
+                                fireEvent(e);
                                 return;
 
                             } else if (player.hasPermission("headsplus.bypass.whitelistw")){
@@ -54,17 +42,7 @@ public class RecipePerms implements Listener {
                                     if (e.getCurrentItem().getItemMeta() instanceof SkullMeta) {
                                         if (hapi.getSkullType(e.getCurrentItem()) != null) {
                                             try {
-                                                HeadCraftEvent event;
-                                                    int amount = shift(e);
-                                                    event = new HeadCraftEvent(player, e.getCurrentItem(), e.getWhoClicked().getWorld(), e.getWhoClicked().getLocation(), amount, hapi.getSkullType(e.getCurrentItem()));
-                                                    Bukkit.getServer().getPluginManager().callEvent(event);
-                                                    if (!event.isCancelled()) {
-                                                        e.setCurrentItem(nms.addNBTTag(e.getCurrentItem()));
-                                                        e.setCurrentItem(nms.setType(hapi.getSkullType(e.getCurrentItem()), e.getCurrentItem()));
-                                                        return;
-                                                    } else {
-                                                        e.setCancelled(true);
-                                                    }
+                                                fireEvent(e);
                                                 } catch (NullPointerException | ClassCastException ignored) {
 
                                                 }
@@ -75,54 +53,22 @@ public class RecipePerms implements Listener {
                                 return;
 
                             } else if (!c.getWhitelist("world").getBoolean("enabled")) {
-                                HeadCraftEvent event;
-                                int amount = shift(e);
-                                event = new HeadCraftEvent(player, e.getCurrentItem(), e.getWhoClicked().getWorld(), e.getWhoClicked().getLocation(), amount, hapi.getSkullType(e.getCurrentItem()));
-                                Bukkit.getServer().getPluginManager().callEvent(event);
-                                if (!event.isCancelled()) {
-                                    e.setCurrentItem(nms.addNBTTag(e.getCurrentItem()));
-                                    e.setCurrentItem(nms.setType(hapi.getSkullType(e.getCurrentItem()), e.getCurrentItem()));
-                                    return;
-                                } else {
-                                    e.setCancelled(true);
-                                }
+                                fireEvent(e);
                                 return;
                             }
                         } else {
                             if (e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
-                                if(e.getSlot() == 0){
-                                    if(e.getCurrentItem().getType() == m){
-                                        e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
-                                        e.setCancelled(true);
-                                    }
-
-                                }
+                                denyPermission(e);
                             } else if (e.getInventory().getType().equals(InventoryType.CRAFTING)){
-                                if (e.getRawSlot() == 0) {
-                                    if(e.getCurrentItem().getType() == m){
-                                        e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
-                                        e.setCancelled(true);
-                                    }
-                                }
+                                denyPermission(e);
                             }
                         }
                     }
                 }
                 if (e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
-                    if(e.getSlot() == 0){
-                        if(e.getCurrentItem().getType() == m){
-                            e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
-                            e.setCancelled(true);
-                        }
-
-                    }
+                    denyPermission(e);
                 } else if (e.getInventory().getType().equals(InventoryType.CRAFTING)){
-                    if (e.getRawSlot() == 0) {
-                        if(e.getCurrentItem().getType() == m){
-                            e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
-                            e.setCancelled(true);
-                        }
-                    }
+                    denyPermission(e);
                 }
             }
         } catch (Exception ex) {
@@ -162,5 +108,31 @@ public class RecipePerms implements Listener {
             amount = 1;
         }
         return amount;
+    }
+
+    private void fireEvent(InventoryClickEvent e) {
+        HeadsPlus hp = HeadsPlus.getInstance();
+        HeadCraftEvent event;
+        NMSManager nms = hp.getNMS();
+        HeadsPlusAPI hapi = hp.getAPI();
+        int amount = shift(e);
+        event = new HeadCraftEvent((Player) e.getWhoClicked(), e.getCurrentItem(), e.getWhoClicked().getWorld(), e.getWhoClicked().getLocation(), amount, hapi.getSkullType(e.getCurrentItem()));
+        Bukkit.getServer().getPluginManager().callEvent(event);
+        if (!event.isCancelled()) {
+            e.setCurrentItem(nms.addNBTTag(e.getCurrentItem()));
+            e.setCurrentItem(nms.setType(hapi.getSkullType(e.getCurrentItem()), e.getCurrentItem()));
+        } else {
+            e.setCancelled(true);
+        }
+    }
+
+    private void denyPermission(InventoryClickEvent e) {
+        Material m = HeadsPlus.getInstance().getNMS().getSkullMaterial(1).getType();
+        if(e.getSlot() == 0){
+            if(e.getCurrentItem().getType() == m){
+                e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
+                e.setCancelled(true);
+            }
+        }
     }
 }

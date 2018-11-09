@@ -3,6 +3,7 @@ package io.github.thatsmusic99.headsplus.nms;
 import com.mojang.authlib.GameProfile;
 import io.github.thatsmusic99.headsplus.api.Challenge;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
+import io.github.thatsmusic99.headsplus.util.AdventCManager;
 import io.github.thatsmusic99.headsplus.util.MaterialTranslator;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -87,6 +88,10 @@ public interface NMSManager {
 
     Icon getIcon(ItemStack i);
 
+    ItemStack setCalendarValue(ItemStack i, String value);
+
+    AdventCManager getCalendarValue(ItemStack i);
+
     ItemStack setChallenge(ItemStack i, Challenge a);
 
     Challenge getChallenge(ItemStack is);
@@ -94,6 +99,10 @@ public interface NMSManager {
     ItemStack removeIcon(ItemStack i);
 
     String getNMSVersion();
+
+    ItemStack setOpen(ItemStack i, boolean value);
+
+    boolean isOpen(ItemStack is);
 
     default Material getSkull0() {
         return Material.getMaterial("SKULL_ITEM");

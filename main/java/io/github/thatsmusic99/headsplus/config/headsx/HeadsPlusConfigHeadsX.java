@@ -5,6 +5,7 @@ import com.mojang.authlib.properties.Property;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.ConfigSettings;
+import io.github.thatsmusic99.headsplus.util.AdventCManager;
 import org.apache.commons.codec.binary.Base64;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -13,6 +14,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -60,12 +62,13 @@ public class HeadsPlusConfigHeadsX extends ConfigSettings {
         getConfig().addDefault("options.version", cVersion);
         getConfig().addDefault("options.default-price", 10.00);
         getConfig().addDefault("options.price-per-world.example-one", 15.00);
-       // getHeadsX().addDefault("options.advent-calender", true);
-       // if (getHeadsX().getBoolean("options.advent-calender")) {
-        //    for (AdventCManager acm : AdventCManager.values()) {
-        //        getHeadsX().addDefault("advent." + acm.name(), new ArrayList<>());
-        //    }
-       // }
+        getConfig().addDefault("options.advent-calendar", true);
+        getConfig().addDefault("options.christmas-hype", 0);
+        if (getConfig().getBoolean("options.advent-calendar")) {
+            for (AdventCManager acm : AdventCManager.values()) {
+                getConfig().addDefault("advent-18." + acm.name(), new ArrayList<>());
+            }
+        }
         if (configF.length() <= 500) {
             loadHeadsX();
         }
@@ -124,21 +127,9 @@ public class HeadsPlusConfigHeadsX extends ConfigSettings {
         String st = s.split("#")[1];
         ItemStack i = HeadsPlus.getInstance().getNMS().getSkullMaterial(1);
         SkullMeta sm = (SkullMeta) i.getItemMeta();
-        GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
-        if (getConfig().getBoolean("heads." + st + ".encode")) {
-            byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", getTextures(s)).getBytes());
-            gm.getProperties().put("textures", new Property("texture", Arrays.toString(encodedData).replaceAll("=", "")));
-        } else {
-            gm.getProperties().put("textures", new Property("texture", getTextures(s).replaceAll("=", "")));
-        }
-
-        Field profileField;
-        profileField = sm.getClass().getDeclaredField("profile");
-
-        profileField.setAccessible(true);
-        profileField.set(sm, gm);
         sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', getConfig().getString("heads." + st + ".displayname")));
         i.setItemMeta(sm);
+        i = setTexture(getTextures(s).replaceAll("=", ""), i);
         return i;
     }
     public String getTextures(String s) {
@@ -149,5 +140,27 @@ public class HeadsPlusConfigHeadsX extends ConfigSettings {
             new DebugPrint(ex, "Startup (headsx.yml)", false, null);
             return "";
         }
+    }
+
+    public ItemStack setTexture(String tex, ItemStack is) throws IllegalAccessException, NoSuchFieldException {
+        SkullMeta sm = (SkullMeta) is.getItemMeta();
+        GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
+        gm.getProperties().put("textures", new Property("texture", tex.replaceAll("=", "")));
+
+
+        Field profileField;
+        profileField = sm.getClass().getDeclaredField("profile");
+
+        profileField.setAccessible(true);
+        profileField.set(sm, gm);
+        is.setItemMeta(sm);
+        return is;
+    }
+
+    public void addChristmasHype() {
+        int hype = getConfig().getInt("options.christmas-hype");
+        hype++;
+        getConfig().set("options.christmas-hype", hype);
+        save();
     }
 }

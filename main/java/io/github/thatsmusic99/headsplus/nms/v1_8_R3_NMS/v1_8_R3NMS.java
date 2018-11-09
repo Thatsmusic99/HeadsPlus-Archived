@@ -6,6 +6,7 @@ import io.github.thatsmusic99.headsplus.api.Challenge;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.nms.SearchGUI;
+import io.github.thatsmusic99.headsplus.util.AdventCManager;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.minecraft.server.v1_8_R3.ItemStack;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
@@ -169,6 +170,27 @@ public class v1_8_R3NMS implements NMSManager {
     }
 
     @Override
+    public org.bukkit.inventory.ItemStack setCalendarValue(org.bukkit.inventory.ItemStack i, String value) {
+        net.minecraft.server.v1_8_R3.ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is == null) return i;
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setString("advent-value", value);
+        return CraftItemStack.asBukkitCopy(is);
+    }
+
+    @Override
+    public AdventCManager getCalendarValue(org.bukkit.inventory.ItemStack is) {
+        net.minecraft.server.v1_8_R3.ItemStack i = CraftItemStack.asNMSCopy(is);
+        if (i == null) return null;
+        if (i.getTag() != null) {
+            return AdventCManager.valueOf(Objects.requireNonNull(i.getTag()).getString("advent-value"));
+        }
+        return null;
+    }
+
+    @Override
     public org.bukkit.inventory.ItemStack setChallenge(org.bukkit.inventory.ItemStack i, Challenge a) {
         ItemStack is = CraftItemStack.asNMSCopy(i);
         if (is.getTag() == null) {
@@ -200,5 +222,24 @@ public class v1_8_R3NMS implements NMSManager {
     @Override
     public String getNMSVersion() {
         return "v1_8_R3";
+    }
+
+    @Override
+    public org.bukkit.inventory.ItemStack setOpen(org.bukkit.inventory.ItemStack i, boolean value) {
+        ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setBoolean("advent-open", value);
+        return CraftItemStack.asBukkitCopy(is);
+    }
+
+    @Override
+    public boolean isOpen(org.bukkit.inventory.ItemStack is) {
+        ItemStack i = CraftItemStack.asNMSCopy(is);
+        if (i.getTag() != null) {
+            return Objects.requireNonNull(i.getTag()).getBoolean("advent-open");
+        }
+        return false;
     }
 }

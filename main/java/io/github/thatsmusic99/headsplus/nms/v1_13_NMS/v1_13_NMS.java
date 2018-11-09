@@ -6,6 +6,7 @@ import io.github.thatsmusic99.headsplus.api.Challenge;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.nms.NewNMSManager;
 import io.github.thatsmusic99.headsplus.nms.SearchGUI;
+import io.github.thatsmusic99.headsplus.util.AdventCManager;
 import net.minecraft.server.v1_13_R1.EntityPlayer;
 import net.minecraft.server.v1_13_R1.NBTTagCompound;
 import org.bukkit.Bukkit;
@@ -163,6 +164,21 @@ public class v1_13_NMS implements NewNMSManager {
     }
 
     @Override
+    public ItemStack setCalendarValue(ItemStack i, String value) {
+        return null;
+    }
+
+    @Override
+    public AdventCManager getCalendarValue(ItemStack is) {
+        net.minecraft.server.v1_13_R1.ItemStack i = CraftItemStack.asNMSCopy(is);
+        if (i == null) return null;
+        if (i.getTag() != null) {
+            return AdventCManager.valueOf(Objects.requireNonNull(i.getTag()).getString("advent-value"));
+        }
+        return null;
+    }
+
+    @Override
     public ItemStack setChallenge(ItemStack i, Challenge a) {
         net.minecraft.server.v1_13_R1.ItemStack is = CraftItemStack.asNMSCopy(i);
         if (is.getTag() == null) {
@@ -189,6 +205,25 @@ public class v1_13_NMS implements NewNMSManager {
         }
         is.getTag().remove("icon");
         return CraftItemStack.asBukkitCopy(is);
+    }
+
+    @Override
+    public ItemStack setOpen(ItemStack i, boolean value) {
+        net.minecraft.server.v1_13_R1.ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setBoolean("advent-open", value);
+        return CraftItemStack.asBukkitCopy(is);
+    }
+
+    @Override
+    public boolean isOpen(ItemStack is) {
+        net.minecraft.server.v1_13_R1.ItemStack i = CraftItemStack.asNMSCopy(is);
+        if (i.getTag() != null) {
+            return Objects.requireNonNull(i.getTag()).getBoolean("advent-open");
+        }
+        return false;
     }
 
     @Override

@@ -61,7 +61,7 @@ public class HeadsPlusConfigHeadsX extends ConfigSettings {
         config = YamlConfiguration.loadConfiguration(configF);
         getConfig().addDefault("options.version", cVersion);
         getConfig().addDefault("options.default-price", 10.00);
-        getConfig().addDefault("options.price-per-world.example-one", 15.00);
+     //   getConfig().addDefault("options.price-per-world.example-one", 15.00);
         getConfig().addDefault("options.advent-calendar", true);
         getConfig().addDefault("options.christmas-hype", 0);
         if (getConfig().getBoolean("options.advent-calendar")) {

@@ -52,7 +52,7 @@ public class HeadsPlusChallenges extends ConfigSettings {
             v = 1.0;
         }
         for (HeadsPlusChallengeEnums hpc : HeadsPlusChallengeEnums.values()) {
-            if (hpc.v > v) {
+            if (hpc.v > v || v == 1.0) {
                 getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".name", hpc.dName);
                 getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".header", hpc.h);
                 getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".description", hpc.d);

@@ -109,12 +109,14 @@ public class Head extends ItemStack implements Icon {
     }
 
     private void giveHead(Player p, InventoryClickEvent e) {
+        NMSManager nms = HeadsPlus.getInstance().getNMS();
         if (p.getInventory().firstEmpty() == -1) {
             p.sendMessage(hpc.getString("full-inv"));
             e.setCancelled(true);
             return;
         }
-        if (e.getCurrentItem().getItemMeta().getLore() != null) {
+        if (nms.getPrice(e.getCurrentItem())  != 0.0 && HeadsPlus.getInstance().econ()) {
+
             Economy ef = HeadsPlus.getInstance().getEconomy();
             Double price = HeadsPlus.getInstance().getNMS().getPrice(e.getCurrentItem());
             if (price > ef.getBalance(p)) {

@@ -50,6 +50,8 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                             SellheadInventory si = new SellheadInventory();
                             SellheadInventory.setSI(p, si);
                             p.openInventory(si.changePage(false, true, p));
+                            printDebugResults(tests, true);
+                            return true;
                         } else {
                             if (nms().isSellable(invi)) {
                                 String s = nms().getType(invi).toLowerCase();
@@ -68,6 +70,8 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                                 if (price > 0) {
                                                     itemRemoval((Player) sender, args, invi);
                                                     sender.sendMessage(success);
+                                                    printDebugResults(tests, true);
+                                                    return true;
 
                                                 }
                                             } else {
@@ -101,11 +105,8 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                 for (ItemStack i : p.getInventory()) {
                                     if (i != null) {
                                     //    boolean found = false;
-                                        if (i.getType() == nms().getSkullMaterial(1).getType()
-                                                && (nms() instanceof NewNMSManager || i.getDurability() == 3)) {
-                                            if (nms().isSellable(i)) {
-                                                price = setPrice(price, args, i, p);
-                                            }
+                                        if (nms().isSellable(i)) {
+                                            price = setPrice(price, args, i, p);
                                         }
                                     }
                                 } if (price == 0.0) {
@@ -160,59 +161,49 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 			if (a[0].equalsIgnoreCase("all")) {
 				for (ItemStack is : p.getInventory()) {
 					if (is != null) {
-						if (is.getType() == nms().getSkullMaterial(1).getType()) {
-                            if (nms().isSellable(is)) {
-                                if (p.getInventory().getHelmet() != null) {
-                                    tests.put("Remove helmet", p.getInventory().getHelmet().isSimilar(is));
-                                    if (p.getInventory().getHelmet().isSimilar(is)) {
-                                        p.getInventory().setHelmet(new ItemStack(Material.AIR));
-                                        HPPlayer hp = HPPlayer.getHPPlayer(p);
-                                        hp.clearMask();
-                                        continue;
-                                    }
-                                }
-                                if (nms().getOffHand(p) != null) {
-                                    tests.put("Off hand", nms().getOffHand(p).isSimilar(is));
-                                    if (nms().getOffHand(p).isSimilar(is)) {
-                                        p.getInventory().setItemInOffHand(new ItemStack(Material.AIR));
-                                        continue;
-                                    }
-                                }
-                                p.getInventory().remove(is);
-                            }
+					    if (nms().isSellable(is)) {
+					        if (p.getInventory().getHelmet() != null) {
+					            tests.put("Remove helmet", p.getInventory().getHelmet().isSimilar(is));
+					            if (p.getInventory().getHelmet().isSimilar(is)) {
+					                p.getInventory().setHelmet(new ItemStack(Material.AIR));
+					                HPPlayer hp = HPPlayer.getHPPlayer(p);
+					                hp.clearMask();
+					                continue;
+					            }
+					        }
+					        if (nms().getOffHand(p) != null) {
+					            tests.put("Off hand", nms().getOffHand(p).isSimilar(is));
+					            if (nms().getOffHand(p).isSimilar(is)) {
+					                p.getInventory().setItemInOffHand(new ItemStack(Material.AIR));
+					                continue;
+					            }
+					        }
+					        p.getInventory().remove(is);
 					    }
 					}
 				}
-			} else if (a[0].matches("^[0-9]+$")) { 
-				if (i.getAmount() > Integer.parseInt(a[0])) {
-					checkHand(p).setAmount(checkHand(p).getAmount() - Integer.parseInt(a[0]));
-			    } else {
-			    	setHand(p, new ItemStack(Material.AIR));
-		        }
-		    } else {
+			} else {
 		    	for (ItemStack is : p.getInventory()) {
 		    		if (is != null) {
-		    			if (is.getType() == nms().getSkullMaterial(1).getType()) {
-                            if (nms().isSellable(is)) {
-                                if (p.getInventory().getHelmet() != null) {
-                                    tests.put("Remove helmet", p.getInventory().getHelmet().isSimilar(is));
-                                    if (p.getInventory().getHelmet().isSimilar(is)) {
-                                        p.getInventory().setHelmet(new ItemStack(Material.AIR));
-                                        HPPlayer hp = HPPlayer.getHPPlayer(p);
-                                        hp.clearMask();
-                                        continue;
-                                    }
-                                }
-                                if (nms().getOffHand(p) != null) {
-                                    tests.put("Off hand", nms().getOffHand(p).isSimilar(is));
-                                    if (nms().getOffHand(p).isSimilar(is)) {
-                                        p.getInventory().setItemInOffHand(new ItemStack(Material.AIR));
-                                        continue;
-                                    }
-                                }
-                                p.getInventory().remove(is);
-							}
-		    			}
+		    		    if (nms().isSellable(is)) {
+		    		        if (p.getInventory().getHelmet() != null) {
+		    		            tests.put("Remove helmet", p.getInventory().getHelmet().isSimilar(is));
+		    		            if (p.getInventory().getHelmet().isSimilar(is)) {
+		    		                p.getInventory().setHelmet(new ItemStack(Material.AIR));
+		    		                HPPlayer hp = HPPlayer.getHPPlayer(p);
+		    		                hp.clearMask();
+		    		                continue;
+		    		            }
+		    		        }
+		    		        if (nms().getOffHand(p) != null) {
+		    		            tests.put("Off hand", nms().getOffHand(p).isSimilar(is));
+		    		            if (nms().getOffHand(p).isSimilar(is)) {
+		    		                p.getInventory().setItemInOffHand(new ItemStack(Material.AIR));
+		    		                continue;
+		    		            }
+		    		        }
+		    		        p.getInventory().remove(is);
+		    		    }
 		    		}
 		    	}
 		    }
@@ -224,16 +215,14 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 		if (a.length > 0) { // More than one argument
 			if (!a[0].matches("^[0-9]+$")) { // More than one head
 				if (a[0].equalsIgnoreCase("all")) { // Sell everything
-					if (i.getType().equals(nms().getSkullMaterial(1).getType())) {
-                        if (nms().isSellable(i)) {
-							String s = nms().getType(i).toLowerCase();
-							if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {
-							    soldHeads.add(s);
-							    i(s, i.getAmount());
-							    p += hpch.getConfig().getDouble(s + ".price");
-                            }
-						}
-					}
+				    if (nms().isSellable(i)) {
+				        String s = nms().getType(i).toLowerCase();
+				        if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {
+				            soldHeads.add(s);
+				            i(s, i.getAmount());
+				            p += hpch.getConfig().getDouble(s + ".price");
+				        }
+				    }
 				} else { // Selected mob
 				    p = f(i, p, a[0]);
 				}
@@ -247,7 +236,6 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                             i(s, i.getAmount());
                         }
                     }
-
 				} else {
 					pl.sendMessage(hpc.getString("not-enough-heads"));
 				}
@@ -259,9 +247,8 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 		Double price = 0.0;
 		for (ItemStack is : p.getInventory()) {
             if (is != null) {
-                if (is.getType().equals(nms().getSkullMaterial(1).getType())) {
-                    price = setPrice(price, a, is, p);
-                }
+                price = setPrice(price, a, is, p);
+
             }
         }
         try {

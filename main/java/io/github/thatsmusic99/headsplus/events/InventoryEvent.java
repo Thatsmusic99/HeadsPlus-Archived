@@ -347,11 +347,9 @@ public class InventoryEvent implements Listener {
         if (e.getInventory().getName().equalsIgnoreCase("HeadsPlus Sellhead menu")) {
             if (e.getCurrentItem() != null) {
                 NMSManager nms = HeadsPlus.getInstance().getNMS();
-                if (e.getCurrentItem().getType().equals(nms.getSkullMaterial(1).getType())) {
-                    if (!nms.getType(e.getCurrentItem()).isEmpty()) {
-                        e.setCancelled(true);
-                        p.performCommand("sellhead " + nms.getType(e.getCurrentItem()));
-                    }
+                if (!nms.getType(e.getCurrentItem()).isEmpty()) {
+                    e.setCancelled(true);
+                    p.performCommand("sellhead " + nms.getType(e.getCurrentItem()));
                 } else if (e.getCurrentItem().getType().equals(Material.ARROW)) {
                     if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Next Page")) {
                         e.setCancelled(true);

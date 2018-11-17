@@ -39,7 +39,7 @@ public class HeadsPlusCrafting extends ConfigSettings {
 
 	private void checkCrafting() {
         NMSManager nms = HeadsPlus.getInstance().getNMS();
-	    getConfig().addDefault("base-item.material", nms.getSkull0().name());
+	    getConfig().addDefault("base-item.material", nms.getSkull(0).getType().name());
 	    getConfig().addDefault("base-item.data", 0);
 		for (RecipeEnums key : RecipeEnums.values()) {
 			if (key == RecipeEnums.SHEEP) {

@@ -3,7 +3,6 @@ package io.github.thatsmusic99.headsplus.crafting;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
-import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -109,7 +108,17 @@ public class RecipeEnumUser {
                         i.setItemMeta(im);
                     }
                     i = makeSell(i, key);
-
+                    if (heads.getStringList(key + ".name").get(0).equalsIgnoreCase("{mob-default}")) {
+                        if (key.equalsIgnoreCase("skeleton")) {
+                            i.setType(nms.getSkull(0).getType());
+                        } else if (key.equalsIgnoreCase("zombie")) {
+                            i.setType(nms.getSkull(2).getType());
+                        } else if (key.equalsIgnoreCase("creeper")) {
+                            i.setType(nms.getSkull(4).getType());
+                        } else {
+                            i.setType(nms.getSkull(3).getType());
+                        }
+                    }
                     ShapelessRecipe recipe = nms.getRecipe(i, "hp" + key);
                     List<String> ingrs = new ArrayList<>();
                     for (String key2 : crafting.getStringList(key + ".ingredients")) {
@@ -162,6 +171,15 @@ public class RecipeEnumUser {
                         i.setItemMeta(im);
                     }
                     i = makeSell(i, key);
+                    if (heads.getStringList(key + ".name").get(0).equalsIgnoreCase("{mob-default}")) {
+                        if (key.equalsIgnoreCase("witherskeleton")) {
+                            i.setType(nms.getSkull(1).getType());
+                        } else if (key.equalsIgnoreCase("enderdragon")) {
+                            i.setType(nms.getSkull(5).getType());
+                        } else {
+                            i.setType(nms.getSkull(3).getType());
+                        }
+                    }
                     ShapelessRecipe recipe = nms.getRecipe(i, "hp" + key);
                     List<String> ingrs = new ArrayList<>();
                     if (crafting.getStringList(key + ".ingredients") != null) {
@@ -175,7 +193,7 @@ public class RecipeEnumUser {
 
                         }
                         if (ingrs.size() > 0) {
-                            recipe.addIngredient(nms.getSkull0());
+                            recipe.addIngredient(new ItemStack(Material.getMaterial(crafting.getString("base-item.material")), 1, (short) crafting.getInt("base-item.data")).getType());
                         }
                     } else {
                         crafting.addDefault(key + ".ingredients", ingrs);

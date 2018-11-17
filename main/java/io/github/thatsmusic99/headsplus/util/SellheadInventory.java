@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -172,6 +173,25 @@ public class SellheadInventory {
             sm.setLore(d);
             it.setItemMeta(sm);
             it = nms.setType(o, it);
+            try {
+                if (hpch.getConfig().getStringList(o + ".name").get(0).equalsIgnoreCase("{mob-default}")) {
+                    if (o.equalsIgnoreCase("skeleton")) {
+                        it.setType(nms.getSkull(0).getType());
+                    } else if (o.equalsIgnoreCase("witherskeleton")) {
+                        it.setType(nms.getSkull(1).getType());
+                    } else if (o.equalsIgnoreCase("zombie")) {
+                        it.setType(nms.getSkull(2).getType());
+                    } else if (o.equalsIgnoreCase("creeper")) {
+                        it.setType(nms.getSkull(4).getType());
+                    } else if (o.equalsIgnoreCase("enderdragon")) {
+                        it.setType(nms.getSkull(5).getType());
+                    }
+                }
+            } catch (IndexOutOfBoundsException ignored) {
+
+            }
+
+
             i.setItem(pos()[io], it);
             io++;
         }

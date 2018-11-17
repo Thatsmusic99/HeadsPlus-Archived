@@ -127,9 +127,8 @@ public class RecipePerms implements Listener {
     }
 
     private void denyPermission(InventoryClickEvent e) {
-        Material m = HeadsPlus.getInstance().getNMS().getSkullMaterial(1).getType();
         if(e.getRawSlot() == 0){
-            if(e.getCurrentItem().getType() == m){
+            if(!HeadsPlus.getInstance().getNMS().getType(e.getCurrentItem()).isEmpty()){
                 e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
                 e.setCancelled(true);
             }

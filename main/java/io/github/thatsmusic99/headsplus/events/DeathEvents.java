@@ -191,6 +191,20 @@ public class DeathEvents implements Listener {
                         } catch (NoSuchFieldException | IllegalAccessException e1) {
                             e1.printStackTrace();
                         }
+                    } else if (name.equalsIgnoreCase("{mob-default}")) {
+                        if (e == EntityType.SKELETON) {
+                            is = nms.getSkull(0);
+                        } else if (e == EntityType.WITHER_SKELETON) {
+                            is = nms.getSkull(1);
+                        } else if (e == EntityType.ZOMBIE) {
+                            is = nms.getSkull(2);
+                        } else if (e == EntityType.CREEPER) {
+                            is = nms.getSkull(4);
+                        } else if (e == EntityType.ENDER_DRAGON) {
+                            is = nms.getSkull(5);
+                        } else {
+                            is = nms.getSkull(3);
+                        }
                     } else {
 
                         is = nms.getSkullMaterial(1);

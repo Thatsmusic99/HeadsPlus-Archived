@@ -104,8 +104,8 @@ public interface NMSManager {
 
     boolean isOpen(ItemStack is);
 
-    default Material getSkull0() {
-        return Material.getMaterial("SKULL_ITEM");
+    default ItemStack getSkull(int data) {
+        return new ItemStack(Material.getMaterial("SKULL_ITEM"), 1, (short) data);
     }
 
 }

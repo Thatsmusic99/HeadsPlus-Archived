@@ -654,4 +654,9 @@ public class ro_ro implements Locale {
     public String inputChat() {
         return "&bIntroduceti un termen pe care doriti sa il cautați.";
     }
+
+    @Override
+    public String completed() {
+        return "&6Terminat!";
+    }
 }

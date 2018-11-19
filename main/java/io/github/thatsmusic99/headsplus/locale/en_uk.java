@@ -651,4 +651,9 @@ public class en_uk implements Locale {
     public String inputChat() {
         return "&bType in a term you want to search.";
     }
+
+    @Override
+    public String completed() {
+        return "&6Completed!";
+    }
 }

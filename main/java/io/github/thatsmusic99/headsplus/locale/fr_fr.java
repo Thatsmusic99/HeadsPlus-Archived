@@ -14,17 +14,17 @@ public class fr_fr implements Locale {
 
     @Override
     public String getReloadingMessage() {
-        return null;
+        return "&3Recharge la configuration...";
     }
 
     @Override
     public String getReloadMessage() {
-        return null;
+        return "&3Rechargé la configuration!";
     }
 
     @Override
     public String getHeadInteractMessage() {
-        return null;
+        return "&3C'est la tête de ";
     }
 
     @Override
@@ -650,5 +650,10 @@ public class fr_fr implements Locale {
     @Override
     public String inputChat() {
         return null;
+    }
+
+    @Override
+    public String completed() {
+        return "&6Terminé!";
     }
 }

@@ -284,4 +284,6 @@ public interface Locale {
 
     String inputChat();
 
+    String completed();
+
 }

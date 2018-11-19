@@ -653,4 +653,9 @@ public class hu_hu implements Locale {
     public String inputChat() {
         return "&bÍrja be azt a kifejezést, amelyet keresni szeretne.";
     }
+
+    @Override
+    public String completed() {
+        return "&6Befejezték!";
+    }
 }

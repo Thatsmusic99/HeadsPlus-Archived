@@ -108,6 +108,7 @@ public class HeadsPlusMessagesConfig extends ConfigSettings {
         getConfig().addDefault("remove-value", new en_uk().removedValue());
         getConfig().addDefault("not-enough-money", new en_uk().getNotEnoughMoney());
         getConfig().addDefault("chat-input", new en_uk().inputChat());
+        getConfig().addDefault("challenge-completed", new en_uk().completed());
 
         if (!getConfig().getString("locale").equalsIgnoreCase(getConfig().getString("pLocale")) && !nullpoint) {
             getConfig().set("pLocale", getConfig().getString("locale"));
@@ -197,6 +198,7 @@ public class HeadsPlusMessagesConfig extends ConfigSettings {
             getConfig().addDefault("remove-value", l.removedValue());
             getConfig().addDefault("not-enough-money", l.getNotEnoughMoney());
             getConfig().addDefault("chat-input", l.inputChat());
+            getConfig().addDefault("challenge-completed", l.completed());
         }
         updateMessages(nullpoint);
 		getConfig().options().copyDefaults(true);

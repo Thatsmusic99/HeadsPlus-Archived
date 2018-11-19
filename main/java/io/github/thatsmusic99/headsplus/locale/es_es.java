@@ -653,4 +653,9 @@ public class es_es implements Locale {
     public String inputChat() {
         return "&bEscriba el término que desea buscar.";
     }
+
+    @Override
+    public String completed() {
+        return "&6¡Terminado!";
+    }
 }

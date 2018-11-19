@@ -650,4 +650,9 @@ public class lolcat implements Locale {
     public String inputChat() {
         return "&bTeyepe sumthin 2 look 4";
     }
+
+    @Override
+    public String completed() {
+        return "&6dun";
+    }
 }

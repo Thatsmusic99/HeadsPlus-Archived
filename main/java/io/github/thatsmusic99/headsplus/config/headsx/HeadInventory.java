@@ -150,7 +150,7 @@ public abstract class HeadInventory {
                         }
                         if (getIconArray()[o].getLore().get(z).contains("{completed}")) {
                             if (c.isComplete(sender)) {
-                                lore.add(ChatColor.GOLD + "Complete!");
+                                lore.add(HeadsPlus.getInstance().getMessagesConfig().getString("challenge-completed"));
                             }
                         }
                         if (getIconArray()[o].getLore().get(z).contains("{challenge-xp}")) {

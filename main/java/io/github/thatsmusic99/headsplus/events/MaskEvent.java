@@ -4,13 +4,21 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class MaskEvent implements Listener {
+
+    private static HashMap<Player, BukkitRunnable> maskMonitors = new HashMap<>();
 
     @EventHandler
     public void onMaskPutOn(InventoryClickEvent e) {
@@ -26,11 +34,18 @@ public class MaskEvent implements Listener {
                         if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {
                             HPPlayer pl = HPPlayer.getHPPlayer((OfflinePlayer) e.getWhoClicked());
                             pl.addMask(s);
-                        }
-                    } else {
-                        if (e.getWhoClicked().getActivePotionEffects().size() > 0) {
-                            HPPlayer pl = HPPlayer.getHPPlayer((OfflinePlayer) e.getWhoClicked());
-                            pl.clearMask();
+                            maskMonitors.put((Player) e.getWhoClicked(), new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    if (e.getWhoClicked().getInventory().getItem(39) == null) {
+                                        HPPlayer pl = HPPlayer.getHPPlayer((OfflinePlayer) e.getWhoClicked());
+                                        pl.clearMask();
+                                        maskMonitors.remove(e.getWhoClicked());
+                                        cancel();
+                                    }
+                                }
+                            });
+                            maskMonitors.get(e.getWhoClicked()).runTaskTimer(HeadsPlus.getInstance(), 20, 40);
                         }
                     }
                 }

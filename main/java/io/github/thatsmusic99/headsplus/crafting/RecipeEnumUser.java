@@ -138,7 +138,9 @@ public class RecipeEnumUser {
                     }
                 }
 
-			} catch (IndexOutOfBoundsException ignored) {
+            } catch (NullPointerException ex) {
+                HeadsPlus.getInstance().getLogger().warning("Error thrown creating head for " + key + ". If this mob isn't in your server version, ignore this message.");
+            } catch (IndexOutOfBoundsException ignored) {
             } catch (Exception e) {
 	    	    hp.getLogger().severe("Error thrown creating head for " + key + ". Please check the report for details.");
                 new DebugPrint(e, "Startup (Crafting)", false, null);
@@ -151,61 +153,66 @@ public class RecipeEnumUser {
 	        try {
                 ItemStack i = hp.getNMS().getSkullMaterial(1);
                 SkullMeta im = (SkullMeta) i.getItemMeta();
-                if (!(heads.getString(key + ".display-name").equals("")) && !(heads.getStringList(key + ".name").isEmpty())) {
-                    hp.debug("Crafting head for " + key + "...", 3);
-                    i.setItemMeta(setupItemMeta(im, key));
-                    if (heads.getStringList(key + ".name").get(0).startsWith("HP#")) {
-                        i = HeadsPlus.getInstance().getHeadsXConfig().getSkull(heads.getStringList(key + ".name").get(0));
-                        i.setItemMeta(setupItemMeta(i.getItemMeta(), key));
-                    } else {
-                        im = nms.setSkullOwner(heads.getStringList(key + ".name").get(0), im);
-                        i.setItemMeta(im);
-                        SkullMeta ims = (SkullMeta) i.getItemMeta();
-                        if (key.equalsIgnoreCase("sheep")) {
-                            ims = nms.setSkullOwner(heads.getStringList(key + ".name.default").get(0), ims);
+                try {
+                    if (!(heads.getString(key + ".display-name").equals("")) && !(heads.getStringList(key + ".name").isEmpty())) {
+                        hp.debug("Crafting head for " + key + "...", 3);
+                        i.setItemMeta(setupItemMeta(im, key));
+                        if (heads.getStringList(key + ".name").get(0).startsWith("HP#")) {
+                            i = HeadsPlus.getInstance().getHeadsXConfig().getSkull(heads.getStringList(key + ".name").get(0));
+                            i.setItemMeta(setupItemMeta(i.getItemMeta(), key));
+                        } else {
+                            im = nms.setSkullOwner(heads.getStringList(key + ".name").get(0), im);
+                            i.setItemMeta(im);
+                            SkullMeta ims = (SkullMeta) i.getItemMeta();
+                            if (key.equalsIgnoreCase("sheep")) {
+                                ims = nms.setSkullOwner(heads.getStringList(key + ".name.default").get(0), ims);
 
-                        } else {
-                            ims = nms.setSkullOwner(heads.getStringList(key + ".name").get(0), ims);
+                            } else {
+                                ims = nms.setSkullOwner(heads.getStringList(key + ".name").get(0), ims);
+                            }
+                            i.setItemMeta(ims);
+                            i.setItemMeta(im);
                         }
-                        i.setItemMeta(ims);
-                        i.setItemMeta(im);
-                    }
-                    i = makeSell(i, key);
-                    if (heads.getStringList(key + ".name").get(0).equalsIgnoreCase("{mob-default}")) {
-                        if (key.equalsIgnoreCase("witherskeleton")) {
-                            i.setType(nms.getSkull(1).getType());
-                        } else if (key.equalsIgnoreCase("enderdragon")) {
-                            i.setType(nms.getSkull(5).getType());
-                        } else {
-                            i.setType(nms.getSkull(3).getType());
+                        i = makeSell(i, key);
+                        if (heads.getStringList(key + ".name").get(0).equalsIgnoreCase("{mob-default}")) {
+                            if (key.equalsIgnoreCase("witherskeleton")) {
+                                i.setType(nms.getSkull(1).getType());
+                            } else if (key.equalsIgnoreCase("enderdragon")) {
+                                i.setType(nms.getSkull(5).getType());
+                            } else {
+                                i.setType(nms.getSkull(3).getType());
+                            }
                         }
-                    }
-                    ShapelessRecipe recipe = nms.getRecipe(i, "hp" + key);
-                    List<String> ingrs = new ArrayList<>();
-                    if (crafting.getStringList(key + ".ingredients") != null) {
-                        ingrs = crafting.getStringList(key + ".ingredients");
-                        for (String key2 : ingrs) {
-                            try {
-                                recipe.addIngredient(Material.getMaterial(key2));
-                            } catch (IllegalArgumentException ignored) {
+                        ShapelessRecipe recipe = nms.getRecipe(i, "hp" + key);
+                        List<String> ingrs = new ArrayList<>();
+                        if (crafting.getStringList(key + ".ingredients") != null) {
+                            ingrs = crafting.getStringList(key + ".ingredients");
+                            for (String key2 : ingrs) {
+                                try {
+                                    recipe.addIngredient(Material.getMaterial(key2));
+                                } catch (IllegalArgumentException ignored) {
+
+                                }
 
                             }
-
+                            if (ingrs.size() > 0) {
+                                recipe.addIngredient(new ItemStack(Material.getMaterial(crafting.getString("base-item.material")), 1, (short) crafting.getInt("base-item.data")).getType());
+                            }
+                        } else {
+                            crafting.addDefault(key + ".ingredients", ingrs);
                         }
                         if (ingrs.size() > 0) {
-                            recipe.addIngredient(new ItemStack(Material.getMaterial(crafting.getString("base-item.material")), 1, (short) crafting.getInt("base-item.data")).getType());
-                        }
-                    } else {
-                        crafting.addDefault(key + ".ingredients", ingrs);
-                    }
-                    if (ingrs.size() > 0) {
-                        try {
-                            Bukkit.addRecipe(recipe);
-                        } catch (IllegalStateException ignored) {
+                            try {
+                                Bukkit.addRecipe(recipe);
+                            } catch (IllegalStateException ignored) {
 
+                            }
                         }
                     }
+                } catch (NullPointerException ex) {
+                    HeadsPlus.getInstance().getLogger().warning("Error thrown creating head for " + key + ". If this mob isn't in your server version, ignore this message.");
                 }
+
             } catch (Exception e) {
                 HeadsPlus.getInstance().getLogger().severe("Error thrown creating head for " + key + ". Please check the report for details.");
                 new DebugPrint(e, "Startup (Crafting)", false, null);

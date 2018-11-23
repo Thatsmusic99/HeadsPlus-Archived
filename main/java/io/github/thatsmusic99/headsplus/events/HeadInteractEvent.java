@@ -46,7 +46,7 @@ public final class HeadInteractEvent implements Listener {
 			    	    for (String n : names) {
 			    	    	if (fc.getStringList(n + ".name").contains(owner)) {
 			    		    	String iMessage1;
-			    		    	String dn = fc.getString(n + ".display-name").toLowerCase();
+			    		    	String dn = hpch.getDisplayName(n).toLowerCase();
 				    	    	if (dn.startsWith("a") || dn.startsWith("e") || dn.startsWith("i") || dn.startsWith("o") || dn.startsWith("u")) {
 				    	    		iMessage1 = hpc.getString("head-mhf-interact-message-2");
 				    	    	} else {

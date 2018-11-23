@@ -58,7 +58,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                 if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {
                                     Double price;
                                     if (invi.getAmount() > 0) {
-                                        price = invi.getAmount() * hpch.getConfig().getDouble(s + ".price");
+                                        price = invi.getAmount() * hpch.getPrice(s);
                                         soldHeads.add(s);
                                         hm.put(s, invi.getAmount());
                                         SellHeadEvent she = new SellHeadEvent(price, soldHeads, (Player) sender, HeadsPlus.getInstance().getEconomy().getBalance((Player) sender), HeadsPlus.getInstance().getEconomy().getBalance((Player) sender) + price, hm);
@@ -158,7 +158,6 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 	}
 	private void itemRemoval(Player p, String[] a, ItemStack i) {
 		if (a.length > 0) {
-			if (a[0].equalsIgnoreCase("all")) {
 				for (ItemStack is : p.getInventory()) {
 					if (is != null) {
 					    if (nms().isSellable(is)) {
@@ -182,33 +181,8 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 					    }
 					}
 				}
-			} else {
-		    	for (ItemStack is : p.getInventory()) {
-		    		if (is != null) {
-		    		    if (nms().isSellable(is)) {
-		    		        if (p.getInventory().getHelmet() != null) {
-		    		            tests.put("Remove helmet", p.getInventory().getHelmet().isSimilar(is));
-		    		            if (p.getInventory().getHelmet().isSimilar(is)) {
-		    		                p.getInventory().setHelmet(new ItemStack(Material.AIR));
-		    		                HPPlayer hp = HPPlayer.getHPPlayer(p);
-		    		                hp.clearMask();
-		    		                continue;
-		    		            }
-		    		        }
-		    		        if (nms().getOffHand(p) != null) {
-		    		            tests.put("Off hand", nms().getOffHand(p).isSimilar(is));
-		    		            if (nms().getOffHand(p).isSimilar(is)) {
-		    		                p.getInventory().setItemInOffHand(new ItemStack(Material.AIR));
-		    		                continue;
-		    		            }
-		    		        }
-		    		        p.getInventory().remove(is);
-		    		    }
-		    		}
-		    	}
-		    }
 		} else {
-			setHand(p, new ItemStack(Material.AIR));
+		    setHand(p, new ItemStack(Material.AIR));
 		}
 	}
 	private double setPrice(Double p, String[] a, ItemStack i, Player pl) {
@@ -220,8 +194,8 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 				        if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {
 				            soldHeads.add(s);
 				            i(s, i.getAmount());
-				            p += hpch.getConfig().getDouble(s + ".price");
-				        }
+				            p += hpch.getPrice(s);
+                        }
 				    }
 				} else { // Selected mob
 				    p = f(i, p, a[0]);
@@ -231,7 +205,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 					if (nms().isSellable(i)) {
 					    String s = nms().getType(i);
 					    if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {
-                            p = hpch.getConfig().getDouble(s + ".price") * Integer.parseInt(a[0]);
+                            p = hpch.getPrice(s) * Integer.parseInt(a[0]);
                             soldHeads.add(s);
                             i(s, i.getAmount());
                         }
@@ -296,7 +270,8 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 	        if (st.equalsIgnoreCase(s)) {
 	            soldHeads.add(s);
 	            i(s, i.getAmount());
-                p = p + (i.getAmount() * hpch.getConfig().getDouble(s + ".price"));
+	            p = p + (i.getAmount() * hpch.getPrice(s));
+
             }
         }
         return p;

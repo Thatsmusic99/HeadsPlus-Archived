@@ -351,9 +351,9 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
         HeadsPlus hp = HeadsPlus.getInstance();
         sb.append(hp.getThemeColour(1)).append("===============").append(hp.getThemeColour(2)).append(" HeadsPlus ").append(hp.getThemeColour(1)).append("===============");
         sb.append(hp.getThemeColour(4)).append("\n").append(l.type()).append(" ").append(hp.getThemeColour(3)).append(type);
-        sb.append(hp.getThemeColour(4)).append("\n").append(l.displayName()).append(" ").append(hp.getThemeColour(3)).append(hpch.getConfig().getString(type + ".display-name"));
-        sb.append(hp.getThemeColour(4)).append("\n").append(l.price()).append(" ").append(hp.getThemeColour(3)).append(hpch.getConfig().getDouble(type + ".price"));
-        sb.append(hp.getThemeColour(4)).append("\n").append(l.interactName()).append(" ").append(hp.getThemeColour(3)).append(hpch.getConfig().getString(type + ".interact-name"));
+        sb.append(hp.getThemeColour(4)).append("\n").append(l.displayName()).append(" ").append(hp.getThemeColour(3)).append(hpch.getDisplayName(type));
+        sb.append(hp.getThemeColour(4)).append("\n").append(l.price()).append(" ").append(hp.getThemeColour(3)).append(hpch.getPrice(type) );
+        sb.append(hp.getThemeColour(4)).append("\n").append(l.interactName()).append(" ").append(hp.getThemeColour(3)).append(hpch.getInteractName(type));
         sb.append(hp.getThemeColour(4)).append("\n").append(l.chance()).append(" ").append(hp.getThemeColour(3)).append(hpch.getConfig().getDouble(type + ".chance"));
         return sb.toString();
     }

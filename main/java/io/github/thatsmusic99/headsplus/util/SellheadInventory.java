@@ -165,10 +165,10 @@ public class SellheadInventory {
                 }
             }
 
-            sm.setDisplayName(hpch.getConfig().getString(o + ".display-name"));
+            sm.setDisplayName(hpch.getDisplayName(o));
             List<String> d = new ArrayList<>();
-            for (String a : hpch.getConfig().getStringList(o + ".lore")) {
-                d.add(ChatColor.translateAlternateColorCodes('&', a).replaceAll("\\{price}", String.valueOf(hpch.getConfig().getDouble(o + ".price"))).replaceAll("\\{type}", o));
+            for (String a : hpch.getLore(o)) {
+                d.add(ChatColor.translateAlternateColorCodes('&', a).replaceAll("\\{price}", String.valueOf(hpch.getPrice(o))).replaceAll("\\{type}", o));
             }
             sm.setLore(d);
             it.setItemMeta(sm);

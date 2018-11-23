@@ -13,6 +13,7 @@ import io.github.thatsmusic99.headsplus.nms.v1_12_NMS.v1_12_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_13_NMS.v1_13_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_13_R2_NMS.v1_13_R2_NMS;
 import io.lumine.xikage.mythicmobs.MythicMobs;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
@@ -108,10 +109,10 @@ public class DeathEvents implements Listener {
                         ItemStack head = nms.getSkullMaterial(a);
                         SkullMeta headM = (SkullMeta) head.getItemMeta();
                         headM = nms.setSkullOwner(ep.getEntity().getName(), headM);
-                        headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getConfig().getString("player.display-name").replaceAll("\\{player}", ep.getEntity().getName())));
+                        headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getDisplayName("player").replaceAll("\\{player}", ep.getEntity().getName())));
                         List<String> strs = new ArrayList<>();
-                        for (String str : hpch.getConfig().getStringList("player.lore")) {
-                            strs.add(ChatColor.translateAlternateColorCodes('&', str.replaceAll("\\{player}", ep.getEntity().getName()).replaceAll("\\{price}", String.valueOf(hpch.getConfig().getDouble("player.price")))));
+                        for (String str : hpch.getLore("player")) {
+                            strs.add(ChatColor.translateAlternateColorCodes('&', str.replaceAll("\\{player}", ep.getEntity().getName()).replaceAll("\\{price}", String.valueOf(hpch.getPrice("player")))));
                         }
                         headM.setLore(strs);
                         head.setItemMeta(headM);
@@ -309,6 +310,7 @@ public class DeathEvents implements Listener {
 	    int thing;
 	    ItemStack i;
 	    List<ItemStack> af = hasColor(e);
+	    String mobName = e.getType().name().replaceAll("_", "").toLowerCase();
 	    try {
             if (af != null && !af.isEmpty()) {
 
@@ -333,10 +335,10 @@ public class DeathEvents implements Listener {
                     } else if (e instanceof Llama) {
                         thing = r.nextInt(hpch.getConfig().getStringList("llama.name.default").size());
                     } else {
-                        thing = r.nextInt(hpch.getConfig().getStringList(e.getType().name().replaceAll("_", "").toLowerCase() + ".name").size());
+                        thing = r.nextInt(hpch.getConfig().getStringList(mobName + ".name").size());
                     }
                 } else {
-                    thing = r.nextInt(hpch.getConfig().getStringList(e.getType().name().replaceAll("_", "").toLowerCase() + ".name").size());
+                    thing = r.nextInt(hpch.getConfig().getStringList(mobName + ".name").size());
                 }
                 i = heads.get(e.getType()).get("default").get(thing);
             }
@@ -348,30 +350,15 @@ public class DeathEvents implements Listener {
         if (nms.getItemInHand(k).containsEnchantment(Enchantment.LOOT_BONUS_MOBS)  && HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("allow-looting-enchantment")) {
             a += nms.getItemInHand(k).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
         }
-        double price;
-        if (hpch.getConfig().get(e.getType().name().replaceAll("_", "").toLowerCase() + ".price").equals("{default}")) {
-            price = hpch.getConfig().getDouble("defaults.price");
-        } else {
-            price = hpch.getConfig().getDouble(e.getType().name().replaceAll("_", "").toLowerCase() + ".price");
-        }
+        double price = hpch.getPrice(mobName);
         i.setAmount(a);
         SkullMeta sm = (SkullMeta) i.getItemMeta();
-        String displayname;
-        if (hpch.getConfig().getString(e.getType().name().replaceAll("_", "").toLowerCase() + ".display-name").equalsIgnoreCase("{default}")) {
-            displayname = hpch.getConfig().getString("defaults.display-name");
-        } else {
-            displayname =  hpch.getConfig().getString(e.getType().name().replaceAll("_", "").toLowerCase() + ".display-name");
-        }
+        String displayname = hpch.getDisplayName(mobName);
         sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', displayname));
         List<String> strs = new ArrayList<>();
-        List<String> lore;
-        if (hpch.getConfig().get(e.getType().name().replaceAll("_", "").toLowerCase() + ".lore").equals("{default}")) {
-            lore = hpch.getConfig().getStringList("defaults.lore");
-        } else {
-            lore = hpch.getConfig().getStringList(e.getType().name().replaceAll("_", "").toLowerCase() + ".lore");
-        }
+        List<String> lore = hpch.getLore(mobName);
         for (String str : lore) {
-            strs.add(ChatColor.translateAlternateColorCodes('&', str.replaceAll("\\{type}", e.getType().name().replaceAll("_", "").toLowerCase()).replaceAll("\\{price}", String.valueOf(price))));
+            strs.add(ChatColor.translateAlternateColorCodes('&', str.replaceAll("\\{type}", mobName).replaceAll("\\{price}", String.valueOf(price))));
         }
         sm.setLore(strs);
         i.setItemMeta(sm);
@@ -380,11 +367,10 @@ public class DeathEvents implements Listener {
         entityLoc.setY(entityLocY);
         World world = e.getWorld();
         i = nms.addNBTTag(i);
-        i = nms.setType(e.getType().name().replaceAll("_", "").toLowerCase(), i);
+        i = nms.setType(mobName, i);
         EntityHeadDropEvent event = new EntityHeadDropEvent(k, i, world, entityLoc, e.getType());
         Bukkit.getServer().getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
-        //    System.out.println(event.getSkull().toString());
             world.dropItem(event.getLocation(), event.getSkull());
             HPPlayer.getHPPlayer(k).addXp(10);
         }

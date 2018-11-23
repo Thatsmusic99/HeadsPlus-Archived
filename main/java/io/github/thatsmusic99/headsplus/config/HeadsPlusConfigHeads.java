@@ -311,4 +311,36 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
             getConfig().set("player.price", p);
 		}
     }
+
+    public double getPrice(String type) {
+        if (getConfig().get(type + ".price").equals("{default}")) {
+            return getConfig().getDouble("defaults.price");
+        } else {
+            return getConfig().getDouble(type + ".price");
+        }
+    }
+
+    public String getDisplayName(String type) {
+        if (getConfig().get(type + ".display-name").equals("{default}")) {
+            return getConfig().getString("defaults.display-name").replaceAll("\\{type}", WordUtils.capitalize(type));
+        } else {
+            return getConfig().getString(type + ".display-name").replaceAll("\\{type}", WordUtils.capitalize(type));
+        }
+    }
+
+    public String getInteractName(String type) {
+        if (getConfig().get(type + ".interact-name").equals("{default}")) {
+            return getConfig().getString("defaults.interact-name");
+        } else {
+            return getConfig().getString(type + ".interact-name");
+        }
+    }
+
+    public List<String> getLore(String type) {
+        if (getConfig().get(type + ".lore").equals("{default}")) {
+            return getConfig().getStringList("defaults.lore");
+        } else {
+            return getConfig().getStringList(type + ".lore");
+        }
+    }
 }

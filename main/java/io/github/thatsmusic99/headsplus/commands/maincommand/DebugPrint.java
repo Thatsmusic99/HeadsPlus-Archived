@@ -6,6 +6,7 @@ import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
+import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -72,14 +73,14 @@ public class DebugPrint implements IHeadsPlusCommand {
 
     @Override
     public String getUsage() {
-        return "/hp debug <dump|head|player> <Player IGN>";
+        return "/hp debug <dump|head|player|clearim> <Player IGN>";
     }
 
     @Override
     public HashMap<Boolean, String> isCorrectUsage(String[] args, CommandSender sender) {
         HashMap<Boolean, String> h = new HashMap<>();
         if (args.length > 1) {
-            if(args[1].equalsIgnoreCase("dump")) {
+            if(args[1].equalsIgnoreCase("dump") || args[1].equalsIgnoreCase("clearim")) {
                 h.put(true, "");
             } else if (args[1].equalsIgnoreCase("head")) {
                 if (sender instanceof Player) {
@@ -135,6 +136,9 @@ public class DebugPrint implements IHeadsPlusCommand {
                 OfflinePlayer pl = Bukkit.getOfflinePlayer(args[2]);
                 String s = new DebugFileCreator().createPlayerReport(HPPlayer.getHPPlayer(pl));
                 sender.sendMessage(ChatColor.GREEN + "Report name: " + s);
+            } else if (args[1].equalsIgnoreCase("clearim")) {
+                InventoryManager.pls.clear();
+                sender.sendMessage(ChatColor.GREEN + "Inventory cache cleared.");
             }
         } catch (IOException | NoSuchFieldException | IllegalAccessException e) {
             if (HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("debug.print-stacktraces-in-console")) {

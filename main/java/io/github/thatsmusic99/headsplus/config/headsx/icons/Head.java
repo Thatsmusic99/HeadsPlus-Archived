@@ -110,6 +110,7 @@ public class Head extends ItemStack implements Icon {
 
     private void giveHead(Player p, InventoryClickEvent e) {
         NMSManager nms = HeadsPlus.getInstance().getNMS();
+        ItemStack i = e.getCurrentItem();
         if (p.getInventory().firstEmpty() == -1) {
             p.sendMessage(hpc.getString("full-inv"));
             e.setCancelled(true);
@@ -118,12 +119,12 @@ public class Head extends ItemStack implements Icon {
         if (nms.getPrice(e.getCurrentItem())  != 0.0 && HeadsPlus.getInstance().econ()) {
 
             Economy ef = HeadsPlus.getInstance().getEconomy();
-            Double price = HeadsPlus.getInstance().getNMS().getPrice(e.getCurrentItem());
+            Double price = nms.getPrice(e.getCurrentItem());
             if (price > ef.getBalance(p)) {
                 p.sendMessage(hpc.getString("not-enough-money"));
                 return;
             }
-            EconomyResponse er = HeadsPlus.getInstance().getEconomy().withdrawPlayer(p, price);
+            EconomyResponse er = ef.withdrawPlayer(p, price);
             String success = hpc.getString("buy-success").replaceAll("\\{price}", Double.toString(er.amount)).replaceAll("\\{balance}", Double.toString(er.balance));
             String fail = hpc.getString("cmd-fail");
             if (er.transactionSuccess()) {
@@ -137,7 +138,9 @@ public class Head extends ItemStack implements Icon {
                 return;
             }
         }
-        p.getInventory().addItem(e.getCurrentItem());
+        ItemStack is = e.getCurrentItem();
+        is = nms.removeIcon(is);
+        p.getInventory().addItem(is);
         e.setCancelled(true);
     }
 

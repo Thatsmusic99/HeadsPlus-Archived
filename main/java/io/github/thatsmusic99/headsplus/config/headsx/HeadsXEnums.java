@@ -271,7 +271,8 @@ public enum HeadsXEnums {
     ACACIA_PLANKS("acacia_planks", "&8[&cAcacia Planks&8]", HPStrings.wood + "MjZmYjc4NGRmZjFhNzYxNjNiNGE3MTc2ZjBiZDY2MjMwZWE5MDZiODJmODVlNDA5NGY0MTM0YTUwYzU5OTI4MSJ9fX0", "blocks", 1.8),
     DARK_OAK_PLANKS("dark_oak_planks", "&8[&7Dark Oak Planks&8]", HPStrings.wood + "MjZmYjc4NGRmZjFhNzYxNjNiNGE3MTc2ZjBiZDY2MjMwZWE5MDZiODJmODVlNDA5NGY0MTM0YTUwYzU5OTI4MSJ9fX0", "blocks", 1.8),
     BONE_BLOCK("bone_block", "&8[&fBone Block&8]", HPStrings.wood + "YjQzMGFiNTQ1YjE0MjgyN2I5MzVmYzdlMzBmZDFhMTczZmE5MWI5M2NhYmJhNDVmODVmMjJhZWVkMGFlZmFjNyJ9fX0", "blocks", 1.8),
-    SNOWBALL("snowball", "&8[&fSnowball&8]", HPStrings.wood + "MWRmZDc3MjRjNjlhMDI0ZGNmYzYwYjE2ZTAwMzM0YWI1NzM4ZjRhOTJiYWZiOGZiYzc2Y2YxNTMyMmVhMDI5MyJ9fX0", "blocks", 1.8);
+    SNOWBALL("snowball", "&8[&fSnowball&8]", HPStrings.wood + "MWRmZDc3MjRjNjlhMDI0ZGNmYzYwYjE2ZTAwMzM0YWI1NzM4ZjRhOTJiYWZiOGZiYzc2Y2YxNTMyMmVhMDI5MyJ9fX0", "blocks", 1.8),
+    SNOWMAN("snowman", "&8[&fSnowman&8]", HPStrings.wood + "NWY4NDZhZmM4OWU2Y2FiYTA1Y2Q2YzJjZTlkNTgzOTcyMDgwNTZlNmVlODI1OTM3ODc5ZTVkNmRiMTEyMWYifX19", "decoration", 2.2);
 
     final String name;
     final String dn;

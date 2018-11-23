@@ -86,9 +86,15 @@ public class InventoryManager {
                     }
                 }
                 if (hpchx.getConfig().getBoolean("options.advent-calendar")) {
-                    ItemStack is = hpchx.getSkull("HP#snowman_head");
+                     ItemStack is;
+                    if (hpchx.getConfig().getString("options.advent-texture").startsWith("HP#")) {
+                         is = hpchx.getSkull(hpchx.getConfig().getString("options.advent-texture"));
+                     } else {
+                        is = hpchx.setTexture(hpchx.getConfig().getString("options.advent-texture"), hp.getNMS().getSkull(3));
+                    }
+
                     SkullMeta sm = (SkullMeta) is.getItemMeta();
-                    sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4[&a&lHeadsPlus &c&lAdvent Calendar!&2]"));
+                    sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpchx.getConfig().getString("options.advent-display-name")));
                     is.setItemMeta(sm);
                     is = hp.getNMS().addSection(is, "advent-calendar");
                     heads.add(is);

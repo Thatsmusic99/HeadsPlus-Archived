@@ -348,12 +348,30 @@ public class DeathEvents implements Listener {
         if (nms.getItemInHand(k).containsEnchantment(Enchantment.LOOT_BONUS_MOBS)  && HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("allow-looting-enchantment")) {
             a += nms.getItemInHand(k).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
         }
+        double price;
+        if (hpch.getConfig().get(e.getType().name().replaceAll("_", "").toLowerCase() + ".price").equals("{default}")) {
+            price = hpch.getConfig().getDouble("defaults.price");
+        } else {
+            price = hpch.getConfig().getDouble(e.getType().name().replaceAll("_", "").toLowerCase() + ".price");
+        }
         i.setAmount(a);
         SkullMeta sm = (SkullMeta) i.getItemMeta();
-        sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getConfig().getString(e.getType().name().replaceAll("_", "").toLowerCase() + ".display-name")));
+        String displayname;
+        if (hpch.getConfig().getString(e.getType().name().replaceAll("_", "").toLowerCase() + ".display-name").equalsIgnoreCase("{default}")) {
+            displayname = hpch.getConfig().getString("defaults.display-name");
+        } else {
+            displayname =  hpch.getConfig().getString(e.getType().name().replaceAll("_", "").toLowerCase() + ".display-name");
+        }
+        sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', displayname));
         List<String> strs = new ArrayList<>();
-        for (String str : hpch.getConfig().getStringList(e.getType().name().replaceAll("_", "").toLowerCase() + ".lore")) {
-            strs.add(ChatColor.translateAlternateColorCodes('&', str.replaceAll("\\{type}", e.getType().name().replaceAll("_", "").toLowerCase()).replaceAll("\\{price}", String.valueOf(hpch.getConfig().getDouble(e.getType().name().replaceAll("_", "").toLowerCase() + ".price")))));
+        List<String> lore;
+        if (hpch.getConfig().get(e.getType().name().replaceAll("_", "").toLowerCase() + ".lore").equals("{default}")) {
+            lore = hpch.getConfig().getStringList("defaults.lore");
+        } else {
+            lore = hpch.getConfig().getStringList(e.getType().name().replaceAll("_", "").toLowerCase() + ".lore");
+        }
+        for (String str : lore) {
+            strs.add(ChatColor.translateAlternateColorCodes('&', str.replaceAll("\\{type}", e.getType().name().replaceAll("_", "").toLowerCase()).replaceAll("\\{price}", String.valueOf(price))));
         }
         sm.setLore(strs);
         i.setItemMeta(sm);

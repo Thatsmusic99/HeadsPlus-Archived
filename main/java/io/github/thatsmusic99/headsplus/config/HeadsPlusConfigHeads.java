@@ -30,6 +30,10 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
 	public void load(boolean ehhLolIDontNeedThisButJavaIsMakingMeAnywaysSoHiHowAreYou) {
 		try {
 			getConfig().options().header("HeadsPlus by Thatsmusic99 - Config wiki: https://github.com/Thatsmusic99/HeadsPlus/wiki/Configuration");
+			getConfig().addDefault("defaults.price", 10.0);
+			getConfig().addDefault("defaults.lore", new ArrayList<>(Arrays.asList("&7Price: &6{price}", "&7Type: &a{type}")));
+			getConfig().addDefault("defaults.display-name", "{type} Head");
+			getConfig().addDefault("defaults.interact-name", "{type}");
 		    addMHFHeads();
 		    addUndefinedHeads();
 		    addPlayerHeads();
@@ -79,9 +83,6 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
                     for (Parrot.Variant variant : Parrot.Variant.values()) {
                         getConfig().addDefault("parrot.name." + variant.name(), new ArrayList<>());
                     }
-                    getConfig().addDefault(key + ".display-name", WordUtils.capitalize(key) + " Head");
-                    getConfig().addDefault(key + ".price", 10.00);
-                    getConfig().addDefault(key + ".interact-name", WordUtils.capitalize(key));
                 }
 
     	    } else if (key.equals("horse")){
@@ -94,18 +95,15 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
                 for (Horse.Color variant : Horse.Color.values()) {
                     getConfig().addDefault("horse.name." + variant.name(), new ArrayList<>());
                 }
-                getConfig().addDefault(key + ".display-name", WordUtils.capitalize(key) + " Head");
-                getConfig().addDefault(key + ".price", 10.00);
-                getConfig().addDefault(key + ".interact-name", WordUtils.capitalize(key));
             } else {
     	        getConfig().addDefault(key + ".name", new ArrayList<>());
-    	        getConfig().addDefault(key + ".display-name", "");
-    	        getConfig().addDefault(key + ".price", 0.00);
     	    }
 
     		getConfig().addDefault(key + ".chance", 0);
+    	    getConfig().addDefault(key + ".display-name", "{default}");
+    	    getConfig().addDefault(key + ".price", "{default}");
 
-            getConfig().addDefault(key + ".interact-name", WordUtils.capitalize(key));
+            getConfig().addDefault(key + ".interact-name", "{default}");
     		getConfig().addDefault(key + ".mask-effects", new ArrayList<>());
     		getConfig().addDefault(key + ".mask-amplifiers", new ArrayList<>());
     		getConfig().addDefault(key + ".lore", new ArrayList<>(Arrays.asList("&7Price: &6{price}", "&7Type: &a{type}")));

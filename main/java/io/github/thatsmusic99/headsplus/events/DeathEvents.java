@@ -192,19 +192,26 @@ public class DeathEvents implements Listener {
                             e1.printStackTrace();
                         }
                     } else if (name.equalsIgnoreCase("{mob-default}")) {
-                        if (e == EntityType.SKELETON) {
-                            is = nms.getSkull(0);
-                        } else if (e == EntityType.WITHER_SKELETON) {
-                            is = nms.getSkull(1);
-                        } else if (e == EntityType.ZOMBIE) {
-                            is = nms.getSkull(2);
-                        } else if (e == EntityType.CREEPER) {
-                            is = nms.getSkull(4);
-                        } else if (e == EntityType.ENDER_DRAGON) {
-                            is = nms.getSkull(5);
-                        } else {
+                        try {
+                            if (e == EntityType.SKELETON) {
+                                is = nms.getSkull(0);
+                            } else if (e == EntityType.WITHER_SKELETON) {
+                                is = nms.getSkull(1);
+                            } else if (e == EntityType.ZOMBIE) {
+                                is = nms.getSkull(2);
+                            } else if (e == EntityType.CREEPER) {
+                                is = nms.getSkull(4);
+                            } else if (e == EntityType.ENDER_DRAGON) {
+                                is = nms.getSkull(5);
+                            } else {
+                                is = nms.getSkull(3);
+                            }
+                        } catch (NoSuchFieldError ex) {
+                            HeadsPlus.getInstance().getLogger().warning("Error thrown when trying to add a mob-default head. Setting to player skull...");
                             is = nms.getSkull(3);
                         }
+
+
                     } else {
 
                         is = nms.getSkullMaterial(1);

@@ -13,7 +13,6 @@ import io.github.thatsmusic99.headsplus.nms.v1_12_NMS.v1_12_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_13_NMS.v1_13_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_13_R2_NMS.v1_13_R2_NMS;
 import io.lumine.xikage.mythicmobs.MythicMobs;
-import org.apache.commons.lang.WordUtils;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
@@ -266,9 +265,10 @@ public class DeathEvents implements Listener {
                 }
             }
         }
-        if (HeadsPlus.getInstance().getNMS() instanceof v1_12_NMS
-                || HeadsPlus.getInstance().getNMS() instanceof v1_13_NMS
-                || HeadsPlus.getInstance().getNMS() instanceof v1_13_R2_NMS) {
+        NMSManager nms = HeadsPlus.getInstance().getNMS();
+        if (nms instanceof v1_12_NMS
+                || nms instanceof v1_13_NMS
+                || nms instanceof v1_13_R2_NMS) {
             if (e instanceof Llama) {
                 Llama llama = (Llama) e;
                 Llama.Color color = llama.getColor();
@@ -311,6 +311,7 @@ public class DeathEvents implements Listener {
 	    ItemStack i;
 	    List<ItemStack> af = hasColor(e);
 	    String mobName = e.getType().name().replaceAll("_", "").toLowerCase();
+	    NMSManager nms = HeadsPlus.getInstance().getNMS();
 	    try {
             if (af != null && !af.isEmpty()) {
 
@@ -327,9 +328,9 @@ public class DeathEvents implements Listener {
 
                 } else if (e instanceof Horse) {
                     thing = r.nextInt(hpch.getConfig().getStringList("horse.name.default").size());
-                } else if (HeadsPlus.getInstance().getNMS() instanceof v1_12_NMS
-                        || HeadsPlus.getInstance().getNMS() instanceof v1_13_NMS
-                        || HeadsPlus.getInstance().getNMS() instanceof v1_13_R2_NMS) {
+                } else if (nms instanceof v1_12_NMS
+                        || nms instanceof v1_13_NMS
+                        || nms instanceof v1_13_R2_NMS) {
                     if (e instanceof Parrot) {
                         thing = r.nextInt(hpch.getConfig().getStringList("parrot.name.default").size());
                     } else if (e instanceof Llama) {
@@ -346,7 +347,7 @@ public class DeathEvents implements Listener {
 	        return;
         }
         int a = 1;
-	    NMSManager nms = HeadsPlus.getInstance().getNMS();
+
         if (nms.getItemInHand(k).containsEnchantment(Enchantment.LOOT_BONUS_MOBS)  && HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("allow-looting-enchantment")) {
             a += nms.getItemInHand(k).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
         }

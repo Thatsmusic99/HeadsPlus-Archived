@@ -4,9 +4,8 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
-import io.github.thatsmusic99.headsplus.nms.v1_8_R1_NMS.v1_8_R1_NMS;
-import io.github.thatsmusic99.headsplus.nms.v1_8_R2_NMS.v1_8_R2_NMS;
-import io.github.thatsmusic99.headsplus.nms.v1_8_R3_NMS.v1_8_R3NMS;
+import io.github.thatsmusic99.headsplus.nms.v1_13_NMS.v1_13_NMS;
+import io.github.thatsmusic99.headsplus.nms.v1_13_R2_NMS.v1_13_R2_NMS;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,9 +25,7 @@ public class MaskEvent implements Listener {
         HeadsPlus hp = HeadsPlus.getInstance();
         if (hp.getConfiguration().getPerks().getBoolean("mask-powerups")) {
             NMSManager nms = hp.getNMS();
-            if (e.getSlot() == 39
-                    || ((nms instanceof v1_8_R3NMS
-                    || nms instanceof v1_8_R2_NMS || nms instanceof v1_8_R1_NMS) && e.getRawSlot() == 5)) {
+            if (e.getRawSlot() == getSlot()) {
 
                 ItemStack ist = e.getCursor();
                 if (ist != null) {
@@ -41,8 +38,7 @@ public class MaskEvent implements Listener {
                             maskMonitors.put((Player) e.getWhoClicked(), new BukkitRunnable() {
                                 @Override
                                 public void run() {
-                                    if (e.getWhoClicked().getInventory().getItem(39) == null && !((nms instanceof v1_8_R3NMS
-                                            || nms instanceof v1_8_R2_NMS || nms instanceof v1_8_R1_NMS) && e.getWhoClicked().getInventory().getItem(5) != null)) {
+                                    if (e.getWhoClicked().getInventory().getHelmet() == null) {
                                         HPPlayer pl = HPPlayer.getHPPlayer((OfflinePlayer) e.getWhoClicked());
                                         pl.clearMask();
                                         maskMonitors.remove(e.getWhoClicked());
@@ -55,6 +51,15 @@ public class MaskEvent implements Listener {
                     }
                 }
             }
+        }
+    }
+
+    private int getSlot() {
+        NMSManager nms = HeadsPlus.getInstance().getNMS();
+        if (nms instanceof v1_13_R2_NMS || nms instanceof v1_13_NMS) {
+            return 39;
+        } else {
+            return 5;
         }
     }
 }

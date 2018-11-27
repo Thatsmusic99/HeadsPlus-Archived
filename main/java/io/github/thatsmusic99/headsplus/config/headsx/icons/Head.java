@@ -5,12 +5,15 @@ import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
+import io.github.thatsmusic99.headsplus.events.HeadPurchaseEvent;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.util.AdventCManager;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
+
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -129,18 +132,14 @@ public class Head extends ItemStack implements Icon {
             String fail = hpc.getString("cmd-fail");
             if (er.transactionSuccess()) {
                 p.sendMessage(success);
-                p.getInventory().addItem(HeadsPlus.getInstance().getNMS().removeIcon(e.getCurrentItem()));
-                e.setCancelled(true);
-                return;
             } else {
                 p.sendMessage(fail + ": " + er.errorMessage);
                 e.setCancelled(true);
                 return;
             }
         }
-        ItemStack is = e.getCurrentItem();
-        is = nms.removeIcon(is);
-        p.getInventory().addItem(is);
+        p.getInventory().addItem(HeadsPlus.getInstance().getNMS().removeIcon(e.getCurrentItem()));
+        Bukkit.getServer().getPluginManager().callEvent(new HeadPurchaseEvent(p, e.getCurrentItem()));
         e.setCancelled(true);
     }
 

@@ -1,10 +1,10 @@
-package io.github.thatsmusic99.headsplus.events;
+package io.github.thatsmusic99.headsplus.listeners;
 
 import java.util.*;
 
-import io.github.thatsmusic99.headsplus.api.EntityHeadDropEvent;
+import io.github.thatsmusic99.headsplus.api.events.EntityHeadDropEvent;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
-import io.github.thatsmusic99.headsplus.api.PlayerHeadDropEvent;
+import io.github.thatsmusic99.headsplus.api.events.PlayerHeadDropEvent;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;

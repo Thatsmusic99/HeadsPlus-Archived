@@ -1,4 +1,4 @@
-package io.github.thatsmusic99.headsplus.events;
+package io.github.thatsmusic99.headsplus.listeners;
 
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;

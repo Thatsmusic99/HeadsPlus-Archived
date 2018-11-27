@@ -1,7 +1,11 @@
-package io.github.thatsmusic99.headsplus.events;
+package io.github.thatsmusic99.headsplus.listeners;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.*;
+import io.github.thatsmusic99.headsplus.api.events.EntityHeadDropEvent;
+import io.github.thatsmusic99.headsplus.api.events.HeadCraftEvent;
+import io.github.thatsmusic99.headsplus.api.events.PlayerHeadDropEvent;
+import io.github.thatsmusic99.headsplus.api.events.SellHeadEvent;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

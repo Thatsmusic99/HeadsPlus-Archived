@@ -1,7 +1,7 @@
-package io.github.thatsmusic99.headsplus.events;
+package io.github.thatsmusic99.headsplus.listeners;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.api.PlayerHeadDropEvent;
+import io.github.thatsmusic99.headsplus.api.events.PlayerHeadDropEvent;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

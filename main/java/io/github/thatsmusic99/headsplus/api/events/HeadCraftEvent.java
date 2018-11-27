@@ -1,4 +1,4 @@
-package io.github.thatsmusic99.headsplus.api;
+package io.github.thatsmusic99.headsplus.api.events;
 
 import org.bukkit.Location;
 import org.bukkit.World;

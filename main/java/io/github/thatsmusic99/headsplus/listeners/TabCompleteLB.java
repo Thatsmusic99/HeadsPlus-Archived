@@ -1,4 +1,4 @@
-package io.github.thatsmusic99.headsplus.events;
+package io.github.thatsmusic99.headsplus.listeners;
 
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.command.Command;

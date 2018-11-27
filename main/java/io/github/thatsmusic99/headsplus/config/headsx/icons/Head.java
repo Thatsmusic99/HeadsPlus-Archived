@@ -5,7 +5,7 @@ import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
-import io.github.thatsmusic99.headsplus.events.HeadPurchaseEvent;
+import io.github.thatsmusic99.headsplus.api.events.HeadPurchaseEvent;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.util.AdventCManager;
@@ -113,19 +113,20 @@ public class Head extends ItemStack implements Icon {
 
     private void giveHead(Player p, InventoryClickEvent e) {
         NMSManager nms = HeadsPlus.getInstance().getNMS();
-        ItemStack i = e.getCurrentItem();
         if (p.getInventory().firstEmpty() == -1) {
             p.sendMessage(hpc.getString("full-inv"));
             e.setCancelled(true);
             return;
         }
+        HeadPurchaseEvent event = new HeadPurchaseEvent(p, e.getCurrentItem());
         if (nms.getPrice(e.getCurrentItem())  != 0.0 && HeadsPlus.getInstance().econ()) {
 
             Economy ef = HeadsPlus.getInstance().getEconomy();
             Double price = nms.getPrice(e.getCurrentItem());
             if (price > ef.getBalance(p)) {
                 p.sendMessage(hpc.getString("not-enough-money"));
-                return;
+                event.setCancelled(true);
+                e.setCancelled(true);
             }
             EconomyResponse er = ef.withdrawPlayer(p, price);
             String success = hpc.getString("buy-success").replaceAll("\\{price}", Double.toString(er.amount)).replaceAll("\\{balance}", Double.toString(er.balance));
@@ -134,13 +135,16 @@ public class Head extends ItemStack implements Icon {
                 p.sendMessage(success);
             } else {
                 p.sendMessage(fail + ": " + er.errorMessage);
+                event.setCancelled(true);
                 e.setCancelled(true);
-                return;
             }
         }
-        p.getInventory().addItem(HeadsPlus.getInstance().getNMS().removeIcon(e.getCurrentItem()));
-        Bukkit.getServer().getPluginManager().callEvent(new HeadPurchaseEvent(p, e.getCurrentItem()));
-        e.setCancelled(true);
+
+        if (!event.isCancelled()) {
+            p.getInventory().addItem(HeadsPlus.getInstance().getNMS().removeIcon(e.getCurrentItem()));
+            Bukkit.getServer().getPluginManager().callEvent(new HeadPurchaseEvent(p, e.getCurrentItem()));
+            e.setCancelled(true);
+        }
     }
 
     @Override

@@ -139,10 +139,9 @@ public class Head extends ItemStack implements Icon {
                 e.setCancelled(true);
             }
         }
-
+        Bukkit.getServer().getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
             p.getInventory().addItem(HeadsPlus.getInstance().getNMS().removeIcon(e.getCurrentItem()));
-            Bukkit.getServer().getPluginManager().callEvent(new HeadPurchaseEvent(p, e.getCurrentItem()));
             e.setCancelled(true);
         }
     }

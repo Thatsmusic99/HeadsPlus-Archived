@@ -2,7 +2,7 @@ package io.github.thatsmusic99.headsplus;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException;
 import io.github.thatsmusic99.headsplus.api.Challenge;
-import io.github.thatsmusic99.headsplus.api.CommunicateEvent;
+import io.github.thatsmusic99.headsplus.api.events.CommunicateEvent;
 import io.github.thatsmusic99.headsplus.api.HeadsPlusAPI;
 import io.github.thatsmusic99.headsplus.api.Level;
 import io.github.thatsmusic99.headsplus.commands.*;
@@ -12,7 +12,7 @@ import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallenges;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.config.levels.*;
 import io.github.thatsmusic99.headsplus.crafting.RecipePerms;
-import io.github.thatsmusic99.headsplus.events.*;
+import io.github.thatsmusic99.headsplus.listeners.*;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 
 import io.github.thatsmusic99.headsplus.nms.*;
@@ -119,7 +119,7 @@ public class HeadsPlus extends JavaPlugin {
             }
 
 
-            debug("- Registering events!", 1);
+            debug("- Registering listeners!", 1);
             registerEvents();
             debug("- Registering commands!", 1);
             registerCommands();
@@ -323,7 +323,7 @@ public class HeadsPlus extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerDeathEvent(), this);
         debug("- Registering MaskEvent...", 3);
         getServer().getPluginManager().registerEvents(new MaskEvent(), this);
-        debug("- Finished registering events!", 2);
+        debug("- Finished registering listeners!", 2);
     }
 
     private void registerCommands() {

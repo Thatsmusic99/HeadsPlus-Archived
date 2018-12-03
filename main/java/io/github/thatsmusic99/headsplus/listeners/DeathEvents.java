@@ -108,7 +108,7 @@ public class DeathEvents implements Listener {
                         ItemStack head = nms.getSkullMaterial(a);
                         SkullMeta headM = (SkullMeta) head.getItemMeta();
                         headM = nms.setSkullOwner(ep.getEntity().getName(), headM);
-                        headM.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getDisplayName("player").replaceAll("\\{player}", ep.getEntity().getName())));
+                        headM.setDisplayName(hpch.getDisplayName("player").replaceAll("\\{player}", ep.getEntity().getName()));
                         List<String> strs = new ArrayList<>();
                         for (String str : hpch.getLore("player")) {
                             strs.add(ChatColor.translateAlternateColorCodes('&', str.replaceAll("\\{player}", ep.getEntity().getName()).replaceAll("\\{price}", String.valueOf(hpch.getPrice("player")))));
@@ -362,7 +362,7 @@ public class DeathEvents implements Listener {
         i.setAmount(a);
         SkullMeta sm = (SkullMeta) i.getItemMeta();
         String displayname = hpch.getDisplayName(mobName);
-        sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', displayname));
+        sm.setDisplayName(displayname);
         List<String> strs = new ArrayList<>();
         List<String> lore = hpch.getLore(mobName);
         for (String str : lore) {

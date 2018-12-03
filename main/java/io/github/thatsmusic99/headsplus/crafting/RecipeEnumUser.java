@@ -231,7 +231,7 @@ public class RecipeEnumUser {
     }
 
     private ItemMeta setupItemMeta(ItemMeta im, String key) {
-        im.setDisplayName(ChatColor.translateAlternateColorCodes('&', heads.getDisplayName(key)));
+        im.setDisplayName(heads.getDisplayName(key));
         List<String> strs = new ArrayList<>();
         for (String str : heads.getLore(key)) {
             strs.add(ChatColor.translateAlternateColorCodes('&', str.replaceAll("\\{type}", key).replaceAll("\\{price}", String.valueOf(heads.getPrice(key)))));

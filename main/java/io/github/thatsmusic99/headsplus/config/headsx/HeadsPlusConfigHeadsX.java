@@ -86,6 +86,12 @@ public class HeadsPlusConfigHeadsX extends ConfigSettings {
                     }
                 }
             }
+            for (HeadsXSections h : HeadsXSections.values()) {
+                if (h.d == cVersion) {
+                    getConfig().addDefault("sections." + h.let + ".display-name", h.dn);
+                    getConfig().addDefault("sections." + h.let + ".texture", h.tx);
+                }
+            }
             for (HeadsXEnums e : HeadsXEnums.values()) {
                 if (e.v == cVersion) {
                     getConfig().addDefault("heads." + e.name + ".database", true);
@@ -96,19 +102,7 @@ public class HeadsPlusConfigHeadsX extends ConfigSettings {
                     getConfig().addDefault("heads." + e.name + ".section", e.sec);
                 }
             }
-            for (HeadsXSections h : HeadsXSections.values()) {
-                if (h.d == cVersion) {
-                    getConfig().addDefault("sections." + h.let + ".display-name", h.dn);
-                    getConfig().addDefault("sections." + h.let + ".texture", h.tx);
-                }
-            }
-            if (getConfig().get("sections.logos.texture").equals("HP#youtube")) {
-                getConfig().addDefault("heads.youtube.database", true);
-                getConfig().addDefault("heads.youtube.encode", false);
-                getConfig().addDefault("heads.youtube.displayname", "&8[&cYouTube&8]");
-                getConfig().addDefault("heads.youtube.texture", HeadsXEnums.YOUTUBE.tex);
-                getConfig().addDefault("heads.youtube.price", "default");
-            }
+
             getConfig().options().copyDefaults(true);
         }
         save();

@@ -5,6 +5,7 @@ import io.github.thatsmusic99.headsplus.nms.v1_12_NMS.v1_12_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_13_R2_NMS.v1_13_R2_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_13_NMS.v1_13_NMS;
 import org.apache.commons.lang.WordUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Llama;
@@ -322,9 +323,9 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
 
     public String getDisplayName(String type) {
         if (getConfig().get(type + ".display-name").equals("{default}")) {
-            return getConfig().getString("defaults.display-name").replaceAll("\\{type}", WordUtils.capitalize(type));
+            return ChatColor.translateAlternateColorCodes('&', getConfig().getString("defaults.display-name").replaceAll("\\{type}", WordUtils.capitalize(type)));
         } else {
-            return getConfig().getString(type + ".display-name").replaceAll("\\{type}", WordUtils.capitalize(type));
+            return ChatColor.translateAlternateColorCodes('&', getConfig().getString(type + ".display-name").replaceAll("\\{type}", WordUtils.capitalize(type)));
         }
     }
 

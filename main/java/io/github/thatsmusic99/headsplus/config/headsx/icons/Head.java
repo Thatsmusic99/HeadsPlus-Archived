@@ -129,7 +129,7 @@ public class Head extends ItemStack implements Icon {
                 e.setCancelled(true);
             }
             EconomyResponse er = ef.withdrawPlayer(p, price);
-            String success = hpc.getString("buy-success").replaceAll("\\{price}", Double.toString(er.amount)).replaceAll("\\{balance}", Double.toString(er.balance));
+            String success = hpc.getString("buy-success").replaceAll("\\{price}", HeadsPlus.getInstance().getConfiguration().fixBalanceStr(er.amount)).replaceAll("\\{balance}", Double.toString(er.balance));
             String fail = hpc.getString("cmd-fail");
             if (er.transactionSuccess()) {
                 p.sendMessage(success);

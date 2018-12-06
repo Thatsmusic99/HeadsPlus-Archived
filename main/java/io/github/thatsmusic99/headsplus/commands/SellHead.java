@@ -64,7 +64,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                         Bukkit.getServer().getPluginManager().callEvent(she);
                                         if (!she.isCancelled()) {
                                             EconomyResponse zr = HeadsPlus.getInstance().getEconomy().depositPlayer((Player) sender, price);
-                                            String success = hpc.getString("sell-success").replaceAll("\\{price}", Double.toString(zr.amount)).replaceAll("\\{balance}", Double.toString(zr.balance));
+                                            String success = hpc.getString("sell-success").replaceAll("\\{price}", Double.toString(zr.amount)).replaceAll("\\{balance}", HeadsPlus.getInstance().getConfiguration().fixBalanceStr(zr.balance));
                                             if (zr.transactionSuccess()) {
                                                 if (price > 0) {
                                                     itemRemoval((Player) sender, args, invi);
@@ -249,7 +249,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 		if (!she.isCancelled()) {
 
             EconomyResponse zr = econ.depositPlayer(p, pr);
-            String success = hpc.getString("sell-success").replaceAll("\\{price}", Double.toString(zr.amount)).replaceAll("\\{balance}", Double.toString(zr.balance));
+            String success = hpc.getString("sell-success").replaceAll("\\{price}", Double.toString(zr.amount)).replaceAll("\\{balance}", HeadsPlus.getInstance().getConfiguration().fixBalanceStr(zr.balance));
 
             if (zr.transactionSuccess()) {
                 tests.put("Transaction success", true);

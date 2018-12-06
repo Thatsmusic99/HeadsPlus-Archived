@@ -2,6 +2,8 @@ package io.github.thatsmusic99.headsplus.config;
 
 import org.bukkit.configuration.ConfigurationSection;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -67,6 +69,7 @@ public class HeadsPlusMainConfig extends ConfigSettings {
         getConfig().addDefault("plugin.mechanics.debug.console.level", 1);
         getConfig().addDefault("plugin.mechanics.anvil-menu-search", false);
         getConfig().addDefault("plugin.mechanics.mythicmobs.no-hp-drops", true);
+        getConfig().addDefault("plugin.mechanics.round-balance-to-2-d-p", true);
     //    getConfig().addDefault("plugin.mechanics.ignored-players-head-drops", new ArrayList<>());
         getConfig().set("mysql.passworld", null); // I still love this
         getConfig().options().copyDefaults(true);
@@ -91,5 +94,16 @@ public class HeadsPlusMainConfig extends ConfigSettings {
 
     public ConfigurationSection getMySQL() {
         return getConfig().getConfigurationSection("mysql");
+    }
+
+    public String fixBalanceStr(double balance) {
+        if (getMechanics().getBoolean("round-balance-to-2-d-p")) {
+            DecimalFormat format = new DecimalFormat("#.##");
+            format.setRoundingMode(RoundingMode.CEILING);
+            return format.format(balance);
+        } else {
+            return String.valueOf(balance);
+        }
+
     }
 }

@@ -197,7 +197,7 @@ public abstract class HeadInventory {
                     ls.add(ChatColor.translateAlternateColorCodes('&', s.replaceAll("\\{heads}",String.valueOf(inv.getHeads()))
                             .replaceAll("\\{pages}", String.valueOf(list.getTotalPages()))
                             .replaceAll("\\{sections}", String.valueOf(inv.getSections()))
-                            .replaceAll("\\{balance}", (hp.econ() ? String.valueOf(hp.getEconomy().getBalance(sender)) : ""))
+                            .replaceAll("\\{balance}", (hp.econ() ? HeadsPlus.getInstance().getConfiguration().fixBalanceStr(hp.getEconomy().getBalance(sender)) : ""))
                             .replaceAll("\\{section}", inv.getSection()) ));
                 }
                 im.setLore(ls);

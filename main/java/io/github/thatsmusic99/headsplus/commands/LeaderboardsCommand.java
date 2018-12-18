@@ -219,7 +219,7 @@ public class LeaderboardsCommand implements CommandExecutor, IHeadsPlusCommand {
 
     @Override
     public String getUsage() {
-        return "/hplb [Entity|Page No.] [Page No.] [Hunting|Selling|Crafting]";
+        return "/hplb [Total|Entity|Page No.] [Page No.] [Hunting|Selling|Crafting]";
     }
 
     @Override

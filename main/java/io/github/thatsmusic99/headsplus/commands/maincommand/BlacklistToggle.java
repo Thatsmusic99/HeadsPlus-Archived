@@ -4,6 +4,7 @@ import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
+import io.github.thatsmusic99.headsplus.util.HPUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
@@ -59,15 +60,9 @@ public class BlacklistToggle implements IHeadsPlusCommand {
 	public boolean fire(String[] args, CommandSender sender) {
 		try {
 			if (args.length == 1) {
-			    if (blacklist.getBoolean("enabled")) {
-			        blacklist.set("enabled", false);
-			        config.save();
-			        sender.sendMessage(hpc.getString("bl-off"));
-			    } else {
-			        blacklist.set("enabled", true);
-			        config.save();
-			        sender.sendMessage(hpc.getString("bl-on"));
-			    }
+				blacklist.set("enabled", HPUtils.switchBoolean(blacklist.getBoolean("enabled")));
+				config.save();
+				sender.sendMessage(blacklist.getBoolean("enabled") ? "bl-on" : "bl-off");
 			} else {
 				if (args[1].equalsIgnoreCase("on")) {
 					if (!blacklist.getBoolean("enabled")) {

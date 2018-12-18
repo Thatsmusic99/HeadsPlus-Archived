@@ -67,7 +67,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                             String success = hpc.getString("sell-success").replaceAll("\\{price}", Double.toString(zr.amount)).replaceAll("\\{balance}", HeadsPlus.getInstance().getConfiguration().fixBalanceStr(zr.balance));
                                             if (zr.transactionSuccess()) {
                                                 if (price > 0) {
-                                                    itemRemoval((Player) sender, args, invi);
+                                                    itemRemoval((Player) sender, args);
                                                     sender.sendMessage(success);
                                                     printDebugResults(tests, true);
                                                     return true;
@@ -155,11 +155,14 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 			p.getInventory().setItemInMainHand(i);
 		}
 	}
-	private void itemRemoval(Player p, String[] a, ItemStack i) {
+	private void itemRemoval(Player p, String[] a) {
 		if (a.length > 0) {
 				for (ItemStack is : p.getInventory()) {
 					if (is != null) {
-					    if (nms().isSellable(is)) {
+					    if (nms().isSellable(is) && !nms().getType(is).isEmpty()) {
+					        if (!a[0].equalsIgnoreCase("all")) {
+					            if (!nms().getType(is).equalsIgnoreCase(a[0])) continue;
+                            }
 					        if (p.getInventory().getHelmet() != null) {
 					            tests.put("Remove helmet", p.getInventory().getHelmet().isSimilar(is));
 					            if (p.getInventory().getHelmet().isSimilar(is)) {
@@ -253,7 +256,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 
             if (zr.transactionSuccess()) {
                 tests.put("Transaction success", true);
-                itemRemoval(p, a, i);
+                itemRemoval(p, a);
                 p.sendMessage(success);
             } else {
                 tests.put("Transaction success", false);

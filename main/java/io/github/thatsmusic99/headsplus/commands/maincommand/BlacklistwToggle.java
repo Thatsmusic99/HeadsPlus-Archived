@@ -3,6 +3,7 @@ package io.github.thatsmusic99.headsplus.commands.maincommand;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
+import io.github.thatsmusic99.headsplus.util.HPUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -57,16 +58,11 @@ public class BlacklistwToggle implements IHeadsPlusCommand {
 	public boolean fire(String[] args, CommandSender sender) {
 		try {
             HeadsPlusMainConfig config = hp.getConfiguration();
+            boolean enabled = config.getBlacklist("world").getBoolean("enabled");
             if (args.length == 1) {
-                if (config.getBlacklist("world").getBoolean("enabled")) {
-                    config.getBlacklist("world").set("enabled", false);
-                    config.save();
-                    sender.sendMessage(hpc.getString("blw-off"));
-                } else if (!config.getBlacklist("world").getBoolean("enabled")) {
-                    config.getBlacklist("world").set("enabled", true);
-                    config.save();
-                    sender.sendMessage(hpc.getString("blw-on"));
-                }
+                config.getBlacklist("world").set("enabled", HPUtils.switchBoolean(enabled));
+                config.save();
+                sender.sendMessage(enabled ? "blw-off" : "blw-on");
             } else {
                 if (args[1].equalsIgnoreCase("on")) {
                     if (!config.getBlacklist("world").getBoolean("enabled")) {

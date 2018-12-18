@@ -6,6 +6,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.locale.Locale;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
+import io.github.thatsmusic99.headsplus.util.HPUtils;
 import io.github.thatsmusic99.headsplus.util.PagedLists;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -396,11 +397,12 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
 
     private String printMaskInfo(String type, int page) {
         try {
-            HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
+            HeadsPlus hp = HeadsPlus.getInstance();
+            HeadsPlusConfigHeads hpch = hp.getHeadsConfig();
             List<Mask> m = new ArrayList<>();
             Locale l = LocaleManager.getLocale();
             StringBuilder sb = new StringBuilder();
-            HeadsPlus hp = HeadsPlus.getInstance();
+
             if (hpch.getConfig().getStringList(type + ".mask-effects").size() < 1) {
                 return hpc.getString("no-mask-data");
             }
@@ -416,7 +418,7 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
 
             }
             PagedLists<Mask> s = new PagedLists<>(m, 8);
-            sb.append(hp.getThemeColour(1)).append("===============").append(hp.getThemeColour(2)).append(" HeadsPlus ").append(hp.getThemeColour(3)).append(page).append("/").append(s.getTotalPages()).append(" ").append(hp.getThemeColour(1)).append("===============\n");
+            sb.append(HPUtils.getHeader(page, s.getTotalPages()));
             sb.append(hp.getThemeColour(4)).append(l.type()).append(" ").append(hp.getThemeColour(3)).append(type).append("\n");
             for (Mask sm : s.getContentsInPage(page)) {
                 sb.append(hp.getThemeColour(3)).append(sm.effect).append(" (").append(sm.amplifier).append(")\n");
@@ -434,7 +436,7 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
             Locale l = LocaleManager.getLocale();
             PagedLists<String> lore = new PagedLists<>(hpch.getConfig().getStringList(type + ".lore"), 8);
             StringBuilder sb = new StringBuilder();
-            sb.append(hp.getThemeColour(1)).append("===============").append(hp.getThemeColour(2)).append(" HeadsPlus ").append(hp.getThemeColour(3)).append(page).append("/").append(lore.getTotalPages()).append(" ").append(hp.getThemeColour(1)).append("===============\n");
+            sb.append(HPUtils.getHeader(page, lore.getTotalPages()));
             sb.append(hp.getThemeColour(4)).append(l.type()).append(" ").append(hp.getThemeColour(3)).append(type).append("\n");
             for (String s : lore.getContentsInPage(page)) {
                 sb.append(hp.getThemeColour(3)).append(ChatColor.translateAlternateColorCodes('&', s));

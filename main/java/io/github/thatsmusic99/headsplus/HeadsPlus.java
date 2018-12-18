@@ -87,7 +87,6 @@ public class HeadsPlus extends JavaPlugin {
     @Override
     public void onEnable() {
         try {
-
             instance = this;
             setupNMS();
             try {

@@ -110,7 +110,7 @@ public class HeadsPlusAPI {
         try {
             return hp.getMySQLAPI().getScores(section, database).get(p);
         } catch (NullPointerException ex) {
-            return 0;
+            return -1;
         }
     }
 

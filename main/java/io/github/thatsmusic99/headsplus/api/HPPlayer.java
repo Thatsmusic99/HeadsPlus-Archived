@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.api;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.api.events.LevelUpEvent;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallenges;
 import org.bukkit.Bukkit;
@@ -158,20 +159,24 @@ public class HPPlayer {
         if (hp.usingLevels()) {
             if (nextLevel != null) {
                 if (nextLevel.getRequiredXP() <= getXp()) {
-                    level = nextLevel;
-                    for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.sendMessage(HeadsPlus.getInstance().getMessagesConfig().getString("level-up")
-                                .replaceAll("\\{name}", this.getPlayer().getName())
-                                .replaceAll("\\{level}", ChatColor.translateAlternateColorCodes('&', level.getDisplayName())));
-                    }
-                    HashMap<Integer, Level> levels = HeadsPlus.getInstance().getLevels();
-                    hpc.getConfig().set("player-data." + getPlayer().getUniqueId().toString() + ".profile.level", level.getConfigName());
-                    for (int i = 1; i < levels.size(); i++) {
-                        if (levels.get(i) == level) {
-                            try {
-                                nextLevel = levels.get(i + 1);
-                            } catch (IndexOutOfBoundsException e) { // End of levels
-                                nextLevel = null;
+                    LevelUpEvent event = new LevelUpEvent(getPlayer().getPlayer(), level, nextLevel);
+                    Bukkit.getPluginManager().callEvent(event);
+                    if (!event.isCancelled()) {
+                        level = nextLevel;
+                        for (Player p : Bukkit.getOnlinePlayers()) {
+                            p.sendMessage(HeadsPlus.getInstance().getMessagesConfig().getString("level-up")
+                                    .replaceAll("\\{name}", this.getPlayer().getName())
+                                    .replaceAll("\\{level}", ChatColor.translateAlternateColorCodes('&', level.getDisplayName())));
+                        }
+                        HashMap<Integer, Level> levels = HeadsPlus.getInstance().getLevels();
+                        hpc.getConfig().set("player-data." + getPlayer().getUniqueId().toString() + ".profile.level", level.getConfigName());
+                        for (int i = 1; i < levels.size(); i++) {
+                            if (levels.get(i) == level) {
+                                try {
+                                    nextLevel = levels.get(i + 1);
+                                } catch (IndexOutOfBoundsException e) { // End of levels
+                                    nextLevel = null;
+                                }
                             }
                         }
                     }

@@ -77,6 +77,7 @@ public class HeadsPlus extends JavaPlugin {
     private HeadsPlusLevels hpl;
     private HeadsPlusMainConfig config;
     private HeadsPlusConfigItems items;
+    private HeadsPlusConfigSounds sounds;
     private final List<Challenge> challenges = new ArrayList<>();
     private NMSManager nms;
     private final List<IHeadsPlusCommand> commands = new ArrayList<>();
@@ -182,6 +183,8 @@ public class HeadsPlus extends JavaPlugin {
             }
         }
     }
+
+    
 
     @Override
     public void onDisable() {
@@ -322,6 +325,8 @@ public class HeadsPlus extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerDeathEvent(), this);
         debug("- Registering MaskEvent...", 3);
         getServer().getPluginManager().registerEvents(new MaskEvent(), this);
+        debug("- Registering SoundEvent...", 3);
+        getServer().getPluginManager().registerEvents(new SoundEvent(), this);
         debug("- Finished registering listeners!", 2);
     }
 
@@ -385,6 +390,9 @@ public class HeadsPlus extends JavaPlugin {
         items = new HeadsPlusConfigItems();
         cs.add(items);
         debug("- Instance for HeadsPlusConfigItems created!", 3);
+        sounds = new HeadsPlusConfigSounds();
+        cs.add(sounds);
+        debug("- Instance for HeadsPlusConfigSounds created!", 3);
         debug("Instances created.", 1);
     }
 
@@ -595,6 +603,10 @@ public class HeadsPlus extends JavaPlugin {
 
     public HeadsPlusConfigItems getItems() {
         return items;
+    }
+
+    public HeadsPlusConfigSounds getSounds() {
+        return sounds;
     }
 
     public ChatColor getThemeColour(int i) {

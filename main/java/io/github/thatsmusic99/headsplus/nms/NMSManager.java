@@ -12,6 +12,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.util.HashMap;
+
 public interface NMSManager {
 
     ItemStack addNBTTag(Object item);
@@ -107,5 +109,7 @@ public interface NMSManager {
     default ItemStack getSkull(int data) {
         return new ItemStack(Material.getMaterial("SKULL_ITEM"), 1, (short) data);
     }
+
+    HashMap<String, String> getNBTTags(ItemStack item);
 
 }

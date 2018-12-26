@@ -19,7 +19,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.util.HashMap;
 import java.util.Objects;
+import java.util.Set;
 
 @SuppressWarnings("deprecation")
 public class v1_8_R1_NMS implements NMSManager {
@@ -236,6 +238,18 @@ public class v1_8_R1_NMS implements NMSManager {
             return Objects.requireNonNull(i.getTag()).getBoolean("advent-open");
         }
         return false;
+    }
+
+    @Override
+    public HashMap<String, String> getNBTTags(ItemStack item) {
+        net.minecraft.server.v1_8_R1.ItemStack i = CraftItemStack.asNMSCopy(item);
+        HashMap<String, String> keys = new HashMap<>();
+        if (i.getTag() != null) {
+            for (String str : (Set<String>) i.getTag().c()) {
+                keys.put(str, i.getTag().get(str).toString());
+            }
+        }
+        return keys;
     }
 
     @Override

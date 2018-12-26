@@ -19,6 +19,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 @SuppressWarnings("deprecation")
@@ -241,5 +242,17 @@ public class v1_8_R3NMS implements NMSManager {
             return Objects.requireNonNull(i.getTag()).getBoolean("advent-open");
         }
         return false;
+    }
+
+    @Override
+    public HashMap<String, String> getNBTTags(org.bukkit.inventory.ItemStack item) {
+        ItemStack i = CraftItemStack.asNMSCopy(item);
+        HashMap<String, String> keys = new HashMap<>();
+        if (i.getTag() != null) {
+            for (String str : i.getTag().c()) {
+                keys.put(str, i.getTag().get(str).toString());
+            }
+        }
+        return keys;
     }
 }

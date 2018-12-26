@@ -73,7 +73,7 @@ public class DebugPrint implements IHeadsPlusCommand {
 
     @Override
     public String getUsage() {
-        return "/hp debug <dump|head|player|clearim> <Player IGN>";
+        return "/hp debug <dump|head|player|clearim|item> <Player IGN>";
     }
 
     @Override
@@ -108,6 +108,17 @@ public class DebugPrint implements IHeadsPlusCommand {
                 } else {
                     h.put(false, HeadsPlus.getInstance().getMessagesConfig().getString("invalid-args"));
                 }
+            } else if (args[1].equalsIgnoreCase("item")) {
+                if (sender instanceof Player) {
+                    NMSManager nms = HeadsPlus.getInstance().getNMS();
+                    if (nms.getItemInHand((Player) sender) != null) {
+                        h.put(true, "");
+                    } else {
+                        h.put(false, HeadsPlus.getInstance().getMessagesConfig().getString("false-head"));
+                    }
+                } else {
+                    h.put(false, "[HeadsPlus] You have to be a player to run this command!");
+                }
             } else {
                 h.put(false, HeadsPlus.getInstance().getMessagesConfig().getString("invalid-args"));
             }
@@ -129,9 +140,12 @@ public class DebugPrint implements IHeadsPlusCommand {
                 String s = new DebugFileCreator().createReport(null, "Debug command");
                 sender.sendMessage(ChatColor.GREEN + "Report name: " + s);
             } else if (args[1].equalsIgnoreCase("head")) {
-                ItemStack is = HeadsPlus.getInstance().getNMS().getItemInHand((Player) sender);
-                String s = new DebugFileCreator().createHeadReport(is);
-                sender.sendMessage(ChatColor.GREEN + "Report name: " + s);
+                if (sender instanceof Player) {
+                    ItemStack is = HeadsPlus.getInstance().getNMS().getItemInHand((Player) sender);
+                    String s = new DebugFileCreator().createHeadReport(is);
+                    sender.sendMessage(ChatColor.GREEN + "Report name: " + s);
+                }
+
             } else if (args[1].equalsIgnoreCase("player")) {
                 OfflinePlayer pl = Bukkit.getOfflinePlayer(args[2]);
                 String s = new DebugFileCreator().createPlayerReport(HPPlayer.getHPPlayer(pl));
@@ -139,6 +153,12 @@ public class DebugPrint implements IHeadsPlusCommand {
             } else if (args[1].equalsIgnoreCase("clearim")) {
                 InventoryManager.pls.clear();
                 sender.sendMessage(ChatColor.GREEN + "Inventory cache cleared.");
+            } else if (args[1].equalsIgnoreCase("item")) {
+                if (sender instanceof Player) {
+                    String s = new DebugFileCreator().createItemReport(HeadsPlus.getInstance().getNMS().getItemInHand((Player) sender));
+                    sender.sendMessage(ChatColor.GREEN + "Report name: " + s);
+                }
+
             }
         } catch (IOException | NoSuchFieldException | IllegalAccessException e) {
             if (HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("debug.print-stacktraces-in-console")) {

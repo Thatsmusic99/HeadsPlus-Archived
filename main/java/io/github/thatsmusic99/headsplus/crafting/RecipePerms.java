@@ -32,35 +32,32 @@ public class RecipePerms implements Listener {
                     if (player.hasPermission("headsplus.craft")) {
                         List<String> worlds = c.getBlacklist("world").getStringList("list");
                         if ((!worlds.contains(player.getWorld().getName())) || !c.getBlacklist("world").getBoolean("enabled") || player.hasPermission("headsplus.bypass.blacklistw")) {
-                            if (c.getWhitelist("world").getStringList("list").contains(player.getWorld().getName())) {
-                                fireEvent(e);
-                                return;
+                            if (e.getCurrentItem() != null) {
+                                if (e.getCurrentItem().getItemMeta() instanceof SkullMeta) {
+                                    if (!hapi.getSkullType(e.getCurrentItem()).isEmpty()) {
+                                        if (c.getWhitelist("world").getStringList("list").contains(player.getWorld().getName())) {
+                                            fireEvent(e);
+                                            return;
 
-                            } else if (player.hasPermission("headsplus.bypass.whitelistw")){
-                                if (e.getCurrentItem() != null) {
-                                    if (e.getCurrentItem().getItemMeta() instanceof SkullMeta) {
-                                        if (hapi.getSkullType(e.getCurrentItem()) != null) {
+                                        } else if (player.hasPermission("headsplus.bypass.whitelistw")){
                                             try {
                                                 fireEvent(e);
-                                                } catch (NullPointerException | ClassCastException ignored) {
-
-                                                }
+                                            } catch (NullPointerException | ClassCastException ignored) {
                                             }
+                                        } else if (!c.getWhitelist("world").getBoolean("enabled")) {
+                                            fireEvent(e);
+                                            return;
                                         }
+                                        return;
                                     }
-
-                                return;
-
-                            } else if (!c.getWhitelist("world").getBoolean("enabled")) {
-                                fireEvent(e);
-                                return;
+                                }
                             }
-                        } else {
-                            if (e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
-                                denyPermission(e);
-                            } else if (e.getInventory().getType().equals(InventoryType.CRAFTING)){
-                                denyPermission(e);
-                            }
+                        }
+                    } else {
+                        if (e.getInventory().getType().equals(InventoryType.WORKBENCH)) {
+                            denyPermission(e);
+                        } else if (e.getInventory().getType().equals(InventoryType.CRAFTING)){
+                            denyPermission(e);
                         }
                     }
                 }

@@ -227,6 +227,59 @@ public class DebugFileCreator {
         return fr.getName();
     }
 
+    public String createItemReport(ItemStack item) throws IOException {
+        JSONArray array1 = new JSONArray();
+        HeadsPlus hp = HeadsPlus.getInstance();
+        JSONObject o1 = new JSONObject();
+        String date = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new java.util.Date (System.currentTimeMillis()));
+        o1.put("Date", date);
+        o1.put("Special message", getErrorHeader());
+        try {
+            o1.put("HeadsPlus version", hp.getDescription().getVersion());
+            o1.put("NMS version", hp.getNMS().getClass().getSimpleName());
+            o1.put("Has Vault hooked", hp.econ());
+            o1.put("MySQL is enabled", hp.isConnectedToMySQLDatabase());
+            o1.put("Locale", LocaleManager.getLocale().getLanguage());
+        } catch (NullPointerException ignored) {
+
+        }
+        JSONObject o2 = new JSONObject();
+        o2.put("material", item.getType());
+        o2.put("amount", item.getAmount());
+        JSONObject o3 = new JSONObject();
+        for (String key : hp.getNMS().getNBTTags(item).keySet()) {
+            o3.put(key, hp.getNMS().getNBTTags(item).get(key));
+        }
+        o2.put("NBT Tags", o3);
+        o1.put("Item details", o2);
+        Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
+        array1.add(o1);
+        String str = gson.toJson(array1);
+        OutputStreamWriter fw;
+        boolean cancelled = false;
+        File fr = null;
+
+        for (int i = 0; !cancelled; i++) {
+            File f2 = new File(hp.getDataFolder() + "/debug");
+            if (!f2.exists()) {
+                f2.mkdir();
+            }
+            File f = new File(hp.getDataFolder() + "/debug/", date.replaceAll(":", "_").replaceAll("/", ".") + "-REPORT-" + i + ".json");
+            if (!f.exists()) {
+                fr = f;
+                cancelled = true;
+            }
+        }
+        fw = new OutputStreamWriter(new FileOutputStream(fr), Charsets.UTF_8);
+        try {
+            fw.write(str.replace("\u0026", "&"));
+        } finally {
+            fw.flush();
+            fw.close();
+        }
+        return fr.getName();
+    }
+
     private String getErrorHeader() {
         List<String> msgs = new ArrayList<>();
         msgs.add("Oh sorry, did I hurt you?");

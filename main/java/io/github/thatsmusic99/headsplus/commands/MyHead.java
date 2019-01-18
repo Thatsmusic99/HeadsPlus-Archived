@@ -5,9 +5,11 @@ import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -26,10 +28,25 @@ public class MyHead implements CommandExecutor, IHeadsPlusCommand {
     private final HashMap<String, Boolean> tests = new HashMap<>();
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String l, String[] strings) {
+    public boolean onCommand(CommandSender sender, Command command, String l, String[] args) {
         try {
             if (sender.hasPermission(getPermission())) {
-                if (!(sender instanceof Player)) {
+
+
+                if (sender instanceof BlockCommandSender) {
+                    if (args.length > 0) {
+                        Player target = Bukkit.getPlayer(args[0]);
+                        if (target != null && target.isOnline()) {
+                            Bukkit.dispatchCommand(target, "minecraft:execute as " + args[1] + "run myhead");
+                            return false;
+                        } else {
+                            sender.sendMessage(hpc.getString("player-offline"));
+                            return false;
+                        }
+                    } else {
+                        return false;
+                    }
+                } else if (!(sender instanceof Player)) {
                     sender.sendMessage(ChatColor.RED + "You must be a player to run this command!");
                     return false;
                 }

@@ -32,6 +32,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		try {
+
             HeadsPlus hp = HeadsPlus.getInstance();
 		    tests.clear();
             hp.debug("- Starting tests for command: sellhead!", 1);
@@ -67,7 +68,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                             String success = hpc.getString("sell-success").replaceAll("\\{price}", Double.toString(zr.amount)).replaceAll("\\{balance}", HeadsPlus.getInstance().getConfiguration().fixBalanceStr(zr.balance));
                                             if (zr.transactionSuccess()) {
                                                 if (price > 0) {
-                                                    itemRemoval((Player) sender, args);
+                                                    itemRemoval((Player) sender, args, -1);
                                                     sender.sendMessage(success);
                                                     printDebugResults(tests, true);
                                                     return true;
@@ -100,12 +101,26 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                             } else {
                                 tests.put("Selling all", false);
                                 double price = 0.0;
-
+                                int limit = -1;
+                                if (args.length > 1) {
+                                    if (args[1].matches("^[0-9]+$")) {
+                                        limit = Integer.parseInt(args[1]);
+                                    }
+                                }
+                                int is = 0;
                                 for (ItemStack i : p.getInventory()) {
                                     if (i != null) {
                                     //    boolean found = false;
                                         if (nms().isSellable(i)) {
-                                            price = setPrice(price, args, i, p);
+                                            String st = nms().getType(i).toLowerCase();
+                                            if (st.equalsIgnoreCase(args[0])) {
+                                                if (is != limit) {
+                                                    price = setPrice(price, args, i, p, limit);
+                                                    is++;
+                                                }
+
+                                            }
+
                                         }
                                     }
                                 } if (price == 0.0) {
@@ -115,7 +130,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                     return true;
                                 }
                                 tests.put("Any heads", true);
-                                pay(p, args, new ItemStack(Material.AIR), price);
+                                pay(p, args, new ItemStack(Material.AIR), price, limit);
                                 return true;
                             }
                         } else {
@@ -155,7 +170,8 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 			p.getInventory().setItemInMainHand(i);
 		}
 	}
-	private void itemRemoval(Player p, String[] a) {
+	private void itemRemoval(Player p, String[] a, int limit) {
+	    int l = limit;
 		if (a.length > 0) {
 				for (ItemStack is : p.getInventory()) {
 					if (is != null) {
@@ -166,20 +182,41 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 					        if (p.getInventory().getHelmet() != null) {
 					            tests.put("Remove helmet", p.getInventory().getHelmet().isSimilar(is));
 					            if (p.getInventory().getHelmet().isSimilar(is)) {
-					                p.getInventory().setHelmet(new ItemStack(Material.AIR));
-					                HPPlayer hp = HPPlayer.getHPPlayer(p);
-					                hp.clearMask();
+                                    if (is.getAmount() > l && l != -1) {
+                                        is.setAmount(is.getAmount() - l);
+                                        l = 0;
+                                    } else {
+                                        p.getInventory().setHelmet(new ItemStack(Material.AIR));
+                                        HPPlayer hp = HPPlayer.getHPPlayer(p);
+                                        hp.clearMask();
+                                        l = is.getAmount() - l;
+                                    }
+
 					                continue;
 					            }
 					        }
 					        if (nms().getOffHand(p) != null) {
 					            tests.put("Off hand", nms().getOffHand(p).isSimilar(is));
 					            if (nms().getOffHand(p).isSimilar(is)) {
-					                p.getInventory().setItemInOffHand(new ItemStack(Material.AIR));
+                                    if (is.getAmount() > l && l != -1) {
+                                        is.setAmount(is.getAmount() - l);
+                                        l = 0;
+                                    } else {
+                                        p.getInventory().setItemInOffHand(new ItemStack(Material.AIR));
+                                        l = is.getAmount() - l;
+                                    }
+
 					                continue;
 					            }
 					        }
-					        p.getInventory().remove(is);
+					        if (is.getAmount() > l && l != -1) {
+					            is.setAmount(is.getAmount() - l);
+					            l = 0;
+                            } else {
+                                p.getInventory().remove(is);
+                                l = is.getAmount() - l;
+                            }
+
 					    }
 					}
 				}
@@ -187,7 +224,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 		    setHand(p, new ItemStack(Material.AIR));
 		}
 	}
-	private double setPrice(Double p, String[] a, ItemStack i, Player pl) {
+	private double setPrice(Double p, String[] a, ItemStack i, Player pl, int limit) {
 		if (a.length > 0) { // More than one argument
 			if (!a[0].matches("^[0-9]+$")) { // More than one head
 				if (a[0].equalsIgnoreCase("all")) { // Sell everything
@@ -195,12 +232,12 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 				        String s = nms().getType(i).toLowerCase();
 				        if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {
 				            soldHeads.add(s);
-				            i(s, i.getAmount());
-				            p += hpch.getPrice(s);
+				            int o = i(s, i.getAmount(), limit);
+				            p += o * hpch.getPrice(s);
                         }
 				    }
 				} else { // Selected mob
-				    p = f(i, p, a[0]);
+				    p = f(i, p, a[0], limit);
 				}
 			} else {
 			    if (Integer.parseInt(a[0]) <= i.getAmount()) {
@@ -209,7 +246,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 					    if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {
                             p = hpch.getPrice(s) * Integer.parseInt(a[0]);
                             soldHeads.add(s);
-                            i(s, i.getAmount());
+                            i(s, i.getAmount(), limit);
                         }
                     }
 				} else {
@@ -223,7 +260,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 		Double price = 0.0;
 		for (ItemStack is : p.getInventory()) {
             if (is != null) {
-                price = setPrice(price, a, is, p);
+                price = setPrice(price, a, is, p, -1);
 
             }
         }
@@ -242,9 +279,9 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
             return;
         }
 
-		pay(p, a, i, price);
+		pay(p, a, i, price, -1);
 	}
-	private void pay(Player p, String[] a, ItemStack i, double pr) {
+	private void pay(Player p, String[] a, ItemStack i, double pr, int limit) {
 		Economy econ = HeadsPlus.getInstance().getEconomy();
 		SellHeadEvent she = new SellHeadEvent(pr, soldHeads, p, econ.getBalance(p), econ.getBalance(p) + pr, hm);
 		Bukkit.getServer().getPluginManager().callEvent(she);
@@ -256,7 +293,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 
             if (zr.transactionSuccess()) {
                 tests.put("Transaction success", true);
-                itemRemoval(p, a);
+                itemRemoval(p, a, limit);
                 p.sendMessage(success);
             } else {
                 tests.put("Transaction success", false);
@@ -266,30 +303,48 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
         }
 	}
 
-    private Double f(ItemStack i, Double p, String s) {
+    private Double f(ItemStack i, Double p, String s, int l) {
 	    String st = nms().getType(i).toLowerCase();
 	    if (nms().isSellable(i)) {
 	        if (st.equalsIgnoreCase(s)) {
 	            soldHeads.add(s);
-	            i(s, i.getAmount());
-	            p = p + (i.getAmount() * hpch.getPrice(s));
+	            int o = i(s, i.getAmount(), l);
+	            p = p + (o * hpch.getPrice(s));
 
             }
         }
         return p;
     }
 
-    private void i(String s, int amount) {
+    private int i(String s, int amount, int l) {
 	    if (hm.get(s) == null) {
-            hm.put(s, amount);
-            return;
+	        if (amount > l && l != -1) {
+	            hm.put(s, l);
+	            return l;
+            } else {
+                hm.put(s, amount);
+                return amount;
+            }
         }
 	    if (hm.get(s) > 0) {
 	        int i = hm.get(s);
 	        i += amount;
-	        hm.put(s, i);
+	        if (i > l && l != -1) {
+	            hm.put(s, l);
+	            return l;
+            } else {
+                hm.put(s, i);
+                return i;
+            }
+
         } else {
-	        hm.put(s, amount);
+            if (amount > l && l != -1) {
+                hm.put(s, l);
+                return l;
+            } else {
+                hm.put(s, amount);
+                return amount;
+            }
         }
     }
 
@@ -315,7 +370,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 
     @Override
     public String getUsage() {
-        return "/sellhead [All|Entity|#]";
+        return "/sellhead [All|Entity|#] [#]";
     }
 
     @Override

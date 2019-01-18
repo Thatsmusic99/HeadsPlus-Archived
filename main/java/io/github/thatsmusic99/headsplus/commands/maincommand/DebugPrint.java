@@ -9,6 +9,7 @@ import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
@@ -16,7 +17,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class DebugPrint implements IHeadsPlusCommand {
@@ -86,13 +90,19 @@ public class DebugPrint implements IHeadsPlusCommand {
                 if (sender instanceof Player) {
                     NMSManager nms = HeadsPlus.getInstance().getNMS();
                     if (nms.getItemInHand((Player) sender) != null) {
-                        if (nms.getItemInHand((Player) sender).getType().equals(nms.getSkullMaterial(1).getType())) {
+                        List<Material> skulls = new ArrayList<>(Arrays.asList(nms.getSkull(0).getType(),
+                                nms.getSkull(1).getType(),
+                                nms.getSkull(2).getType(),
+                                nms.getSkull(3).getType(),
+                                nms.getSkull(4).getType(),
+                                nms.getSkull(5).getType()));
+                        if (skulls.contains(nms.getItemInHand((Player) sender).getType())) {
                             h.put(true, "");
                         } else {
-                            h.put(false, HeadsPlus.getInstance().getMessagesConfig().getString("false-head"));
+                            h.put(false, HeadsPlus.getInstance().getMessagesConfig().getString("false-item"));
                         }
                     } else {
-                        h.put(false, HeadsPlus.getInstance().getMessagesConfig().getString("false-head"));
+                        h.put(false, HeadsPlus.getInstance().getMessagesConfig().getString("false-item"));
                     }
                 } else {
                     h.put(false, "[HeadsPlus] You have to be a player to run this command!");

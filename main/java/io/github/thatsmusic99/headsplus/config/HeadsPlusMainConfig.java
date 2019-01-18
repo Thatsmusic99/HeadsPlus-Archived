@@ -36,10 +36,10 @@ public class HeadsPlusMainConfig extends ConfigSettings {
         getConfig().addDefault("mysql.username", "username");
         getConfig().addDefault("mysql.password", "password");
         getConfig().addDefault("mysql.enabled", false);
-        getConfig().addDefault("theme-colours.1", "DARK_RED"); // TODO
-        getConfig().addDefault("theme-colours.2", "WHITE");
-        getConfig().addDefault("theme-colours.3", "RED");
-        getConfig().addDefault("theme-colours.4", "GREEN");
+        getConfig().addDefault("theme-colours.1", "DARK_BLUE");
+        getConfig().addDefault("theme-colours.2", "GOLD");
+        getConfig().addDefault("theme-colours.3", "GRAY");
+        getConfig().addDefault("theme-colours.4", "DARK_AQUA");
         getConfig().addDefault("plugin.perks.sell-heads", true);
         getConfig().addDefault("plugin.perks.drop-heads", true);
         getConfig().addDefault("plugin.perks.drops.ignore-players", new ArrayList<>());
@@ -56,8 +56,8 @@ public class HeadsPlusMainConfig extends ConfigSettings {
                         "&3The server owner screamed at &b{player} &3\"OFF WITH HIS HEAD!\"&3. &b{killer} &3finished the job.")));
         getConfig().addDefault("plugin.perks.smite-player-if-they-get-a-head", false);
         getConfig().addDefault("plugin.perks.mask-powerups", true);
-        getConfig().addDefault("plugin.mechanics.theme", "christmas");
-        getConfig().addDefault("plugin.mechanics.plugin-theme-dont-change", "christmas");
+        getConfig().addDefault("plugin.mechanics.theme", "classic");
+        getConfig().addDefault("plugin.mechanics.plugin-theme-dont-change", "classic");
         getConfig().addDefault("plugin.mechanics.update.check", true);
         getConfig().addDefault("plugin.mechanics.update.notify", true);
         getConfig().addDefault("plugin.mechanics.allow-looting-enchantment", true);

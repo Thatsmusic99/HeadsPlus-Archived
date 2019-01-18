@@ -4,6 +4,7 @@ import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import org.bukkit.*;
+import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -13,6 +14,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,6 +26,15 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
     private final HeadsPlus hp = HeadsPlus.getInstance();
     private final HeadsPlusMessagesConfig hpc = hp.getMessagesConfig();
     private final HashMap<String, Boolean> tests = new HashMap<>();
+
+    private List<String> selectors = Arrays.asList("@a", "@p", "@s", "@r");
+
+    private boolean startsWithSelector(String arg) {
+        for(String selector : selectors) {
+            if(arg.startsWith(selector)) return true;
+        }
+        return false;
+    }
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         return fire(args, sender);
@@ -176,27 +187,32 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
 	            if (args.length > 1) {
 	                tests.put("No Other permission", !sender.hasPermission("headsplus.head.others"));
 	                if (sender.hasPermission("headsplus.head.others")) {
-	                    tests.put("Player Found", hp.getNMS().getPlayer(args[1]) != null);
-	                    if (hp.getNMS().getPlayer(args[1]) != null) {
-	                        boolean b = args[0].matches("^[A-Za-z0-9_]+$") && (2 < args[0].length()) && (args[0].length() < 17);
-	                        tests.put("Valid name", b);
-	                        if (b) {
-	                            String[] s = new String[2];
-	                            s[0] = args[0];
-	                            s[1] = args[1];
-	                            giveH(s, sender, hp.getNMS().getPlayer(args[1]));
-	                            printDebugResults(tests, true);
-	                            return true;
-	                        } else if (!args[0].matches("^[A-Za-z0-9_]+$")) {
-	                            sender.sendMessage(hpc.getString("alpha-names"));
+
+                            tests.put("Player Found", hp.getNMS().getPlayer(args[1]) != null);
+                            if (sender instanceof BlockCommandSender && startsWithSelector(args[0]) && startsWithSelector(args[1])) {
+                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "minecraft:execute as " + args[1] + " run head " + args[0] + " " + args[1]);
+                            } else if (hp.getNMS().getPlayer(args[1]) != null) {
+                                boolean b = args[0].matches("^[A-Za-z0-9_]+$") && (2 < args[0].length()) && (args[0].length() < 17);
+                                tests.put("Valid name", b);
+                                if (b) {
+                                    String[] s = new String[2];
+                                    s[0] = args[0];
+                                    s[1] = args[1];
+                                    giveH(s, sender, hp.getNMS().getPlayer(args[1]));
+                                    printDebugResults(tests, true);
+                                    return true;
+                                } else if (!args[0].matches("^[A-Za-z0-9_]+$")) {
+                                    sender.sendMessage(hpc.getString("alpha-names"));
                                 } else if (args[0].length() < 3) {
                                     sender.sendMessage(hpc.getString("too-short-head"));
                                 } else {
                                     sender.sendMessage(hpc.getString("head-too-long"));
                                 }
-	                    } else {
-	                        sender.sendMessage(hpc.getString("player-offline"));
-	                    }
+                            } else {
+                                sender.sendMessage(hpc.getString("player-offline"));
+                            }
+
+
 	                    printDebugResults(tests, false);
 	                    return true;
 	                } else {

@@ -39,11 +39,11 @@ public class Head extends ItemStack implements Icon {
     @Override
     public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
         NMSManager nms = HeadsPlus.getInstance().getNMS();
-        if (im.getSection().equalsIgnoreCase("advent-calendar")) {
-            if (nms.isOpen(e.getCurrentItem())) {
-                giveHead(p, e);
-                return;
-            } else {
+       // if (im.getSection().equalsIgnoreCase("advent-calendar")) {
+        //    if (nms.isOpen(e.getCurrentItem())) {
+            //    giveHead(p, e);
+            //    return;
+       /*     } else {
                 Date date = new Date();
                 LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 int month = localDate.getMonthValue();
@@ -80,8 +80,8 @@ public class Head extends ItemStack implements Icon {
                 }
 
 
-            }
-        }
+            } */
+     //   }
         if (e.getClick().isRightClick()) {
             HPPlayer hpp = HPPlayer.getHPPlayer(p);
             String id = HeadsPlus.getInstance().getNMS().getId(e.getCurrentItem());

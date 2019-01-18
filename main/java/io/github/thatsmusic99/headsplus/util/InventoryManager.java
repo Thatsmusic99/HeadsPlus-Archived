@@ -85,7 +85,7 @@ public class InventoryManager {
                         heads.add(is);
                     }
                 }
-                if (hpchx.getConfig().getBoolean("options.advent-calendar")) {
+            /*    if (hpchx.getConfig().getBoolean("options.advent-calendar")) {
                      ItemStack is;
                     if (hpchx.getConfig().getString("options.advent-texture").startsWith("HP#")) {
                          is = hpchx.getSkull(hpchx.getConfig().getString("options.advent-texture"));
@@ -98,7 +98,7 @@ public class InventoryManager {
                     is.setItemMeta(sm);
                     is = hp.getNMS().addSection(is, "advent-calendar");
                     heads.add(is);
-                }
+                }*/
                 paged = new PagedLists<>(heads, hp.getItems().getConfig().getStringList("inventories.headmenu.icons").stream().filter(l -> l.equalsIgnoreCase("headsection")).collect(Collectors.toList()).size());
                 pages = paged.getTotalPages();
 
@@ -202,53 +202,10 @@ public class InventoryManager {
                     } else {
                         is = new ItemStack(new io.github.thatsmusic99.headsplus.config.headsx.icons.Challenge().getMaterial(), 1, (byte) hp.getItems().getConfig().getInt("icons.challenge.data-value"));
                     }
-                  /*  ItemMeta im = is.getItemMeta();
-                    im.setDisplayName(ChatColor.translateAlternateColorCodes('&', c.getChallengeHeader()));
-                    List<String> lore = new ArrayList<>();
-                    for (String st : c.getDescription()) {
-                        lore.add(ChatColor.translateAlternateColorCodes('&', st));
-                    }
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(ChatColor.GOLD).append("Reward: ");
-                    HPChallengeRewardTypes re = c.getRewardType();
-                    if (re == HPChallengeRewardTypes.ECO) {
-                        sb.append(ChatColor.GREEN).append("$").append(c.getRewardValue().toString());
-                    } else if (re == HPChallengeRewardTypes.GIVE_ITEM) {
-                        try {
-                            Material.valueOf(c.getRewardValue().toString());
-                            sb.append(ChatColor.GREEN).append(c.getRewardItemAmount()).append(" ").append(WordUtils.capitalize(c.getRewardValue().toString().toLowerCase().replaceAll("_", " "))).append("(s)");
-                        } catch (IllegalArgumentException ignored) {
-
-                        }
-                    } else if (re == HPChallengeRewardTypes.ADD_GROUP) {
-                        sb.append(ChatColor.GREEN).append("Group ").append(c.getRewardValue().toString()).append(" addition");
-                    } else {
-                        sb.append(ChatColor.GREEN).append("Group ").append(c.getRewardValue().toString()).append(" removal");
-                    }
-                    lore.add(sb.toString());
-                    lore.add(ChatColor.GOLD + "XP: " + ChatColor.GREEN + c.getGainedXP());
-                    if (c.isComplete(p)) {
-                        lore.add(ChatColor.GREEN + "Completed!");
-                    }
-                    im.setLore(lore);
-                    is.setItemMeta(im); */
                     is = nms.setChallenge(is, c);
                     items.add(is);
                 }
 
-           /*     int ch = hp.getChallenges().size();
-                int cch = hp.getChallengeConfig().getConfig().getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").size();
-                ItemStack is2 = new ItemStack(Material.PAPER);
-                ItemMeta im = is2.getItemMeta();
-                im.setDisplayName(ChatColor.GOLD + "[" + ChatColor.YELLOW + "" + ChatColor.BOLD + "Stats" + ChatColor.GOLD + "]");
-                List<String> lore = new ArrayList<>();
-                lore.add(ChatColor.GREEN + "Total challenges: " + ch);
-                lore.add(ChatColor.GREEN + "Total pages: " + pages);
-                lore.add(ChatColor.GREEN + "Total sections: " + sections) ;
-                lore.add(ChatColor.GREEN + "Completed challenges: " + cch);
-                lore.add(ChatColor.GREEN + "Current section: " + section);
-                im.setLore(lore);
-                is2.setItemMeta(im); */
                 paged = new PagedLists<>(items, a);
                 pages = paged.getTotalPages();
                 return new ChallengeSection().build(paged, p);

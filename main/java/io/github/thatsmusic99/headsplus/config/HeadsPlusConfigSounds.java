@@ -1,6 +1,6 @@
 package io.github.thatsmusic99.headsplus.config;
 
-import org.bukkit.Sound;
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 
 public class HeadsPlusConfigSounds extends ConfigSettings {
 
@@ -13,7 +13,7 @@ public class HeadsPlusConfigSounds extends ConfigSettings {
     protected void load(boolean nullp) {
         super.load(nullp);
         for (Defaults d : Defaults.values()) {
-            getConfig().addDefault("sounds." + d.name + ".sound", Sound.ENTITY_EXPERIENCE_ORB_PICKUP.name());
+            getConfig().addDefault("sounds." + d.name + ".sound", HeadsPlus.getInstance().getNMS().getEXPSound().name());
             getConfig().addDefault("sounds." + d.name + ".volume", 1.0f);
             getConfig().addDefault("sounds." + d.name + ".pitch", 1.0f);
             getConfig().addDefault("sounds." + d.name + ".enabled", d.enabled);

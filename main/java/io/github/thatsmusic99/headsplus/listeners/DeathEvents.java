@@ -94,6 +94,8 @@ public class DeathEvents implements Listener {
                         }
                     }
                 }
+                if (c.getPerks().getStringList("drops.ignore-players").contains(ep.getEntity().getUniqueId().toString())
+                        || c.getPerks().getStringList("drops.ignore-players").contains(ep.getEntity().getName())) return;
                 if (!c.getBlacklist("world").getStringList("list").contains(ep.getEntity().getWorld().getName()) || ep.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !c.getBlacklist("world").getBoolean("enabled")) {
                     Random rand = new Random();
                     double chance1 = hpch.getConfig().getDouble("player.chance");

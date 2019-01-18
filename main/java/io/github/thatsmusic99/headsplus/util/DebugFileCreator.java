@@ -117,6 +117,7 @@ public class DebugFileCreator {
         } catch (NullPointerException ignored) {
 
         }
+        o1.put("Skull Type", s.getType().name());
 
         o1.put("Server version", Bukkit.getVersion());
         JSONObject o2 = new JSONObject();
@@ -131,10 +132,15 @@ public class DebugFileCreator {
             o2.put("Owning Player", hp.getNMS().getSkullOwnerName((SkullMeta) s.getItemMeta()));
         } catch (NullPointerException ignored) {
         }
-        Field pro = ((SkullMeta) s.getItemMeta()).getClass().getDeclaredField("profile");
-        pro.setAccessible(true);
-        GameProfile gm = (GameProfile) pro.get(s.getItemMeta());
-        o2.put("Texture", gm.getProperties().get("textures").iterator().next().getValue());
+        try {
+            Field pro = ((SkullMeta) s.getItemMeta()).getClass().getDeclaredField("profile");
+            pro.setAccessible(true);
+            GameProfile gm = (GameProfile) pro.get(s.getItemMeta());
+            o2.put("Texture", gm.getProperties().get("textures").iterator().next().getValue());
+        } catch (NullPointerException ignored) {
+
+        }
+
         o2.put("Can be sold", hp.getAPI().isSellable(s));
         o2.put("Skull Type", hp.getAPI().getSkullType(s));
         o1.put("Head details", o2);

@@ -37,10 +37,6 @@ public class LBEvents implements Listener {
     public void onPHeadDrop(PlayerHeadDropEvent e) {
         try {
             if (!e.isCancelled()) {
-                if (HeadsPlus.getInstance().getConfiguration().getPerks().getStringList("drops.ignore-players").contains(e.getKiller().getName())) {
-                    e.setCancelled(true);
-                    return;
-                }
                 if (hp.isUsingLeaderboards()) {
                     if (hp.getConfiguration().getPerks().getBoolean("smite-player-if-they-get-a-head")) {
                         for (int i = 0; i < 5; i++) {

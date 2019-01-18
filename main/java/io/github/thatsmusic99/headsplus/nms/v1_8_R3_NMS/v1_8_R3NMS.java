@@ -13,6 +13,7 @@ import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
@@ -254,5 +255,10 @@ public class v1_8_R3NMS implements NMSManager {
             }
         }
         return keys;
+    }
+
+    @Override
+    public Sound getEXPSound() {
+        return Sound.valueOf("ORB_PICKUP");
     }
 }

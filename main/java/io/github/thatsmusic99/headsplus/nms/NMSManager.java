@@ -7,6 +7,7 @@ import io.github.thatsmusic99.headsplus.util.AdventCManager;
 import io.github.thatsmusic99.headsplus.util.MaterialTranslator;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
@@ -111,5 +112,9 @@ public interface NMSManager {
     }
 
     HashMap<String, String> getNBTTags(ItemStack item);
+
+    default Sound getEXPSound() {
+        return Sound.valueOf("ENTITY_EXPERIENCE_ORB_PICKUP");
+    }
 
 }

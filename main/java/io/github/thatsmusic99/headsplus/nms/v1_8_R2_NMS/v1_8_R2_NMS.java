@@ -12,6 +12,7 @@ import net.minecraft.server.v1_8_R2.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R2.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_8_R2.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
@@ -254,5 +255,10 @@ public class v1_8_R2_NMS implements NMSManager {
     @Override
     public String getNMSVersion() {
         return "v1_8_R2";
+    }
+
+    @Override
+    public Sound getEXPSound() {
+        return Sound.valueOf("ORB_PICKUP");
     }
 }

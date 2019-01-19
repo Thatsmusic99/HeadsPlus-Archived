@@ -99,6 +99,7 @@ public class HeadsPlusChallenges extends ConfigSettings {
     private void addChallenges() {
         HeadsPlus.getInstance().getChallenges().clear();
         for (String st : config.getConfigurationSection("challenges").getKeys(false)) {
+            if (st.equalsIgnoreCase("current-version") || st.equalsIgnoreCase("options")) continue;
             for (String s : config.getConfigurationSection("challenges." + st).getKeys(false)) {
                 String name = config.getString("challenges." + st + "." + s + ".name");
                 String header = config.getString("challenges." + st + "." + s + ".header");

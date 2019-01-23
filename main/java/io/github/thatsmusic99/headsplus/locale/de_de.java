@@ -3,7 +3,7 @@ package io.github.thatsmusic99.headsplus.locale;
 public class de_de implements Locale {
     @Override
     public boolean active() {
-        return false;
+        return true;
     }
 
     @Override
@@ -538,7 +538,7 @@ public class de_de implements Locale {
 
     @Override
     public String getPluginUpToDate() {
-        return "{header} &3Das Plugin ist auf dem neuesten Stand!"l;
+        return "{header} &3Das Plugin ist auf dem neuesten Stand!";
     }
 
     @Override

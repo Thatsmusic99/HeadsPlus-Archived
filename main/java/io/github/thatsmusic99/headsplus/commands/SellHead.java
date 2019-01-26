@@ -58,7 +58,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                 if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {
                                     Double price;
                                     if (invi.getAmount() > 0) {
-                                        price = invi.getAmount() * hpch.getPrice(s);
+                                        price = invi.getAmount() * nms().getPrice(invi);
                                         soldHeads.add(s);
                                         hm.put(s, invi.getAmount());
                                         SellHeadEvent she = new SellHeadEvent(price, soldHeads, (Player) sender, HeadsPlus.getInstance().getEconomy().getBalance((Player) sender), HeadsPlus.getInstance().getEconomy().getBalance((Player) sender) + price, hm);
@@ -120,7 +120,6 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                                 }
 
                                             }
-
                                         }
                                     }
                                 } if (price == 0.0) {
@@ -189,7 +188,9 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                         p.getInventory().setHelmet(new ItemStack(Material.AIR));
                                         HPPlayer hp = HPPlayer.getHPPlayer(p);
                                         hp.clearMask();
-                                        l = is.getAmount() - l;
+                                        if (l != -1) {
+                                            l = is.getAmount() - l;
+                                        }
                                     }
 
 					                continue;
@@ -203,7 +204,9 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                         l = 0;
                                     } else {
                                         p.getInventory().setItemInOffHand(new ItemStack(Material.AIR));
-                                        l = is.getAmount() - l;
+                                        if (l != -1) {
+                                            l = is.getAmount() - l;
+                                        }
                                     }
 
 					                continue;
@@ -214,7 +217,9 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 					            l = 0;
                             } else {
                                 p.getInventory().remove(is);
-                                l = is.getAmount() - l;
+                                if (l != -1) {
+                                    l = is.getAmount() - l;
+                                }
                             }
 
 					    }
@@ -233,7 +238,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 				        if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {
 				            soldHeads.add(s);
 				            int o = i(s, i.getAmount(), limit);
-				            p += o * hpch.getPrice(s);
+				            p += o * nms().getPrice(i);
                         }
 				    }
 				} else { // Selected mob
@@ -244,7 +249,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 					if (nms().isSellable(i)) {
 					    String s = nms().getType(i);
 					    if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {
-                            p = hpch.getPrice(s) * Integer.parseInt(a[0]);
+                            p = nms().getPrice(i) * Integer.parseInt(a[0]);
                             soldHeads.add(s);
                             i(s, i.getAmount(), limit);
                         }
@@ -309,7 +314,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 	        if (st.equalsIgnoreCase(s)) {
 	            soldHeads.add(s);
 	            int o = i(s, i.getAmount(), l);
-	            p = p + (o * hpch.getPrice(s));
+	            p = (o * nms().getPrice(i));
 
             }
         }

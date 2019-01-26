@@ -24,7 +24,7 @@ public class fr_fr implements Locale {
 
     @Override
     public String getHeadInteractMessage() {
-        return "&3C'est la tête de ";
+        return "&3C'est la tête de {player}!";
     }
 
     @Override
@@ -34,7 +34,7 @@ public class fr_fr implements Locale {
 
     @Override
     public String getHeadMhfInteractMessage2() {
-        return null;
+        return "&3C'est la tête d'";
     }
 
     @Override
@@ -654,6 +654,11 @@ public class fr_fr implements Locale {
 
     @Override
     public String completed() {
-        return "&6Terminé!";
+        return "&6Fini!";
+    }
+
+    @Override
+    public String lostMoney() {
+        return "&cTu as perdu {price} à cause de {player} te tué!";
     }
 }

@@ -656,4 +656,9 @@ public class en_uk implements Locale {
     public String completed() {
         return "&6Completed!";
     }
+
+    @Override
+    public String lostMoney() {
+        return "&cBecause you got killed by {player}, you lost {price}!";
+    }
 }

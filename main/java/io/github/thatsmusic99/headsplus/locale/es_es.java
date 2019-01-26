@@ -658,4 +658,9 @@ public class es_es implements Locale {
     public String completed() {
         return "&6¡Terminado!";
     }
+
+    @Override
+    public String lostMoney() {
+        return "&c¡Porque te mató {player}, perdiste {price}!";
+    }
 }

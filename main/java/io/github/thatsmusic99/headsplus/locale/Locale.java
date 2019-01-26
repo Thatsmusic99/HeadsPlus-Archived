@@ -286,4 +286,6 @@ public interface Locale {
 
     String completed();
 
+    String lostMoney();
+
 }

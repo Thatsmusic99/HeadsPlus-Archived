@@ -226,6 +226,7 @@ public class RecipeEnumUser {
         if (hp.canSellHeads()) {
             item = hp.getNMS().addNBTTag(item);
             item = hp.getNMS().setType(type, item);
+            item = hp.getNMS().setPrice(item, heads.getPrice(type));
         }
         return item;
     }

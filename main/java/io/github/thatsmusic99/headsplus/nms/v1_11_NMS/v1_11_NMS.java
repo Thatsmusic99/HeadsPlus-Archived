@@ -248,6 +248,16 @@ public class v1_11_NMS implements NMSManager {
     }
 
     @Override
+    public org.bukkit.inventory.ItemStack setPrice(org.bukkit.inventory.ItemStack i, double price) {
+        net.minecraft.server.v1_11_R1.ItemStack is = org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack.asNMSCopy(i);
+        if (is.getTag() == null) {
+            is.setTag(new net.minecraft.server.v1_11_R1.NBTTagCompound());
+        }
+        is.getTag().setDouble("head-price", price);
+        return org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack.asBukkitCopy(is);
+    }
+
+    @Override
     public String getNMSVersion() {
         return "v1_11_R1";
     }

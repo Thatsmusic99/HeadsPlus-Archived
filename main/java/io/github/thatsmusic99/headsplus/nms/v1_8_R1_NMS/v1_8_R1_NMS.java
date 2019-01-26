@@ -254,6 +254,16 @@ public class v1_8_R1_NMS implements NMSManager {
     }
 
     @Override
+    public ItemStack setPrice(ItemStack i, double price) {
+        net.minecraft.server.v1_8_R1.ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setDouble("head-price", price);
+        return CraftItemStack.asBukkitCopy(is);
+    }
+
+    @Override
     public String getNMSVersion() {
         return "v1_8_R1";
     }

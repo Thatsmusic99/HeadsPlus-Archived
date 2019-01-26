@@ -56,6 +56,9 @@ public class HeadsPlusMainConfig extends ConfigSettings {
                         "&3The server owner screamed at &b{player} &3\"OFF WITH HIS HEAD!\"&3. &b{killer} &3finished the job.")));
         getConfig().addDefault("plugin.perks.smite-player-if-they-get-a-head", false);
         getConfig().addDefault("plugin.perks.mask-powerups", true);
+        getConfig().addDefault("plugin.perks.pvp.player-balance-competition", false);
+        getConfig().addDefault("plugin.perks.pvp.percentage-lost", 0.05);
+        getConfig().addDefault("plugin.perks.pvp.percentage-balance-for-head", 0.05);
         getConfig().addDefault("plugin.mechanics.theme", "classic");
         getConfig().addDefault("plugin.mechanics.plugin-theme-dont-change", "classic");
         getConfig().addDefault("plugin.mechanics.update.check", true);

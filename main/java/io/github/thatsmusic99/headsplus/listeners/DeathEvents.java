@@ -123,6 +123,13 @@ public class DeathEvents implements Listener {
                         World world = ep.getEntity().getWorld();
                         head = nms.addNBTTag(head);
                         head = nms.setType("player", head);
+                        double price = hpch.getPrice("player");
+                        if (hp.getConfiguration().getPerks().getBoolean("pvp.player-balance-competition")) {
+                            double playerprice = HeadsPlus.getInstance().getEconomy().getBalance(ep.getEntity());
+                            price = playerprice * hp.getConfiguration().getPerks().getDouble("pvp.percentage-balance-for-head");
+                            double lostprice = HeadsPlus.getInstance().getEconomy().getBalance(ep.getEntity()) * hp.getConfiguration().getPerks().getDouble("pvp.percentage-lost");
+                        }
+                        head = nms.setPrice(head, price);
                         PlayerHeadDropEvent event = new PlayerHeadDropEvent(ep.getEntity(), ep.getEntity().getKiller(), head, world, entityLoc);
                         Bukkit.getServer().getPluginManager().callEvent(event);
                         if (!event.isCancelled()) {

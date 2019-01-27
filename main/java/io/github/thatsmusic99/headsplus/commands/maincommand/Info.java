@@ -59,7 +59,7 @@ public class Info implements IHeadsPlusCommand {
             sender.sendMessage(hp.getThemeColour(4) + l.versionWord() + " " + hp.getThemeColour(3) + version);
             sender.sendMessage(hp.getThemeColour(4) + l.author() + " " + hp.getThemeColour(3) + author);
             sender.sendMessage(hp.getThemeColour(4) + l.language() + " " + hp.getThemeColour(3) + l.getLanguage());
-            sender.sendMessage(hp.getThemeColour(4) + l.contributors() + hp.getThemeColour(3) + "Toldi, DariusTK, AlansS53");
+            sender.sendMessage(hp.getThemeColour(4) + l.contributors() + hp.getThemeColour(3) + "Toldi, DariusTK, AlansS53, Gneiwny, steve4744, Niestrat99");
         } catch (Exception e) {
 		    new DebugPrint(e, "Subcommand (info)", true, sender);
         }

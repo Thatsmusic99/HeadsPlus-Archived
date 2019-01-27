@@ -395,6 +395,7 @@ public class DeathEvents implements Listener {
         World world = e.getWorld();
         i = nms.addNBTTag(i);
         i = nms.setType(mobName, i);
+        i = nms.setPrice(i, price);
         EntityHeadDropEvent event = new EntityHeadDropEvent(k, i, world, entityLoc, e.getType());
         Bukkit.getServer().getPluginManager().callEvent(event);
         if (!event.isCancelled()) {

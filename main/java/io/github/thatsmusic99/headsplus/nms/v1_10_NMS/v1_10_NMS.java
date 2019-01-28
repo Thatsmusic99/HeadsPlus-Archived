@@ -247,6 +247,16 @@ public class v1_10_NMS implements NMSManager {
     }
 
     @Override
+    public org.bukkit.inventory.ItemStack setPrice(org.bukkit.inventory.ItemStack i, double price) {
+        ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setDouble("head-price", price);
+        return CraftItemStack.asBukkitCopy(is);
+    }
+
+    @Override
     public String getNMSVersion() {
         return "v1_10_R1";
     }

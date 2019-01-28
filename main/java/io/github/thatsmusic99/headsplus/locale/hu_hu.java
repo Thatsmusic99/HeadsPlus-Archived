@@ -658,4 +658,9 @@ public class hu_hu implements Locale {
     public String completed() {
         return "&6Befejezték!";
     }
+
+    @Override
+    public String lostMoney() {
+        return "&cMert {player} megölte, elvesztette {price}!";
+    }
 }

@@ -117,4 +117,6 @@ public interface NMSManager {
         return Sound.valueOf("ENTITY_EXPERIENCE_ORB_PICKUP");
     }
 
+    ItemStack setPrice(ItemStack i, double price);
+
 }

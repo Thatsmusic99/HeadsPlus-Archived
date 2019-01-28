@@ -655,4 +655,9 @@ public class lolcat implements Locale {
     public String completed() {
         return "&6dun";
     }
+
+    @Override
+    public String lostMoney() {
+        return "&cok so u lost {price} cos {player} kicked ur butt B)";
+    }
 }

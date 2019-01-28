@@ -111,21 +111,38 @@ public class DeathEvents implements Listener {
                         SkullMeta headM = (SkullMeta) head.getItemMeta();
                         headM = nms.setSkullOwner(ep.getEntity().getName(), headM);
                         headM.setDisplayName(hpch.getDisplayName("player").replaceAll("\\{player}", ep.getEntity().getName()));
-                        List<String> strs = new ArrayList<>();
-                        for (String str : hpch.getLore("player")) {
-                            strs.add(ChatColor.translateAlternateColorCodes('&', str.replaceAll("\\{player}", ep.getEntity().getName()).replaceAll("\\{price}", String.valueOf(hpch.getPrice("player")))));
-                        }
-                        headM.setLore(strs);
-                        head.setItemMeta(headM);
+
+
                         Location entityLoc = ep.getEntity().getLocation();
                         double entityLocY = entityLoc.getY() + 1;
                         entityLoc.setY(entityLocY);
                         World world = ep.getEntity().getWorld();
+
+                        double price = hpch.getPrice("player");
+                        boolean b = hp.getConfiguration().getPerks().getBoolean("pvp.player-balance-competition");
+                        double lostprice = 0.0;
+                        if (b) {
+                            double playerprice = HeadsPlus.getInstance().getEconomy().getBalance(ep.getEntity());
+                            price = playerprice * hp.getConfiguration().getPerks().getDouble("pvp.percentage-balance-for-head");
+                            lostprice = HeadsPlus.getInstance().getEconomy().getBalance(ep.getEntity()) * hp.getConfiguration().getPerks().getDouble("pvp.percentage-lost");
+                        }
+
+                        List<String> strs = new ArrayList<>();
+                        for (String str : hpch.getLore("player")) {
+                            strs.add(ChatColor.translateAlternateColorCodes('&', str.replaceAll("\\{player}", ep.getEntity().getName()).replaceAll("\\{price}", String.valueOf(price))));
+                        }
+                        headM.setLore(strs);
+                        head.setItemMeta(headM);
                         head = nms.addNBTTag(head);
                         head = nms.setType("player", head);
+                        head = nms.setPrice(head, price);
                         PlayerHeadDropEvent event = new PlayerHeadDropEvent(ep.getEntity(), ep.getEntity().getKiller(), head, world, entityLoc);
                         Bukkit.getServer().getPluginManager().callEvent(event);
                         if (!event.isCancelled()) {
+                            if (b) {
+                                hp.getEconomy().withdrawPlayer(ep.getEntity(), lostprice);
+                                ep.getEntity().sendMessage(hp.getMessagesConfig().getString("lost-money").replaceAll("\\{player}", ep.getEntity().getKiller().getName()).replaceAll("\\{price}", String.valueOf(lostprice)));
+                            }
                             world.dropItem(event.getLocation(), event.getSkull());
                         }
                     }
@@ -378,6 +395,7 @@ public class DeathEvents implements Listener {
         World world = e.getWorld();
         i = nms.addNBTTag(i);
         i = nms.setType(mobName, i);
+        i = nms.setPrice(i, price);
         EntityHeadDropEvent event = new EntityHeadDropEvent(k, i, world, entityLoc, e.getType());
         Bukkit.getServer().getPluginManager().callEvent(event);
         if (!event.isCancelled()) {

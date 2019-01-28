@@ -659,4 +659,9 @@ public class ro_ro implements Locale {
     public String completed() {
         return "&6Terminat!";
     }
+
+    @Override
+    public String lostMoney() {
+        return "&cPentru ca ai fost ucis de {player}, ai pierdut {price}!";
+    }
 }

@@ -1,88 +1,131 @@
 # HeadsPlus by Thatsmusic99 - Config wiki: https://github.com/Thatsmusic99/HeadsPlus/wiki/Configuration
+defaults:
+  price: 10.0
+  lore:
+  - '&7Price: &6{price}'
+  - '&7Type: &a{type}'
+  display-name: '{type} Head'
+  interact-name: '{type}'
 blaze:
   name:
   - MHF_Blaze
-  chance: 25
-  display-name: '&6&lBlaze &7&lHead'
-  price: 50.0
   interact-name: Blaze
+  display-name: '&6&lBlaze &7&lHead'
+  chance: 25
+  price: 50.0
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 cavespider:
   name:
   - MHF_Cavespider
-  chance: 25
-  display-name: '&1&lCave &3&lSpider &7&lHead'
-  price: 30.0
   interact-name: Cavespider
+  display-name: '&1&lCave &3&lSpider &7&lHead'
+  chance: 25
+  price: 30.0
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 chicken:
   name:
   - MHF_Chicken
-  chance: 25
-  display-name: '&lChicken &7&lHead'
-  price: 10.0
   interact-name: Chicken
+  display-name: '&lChicken &7&lHead'
+  chance: 25
+  price: 10.0
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 cow:
   name:
   - MHF_Cow
-  chance: 25
-  display-name: '&8&lCow &7&lHead'
-  price: 10.0
   interact-name: Cow
+  display-name: '&8&lCow &7&lHead'
+  chance: 25
+  price: 10.0
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 creeper:
   name:
   - MHF_Creeper
-  chance: 25
-  display-name: '&a&lCreeper &7&lHead'
-  price: 20.0
   interact-name: Creeper
+  display-name: '&a&lCreeper &7&lHead'
+  chance: 25
+  price: 20.0
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 enderman:
   name:
   - MHF_Enderman
-  chance: 25
-  display-name: '&0&lEnderman &7&lHead'
-  price: 30.0
   interact-name: Enderman
+  display-name: '&0&lEnderman &7&lHead'
+  chance: 25
+  price: 30.0
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 ghast:
   name:
   - MHF_Ghast
-  chance: 25
-  display-name: '&lGhast &7&lHead'
-  price: 50.0
   interact-name: Ghast
+  display-name: '&lGhast &7&lHead'
+  chance: 25
+  price: 50.0
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 guardian:
   name:
   - MHF_Guardian
-  chance: 25
-  display-name: '&3&lGuardian &7&lHead'
-  price: 50.0
   interact-name: Guardian
+  display-name: '&3&lGuardian &7&lHead'
+  chance: 25
+  price: 50.0
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 irongolem:
   name:
   - MHF_Golem
-  chance: 25
-  display-name: '&lIron Golem &7&lHead'
-  price: 30.0
   interact-name: Iron Golem
+  display-name: '&lIron Golem &7&lHead'
+  chance: 25
+  price: 30.0
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 mushroomcow:
   name:
   - MHF_Mushroomcow
-  chance: 25
-  display-name: '&c&lMushroomcow &7&lHead'
-  price: 10.0
   interact-name: Mushroomcow
+  display-name: '&c&lMushroomcow &7&lHead'
+  chance: 25
+  price: 10.0
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 rabbit:
   name:
   - MHF_Rabbit
-  chance: 10
-  display-name: '&e&lRabbit &7&lHead'
-  price: 10.0
   interact-name: Rabbit
+  display-name: '&e&lRabbit &7&lHead'
+  chance: 10
+  price: 10.0
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 pig:
   name:
   - MHF_Pig
-  chance: 25
-  display-name: '&e&lPig &7&lHead'
-  price: 10.0
   interact-name: Pig
+  display-name: '&e&lPig &7&lHead'
+  chance: 25
+  price: 10.0
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 sheep:
   name:
     default:
@@ -103,7 +146,7 @@ sheep:
     - HP#pink_sheep
     GRAY:
     - HP#gray_sheep
-    SILVER:
+    LIGHT_GRAY:
     - HP#silver_sheep
     CYAN:
     - HP#cyan_sheep
@@ -119,189 +162,428 @@ sheep:
     - HP#red_sheep
     BLACK:
     - HP#black_sheep
-  chance: 25
-  display-name: '&lSheep &7&lHead'
-  price: 10.0
+    SILVER:
+    - HP#silver_sheep
   interact-name: Sheep
+  display-name: '&lSheep &7&lHead'
+  chance: 25
+  price: 10.0
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 skeleton:
   name:
   - MHF_Skeleton
-  chance: 25
-  display-name: '&7&lSkeleton Head'
-  price: 15.0
   interact-name: Skeleton
+  display-name: '&7&lSkeleton Head'
+  chance: 25
+  price: 15.0
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 slime:
   name:
   - MHF_Slime
-  chance: 25
-  display-name: '&a&lSlime &7&lHead'
-  price: 20.0
   interact-name: Slime
+  display-name: '&a&lSlime &7&lHead'
+  chance: 25
+  price: 20.0
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 spider:
   name:
   - MHF_Spider
-  chance: 25
-  display-name: '&8&lSpider &7&lHead'
-  price: 15.0
   interact-name: Spider
+  display-name: '&8&lSpider &7&lHead'
+  chance: 25
+  price: 15.0
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 squid:
   name:
   - MHF_Squid
-  chance: 25
-  display-name: '&9&lSquid &7&lHead'
-  price: 10.0
   interact-name: Squid
+  display-name: '&9&lSquid &7&lHead'
+  chance: 25
+  price: 10.0
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 villager:
   name:
   - MHF_Villager
-  chance: 25
-  display-name: '&6&lVillager &7&lHead'
-  price: 10.0
   interact-name: Villager
+  display-name: '&6&lVillager &7&lHead'
+  chance: 25
+  price: 10.0
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 witch:
   name:
   - MHF_Witch
-  chance: 25
-  display-name: '&5&lWitch &7&lHead'
-  price: 20.0
   interact-name: Witch
+  display-name: '&5&lWitch &7&lHead'
+  chance: 25
+  price: 20.0
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 zombie:
   name:
   - MHF_Zombie
-  chance: 25
-  display-name: '&2&lZombie &7&lHead'
-  price: 15.0
   interact-name: Zombie
+  display-name: '&2&lZombie &7&lHead'
+  chance: 25
+  price: 15.0
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 bat:
   name: []
   chance: 0
   display-name: ''
   price: 0.0
   interact-name: Bat
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
+cod:
+  name: []
+  chance: 0
+  display-name: '{default}'
+  price: '{default}'
+  interact-name: '{default}'
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
+dolphin:
+  name: []
+  chance: 0
+  display-name: '{default}'
+  price: '{default}'
+  interact-name: '{default}'
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 donkey:
   name: []
   chance: 0
   display-name: ''
   price: 0.0
   interact-name: Donkey
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
+drowned:
+  name: []
+  chance: 0
+  display-name: '{default}'
+  price: '{default}'
+  interact-name: '{default}'
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 enderdragon:
   name: []
   chance: 0
   display-name: ''
   price: 0.0
   interact-name: Enderdragon
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 elderguardian:
   name: []
   chance: 0
   display-name: ''
   price: 0.0
   interact-name: Elderguardian
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 endermite:
   name: []
   chance: 0
   display-name: ''
   price: 0.0
   interact-name: Endermite
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 evoker:
   name: []
   chance: 0
   display-name: ''
   price: 0.0
   interact-name: Evoker
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 horse:
-  name: []
+  name:
+    default: []
+    WHITE: []
+    CREAMY: []
+    CHESTNUT: []
+    BROWN: []
+    BLACK: []
+    GRAY: []
+    DARK_BROWN: []
   chance: 0
   display-name: ''
   price: 0.0
   interact-name: Horse
-llama:
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
+husk:
   name: []
+  chance: 0
+  display-name: '{default}'
+  price: '{default}'
+  interact-name: '{default}'
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
+llama:
+  name:
+    default: []
+    CREAMY: []
+    WHITE: []
+    BROWN: []
+    GRAY: []
   chance: 0
   display-name: ''
   price: 0.0
   interact-name: Llama
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 magmacube:
   name: []
   chance: 0
   display-name: ''
   price: 0.0
   interact-name: Magmacube
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 mule:
   name: []
   chance: 0
   display-name: ''
   price: 0.0
   interact-name: Mule
-parrot:
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
+ocelot:
   name: []
+  chance: 0
+  display-name: '{default}'
+  price: '{default}'
+  interact-name: '{default}'
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
+parrot:
+  name:
+    default: []
+    RED: []
+    BLUE: []
+    GREEN: []
+    CYAN: []
+    GRAY: []
   chance: 0
   display-name: ''
   price: 0.0
   interact-name: Parrot
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
+phantom:
+  name: []
+  chance: 0
+  display-name: '{default}'
+  price: '{default}'
+  interact-name: '{default}'
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
+pigzombie:
+  name: []
+  chance: 0
+  display-name: '{default}'
+  price: '{default}'
+  interact-name: '{default}'
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 polarbear:
   name: []
   chance: 0
   display-name: ''
   price: 0.0
   interact-name: Polarbear
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
+pufferfish:
+  name: []
+  chance: 0
+  display-name: '{default}'
+  price: '{default}'
+  interact-name: '{default}'
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
+salmon:
+  name: []
+  chance: 0
+  display-name: '{default}'
+  price: '{default}'
+  interact-name: '{default}'
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 shulker:
   name: []
   chance: 0
   display-name: ''
   price: 0.0
   interact-name: Shulker
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 silverfish:
   name: []
   chance: 0
   display-name: ''
   price: 0.0
   interact-name: Silverfish
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 skeletonhorse:
   name: []
   chance: 0
   display-name: ''
   price: 0.0
   interact-name: Skeletonhorse
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 snowman:
   name: []
   chance: 0
   display-name: ''
   price: 0.0
   interact-name: Snowman
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 stray:
   name: []
   chance: 0
   display-name: ''
   price: 0.0
   interact-name: Stray
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
+tropicalfish:
+  name: []
+  chance: 0
+  display-name: '{default}'
+  price: '{default}'
+  interact-name: '{default}'
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
+turtle:
+  name: []
+  chance: 0
+  display-name: '{default}'
+  price: '{default}'
+  interact-name: '{default}'
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 vex:
   name: []
   chance: 0
   display-name: ''
   price: 0.0
   interact-name: Vex
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 vindicator:
   name: []
   chance: 0
   display-name: ''
   price: 0.0
   interact-name: Vindicator
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 wither:
   name: []
   chance: 0
   display-name: ''
   price: 0.0
   interact-name: Wither
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 witherskeleton:
   name: []
   chance: 0
   display-name: ''
   price: 0.0
   interact-name: Witherskeleton
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
+wolf:
+  name: []
+  chance: 0
+  display-name: '{default}'
+  price: '{default}'
+  interact-name: '{default}'
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
+zombiehorse:
+  name: []
+  chance: 0
+  display-name: '{default}'
+  price: '{default}'
+  interact-name: '{default}'
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
+zombievillager:
+  name: []
+  chance: 0
+  display-name: '{default}'
+  price: '{default}'
+  interact-name: '{default}'
+  mask-effects: []
+  mask-amplifiers: []
+  lore: '{default}'
 player:
   chance: 100
   display-name: '&b&l%d''s &7&lhead'
   price: 10.0
+  mask-effects: []
+  mask-amplifiers: []
+  lore:
+  - '&7Price: &6{price}'
+  - '&7Player: &a{player}'
 appleHeadN: MHF_apple
 appleN: MHF_apple
 cakeHeadN: MHF_cake

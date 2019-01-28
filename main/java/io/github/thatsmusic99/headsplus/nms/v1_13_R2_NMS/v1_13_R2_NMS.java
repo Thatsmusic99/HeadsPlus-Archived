@@ -247,6 +247,16 @@ public class v1_13_R2_NMS implements NewNMSManager {
     }
 
     @Override
+    public ItemStack setPrice(ItemStack i, double price) {
+        net.minecraft.server.v1_13_R2.ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setDouble("head-price", price);
+        return CraftItemStack.asBukkitCopy(is);
+    }
+
+    @Override
     public String getNMSVersion() {
         return "v1_13_R2";
     }

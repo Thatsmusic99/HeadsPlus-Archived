@@ -67,6 +67,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                             EconomyResponse zr = HeadsPlus.getInstance().getEconomy().depositPlayer((Player) sender, price);
                                             String success = hpc.getString("sell-success").replaceAll("\\{price}", Double.toString(zr.amount)).replaceAll("\\{balance}", HeadsPlus.getInstance().getConfiguration().fixBalanceStr(zr.balance));
                                             if (zr.transactionSuccess()) {
+                                                
                                                 if (price > 0) {
                                                     itemRemoval((Player) sender, args, -1);
                                                     sender.sendMessage(success);

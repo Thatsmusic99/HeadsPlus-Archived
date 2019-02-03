@@ -189,17 +189,17 @@ public class HeadsPlusMessagesConfig extends ConfigSettings {
             getConfig().set("plugin-disabled", l.getDisabled());
             getConfig().set("faulty-theme", l.badTheme());
             getConfig().set("no-vault", l.noVault());
-            getConfig().addDefault("no-vault-2", l.noVaultGroup());
-            getConfig().addDefault("no-name-data", l.noNameData());
-            getConfig().addDefault("no-lore-data", l.noLoreData());
-            getConfig().addDefault("no-mask-data", l.noMaskData());
-            getConfig().addDefault("set-value", l.setValue());
-            getConfig().addDefault("add-value", l.addedValue());
-            getConfig().addDefault("remove-value", l.removedValue());
-            getConfig().addDefault("not-enough-money", l.getNotEnoughMoney());
-            getConfig().addDefault("chat-input", l.inputChat());
-            getConfig().addDefault("challenge-completed", l.completed());
-            getConfig().addDefault("lost-money", l.lostMoney());
+            getConfig().set("no-vault-2", l.noVaultGroup());
+            getConfig().set("no-name-data", l.noNameData());
+            getConfig().set("no-lore-data", l.noLoreData());
+            getConfig().set("no-mask-data", l.noMaskData());
+            getConfig().set("set-value", l.setValue());
+            getConfig().set("add-value", l.addedValue());
+            getConfig().set("remove-value", l.removedValue());
+            getConfig().set("not-enough-money", l.getNotEnoughMoney());
+            getConfig().set("chat-input", l.inputChat());
+            getConfig().set("challenge-completed", l.completed());
+            getConfig().set("lost-money", l.lostMoney());
         }
         updateMessages(nullpoint);
 		getConfig().options().copyDefaults(true);

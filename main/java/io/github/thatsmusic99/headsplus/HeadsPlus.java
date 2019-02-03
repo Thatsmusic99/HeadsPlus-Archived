@@ -209,6 +209,7 @@ public class HeadsPlus extends JavaPlugin {
             return false;
         }
         econ = rsp.getProvider();
+
         return econ != null;
     }
 
@@ -223,7 +224,7 @@ public class HeadsPlus extends JavaPlugin {
             }
             Class.forName("com.mysql.jdbc.Driver");
             ConfigurationSection mysql = getConfiguration().getMySQL();
-            connection = DriverManager.getConnection("jdbc:mysql://" + mysql.getString("host") + ":" + mysql.getString("port") + "/" + mysql.getString("database") + "?useSSL=false", mysql.getString("username"), mysql.getString("password"));
+            connection = DriverManager.getConnection("jdbc:mysql://" + mysql.getString("host") + ":" + mysql.getString("port") + "/" + mysql.getString("database") + "?useSSL=false&autoReconnect=true", mysql.getString("username"), mysql.getString("password"));
             Statement st = connection.createStatement();
             for (String str : Arrays.asList("headspluslb", "headsplussh", "headspluscraft")) {
                 debug("- Creating database for " + str + "...", 2);
@@ -332,8 +333,7 @@ public class HeadsPlus extends JavaPlugin {
     private void registerCommands() {
         debug("- Registering /headsplus...", 3);
         getCommand("headsplus").setExecutor(new HeadsPlusCommand());
-        debug("- Registering /hp...", 3);
-        getCommand("hp").setExecutor(new HeadsPlusCommand());
+     //   getCommand("hp").setExecutor(new HeadsPlusCommand());
         debug("- Registering /hp's tab completer..", 3);
         getCommand("hp").setTabCompleter(new TabComplete());
         debug("- Registering /head...", 3);
@@ -467,6 +467,7 @@ public class HeadsPlus extends JavaPlugin {
         commands.add(new SellHead());
         commands.add(new DebugPrint());
         commands.add(new HeadInfoCommand());
+    //    commands.add(new Conjure());
     }
 
     // GETTERS

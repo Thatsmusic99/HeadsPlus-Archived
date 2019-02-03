@@ -127,6 +127,7 @@ public class Head extends ItemStack implements Icon {
                 p.sendMessage(hpc.getString("not-enough-money"));
                 event.setCancelled(true);
                 e.setCancelled(true);
+                return;
             }
             EconomyResponse er = ef.withdrawPlayer(p, price);
             String success = hpc.getString("buy-success").replaceAll("\\{price}", HeadsPlus.getInstance().getConfiguration().fixBalanceStr(er.amount)).replaceAll("\\{balance}", Double.toString(er.balance));

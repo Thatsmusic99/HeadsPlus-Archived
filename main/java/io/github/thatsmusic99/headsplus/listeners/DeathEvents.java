@@ -36,7 +36,7 @@ public class DeathEvents implements Listener {
 	public final List<EntityType> ableEntities = new ArrayList<>(Arrays.asList(EntityType.BAT, EntityType.BLAZE, EntityType.CAVE_SPIDER, EntityType.CHICKEN, EntityType.COW, EntityType.CREEPER, EntityType.ENDER_DRAGON, EntityType.ENDERMAN, EntityType.ENDERMITE, EntityType.GHAST, EntityType.GUARDIAN, EntityType.HORSE, EntityType.IRON_GOLEM, EntityType.MAGMA_CUBE, EntityType.MUSHROOM_COW, EntityType.OCELOT, EntityType.PIG, EntityType.PIG_ZOMBIE, EntityType.RABBIT, EntityType.SHEEP, EntityType.SILVERFISH, EntityType.SKELETON, EntityType.SLIME, EntityType.SNOWMAN, EntityType.SPIDER, EntityType.SQUID, EntityType.VILLAGER, EntityType.WITCH, EntityType.WITHER, EntityType.ZOMBIE, EntityType.WOLF));
     private final HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().getHeadsXConfig();
     private final HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
-    private final HashMap<EntityType, HashMap<String, List<ItemStack>>> heads = new HashMap<>();
+    public final HashMap<EntityType, HashMap<String, List<ItemStack>>> heads = new HashMap<>();
 
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent e) {
@@ -413,5 +413,14 @@ public class DeathEvents implements Listener {
         }
 
         return false;
+    }
+
+    public EntityType prettyStringToEntity(String s) {
+	    for (EntityType e : ableEntities) {
+	        if (e.name().replaceAll("_", "").equalsIgnoreCase(s)) {
+	            return e;
+            }
+        }
+        return null;
     }
 }

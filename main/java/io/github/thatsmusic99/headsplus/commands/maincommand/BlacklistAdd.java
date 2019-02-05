@@ -11,7 +11,8 @@ import org.bukkit.command.CommandSender;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 
 public class BlacklistAdd implements IHeadsPlusCommand {
-	
+
+	// S
 	private final HeadsPlusMainConfig config = HeadsPlus.getInstance().getConfiguration();
 	private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
@@ -37,7 +38,7 @@ public class BlacklistAdd implements IHeadsPlusCommand {
 
 	@Override
 	public String getUsage() {
-		return "/hp blacklistadd <Username>";
+		return "/hp blacklistadd <Username|UUID>";
 	}
 
 	@Override

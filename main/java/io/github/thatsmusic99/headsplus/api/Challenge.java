@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 
 public class Challenge {
 
+    // I
     private String configName;
     private String mainName;
     private String header;

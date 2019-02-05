@@ -5,6 +5,7 @@ import org.bukkit.event.HandlerList;
 
 public class CommunicateEvent extends Event {
 
+    // S
     private static final HandlerList handlers = new HandlerList();
     private String plugin;
 

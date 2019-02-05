@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class PlayerHeadDropEvent extends Event implements Cancellable {
 
+    // M
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled;
     private final Player deadPlayer;

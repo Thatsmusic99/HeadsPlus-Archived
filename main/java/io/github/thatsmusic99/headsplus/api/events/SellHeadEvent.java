@@ -10,6 +10,7 @@ import java.util.List;
 
 public class SellHeadEvent extends Event implements Cancellable {
 
+    // S
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled;
     private double totalPaid;

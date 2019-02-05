@@ -20,6 +20,7 @@ import java.util.UUID;
 
 public class HeadsPlusAPI {
 
+    // S
     private HeadsPlus hp = HeadsPlus.getInstance();
     private final HeadsPlusConfigHeadsX hpcHeadsX = hp.getHeadsXConfig();
     private final HeadsPlusConfigHeads hpcHeads = hp.getHeadsConfig();

@@ -15,6 +15,7 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 
 public class HelpMenu implements IHeadsPlusCommand {
 
+    // I
 	private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
 	private void helpNoArgs(CommandSender sender) {

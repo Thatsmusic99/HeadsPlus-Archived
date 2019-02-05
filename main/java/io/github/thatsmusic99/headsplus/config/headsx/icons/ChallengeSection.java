@@ -46,6 +46,11 @@ public class ChallengeSection {
         public String getDefaultDisplayName() {
             return "&8[&a&lEasy&8]";
         }
+
+        @Override
+        public String getSingleLetter() {
+            return "E";
+        }
     }
 
     public static class EasyMedium implements Icon {
@@ -80,6 +85,11 @@ public class ChallengeSection {
         @Override
         public String getDefaultDisplayName() {
             return "&8[&a&lEasy&8-&6&lMedium&8]";
+        }
+
+        @Override
+        public String getSingleLetter() {
+            return "";
         }
     }
 

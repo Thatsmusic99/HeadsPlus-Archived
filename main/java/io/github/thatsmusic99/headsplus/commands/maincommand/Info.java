@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 public class Info implements IHeadsPlusCommand {
 
+	// D
 	@Override
 	public String getCmdName() {
 		return "info";

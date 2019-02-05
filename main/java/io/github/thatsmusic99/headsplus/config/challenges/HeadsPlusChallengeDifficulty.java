@@ -16,6 +16,7 @@ public enum HeadsPlusChallengeDifficulty {
     public String dn;
     public DyeColor color;
     public int i;
+    public int p;
 
     HeadsPlusChallengeDifficulty(String key, String dn, DyeColor color, int i) {
         this.key = key;

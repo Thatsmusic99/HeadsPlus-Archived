@@ -13,6 +13,7 @@ import java.util.List;
 
 public class BlacklistwAdd implements IHeadsPlusCommand {
 
+    // I
 	private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
 	@Override

@@ -8,6 +8,7 @@ import org.bukkit.event.HandlerList;
 
 public class LevelUpEvent extends Event implements Cancellable {
 
+    // I
     private final Player player;
     private final Level currentLevel;
     private final Level nextLevel;

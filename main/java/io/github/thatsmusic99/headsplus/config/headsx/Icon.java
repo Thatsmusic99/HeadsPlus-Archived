@@ -69,4 +69,6 @@ public interface Icon {
         return HeadsPlus.getInstance().getItems().getConfig().getString("icons." + getIconName() + ".display-name");
     }
 
+    String getSingleLetter();
+
 }

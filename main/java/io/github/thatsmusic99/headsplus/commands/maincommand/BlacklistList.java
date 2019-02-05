@@ -14,6 +14,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 
 public class BlacklistList implements IHeadsPlusCommand {
 
+    // L
     private HeadsPlus hp = HeadsPlus.getInstance();
 	private final HeadsPlusMessagesConfig hpc = hp.getMessagesConfig();
 	private HeadsPlusMainConfig config = hp.getConfiguration();

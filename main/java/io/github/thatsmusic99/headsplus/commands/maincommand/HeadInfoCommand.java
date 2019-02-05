@@ -19,6 +19,7 @@ import java.util.List;
 
 public class HeadInfoCommand implements IHeadsPlusCommand {
 
+    // A
     private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @Override

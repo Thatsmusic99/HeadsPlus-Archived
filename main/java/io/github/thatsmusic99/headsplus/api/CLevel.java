@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus.api;
 
 public class CLevel implements Level {
 
+    // T
     private String configName;
     private String displayName;
     private int requiredXP;

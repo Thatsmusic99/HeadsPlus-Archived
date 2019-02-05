@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 
 public class DebugPrint implements IHeadsPlusCommand {
 
+    // R
     public DebugPrint(Exception e, String name, boolean command, CommandSender sender) {
         Logger log = HeadsPlus.getInstance().getLogger();
         ConfigurationSection cs = HeadsPlus.getInstance().getConfiguration().getMechanics();

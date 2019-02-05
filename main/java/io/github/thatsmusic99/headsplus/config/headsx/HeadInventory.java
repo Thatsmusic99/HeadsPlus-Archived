@@ -29,7 +29,7 @@ public abstract class HeadInventory {
 
     public abstract String getDefaultTitle();
 
-    public abstract Icon[] getDefaultItems();
+    public abstract String getDefaultItems();
 
     public abstract String getDefaultId();
 

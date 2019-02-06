@@ -52,9 +52,9 @@ public class HeadsPlusConfigItems extends ConfigSettings {
         for (HeadInventory inv : HeadInventory.getInventories()) {
              getConfig().addDefault("inventories." + inv.getName() + ".title", inv.getDefaultTitle());
              List<String> icons = new ArrayList<>();
-             for (Icon i : inv.getDefaultItems()) {
-                 icons.add(i.getIconName());
-             }
+         //    for (Icon i : inv.getDefaultItems()) {
+         //        icons.add(i.getIconName());
+         //    }
              getConfig().addDefault("inventories." + inv.getName() + ".icons", icons);
              getConfig().addDefault("inventories." + inv.getName() + ".size", 54);
         }

@@ -48,4 +48,9 @@ public class Stats extends ItemStack implements Icon {
         return HeadsPlus.getInstance().getItems().getConfig().getStringList("icons." + getIconName() + ".lore");
     }
 
+    @Override
+    public String getSingleLetter() {
+        return "S";
+    }
+
 }

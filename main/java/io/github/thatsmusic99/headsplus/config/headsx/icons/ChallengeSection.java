@@ -89,7 +89,7 @@ public class ChallengeSection {
 
         @Override
         public String getSingleLetter() {
-            return "";
+            return "R";
         }
     }
 
@@ -126,6 +126,11 @@ public class ChallengeSection {
         public String getDefaultDisplayName() {
             return "&8[&6&lMedium&8]";
         }
+
+        @Override
+        public String getSingleLetter() {
+            return "Z";
+        }
     }
 
     public static class MediumHard implements Icon {
@@ -160,6 +165,11 @@ public class ChallengeSection {
         @Override
         public String getDefaultDisplayName() {
             return "&8[&6&lMedium&8-&c&lHard&8]";
+        }
+
+        @Override
+        public String getSingleLetter() {
+            return "V";
         }
     }
 
@@ -200,6 +210,11 @@ public class ChallengeSection {
         @Override
         public List<String> getLore() {
             return HeadsPlus.getInstance().getItems().getConfig().getStringList("icons." + getIconName() + ".lore");
+        }
+
+        @Override
+        public String getSingleLetter() {
+            return "B";
         }
     }
 }

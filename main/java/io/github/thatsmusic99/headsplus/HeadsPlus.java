@@ -467,7 +467,7 @@ public class HeadsPlus extends JavaPlugin {
         commands.add(new SellHead());
         commands.add(new DebugPrint());
         commands.add(new HeadInfoCommand());
-    //    commands.add(new Conjure());
+        commands.add(new Conjure());
     }
 
     // GETTERS

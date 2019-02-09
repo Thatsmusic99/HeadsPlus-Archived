@@ -5,6 +5,7 @@ import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.listeners.DeathEvents;
+import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -34,7 +35,7 @@ public class Conjure implements IHeadsPlusCommand {
 
     @Override
     public String getCmdDescription() {
-        return "";
+        return LocaleManager.getLocale().descConjure();
     }
 
     @Override

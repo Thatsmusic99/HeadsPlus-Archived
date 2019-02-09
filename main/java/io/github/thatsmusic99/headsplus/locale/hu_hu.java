@@ -663,4 +663,9 @@ public class hu_hu implements Locale {
     public String lostMoney() {
         return "&cMert {player} megölte, elvesztette {price}!";
     }
+
+    @Override
+    public String descConjure() {
+        return "Visszatér egy adott típusú fejet.";
+    }
 }

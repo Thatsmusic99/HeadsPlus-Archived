@@ -63,7 +63,7 @@ public abstract class HeadInventory {
         FileConfiguration fc = HeadsPlus.getInstance().getItems().getConfig();
         Icon[] icons = new Icon[getSize()];
         for (int i = 0; i < getSize(); i++) {
-            icons[i] = Icon.getIconFromName(fc.getStringList("inventories." + getName() + ".icons").get(i));
+            icons[i] = Icon.getIconFromSingleLetter(String.valueOf(fc.getString("inventories." + getName() + ".icons").charAt(i)));
         }
         return icons;
     }

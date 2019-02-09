@@ -99,7 +99,7 @@ public class InventoryManager {
                     is = hp.getNMS().addSection(is, "advent-calendar");
                     heads.add(is);
                 }*/
-                paged = new PagedLists<>(heads, hp.getItems().getConfig().getStringList("inventories.headmenu.icons").stream().filter(l -> l.equalsIgnoreCase("headsection")).collect(Collectors.toList()).size());
+                paged = new PagedLists<>(heads, charOccurance(hp.getItems().getConfig().getString("inventories.headmenu.icons"), "L"));
                 pages = paged.getTotalPages();
 
                 return headmenu.build(paged, p);
@@ -123,7 +123,7 @@ public class InventoryManager {
                         heads.add(skull(String.valueOf(str), p));
                     }
                 }
-                paged = new PagedLists<>(heads, hp.getItems().getConfig().getStringList("inventories.headsection.icons").stream().filter(l -> l.equalsIgnoreCase("head")).collect(Collectors.toList()).size());
+                paged = new PagedLists<>(heads, charOccurance(hp.getItems().getConfig().getString("inventories.headsection.icons"), "H"));
                 pages = paged.getTotalPages();
                 return new HeadSection().build(paged, p);
             } else if (section.equalsIgnoreCase("favourites")) {
@@ -134,7 +134,7 @@ public class InventoryManager {
                         heads.add(skull(String.valueOf(str), p));
                     }
                 }
-                paged = new PagedLists<>(heads, hp.getItems().getConfig().getStringList("inventories.favourites.icons").stream().filter(l -> l.equalsIgnoreCase("head")).collect(Collectors.toList()).size());
+                paged = new PagedLists<>(heads, charOccurance(hp.getItems().getConfig().getString("inventories.favourites.icons"), "H"));
                 pages = paged.getTotalPages();
                 return new FavouritesMenu().build(paged, p);
             } else {
@@ -152,7 +152,7 @@ public class InventoryManager {
                             items.add(skull(String.valueOf(str), p));
                         }
                     }
-                    paged = new PagedLists<>(items, hp.getItems().getConfig().getStringList("inventories.headsection.icons").stream().filter(lst -> lst.equalsIgnoreCase("head")).collect(Collectors.toList()).size());
+                    paged = new PagedLists<>(items, charOccurance(hp.getItems().getConfig().getString("inventories.headsection.icons"), "H"));
                     pages = paged.getTotalPages();
                     return new HeadSection().build(paged, p);
                 } else {
@@ -176,7 +176,7 @@ public class InventoryManager {
                             items.add(is);
                         }
                     }
-                    paged = new PagedLists<>(items, hp.getItems().getConfig().getStringList("inventories.headsection.icons").stream().filter(lst -> lst.equalsIgnoreCase("head")).collect(Collectors.toList()).size());
+                    paged = new PagedLists<>(items, charOccurance(hp.getItems().getConfig().getString("inventories.headsection.icons"), "H"));
                     pages = paged.getTotalPages();
                     return new HeadSection().build(paged, p);
                 }
@@ -194,7 +194,7 @@ public class InventoryManager {
                         cs.add(c);
                     }
                 }
-                int a = hp.getItems().getConfig().getStringList("inventories.challenge-section.icons").stream().filter(lst -> lst.equalsIgnoreCase("challenge")).collect(Collectors.toList()).size();
+                int a = charOccurance(hp.getItems().getConfig().getString("inventories.challenge-section.icons"), "C");
                 for (Challenge c : cs) {
                     ItemStack is;
                     if (c.isComplete(p)) {
@@ -241,7 +241,7 @@ public class InventoryManager {
                 it = nms.setType(o, it);
                 items.add(it);
             }
-            PagedLists<ItemStack> ps = new PagedLists<>(items, hp.getItems().getConfig().getStringList("inventories.sellheadmenu.icons").stream().filter(lst -> lst.equalsIgnoreCase("head")).collect(Collectors.toList()).size());
+            PagedLists<ItemStack> ps = new PagedLists<>(items, charOccurance(hp.getItems().getConfig().getString("inventories.sellheadmenu.icons"), "H"));
             pages = ps.getTotalPages();
             return new SellheadMenu().build(ps, p);
         }
@@ -297,5 +297,15 @@ public class InventoryManager {
 
     public static InventoryManager getIM(Player p) {
         return pls.get(p);
+    }
+
+    private int charOccurance(String s, String c) {
+        int count = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (String.valueOf(s.charAt(i)).equalsIgnoreCase(c)) {
+                count++;
+            }
+        }
+        return count;
     }
 }

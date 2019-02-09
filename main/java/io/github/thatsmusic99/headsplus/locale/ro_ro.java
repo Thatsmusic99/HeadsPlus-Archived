@@ -664,4 +664,9 @@ public class ro_ro implements Locale {
     public String lostMoney() {
         return "&cPentru ca ai fost ucis de {player}, ai pierdut {price}!";
     }
+
+    @Override
+    public String descConjure() {
+        return "Retreife un cap de un anumit tip.";
+    }
 }

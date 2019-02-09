@@ -660,4 +660,9 @@ public class lolcat implements Locale {
     public String lostMoney() {
         return "&cok so u lost {price} cos {player} kicked ur butt B)";
     }
+
+    @Override
+    public String descConjure() {
+        return "Get a kewl hed or smth";
+    }
 }

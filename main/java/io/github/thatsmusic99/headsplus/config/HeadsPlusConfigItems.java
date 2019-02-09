@@ -50,13 +50,13 @@ public class HeadsPlusConfigItems extends ConfigSettings {
             }
         }
         for (HeadInventory inv : HeadInventory.getInventories()) {
-             getConfig().addDefault("inventories." + inv.getName() + ".title", inv.getDefaultTitle());
-             List<String> icons = new ArrayList<>();
-         //    for (Icon i : inv.getDefaultItems()) {
-         //        icons.add(i.getIconName());
-         //    }
-             getConfig().addDefault("inventories." + inv.getName() + ".icons", icons);
-             getConfig().addDefault("inventories." + inv.getName() + ".size", 54);
+            getConfig().addDefault("inventories." + inv.getName() + ".title", inv.getDefaultTitle());
+            if (getConfig().get("inventories." + inv.getName() + ".icons") instanceof List) {
+                HeadsPlus.getInstance().getLogger().warning("Old format for inventories.yml detected for " + inv.getName() + "! Starting over...");
+                getConfig().set("inventories." + inv.getName() + ".icons", inv.getDefaultItems());
+            }
+            getConfig().addDefault("inventories." + inv.getName() + ".icons", inv.getDefaultItems());
+            getConfig().addDefault("inventories." + inv.getName() + ".size", 54);
         }
 
         getConfig().options().copyDefaults(true);

@@ -82,6 +82,7 @@ public class Head extends ItemStack implements Icon {
 
             } */
      //   }
+
         if (e.getClick().isRightClick()) {
             HPPlayer hpp = HPPlayer.getHPPlayer(p);
             String id = HeadsPlus.getInstance().getNMS().getId(e.getCurrentItem());

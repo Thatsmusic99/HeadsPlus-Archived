@@ -663,4 +663,9 @@ public class es_es implements Locale {
     public String lostMoney() {
         return "&c¡Porque te mató {player}, perdiste {price}!";
     }
+
+    @Override
+    public String descConjure() {
+        return "Recupera una cabeza de un tipo específico.";
+    }
 }

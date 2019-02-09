@@ -661,4 +661,9 @@ public class fr_fr implements Locale {
     public String lostMoney() {
         return "&cTu as perdu {price} à cause de {player} te tué!";
     }
+
+    @Override
+    public String descConjure() {
+        return null;
+    }
 }

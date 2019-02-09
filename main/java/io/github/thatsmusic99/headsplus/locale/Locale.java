@@ -288,4 +288,6 @@ public interface Locale {
 
     String lostMoney();
 
+    String descConjure();
+
 }

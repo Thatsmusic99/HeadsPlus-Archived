@@ -57,6 +57,15 @@ public interface Icon {
         return icons;
     }
 
+    static Icon getIconFromSingleLetter(String s) {
+        for (Icon i : getIcons()) {
+            if (i.getSingleLetter().equalsIgnoreCase(s) && !(i instanceof Air)) {
+                return i;
+            }
+        }
+        return null;
+    }
+
     default Material getMaterial() {
         return Material.getMaterial(HeadsPlus.getInstance().getItems().getConfig().getString("icons." + getIconName() + ".material"));
     }

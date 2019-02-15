@@ -56,7 +56,9 @@ public class DeathEvents implements Listener {
                     }
                     if (!c.getBlacklist("world").getStringList("list").contains(e.getEntity().getWorld().getName()) || e.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !c.getBlacklist("world").getBoolean("enabled")) {
 
+
                         String entity = e.getEntityType().toString().toLowerCase().replaceAll("_", "");
+                        if (c.getMechanics().getStringList("looting.ignored-entities").contains(entity)) return;
                         Random rand = new Random();
                         double chance1 = hpch.getConfig().getDouble(entity + ".chance");
                         double chance2 = (double) rand.nextInt(100);
@@ -94,6 +96,7 @@ public class DeathEvents implements Listener {
                         }
                     }
                 }
+                if (c.getMechanics().getStringList("looting.ignored-entities").contains("player")) return;
                 if (c.getPerks().getStringList("drops.ignore-players").contains(ep.getEntity().getUniqueId().toString())
                         || c.getPerks().getStringList("drops.ignore-players").contains(ep.getEntity().getName())) return;
                 if (!c.getBlacklist("world").getStringList("list").contains(ep.getEntity().getWorld().getName()) || ep.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !c.getBlacklist("world").getBoolean("enabled")) {

@@ -4,9 +4,10 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallenges;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusLeaderboards;
 import io.github.thatsmusic99.headsplus.listeners.DeathEvents;
+import io.github.thatsmusic99.headsplus.storage.PlayerScores;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
@@ -28,6 +29,10 @@ public class MySQLAPI {
         hpl = hp.getLeaderboardsConfig();
         hpc = hp.getChallengeConfig();
         de = hp.getDeathEvents();
+        if (hpc.getConfig().get("player-data") instanceof ConfigurationSection) {
+            HeadsPlus.getInstance().getLogger().info("Old storage detected! Transfering data (this will be saved when the server stops)...");
+            transferScoresToJSON();
+        }
     }
 
     private void addNewPlayerValue(Player p, String section, String database, int shAmount) throws SQLException {
@@ -90,36 +95,15 @@ public class MySQLAPI {
             }
         } else {
             if (database.equalsIgnoreCase("headspluslb")) {
-                hpl.getConfig().addDefault("player-data." + uuid + "." + section, 0);
-                int s = hpl.getConfig().getInt("server-total.total");
-                s++;
-                hpl.getConfig().set("server-total.total", s);
-                int is = hpl.getConfig().getInt("server-total." + section);
-                is++;
-                hpl.getConfig().set("server-total." + section, is);
-                hpl.getConfig().options().copyDefaults(true);
-                hpl.save();
+                HeadsPlus.getInstance().getScores().setPlayerTotal(uuid, section, database, 0);
+                HeadsPlus.getInstance().getScores().addPlayerTotal("server-total", section.toUpperCase(), database, 1);
             } else if (database.equalsIgnoreCase("headsplussh")) {
-                hpc.getConfig().addDefault("player-data." + uuid + ".sellhead." + section, 0);
-                int s = hpc.getConfig().getInt("server-total.sellhead.total");
-                s += shAmount;
-                hpc.getConfig().set("server-total.sellhead.total", s);
-                int is = hpc.getConfig().getInt("server-total." + section);
-                is += shAmount;
-                hpc.getConfig().set("server-total." + section, is);
-                hpc.getConfig().options().copyDefaults(true);
-                hpc.save();
+                HeadsPlus.getInstance().getScores().setPlayerTotal(uuid, section, database, 0);
+                HeadsPlus.getInstance().getScores().addPlayerTotal("server-total", section.toUpperCase(), database, shAmount);
             } else {
                 try {
-                    hpc.getConfig().addDefault("player-data." + uuid + ".crafting." + section, 0);
-                    int s = hpc.getConfig().getInt("server-total.crafting.total");
-                    s += shAmount;
-                    hpc.getConfig().set("server-total.crafting.total", s);
-                    int is = hpc.getConfig().getInt("server-total.crafting." + section);
-                    is += shAmount;
-                    hpc.getConfig().set("server-total.crafting." + section, is);
-                    hpc.getConfig().options().copyDefaults(true);
-                    hpc.save();
+                    HeadsPlus.getInstance().getScores().setPlayerTotal(uuid, section, database, 0);
+                    HeadsPlus.getInstance().getScores().addPlayerTotal("server-total", section.toUpperCase(), database, shAmount);
                 } catch (IllegalArgumentException ignored) { // Idk why the hell this happens????
 
                 }
@@ -165,61 +149,26 @@ public class MySQLAPI {
         } else {
             if (database.equalsIgnoreCase("headspluslb")) {
                 try {
-                    int i = hpl.getConfig().getInt("player-data." + uuid + "." + section);
-                    i++;
-                    hpl.getConfig().set("player-data." + uuid + "." + section, i);
-                    int is = hpl.getConfig().getInt("player-data." + uuid+ ".total");
-                    is++;
-                    hpl.getConfig().set("player-data." + uuid + ".total", is);
-                    int s = hpl.getConfig().getInt("server-total." + section);
-                    s++;
-                    hpl.getConfig().set("server-total." + section, s);
-                    int h = hpl.getConfig().getInt("server-total.total");
-                    h++;
-                    hpl.getConfig().set("server-total.total", h);
-                    hpl.getConfig().options().copyDefaults(true);
-                    hpl.save();
+                    HeadsPlus.getInstance().getScores().addPlayerTotal(uuid, section.toUpperCase(), database, 1);
+                    HeadsPlus.getInstance().getScores().addPlayerTotal("server-total", section.toUpperCase(), database, 1);
                 } catch (Exception e) {
+                    e.printStackTrace();
                     addNewPlayerValue(p, section, database, shAmount);
                 }
             } else {
                 if (database.equalsIgnoreCase("headsplussh")) {
                     try {
-                        FileConfiguration ch = hpc.getConfig();
-                        int i = ch.getInt("player-data." + uuid + ".sellhead." + section);
-                        i += shAmount;
-                        ch.set("player-data." + uuid + ".sellhead." + section, i);
-                        int is = ch.getInt("player-data." + uuid + ".sellhead.total");
-                        is += shAmount;
-                        ch.set("player-data." + uuid + ".sellhead.total", is);
-                        int s = hpc.getConfig().getInt("server-total.sellhead.total");
-                        s += shAmount;
-                        hpc.getConfig().set("server-total.sellhead.total", s);
-                        int h = hpc.getConfig().getInt("server-total.sellhead." + section.toUpperCase());
-                        h += shAmount;
-                        hpc.getConfig().set("server-total.sellhead." + section, h);
-                        hpc.getConfig().options().copyDefaults(true);
-                        hpc.save();
+                        HeadsPlus.getInstance().getScores().addPlayerTotal(uuid, section.toUpperCase(), database, shAmount);
+                        HeadsPlus.getInstance().getScores().addPlayerTotal("server-total", section.toUpperCase(), database, shAmount);
                     } catch (Exception e) {
                         addNewPlayerValue(p, section, database, shAmount);
                     }
                 } else {
                     try {
-                        int i = hpc.getConfig().getInt("player-data." + uuid + ".crafting." + section);
-                        i += shAmount;
-                        hpc.getConfig().set("player-data." + uuid + ".crafting." + section, i);
-                        int is = hpc.getConfig().getInt("player-data." + uuid + ".crafting.total");
-                        is += shAmount;
-                        hpc.getConfig().set("player-data." + uuid + ".crafting.total", is);
-                        int s = hpc.getConfig().getInt("server-total.crafting.total");
-                        s += shAmount;
-                        hpc.getConfig().set("server-total.crafting.total", s);
-                        int h = hpc.getConfig().getInt("server-total.crafting." + section.toUpperCase());
-                        h += shAmount;
-                        hpc.getConfig().set("server-total.crafting." + section.toUpperCase(), h);
-                        hpc.getConfig().options().copyDefaults(true);
-                        hpc.save();
+                        HeadsPlus.getInstance().getScores().addPlayerTotal(uuid, section.toUpperCase(), database, shAmount);
+                        HeadsPlus.getInstance().getScores().addPlayerTotal("server-total", section.toUpperCase(), database, shAmount);
                     } catch (Exception e) {
+                        e.printStackTrace();
                         addNewPlayerValue(p, section, database, shAmount);
                     }
                 }
@@ -260,34 +209,17 @@ public class MySQLAPI {
             hs = sortHashMapByValues(hs);
             return hs;
         } else {
-            if (database.equalsIgnoreCase("headspluslb")) {
-                LinkedHashMap<OfflinePlayer, Integer> hs = new LinkedHashMap<>();
-                for (String cs : hpl.getConfig().getConfigurationSection("player-data").getKeys(false)) {
-                    OfflinePlayer p = Bukkit.getOfflinePlayer(UUID.fromString(cs));
-                    int i = hpl.getConfig().getInt("player-data." + p.getUniqueId().toString() + "." + ((section.equalsIgnoreCase("total") || section.equalsIgnoreCase("player")) ? section : section.toUpperCase()));
-                    hs.put(p, i);
-                }
-                hs = sortHashMapByValues(hs);
-                return hs;
-            } else if (database.equalsIgnoreCase("headsplussh")) {
-                LinkedHashMap<OfflinePlayer, Integer> hs = new LinkedHashMap<>();
-                for (String cs : hpc.getConfig().getConfigurationSection("player-data").getKeys(false)) {
-                    OfflinePlayer p = Bukkit.getOfflinePlayer(UUID.fromString(cs));
-                    int i = hpc.getConfig().getInt("player-data." + p.getUniqueId().toString() + ".sellhead." + section);
-                    hs.put(p, i);
-                }
-                hs = sortHashMapByValues(hs);
-                return hs;
-            } else {
-                LinkedHashMap<OfflinePlayer, Integer> hs = new LinkedHashMap<>();
-                for (String cs : hpc.getConfig().getConfigurationSection("player-data").getKeys(false)) {
-                    OfflinePlayer p = Bukkit.getOfflinePlayer(UUID.fromString(cs));
-                    int i = hpc.getConfig().getInt("player-data." + p.getUniqueId().toString() + ".crafting." + section);
-                    hs.put(p, i);
-                }
-                hs = sortHashMapByValues(hs);
-                return hs;
+            PlayerScores scores = HeadsPlus.getInstance().getScores();
+            LinkedHashMap<OfflinePlayer, Integer> hs = new LinkedHashMap<>();
+            for (Object cs : scores.getJSON().keySet()) {
+                if (String.valueOf(cs).equalsIgnoreCase("server-total")) continue;
+                OfflinePlayer p = Bukkit.getOfflinePlayer(UUID.fromString(String.valueOf(cs)));
+                int i = HeadsPlus.getInstance().getScores().getPlayerTotal(String.valueOf(cs), (section.equalsIgnoreCase("total") || section.equalsIgnoreCase("player") ? section : section.toUpperCase()), database);
+                hs.put(p, i);
             }
+            hs = sortHashMapByValues(hs);
+            return hs;
+
         }
 
     }
@@ -316,5 +248,49 @@ public class MySQLAPI {
             }
         }
         return sortedMap;
+    }
+
+    private void transferScoresToJSON() {
+        PlayerScores scores = HeadsPlus.getInstance().getScores();
+        for (String uuid : hpc.getConfig().getConfigurationSection("player-data").getKeys(false)) {
+            for (String database : hpc.getConfig().getConfigurationSection("player-data." + uuid).getKeys(false)) {
+                if (database.equalsIgnoreCase("sellhead") || database.equalsIgnoreCase("crafting")) {
+                    for (String section : hpc.getConfig().getConfigurationSection("player-data." + uuid + "." + database).getKeys(false)) {
+
+                        scores.setPlayerTotal(uuid, section, database,
+                                hpc.getConfig().getInt("player-data." + uuid + "." + database + "." + section));
+
+
+                    }
+                }
+            }
+            scores.setCompletedChallenges(uuid, hpc.getConfig().getStringList("player-data." + uuid + ".completed-challenges"));
+            scores.setXp(uuid, hpc.getConfig().getInt("player-data." + uuid + ".profile.xp"));
+            scores.setLevel(uuid, hpc.getConfig().getString("player-data." + uuid + ".profile.level"));
+        }
+        for (String uuid : hpl.getConfig().getConfigurationSection("player-data").getKeys(false)) {
+            for (String section : hpl.getConfig().getConfigurationSection("player-data." + uuid).getKeys(false)) {
+                HeadsPlus.getInstance().getScores().setPlayerTotal(uuid, section, "headspluslb",
+                        hpl.getConfig().getInt("player-data." + uuid + "." + section));
+            }
+        }
+        for (String section : hpl.getConfig().getConfigurationSection("server-total").getKeys(false)) {
+            HeadsPlus.getInstance().getScores().setPlayerTotal("server-total", section, "headspluslb",
+                    hpl.getConfig().getInt("server-total." + section));
+        }
+        for (String database : hpc.getConfig().getConfigurationSection("server-total").getKeys(false)) {
+            for (String section : hpc.getConfig().getConfigurationSection("server-total." +  database).getKeys(false)) {
+                HeadsPlus.getInstance().getScores().setPlayerTotal("server-total", section, database,
+                        hpc.getConfig().getInt("server-total." + database + section));
+            }
+        }
+
+        hpc.getConfig().set("player-data", null);
+        hpl.getConfig().set("player-data", null);
+        hpc.getConfig().set("server-total", null);
+        hpl.getConfig().set("server-total", null);
+        hpl.selfDestruct();
+        hpc.getConfig().options().copyDefaults(true);
+        hpc.save();
     }
 }

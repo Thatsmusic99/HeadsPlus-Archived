@@ -3,7 +3,7 @@ package io.github.thatsmusic99.headsplus.api;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.events.LevelUpEvent;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
-import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallenges;
+import io.github.thatsmusic99.headsplus.storage.PlayerScores;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -39,16 +39,17 @@ public class HPPlayer {
         } catch (NullPointerException ignored) {
         }
         HeadsPlus hp = HeadsPlus.getInstance();
-        HeadsPlusChallenges hpchl = hp.getChallengeConfig();
+        PlayerScores scores = hp.getScores();
         HeadsPlusAPI hapi = hp.getAPI();
         HashMap<Integer, Level> levels = hp.getLevels();
-        this.xp = hpchl.getConfig().getInt("player-data." + getPlayer().getUniqueId().toString() + ".profile.xp");
+        this.xp = scores.getXp(p.getUniqueId().toString());
         List<Challenge> sc = new ArrayList<>();
-        for (String str : hpchl.getConfig().getStringList("player-data." + getPlayer().getUniqueId().toString() + ".completed-challenges")) {
+        for (String str : scores.getCompletedChallenges(p.getUniqueId().toString())) {
             sc.add(hapi.getChallengeByConfigName(str));
+            System.out.println(hapi.getChallengeByConfigName(str));
         }
         if (hp.usingLevels()) {
-            if (hpchl.getConfig().getString("player-data." + getPlayer().getUniqueId().toString() + ".profile.level") == null) {
+            if (scores.getLevel(p.getUniqueId().toString()) == null) {
                 for (int i = levels.size() - 1; i > 0; i--) {
                     if (levels.get(i).getRequiredXP() <= getXp()) {
                         level = levels.get(i);
@@ -62,7 +63,7 @@ public class HPPlayer {
                 }
             } else {
                 for (int i = levels.size() - 1; i > 0; i--) {
-                    if (levels.get(i).getConfigName().equals(hpchl.getConfig().getString("player-data." + getPlayer().getUniqueId().toString() + ".profile.level"))) {
+                    if (levels.get(i).getConfigName().equals(scores.getLevel(p.getUniqueId().toString()))) {
                         level = levels.get(i);
                         try {
                             nextLevel = levels.get(i + 1);
@@ -137,26 +138,16 @@ public class HPPlayer {
     }
 
     public void addCompleteChallenge(Challenge c) {
-        HeadsPlusChallenges hpc = HeadsPlus.getInstance().getChallengeConfig();
-        List<String> str = hpc.getConfig().getStringList("player-data." + getPlayer().getUniqueId().toString() + ".completed-challenges");
-        str.add(c.getConfigName());
-        hpc.getConfig().set("player-data." + getPlayer().getUniqueId().toString() + ".completed-challenges", str);
+        PlayerScores scores = HeadsPlus.getInstance().getScores();
+        scores.completeChallenge(player.getUniqueId().toString(), c);
         completeChallenges.add(c);
     }
 
     public void addXp(int xp) {
         HeadsPlus hp = HeadsPlus.getInstance();
-        HeadsPlusChallenges hpc = hp.getChallengeConfig();
-        if (hpc.getConfig().getInt("player-data." + getPlayer().getUniqueId().toString() + ".profile.xp") <= 0) {
-            hpc.getConfig().addDefault("player-data." + getPlayer().getUniqueId().toString() + ".profile.xp", xp);
-        } else {
-            int a = hpc.getConfig().getInt("player-data." + getPlayer().getUniqueId().toString() + ".profile.xp");
-            a += xp;
-            hpc.getConfig().set("player-data." + getPlayer().getUniqueId().toString() + ".profile.xp", a);
-        }
+        PlayerScores scores = HeadsPlus.getInstance().getScores();
+        scores.addXp(player.getUniqueId().toString(), xp);
         this.xp += xp;
-        hpc.getConfig().options().copyDefaults(true);
-        hpc.save();
         if (hp.usingLevels()) {
             if (nextLevel != null) {
                 if (nextLevel.getRequiredXP() <= getXp()) {
@@ -170,7 +161,7 @@ public class HPPlayer {
                                     .replaceAll("\\{level}", ChatColor.translateAlternateColorCodes('&', level.getDisplayName())));
                         }
                         HashMap<Integer, Level> levels = HeadsPlus.getInstance().getLevels();
-                        hpc.getConfig().set("player-data." + getPlayer().getUniqueId().toString() + ".profile.level", level.getConfigName());
+                        scores.setLevel(player.getUniqueId().toString(), level.getConfigName());
                         for (int i = 1; i < levels.size(); i++) {
                             if (levels.get(i) == level) {
                                 try {
@@ -184,9 +175,6 @@ public class HPPlayer {
                 }
             }
         }
-
-        hpc.getConfig().options().copyDefaults(true);
-        hpc.save();
     }
 
     public boolean hasHeadFavourited(String s) {

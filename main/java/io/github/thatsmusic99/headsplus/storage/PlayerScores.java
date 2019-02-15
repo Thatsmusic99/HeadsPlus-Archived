@@ -1,0 +1,207 @@
+package io.github.thatsmusic99.headsplus.storage;
+
+import io.github.thatsmusic99.headsplus.api.Challenge;
+import org.bukkit.OfflinePlayer;
+import org.json.simple.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class PlayerScores implements JSONFile {
+
+    private JSONObject json = new JSONObject();
+
+    @Override
+    public String getName() {
+        return "playerinfo";
+    }
+
+    @Override
+    public void writeData(OfflinePlayer p, Object... values) {
+
+    }
+
+    @Override
+    public JSONObject getJSON() {
+        return json;
+    }
+
+    @Override
+    public Object getData(Object key) {
+        return null;
+    }
+
+    @Override
+    public void setJSON(JSONObject s) {
+        json = s;
+    }
+
+    public void completeChallenge(String uuid, Challenge c) {
+        JSONObject o1 = (JSONObject) json.get(uuid);
+        if (o1 == null) {
+            o1 = new JSONObject();
+        }
+        List<String> challenges = getCompletedChallenges(uuid);
+        challenges.add(c.getConfigName());
+        o1.put("completed-challenges", challenges);
+        json.put(uuid, o1);
+    }
+
+    public void addXp(String uuid, int xp) {
+        int exp = getXp(uuid);
+        exp += xp;
+        setXp(uuid, exp);
+    }
+
+    public void setXp(String uuid, int xp) {
+        JSONObject o1 = (JSONObject) json.get(uuid);
+        if (o1 == null) {
+            o1 = new JSONObject();
+        }
+        o1.put("xp", xp);
+        json.put(uuid, o1);
+    }
+
+    public int getXp(String uuid) {
+        JSONObject o1 = (JSONObject) json.get(uuid);
+        if (o1 == null) {
+            o1 = new JSONObject();
+        }
+        return Math.toIntExact((long)o1.get("xp"));
+    }
+
+    public void setLevel(String uuid, String level) {
+        JSONObject o1 = (JSONObject) json.get(uuid);
+        if (o1 == null) {
+            o1 = new JSONObject();
+        }
+        o1.put("level", level);
+        json.put(uuid, o1);
+    }
+
+    public String getLevel(String uuid) {
+        JSONObject o1 = (JSONObject) json.get(uuid);
+        if (o1 == null) {
+            o1 = new JSONObject();
+        }
+        return (o1.get("level") == null ? "" : (String) o1.get("level"));
+    }
+
+    public void setCompletedChallenges(String uuid, List<String> ch) {
+        JSONObject o1 = (JSONObject) json.get(uuid);
+        if (o1 == null) {
+            o1 = new JSONObject();
+        }
+        o1.put("completed-challenges", ch);
+        json.put(uuid, o1);
+    }
+
+    public List<String> getCompletedChallenges(String uuid) {
+        JSONObject o1 = (JSONObject) json.get(uuid);
+        if (o1 == null) {
+            o1 = new JSONObject();
+        }
+        return (o1.get("completed-challenges") == null ? new ArrayList<>() : (List<String>) o1.get("completed-challenges"));
+    }
+
+    public int getPlayerTotal(String uuid, String type, String db) {
+        String s = "";
+        switch (db) {
+            case "headspluslb":
+                s = "hunting";
+                break;
+            case "headsplussh":
+                s = "sellhead";
+                break;
+            case "headspluscraft":
+                s = "crafting";
+                break;
+        }
+        JSONObject o1 = (JSONObject) json.get(uuid);
+        if (o1 == null) {
+            o1 = new JSONObject();
+        }
+        JSONObject o2 = (JSONObject) o1.get(s);
+        if (o2 == null) {
+            o2 = new JSONObject();
+        }
+        Object o = o2.get(type);
+        int i = 0;
+        if (o != null) {
+            i = Math.toIntExact((long) o2.get(type));
+        }
+        return i;
+    }
+
+    public void addPlayerTotal(String uuid, String type, String db, int amount) {
+        String s;
+        switch (db) {
+            case "headspluslb":
+                s = "hunting";
+                break;
+            case "headsplussh":
+                s = "sellhead";
+                break;
+            case "headspluscraft":
+                s = "crafting";
+                break;
+            default:
+                s = db;
+                break;
+        }
+        JSONObject o1 = (JSONObject) json.get(uuid);
+        if (o1 == null) {
+            o1 = new JSONObject();
+        }
+        JSONObject o2 = (JSONObject) o1.get(s);
+        if (o2 == null) {
+            o2 = new JSONObject();
+        }
+        Object o = o2.get(type);
+        int i = 0;
+        if (o != null) {
+            i =  Math.toIntExact((long) o2.get(type));
+        }
+
+        i += amount;
+        Object o3 = o2.get("total");
+        int j = 0;
+        if (o3 != null) {
+            j =  Math.toIntExact((long) o2.get("total"));
+        }
+        j += amount;
+        o2.put("total", j);
+        o2.put(type, i);
+        o1.put(s, o2);
+        json.put(uuid, o1);
+    }
+
+    public void setPlayerTotal(String uuid, String type, String db, int no) {
+        String s;
+        switch (db) {
+            case "headspluslb":
+                s = "hunting";
+                break;
+            case "headsplussh":
+                s = "sellhead";
+                break;
+            case "headspluscraft":
+                s = "crafting";
+                break;
+            default:
+                s = db;
+                break;
+        }
+        JSONObject o1 = (JSONObject) json.get(uuid);
+        if (o1 == null) {
+            o1 = new JSONObject();
+        }
+        JSONObject o2 = (JSONObject) o1.get(s);
+        if (o2 == null) {
+            o2 = new JSONObject();
+        }
+        o2.put(type, no);
+        o1.put(s, o2);
+        json.put(uuid, o1);
+    }
+}

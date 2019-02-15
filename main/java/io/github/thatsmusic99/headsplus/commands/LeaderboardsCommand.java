@@ -187,6 +187,7 @@ public class LeaderboardsCommand implements CommandExecutor, IHeadsPlusCommand {
             }
             return sb.toString();
         } catch (IllegalArgumentException ex) {
+            ex.printStackTrace();
             if (ph.getHs().size() > 0) {
                 return hpc.getString("invalid-pg-no");
             } else {

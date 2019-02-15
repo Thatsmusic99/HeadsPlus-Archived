@@ -27,6 +27,7 @@ import io.github.thatsmusic99.headsplus.nms.v1_8_R3_NMS.v1_8_R3NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_9_NMS.v1_9_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_9_R2_NMS.V1_9_NMS2;
 import io.github.thatsmusic99.headsplus.storage.Favourites;
+import io.github.thatsmusic99.headsplus.storage.PlayerScores;
 import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import io.github.thatsmusic99.headsplus.util.MySQLAPI;
 import io.github.thatsmusic99.og.OreGenerator;
@@ -84,6 +85,7 @@ public class HeadsPlus extends JavaPlugin {
     private HashMap<Integer, Level> levels = new HashMap<>();
     private List<ConfigSettings> cs = new ArrayList<>();
     private Favourites favourites;
+    private PlayerScores scores;
 
     @Override
     public void onEnable() {
@@ -102,7 +104,7 @@ public class HeadsPlus extends JavaPlugin {
             debug("- Checking plugin theme.", 1);
             checkTheme();
             debug("- Setting up favourites.json.", 1);
-            setupJSON();
+
             if (getConfiguration().getMySQL().getBoolean("enabled")) {
                 debug("- MySQL is to be enabled. Opening connection...", 1);
                 openConnection();
@@ -191,6 +193,11 @@ public class HeadsPlus extends JavaPlugin {
             favourites.save();
         } catch (IOException e) {
             new DebugPrint(e, "Disabling (saving favourites)", false, null);
+        }
+        try {
+            scores.save();
+        } catch (IOException e) {
+            new DebugPrint(e, "Disabling (saving scores)", false, null);
         }
         log.info(hpc.getString("plugin-disabled"));
     }
@@ -379,6 +386,11 @@ public class HeadsPlus extends JavaPlugin {
         hpchl = new HeadsPlusChallenges();
         cs.add(hpchl);
         debug("- Instance for HeadsPlusChallenges created!", 3);
+        try {
+            setupJSON();
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
         hapi = new HeadsPlusAPI();
         debug("- Instance for HeadsPlus's API created!", 3);
         mySQLAPI = new MySQLAPI();
@@ -405,6 +417,9 @@ public class HeadsPlus extends JavaPlugin {
         favourites = new Favourites();
         favourites.create();
         favourites.read();
+        scores = new PlayerScores();
+        scores.create();
+        scores.read();
     }
 
 
@@ -475,6 +490,10 @@ public class HeadsPlus extends JavaPlugin {
 
     public Favourites getFavourites() {
         return favourites;
+    }
+
+    public PlayerScores getScores() {
+        return scores;
     }
 
     public String getVersion() {

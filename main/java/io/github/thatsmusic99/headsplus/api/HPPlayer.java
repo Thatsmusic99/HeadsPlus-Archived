@@ -46,7 +46,6 @@ public class HPPlayer {
         List<Challenge> sc = new ArrayList<>();
         for (String str : scores.getCompletedChallenges(p.getUniqueId().toString())) {
             sc.add(hapi.getChallengeByConfigName(str));
-            System.out.println(hapi.getChallengeByConfigName(str));
         }
         if (hp.usingLevels()) {
             if (scores.getLevel(p.getUniqueId().toString()) == null) {

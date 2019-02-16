@@ -18,7 +18,7 @@ public class ChallengesMenu extends HeadInventory {
         return  "GGGGGGGGG" +
                 "GAAAAAAAG" +
                 "GAEARAZAG" +
-                "GAAVABAAG" +
+                "GAAVAJAAG" +
                 "GAAAAAAAG" +
                 "GGGGXGGGG";
     }

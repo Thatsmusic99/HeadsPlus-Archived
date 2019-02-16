@@ -116,13 +116,7 @@ public class Challenge {
     }
 
     public boolean isComplete(Player p) {
-        FileConfiguration c = HeadsPlus.getInstance().getChallengeConfig().getConfig();
-        if (c.getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").size() <= 0) {
-            HeadsPlus.getInstance().getChallengeConfig().getConfig().addDefault("player-data." + p.getUniqueId().toString() + ".completed-challenges", new ArrayList<>());
-            return false;
-        } else {
-            return c.getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").contains(getConfigName());
-        }
+        return HeadsPlus.getInstance().getScores().getCompletedChallenges(p.getUniqueId().toString()).contains(getConfigName());
     }
 
     public void complete(Player p, Inventory i, int slot) {

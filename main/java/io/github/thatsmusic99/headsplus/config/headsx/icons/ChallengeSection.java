@@ -214,7 +214,7 @@ public class ChallengeSection {
 
         @Override
         public String getSingleLetter() {
-            return "B";
+            return "J";
         }
     }
 }

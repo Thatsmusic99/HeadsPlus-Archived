@@ -58,7 +58,6 @@ public class DeathEvents implements Listener {
 
 
                         String entity = e.getEntityType().toString().toLowerCase().replaceAll("_", "");
-                        if (c.getMechanics().getStringList("looting.ignored-entities").contains(entity)) return;
                         Random rand = new Random();
                         double chance1 = hpch.getConfig().getDouble(entity + ".chance");
                         double chance2 = (double) rand.nextInt(100);
@@ -96,7 +95,6 @@ public class DeathEvents implements Listener {
                         }
                     }
                 }
-                if (c.getMechanics().getStringList("looting.ignored-entities").contains("player")) return;
                 if (c.getPerks().getStringList("drops.ignore-players").contains(ep.getEntity().getUniqueId().toString())
                         || c.getPerks().getStringList("drops.ignore-players").contains(ep.getEntity().getName())) return;
                 if (!c.getBlacklist("world").getStringList("list").contains(ep.getEntity().getWorld().getName()) || ep.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !c.getBlacklist("world").getBoolean("enabled")) {
@@ -107,7 +105,9 @@ public class DeathEvents implements Listener {
                     if (chance1 == 0.0) return;
                     if (chance2 <= chance1) {
                         int a = 1;
-                        if (nms.getItemInHand(ep.getEntity().getKiller()).containsEnchantment(Enchantment.LOOT_BONUS_MOBS) && c.getMechanics().getBoolean("allow-looting-enchantment")) {
+                        if (nms.getItemInHand(ep.getEntity().getKiller()).containsEnchantment(Enchantment.LOOT_BONUS_MOBS)
+                                && c.getMechanics().getBoolean("allow-looting-enchantment")
+                                && !(c.getMechanics().getStringList("looting.ignored-entities").contains("player"))) {
                             a += nms.getItemInHand(ep.getEntity().getKiller()).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
                         }
                         ItemStack head = nms.getSkullMaterial(a);
@@ -377,7 +377,9 @@ public class DeathEvents implements Listener {
         }
         int a = 1;
 
-        if (nms.getItemInHand(k).containsEnchantment(Enchantment.LOOT_BONUS_MOBS)  && HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("allow-looting-enchantment")) {
+        if (nms.getItemInHand(k).containsEnchantment(Enchantment.LOOT_BONUS_MOBS)
+                && HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("allow-looting-enchantment")
+                && !(HeadsPlus.getInstance().getConfiguration().getMechanics().getStringList("looting.ignored-entities").contains(mobName))) {
             a += nms.getItemInHand(k).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
         }
         double price = hpch.getPrice(mobName);

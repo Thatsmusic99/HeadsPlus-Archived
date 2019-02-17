@@ -48,10 +48,11 @@ public class HPPlayer {
             sc.add(hapi.getChallengeByConfigName(str));
         }
         if (hp.usingLevels()) {
-            if (scores.getLevel(p.getUniqueId().toString()) == null) {
+            if (scores.getLevel(p.getUniqueId().toString()).isEmpty()) {
                 for (int i = levels.size() - 1; i > 0; i--) {
                     if (levels.get(i).getRequiredXP() <= getXp()) {
                         level = levels.get(i);
+                        scores.setLevel(p.getUniqueId().toString(), level.getConfigName());
                         try {
                             nextLevel = levels.get(i + 1);
                         } catch (IndexOutOfBoundsException e) { // End of levels

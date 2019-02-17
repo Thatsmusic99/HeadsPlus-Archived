@@ -63,11 +63,17 @@ public class PlayerScores implements JSONFile {
     }
 
     public int getXp(String uuid) {
-        JSONObject o1 = (JSONObject) json.get(uuid);
-        if (o1 == null) {
-            o1 = new JSONObject();
+        try {
+            JSONObject o1 = (JSONObject) json.get(uuid);
+            if (o1 == null) {
+                o1 = new JSONObject();
+            }
+            return getInt(o1, "xp");
+        } catch (NullPointerException ex) {
+            setXp(uuid, 0);
+            return getInt((JSONObject) json.get(uuid), "xp");
         }
-        return Math.toIntExact((long)o1.get("xp"));
+
     }
 
     public void setLevel(String uuid, String level) {
@@ -128,7 +134,7 @@ public class PlayerScores implements JSONFile {
         Object o = o2.get(type);
         int i = 0;
         if (o != null) {
-            i = Math.toIntExact((long) o2.get(type));
+            i = getInt(o2, type);
         }
         return i;
     }
@@ -160,14 +166,14 @@ public class PlayerScores implements JSONFile {
         Object o = o2.get(type);
         int i = 0;
         if (o != null) {
-            i =  Math.toIntExact((long) o2.get(type));
+            i = getInt(o2, type);
         }
 
         i += amount;
         Object o3 = o2.get("total");
         int j = 0;
         if (o3 != null) {
-            j =  Math.toIntExact((long) o2.get("total"));
+            j = getInt(o2, "total");
         }
         j += amount;
         o2.put("total", j);
@@ -203,5 +209,13 @@ public class PlayerScores implements JSONFile {
         o2.put(type, no);
         o1.put(s, o2);
         json.put(uuid, o1);
+    }
+
+    private int getInt(JSONObject o, String s) {
+        try {
+            return Math.toIntExact((long) o.get(s));
+        } catch (ClassCastException a) {
+            return (int) o.get(s);
+        }
     }
 }

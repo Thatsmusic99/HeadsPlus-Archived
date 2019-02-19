@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigTextMenu;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.util.PagedLists;
 import org.bukkit.command.CommandSender;
@@ -45,7 +46,15 @@ public class BlacklistwList implements IHeadsPlusCommand {
     @Override
     public HashMap<Boolean, String> isCorrectUsage(String[] args, CommandSender sender) {
         HashMap<Boolean, String> h = new HashMap<>();
-        h.put(true, "");
+        if (args.length > 1) {
+            if (args[1].matches("^[0-9]+$")) {
+                h.put(true, "");
+            } else {
+                h.put(false, hpc.getString("invalid-input-int"));
+            }
+        } else {
+            h.put(true, "");
+        }
         return h;
     }
 
@@ -58,34 +67,21 @@ public class BlacklistwList implements IHeadsPlusCommand {
 	public boolean fire(String[] args, CommandSender sender) {
 		try {
 		    List<String> bl = hp.getConfiguration().getBlacklist("world").getStringList("list");
-            if (args.length == 1) {
-                if (bl.size() < 1) {
-                    sender.sendMessage(hpc.getString("empty-blw"));
-                    return true;
-                }
-                PagedLists<String> pl = new PagedLists<>(bl, 8);
-                sender.sendMessage(hp.getThemeColour(1) + "============ " + hp.getThemeColour(2) + "World Blacklist: " + hp.getThemeColour(3)+ "1/" + pl.getTotalPages() + hp.getThemeColour(1) + " ==========" );
-                for (String key : pl.getContentsInPage(1)) {
-                    sender.sendMessage(hp.getThemeColour(4) + key);
-                }
+		    int page;
+		    if (args.length == 1) {
+		        page = 1;
             } else {
-                if (args[1].matches("^[0-9]+$")) {
-                    int page = Integer.parseInt(args[1]);
-                    PagedLists<String> pl = new PagedLists<>(bl, 8);
-
-                    if ((page > pl.getTotalPages()) || (0 >= page)) {
-                        sender.sendMessage(hpc.getString("invalid-pg-no"));
-                    } else {
-                        sender.sendMessage(hp.getThemeColour(1) + "============ " + hp.getThemeColour(2) + "World Blacklist: "
-                                + hp.getThemeColour(3) + page + "/" + pl.getTotalPages()
-                                + hp.getThemeColour(1) + " ==========");
-                        for (String key : pl.getContentsInPage(page)) {
-                            sender.sendMessage(hp.getThemeColour(4) + key);
-                        }
-                    }
-                } else {
-                    sender.sendMessage(hpc.getString("invalid-input-int"));
-                }
+		        page = Integer.parseInt(args[1]);
+            }
+            if (bl.size() == 0) {
+                sender.sendMessage(hpc.getString("empty-blw"));
+                return true;
+            }
+            PagedLists<String> pl = new PagedLists<>(bl, 8);
+		    if ((page > pl.getTotalPages()) || (0 >= page)) {
+		        sender.sendMessage(hpc.getString("invalid-pg-no"));
+		    } else {
+                sender.sendMessage(HeadsPlusConfigTextMenu.BlacklistTranslator.translate("blacklist", "world", pl, page));
             }
         } catch (Exception e) {
 		    new DebugPrint(e, "Subcommand (blacklistwl)", true, sender);

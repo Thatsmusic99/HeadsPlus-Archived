@@ -1,11 +1,14 @@
 package io.github.thatsmusic99.headsplus.storage;
 
 import io.github.thatsmusic99.headsplus.api.Challenge;
+import io.github.thatsmusic99.headsplus.util.HPUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class PlayerScores implements JSONFile {
 
@@ -51,6 +54,7 @@ public class PlayerScores implements JSONFile {
         int exp = getXp(uuid);
         exp += xp;
         setXp(uuid, exp);
+        HPUtils.addBossBar(Bukkit.getOfflinePlayer(UUID.fromString(uuid)));
     }
 
     public void setXp(String uuid, int xp) {

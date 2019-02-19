@@ -253,43 +253,53 @@ public class MySQLAPI {
     private void transferScoresToJSON() {
         PlayerScores scores = HeadsPlus.getInstance().getScores();
         for (String uuid : hpc.getConfig().getConfigurationSection("player-data").getKeys(false)) {
-            for (String database : hpc.getConfig().getConfigurationSection("player-data." + uuid).getKeys(false)) {
-                if (database.equalsIgnoreCase("sellhead") || database.equalsIgnoreCase("crafting")) {
-                    for (String section : hpc.getConfig().getConfigurationSection("player-data." + uuid + "." + database).getKeys(false)) {
+            if (!HeadsPlus.getInstance().isConnectedToMySQLDatabase()) {
+                for (String database : hpc.getConfig().getConfigurationSection("player-data." + uuid).getKeys(false)) {
+                    if (database.equalsIgnoreCase("sellhead") || database.equalsIgnoreCase("crafting")) {
+                        for (String section : hpc.getConfig().getConfigurationSection("player-data." + uuid + "." + database).getKeys(false)) {
 
-                        scores.setPlayerTotal(uuid, section, database,
-                                hpc.getConfig().getInt("player-data." + uuid + "." + database + "." + section));
+                            scores.setPlayerTotal(uuid, section, database,
+                                    hpc.getConfig().getInt("player-data." + uuid + "." + database + "." + section));
 
 
+                        }
                     }
                 }
+
             }
             scores.setCompletedChallenges(uuid, hpc.getConfig().getStringList("player-data." + uuid + ".completed-challenges"));
             scores.setXp(uuid, hpc.getConfig().getInt("player-data." + uuid + ".profile.xp"));
             scores.setLevel(uuid, hpc.getConfig().getString("player-data." + uuid + ".profile.level"));
         }
-        for (String uuid : hpl.getConfig().getConfigurationSection("player-data").getKeys(false)) {
-            for (String section : hpl.getConfig().getConfigurationSection("player-data." + uuid).getKeys(false)) {
-                HeadsPlus.getInstance().getScores().setPlayerTotal(uuid, section, "headspluslb",
-                        hpl.getConfig().getInt("player-data." + uuid + "." + section));
+        if (!HeadsPlus.getInstance().isConnectedToMySQLDatabase()) {
+            for (String uuid : hpl.getConfig().getConfigurationSection("player-data").getKeys(false)) {
+                for (String section : hpl.getConfig().getConfigurationSection("player-data." + uuid).getKeys(false)) {
+                    HeadsPlus.getInstance().getScores().setPlayerTotal(uuid, section, "headspluslb",
+                            hpl.getConfig().getInt("player-data." + uuid + "." + section));
+                }
             }
-        }
-        for (String section : hpl.getConfig().getConfigurationSection("server-total").getKeys(false)) {
-            HeadsPlus.getInstance().getScores().setPlayerTotal("server-total", section, "headspluslb",
-                    hpl.getConfig().getInt("server-total." + section));
-        }
-        for (String database : hpc.getConfig().getConfigurationSection("server-total").getKeys(false)) {
-            for (String section : hpc.getConfig().getConfigurationSection("server-total." +  database).getKeys(false)) {
-                HeadsPlus.getInstance().getScores().setPlayerTotal("server-total", section, database,
-                        hpc.getConfig().getInt("server-total." + database + section));
+            for (String section : hpl.getConfig().getConfigurationSection("server-total").getKeys(false)) {
+                HeadsPlus.getInstance().getScores().setPlayerTotal("server-total", section, "headspluslb",
+                        hpl.getConfig().getInt("server-total." + section));
+            }
+            for (String database : hpc.getConfig().getConfigurationSection("server-total").getKeys(false)) {
+                for (String section : hpc.getConfig().getConfigurationSection("server-total." +  database).getKeys(false)) {
+                    HeadsPlus.getInstance().getScores().setPlayerTotal("server-total", section, database,
+                            hpc.getConfig().getInt("server-total." + database + section));
+                }
             }
         }
 
+        try {
+            hpl.getConfig().set("player-data", null);
+            hpl.getConfig().set("server-total", null);
+            hpl.selfDestruct();
+        } catch (NullPointerException ignored) {
+
+        }
+
         hpc.getConfig().set("player-data", null);
-        hpl.getConfig().set("player-data", null);
         hpc.getConfig().set("server-total", null);
-        hpl.getConfig().set("server-total", null);
-        hpl.selfDestruct();
         hpc.getConfig().options().copyDefaults(true);
         hpc.save();
     }

@@ -79,6 +79,7 @@ public class HeadsPlus extends JavaPlugin {
     private HeadsPlusMainConfig config;
     private HeadsPlusConfigItems items;
     private HeadsPlusConfigSounds sounds;
+    private HeadsPlusConfigTextMenu menus;
     private final List<Challenge> challenges = new ArrayList<>();
     private NMSManager nms;
     private final List<IHeadsPlusCommand> commands = new ArrayList<>();
@@ -404,6 +405,9 @@ public class HeadsPlus extends JavaPlugin {
         sounds = new HeadsPlusConfigSounds();
         cs.add(sounds);
         debug("- Instance for HeadsPlusConfigSounds created!", 3);
+        menus = new HeadsPlusConfigTextMenu();
+        cs.add(menus);
+        debug("- Instance for HeadsPlusConfigTextMenu created!", 3);
         debug("Instances created.", 1);
     }
 
@@ -538,6 +542,10 @@ public class HeadsPlus extends JavaPlugin {
 
     public boolean isUsingLeaderboards() {
         return getConfiguration().getPerks().getBoolean("leaderboards");
+    }
+
+    public HeadsPlusConfigTextMenu getMenus() {
+        return menus;
     }
 
     public Economy getEconomy() {

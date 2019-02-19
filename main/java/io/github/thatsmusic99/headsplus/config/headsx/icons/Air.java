@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Air implements Icon {
+    // ABCEFGHJKLMNRSTVXZ
     @Override
     public String getIconName() {
         return "air";

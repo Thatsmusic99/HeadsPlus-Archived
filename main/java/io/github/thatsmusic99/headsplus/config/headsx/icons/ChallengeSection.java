@@ -209,12 +209,52 @@ public class ChallengeSection {
 
         @Override
         public List<String> getLore() {
-            return HeadsPlus.getInstance().getItems().getConfig().getStringList("icons." + getIconName() + ".lore");
+            return new ArrayList<>();
         }
 
         @Override
         public String getSingleLetter() {
             return "J";
+        }
+    }
+
+    public static class Tedious implements Icon {
+
+        @Override
+        public String getIconName() {
+            return "challenges-tedious";
+        }
+
+        @Override
+        public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
+            e.setCancelled(true);
+            p.closeInventory();
+            im.setSection("tedious");
+            try {
+                p.openInventory(im.changePage(false, true, p, im.getSection()));
+            } catch (NoSuchFieldException | IllegalAccessException e1) {
+                e1.printStackTrace();
+            }
+        }
+
+        @Override
+        public Material getDefaultMaterial() {
+            return Material.NETHERRACK;
+        }
+
+        @Override
+        public List<String> getDefaultLore() {
+            return new ArrayList<>();
+        }
+
+        @Override
+        public String getDefaultDisplayName() {
+            return "&8[&c&lTedious&8]";
+        }
+
+        @Override
+        public String getSingleLetter() {
+            return "T";
         }
     }
 }

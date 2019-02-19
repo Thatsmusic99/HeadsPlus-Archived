@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigTextMenu;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.util.PagedLists;
@@ -78,18 +79,13 @@ public class BlacklistList implements IHeadsPlusCommand {
             List<String> bl = config.getBlacklist("default").getStringList("blacklist");
             if (bl.size() == 0) {
                 sender.sendMessage(hpc.getString("empty-bl"));
+                return true;
             }
             PagedLists<String> pl = new PagedLists<>(bl, 8);
             if ((page > pl.getTotalPages()) || (0 >= page)) {
                 sender.sendMessage(hpc.getString("invalid-pg-no"));
             } else {
-                sender.sendMessage(hp.getThemeColour(1) + "============ " + hp.getThemeColour(2) + "Blacklist: " + hp.getThemeColour(3) + page + "/" + pl.getTotalPages() + hp.getThemeColour(1) + " ==========");
-
-                for (Object keyz : pl.getContentsInPage(page)) {
-                    String key = (String) keyz;
-                    sender.sendMessage(hp.getThemeColour(4) + key);
-
-                }
+                sender.sendMessage(HeadsPlusConfigTextMenu.BlacklistTranslator.translate("blacklist", "default", pl, page));
             }
         } catch (Exception e) {
 	        new DebugPrint(e, "Subcommand (blacklistl)", true, sender);

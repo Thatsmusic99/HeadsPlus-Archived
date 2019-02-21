@@ -2,11 +2,8 @@ package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigTextMenu;
-import io.github.thatsmusic99.headsplus.locale.Locale;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import org.bukkit.command.CommandSender;
-
-import io.github.thatsmusic99.headsplus.HeadsPlus;
 
 import java.util.HashMap;
 

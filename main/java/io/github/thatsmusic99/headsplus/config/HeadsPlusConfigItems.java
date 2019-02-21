@@ -6,7 +6,6 @@ import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.config.headsx.icons.*;
 import io.github.thatsmusic99.headsplus.nms.NewNMSManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HeadsPlusConfigItems extends ConfigSettings {

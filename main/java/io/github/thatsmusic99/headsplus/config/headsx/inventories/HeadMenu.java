@@ -1,9 +1,6 @@
 package io.github.thatsmusic99.headsplus.config.headsx.inventories;
 
 import io.github.thatsmusic99.headsplus.config.headsx.HeadInventory;
-import io.github.thatsmusic99.headsplus.config.headsx.Icon;
-import io.github.thatsmusic99.headsplus.config.headsx.icons.*;
-import io.github.thatsmusic99.headsplus.config.headsx.icons.HeadSection;
 
 public class HeadMenu extends HeadInventory {
 

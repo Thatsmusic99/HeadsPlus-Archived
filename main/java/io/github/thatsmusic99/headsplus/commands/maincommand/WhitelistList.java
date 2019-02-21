@@ -75,12 +75,8 @@ public class WhitelistList implements IHeadsPlusCommand {
                 sender.sendMessage(hpc.getString("empty-wl"));
                 return true;
             }
-            PagedLists<String> pl = new PagedLists<>(wl, 8);
-            if ((page > pl.getTotalPages()) || (0 >= page)) {
-                sender.sendMessage(hpc.getString("invalid-pg-no"));
-            } else {
-                sender.sendMessage(HeadsPlusConfigTextMenu.BlacklistTranslator.translate("whitelist", "default", pl, page));
-            }
+            sender.sendMessage(HeadsPlusConfigTextMenu.BlacklistTranslator.translate("whitelist", "default", wl, page));
+
 
         } catch (Exception e) {
             new DebugPrint(e, "Subcommand (whitelistl)", true, sender);

@@ -106,10 +106,7 @@ public class HeadsPlus extends JavaPlugin {
             checkTheme();
             debug("- Setting up favourites.json.", 1);
 
-            if (getConfiguration().getMySQL().getBoolean("enabled")) {
-                debug("- MySQL is to be enabled. Opening connection...", 1);
-                openConnection();
-            }
+
             if (!getConfiguration().getPerks().getBoolean("disable-crafting")) {
                 debug("- Recipes may be added. Creating...", 1);
                 getServer().getPluginManager().registerEvents(new RecipePerms(), this);
@@ -394,6 +391,14 @@ public class HeadsPlus extends JavaPlugin {
         }
         hapi = new HeadsPlusAPI();
         debug("- Instance for HeadsPlus's API created!", 3);
+        if (getConfiguration().getMySQL().getBoolean("enabled")) {
+            debug("- MySQL is to be enabled. Opening connection...", 1);
+            try {
+                openConnection();
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
         mySQLAPI = new MySQLAPI();
         debug("- Instance for MySQL created!", 3);
         hpl = new HeadsPlusLevels();
@@ -405,6 +410,7 @@ public class HeadsPlus extends JavaPlugin {
         sounds = new HeadsPlusConfigSounds();
         cs.add(sounds);
         debug("- Instance for HeadsPlusConfigSounds created!", 3);
+
         menus = new HeadsPlusConfigTextMenu();
         cs.add(menus);
         debug("- Instance for HeadsPlusConfigTextMenu created!", 3);

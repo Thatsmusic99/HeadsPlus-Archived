@@ -7,7 +7,6 @@ import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigTextMenu;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
-import io.github.thatsmusic99.headsplus.util.PagedLists;
 import org.bukkit.command.CommandSender;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
@@ -81,12 +80,8 @@ public class BlacklistList implements IHeadsPlusCommand {
                 sender.sendMessage(hpc.getString("empty-bl"));
                 return true;
             }
-            PagedLists<String> pl = new PagedLists<>(bl, 8);
-            if ((page > pl.getTotalPages()) || (0 >= page)) {
-                sender.sendMessage(hpc.getString("invalid-pg-no"));
-            } else {
-                sender.sendMessage(HeadsPlusConfigTextMenu.BlacklistTranslator.translate("blacklist", "default", pl, page));
-            }
+            sender.sendMessage(HeadsPlusConfigTextMenu.BlacklistTranslator.translate("blacklist", "default", bl, page));
+
         } catch (Exception e) {
 	        new DebugPrint(e, "Subcommand (blacklistl)", true, sender);
         }

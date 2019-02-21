@@ -272,22 +272,27 @@ public class MySQLAPI {
             scores.setLevel(uuid, hpc.getConfig().getString("player-data." + uuid + ".profile.level"));
         }
         if (!HeadsPlus.getInstance().isConnectedToMySQLDatabase()) {
-            for (String uuid : hpl.getConfig().getConfigurationSection("player-data").getKeys(false)) {
-                for (String section : hpl.getConfig().getConfigurationSection("player-data." + uuid).getKeys(false)) {
-                    HeadsPlus.getInstance().getScores().setPlayerTotal(uuid, section, "headspluslb",
-                            hpl.getConfig().getInt("player-data." + uuid + "." + section));
+            try {
+                for (String uuid : hpl.getConfig().getConfigurationSection("player-data").getKeys(false)) {
+                    for (String section : hpl.getConfig().getConfigurationSection("player-data." + uuid).getKeys(false)) {
+                        HeadsPlus.getInstance().getScores().setPlayerTotal(uuid, section, "headspluslb",
+                                hpl.getConfig().getInt("player-data." + uuid + "." + section));
+                    }
                 }
-            }
-            for (String section : hpl.getConfig().getConfigurationSection("server-total").getKeys(false)) {
-                HeadsPlus.getInstance().getScores().setPlayerTotal("server-total", section, "headspluslb",
-                        hpl.getConfig().getInt("server-total." + section));
-            }
-            for (String database : hpc.getConfig().getConfigurationSection("server-total").getKeys(false)) {
-                for (String section : hpc.getConfig().getConfigurationSection("server-total." +  database).getKeys(false)) {
-                    HeadsPlus.getInstance().getScores().setPlayerTotal("server-total", section, database,
-                            hpc.getConfig().getInt("server-total." + database + section));
+                for (String section : hpl.getConfig().getConfigurationSection("server-total").getKeys(false)) {
+                    HeadsPlus.getInstance().getScores().setPlayerTotal("server-total", section, "headspluslb",
+                            hpl.getConfig().getInt("server-total." + section));
                 }
+                for (String database : hpc.getConfig().getConfigurationSection("server-total").getKeys(false)) {
+                    for (String section : hpc.getConfig().getConfigurationSection("server-total." +  database).getKeys(false)) {
+                        HeadsPlus.getInstance().getScores().setPlayerTotal("server-total", section, database,
+                                hpc.getConfig().getInt("server-total." + database + section));
+                    }
+                }
+            } catch (NullPointerException ex) {
+                HeadsPlus.getInstance().getLogger().warning("leaderboards.yml wasn't found - has it already been deleted..?");
             }
+
         }
 
         try {

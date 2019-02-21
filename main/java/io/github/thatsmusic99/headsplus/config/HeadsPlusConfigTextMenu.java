@@ -9,6 +9,7 @@ import io.github.thatsmusic99.headsplus.util.PagedHashmaps;
 import io.github.thatsmusic99.headsplus.util.PagedLists;
 import mkremins.fanciful.FancyMessage;
 import org.apache.commons.lang.WordUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
@@ -29,11 +30,13 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
         getConfig().addDefault("help.header", "{default-paged}");
         getConfig().addDefault("help.for-each-line", "{3}{usage} - {4}{description}");
         getConfig().addDefault("help.lines-per-page", 8);
-        getConfig().addDefault("help.command-help", new ArrayList<>(Arrays.asList("{header}",
+        getConfig().addDefault("help.command-help.header", "{default}");
+        getConfig().addDefault("help.command-help.layout", new ArrayList<>(Arrays.asList("{header}",
                 "{3}Usage - {4}{usage}",
                 "{3}Description - {4}{description}",
                 "{3}Permission - {4}{permission}",
                 "{3}Further usages - {4}{further-usage}")));
+        getConfig().addDefault("head-info.header", "{default}");
         getConfig().addDefault("head-info.normal-layout", new ArrayList<>(Arrays.asList("{header}",
                 "{4}Type: {3}{type}",
                 "{4}Display name: {3}{display-name}",
@@ -47,6 +50,7 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
         getConfig().addDefault("head-info.lore-info.header", "{default}");
         getConfig().addDefault("head-info.lore-info.first-line", "{4}Type: {3}{type}");
         getConfig().addDefault("head-info.lore-info.for-each-line", "{3}{lore}");
+        getConfig().addDefault("head-info.lore-info.lines-per-page", 8);
         getConfig().addDefault("head-info.name-info.colored.header", "{default}");
         getConfig().addDefault("head-info.name-info.colored.first-line", "{4}Type: {3}{type}");
         getConfig().addDefault("head-info.name-info.colored.for-each-line", "{3}{name} ({color})");
@@ -92,10 +96,10 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
 
     private static String translateColors(String s) {
         HeadsPlus hp = HeadsPlus.getInstance();
-        return translateHeader(s.replaceAll("\\{1}", hp.getThemeColour(1).toString())
+        return translateHeader(s).replaceAll("\\{1}", hp.getThemeColour(1).toString())
                 .replaceAll("\\{2}", hp.getThemeColour(2).toString())
                 .replaceAll("\\{3}", hp.getThemeColour(3).toString())
-                .replaceAll("\\{4}", hp.getThemeColour(4).toString()));
+                .replaceAll("\\{4}", hp.getThemeColour(4).toString());
     }
 
     private static String translateHeader(String s) {
@@ -135,8 +139,8 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
                 .replaceAll("\\{hunter-counter}", String.valueOf(api.getPlayerInLeaderboards(p.getPlayer(), "total", "headspluslb")))
                 .replaceAll("\\{sellhead-counter}", String.valueOf(api.getPlayerInLeaderboards(p.getPlayer(), "total", "headsplussh")))
                 .replaceAll("\\{crafting-counter}", String.valueOf(api.getPlayerInLeaderboards(p.getPlayer(), "total", "headspluscraft")))
-                .replaceAll("\\{level}", p.getLevel().getDisplayName())
-                .replaceAll("\\{next-level-xp}", String.valueOf((p.getNextLevel() != null ? (p.getNextLevel().getRequiredXP() - p.getXp()) : 0)))
+                .replaceAll("\\{level}", ChatColor.translateAlternateColorCodes('&', p.getLevel().getDisplayName()))
+                .replaceAll("\\{next-level}", String.valueOf((p.getNextLevel() != null ? (p.getNextLevel().getRequiredXP() - p.getXp()) : 0)))
                 .replaceAll("\\{header}", h.getConfig().getString("profile.header")))).append("\n");
             }
             return sb.toString();
@@ -200,9 +204,9 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
             sb.append(translateColors(ht.getConfig().getString("head-info.name-info.colored.first-line"))
             .replaceAll("\\{type}", type)).append("\n");
             for (Head head : hs.getContentsInPage(page)) {
-                sb.append(sb.append(translateColors(ht.getConfig().getString("head-info.name-info.colored.for-each-line"))
+                sb.append(translateColors(ht.getConfig().getString("head-info.name-info.colored.for-each-line"))
                 .replaceAll("\\{name}", head.type)
-                .replaceAll("\\{color}", head.colour))).append("\n");
+                .replaceAll("\\{color}", head.colour)).append("\n");
             }
             return sb.toString();
         }
@@ -288,16 +292,17 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
         public static String translateCommandHelp(IHeadsPlusCommand key, CommandSender sender) {
             StringBuilder sb = new StringBuilder();
             HeadsPlusConfigTextMenu ht = HeadsPlus.getInstance().getMenus();
-            for (String s : ht.getConfig().getStringList("help.command-help")) {
+            for (String s : ht.getConfig().getStringList("help.command-help.layout")) {
                 if (!s.contains("{permission}") || sender.hasPermission("headsplus.help.viewperms")) {
-
-                    sb.append(translateColors(s.replaceAll("\\{header}", ht.getConfig().getString("help.header"))
-                            .replaceAll("\\{description}", key.getCmdDescription()).replaceAll("\\{usage}", key.getUsage())));
                     if (s.contains("{further-usage}") && key.advancedUsages().length > 0) {
-                        sb.append(translateColors(s.replaceAll("\\{further-usage}", "")));
+                        sb.append(translateColors(s.replaceAll("\\{further-usage}", ""))).append("\n");
                         for (String s2 : key.advancedUsages()) {
                             sb.append(HeadsPlus.getInstance().getThemeColour(4)).append(translateColors(s2)).append("\n");
                         }
+                    } else if (!s.contains("{further-usage}")){
+                        sb.append(translateColors(s.replaceAll("\\{header}", ht.getConfig().getString("help.command-help.header"))
+                                .replaceAll("\\{description}", key.getCmdDescription()).replaceAll("\\{usage}", key.getUsage()))
+                                .replaceAll("\\{permission}", key.getPermission())).append("\n");
                     }
                 }
             }
@@ -337,6 +342,7 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
                     return hpc.getString("no-data-lb");
                 }
             } catch (NullPointerException ex) {
+                ex.printStackTrace();
                 return hpc.getString("no-data-lb");
             }
         }
@@ -351,6 +357,7 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
             for (String s : h.getConfig().getStringList("info.layout")) {
                 sb.append(translateColors(s
                         .replaceAll("\\{version}", String.valueOf(hp.getVersion()))
+                        .replaceAll("\\{header}", h.getConfig().getString("info.header"))
                         .replaceAll("\\{author}", String.valueOf(hp.getAuthor()))
                         .replaceAll("\\{locale}", LocaleManager.getLocale().getLanguage())
                         .replaceAll("\\{contributors}", "Toldi, DariusTK, AlansS53, Gneiwny, steve4744, Niestrat99"))).append("\n");

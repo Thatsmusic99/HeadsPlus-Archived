@@ -202,11 +202,11 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
             }
             sb.append(translateColors(ht.getConfig().getString("head-info.name-info.colored.header"))).append("\n");
             sb.append(translateColors(ht.getConfig().getString("head-info.name-info.colored.first-line"))
-            .replaceAll("\\{type}", type)).append("\n");
+            .replaceAll("\\{type}", type));
             for (Head head : hs.getContentsInPage(page)) {
-                sb.append(translateColors(ht.getConfig().getString("head-info.name-info.colored.for-each-line"))
+                sb.append("\n").append(translateColors(ht.getConfig().getString("head-info.name-info.colored.for-each-line"))
                 .replaceAll("\\{name}", head.type)
-                .replaceAll("\\{color}", head.colour)).append("\n");
+                .replaceAll("\\{color}", head.colour));
             }
             return sb.toString();
         }
@@ -232,11 +232,11 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
             }
             sb.append(translateColors(ht.getConfig().getString("head-info.mask-info.header"))).append("\n");
             sb.append(translateColors(ht.getConfig().getString("head-info.mask-info.first-line"))
-                    .replaceAll("\\{type}", type)).append("\n");
+                    .replaceAll("\\{type}", type));
             for (Mask mask : hs.getContentsInPage(page)) {
-                sb.append(sb.append(translateColors(ht.getConfig().getString("head-info.mask-info.for-each-line"))
+                sb.append("\n").append(sb.append(translateColors(ht.getConfig().getString("head-info.mask-info.for-each-line"))
                         .replaceAll("\\{effect}", mask.effect)
-                        .replaceAll("\\{amplifier}", String.valueOf(mask.amplifier)))).append("\n");
+                        .replaceAll("\\{amplifier}", String.valueOf(mask.amplifier))));
             }
             return sb.toString();
         }
@@ -251,10 +251,10 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
             }
             sb.append(translateColors(ht.getConfig().getString("head-info.lore-info.header"))).append("\n");
             sb.append(translateColors(ht.getConfig().getString("head-info.lore-info.first-line"))
-                    .replaceAll("\\{type}", type)).append("\n");
+                    .replaceAll("\\{type}", type));
             for (String s : lore.getContentsInPage(page)) {
-                sb.append(translateColors(ht.getConfig().getString("head-info.lore-info.for-each-line")
-                .replaceAll("\\{lore}", s))).append("\n");
+                sb.append("\n").append(translateColors(ht.getConfig().getString("head-info.lore-info.for-each-line")
+                .replaceAll("\\{lore}", s)));
             }
             return sb.toString();
         }
@@ -295,14 +295,14 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
             for (String s : ht.getConfig().getStringList("help.command-help.layout")) {
                 if (!s.contains("{permission}") || sender.hasPermission("headsplus.help.viewperms")) {
                     if (s.contains("{further-usage}") && key.advancedUsages().length > 0) {
-                        sb.append(translateColors(s.replaceAll("\\{further-usage}", ""))).append("\n");
+                        sb.append(translateColors(s.replaceAll("\\{further-usage}", "")));
                         for (String s2 : key.advancedUsages()) {
-                            sb.append(HeadsPlus.getInstance().getThemeColour(4)).append(translateColors(s2)).append("\n");
+                            sb.append("\n").append(HeadsPlus.getInstance().getThemeColour(4)).append(translateColors(s2));
                         }
                     } else if (!s.contains("{further-usage}")){
-                        sb.append(translateColors(s.replaceAll("\\{header}", ht.getConfig().getString("help.command-help.header"))
+                        sb.append("\n").append(translateColors(s.replaceAll("\\{header}", ht.getConfig().getString("help.command-help.header"))
                                 .replaceAll("\\{description}", key.getCmdDescription()).replaceAll("\\{usage}", key.getUsage()))
-                                .replaceAll("\\{permission}", key.getPermission())).append("\n");
+                                .replaceAll("\\{permission}", key.getPermission()));
                     }
                 }
             }
@@ -355,12 +355,12 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
             HeadsPlusConfigTextMenu h = HeadsPlus.getInstance().getMenus();
             HeadsPlus hp = HeadsPlus.getInstance();
             for (String s : h.getConfig().getStringList("info.layout")) {
-                sb.append(translateColors(s
+                sb.append("\n").append(translateColors(s
                         .replaceAll("\\{version}", String.valueOf(hp.getVersion()))
                         .replaceAll("\\{header}", h.getConfig().getString("info.header"))
                         .replaceAll("\\{author}", String.valueOf(hp.getAuthor()))
                         .replaceAll("\\{locale}", LocaleManager.getLocale().getLanguage())
-                        .replaceAll("\\{contributors}", "Toldi, DariusTK, AlansS53, Gneiwny, steve4744, Niestrat99"))).append("\n");
+                        .replaceAll("\\{contributors}", "Toldi, DariusTK, AlansS53, Gneiwny, steve4744, Niestrat99, Alexisparis007")));
             }
             return sb.toString();
         }

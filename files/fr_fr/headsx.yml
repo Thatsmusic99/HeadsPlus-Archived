@@ -1,0 +1,1933 @@
+# HeadsPlus by Thatsmusic99
+#  WARNING: This is an advanced section of the plugin. If you do not know what you a doing with it, please do not use it due to risk of crashing your own and other's games.
+#  For more information visit the GitHub wiki for HeadsX.yml: https://github.com/Thatsmusic99/HeadsPlus/wiki/headsx.yml
+#  Traduit par Cyrex/Alexisparis007 (merci beaucoup!)
+options:
+  version: 2.2
+  default-price: 10.0
+sections:
+  alphabet:
+    display-name: '&8[&6Alphabet&8]'
+    texture: HP#wood_a
+  animals:
+    display-name: '&8[&aAnimaux&8]'
+    texture: HP#elephant
+  decoration:
+    display-name: '&8[&eDécoration&8]'
+    texture: HP#paper_lantern
+  food_and_drink:
+    display-name: '&8[&6Aliments &7et &9Boisson&8]'
+    texture: HP#pepsi
+  logos:
+    display-name: '&8[&cLogos&8]'
+    texture: HP#youtube
+  plants:
+    display-name: '&8[&aLes plantes&8]'
+    texture: HP#white_flower_bush
+  colors:
+    display-name: '&8[&4C&6o&eu&al&be&du&8r]'
+    texture: HP#rainbow
+  emotes:
+    display-name: '&8[&eEmotes&8]'
+    texture: HP#e_wink
+  blocks:
+    display-name: '&8[&9Blocks&8]'
+    texture: HP#oak_log
+heads:
+  wood_a:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois A&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTY3ZDgxM2FlN2ZmZTViZTk1MWE0ZjQxZjJhYTYxOWE1ZTM4OTRlODVlYTVkNDk4NmY4NDk0OWM2M2Q3NjcyZSJ9fX0
+    price: default
+    section: alphabet
+  wood_b:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois B&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTBjMWI1ODRmMTM5ODdiNDY2MTM5Mjg1YjJmM2YyOGRmNjc4NzEyM2QwYjMyMjgzZDg3OTRlMzM3NGUyMyJ9fX0
+    price: default
+    section: alphabet
+  wood_c:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois C&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWJlOTgzZWM0NzgwMjRlYzZmZDA0NmZjZGZhNDg0MjY3NjkzOTU1MWI0NzM1MDQ0N2M3N2MxM2FmMThlNmYifX19
+    price: default
+    section: alphabet
+  wood_d:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois D&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzE5M2RjMGQ0YzVlODBmZjlhOGEwNWQyZmNmZTI2OTUzOWNiMzkyNzE5MGJhYzE5ZGEyZmNlNjFkNzEifX19
+    price: default
+    section: alphabet
+  wood_e:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois E&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGJiMjczN2VjYmY5MTBlZmUzYjI2N2RiN2Q0YjMyN2YzNjBhYmM3MzJjNzdiZDBlNGVmZjFkNTEwY2RlZiJ9fX0
+    price: default
+    section: alphabet
+  wood_f:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois F&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjE4M2JhYjUwYTMyMjQwMjQ4ODZmMjUyNTFkMjRiNmRiOTNkNzNjMjQzMjU1OWZmNDllNDU5YjRjZDZhIn19fQ
+    price: default
+    section: alphabet
+  wood_g:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois G&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWNhM2YzMjRiZWVlZmI2YTBlMmM1YjNjNDZhYmM5MWNhOTFjMTRlYmE0MTlmYTQ3NjhhYzMwMjNkYmI0YjIifX19
+    price: default
+    section: alphabet
+  wood_h:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois H&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzFmMzQ2MmE0NzM1NDlmMTQ2OWY4OTdmODRhOGQ0MTE5YmM3MWQ0YTVkODUyZTg1YzI2YjU4OGE1YzBjNzJmIn19fQ
+    price: default
+    section: alphabet
+  wood_i:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois I&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDYxNzhhZDUxZmQ1MmIxOWQwYTM4ODg3MTBiZDkyMDY4ZTkzMzI1MmFhYzZiMTNjNzZlN2U2ZWE1ZDMyMjYifX19
+    price: default
+    section: alphabet
+  wood_j:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois J&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2E3OWRiOTkyMzg2N2U2OWMxZGJmMTcxNTFlNmY0YWQ5MmNlNjgxYmNlZGQzOTc3ZWViYmM0NGMyMDZmNDkifX19
+    price: default
+    section: alphabet
+  wood_k:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois K&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTQ2MWIzOGM4ZTQ1NzgyYWRhNTlkMTYxMzJhNDIyMmMxOTM3NzhlN2Q3MGM0NTQyYzk1MzYzNzZmMzdiZTQyIn19fQ
+    price: default
+    section: alphabet
+  wood_l:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois L&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzE5ZjUwYjQzMmQ4NjhhZTM1OGUxNmY2MmVjMjZmMzU0MzdhZWI5NDkyYmNlMTM1NmM5YWE2YmIxOWEzODYifX19
+    price: default
+    section: alphabet
+  wood_m:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois M&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDljNDVhMjRhYWFiZjQ5ZTIxN2MxNTQ4MzIwNDg0OGE3MzU4MmFiYTdmYWUxMGVlMmM1N2JkYjc2NDgyZiJ9fX0
+    price: default
+    section: alphabet
+  wood_n:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois N&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzViOGIzZDhjNzdkZmI4ZmJkMjQ5NWM4NDJlYWM5NGZmZmE2ZjU5M2JmMTVhMjU3NGQ4NTRkZmYzOTI4In19fQ
+    price: default
+    section: alphabet
+  wood_o:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois O&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDExZGUxY2FkYjJhZGU2MTE0OWU1ZGVkMWJkODg1ZWRmMGRmNjI1OTI1NWIzM2I1ODdhOTZmOTgzYjJhMSJ9fX0
+    price: default
+    section: alphabet
+  wood_p:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois P&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTBhNzk4OWI1ZDZlNjIxYTEyMWVlZGFlNmY0NzZkMzUxOTNjOTdjMWE3Y2I4ZWNkNDM2MjJhNDg1ZGMyZTkxMiJ9fX0
+    price: default
+    section: alphabet
+  wood_q:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois Q&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDM2MDlmMWZhZjgxZWQ0OWM1ODk0YWMxNGM5NGJhNTI5ODlmZGE0ZTFkMmE1MmZkOTQ1YTU1ZWQ3MTllZDQifX19
+    price: default
+    section: alphabet
+  wood_r:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois R&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTVjZWQ5OTMxYWNlMjNhZmMzNTEzNzEzNzliZjA1YzYzNWFkMTg2OTQzYmMxMzY0NzRlNGU1MTU2YzRjMzcifX19
+    price: default
+    section: alphabet
+  wood_s:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois S&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2U0MWM2MDU3MmM1MzNlOTNjYTQyMTIyODkyOWU1NGQ2Yzg1NjUyOTQ1OTI0OWMyNWMzMmJhMzNhMWIxNTE3In19fQ
+    price: default
+    section: alphabet
+  wood_t:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois T&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTU2MmU4YzFkNjZiMjFlNDU5YmU5YTI0ZTVjMDI3YTM0ZDI2OWJkY2U0ZmJlZTJmNzY3OGQyZDNlZTQ3MTgifX19
+    price: default
+    section: alphabet
+  wood_u:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois U&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjA3ZmJjMzM5ZmYyNDFhYzNkNjYxOWJjYjY4MjUzZGZjM2M5ODc4MmJhZjNmMWY0ZWZkYjk1NGY5YzI2In19fQ
+    price: default
+    section: alphabet
+  wood_v:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois V&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2M5YTEzODYzOGZlZGI1MzRkNzk5Mjg4NzZiYWJhMjYxYzdhNjRiYTc5YzQyNGRjYmFmY2M5YmFjNzAxMGI4In19fQ
+    price: default
+    section: alphabet
+  wood_w:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois W&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjY5YWQxYTg4ZWQyYjA3NGUxMzAzYTEyOWY5NGU0YjcxMGNmM2U1YjRkOTk1MTYzNTY3ZjY4NzE5YzNkOTc5MiJ9fX0
+    price: default
+    section: alphabet
+  wood_x:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois X&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWE2Nzg3YmEzMjU2NGU3YzJmM2EwY2U2NDQ5OGVjYmIyM2I4OTg0NWU1YTY2YjVjZWM3NzM2ZjcyOWVkMzcifX19
+    price: default
+    section: alphabet
+  wood_y:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois Y&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzUyZmIzODhlMzMyMTJhMjQ3OGI1ZTE1YTk2ZjI3YWNhNmM2MmFjNzE5ZTFlNWY4N2ExY2YwZGU3YjE1ZTkxOCJ9fX0
+    price: default
+    section: alphabet
+  wood_z:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois Z&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTA1ODJiOWI1ZDk3OTc0YjExNDYxZDYzZWNlZDg1ZjQzOGEzZWVmNWRjMzI3OWY5YzQ3ZTFlMzhlYTU0YWU4ZCJ9fX0
+    price: default
+    section: alphabet
+  wood_ascii_a:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois Ascii A&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTVjZDZkYjllYzNjN2Q5MTEzZTZkZDQ5YTE2Zjk5YTMyNmI5ZjU5NGNlOTg3ZjkxOTU1OWFjN2RiZDNiNTU1In19fQ
+    price: default
+    section: alphabet
+  wood_ascii_o:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois Ascii O&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmVkYmI0NGM2MzliOTUzMDhmZmNkZjhjNDc3MGRmZThiMDJkNzUyZGVjNGIzMTk2ZjRhOGY5YWMyMzE1MzkzYSJ9fX0
+    price: default
+    section: alphabet
+  wood_ascii_u:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois Ascii U&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2I1MmI5NGM2NTE2Y2JlNDYxZmVhNjIxZDMxNmNlZTBiODc1ZjBmYmMyMzlkMjUyNzNlODI0YjYxM2U3M2RkNCJ9fX0
+    price: default
+    section: alphabet
+  wood_1:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois 1&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzFiYzJiY2ZiMmJkMzc1OWU2YjFlODZmYzdhNzk1ODVlMTEyN2RkMzU3ZmMyMDI4OTNmOWRlMjQxYmM5ZTUzMCJ9fX0
+    price: default
+    section: alphabet
+  wood_2:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois 2&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGNkOWVlZWU4ODM0Njg4ODFkODM4NDhhNDZiZjMwMTI0ODVjMjNmNzU3NTNiOGZiZTg0ODczNDE0MTk4NDcifX19
+    price: default
+    section: alphabet
+  wood_3:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois 3&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWQ0ZWFlMTM5MzM4NjBhNmRmNWU4ZTk1NTY5M2I5NWE4YzNiMTVjMzZiOGI1ODc1MzJhYzA5OTZiYzM3ZTUifX19
+    price: default
+    section: alphabet
+  wood_4:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois 4&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDJlNzhmYjIyNDI0MjMyZGMyN2I4MWZiY2I0N2ZkMjRjMWFjZjc2MDk4NzUzZjJkOWMyODU5ODI4N2RiNSJ9fX0
+    price: default
+    section: alphabet
+  wood_5:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois 5&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmQ1N2UzYmM4OGE2NTczMGUzMWExNGUzZjQxZTAzOGE1ZWNmMDg5MWE2YzI0MzY0M2I4ZTU0NzZhZTIifX19
+    price: default
+    section: alphabet
+  wood_6:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois 6&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzM0YjM2ZGU3ZDY3OWI4YmJjNzI1NDk5YWRhZWYyNGRjNTE4ZjVhZTIzZTcxNjk4MWUxZGNjNmIyNzIwYWIifX19
+    price: default
+    section: alphabet
+  wood_7:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois 7&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmRiNmViMjVkMWZhYWJlMzBjZjQ0NGRjNjMzYjU4MzI0NzVlMzgwOTZiN2UyNDAyYTNlYzQ3NmRkN2I5In19fQ
+    price: default
+    section: alphabet
+  wood_8:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois 8&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTkxOTQ5NzNhM2YxN2JkYTk5NzhlZDYyNzMzODM5OTcyMjI3NzRiNDU0Mzg2YzgzMTljMDRmMWY0Zjc0YzJiNSJ9fX0
+    price: default
+    section: alphabet
+  wood_9:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois 9&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTY3Y2FmNzU5MWIzOGUxMjVhODAxN2Q1OGNmYzY0MzNiZmFmODRjZDQ5OWQ3OTRmNDFkMTBiZmYyZTViODQwIn19fQ
+    price: default
+    section: alphabet
+  wood_0:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois 0&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMGViZTdlNTIxNTE2OWE2OTlhY2M2Y2VmYTdiNzNmZGIxMDhkYjg3YmI2ZGFlMjg0OWZiZTI0NzE0YjI3In19fQ
+    price: default
+    section: alphabet
+  wood_space:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWRiNTMyYjVjY2VkNDZiNGI1MzVlY2UxNmVjZWQ3YmJjNWNhYzU1NTk0ZDYxZThiOGY4ZWFjNDI5OWM5ZmMifX19
+    price: default
+    section: alphabet
+  wood_colon:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2NiZWUyOGUyYzc5ZGIxMzhmMzk3N2JhNDcyZGZhZTZiMTFhOWJiODJkNWIzZDdmMjU0NzkzMzhmZmYxZmU5MiJ9fX0
+    price: default
+    section: alphabet
+  wood_slash:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2Y5NWQ3YzFiYmYzYWZhMjg1ZDhkOTY3NTdiYjU1NzIyNTlhM2FlODU0ZjUzODlkYzUzMjA3Njk5ZDk0ZmQ4In19fQ
+    price: default
+    section: alphabet
+  portable_grill:
+    database: true
+    encode: false
+    displayname: '&8[&7Grill portable&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzE4ZTM1ZWM0YjRiNGMxNTkxYzUxNzczODZkZTE4Nzk3NDU0Mjk4Yjc0NTU5ODJlM2FlODNiYWNjZWQwZjFhMiJ9fX0
+    price: default
+    section: decoration
+  beer_barrel:
+    database: true
+    encode: false
+    displayname: '&8[&6Baril de bière&7]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmZiOTg1OTYyZjQ2ZTA1NWY1M2Q4ZWUzNWIxMWI4YTYyZjM5N2RhZDlkYjlmZWFlZmY0ODI5NjMwZDlkOSJ9fX0
+    price: default
+    section: decoration
+  present:
+    database: true
+    encode: false
+    displayname: '&8[&cCadeau 1&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmQ3YTlmNmVkMDhkZDIxN2ZkZjA5ZjQ2NTJiZjZiN2FmNjIxZTFkNWY4OTYzNjA1MzQ5ZGE3Mzk5OGE0NDMifX19
+    price: default
+    section: decoration
+  present_1:
+    database: true
+    encode: false
+    displayname: '&8[&9Cadeau 2&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjU2MTJkYzdiODZkNzFhZmMxMTk3MzAxYzE1ZmQ5NzllOWYzOWU3YjFmNDFkOGYxZWJkZjgxMTU1NzZlMmUifX19
+    price: default
+    section: decoration
+  parcel:
+    database: true
+    encode: false
+    displayname: '&8[&6Cadeau&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTYyMzRhZTdkNTU5MDNlYThiYzM0NDEzY2Q1MmRlZDNiMzdjOTJlZWU1YWU1MzNmYzUxMjZhNjU0NjFmMTFmIn19fQ
+    price: default
+    section: decoration
+  lava_bucket:
+    database: true
+    encode: false
+    displayname: '&8[&6Seau de lave&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGQ1NDI3YTgzNTQwYTA4YTNmYTJlNjU1YzI5NjRhMDcyNDM1MTQ1ODRhNzFlYzM1ZDZiOWUxODRkZmJlMzE4In19fQ
+    price: default
+    section: decoration
+  water_bucket:
+    database: true
+    encode: false
+    displayname: '&8[&3Seau d''eau&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDlmMWYwN2UyYjFjMzJiYjY0YTEyOGU1MjlmM2FmMWU1Mjg2ZTUxODU0NGVkZjhjYmFhNmM0MDY1YjQ3NmIifX19
+    price: default
+    section: decoration
+  bucket:
+    database: true
+    encode: false
+    displayname: '&8[&7Seau&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjFlYTgyNTE1MGIwNmU2NWUyY2ViNTkzYWZlMzQyZGNhNTZkZGExMmJmNmM5Njk2ZmI4MmY5MGRjZDQyM2FiIn19fQ
+    price: default
+    section: decoration
+  cctv:
+    database: true
+    encode: false
+    displayname: '&8[&7CCTV&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWIyOGY0ZWVmZjg5MWI3OGQ1MWY3NWQ4NzIyYzYyODQ4NGJhNDlkZjljOWYyMzcxODk4YzI2OTY3Mzg2In19fQ
+    price: default
+    section: decoration
+  radio:
+    database: true
+    encode: false
+    displayname: '&8[&7Radio&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTQ4YThjNTU4OTFkZWM3Njc2NDQ0OWY1N2JhNjc3YmUzZWU4OGEwNjkyMWNhOTNiNmNjN2M5NjExYTdhZiJ9fX0
+    price: default
+    section: decoration
+  black_dice:
+    database: true
+    encode: false
+    displayname: '&8[&7Dé noir&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTE1ZjdjMzEzYmNhOWMyZjk1OGU2OGFiMTRhYjM5Mzg2N2Q2NzUwM2FmZmZmOGYyMGNiMTNmYmU5MTdmZDMxIn19fQ
+    price: default
+    section: decoration
+  white_dice:
+    database: true
+    encode: false
+    displayname: '&8[&fDé blanc&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzk3OTU1NDYyZTRlNTc2NjY0NDk5YWM0YTFjNTcyZjYxNDNmMTlhZDJkNjE5NDc3NjE5OGY4ZDEzNmZkYjIifX19
+    price: default
+    section: decoration
+  red_dice:
+    database: true
+    encode: false
+    displayname: '&8[&cDé rouge&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTEzMWRlOGU5NTFmZGQ3YjlhM2QyMzlkN2NjM2FhM2U4NjU1YTMzNmI5OTliOWVkYmI0ZmIzMjljYmQ4NyJ9fX0
+    price: default
+    section: decoration
+  globe:
+    database: true
+    encode: false
+    displayname: '&8[&bGlobe&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjFkZDRmZTRhNDI5YWJkNjY1ZGZkYjNlMjEzMjFkNmVmYTZhNmI1ZTdiOTU2ZGI5YzVkNTljOWVmYWIyNSJ9fX0
+    price: default
+    section: decoration
+  toaster:
+    database: true
+    encode: false
+    displayname: '&8[&7Toaster&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzExNmY4OWQyZThkYmQxMjY2MzY0MTVmOTMyODY0MWM2ZmEyODkwYzMyZDQzOWVmZmMzOGEyMjk2YzJkIn19fQ
+    price: default
+    section: decoration
+  tnt:
+    database: true
+    encode: false
+    displayname: '&8[&cTNT&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2FmNTk3NzZmMmYwMzQxMmM3YjU5NDdhNjNhMGNmMjgzZDUxZmU2NWFjNmRmN2YyZjg4MmUwODM0NDU2NWU5In19fQ
+    price: default
+    section: decoration
+  pearl:
+    database: true
+    encode: false
+    displayname: '&8[&fPerl&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2QxNmFlOTUxMTIwMzk0ZjM2OGYyMjUwYjdjM2FkM2ZiMTJjZWE1NWVjMWIyZGI1YTk0ZDFmYjdmZDRiNmZhIn19fQ
+    price: default
+    section: decoration
+  chimney:
+    database: true
+    encode: false
+    displayname: '&8[&7Cheminée&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTQ1MmQ3ZThiOWE4ZmUzZGY5MTU1ODQyMjI4NDZjZjk4ODU0ODc1OGI0ODU1NmFiNGM4NjgzZDA4NGNhNWZjOSJ9fX0
+    price: default
+    section: decoration
+  red_candle:
+    database: true
+    encode: false
+    displayname: '&8[&cBougie rouge&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWZkZGRkYjhlZWUxMWJjMzEyZDFhY2ZkNjIxYTQ0NmI1Njg2OGFhZjY2YTUwNzFjYTk0MjU1ODJiMThjZGQ2In19fQ
+    price: default
+    section: decoration
+  white_candle:
+    database: true
+    encode: false
+    displayname: '&8[&fBougie blanche&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzgxMjI2NjU2ZDgyNTI5MWIxZDdlNDU2Yjc0ZWNkY2UyODY3MjE2OTY0MWU2YzM1YjFlMjNiOWI0MDI3NGUifX19
+    price: default
+    section: decoration
+  monitor:
+    database: true
+    encode: false
+    displayname: '&8[&7Moniteur&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzMzZGNmYjRkYTEwMTc3MjY0OTY4YjQ0OWU3MjRhZGViZWUzYmMzM2I3MmJhZTg1ODQyYjRhYWI5YmQ5YzRkYiJ9fX0
+    price: default
+    section: decoration
+  cooking_pot:
+    database: true
+    encode: false
+    displayname: '&8[&7Marmite&7]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmIxNDZlMWNmMWFhYzQwZDM3OTFjODk4MWEzMjhkNTVmOTc0YThiOWY3YjNhYmRlM2Q0YjkxODczNGVhNyJ9fX0
+    price: default
+    section: decoration
+  lantern:
+    database: true
+    encode: false
+    displayname: '&8[&6Lanterne&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTk5OGUzNjY4YTZjYTYyZWI3NWYzNmZhNGJiN2Y1ZWNkYjI2YjE3MGFhY2QzMzc3ZGI1M2Y2MmYxODhiMzgifX19
+    price: default
+    section: decoration
+  paper_lantern:
+    database: true
+    encode: false
+    displayname: '&8[&cLanterne de papier&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjYyODNlN2E4OGQzMjcxOTMwNGEzN2VkZTBjNmE4YzVkYzlkOWNmOWIwMGExNzljZjkwNGU4Y2U4MjEzMTIifX19
+    price: default
+    section: decoration
+  snow_globe:
+    database: true
+    encode: false
+    displayname: '&8[&bBoule à neige&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmRkNjYzMTM2Y2FmYTExODA2ZmRiY2E2YjU5NmFmZDg1MTY2YjRlYzAyMTQyYzhkNWFjODk0MWQ4OWFiNyJ9fX0
+    price: default
+    section: decoration
+  speaker:
+    database: true
+    encode: false
+    displayname: '&8[&7Enceinte&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTM1OTZmZDdiZTZiNzQ2M2U3ZDJjYzQ1ODQ0NWU2YTBhOWExODNkOGY0Y2ZjYzgwMTE4YmE3MTNhN2RkMTgifX19
+    price: default
+    section: decoration
+  rose_pot:
+    database: true
+    encode: false
+    displayname: '&8[&cPot Rose&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWRiYTM4ZTlmYzY3ZjcyYzQ1OGZkYWM4ZWNkN2NhYmFlZDNlYjgzNzM3MTQzYTAxMjgzNTBhMWFiMzgxZTNlIn19fQ
+    price: default
+    section: decoration
+  salvia_pot:
+    database: true
+    encode: false
+    displayname: '&8[&9Pot&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWQ4MGMyNmY5MDRiNTdlNjMxZTM5ZWJjNDQ2ZWMxYWYyZGNlMzQzMmViODQzMWZiZDE5MDg3YWRiNGFiY2IifX19
+    price: default
+    section: decoration
+  toilet_paper:
+    database: true
+    encode: false
+    displayname: '&8[&fPapier de toilette&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzM4MGM3ZTYyMWExZjRkYTU0M2U0YzdhYjE0OTRlZTE4NGI4N2JiMTMyNDE4NTEyYzllZWU4NThmOWRlMWRiIn19fQ
+    price: default
+    section: decoration
+  fishbowl:
+    database: true
+    encode: false
+    displayname: '&8[&bBocal à poissons&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWYxMmUwZGZlNjhhZWY3Y2I1YzA2Yzc3Y2YyNzIyMzBhNWNkNjgyYmM0NTJjYjY5OWIyMTc3ZGY1ZTZhZjY0In19fQ
+    price: default
+    section: decoration
+  beach_ball:
+    database: true
+    encode: false
+    displayname: '&8[&eBallon de plage&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWE1YWIwNWVhMjU0YzMyZTNjNDhmM2ZkY2Y5ZmQ5ZDc3ZDNjYmEwNGU2YjVlYzJlNjhiM2NiZGNmYWMzZmQifX19
+    price: default
+    section: decoration
+  soccer_ball:
+    database: true
+    encode: false
+    displayname: '&8[&fBallong de foot&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGU0YTcwYjdiYmNkN2E4YzMyMmQ1MjI1MjA0OTFhMjdlYTZiODNkNjBlY2Y5NjFkMmI0ZWZiYmY5ZjYwNWQifX19
+    price: default
+    section: decoration
+  fire_charge:
+    database: true
+    encode: false
+    displayname: '&8[&cCharge d''incendie&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWMyZTlkODM5NWNhY2Q5OTIyODY5YzE1MzczY2Y3Y2IxNmRhMGE1Y2U1ZjNjNjMyYjE5Y2ViMzkyOWM5YTExIn19fQ
+    price: default
+    section: decoration
+  basketball:
+    database: true
+    encode: false
+    displayname: '&8[&6Basketball&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWRmODQ3MTVhNjRkYzQ1NTg2ZjdhNjA3OWY4ZTQ5YTk0NzdjMGZlOTY1ODliNGNmZDcxY2JhMzIyNTRhYzgifX19
+    price: default
+    section: decoration
+  cannonball:
+    database: true
+    encode: false
+    displayname: '&8[&7Cannonball&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTk2NzU0ZDMzMDQzNTM0NWFhZTNhOWYwNjNjZmNhNDJhZmIyOGI3YzVjNGJiOWYyOTRlZDI1MjdkOTYxIn19fQ
+    price: default
+    section: decoration
+  clock:
+    database: true
+    encode: false
+    displayname: '&8[&6Montre&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODQ3N2RhZmM4YzllYTA3OTk2MzMzODE3OTM4NjZkMTQ2YzlhMzlmYWQ0YzY2ODRlNzExN2Q5N2U5YjZjMyJ9fX0
+    price: default
+    section: decoration
+  rubiks_cube:
+    database: true
+    encode: false
+    displayname: '&8[&cRubik''s Cube&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGYxYTI3N2JlYjllNGZhYTZlN2UzNTZjNzQ3ODZlOTY2MTU1NzM2YTY4NThiZjViYjVhZDI5ZGY1YmFiNjFhMSJ9fX0
+    price: default
+    section: decoration
+  letter_box:
+    database: true
+    encode: false
+    displayname: '&8[&9Boîte au lettre&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWIyODE1Yjk5YzEzYmZjNTViNGM1YzI5NTlkMTU3YTYyMzNhYjA2MTg2NDU5MjMzYmMxZTRkNGY3ODc5MmM2OSJ9fX0
+    price: default
+    section: decoration
+  basket:
+    database: true
+    encode: false
+    displayname: '&8[&6Panier&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzEzODVhN2FmYjM1NTJmYWY3MWMyYzVhOGU2YTViMWQyZTY3MmM3ODZlODA3NDQzM2ViNTgzOWFjZTgzYjQifX19
+    price: default
+    section: decoration
+  papers:
+    database: true
+    encode: false
+    displayname: '&8[&fPapiers&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzY2OTJmOTljYzZkNzgyNDIzMDQxMTA1NTM1ODk0ODQyOThiMmU0YTAyMzNiNzY3NTNmODg4ZTIwN2VmNSJ9fX0
+    price: default
+    section: decoration
+  red_lantern:
+    database: true
+    encode: false
+    displayname: '&8[&cLanterne Rouge&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTFiOGZkYTQzMTFmNzQ3M2JjOTQ4ZmI1NWExNzI0YzUzYWZmYTZmYmEzM2U3NWQ0MTM2ZWYwM2ZhOThhOGMifX19
+    price: default
+    section: decoration
+  yellow_lantern:
+    database: true
+    encode: false
+    displayname: '&8[&eLanterne Jaune&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2QyNWU0NjcxOWY5NjdiMzNjMjk3ZWQxNGE1MWJlOTRlZDY0YmJlZDM2MmFhYzkxYzc5ZjM5MDNlMWVhNDkxIn19fQ
+    price: default
+    section: decoration
+  off_lantern:
+    database: true
+    encode: false
+    displayname: '&8[&7Lanterne étteinte&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzczYTExNTI4MzAyZjI1NDJkMTk2N2JmYzY3ZGFiM2FmNWQ1ZjFmNzZjMzYwZWI2N2I3MWIyYWU0YzNmN2IifX19
+    price: default
+    section: decoration
+  snowman_head:
+    database: true
+    encode: false
+    displayname: '&8[&fTête de Bonhomme de neige&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOThlMzM0ZTRiZWUwNDI2NDc1OWE3NjZiYzE5NTVjZmFmM2Y1NjIwMTQyOGZhZmVjOGQ0YmYxYmIzNmFlNiJ9fX0
+    price: default
+    section: decoration
+  fan:
+    database: true
+    encode: false
+    displayname: '&8[&7Fan&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTcyNzcxZmMxMTczNzA2M2M4MWViNzU5NzNlOWI4MjU5MDk1MWUzNjc0ZjMxYWNjZThjZGRkMWFhZDFiIn19fQ
+    price: default
+    section: decoration
+  chess_board:
+    database: true
+    encode: false
+    displayname: '&8[&fÉchiquier&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTQwOTRlZmZlZTRiYTJhYjFjMmZjNmM4ZWQxYzQ2OTBmYmExOWM4NjYxN2U5MjI3ZGIxZjU4ZDhkZDVkIn19fQ
+    price: default
+    section: decoration
+  projector:
+    database: true
+    encode: false
+    displayname: '&8[&7Projecteur&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjhmMjI0ZDZiNmM4NmU2YjIxZWQ0MGMwMWFkZTNjYTFlMGExNWNiOTdkZWZhZDc4YThkMThlZjRhNTUxYjZhMiJ9fX0
+    price: default
+    section: decoration
+  tissue_box:
+    database: true
+    encode: false
+    displayname: '&8[&bBoîte à mouchoirs&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTZiOGJiOWM0NmNmNzlkZjIxNDdkMjNmMjhmZGRlYmU4ZTNiYWM3NjU4MGYzZDZkZDU1ZDhlOTFhZTdiMCJ9fX0
+    price: default
+    section: decoration
+  microwave:
+    database: true
+    encode: false
+    displayname: '&8[&7Micro-onde&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmNkNDdjNzQ3NDczM2NmYzRmZGRhZTY5ZTQxNTQxM2U1OGFkMzllMjUxNDI0ZjZlMWFlNjdjZmNmNTVjNjgyIn19fQ
+    price: default
+    section: decoration
+  wooden_crate:
+    database: true
+    encode: false
+    displayname: '&8[&6Caisse en bois&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWYyMmI2YTNhMGYyNGJkZWVhYjJhNmFjZDliMWY1MmJiOTU5NGQ1ZjZiMWUyYzA1ZGRkYjIxOTQxMGM4In19fQ
+    price: default
+    section: decoration
+  fire:
+    database: true
+    encode: false
+    displayname: '&8[&cFeu&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDA4MGJiZWZjYTg3ZGMwZjM2NTM2YjY1MDg0MjVjZmM0Yjk1YmE2ZThmNWU2YTQ2ZmY5ZTljYjQ4OGE5ZWQifX19
+    price: default
+    section: decoration
+  wii_console:
+    database: true
+    encode: false
+    displayname: '&8[&fWii Console&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjYzYTM5NTljMjU5NjcxZjJkYjMzZTU1NDIyY2I5ZDM2NmZiYjRhMjQyOTFlNWZlZTVlYzUzZmRiMTVmNDNmZSJ9fX0
+    price: default
+    section: decoration
+  playstation:
+    database: true
+    encode: false
+    displayname: '&8[&7Playstation&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjg1ZTQ0ZDBlYTZkZTdiNGQ0OTY5NWE0Y2U5OTJhYzkwYjVlZjI3YmM4NWQ5NDFlNmZlODkwY2JmNmE5OCJ9fX0
+    price: default
+    section: decoration
+  xbox:
+    database: true
+    encode: false
+    displayname: '&8[&7XBox&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2Q0OWI0NGVjMDk0N2MyMjMxZThmODc5ZWJhYTg5ZDU1MjkzYTg3MjE5YTYxYjZhNWNmZGRkODgzYmI3NyJ9fX0
+    price: default
+    section: decoration
+  flower_pot:
+    database: true
+    encode: false
+    displayname: '&8[&7Pot de fleur&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWIyZjZmYWYxYjk5YWMzOGQ1MmIxYzdiYzQ5ZWI3OTFjNjcwNTQzMzdkNDRkODNkNjZhZGVjYjUwZjM3NSJ9fX0
+    price: default
+    section: decoration
+  bread:
+    database: true
+    encode: false
+    displayname: '&8[&6Pain&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTE5OTdkYTY0MDQzYjI4NDgyMjExNTY0M2E2NTRmZGM0ZThhNzIyNjY2NGI0OGE0ZTFkYmI1NTdiNWMwZmUxNCJ9fX0
+    price: default
+    section: food_and_drink
+  cheese:
+    database: true
+    encode: false
+    displayname: '&8[&eFromage&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzZjMDFiZmZlY2ZkYWI2ZDNjMGYxYTdjNmRmNmFhMTkzNmYyYWE3YTUxYjU0YTRkMzIzZTFjYWNiYzUzOSJ9fX0
+    price: default
+    section: food_and_drink
+  chocolate_donut:
+    database: true
+    encode: false
+    displayname: '&8[&6Donut au chocolat&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTlkYTU0ZmYzNjZlNzM4ZTMxZGU5MjkxOTk4NmFiYjRkNTBjYTk0NGZhOTkyNmFmNjM3NThiNzQ0OGYxOCJ9fX0
+    price: default
+    section: food_and_drink
+  white_donut:
+    database: true
+    encode: false
+    displayname: '&8[&fBeignet Blanc&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDA3YjhjNTFhY2VjMmE1MDhiYjJmYTY1MmZiNmU0YTA4YjE5NDg1MTU5YTA5OWY1OTgyY2NiODhkZjFmZTI3ZSJ9fX0
+    price: default
+    section: food_and_drink
+  pink_donut:
+    database: true
+    encode: false
+    displayname: '&8[&dDonut Rose&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDA3YjhjNTFhY2VjMmE1MDhiYjJmYTY1MmZiNmU0YTA4YjE5NDg1MTU5YTA5OWY1OTgyY2NiODhkZjFmZTI3ZSJ9fX0
+    price: default
+    section: food_and_drink
+  taco:
+    database: true
+    encode: false
+    displayname: '&8[&6Tacos&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWFkN2MwYTA0ZjE0ODVjN2EzZWYyNjFhNDhlZTgzYjJmMWFhNzAxYWIxMWYzZmM5MTFlMDM2NmE5Yjk3ZSJ9fX0
+    price: default
+    section: food_and_drink
+  popcorn:
+    database: true
+    encode: false
+    displayname: '&8[&ePopcorn&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTQ5N2IxNDdjZmFlNTIyMDU1OTdmNzJlM2M0ZWY1MjUxMmU5Njc3MDIwZTRiNGZhNzUxMmMzYzZhY2RkOGMxIn19fQ
+    price: default
+    section: food_and_drink
+  pancakes:
+    database: true
+    encode: false
+    displayname: '&8[&6Pancakes&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmJhYTdmOGU0MzcxMTJiM2I2NTY5NDcxNTk2ZDViNjFkYWE3YTNiNDA4MzkxZDFlZDQzMmY1MzE3Nzk2YTIifX19
+    price: default
+    section: food_and_drink
+  bowl_of_rice:
+    database: true
+    encode: false
+    displayname: '&8[&9Bol de riz&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGE5MWYyNWI3ZTEwNTcxOGY5Zjk3OTljNjIxZjNiZWJkM2FhZWZjMThjMjAxOTA2MjMzOGE1MTExMjhjNDU2In19fQ
+    price: default
+    section: food_and_drink
+  salmon:
+    database: true
+    encode: false
+    displayname: '&8[&cSaumon&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjE3ZWRhMWY2NWJkYzhlZDQxYWFhNGNjYWE0ZTJiZWQ2OTQ3MTRlMzI4NjdlZTE2YWYzMWY0YzQyZWYxZjI4In19fQ
+    price: default
+    section: food_and_drink
+  sundae:
+    database: true
+    encode: false
+    displayname: '&8[&eSundae&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTUzNjZjYTE3OTc0ODkyZTRmZDRjN2I5YjE4ZmViMTFmMDViYTJlYzQ3YWE1MDM1YzgxYTk1MzNiMjgifX19
+    price: default
+    section: food_and_drink
+  pepsi:
+    database: true
+    encode: false
+    displayname: '&8[&9Pe&fp&csi&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmJiYWU2ZGY5OWRjODJiZWFmNDlkMDY0ZGY3NGExYmJjMTVlOGUzNzY1MzMyNzY5MTJjOGM4ZmU1OWNiNGY0In19fQ
+    price: default
+    section: food_and_drink
+  fanta:
+    database: true
+    encode: false
+    displayname: '&8[&6Fanta&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmJlOTUwNWEzOGExNGQxNTEyYzc4OTJmYzQ0ZDNkN2NlNjMzOGIxYmYwZjkxMjM3MjFiMTIxYTE0YjA5NWEzIn19fQ
+    price: default
+    section: food_and_drink
+  coca_cola:
+    database: true
+    encode: false
+    displayname: '&8[&cCoca &fCola&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTNiMDFmYjJmNmJhNDdjOWQ3NjM4NDkxZjM3Y2Q4NTgyYTkzNzczMTE4NmRmNGQxZWNjZDU5YjY1YmYzNyJ9fX0
+    price: default
+    section: food_and_drink
+  water:
+    database: true
+    encode: false
+    displayname: '&8[&9Eau&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWVkOGE5ODVkYTdiMzRiZjkyODdiYWQyMWY2YmZlY2FiMWQ5MGZiOGEyZjlmMTMwNWJmMzI4ZWE4ZGNmIn19fQ
+    price: default
+    section: food_and_drink
+  red_wine:
+    database: true
+    encode: false
+    displayname: '&8[&cVin Rouge&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjc1NTg0ZTZmZDU0Y2EwMWRmNGVmZmQ1Zjc0NmIyZDgzYTU4OWRlNjc3NzU1NzU2YmI1OGQ5ZWEyODQ1MTYifX19
+    price: default
+    section: food_and_drink
+  sandwich:
+    database: true
+    encode: false
+    displayname: '&8[&6Sandwich&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTQ5NjU4OWZiNWMxZjY5Mzg3YjdmYjE3ZDkyMzEyMDU4ZmY2ZThlYmViM2ViODllNGY3M2U3ODE5NjExM2IifX19
+    price: default
+    section: food_and_drink
+  beer:
+    database: true
+    encode: false
+    displayname: '&8[&eBierre&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDA1M2UyNjg2N2JiNTc1MzhlOTc4OTEzN2RiYmI1Mzc3NGUxOGVkYTZmZWY1MWNiMmVkZjQyNmIzNzI2NCJ9fX0
+    price: default
+    section: food_and_drink
+  red_jam:
+    database: true
+    encode: false
+    displayname: '&8[&cConfiture Rouge&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzBiOGI1ODg5ZWUxYzYzODhkYzZjMmM1ZGJkNzBiNjk4NGFlZmU1NDMxOWEwOTVlNjRkYjc2MzgwOTdiODIxIn19fQ
+    price: default
+    section: food_and_drink
+  nutella:
+    database: true
+    encode: false
+    displayname: '&8[&7N&cutella&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTE1ZGNiMmRhMDJjZjczNDgyOWUxZTI3M2UzMDI1NjE3ZDgwNzE1MTZmOTUzMjUxYjUyNTQ1ZGE4ZDNlOGRiOCJ9fX0
+    price: default
+    section: food_and_drink
+  fries:
+    database: true
+    encode: false
+    displayname: '&8[&6Frites&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTBlYWNhYzQxYTllYWYwNTEzNzZlZjJmOTU5NzAxZTFiYmUxYmY0YWE2NzE1YWRjMzRiNmRjMjlhMTNlYTkifX19
+    price: default
+    section: food_and_drink
+  burger:
+    database: true
+    encode: false
+    displayname: '&8[&6Burger&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTZlZjFjMjVmNTE2ZjJlN2Q2Zjc2Njc0MjBlMzNhZGNmM2NkZjkzOGNiMzdmOWE0MWE4YjM1ODY5ZjU2OWIifX19
+    price: default
+    section: food_and_drink
+  candy_bowl:
+    database: true
+    encode: false
+    displayname: '&8[&aBol à bonbons&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzY4ZjFjMzM2MjViNGI0NGMzNjdiNTRjNTRhYmQxY2VhMDg4MzQ1MWYxN2Q0ZjcwM2JhM2E4N2JiOWI4MDM3In19fQ
+    price: default
+    section: food_and_drink
+  butter:
+    database: true
+    encode: false
+    displayname: '&8[&eBeurre&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjY2YjE5ZjdkNjM1ZDAzNDczODkxZGYzMzAxN2M1NDkzNjMyMDlhOGY2MzI4YTg1NDJjMjEzZDA4NTI1ZSJ9fX0
+    price: default
+    section: food_and_drink
+  spaghetti:
+    database: true
+    encode: false
+    displayname: '&8[&6Spaghetti&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2M0NmJlYzVhMjVlM2RlNmQxZTY1MWM3NWI1ZWU4YzQxZDQ2NmIyMjdkM2ZhMjdkMWYyODk5NTRjMTQ5NyJ9fX0
+    price: default
+    section: food_and_drink
+  hot_dog:
+    database: true
+    encode: false
+    displayname: '&8[&cHot Dog&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWNhNDVmZDc1NWYyYjMyMGY2OWYxMjYwZmEzM2JkYTkzNGM5ZDJkMzE1ZTkxZmFkYWU3ZGM1ZjlmM2FmNTAifX19
+    price: default
+    section: food_and_drink
+  owl:
+    database: true
+    encode: false
+    displayname: '&8[&7Chouette&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjY0Njk0YjY4MTY1YmI5YWFiZTc5ZTEzYmM4ODdlODhmZjNiMGRmYmYzNGNjYWFjYzJhM2FkNGE5ZGRmOWUyIn19fQ
+    price: default
+    section: animals
+  robin:
+    database: true
+    encode: false
+    displayname: '&8[&6Robin&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjk2MjczNzBmZWRiZDBiYWU3YmFlNmQ2Zjg1ODM1NTU3NjM3ODljMWJkOTNmYTYzOWNmYTNkZmQ0OGUzNDg1MCJ9fX0
+    price: default
+    section: animals
+  blue_bird:
+    database: true
+    encode: false
+    displayname: '&8[&3Oiseau bleu&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjRkNTMzMzNmMThjY2Q3YTdmYWU1OWY4NDE1YTQzOGVjOWI2NTM1OTk4OTYyNjk1Y2M0ZjY4ZWQyZDMxIn19fQ
+    price: default
+    section: animals
+  blue_bird2:
+    database: true
+    encode: false
+    displayname: '&8[&1Oiseau bleu&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjZkY2MwNjhmNjIwNmY5YjRjMmMzZDNjNjRjMDk1N2FjYjUxYjExZmNlNTEyYTZmNDk4NDgzNjg2OWYwIn19fQ
+    price: default
+    section: animals
+  white_bird:
+    database: true
+    encode: false
+    displayname: '&8[&fOiseau Blanc&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzNiZGU0MzExMWY2OWE3ZmRhNmVjNmZhZjIyNjNjODI3OTYxZjM5MGQ3YzYxNjNlZDEyMzEwMzVkMWIwYjkifX19
+    price: default
+    section: animals
+  parrot:
+    database: true
+    encode: false
+    displayname: '&8[&cPerroquet]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzEzNWY1ODM4ZTUxNTg1ZTE1OTQyZThmMmYxY2MzNmRhOTYzMDcwZGRkNWJhMzVhZjk1ZWQzN2ViNmMzIn19fQ
+    price: default
+    section: animals
+  chicken:
+    database: true
+    encode: false
+    displayname: '&8[&fKFC&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2YzN2Q1MjRjM2VlZDE3MWNlMTQ5ODg3ZWExZGVlNGVkMzk5OTA0NzI3ZDUyMTg2NTY4OGVjZTNiYWM3NWUifX19
+    price: default
+    section: animals
+  panda:
+    database: true
+    encode: false
+    displayname: '&8[&fPanda&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDhjZGQ0ZjI4NTYzMmMyNWQ3NjJlY2UyNWY0MTkzYjk2NmMyNjQxYjE1ZDliZGJjMGExMTMwMjNkZTc2YWIifX19
+    price: default
+    section: animals
+  turtle:
+    database: true
+    encode: false
+    displayname: '&8[&aTortue&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTJlNTQ4NDA4YWI3NWQ3ZGY4ZTZkNWQyNDQ2ZDkwYjZlYzYyYWE0ZjdmZWI3OTMwZDFlZTcxZWVmZGRmNjE4OSJ9fX0
+    price: default
+    section: animals
+  bee:
+    database: true
+    encode: false
+    displayname: '&8[&6Abeille&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTQ3MzIyZjgzMWUzYzE2OGNmYmQzZTI4ZmU5MjUxNDRiMjYxZTc5ZWIzOWM3NzEzNDlmYWM1NWE4MTI2NDczIn19fQ
+    price: default
+    section: animals
+  doge:
+    database: true
+    encode: false
+    displayname: '&8[&6Chien&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZThlNmY3Nzk1ZGYyZWI4ZDdmNGZmNWQwYWVkNTI5YmU4MTEzNGQ5N2JiNTEyNjNlMzhjYjY5NGQ2NzA0ZGE0In19fQ
+    price: default
+    section: animals
+  lizard:
+    database: true
+    encode: false
+    displayname: '&8[&aLézard&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWRhMjgxM2Q0ZjVhY2Q2OWVkNTkwYzFkOGE0NDJiNTk1NTE5ZGNiYzBlMTcxOThhZGZhYWFhZjE1Zjg5YjAifX19
+    price: default
+    section: animals
+  elephant:
+    database: true
+    encode: false
+    displayname: '&8[&7Eléphant&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzcxZTgyOTY1ZDMzMjEzZWYyNmY2Yjg5NzIyZWRlZTQzNDZjMzU0YzA4ZTM0ZWNmY2ZkNmRkZDM2MWE5ZTdlIn19fQ
+    price: default
+    section: animals
+  racoon:
+    database: true
+    encode: false
+    displayname: '&8[&7Raton laveur&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGE5YTk2YTI2Yjc4YzViODM3NGY1ODBkZmZmYzgxOTlhYTE3NjcxYjRjNTMyZGRkNTQ1MjE3YmIyNTE3NmVkIn19fQ
+    price: default
+    section: animals
+  llama:
+    database: true
+    encode: false
+    displayname: '&8[&6Lama&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODE4Y2Q0NTdmYmFmMzI3ZmEzOWYxMGI1YjM2MTY2ZmQwMTgyNjQwMzY4NjUxNjRjMDJkOWU1ZmY1M2Y0NSJ9fX0
+    price: default
+    section: animals
+  polar_bear:
+    database: true
+    encode: false
+    displayname: '&8[&fours Polaire&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDQyMTIzYWMxNWVmZmExYmE0NjQ2MjQ3Mjg3MWI4OGYxYjA5YzFkYjQ2NzYyMTM3NmUyZjcxNjU2ZDNmYmMifX19
+    price: default
+    section: animals
+  youtube:
+    database: true
+    encode: false
+    displayname: '&8[&cYouTube&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDJmNmMwN2EzMjZkZWY5ODRlNzJmNzcyZWQ2NDU0NDlmNWVjOTZjNmNhMjU2NDk5YjVkMmI4NGE4ZGNlIn19fQ
+    price: default
+    section: logos
+  facebook:
+    database: true
+    encode: false
+    displayname: '&8[&9Facebook&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGViNDYxMjY5MDQ0NjNmMDdlY2ZjOTcyYWFhMzczNzNhMjIzNTliNWJhMjcxODIxYjY4OWNkNTM2N2Y3NTc2MiJ9fX0
+    price: default
+    section: logos
+  skype:
+    database: true
+    encode: false
+    displayname: '&8[&bSkype&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmVjMTgyZGE3ZDNjMGE4YWNjM2JlOWI3N2MyOWJlNDdlMDhjMjBiMDUwYjEzZmQ0YzRjN2Q3MWY2NjI3MyJ9fX0
+    price: default
+    section: logos
+  instagram:
+    database: true
+    encode: false
+    displayname: '&8[&fInstagram&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWM4OGQ2MTYzZmFiZTdjNWU2MjQ1MGViMzdhMDc0ZTJlMmM4ODYxMWM5OTg1MzZkYmQ4NDI5ZmFhMDgxOTQ1MyJ9fX0
+    price: default
+    section: logos
+  reddit:
+    database: true
+    encode: false
+    displayname: '&8[&fReddit!&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGQ5YmQ0YjJmYThkYTgyNDdhODJjM2QxZmEyNDY3MTVmOWI2ZDk4Yzc3ODM3NGRhNmVmYzEwYzg5Y2Q2NCJ9fX0
+    price: default
+    section: logos
+  twitch:
+    database: true
+    encode: false
+    displayname: '&8[&5Twitch&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDZiZTY1ZjQ0Y2QyMTAxNGM4Y2RkZDAxNThiZjc1MjI3YWRjYjFmZDE3OWY0YzFhY2QxNThjODg4NzFhMTNmIn19fQ
+    price: default
+    section: logos
+  google_chrome:
+    database: true
+    encode: false
+    displayname: '&8[&cGoogle &aChrome&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTY5MzZkNGYwZDFiOTNmZWY3NzViMWZiZDE5MjgxYjcwYzZmODg0NzViYjVhNDFiZjM3MmMxMmYxZjhhMjIifX19
+    price: default
+    section: logos
+  twitter:
+    database: true
+    encode: false
+    displayname: '&8[&bTwitter&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzY4NWEwYmU3NDNlOTA2N2RlOTVjZDhjNmQxYmEyMWFiMjFkMzczNzFiM2Q1OTcyMTFiYjc1ZTQzMjc5In19fQ
+    price: default
+    section: logos
+  discord:
+    database: true
+    encode: false
+    displayname: '&8[&9Discord&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzg3M2MxMmJmZmI1MjUxYTBiODhkNWFlNzVjNzI0N2NiMzlhNzVmZjFhODFjYmU0YzhhMzliMzExZGRlZGEifX19
+    price: default
+    section: logos
+  snapchat:
+    database: true
+    encode: false
+    displayname: '&8[&eSnapchat&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODczNTgyOWFkMGE4NzhmOTYwZDc5NGE2MWUzZjE3MjVmZmQxYTBkNTRmNzRjZDk0NjUyY2I2OWIyNGUzIn19fQ
+    price: default
+    section: logos
+  imgur:
+    database: true
+    encode: false
+    displayname: '&8[&aImgur&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWY1ODc3MjJlNjdhZjRhZjg4Y2ZhZWM2NmViZjFjY2U2YzdmYmM1MzZiNWMyNTY1MmFmNjM3NzcyMDQ3OTAifX19
+    price: default
+    section: logos
+  mojang:
+    database: true
+    encode: false
+    displayname: '&8[&cMojang&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjc3MDVlM2U5OTdlNWNlNTIxNjY2M2M5ZTY0YjM5NmZhNDNlZGRlODI1NWZkOTEwZjBjYzgxYTAzMjVlNmIifX19
+    price: default
+    section: logos
+  patreon:
+    database: true
+    encode: false
+    displayname: '&8[&cPatreon&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTY5M2I2NmE1OTVmNzhhZjNmNTFmNGVmYTRjMTMzNzViMWI5NThlNmY0YzUwN2E0N2M0ZmU1NjVjYzI3NSJ9fX0
+    price: default
+    section: logos
+  pinterest:
+    database: true
+    encode: false
+    displayname: '&8[&cPinterest&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZThlNzY2N2E3M2EwMDc0ZmUxYWVhNzRkMWI2YjNiYTNjZTQ5ZjE4MTkyYjRmN2Q1ZDhmZTYzNmUwYzU0ZiJ9fX0
+    price: default
+    section: logos
+  deviantart:
+    database: true
+    encode: false
+    displayname: '&8[&aDeviantArt&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2VhNGRiZTkzZDhkM2JhNzE3NzkxNDM2ZWVjYWE1YjdlMmU4NDJmNGIxNjFmZWYxYzZmMWQ2NTkyIn19fQ
+    price: default
+    section: logos
+  mixer:
+    database: true
+    encode: false
+    displayname: '&8[&3Mixeur&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGM3MmJiZDM2ZDIyMTdmYTg2ZjI2ODJlNjdkNjRhYWJhYzYxNWIyZTIwNTQxZmY0ZDcxODk5ZDQwNmViIn19fQ
+    price: default
+    section: logos
+  ios_apple:
+    database: true
+    encode: false
+    displayname: '&8[&fPomme&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGNmODExZmExMDljZGU2MjljNzEyY2NkM2ZjOTI4OWU2NzhhNWUxODg5NGY0ODhjMDc0NDQ4ZTQ4ZDg1MiJ9fX0
+    price: default
+    section: logos
+  spotify:
+    database: true
+    encode: false
+    displayname: '&8[&aSpotify&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmU3OTJkMzhlNDE2OGQyNmRlNzc4Mzk4NGNhZmZmYzYwYjQ4ODM4ZDgxZjIyOTYwNzZmZTE0ZGVkZDYifX19
+    price: default
+    section: logos
+  paypal:
+    database: true
+    encode: false
+    displayname: '&8[&9Pay&3Pal&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDRkY2ZjZmFmNzcwZTU2M2MwY2ZkY2QzMDZhMTg1ZWE5NDIzZmUxNjljY2FjZWE2YjkwMzdmMjMzYTJiZjVjIn19fQ
+    price: default
+    section: logos
+  netflix:
+    database: true
+    encode: false
+    displayname: '&8[&cNetflix&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDYzYWQ4Y2JmNjhhODQyYzM0MWM5Y2NjMzQzM2I0NDNmMDNmNzdiMGRlMjY0OGJjYzkzYzRjNDdhODA2ZCJ9fX0
+    price: default
+    section: logos
+  github:
+    database: true
+    encode: false
+    displayname: '&8[&fGitHub&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjZlMjdkYTEyODE5YThiMDUzZGEwY2MyYjYyZGVjNGNkYTkxZGU2ZWVlYzIxY2NmM2JmZTZkZDhkNDQzNmE3In19fQ
+    price: default
+    section: logos
+  wood_heart:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois en Coeur&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzM2ZmViZWNhN2M0ODhhNjY3MWRjMDcxNjU1ZGRlMmExYjY1YzNjY2IyMGI2ZThlYWY5YmZiMDhlNjRiODAifX19
+    price: default
+    section: alphabet
+  wood_minus:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois Moins&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmQ4YTk5ZGIyYzM3ZWM3MWQ3MTk5Y2Q1MjYzOTk4MWE3NTEzY2U5Y2NhOTYyNmEzOTM2Zjk2NWIxMzExOTMifX19
+    price: default
+    section: alphabet
+  wood_hashtag:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois Hashtag&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWFlODVmNzRmOGUyYzA1NGI3ODFhMjlmYTliMjU5MzRiYTYzYmI3OWYxZGU4YTk1YjQzNmQ5YmZkY2FmNGNkIn19fQ
+    price: default
+    section: alphabet
+  wood_underscore:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois Underscore&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzk2NmY4OTFjMTU0NmFlY2JmY2MzYmFlZGNmYjY3MDc5ZDdmMmE2YThiNzM5ZWQ1YmFjMmJiM2NmMzA4ZDM4In19fQ
+    price: default
+    section: alphabet
+  wood_square_bracket:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois Carré&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmNjNmJkMTNhNjFmY2JhNGEzODU5ZWMwNmJiOGM4MjM3MzliNmJlYWNiYThjZmEwMTUyZThjNjBkYjk0In19fQ
+    price: default
+    section: alphabet
+  wood_square_bracket_2:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois Carré 2&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTY1MDczMzZlMzUwNjZkYWE4ZTRlNmU2MjRmOTNmNjVlMzVlZTk3NGU5ZThiNjRkMmRkOTkwNGVjZWZkYTIifX19
+    price: default
+    section: alphabet
+  wood_percentage:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois Pourcentage&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTA4NTFjZjA2MjU0OGM0MzYyNTNjMzM3YTQxMTJjZmM5ODU0NDNhNzQ4ZDkzMWNmMjAxZDFlODRmYzcyYjEyYyJ9fX0
+    price: default
+    section: alphabet
+  wood_quotes:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois Marqué&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDc1N2U5NzJjNzYzMTQ5NDc2YmM1NTZjZmJhZDM2MTRjMWQ0OTk1NGYxM2Y4ODkzZWI5ZDEwNTg0NTc1M2YyZSJ9fX0
+    price: default
+    section: alphabet
+  wood_semi_colon:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois Point Virgule&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTcxZjRkMmJmZmI1OTRjMTU4YzZjZTFlZjlkOTgyYjZmZDI0NTgyNzVlN2Y4OTY1NWJiNzRlZGU3NjhkZWQifX19
+    price: default
+    section: alphabet
+  wood_comma:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois Comma&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzg0MGI0ZTdhNjgwNDM0ODU3NDI3MTExYmRhZjY0ZTdmYmE5MTJlYTU3MDcxODJlOThiYzU4NWNjYjUzIn19fQ
+    price: default
+    section: alphabet
+  wood_curly_bracket:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois Curly&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjE3NmVmMDU1ODgxNWI3ZjA1YzE1M2NmNGNkYzY5ZjliYTRiYTFjMTBlYTFhODc0OWFlYjhjMmI5NzdlIn19fQ
+    price: default
+    section: alphabet
+  wood_curly_bracket_2:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois Curly 2&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODNiMTNmZjhlN2EzZmFiNWZmMWU5OGU4ZmQ5MzljYzA5N2I2YjQ1Yzg1MjQwZDMyNDUwOTk0Zjc2NzE0MzlkIn19fQ
+    price: default
+    section: alphabet
+  wood_equals_sign:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois Egale&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzg3Njg5ZjgzMzQzNmFhNzExYWJiZDQ1MTY4ODU2Nzc1YTJiMTE0NjU2Y2RmNGRjNWE2YzZmMWFmYWU1MjAifX19
+    price: default
+    section: alphabet
+  wood_plus_sign:
+    database: true
+    encode: false
+    displayname: '&8[&6Bois Plus&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2VkZDIwYmU5MzUyMDk0OWU2Y2U3ODlkYzRmNDNlZmFlYjI4YzcxN2VlNmJmY2JiZTAyNzgwMTQyZjcxNiJ9fX0
+    price: default
+    section: alphabet
+  rainbow_sundae:
+    database: true
+    encode: false
+    displayname: '&8[&cS&eu&an&bd&5a&de&8 &cC&eo&al&bo&3r&5é]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjk2YTgxYjk5NDQ0ZGQ1M2FhYTAxOTdmMzdiZTdiMDM4MzgzYWU4NWNjM2E2MzhiZTU0ZTdiNzZkZjM2YTJjIn19fQ
+    price: default
+    section: food_and_drink
+  monochrome_sundae:
+    database: true
+    encode: false
+    displayname: '&8[&7Monochrome &fSundae&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGJlYTYyNmQyN2ZkYmQ2Y2I5OTI3MmViZTBiZjE1OWU5MjRkNWMwYTMxNzNmZDVjMmI1MTI4Y2RhZGY3MzcifX19
+    price: default
+    section: food_and_drink
+  melon_sundae:
+    database: true
+    encode: false
+    displayname: '&8[&aSundae&8 &cMelon]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTE4YjQ0NzE2M2M2NzhhYmI5NTZhMzkyODg3OGYzZjJkNWJiMTU3NzJiMTM4ZmRhYmI3MTJjNTliYjhhZDM1In19fQ
+    price: default
+    section: food_and_drink
+  lemon_sundae:
+    database: true
+    encode: false
+    displayname: '&8[Sundae&8 &eCitron]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGUyNjExNTE4MDM3NTM2NmJiMzRlZDE2YzI2Y2UyZDA0ZDkxZjdmNTI3Mjc2YWMyNDcwZTllYmFmMmRhZjM1In19fQ
+    price: default
+    section: food_and_drink
+  strawberry_sundae:
+    database: true
+    encode: false
+    displayname: '&8[Sundae&8 &cFraise]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzU5ZjRiNGYxYThiZjRmNGFkNjg3NGY5MzBhYzdkN2U5M2U5OTA2MWY4NzlhYjgwNDI4ZjUyZTc1N2EyOSJ9fX0
+    price: default
+    section: food_and_drink
+  bananasplit_sundae:
+    database: true
+    encode: false
+    displayname: '&8[&eBanana Split Sundae&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2FkMmU2NDYzOGRhZmRlYjI0Yzk1NjU4YjZhYmFiMjM2ZDIzZWI5MzQxZTk4YTI0MzdiYTYxMTk0OTQ4OWEifX19
+    price: default
+    section: food_and_drink
+  rosebush:
+    database: true
+    encode: false
+    displayname: '&8[ &aBush&8 &cRose]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODJmNzNhZTAyZGJkYmNhNzhmZmZmNTIzNTA5NWVlN2Y4NzZlYWE1YTNjOGNkNWJlZDI1N2M0YWNjNTZmMTM2OCJ9fX0
+    price: default
+    section: plants
+  white_flower_bush:
+    database: true
+    encode: false
+    displayname: '&8[&aBuisson&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWM4NzQ0YzJkMmZlOTU3ZjgwNzg0NzZlZDgwOWJhZmQ4YTU0NmVhNzE4ZDEwNDRhMDk5YTgxNGEyNzM2OTUwIn19fQ
+    price: default
+    section: plants
+  blueberry_bush:
+    database: true
+    encode: false
+    displayname: '&8[&aBush&8 &eMyrtille]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWE4YjY3NDc5ZjEyMmJkNjA1ZWUwYzA5ODVhZWNkN2JiODEwOTA5NWE4ZGZmOGU1ZjdlYzk2NDhlMTE4In19fQ
+    price: default
+    section: plants
+  white_berry_bush:
+    database: true
+    encode: false
+    displayname: '&8[&aBuisson&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjg5NGRhYmU1OGI1ZTQ0YzA4NTFkMjYzMWZmNmQ3OWI1Yjg3NmE0YTEyYmIxY2MyNmQyODc3Mzk5ZmU2MTIyIn19fQ
+    price: default
+    section: plants
+  red_flower_bush:
+    database: true
+    encode: false
+    displayname: '&8[&aBuisson&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODVjZTQwZWVmODY5YmUyY2Y4ODg4OWRhOTI2OGNmZGU2ZDkzMTliMzc3ODU4OWFkNDdlOWQzNWFhYThmMWQifX19
+    price: default
+    section: plants
+  yellow_flower_bush:
+    database: true
+    encode: false
+    displayname: '&8[&aBuisson&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzUzZWYxYTU0MjY5ODNhMWQxMTczN2Y3YTQyODZmYTcxOGI4M2Q1NGUyMzcxNzlmYzhiOGU4NGM2ODIifX19
+    price: default
+    section: plants
+  red_flower_bush_2:
+    database: true
+    encode: false
+    displayname: '&8[&aBuisson&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDBhYjVmN2I3NWI2NjIzNzg3NjgxMWVjOTRjMjcyMjgzOWY3MGRiMWRjYzY3ZGUzN2Q3NjdmMmU5NDFiZiJ9fX0
+    price: default
+    section: plants
+  pink_flower_bush:
+    database: true
+    encode: false
+    displayname: '&8[&aBuisson&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDBhYjVmN2I3NWI2NjIzNzg3NjgxMWVjOTRjMjcyMjgzOWY3MGRiMWRjYzY3ZGUzN2Q3NjdmMmU5NDFiZiJ9fX0
+    price: default
+    section: plants
+  red_berry_bush:
+    database: true
+    encode: false
+    displayname: '&8[&cBaie]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmNlZTQ3ODdhYjg2ODg0MTViZDIyMzEyNTRiOGZkOWVmYzQ4ODljNGMzZWJkY2M2N2ZlZGI4M2I4YzQzOGMxIn19fQ
+    price: default
+    section: plants
+  chorus_plant:
+    database: true
+    encode: false
+    displayname: '&8[&5Chorus Plante&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzQwZjFkYjk3MTRmYTE0M2IyY2Q0YWI0YjFhMTM0ZGJmMmZlYzVjZTA0OTExYjIxZWVmZTc5MTEzNjFlYjkifX19
+    price: default
+    section: plants
+  chorus_flower:
+    database: true
+    encode: false
+    displayname: '&8[&dFleur de Chorus&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTJlYjMwYTBiZTNkN2M3ZTE2MmM3NmU3MmEzYzRjYzQ0MjIzNTY3MTYyYTk0MTc1MjU3MmFlNmNjZWI5NmM4NiJ9fX0
+    price: default
+    section: plants
+  white_sheep:
+    database: true
+    encode: false
+    displayname: '&8[&fMouton&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjMxZjljY2M2YjNlMzJlY2YxM2I4YTExYWMyOWNkMzNkMThjOTVmYzczZGI4YTY2YzVkNjU3Y2NiOGJlNzAifX19
+    price: default
+    section: animals
+  red_sheep:
+    database: true
+    encode: false
+    displayname: '&8[&cMouton&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODM5YWY0NzdlYjYyNzgxNWY3MjNhNTY2MjU1NmVjOWRmY2JhYjVkNDk0ZDMzOGJkMjE0MjMyZjIzZTQ0NiJ9fX0
+    price: default
+    section: animals
+  orange_sheep:
+    database: true
+    encode: false
+    displayname: '&8[&6Mouton&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjA5ODM5N2EyNzBiNGMzZDJiMWU1NzRiOGNmZDNjYzRlYTM0MDkwNjZjZWZlMzFlYTk5MzYzM2M5ZDU3NiJ9fX0
+    price: default
+    section: animals
+  yellow_sheep:
+    database: true
+    encode: false
+    displayname: '&8[&eMouton&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjZhNDExMmRmMWU0YmNlMmE1ZTI4NDE3ZjNhYWZmNzljZDY2ZTg4NWMzNzI0NTU0MTAyY2VmOGViOCJ9fX0
+    price: default
+    section: animals
+  lime_sheep:
+    database: true
+    encode: false
+    displayname: '&8[&aMouton&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTJhMjQ0OGY1OGE0OTEzMzI0MzRlODVjNDVkNzg2ZDg3NDM5N2U4MzBhM2E3ODk0ZTZkOTI2OTljNDJiMzAifX19
+    price: default
+    section: animals
+  green_sheep:
+    database: true
+    encode: false
+    displayname: '&8[&2Mouton&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmRlNTVhMzk1YTIyNDY0NDViNDVmOWE2ZDY4ODcyMzQ0YmJlYTU0ZjM2MmQ1MjlmYzViMGI4NTdlYTU4MzI2YiJ9fX0
+    price: default
+    section: animals
+  light_blue_sheep:
+    database: true
+    encode: false
+    displayname: '&8[&bMouton&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWE2MjRmNTk2NmJlZGQ2ZTY3ZjY1NGI1OWU5MjQ5YjJlY2YzMDdkOTAzMzM5YmMxOTk5MjM5NzdmNGM4YyJ9fX0
+    price: default
+    section: animals
+  cyan_sheep:
+    database: true
+    encode: false
+    displayname: '&8[&3Mouton&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDZmNmM3ZTdmZDUxNGNlMGFjYzY4NTkzMjI5ZTQwZmNjNDM1MmI4NDE2NDZlNGYwZWJjY2NiMGNlMjNkMTYifX19
+    price: default
+    section: animals
+  blue_sheep:
+    database: true
+    encode: false
+    displayname: '&8[&9Mouton&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDllYzIyODE4ZDFmYmZjODE2N2ZiZTM2NzI4YjI4MjQwZTM0ZTE2NDY5YTI5MjlkMDNmZGY1MTFiZjJjYTEifX19
+    price: default
+    section: animals
+  purple_sheep:
+    database: true
+    encode: false
+    displayname: '&8[&5Mouton&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWU1Mjg2N2FmZWYzOGJiMTRhMjZkMTQyNmM4YzBmMTE2YWQzNDc2MWFjZDkyZTdhYWUyYzgxOWEwZDU1Yjg1In19fQ
+    price: default
+    section: animals
+  magenta_sheep:
+    database: true
+    encode: false
+    displayname: '&8[&dMouton&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTgzNjU2NWM3ODk3ZDQ5YTcxYmMxODk4NmQxZWE2NTYxMzIxYTBiYmY3MTFkNDFhNTZjZTNiYjJjMjE3ZTdhIn19fQ
+    price: default
+    section: animals
+  pink_sheep:
+    database: true
+    encode: false
+    displayname: '&8[&dMouton&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmFjNzRhMmI5YjkxNDUyZTU2ZmExZGRhNWRiODEwNzc4NTZlNDlmMjdjNmUyZGUxZTg0MWU1Yzk1YTZmYzVhYiJ9fX0
+    price: default
+    section: animals
+  silver_sheep:
+    database: true
+    encode: false
+    displayname: '&8[&7Mouton&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2UxYWM2ODM5OTNiZTM1NTEyZTFiZTMxZDFmNGY5OGU1ODNlZGIxNjU4YTllMjExOTJjOWIyM2I1Y2NjZGMzIn19fQ
+    price: default
+    section: animals
+  gray_sheep:
+    database: true
+    encode: false
+    displayname: '&8[&7Mouton&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDI4N2ViNTAxMzkxZjI3NTM4OWYxNjZlYzlmZWJlYTc1ZWM0YWU5NTFiODhiMzhjYWU4N2RmN2UyNGY0YyJ9fX0
+    price: default
+    section: animals
+  black_sheep:
+    database: true
+    encode: false
+    displayname: '&8[&7Mouton&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzI2NTIwODNmMjhlZDFiNjFmOWI5NjVkZjFhYmYwMTBmMjM0NjgxYzIxNDM1OTUxYzY3ZDg4MzY0NzQ5ODIyIn19fQ
+    price: default
+    section: animals
+  brown_sheep:
+    database: true
+    encode: false
+    displayname: '&8[&6Mouton&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTU1YWQ2ZTVkYjU2OTJkODdmNTE1MTFmNGUwOWIzOWZmOWNjYjNkZTdiNDgxOWE3Mzc4ZmNlODU1M2I4In19fQ
+    price: default
+    section: animals
+  red_block:
+    database: true
+    encode: false
+    displayname: '&8[&cRouge&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWZkZTNiZmNlMmQ4Y2I3MjRkZTg1NTZlNWVjMjFiN2YxNWY1ODQ2ODRhYjc4NTIxNGFkZDE2NGJlNzYyNGIifX19
+    price: default
+    section: colors
+  orange_block:
+    database: true
+    encode: false
+    displayname: '&8[&6Orange&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmM0ODg2ZWYzNjJiMmM4MjNhNmFhNjUyNDFjNWM3ZGU3MWM5NGQ4ZWM1ODIyYzUxZTk2OTc2NjQxZjUzZWEzNSJ9fX0
+    price: default
+    section: colors
+  yellow_block:
+    database: true
+    encode: false
+    displayname: '&8[&eJaune&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzY0MTY4MmY0MzYwNmM1YzlhZDI2YmM3ZWE4YTMwZWU0NzU0N2M5ZGZkM2M2Y2RhNDllMWMxYTI4MTZjZjBiYSJ9fX0
+    price: default
+    section: colors
+  lime_block:
+    database: true
+    encode: false
+    displayname: '&8[&aCitron vert&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDI3Y2E0NmY2YTliYjg5YTI0ZmNhZjRjYzBhY2Y1ZTgyODVhNjZkYjc1MjEzNzhlZDI5MDlhZTQ0OTY5N2YifX19
+    price: default
+    section: colors
+  green_block:
+    database: true
+    encode: false
+    displayname: '&8[&2Vert&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGU5YjI3ZmNjZDgwOTIxYmQyNjNjOTFkYzUxMWQwOWU5YTc0NjU1NWU2YzljYWQ1MmU4NTYyZWQwMTgyYTJmIn19fQ
+    price: default
+    section: colors
+  light_blue_block:
+    database: true
+    encode: false
+    displayname: '&8[&bBleu clair&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMDdjNzhmM2VlNzgzZmVlY2QyNjkyZWJhNTQ4NTFkYTVjNDMyMzA1NWViZDJmNjgzY2QzZTgzMDJmZWE3YyJ9fX0
+    price: default
+    section: colors
+  cyan_block:
+    database: true
+    encode: false
+    displayname: '&8[&3Cyan&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGMzNzRhY2VhNzhlZmJlZmE3OThiZTFiMjdlOTcxNGMzNjQxMWUyMDJlZWNkMzdiOGNmY2ZkMjQ5YTg2MmUifX19
+    price: default
+    section: colors
+  blue_block:
+    database: true
+    encode: false
+    displayname: '&8[&9Bleu&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmE0NjA1MzAxMmM2OGYyODlhYmNmYjE3YWI4MDQyZDVhZmJhOTVkY2FhOTljOTljMWUwMzYwODg2ZDM1In19fQ
+    price: default
+    section: colors
+  purple_block:
+    database: true
+    encode: false
+    displayname: '&8[&5Violet&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTMyYWUyY2I4ZDJhZTYxNTE0MWQyYzY1ODkyZjM2NGZjYWRkZjczZmRlYzk5YmUxYWE2ODc0ODYzZWViNWMifX19
+    price: default
+    section: colors
+  magenta_block:
+    database: true
+    encode: false
+    displayname: '&8[&dMagenta&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2VmMGM1NzczZGY1NjBjYzNmYzczYjU0YjVmMDhjZDY5ODU2NDE1YWI1NjlhMzdkNmQ0NGYyZjQyM2RmMjAifX19
+    price: default
+    section: colors
+  pink_block:
+    database: true
+    encode: false
+    displayname: '&8[&dRose&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzNiMGFmODNkMGM3MjhhZWVjYTQ3MGYwOGExZDc1ZjQxY2VlMjUzYTM1NzNiYTQxNTdjYTI0MzNlNmMzNiJ9fX0
+    price: default
+    section: colors
+  white_block:
+    database: true
+    encode: false
+    displayname: '&8[&fBlanc&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzY2YTVjOTg5MjhmYTVkNGI1ZDViOGVmYjQ5MDE1NWI0ZGRhMzk1NmJjYWE5MzcxMTc3ODE0NTMyY2ZjIn19fQ
+    price: default
+    section: colors
+  light_gray_block:
+    database: true
+    encode: false
+    displayname: '&8[&7Gris clair&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzhlMjk1NzY5OWJjOThhNGI1ZDYzNGFiNzE4NjdlZWIxODZiOTM0YmRiNjVkMmM0YjlkY2MyYjYxM2NmNSJ9fX0
+    price: default
+    section: colors
+  gray_block:
+    database: true
+    encode: false
+    displayname: '&8[&7Gris&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmExN2U5NzAzN2NlMzUzZjg1ZjVjNjVkZjQzNWQyOTQ0OWE4OGRhNDQ0MmU0MzYxY2Y5OWFiYmUxZjg5MmZiIn19fQ
+    price: default
+    section: colors
+  black_block:
+    database: true
+    encode: false
+    displayname: '&8[&7Noir&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTY3YTJmMjE4YTZlNmUzOGYyYjU0NWY2YzE3NzMzZjRlZjliYmIyODhlNzU0MDI5NDljMDUyMTg5ZWUifX19
+    price: default
+    section: colors
+  brown_block:
+    database: true
+    encode: false
+    displayname: '&8[&6Marron&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjFmNWZmZmM2ZWYyODcyNGZiOWEwYzExMGQ5ZmE3ZDIzMGUzYWY1ZTkyMjk3ZTNkNjJkZjQ1MjcxYWUxZjQifX19
+    price: default
+    section: colors
+  rainbow:
+    database: true
+    encode: false
+    displayname: '&8[&4C&6o&au&el&be&3u&dr&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTFlNDJiOGY1MGZlZDgyOGQ0Yjk4MWMyN2NhMTNkMDcxY2U4NjNmNjE1NDBiMjc2MzgyNjZmNzcyZDQxZCJ9fX0
+    price: default
+    section: colors
+  e_neutral:
+    database: true
+    encode: false
+    displayname: '&8[&eEmote Neutre&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODExNWRjYzE3YjJlMTVjZDQxODMxODg1ZDdkYmI4ZmYyZTljYWM0ZmVjNzA4MDM1OGZlNTVmOTNlZWExOWIifX19
+    price: default
+    section: emotes
+  e_smile:
+    database: true
+    encode: false
+    displayname: '&8[&eEmote Souriant&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTJlOTgxNjVkZWVmNGVkNjIxOTUzOTIxYzFlZjgxN2RjNjM4YWY3MWMxOTM0YTQyODdiNjlkN2EzMWY2YjgifX19
+    price: default
+    section: emotes
+  e_tongue:
+    database: true
+    encode: false
+    displayname: '&8[&eEmote Langue&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2ZmYWNjZjE3ODc5YjE3ODkxZmM1ZWY2NjQ3MmNjMDY2YTg1YmZhMzFiNmQ3ODZjMzJhZmVlNDc5NjA2OGQifX19
+    price: default
+    section: emotes
+  e_wink:
+    database: true
+    encode: false
+    displayname: '&8[Emote&8 &eClin d''oeil]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjRlYTJkNmY5MzlmZWZlZmY1ZDEyMmU2M2RkMjZmYThhNDI3ZGY5MGIyOTI4YmMxZmE4OWE4MjUyYTdlIn19fQ
+    price: default
+    section: emotes
+  e_surprised:
+    database: true
+    encode: false
+    displayname: '&8[&eEmote Suprise&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmMyYjliOWFlNjIyYmQ2OGFkZmY3MTgwZjgyMDZlYzQ0OTRhYmJmYTEzMGU5NGE1ODRlYzY5MmU4OTg0YWIyIn19fQ
+    price: default
+    section: emotes
+  e_dead:
+    database: true
+    encode: false
+    displayname: '&8[&eEmote Mort&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjM3MWU0ZTFjZjZhMWEzNmZkYWUyNzEzN2ZkOWI4NzQ4ZTYxNjkyOTk5MjVmOWFmMmJlMzAxZTU0Mjk4YzczIn19fQ
+    price: default
+    section: emotes
+  e_kiss:
+    database: true
+    encode: false
+    displayname: '&8[&eEmote Kiss&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTQ1YmQxOGEyYWFmNDY5ZmFkNzJlNTJjZGU2Y2ZiMDJiZmJhYTViZmVkMmE4MTUxMjc3Zjc3OWViY2RjZWMxIn19fQ
+    price: default
+    section: emotes
+  e_crying:
+    database: true
+    encode: false
+    displayname: '&8[&eEmote Criante&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWYxYjg3NWRlNDljNTg3ZTNiNDAyM2NlMjRkNDcyZmYyNzU4M2ExZjA1NGYzN2U3M2ExMTU0YjViNTQ5OCJ9fX0
+    price: default
+    section: emotes
+  e_disappointed:
+    database: true
+    encode: false
+    displayname: '&8[&eEmote Déçu&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODNmZGNmMDQyZGFjYzczMmI2OTk1ODJjYWU3YzU5YTY1OWM4NmM1N2U0MzE0MmEyY2M4OWU0ZDllZjAzNyJ9fX0
+    price: default
+    section: emotes
+  e_sleeping:
+    database: true
+    encode: false
+    displayname: '&8[&eEmote Endormie&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWM0YTQxNTU0MzQyYjJjYmZiZDg5NWU5ZWM3MDg5YWU4NjFmZWM4ZjUxNjkzODIyZWMxZWIzY2EzZjE4In19fQ
+    price: default
+    section: emotes
+  emerald_block:
+    database: true
+    encode: false
+    displayname: '&8[&aBlock d''émeraude&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWM5MDZkNjg4ZTY1ODAyNTY5ZDk3MDViNTc5YmNlNTZlZGM4NmVhNWMzNmJkZDZkNmZjMzU1MTZhNzdkNCJ9fX0
+    price: default
+    section: blocks
+  diamond_block:
+    database: true
+    encode: false
+    displayname: '&8[&bBlock de Diamant&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTYzMTU5N2RjZTRlNDA1MWU4ZDVhNTQzNjQxOTY2YWI1NGZiZjI1YTBlZDYwNDdmMTFlNjE0MGQ4OGJmNDhmIn19fQ
+    price: default
+    section: blocks
+  gold_block:
+    database: true
+    encode: false
+    displayname: '&8[&eBlock d''Or&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTRiZjg5M2ZjNmRlZmFkMjE4Zjc4MzZlZmVmYmU2MzZmMWMyY2MxYmI2NTBjODJmY2NkOTlmMmMxZWU2In19fQ
+    price: default
+    section: blocks
+  iron_block:
+    database: true
+    encode: false
+    displayname: '&8[&fBlock de Fer&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTI2Yjc3MjMyOWNmMzJmODY0M2M0OTI4NjI2YjZhMzI1MjMzZmY2MWFhOWM3NzI1ODczYTRiZDY2ZGIzZDY5MiJ9fX0
+    price: default
+    section: blocks
+  redstone_block:
+    database: true
+    encode: false
+    displayname: '&8[&cBlock de Redstone&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmI3OGZhNWRlZmU3MmRlYmNkOWM3NmFiOWY0ZTExNDI1MDQ3OWJiOWI0NGY0Mjg4N2JiZjZmNzM4NjEyYiJ9fX0
+    price: default
+    section: blocks
+  cobblestone:
+    database: true
+    encode: false
+    displayname: '&8[&7Cobblestone&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGMxNzU0ODUxZTM2N2U4YmViYTJhNmQ4ZjdjMmZlZGU4N2FlNzkzYWM1NDZiMGYyOTlkNjczMjE1YjI5MyJ9fX0
+    price: default
+    section: blocks
+  grass_block:
+    database: true
+    encode: false
+    displayname: '&8[&aBlock de Terre&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzk1ZDM3OTkzZTU5NDA4MjY3ODQ3MmJmOWQ4NjgyMzQxM2MyNTBkNDMzMmEyYzdkOGM1MmRlNDk3NmIzNjIifX19
+    price: default
+    section: blocks
+  snow_grass_block:
+    database: true
+    encode: false
+    displayname: '&8[&fBlock de Neige&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDNjNTJlYWU3NDdjYWQ1YjRmZDE5YjFhMjNiMzlhMzM2YjYyZWQ0MjI3OTdhNjIyZDA0NWY0M2U1ZDM4In19fQ
+    price: default
+    section: blocks
+  wood_planks:
+    database: true
+    encode: false
+    displayname: '&8[&6Planche de Bois&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTBmOTZkOWI3MjMwM2YzNzI3OWZhOWMyY2MyM2VlNmY4ZGI2ODIzNjg1YjYyNmI1NmVkNTNiNjc0YjZiMCJ9fX0
+    price: default
+    section: blocks
+  diamond_ore:
+    database: true
+    encode: false
+    displayname: '&8[&bDiamant&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTFlZDlhYmY1MWZlNGVhODRjZmNiMjcyOTdmMWJjNTRjZDM4MmVkZjg1ZTdiZDZlNzVlY2NhMmI4MDY2MTEifX19
+    price: default
+    section: blocks
+  gold_ore:
+    database: true
+    encode: false
+    displayname: '&8[&eOr&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzNiYzk2NWQ1NzljM2M2MDM5ZjBhMTdlYjdjMmU2ZmFmNTM4YzdhNWRlOGU2MGVjN2E3MTkzNjBkMGE4NTdhOSJ9fX0
+    price: default
+    section: blocks
+  redstone_ore:
+    database: true
+    encode: false
+    displayname: '&8[&cRedstone&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTY5YTFmMTE0MTUxYjQ1MjEzNzNmMzRiYzE0YzI5NjNhNTAxMWNkYzI1YTY1NTRjNDhjNzA4Y2Q5NmViZmMifX19
+    price: default
+    section: blocks
+  coal_block:
+    database: true
+    encode: false
+    displayname: '&8[&7Block de Charbon&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjZjNWVjYWM5NDJjNzdiOTVhYjQ2MjBkZjViODVlMzgwNjRjOTc0ZjljNWM1NzZiODQzNjIyODA2YTQ1NTcifX19
+    price: default
+    section: blocks
+  coal_ore:
+    database: true
+    encode: false
+    displayname: '&8[&7Charbon&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzYxYzU3OTc0ZjEwMmQzZGViM2M1M2Q0MmZkZTkwOWU5YjM5Y2NiYzdmNzc2ZTI3NzU3NWEwMmQ1MWExOTk5ZSJ9fX0
+    price: default
+    section: blocks
+  iron_ore:
+    database: true
+    encode: false
+    displayname: '&8[&fFer&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTAxODQzZWM0M2YwODhjOTYzZmZjM2UyZjcxYzY2ZTMxNTU5NDNiMTc3YTFhMzU5ODJiMTIwZjZmNjQ4MjJiYyJ9fX0
+    price: default
+    section: blocks
+  emerald_ore:
+    database: true
+    encode: false
+    displayname: '&8[&aEmeraude&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDA1Mzg1MTUyN2M0YzllZjMwYTYxZmIwNjdlYmNlOTU3YzcyNmUxNjg3ZjhiNTMwZmI0YTZiZWViYTQzOGJkIn19fQ
+    price: default
+    section: blocks
+  end_stone:
+    database: true
+    encode: false
+    displayname: '&8[&ePierre de l''End&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTlmMjFmNWQ4ODMzMTZmZDY1YTkzNjZmMzJhMzMwMTMxODJlMzM4MWRlYzIxYzE3Yzc4MzU1ZDliZjRmMCJ9fX0
+    price: default
+    section: blocks
+  oak_log:
+    database: true
+    encode: false
+    displayname: '&8[&6Bûche de chêne&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTRhYWRhNGQ5ZmNlZGE5MDE4NjkxOGQ2Y2EzNWI5YTBlYWQ4ZTRiMTRjOWQ5NDI3MTU3ZWU5YjkzMzlkN2IxIn19fQ
+    price: default
+    section: blocks
+  diamond_block_2:
+    database: true
+    encode: false
+    displayname: '&8[&bBlock de Diamant&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2E0MzgxYTVhYjRhY2M2ZGU4ZDRlZWU3NjllYmE2YmFkYjJmMmI0ZTkzNDJhY2FlMjc1MDI5NWU2MDYwNGE1NyJ9fX0
+    price: default
+    section: blocks
+  emerald_block_2:
+    database: true
+    encode: false
+    displayname: '&8[&aBlock d''Emeraude&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjcyYzA1ZGQ3NjI4OGY0MzI4YTI0MzkxYmY0NzI1ZmQyMjYwNTkyZGIzY2Y5YjJiYzIwMzJkZDA1OTZjZjQ0MCJ9fX0
+    price: default
+    section: blocks
+  gold_block_2:
+    database: true
+    encode: false
+    displayname: '&8[&eBlock d''Or&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTU2NGU1NTM4MGQzOTkwMDJlMDFjZjBiMTI3NzRjZGE2YTdhMjZkODZiNTliZjg2MjkyODRlZjFhMzg3ZDRkMCJ9fX0
+    price: default
+    section: blocks
+  red_mushroom:
+    database: true
+    encode: false
+    displayname: '&8[&cBlock de Champignon Rouge&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODJlNjQyYmE2N2IwYmFkNWY3YWU5NTlhMjQ3YzlhZDFlYzRhOGM2MjQxNGJkZTU2YTgxMDY0Y2Q4YWY2OTE4YSJ9fX0
+    price: default
+    section: blocks
+  missing_texture:
+    database: true
+    encode: false
+    displayname: '&8[&dTexture manquante&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmNjMTEzZGNjZTE1ZmE0NTRjODQ1ZTk5MDk2MmY1ZjE2YTJhOTZmOTk2NTkwYzE2ZTVlMjQ0M2U0ZjgwMTVjNCJ9fX0
+    price: default
+    section: blocks
+  brain_coral:
+    database: true
+    encode: false
+    displayname: '&8[&dCorail&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTU3ZGQ0M2U4ZjFjZDEzNzI2YzBmOTlhYzQwNDcxNTA0N2QxMmViNDJhMjhmZmM2YWU5YmZiM2I3MGQ3NjQwYSJ9fX0
+    price: default
+    section: blocks
+  bubble_coral:
+    database: true
+    encode: false
+    displayname: '&8[&dBulle de corail&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTNmMTgwNWVkY2QzMmI5N2FiMmYxOWEwM2JhYWIxZjhkNGRjNGRiOGVjN2EwMDRiMTRlYjY2NmQwOWZiODdmMiJ9fX0
+    price: default
+    section: blocks
+  fire_coral:
+    database: true
+    encode: false
+    displayname: '&8[&cChabon brûlé&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWZlOGRlZDNjNzRlYWNkNzg0MTJhOTAzYjkwNGY1NTc3ODUwZDFlMjBkMzQ4NzhmZDc3NTk3YWQxNjMzYmY3NCJ9fX0
+    price: default
+    section: blocks
+  horn_coral:
+    database: true
+    encode: false
+    displayname: '&8[&eCorail 2&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzQ5MWI2ZTZhZTk0NTFjNDdlMDliZjFmZjIzZDUwZmZmODdiYTU5MjdhNTFmNDZmZmVkZjkyNmM1Y2JkZTc3ZiJ9fX0
+    price: default
+    section: blocks
+  tube_coral:
+    database: true
+    encode: false
+    displayname: '&8[&9Tube de Corail&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzlmYzNjZjU1MDhkNDBjMTQ2OTlkNWJmN2YyNTI3NTllMTk1NmFmOWE2NmQxNWE2YzM4NTQzNzhjNjFmNmQ5YSJ9fX0
+    price: default
+    section: blocks
+  oak_planks:
+    database: true
+    encode: false
+    displayname: '&8[&6Planche de Bois&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWIwZTExMzcwNGZjMjdjODhmOWU1MWFlODJlN2IwNWY3MDExYzQxMGYyMWUxOTEyMDViZWYyNTVhYTBkNmYzMSJ9fX0
+    price: default
+    section: blocks
+  birch_planks:
+    database: true
+    encode: false
+    displayname: '&8[&ePlanches de bouleau&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWMzMmYxMGUwOTY1MGI2Zjk4NWFjZTk5MDYzNjA5N2JhOWE4NzZmNDljNWQ2MjZmMjkyYzNiMDhlYmY4MmMyMyJ9fX0
+    price: default
+    section: blocks
+  spruce_planks:
+    database: true
+    encode: false
+    displayname: '&8[&6Planches d''épicéa&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTg2M2Y5MmI2ZDY2MzA1MjJhMTgwZWM0MjkxODY5YzFlNzAwZTUyNmM4NTRiZWUwNzM1NTcwOWVmM2I3NTk2YiJ9fX0
+    price: default
+    section: blocks
+  jungle_planks:
+    database: true
+    encode: false
+    displayname: '&8[&cPlanche de Jungle&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNThiYzNlN2FkYTM3NDE4ZWM1YzYwNzlkMTJjMThhZGViNjQ4ZGM0NWRlMzYwMWNjYWE1YmYyMDVjOTAxNTk2YSJ9fX0
+    price: default
+    section: blocks
+  acacia_planks:
+    database: true
+    encode: false
+    displayname: '&8[&cPlanche d''acacia&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjZmYjc4NGRmZjFhNzYxNjNiNGE3MTc2ZjBiZDY2MjMwZWE5MDZiODJmODVlNDA5NGY0MTM0YTUwYzU5OTI4MSJ9fX0
+    price: default
+    section: blocks
+  dark_oak_planks:
+    database: true
+    encode: false
+    displayname: '&8[&7Planches De Chêne Foncé&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjZmYjc4NGRmZjFhNzYxNjNiNGE3MTc2ZjBiZDY2MjMwZWE5MDZiODJmODVlNDA5NGY0MTM0YTUwYzU5OTI4MSJ9fX0
+    price: default
+    section: blocks
+  bone_block:
+    database: true
+    encode: false
+    displayname: '&8[&fBlock d''Os&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjQzMGFiNTQ1YjE0MjgyN2I5MzVmYzdlMzBmZDFhMTczZmE5MWI5M2NhYmJhNDVmODVmMjJhZWVkMGFlZmFjNyJ9fX0
+    price: default
+    section: blocks
+  snowball:
+    database: true
+    encode: false
+    displayname: '&8[&fBoule de Neige&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRmZDc3MjRjNjlhMDI0ZGNmYzYwYjE2ZTAwMzM0YWI1NzM4ZjRhOTJiYWZiOGZiYzc2Y2YxNTMyMmVhMDI5MyJ9fX0
+    price: default
+    section: blocks
+  snowman:
+    database: true
+    encode: false
+    displayname: '&8[&fBonhomme de neige&8]'
+    texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWY4NDZhZmM4OWU2Y2FiYTA1Y2Q2YzJjZTlkNTgzOTcyMDgwNTZlNmVlODI1OTM3ODc5ZTVkNmRiMTEyMWYifX19
+    price: default
+    section: decoration

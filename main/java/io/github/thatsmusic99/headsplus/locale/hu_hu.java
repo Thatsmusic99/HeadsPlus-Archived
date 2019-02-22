@@ -300,21 +300,6 @@ public class hu_hu implements Locale {
     }
 
     @Override
-    public String versionWord() {
-        return "Verzió: ";
-    }
-
-    @Override
-    public String author() {
-        return "Szerző: ";
-    }
-
-    @Override
-    public String language() {
-        return "Nyelv: ";
-    }
-
-    @Override
     public String descBlacklistAdd() {
         return "Hozzáad egy fejet a feketelistához.";
     }
@@ -535,11 +520,6 @@ public class hu_hu implements Locale {
     }
 
     @Override
-    public String contributors() {
-        return "Közreműködők: ";
-    }
-
-    @Override
     public String getPluginUpToDate() {
         return "%h &3A bővítmény naprakész!";
     }
@@ -597,31 +577,6 @@ public class hu_hu implements Locale {
     @Override
     public String noMaskData() {
         return "{header} &cNincsenek maszk adatok ehhez az entitáshoz!";
-    }
-
-    @Override
-    public String type() {
-        return "Típus";
-    }
-
-    @Override
-    public String interactName() {
-        return "Interaktus neve";
-    }
-
-    @Override
-    public String displayName() {
-        return "Megjelenítendő név";
-    }
-
-    @Override
-    public String price() {
-        return "Ár";
-    }
-
-    @Override
-    public String chance() {
-        return "Lehetőség:";
     }
 
     @Override

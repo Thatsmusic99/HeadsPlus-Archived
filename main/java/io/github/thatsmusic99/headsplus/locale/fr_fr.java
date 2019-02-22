@@ -4,7 +4,7 @@ public class fr_fr implements Locale {
 
     @Override
     public boolean active() {
-        return false;
+        return true;
     }
 
     @Override
@@ -14,402 +14,387 @@ public class fr_fr implements Locale {
 
     @Override
     public String getReloadingMessage() {
-        return "&3Recharge la configuration...";
+        return "{header} &3Config reload...";
     }
 
     @Override
     public String getReloadMessage() {
-        return "&3Rechargé la configuration!";
+        return "{header} &3La config a été reload!";
     }
 
     @Override
     public String getHeadInteractMessage() {
-        return "&3C'est la tête de {player}!";
+        return "&3C''est une tête d''&b{name}!";
     }
 
     @Override
     public String getHeadMhfInteractMessage() {
-        return null;
+        return "&3C''est une tête d''&b{name}!";
     }
 
     @Override
     public String getHeadMhfInteractMessage2() {
-        return "&3C'est la tête d'";
+        return "&3C''est une tête d''&b{name}!";
     }
 
     @Override
     public String getSellSuccess() {
-        return null;
+        return "&3Tu as bien vendu des têtes pour &b{price} &3et maintenant tu as &b{balance}!";
     }
 
     @Override
     public String getNotEnoughHeads() {
-        return null;
+        return "&cTu n''as pas assez de tête!";
     }
 
     @Override
     public String getNoHeads() {
-        return null;
+        return "&cTu n''as pas de tête ''valide'' dans ton inventaire!";
     }
 
     @Override
     public String getInvalidArguments() {
-        return null;
+        return "&cCaractères invalides!";
     }
 
     @Override
     public String getFalseHead() {
-        return null;
+        return "&cCette tête ne peut pas être vendue!";
     }
 
     @Override
     public String getFalseItem() {
-        return null;
+        return "&cCe n''est pas une tête!";
     }
 
     @Override
     public String getBlacklistHead() {
-        return null;
+        return "&cCette tête est sur la blacklist et ne peut pas être utilisée!";
     }
 
     @Override
     public String getWhitelistHead() {
-        return null;
+        return "&cCette tête n''est pas sur la whitelist et ne peut donc pas être utilisée!";
     }
 
     @Override
     public String getFullInventory() {
-        return null;
+        return "&cTon iventaire est plein!";
     }
 
     @Override
     public String getAlphaNames() {
-        return null;
+        return "&cCette commande ne gère que les noms alphanumériques!";
     }
 
     @Override
     public String getTooManyArguments() {
-        return null;
+        return "&cTrop de caractères!";
     }
 
     @Override
     public String getHeadTooLong() {
-        return null;
+        return "&cIGN est trop long pour être validé! Merci d''utiliser une IGN entre 3 et 16 caractères.";
     }
 
     @Override
     public String getHeadTooShort() {
-        return null;
+        return "&cIGN est trop court pour être validé! Merci d''utiliser une IGN entre 3 et 16 caractères.";
     }
 
     @Override
     public String getInvalidPageNumber() {
-        return null;
+        return "{header} &cNuméro de page invalide!";
     }
 
     @Override
     public String getInvalidInputInteger() {
-        return null;
+        return "{header} &cVous ne pouvez utiliser que des entiers dans cette commande!";
     }
 
     @Override
     public String getNoPermissions() {
-        return null;
+        return "&cTu n''as pas la permission pour faire ça!";
     }
 
     @Override
     public String getHeadAlreadyAdded() {
-        return null;
+        return "{header} &3Cette tête est déjà ajoutée!";
     }
 
     @Override
     public String getHeadAddedBlacklist() {
-        return null;
+        return "{header} &3{player} a bien été ajouté à la blacklist!";
     }
 
     @Override
     public String getHeadNotOnBlacklist() {
-        return null;
+        return "{header} &3Cette tête n''est pas dans la blacklist!";
     }
 
     @Override
     public String getHeadRemovedBlacklist() {
-        return null;
+        return "{header} &3{player} a bien été retiré de la blacklist!";
     }
 
     @Override
     public String getHeadAddedWhitelist() {
-        return null;
+        return "{header} &3{player} a bien été ajouté à la whitelist!";
     }
 
     @Override
     public String getHeadNotOnWhitelist() {
-        return null;
+        return "{header} &3Cette tête n''est pas dans la whitelist!";
     }
 
     @Override
     public String getHeadRemovedWhitelist() {
-        return null;
+        return "{header} &3{player} a bien été retiré de la whitelist!";
     }
 
     @Override
     public String getWorldAlreadyAdded() {
-        return null;
+        return "{header} &3Ce monde a déjà été ajouté!";
     }
 
     @Override
     public String getWorldAddedBlacklist() {
-        return null;
+        return "{header} &3{world} a bien été ajouté à la blacklist!";
     }
 
     @Override
     public String getWorldNotOnBlacklist() {
-        return null;
+        return "{header} &3Ce monde n''est pas dans la blacklist!";
     }
 
     @Override
     public String getWorldRemovedBlacklist() {
-        return null;
+        return "{header} &3{world} a bien été retiré de la blacklist!";
     }
 
     @Override
     public String getWorldAddedWhitelist() {
-        return null;
+        return "{header} &3{world} a bien été ajouté à la whitelist!";
     }
 
     @Override
     public String getWorldNotOnWhitelist() {
-        return null;
+        return "{header} &3Ce monde n''est pas dans la whitelist!";
     }
 
     @Override
     public String getWorldRemovedWhitelist() {
-        return null;
+        return "{header} &3{world} a bien été retiré de whitelist!";
     }
 
     @Override
     public String getBlacklistOn() {
-        return null;
+        return "{header} &3La blacklist a bien été activée!";
     }
 
     @Override
     public String getBlacklistAlreadyOn() {
-        return null;
+        return "{header} &3La blacklist est déjà activée!";
     }
 
     @Override
     public String getBlacklistOff() {
-        return null;
+        return "{header} &3La blacklist a bien été désactivée!";
     }
 
     @Override
     public String getBlacklistAlreadyOff() {
-        return null;
+        return "{header} &3La blacklist est déjà désactivée!";
     }
 
     @Override
     public String getWBlacklistOn() {
-        return null;
+        return "{header} &3La blacklist du monde a bien été activée!";
     }
 
     @Override
     public String getWBlacklistAlreadyOn() {
-        return null;
+        return "{header} &3La blacklist du monde est déjà activée!";
     }
 
     @Override
     public String getWBlacklistOff() {
-        return null;
+        return "{header} &3La blacklist du monde a bien été désactivée!";
     }
 
     @Override
     public String getWBlacklistAlreadyOff() {
-        return null;
+        return "{header} &3La blacklist du monde est déjà désactivée!";
     }
 
     @Override
     public String getWhitelistOn() {
-        return null;
+        return "{header} &3La whitelist a bien été activée!";
     }
 
     @Override
     public String getWhitelistAlreadyOn() {
-        return null;
+        return "{header} &3La whitelist est déjà activée!";
     }
 
     @Override
     public String getWhitelistOff() {
-        return null;
+        return "{header} &3La whitelist a bien été désactivée!";
     }
 
     @Override
     public String getWhitelistAlreadyOff() {
-        return null;
+        return "{header} &3La whitelist est déjà désactivée!";
     }
 
     @Override
     public String getWWhitelistOn() {
-        return null;
+        return "{header} &3La whitelist du monde a bien été activée!";
     }
 
     @Override
     public String getWWhitelistAlreadyOn() {
-        return null;
+        return "{header} &3La whitelist du monde est déjà activée!";
     }
 
     @Override
     public String getWWhitelistOff() {
-        return null;
+        return "{header} &3La whitelist du monde a bien été désactivée!";
     }
 
     @Override
     public String getWWhitelistAlreadyOff() {
-        return null;
+        return "{header} &3La whitelist du monde est déjà désactivée!";
     }
 
     @Override
     public String getDisabledCommand() {
-        return null;
+        return "&cCette commande est désactivée!";
     }
 
     @Override
     public String getEmptyBlacklist() {
-        return null;
+        return "{header} &cLa blacklist est vide!";
     }
 
     @Override
     public String getEmptyWBlacklist() {
-        return null;
+        return "{header} &cLa blacklist du monde est vide!";
     }
 
     @Override
     public String getEmptyWhitelist() {
-        return null;
+        return "{header} &cLa whitelist est vide!";
     }
 
     @Override
     public String getEmptyWWhitelist() {
-        return null;
+        return "{header} &cLa whitelist du monde est vide!";
     }
 
     @Override
     public String getBuySuccess() {
-        return null;
-    }
-
-    @Override
-    public String versionWord() {
-        return null;
-    }
-
-    @Override
-    public String author() {
-        return null;
-    }
-
-    @Override
-    public String language() {
-        return null;
+        return "&3Tu as acheté une tête pour &b{price} &3et maintenant tu as &b{balance}!";
     }
 
     @Override
     public String descBlacklistAdd() {
-        return null;
+        return "Ajoute une tête à la blacklist.";
     }
 
     @Override
     public String descBlacklistDelete() {
-        return null;
+        return "Élimine une tête à la blacklist.";
     }
 
     @Override
     public String descBlacklistList() {
-        return null;
+        return "Liste les noms dans la blacklist.";
     }
 
     @Override
     public String descBlacklistToggle() {
-        return null;
+        return "Autorise/Pour désactive la blacklist.";
     }
 
     @Override
     public String descBlacklistwAdd() {
-        return null;
+        return "Ajoute une tête à la blacklist (pour les mondes).";
     }
 
     @Override
     public String descBlacklistwDelete() {
-        return null;
+        return "Élimine une tête à la blacklist (pour les mondes).";
     }
 
     @Override
     public String descBlacklistwList() {
-        return null;
+        return "Liste les mondes dans la blacklist.";
     }
 
     @Override
     public String descBlacklistwToggle() {
-        return null;
+        return "Autorise/Pour désactive la blacklist (pour les mondes).";
     }
 
     @Override
     public String descInfo() {
-        return null;
+        return "Affiche les renseignements quelque le plugin.";
     }
 
     @Override
     public String descMCReload() {
-        return null;
+        return "Reload la config.";
     }
 
     @Override
     public String descWhitelistAdd() {
-        return null;
+        return "Ajoute une tête à la whitelist.";
     }
 
     @Override
     public String descWhitelistDelete() {
-        return null;
+        return "Élimine une tête à la whitelist.";
     }
 
     @Override
     public String descWhitelistList() {
-        return null;
+        return "Liste les noms dans la whitelist.";
     }
 
     @Override
     public String descWhitelistToggle() {
-        return null;
+        return "Autorise/Pour désactive la whitelist.";
     }
 
     @Override
     public String descWhitelistwAdd() {
-        return null;
+        return "Liste les noms dans la whitelist.";
     }
 
     @Override
     public String descWhitelistwDelete() {
-        return null;
+        return "Élimine une tête à la whitelist (pour les mondes).";
     }
 
     @Override
     public String descWhitelistwList() {
-        return null;
+        return "Liste les mondes dans la whitelist.";
     }
 
     @Override
     public String descWhitelistwToggle() {
-        return null;
+        return "Autorise/Pour désactive la whitelist (pour les mondes).";
     }
 
     @Override
     public String descHead() {
-        return null;
+        return "Vous-donne une tête.";
     }
 
     @Override
     public String descSellhead() {
-        return null;
+        return "Vend les têtes dans votre main, vous pouvez utiliser le paramètre nombreuse vendre un nombre spécifique, nom d'entité vendre une entité spécifique, et \"all\" pour vendre tous les têtes.";
     }
 
     @Override
@@ -419,251 +404,221 @@ public class fr_fr implements Locale {
 
     @Override
     public String descMyHead() {
-        return null;
+        return "Vous-donne votre tête.";
     }
 
     @Override
     public String descHPLeaderboards() {
-        return null;
+        return "Affiche le classement des têtes.";
     }
 
     @Override
     public String getUpdateFound() {
-        return null;
+        return "{header} &3Une update a été trouvée pour HeadsPlus!";
     }
 
     @Override
     public String getCurrentVersion() {
-        return null;
+        return "&3Actualle version: &7";
     }
 
     @Override
     public String getNewVersion() {
-        return null;
+        return "&3Nouvelle version: &7";
     }
 
     @Override
     public String getDescription() {
-        return null;
+        return "&3Description: &7";
     }
 
     @Override
     public String getChristmasDeniedMessage() {
-        return null;
+        return "&cCe n''est pas encore cette date!";
     }
 
     @Override
     public String getBlockPlaceDenied() {
-        return null;
+        return "&cVous ne pouvez pas placer de têtes vendables!";
     }
 
     @Override
     public String getNoDataRecorded() {
-        return null;
+        return "&cAucune donnée de classement n''a encore été enregistrée!";
     }
 
     @Override
     public String getPlayerOffline() {
-        return null;
+        return "&cCe joueur est hors-ligne!";
     }
 
     @Override
     public String easy() {
-        return null;
+        return "Facile";
     }
 
     @Override
     public String medium() {
-        return null;
+        return "Intermédiaire";
     }
 
     @Override
     public String hard() {
-        return null;
+        return "Difficile";
     }
 
     @Override
     public String getReward() {
-        return null;
+        return "Récompense:";
     }
 
     @Override
     public String chCompleteMessage() {
-        return null;
+        return "{header} &b{name} &3a complété le challenge &b{challenge}!";
     }
 
     @Override
     public String descProfile() {
-        return null;
+        return "Affiche ton profil du plugin.";
     }
 
     @Override
     public String noData() {
-        return null;
+        return "&cIl n''y a pas de données pour ce joueur!";
     }
 
     @Override
     public String cantCompleteChallenge() {
-        return null;
+        return "&cTu ne peux pas compléter ce challenge!";
     }
 
     @Override
     public String alreadyCompleted() {
-        return null;
+        return "&cTu as déjà complété ce challenge!";
     }
 
     @Override
     public String cantViewData() {
-        return null;
+        return "&cVous ne pouvez pas voir vos propres données dans la console!";
     }
 
     @Override
     public String descHelpMenu() {
-        return null;
+        return "Affiche le menu d'aide.";
     }
 
     @Override
     public String descChallenges() {
-        return null;
+        return "Affiche les challenges tu peux compléter.";
     }
 
     @Override
     public String getAchievedNextLevel() {
-        return null;
-    }
-
-    @Override
-    public String contributors() {
-        return null;
+        return "{header} &3{name} a atteint le niveau {level}!";
     }
 
     @Override
     public String getPluginUpToDate() {
-        return null;
+        return "{header} &3Le plugin est à jour!";
     }
 
     @Override
     public String getEnabled() {
-        return null;
+        return "{header} &3HeadsPlus a bien été activé!";
     }
 
     @Override
     public String getErrorEnabled() {
-        return null;
+        return "{header} &cHeadsPlus n''a pas réussi à démarrer correctement. Un rapport d''erreur a été créé dans /plugins/HeadsPlus/debug";
     }
 
     @Override
     public String getDisabled() {
-        return null;
+        return "&cCette commande est désactivée!";
     }
 
     @Override
     public String badTheme() {
-        return null;
+        return "{header} &3Un thème défectueux a été mis! Aucun changement de thème ne sera fait.";
     }
 
     @Override
     public String getCommandFail() {
-        return null;
+        return "{header} &cImpossible d''exécuter cette commande!";
     }
 
     @Override
     public String noVault() {
-        return null;
+        return "{header} &cVault n''a pas été trouvée! Les têtes ne peuvent pas être vendues et les récompenses des challenges ne peuvent pas être ajoutés/retirés.";
     }
 
     @Override
     public String descDebug() {
-        return null;
+        return "Dépose le dossier déboguer.";
     }
 
     @Override
     public String noVaultGroup() {
-        return null;
+        return "{header} &cVault n''a pas été trouvé au démarrage! Impossible d''ajouter un groupe.";
     }
 
     @Override
     public String noNameData() {
-        return null;
+        return "{header} &cIl n''y a pas de nom pour cette entité!";
     }
 
     @Override
     public String noLoreData() {
-        return null;
+        return "{header} &cIl n''y a pas de déscription pour cette entité!";
     }
 
     @Override
     public String noMaskData() {
-        return null;
-    }
-
-    @Override
-    public String type() {
-        return null;
-    }
-
-    @Override
-    public String interactName() {
-        return null;
-    }
-
-    @Override
-    public String displayName() {
-        return null;
-    }
-
-    @Override
-    public String price() {
-        return null;
-    }
-
-    @Override
-    public String chance() {
-        return null;
+        return "{header} &cIl n''y a pas de cache pour cette entité!";
     }
 
     @Override
     public String descHeadView() {
-        return null;
+        return "{header} &cIl n''y a pas de cache pour cette entité!";
     }
 
     @Override
     public String setValue() {
-        return null;
+        return "{header} &3{entity} {setting} a bien été changé en {value}!";
     }
 
     @Override
     public String addedValue() {
-        return null;
+        return "{header} &3{value} a bien été ajouté(e) {entity} {setting}!";
     }
 
     @Override
     public String removedValue() {
-        return null;
+        return "{header} &3{value} a bien été retiré(e) {entity} {setting}!";
     }
 
     @Override
     public String getNotEnoughMoney() {
-        return null;
+        return "{header} &cTu n''as pas assez d''argent!";
     }
 
     @Override
     public String inputChat() {
-        return null;
+        return "&bTapez un terme que vous souhaitez rechercher!";
     }
 
     @Override
     public String completed() {
-        return "&6Fini!";
+        return "&6Terminé!";
     }
 
     @Override
     public String lostMoney() {
-        return "&cTu as perdu {price} à cause de {player} te tué!";
+        return "&cParce que tu as été tué par {player}, tu as perdu {price}!";
     }
 
     @Override
     public String descConjure() {
-        return null;
+        return "Obtenit une tête d'un type spécifique.";
     }
 }

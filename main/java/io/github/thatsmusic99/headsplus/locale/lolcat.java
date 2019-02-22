@@ -297,21 +297,6 @@ public class lolcat implements Locale {
     }
 
     @Override
-    public String versionWord() {
-        return "Vvvvvershun: ";
-    }
-
-    @Override
-    public String author() {
-        return "AweTHOR: ";
-    }
-
-    @Override
-    public String language() {
-        return "Lingo: ";
-    }
-
-    @Override
     public String descBlacklistAdd() {
         return "Addz a hed 2 teh naughty list";
     }
@@ -532,11 +517,6 @@ public class lolcat implements Locale {
     }
 
     @Override
-    public String contributors() {
-        return "Helprz: ";
-    }
-
-    @Override
     public String getPluginUpToDate() {
         return "%h &3oboi da plugeen iz up-2-d8!";
     }
@@ -594,31 +574,6 @@ public class lolcat implements Locale {
     @Override
     public String noMaskData() {
         return "{header} soz but dere iz nu mAHsk data ;-;";
-    }
-
-    @Override
-    public String type() {
-        return "Teyepe";
-    }
-
-    @Override
-    public String interactName() {
-        return "Hit naim:";
-    }
-
-    @Override
-    public String displayName() {
-        return "Disssplai naim:";
-    }
-
-    @Override
-    public String price() {
-        return "Preyece:";
-    }
-
-    @Override
-    public String chance() {
-        return "CHOOCHOOCHANS:";
     }
 
     @Override

@@ -297,21 +297,6 @@ public class de_de implements Locale {
     }
 
     @Override
-    public String versionWord() {
-        return "Version: ";
-    }
-
-    @Override
-    public String author() {
-        return "Author: ";
-    }
-
-    @Override
-    public String language() {
-        return "Sprache: ";
-    }
-
-    @Override
     public String descBlacklistAdd() {
         return "Fügt einen Kopf zur Blacklist hinzu.";
     }
@@ -532,11 +517,6 @@ public class de_de implements Locale {
     }
 
     @Override
-    public String contributors() {
-        return "Beiträger: ";
-    }
-
-    @Override
     public String getPluginUpToDate() {
         return "{header} &3Das Plugin ist auf dem neuesten Stand!";
     }
@@ -594,31 +574,6 @@ public class de_de implements Locale {
     @Override
     public String noMaskData() {
         return "{header} &cEs gibt keine Maskendaten über dieses Wesen!";
-    }
-
-    @Override
-    public String type() {
-        return "Typ:";
-    }
-
-    @Override
-    public String interactName() {
-        return "Interaktiver Name:";
-    }
-
-    @Override
-    public String displayName() {
-        return "Anzeigename:";
-    }
-
-    @Override
-    public String price() {
-        return "Preis:";
-    }
-
-    @Override
-    public String chance() {
-        return "Chance:";
     }
 
     @Override

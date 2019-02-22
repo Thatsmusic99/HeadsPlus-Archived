@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus.util;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -26,7 +27,7 @@ public class HPUtils {
         ConfigurationSection c = HeadsPlus.getInstance().getConfiguration().getMechanics();
         if (c.getBoolean("boss-bar.enabled")) {
             if (p.getNextLevel() != null) {
-                String s = c.getString("boss-bar.title");
+                String s = ChatColor.translateAlternateColorCodes('&', c.getString("boss-bar.title"));
                 BossBar b = HeadsPlus.getInstance().getServer().createBossBar(s, BarColor.valueOf(c.getString("boss-bar.color")), BarStyle.SEGMENTED_6);
                 b.addPlayer((Player) p.getPlayer());
                 Double d = ((double) p.getNextLevel().getRequiredXP() - p.getXp()) / (double) p.getNextLevel().getRequiredXP();

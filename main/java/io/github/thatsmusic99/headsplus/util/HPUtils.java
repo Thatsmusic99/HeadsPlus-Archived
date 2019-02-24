@@ -28,17 +28,22 @@ public class HPUtils {
         if (c.getBoolean("boss-bar.enabled")) {
             if (p.getNextLevel() != null) {
                 String s = ChatColor.translateAlternateColorCodes('&', c.getString("boss-bar.title"));
-                BossBar b = HeadsPlus.getInstance().getServer().createBossBar(s, BarColor.valueOf(c.getString("boss-bar.color")), BarStyle.SEGMENTED_6);
-                b.addPlayer((Player) p.getPlayer());
-                Double d = ((double) p.getNextLevel().getRequiredXP() - p.getXp()) / (double) p.getNextLevel().getRequiredXP();
-                b.setProgress(d);
-                b.setVisible(true);
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        b.setVisible(false);
-                    }
-                }.runTaskLater(HeadsPlus.getInstance(), c.getInt("boss-bar.lifetime") * 20);
+                try {
+                    BossBar b = HeadsPlus.getInstance().getServer().createBossBar(s, BarColor.valueOf(c.getString("boss-bar.color")), BarStyle.SEGMENTED_6);
+                    b.addPlayer((Player) p.getPlayer());
+                    Double d = ((double) p.getNextLevel().getRequiredXP() - p.getXp()) / (double) p.getNextLevel().getRequiredXP();
+                    b.setProgress(d);
+                    b.setVisible(true);
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            b.setVisible(false);
+                        }
+                    }.runTaskLater(HeadsPlus.getInstance(), c.getInt("boss-bar.lifetime") * 20);
+                } catch (Exception ignored) {
+
+                }
+
             }
         }
     }

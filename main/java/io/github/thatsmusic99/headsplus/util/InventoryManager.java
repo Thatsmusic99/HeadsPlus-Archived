@@ -6,6 +6,7 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.Challenge;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
+import io.github.thatsmusic99.headsplus.config.headsx.HeadInventory;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.config.headsx.inventories.*;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
@@ -32,6 +33,7 @@ public class InventoryManager {
     private int cPage = 0;
     private int sections = 0;
     private String cSection = "menu";
+    private HeadInventory inventory;
     private final HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().getHeadsXConfig();
     public static final HashMap<Player, InventoryManager> pls = new HashMap<>();
     public int getPages() { return pages; }
@@ -42,6 +44,10 @@ public class InventoryManager {
     public void setSection(String s) { cSection = s; }
     public String getType() {
         return type;
+    }
+
+    public HeadInventory getInventory() {
+        return inventory;
     }
 
     public Inventory changePage(boolean next, boolean start, Player p, String section) throws NoSuchFieldException, IllegalAccessException {
@@ -63,6 +69,7 @@ public class InventoryManager {
 
             if (section.equalsIgnoreCase("menu")) {
                 HeadMenu headmenu = new HeadMenu();
+                inventory = headmenu;
                 if (hpchx.getConfig().getBoolean("options.advent-calendar")) {
                     sections++;
                 }
@@ -124,6 +131,7 @@ public class InventoryManager {
                 }
                 paged = new PagedLists<>(heads, charOccurance(hp.getItems().getConfig().getString("inventories.headsection.icons"), "H"));
                 pages = paged.getTotalPages();
+                inventory = new HeadSection();
                 return new HeadSection().build(paged, p);
             } else if (section.equalsIgnoreCase("favourites")) {
                 HPPlayer hps = HPPlayer.getHPPlayer(p);
@@ -135,6 +143,7 @@ public class InventoryManager {
                 }
                 paged = new PagedLists<>(heads, charOccurance(hp.getItems().getConfig().getString("inventories.favourites.icons"), "H"));
                 pages = paged.getTotalPages();
+                inventory = new FavouritesMenu();
                 return new FavouritesMenu().build(paged, p);
             } else {
                 List<String> l = new ArrayList<>();
@@ -153,6 +162,7 @@ public class InventoryManager {
                     }
                     paged = new PagedLists<>(items, charOccurance(hp.getItems().getConfig().getString("inventories.headsection.icons"), "H"));
                     pages = paged.getTotalPages();
+                    inventory = new HeadSection();
                     return new HeadSection().build(paged, p);
                 } else {
                     List<ItemStack> items = new ArrayList<>();
@@ -177,6 +187,7 @@ public class InventoryManager {
                     }
                     paged = new PagedLists<>(items, charOccurance(hp.getItems().getConfig().getString("inventories.headsection.icons"), "H"));
                     pages = paged.getTotalPages();
+                    inventory = new HeadSection();
                     return new HeadSection().build(paged, p);
                 }
 
@@ -207,6 +218,7 @@ public class InventoryManager {
 
                 paged = new PagedLists<>(items, a);
                 pages = paged.getTotalPages();
+                inventory = new ChallengeSection();
                 return new ChallengeSection().build(paged, p);
             }
         } else {
@@ -242,6 +254,7 @@ public class InventoryManager {
             }
             PagedLists<ItemStack> ps = new PagedLists<>(items, charOccurance(hp.getItems().getConfig().getString("inventories.sellheadmenu.icons"), "H"));
             pages = ps.getTotalPages();
+            inventory = new SellheadMenu();
             return new SellheadMenu().build(ps, p);
         }
     }

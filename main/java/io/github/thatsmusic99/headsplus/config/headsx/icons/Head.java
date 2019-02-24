@@ -5,6 +5,7 @@ import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.api.events.HeadPurchaseEvent;
+import io.github.thatsmusic99.headsplus.config.headsx.inventories.SellheadMenu;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import net.milkbowl.vault.economy.Economy;
@@ -76,34 +77,50 @@ public class Head extends ItemStack implements Icon {
 
             } */
      //   }
-
-        if (e.getClick().isRightClick()) {
-            HPPlayer hpp = HPPlayer.getHPPlayer(p);
-            String id = HeadsPlus.getInstance().getNMS().getId(e.getCurrentItem());
-            ItemMeta im2 = e.getCurrentItem().getItemMeta();
-            List<String> s = new ArrayList<>();
-            if (hpp.hasHeadFavourited(id)) {
-                hpp.removeFavourite(id);
-                for (String r : getLore()) {
-                    s.add(ChatColor.translateAlternateColorCodes('&', r.replaceAll("\\{price}", String.valueOf(nms.getPrice(e.getCurrentItem())))
-                            .replaceAll("\\{favourite}", HPPlayer.getHPPlayer(p).hasHeadFavourited(nms.getId(e.getCurrentItem())) ? ChatColor.GOLD + "Favourite!" : "")));
-
+        if (im.getType().equalsIgnoreCase("sellhead")) {
+            System.out.println("A");
+            System.out.println(nms.getType(e.getCurrentItem()));
+            if (!nms.getType(e.getCurrentItem()).isEmpty()) {
+                System.out.println("B");
+                if (e.isRightClick()) {
+                    e.setCancelled(true);
+                    p.performCommand("sellhead " + nms.getType(e.getCurrentItem()) + " 1");
+                } else {
+                    e.setCancelled(true);
+                    p.performCommand("sellhead " + nms.getType(e.getCurrentItem()));
                 }
-            } else {
-                hpp.addFavourite(id);
-                for (String r : getLore()) {
-                    s.add(ChatColor.translateAlternateColorCodes('&', r.replaceAll("\\{price}", String.valueOf(nms.getPrice(e.getCurrentItem())))
-                            .replaceAll("\\{favourite}", HPPlayer.getHPPlayer(p).hasHeadFavourited(nms.getId(e.getCurrentItem())) ? ChatColor.GOLD + "Favourite!" : "")));
 
-                }
             }
-            im2.setLore(s);
-            e.getCurrentItem().setItemMeta(im2);
-            e.getInventory().setItem(e.getSlot(), e.getCurrentItem());
-            e.setCancelled(true);
         } else {
-            giveHead(p, e);
+            if (e.getClick().isRightClick()) {
+                HPPlayer hpp = HPPlayer.getHPPlayer(p);
+                String id = HeadsPlus.getInstance().getNMS().getId(e.getCurrentItem());
+                ItemMeta im2 = e.getCurrentItem().getItemMeta();
+                List<String> s = new ArrayList<>();
+                if (hpp.hasHeadFavourited(id)) {
+                    hpp.removeFavourite(id);
+                    for (String r : getLore()) {
+                        s.add(ChatColor.translateAlternateColorCodes('&', r.replaceAll("\\{price}", String.valueOf(nms.getPrice(e.getCurrentItem())))
+                                .replaceAll("\\{favourite}", HPPlayer.getHPPlayer(p).hasHeadFavourited(nms.getId(e.getCurrentItem())) ? ChatColor.GOLD + "Favourite!" : "")));
+
+                    }
+                } else {
+                    hpp.addFavourite(id);
+                    for (String r : getLore()) {
+                        s.add(ChatColor.translateAlternateColorCodes('&', r.replaceAll("\\{price}", String.valueOf(nms.getPrice(e.getCurrentItem())))
+                                .replaceAll("\\{favourite}", HPPlayer.getHPPlayer(p).hasHeadFavourited(nms.getId(e.getCurrentItem())) ? ChatColor.GOLD + "Favourite!" : "")));
+
+                    }
+                }
+                im2.setLore(s);
+                e.getCurrentItem().setItemMeta(im2);
+                e.getInventory().setItem(e.getSlot(), e.getCurrentItem());
+                e.setCancelled(true);
+            } else {
+                giveHead(p, e);
+            }
         }
+
     }
 
     private void giveHead(Player p, InventoryClickEvent e) {

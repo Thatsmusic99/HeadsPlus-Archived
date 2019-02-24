@@ -49,7 +49,7 @@ public abstract class HeadInventory {
         inventories.add(new FavouritesMenu());
         inventories.add(new HeadMenu());
         inventories.add(new HeadSection());
-    //    inventories.add(new SellheadMenu());
+        inventories.add(new SellheadMenu());
         return inventories;
     }
 
@@ -91,14 +91,24 @@ public abstract class HeadInventory {
                     ItemStack is = list.getContentsInPage(inv.getPage()).get(h);
                     ItemMeta im = is.getItemMeta();
                     im.setDisplayName(getIconArray()[o].getDisplayName().replaceAll("\\{head-name}", is.getItemMeta().getDisplayName()));
+                    if (this instanceof SellheadMenu) {
+                        im.setDisplayName(im.getDisplayName().replaceAll("\\{default}",
+                                HeadsPlus.getInstance().getHeadsConfig().getDisplayName(nms.getType(is))));
+                    }
                     List<String> l = new ArrayList<>();
                     for (String s : getIconArray()[o].getLore()) {
                         l.add(ChatColor.translateAlternateColorCodes('&', s.replaceAll("\\{price}", String.valueOf(nms.getPrice(is)))
                                 .replaceAll("\\{favourite}", HPPlayer.getHPPlayer(sender).hasHeadFavourited(nms.getId(is)) ? ChatColor.GOLD + "Favourite!" : "")));
                     }
                     im.setLore(l);
+                    String s = "";
+                    if (this instanceof SellheadMenu) {
+                        s = nms.getType(is);
+
+                    }
                     is.setItemMeta(im);
                     is = nms.setIcon(is, getIconArray()[o]);
+                    is = nms.setType(s, is);
                     i.setItem(o, is);
                     h++;
                 } catch (IndexOutOfBoundsException ex) {

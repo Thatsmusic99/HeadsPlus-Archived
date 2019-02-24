@@ -8,6 +8,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
+import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import io.github.thatsmusic99.headsplus.util.SellheadInventory;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
@@ -47,41 +48,47 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                     if (args.length == 0 && (sender.hasPermission("headsplus.sellhead"))) { // If sold via hand
                         tests.put("No arguments", true);
                         if (hp.getConfiguration().getMechanics().getBoolean("sellhead-gui")) {
-                            SellheadInventory si = new SellheadInventory();
-                            SellheadInventory.setSI(p, si);
-                            p.openInventory(si.changePage(false, true, p));
+                            InventoryManager im2 = new InventoryManager("sellhead");
+                            InventoryManager.pls.put(p, im2);
+                            InventoryManager im = InventoryManager.getIM(p);
+                            im.setSection("Menu");
+                            p.openInventory(im.changePage(true, true, (Player) sender, "Menu"));
                             printDebugResults(tests, true);
                             return true;
                         } else {
-                            if (nms().isSellable(invi)) {
-                                String s = nms().getType(invi).toLowerCase();
-                                if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {
-                                    Double price;
-                                    if (invi.getAmount() > 0) {
-                                        price = invi.getAmount() * nms().getPrice(invi);
-                                        soldHeads.add(s);
-                                        hm.put(s, invi.getAmount());
-                                        SellHeadEvent she = new SellHeadEvent(price, soldHeads, (Player) sender, HeadsPlus.getInstance().getEconomy().getBalance((Player) sender), HeadsPlus.getInstance().getEconomy().getBalance((Player) sender) + price, hm);
-                                        Bukkit.getServer().getPluginManager().callEvent(she);
-                                        if (!she.isCancelled()) {
-                                            EconomyResponse zr = HeadsPlus.getInstance().getEconomy().depositPlayer((Player) sender, price);
-                                            String success = hpc.getString("sell-success").replaceAll("\\{price}", Double.toString(zr.amount)).replaceAll("\\{balance}", HeadsPlus.getInstance().getConfiguration().fixBalanceStr(zr.balance));
-                                            if (zr.transactionSuccess()) {
-                                                
-                                                if (price > 0) {
-                                                    itemRemoval((Player) sender, args, -1);
-                                                    sender.sendMessage(success);
-                                                    printDebugResults(tests, true);
-                                                    return true;
+                            if (invi != null) {
+                                if (nms().isSellable(invi)) {
+                                    String s = nms().getType(invi).toLowerCase();
+                                    if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {
+                                        Double price;
+                                        if (invi.getAmount() > 0) {
+                                            price = invi.getAmount() * nms().getPrice(invi);
+                                            soldHeads.add(s);
+                                            hm.put(s, invi.getAmount());
+                                            SellHeadEvent she = new SellHeadEvent(price, soldHeads, (Player) sender, HeadsPlus.getInstance().getEconomy().getBalance((Player) sender), HeadsPlus.getInstance().getEconomy().getBalance((Player) sender) + price, hm);
+                                            Bukkit.getServer().getPluginManager().callEvent(she);
+                                            if (!she.isCancelled()) {
+                                                EconomyResponse zr = HeadsPlus.getInstance().getEconomy().depositPlayer((Player) sender, price);
+                                                String success = hpc.getString("sell-success").replaceAll("\\{price}", Double.toString(zr.amount)).replaceAll("\\{balance}", HeadsPlus.getInstance().getConfiguration().fixBalanceStr(zr.balance));
+                                                if (zr.transactionSuccess()) {
 
+                                                    if (price > 0) {
+                                                        itemRemoval((Player) sender, args, -1);
+                                                        sender.sendMessage(success);
+                                                        printDebugResults(tests, true);
+                                                        return true;
+
+                                                    }
+                                                } else {
+                                                    sender.sendMessage(hpc.getString("cmd-fail"));
                                                 }
-                                            } else {
-                                                sender.sendMessage(hpc.getString("cmd-fail"));
                                             }
                                         }
                                     }
+                                } else {
+                                    sender.sendMessage(hpc.getString("false-head"));
+                                    return true;
                                 }
-
                             } else {
                                 sender.sendMessage(hpc.getString("false-head"));
                                 return true;

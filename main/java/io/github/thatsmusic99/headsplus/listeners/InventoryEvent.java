@@ -18,7 +18,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 public class InventoryEvent implements Listener {
 
     private InventoryManager im;
-    private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @EventHandler
     public void onClickEvent(InventoryClickEvent e) {

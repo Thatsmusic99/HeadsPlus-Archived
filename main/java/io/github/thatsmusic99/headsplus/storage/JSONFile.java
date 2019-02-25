@@ -53,7 +53,6 @@ public interface JSONFile {
             writer.close();
         }
         Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
-        System.out.println(getJSON().toJSONString());
         String s = gson.toJson(getJSON());
         OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(jsonfile), Charsets.UTF_8);
         try {

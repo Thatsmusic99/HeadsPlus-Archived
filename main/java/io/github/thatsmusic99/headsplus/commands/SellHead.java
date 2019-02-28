@@ -223,11 +223,15 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 					        if (is.getAmount() > l && l != -1) {
 					            is.setAmount(is.getAmount() - l);
 					            l = 0;
-                            } else {
+                            } else if (l > 0) {
                                 p.getInventory().remove(is);
-                                if (l != -1) {
-                                    l = is.getAmount() - l;
+                                l = l - is.getAmount();
+                                if (l <= -1) {
+                                    l = 0;
                                 }
+                            } else if (l == -1){
+                                p.getInventory().remove(is);
+
                             }
 
 					    }
@@ -245,7 +249,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 				        String s = nms().getType(i).toLowerCase();
 				        if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {
 				            soldHeads.add(s);
-				            int o = i(s, i.getAmount(), limit);
+				            int o = i(s, i.getAmount(), limit, false);
 				            p += o * nms().getPrice(i);
                         }
 				    }
@@ -259,7 +263,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 					    if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {
                             p = nms().getPrice(i) * Integer.parseInt(a[0]);
                             soldHeads.add(s);
-                            i(s, i.getAmount(), limit);
+                            i(s, i.getAmount(), limit, false);
                         }
                     }
 				} else {
@@ -321,7 +325,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 	    if (nms().isSellable(i)) {
 	        if (st.equalsIgnoreCase(s)) {
 	            soldHeads.add(s);
-	            int o = i(s, i.getAmount(), l);
+	            int o = i(s, i.getAmount(), l, true);
 	            p = (o * nms().getPrice(i));
 
             }
@@ -329,7 +333,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
         return p;
     }
 
-    private int i(String s, int amount, int l) {
+    private int i(String s, int amount, int l, boolean g) {
 	    if (hm.get(s) == null) {
 	        if (amount > l && l != -1) {
 	            hm.put(s, l);
@@ -347,7 +351,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 	            return l;
             } else {
                 hm.put(s, i);
-                return i;
+                return g ? i : amount;
             }
 
         } else {

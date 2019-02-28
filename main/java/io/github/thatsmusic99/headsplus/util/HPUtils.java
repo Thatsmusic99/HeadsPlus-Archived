@@ -40,7 +40,7 @@ public class HPUtils {
                             b.setVisible(false);
                         }
                     }.runTaskLater(HeadsPlus.getInstance(), c.getInt("boss-bar.lifetime") * 20);
-                } catch (Exception ignored) {
+                } catch (NoClassDefFoundError ignored) {
 
                 }
 

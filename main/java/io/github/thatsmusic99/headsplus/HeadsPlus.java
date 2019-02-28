@@ -669,16 +669,13 @@ public class HeadsPlus extends JavaPlugin {
         try {
             if (Bukkit.getServer().getPluginManager().getPlugin("ProjectPG-PRO") instanceof Core) {
                 getLogger().info("I think I see ProjectPG here... are you ready, Aaron?");
-                // Although I have my suspicions about those lot.
-                // Here's my reason.
-                // Error is dead, right?
-                // Or at least... TM's alive. But that AI isn't running...
-                // The only ones running are the SE1s.
-                // Although I think in 2019... something is going to happen.
-                // I'm not looking forward to it.
-                // Let's see though, let's see.
-                //
-                // ProjectPG - SE1, where it all begins.
+                // "I think we need to get out of here. I'm gonna be dead honest..."
+                // "Oh? Remember what the government said though: we're practically in a permanent curfew?"
+                // ...
+
+                // "Yes, I do. However, if we don't get out of here, we're going to die here. And we can't do that to your sister."
+
+                // PROJECT PG SE0
                 Bukkit.getPluginManager().callEvent(new CommunicateEvent("ProjectPG"));
             }
             if (Bukkit.getServer().getPluginManager().getPlugin("AdvancedOreGenerator") instanceof OreGenerator) {

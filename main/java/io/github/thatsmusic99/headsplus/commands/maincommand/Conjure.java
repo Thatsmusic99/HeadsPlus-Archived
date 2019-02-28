@@ -123,7 +123,7 @@ public class Conjure implements IHeadsPlusCommand {
 
     @Override
     public boolean fire(String[] args, CommandSender sender) {
-        ((Player) sender).getWorld().dropItem(((Player) sender).getLocation(), head);
+        ((Player) sender).getWorld().dropItem(((Player) sender).getLocation(), head).setPickupDelay(0);
         return false;
     }
 }

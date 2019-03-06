@@ -80,6 +80,7 @@ public class HeadsPlusChallenges extends ConfigSettings {
             getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".item-amount", hpc.a);
             getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".head-type", hpc.t);
             getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".xp", hpc.exp);
+            getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".command-sender", "player");
 
         }
         if (!HeadsPlus.getInstance().isConnectedToMySQLDatabase()) {
@@ -121,8 +122,8 @@ public class HeadsPlusChallenges extends ConfigSettings {
                 int items = config.getInt("challenges." + st + "." + s + ".item-amount");
                 String headType = config.getString("challenges." + st + "." + s + ".head-type");
                 int xp = config.getInt("challenges." + st + "." + s + ".xp");
-
-                Challenge c = new Challenge(s, name, header, desc, min, type, reward, rewardVal, items, headType, xp, HeadsPlusChallengeDifficulty.valueOf(st.toUpperCase()));
+                String sender = config.getString("challenges." + st + "." + s + ".command-sender");
+                Challenge c = new Challenge(s, name, header, desc, min, type, reward, rewardVal, items, headType, xp, HeadsPlusChallengeDifficulty.valueOf(st.toUpperCase()), sender);
                 HeadsPlus.getInstance().getChallenges().add(c);
 
             }

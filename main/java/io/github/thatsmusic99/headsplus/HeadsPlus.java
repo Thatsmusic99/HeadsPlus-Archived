@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException;
 import io.github.thatsmusic99.headsplus.api.Challenge;
+import io.github.thatsmusic99.headsplus.api.RLevel;
 import io.github.thatsmusic99.headsplus.api.events.CommunicateEvent;
 import io.github.thatsmusic99.headsplus.api.HeadsPlusAPI;
 import io.github.thatsmusic99.headsplus.api.Level;
@@ -83,7 +84,7 @@ public class HeadsPlus extends JavaPlugin {
     private final List<Challenge> challenges = new ArrayList<>();
     private NMSManager nms;
     private final List<IHeadsPlusCommand> commands = new ArrayList<>();
-    private HashMap<Integer, Level> levels = new HashMap<>();
+    private HashMap<Integer, RLevel> levels = new HashMap<>();
     private List<ConfigSettings> cs = new ArrayList<>();
     private Favourites favourites;
     private PlayerScores scores;
@@ -542,7 +543,7 @@ public class HeadsPlus extends JavaPlugin {
         return getConfiguration().getMechanics().getBoolean("stop-placement-of-sellable-heads");
     }
 
-    public HashMap<Integer, Level> getLevels() {
+    public HashMap<Integer, RLevel> getLevels() {
         return levels;
     }
 

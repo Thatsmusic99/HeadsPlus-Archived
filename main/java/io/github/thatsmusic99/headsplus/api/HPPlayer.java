@@ -21,9 +21,9 @@ public class HPPlayer {
     // M
     private OfflinePlayer player;
     private int xp;
-    private Level level = null;
+    private RLevel level = null;
     private List<Challenge> completeChallenges;
-    private Level nextLevel = null;
+    private RLevel nextLevel = null;
     private List<PotionEffect> activeMasks;
     public static List<HPPlayer> players = new ArrayList<>();
     private List<String> favouriteHeads;
@@ -41,7 +41,7 @@ public class HPPlayer {
         HeadsPlus hp = HeadsPlus.getInstance();
         PlayerScores scores = hp.getScores();
         HeadsPlusAPI hapi = hp.getAPI();
-        HashMap<Integer, Level> levels = hp.getLevels();
+        HashMap<Integer, RLevel> levels = hp.getLevels();
         this.xp = scores.getXp(p.getUniqueId().toString());
         List<Challenge> sc = new ArrayList<>();
         for (String str : scores.getCompletedChallenges(p.getUniqueId().toString())) {
@@ -106,11 +106,11 @@ public class HPPlayer {
         return xp;
     }
 
-    public Level getLevel() {
+    public RLevel getLevel() {
         return level;
     }
 
-    public Level getNextLevel() {
+    public RLevel getNextLevel() {
         return nextLevel;
     }
 
@@ -160,8 +160,11 @@ public class HPPlayer {
                                     .replaceAll("\\{name}", this.getPlayer().getName())
                                     .replaceAll("\\{level}", ChatColor.translateAlternateColorCodes('&', level.getDisplayName())));
                         }
-                        HashMap<Integer, Level> levels = HeadsPlus.getInstance().getLevels();
+                        HashMap<Integer, RLevel> levels = HeadsPlus.getInstance().getLevels();
                         scores.setLevel(player.getUniqueId().toString(), level.getConfigName());
+                        if (level.isrEnabled()) {
+                            level.reward(player.getPlayer());
+                        }
                         for (int i = 1; i < levels.size(); i++) {
                             if (levels.get(i) == level) {
                                 try {

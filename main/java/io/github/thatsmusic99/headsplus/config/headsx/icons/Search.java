@@ -6,9 +6,11 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.nms.SearchGUI;
 import io.github.thatsmusic99.headsplus.nms.v1_12_NMS.SearchGUI1_12;
-import io.github.thatsmusic99.headsplus.util.ChatListenerUtil;
+import io.github.thatsmusic99.headsplus.util.ChatPrompt;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import org.bukkit.Material;
+import org.bukkit.conversations.Conversation;
+import org.bukkit.conversations.ConversationFactory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -17,8 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Search extends ItemStack implements Icon {
-
-    private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @Override
     public String getIconName() {
@@ -48,13 +48,22 @@ public class Search extends ItemStack implements Icon {
                 s.setSlot(SearchGUI1_12.AnvilSlot.INPUT_LEFT, new ItemStack(Material.NAME_TAG));
                 s.open();
             } else {
-                new ChatListenerUtil(p, event -> {
-                    im.setSection(event.getInput());
-                    event.getPlayer().closeInventory();
-                    event.getPlayer().openInventory(im.changePage(false, true, event.getPlayer(), "search:" + event.getInput()));
+                ConversationFactory c = new ConversationFactory(HeadsPlus.getInstance());
+                Conversation conv = c.withFirstPrompt(new ChatPrompt()).withLocalEcho(false).buildConversation(p);
+                conv.addConversationAbandonedListener(event -> {
+                    if (event.gracefulExit()) {
+                        String input = String.valueOf(event.getContext().getSessionData("term"));
+                        im.setSection(input);
+                        p.closeInventory();
+                        try {
+                            p.openInventory(im.changePage(false, true, p, "search:" + input));
+                        } catch (NoSuchFieldException | IllegalAccessException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
 
                 });
-                p.sendMessage(hpc.getString("chat-input"));
+                conv.begin();
             }
 
         } catch (Exception ex) {

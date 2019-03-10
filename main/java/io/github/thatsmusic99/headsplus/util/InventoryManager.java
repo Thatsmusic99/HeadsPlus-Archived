@@ -196,6 +196,7 @@ public class InventoryManager {
             NMSManager nms = HeadsPlus.getInstance().getNMS();
             List<ItemStack> items = new ArrayList<>();
             if (cSection.equalsIgnoreCase("menu")) {
+                pages = HeadsPlus.getInstance().getItems().getConfig().getString("inventories.challenges-menu.icons").split(":").length;
                 return new ChallengesMenu().build(null, p);
             } else {
                 List<Challenge> cs = new ArrayList<>();

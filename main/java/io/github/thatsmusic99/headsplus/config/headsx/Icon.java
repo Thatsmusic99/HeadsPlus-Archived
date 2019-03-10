@@ -54,6 +54,11 @@ public interface Icon {
         icons.add(new ChallengeSection.Medium());
         icons.add(new ChallengeSection.MediumHard());
         icons.add(new ChallengeSection.Hard());
+        icons.add(new ChallengeSection.Tedious());
+        icons.add(new ChallengeSection.TediousPainful());
+        icons.add(new ChallengeSection.Painful());
+        icons.add(new ChallengeSection.PainfulDeadly());
+        icons.add(new ChallengeSection.Deadly());
         return icons;
     }
 

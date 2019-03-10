@@ -15,7 +15,13 @@ public class ChallengesMenu extends HeadInventory {
                 "GAEARAZAG" +
                 "GAAVAJAAG" +
                 "GAAAAAAAG" +
-                "GGGGXNGGG";
+                "GGGGXNGGG:" +
+                "GGGGGGGGG" +
+                "GAAAAAAAG" +
+                "GATAIAPAG" +
+                "GAAOADAAG" +
+                "GAAAAAAAG" +
+                "GGGBXNGGG";
     }
 
     @Override

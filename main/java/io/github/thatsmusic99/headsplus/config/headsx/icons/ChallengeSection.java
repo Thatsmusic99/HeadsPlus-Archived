@@ -239,7 +239,7 @@ public class ChallengeSection {
 
         @Override
         public Material getDefaultMaterial() {
-            return Material.NETHERRACK;
+            return HeadsPlus.getInstance().getNMS().getColouredBlock(MaterialTranslator.BlockType.TERRACOTTA, 11).getType();
         }
 
         @Override
@@ -255,6 +255,166 @@ public class ChallengeSection {
         @Override
         public String getSingleLetter() {
             return "T";
+        }
+    }
+
+    public static class TediousPainful implements Icon {
+
+        @Override
+        public String getIconName() {
+            return "challenges-tedious-painful";
+        }
+
+        @Override
+        public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
+            e.setCancelled(true);
+            p.closeInventory();
+            im.setSection("tedious-painful");
+            try {
+                p.openInventory(im.changePage(false, true, p, im.getSection()));
+            } catch (NoSuchFieldException | IllegalAccessException e1) {
+                e1.printStackTrace();
+            }
+        }
+
+        @Override
+        public Material getDefaultMaterial() {
+            return HeadsPlus.getInstance().getNMS().getColouredBlock(MaterialTranslator.BlockType.TERRACOTTA, 10).getType();
+        }
+
+        @Override
+        public List<String> getDefaultLore() {
+            return new ArrayList<>();
+        }
+
+        @Override
+        public String getDefaultDisplayName() {
+            return "&8[&c&lTedious&8-&5&lPainful&8]";
+        }
+
+        @Override
+        public String getSingleLetter() {
+            return "I";
+        }
+    }
+
+    public static class Painful implements Icon {
+
+        @Override
+        public String getIconName() {
+            return "painful";
+        }
+
+        @Override
+        public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
+            e.setCancelled(true);
+            p.closeInventory();
+            im.setSection("tedious-painful");
+            try {
+                p.openInventory(im.changePage(false, true, p, im.getSection()));
+            } catch (NoSuchFieldException | IllegalAccessException e1) {
+                e1.printStackTrace();
+            }
+        }
+
+        @Override
+        public Material getDefaultMaterial() {
+            return HeadsPlus.getInstance().getNMS().getColouredBlock(MaterialTranslator.BlockType.TERRACOTTA, 2).getType();
+        }
+
+        @Override
+        public List<String> getDefaultLore() {
+            return new ArrayList<>();
+        }
+
+        @Override
+        public String getDefaultDisplayName() {
+            return "&8[&5&lPainful&8]";
+        }
+
+        @Override
+        public String getSingleLetter() {
+            return "P";
+        }
+    }
+
+    public static class PainfulDeadly implements Icon {
+
+        @Override
+        public String getIconName() {
+            return "painful-deadly";
+        }
+
+        @Override
+        public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
+            e.setCancelled(true);
+            p.closeInventory();
+            im.setSection("painful-deadly");
+            try {
+                p.openInventory(im.changePage(false, true, p, im.getSection()));
+            } catch (NoSuchFieldException | IllegalAccessException e1) {
+                e1.printStackTrace();
+            }
+        }
+
+        @Override
+        public Material getDefaultMaterial() {
+            return HeadsPlus.getInstance().getNMS().getColouredBlock(MaterialTranslator.BlockType.TERRACOTTA, 6).getType();
+        }
+
+        @Override
+        public List<String> getDefaultLore() {
+            return new ArrayList<>();
+        }
+
+        @Override
+        public String getDefaultDisplayName() {
+            return "&8[&5Painful&8-&4Deadly&8]";
+        }
+
+        @Override
+        public String getSingleLetter() {
+            return "O";
+        }
+    }
+
+    public static class Deadly implements Icon {
+
+        @Override
+        public String getIconName() {
+            return "deadly";
+        }
+
+        @Override
+        public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
+            e.setCancelled(true);
+            p.closeInventory();
+            im.setSection("deadly");
+            try {
+                p.openInventory(im.changePage(false, true, p, im.getSection()));
+            } catch (NoSuchFieldException | IllegalAccessException e1) {
+                e1.printStackTrace();
+            }
+        }
+
+        @Override
+        public Material getDefaultMaterial() {
+            return HeadsPlus.getInstance().getNMS().getColouredBlock(MaterialTranslator.BlockType.TERRACOTTA, 14).getType();
+        }
+
+        @Override
+        public List<String> getDefaultLore() {
+            return new ArrayList<>();
+        }
+
+        @Override
+        public String getDefaultDisplayName() {
+            return "&8[&4Deadly&8]";
+        }
+
+        @Override
+        public String getSingleLetter() {
+            return "D";
         }
     }
 }

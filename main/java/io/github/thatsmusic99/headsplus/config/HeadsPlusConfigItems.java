@@ -41,8 +41,16 @@ public class HeadsPlusConfigItems extends ConfigSettings {
                     getConfig().addDefault("icons." + i.getIconName() + ".data-value", 4);
                 } else if (i instanceof ChallengeSection.MediumHard) {
                     getConfig().addDefault("icons." + i.getIconName() + ".data-value", 1);
-                } else if (i instanceof ChallengeSection.Hard) {
+                } else if (i instanceof ChallengeSection.Hard || i instanceof ChallengeSection.Deadly) {
                     getConfig().addDefault("icons." + i.getIconName() + ".data-value", 14);
+                } else if (i instanceof ChallengeSection.Painful) {
+                    getConfig().addDefault("icons." + i.getIconName() + ".data-value", 2);
+                } else if (i instanceof ChallengeSection.PainfulDeadly) {
+                    getConfig().addDefault("icons." + i.getIconName() + ".data-value", 6);
+                } else if (i instanceof ChallengeSection.Tedious) {
+                    getConfig().addDefault("icons." + i.getIconName() + ".data-value", 11);
+                } else if (i instanceof ChallengeSection.TediousPainful) {
+                    getConfig().addDefault("icons." + i.getIconName() + ".data-value", 10);
                 } else {
                     getConfig().addDefault("icons." + i.getIconName() + ".data-value", 0);
                 }

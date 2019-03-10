@@ -27,7 +27,7 @@ public class HeadsPlusChallenges extends ConfigSettings {
             load(false);
         }
         double v = getConfig().getDouble("challenges.options.current-version");
-        if (v < 1.1) {
+        if (v < 1.2) {
             for (HeadsPlusChallengeEnums hpc : HeadsPlusChallengeEnums.values()) {
                 if (hpc.v > v) {
                     getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".name", hpc.dName);
@@ -43,7 +43,7 @@ public class HeadsPlusChallenges extends ConfigSettings {
                 }
 
             }
-            getConfig().set("challenges.options.current-version", 1.1);
+            getConfig().set("challenges.options.current-version", 1.2);
             getConfig().options().copyDefaults(true);
         }
 
@@ -64,10 +64,10 @@ public class HeadsPlusChallenges extends ConfigSettings {
                 "\nItem Amount - If using GIVE_ITEM as a reward type, you can set an it" +
                 "\nHead type - The head type required to complete the challenge, use \"total\" for all types." +
                 "\nXP - Amount of XP (HeadsPlus levels) that will be received.");
-        getConfig().addDefault("challenges.options.current-version", 1.1);
+        getConfig().addDefault("challenges.options.current-version", 1.2);
         double v = getConfig().getDouble("challenges.options.current-version");
-        if (v < 1.1) {
-            getConfig().set("challenges.options.current-version", 1.1);
+        if (v < 1.2) {
+            getConfig().set("challenges.options.current-version", 1.2);
         }
         for (HeadsPlusChallengeEnums hpc : HeadsPlusChallengeEnums.values()) {
             getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".name", hpc.dName);

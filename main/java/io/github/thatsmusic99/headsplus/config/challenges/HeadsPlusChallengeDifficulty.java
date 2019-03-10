@@ -13,7 +13,9 @@ public enum HeadsPlusChallengeDifficulty {
     HARD("hard", DyeColor.RED, 32, 1),
     TEDIOUS("tedious", DyeColor.BLUE, 20, 2),
     TEDIOUS_PAINFUL("tedious_painful", DyeColor.PURPLE, 22, 2),
-    PAINFUL("painful", DyeColor.MAGENTA, 24, 2);
+    PAINFUL("painful", DyeColor.MAGENTA, 24, 2),
+    PAINFUL_DEADLY("painful_deadly", DyeColor.PINK, 30, 2),
+    DEADLY("deadly", DyeColor.RED, 32, 2);
 
     public String key;
     public DyeColor color;

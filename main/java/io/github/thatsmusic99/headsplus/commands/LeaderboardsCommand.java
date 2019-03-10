@@ -2,25 +2,18 @@ package io.github.thatsmusic99.headsplus.commands;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigTextMenu;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
-import io.github.thatsmusic99.headsplus.util.PagedHashmaps;
-import org.apache.commons.lang.WordUtils;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 
 import java.sql.SQLException;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Set;
 
 public class LeaderboardsCommand implements CommandExecutor, IHeadsPlusCommand {
 
-    private PagedHashmaps<OfflinePlayer, Integer> ph;
-    private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
     private final HashMap<String, Boolean> tests = new HashMap<>();
 
     @Override
@@ -164,37 +157,7 @@ public class LeaderboardsCommand implements CommandExecutor, IHeadsPlusCommand {
     }
 
     private String getLeaderboard(String sec, int page, String part) throws SQLException {
-        try {
-            HeadsPlus hp = HeadsPlus.getInstance();
-            StringBuilder sb = new StringBuilder();
-            String database = "headspluslb";
-            switch (part.toLowerCase()) {
-                case "selling":
-                    database = "headsplussh";
-                    break;
-                case "crafting":
-                    database = "headspluscraft";
-                    break;
-            }
-            ph = new PagedHashmaps<>(HeadsPlus.getInstance().getMySQLAPI().getScores(sec, database), 8);
-
-            sb.append(hp.getThemeColour(1)).append("=======").append(hp.getThemeColour(2)).append(" HeadsPlus Leaderboards: ").append(WordUtils.capitalize(sec)).append(" ").append(hp.getThemeColour(3)).append(page).append("/").append(ph.getTotalPages()).append(" ").append(hp.getThemeColour(1)).append("=======");
-            Set<OfflinePlayer> it = ph.getContentsInPage(page).keySet();
-            Collection<Integer> it2 = ph.getContentsInPage(page).values();
-            for (int i = 0; i < it.size(); i++) {
-                int in = i + (ph.getContentsPerPage() * (ph.getCurrentPage() - 1));
-                sb.append("\n").append(hp.getThemeColour(4)).append(in + 1).append(". ").append(hp.getThemeColour(2)).append(((OfflinePlayer)it.toArray()[i]).getName()).append(hp.getThemeColour(3)).append(" - ").append(hp.getThemeColour(2)).append(it2.toArray()[i]);
-            }
-            return sb.toString();
-        } catch (IllegalArgumentException ex) {
-            if (ph.getHs().size() > 0) {
-                return hpc.getString("invalid-pg-no");
-            } else {
-                return hpc.getString("no-data-lb");
-            }
-        } catch (NullPointerException ex) {
-            return hpc.getString("no-data-lb");
-        }
+        return HeadsPlusConfigTextMenu.LeaderBoardTranslator.translate(sec, part, page);
     }
 
     @Override

@@ -59,11 +59,13 @@ public class HeadsPlusMainConfig extends ConfigSettings {
         getConfig().addDefault("plugin.perks.pvp.player-balance-competition", false);
         getConfig().addDefault("plugin.perks.pvp.percentage-lost", 0.05);
         getConfig().addDefault("plugin.perks.pvp.percentage-balance-for-head", 0.05);
+        getConfig().addDefault("plugin.perks.houses.enabled", true);
         getConfig().addDefault("plugin.mechanics.theme", "classic");
         getConfig().addDefault("plugin.mechanics.plugin-theme-dont-change", "classic");
         getConfig().addDefault("plugin.mechanics.update.check", true);
         getConfig().addDefault("plugin.mechanics.update.notify", true);
         getConfig().addDefault("plugin.mechanics.allow-looting-enchantment", true);
+        getConfig().addDefault("plugin.mechanics.looting.ignored-entities", new ArrayList<>());
         getConfig().addDefault("plugin.mechanics.stop-placement-of-sellable-heads", false);
         getConfig().addDefault("plugin.mechanics.sellhead-gui", true);
         getConfig().addDefault("plugin.mechanics.debug.create-debug-files", true);
@@ -73,6 +75,10 @@ public class HeadsPlusMainConfig extends ConfigSettings {
         getConfig().addDefault("plugin.mechanics.anvil-menu-search", false);
         getConfig().addDefault("plugin.mechanics.mythicmobs.no-hp-drops", true);
         getConfig().addDefault("plugin.mechanics.round-balance-to-2-d-p", true);
+        getConfig().addDefault("plugin.mechanics.boss-bar.enabled", true);
+        getConfig().addDefault("plugin.mechanics.boss-bar.color", "RED");
+        getConfig().addDefault("plugin.mechanics.boss-bar.title", "&c&lXP to next HP level");
+        getConfig().addDefault("plugin.mechanics.boss-bar.lifetime", 5);
     //    getConfig().addDefault("plugin.mechanics.ignored-players-head-drops", new ArrayList<>());
         getConfig().set("mysql.passworld", null); // I still love this
         getConfig().options().copyDefaults(true);

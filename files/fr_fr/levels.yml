@@ -1,0 +1,158 @@
+# Traduit par Cyrex/Alexisparis007 (merci beaucoup!)
+version: 0.0
+levels:
+  grass:
+    display-name: '&2&lBousse'
+    added-version: 0.0
+    required-xp: 0
+    hierachy: 1
+  dirt:
+    display-name: '&6&lTerre'
+    added-version: 0.0
+    required-xp: 250
+    hierachy: 2
+  stone:
+    display-name: '&7&lPierre'
+    added-version: 0.0
+    required-xp: 750
+    hierachy: 3
+  coal:
+    display-name: '&8&lCharbon'
+    added-version: 0.0
+    required-xp: 1500
+    hierachy: 4
+  coal_2:
+    display-name: '&8&lCharbon &0&lII'
+    added-version: 0.0
+    required-xp: 2000
+    hierachy: 5
+  iron:
+    display-name: '&f&lFer'
+    added-version: 0.0
+    required-xp: 2750
+    hierachy: 6
+  iron_2:
+    display-name: '&f&lFer &7&lII'
+    added-version: 0.0
+    required-xp: 3500
+    hierachy: 7
+  redstone:
+    display-name: '&c&lRedstone'
+    added-version: 0.0
+    required-xp: 4500
+    hierachy: 8
+  redstone_2:
+    display-name: '&l&cRedstone &4&lII'
+    added-version: 0.0
+    required-xp: 5500
+    hierachy: 9
+  lapis:
+    display-name: '&9&lLapis Lazuli'
+    added-version: 0.0
+    required-xp: 7000
+    hierachy: 10
+  lapis_2:
+    display-name: '&9&lLapis Lazuli &1&lII'
+    added-version: 0.0
+    required-xp: 8000
+    hierachy: 11
+  lapis_3:
+    display-name: '&9&lLapis Lazuli &1&lIII'
+    added-version: 0.0
+    required-xp: 9000
+    hierachy: 12
+  gold:
+    display-name: '&e&lOr'
+    added-version: 0.0
+    required-xp: 10000
+    hierachy: 13
+  gold_2:
+    display-name: '&e&lOr &6&lII'
+    added-version: 0.0
+    required-xp: 12500
+    hierachy: 14
+  gold_3:
+    display-name: '&e&lOr &6&lIII'
+    added-version: 0.0
+    required-xp: 15000
+    hierachy: 15
+  diamond:
+    display-name: '&b&lDiamant'
+    added-version: 0.0
+    required-xp: 17000
+    hierachy: 16
+  diamond_2:
+    display-name: '&b&lDiamant &3&lII'
+    added-version: 0.0
+    required-xp: 20000
+    hierachy: 17
+  diamond_3:
+    display-name: '&b&lDiamant &3&lIII'
+    added-version: 0.0
+    required-xp: 22500
+    hierachy: 18
+  obsidian:
+    display-name: '&8&lObsidienne'
+    added-version: 0.0
+    required-xp: 25000
+    hierachy: 19
+  obsidian_2:
+    display-name: '&8&lObsidienne &0&lII'
+    added-version: 0.0
+    required-xp: 30000
+    hierachy: 20
+  obsidian_3:
+    display-name: '&8&lObsidienne &0&lIII'
+    added-version: 0.0
+    required-xp: 35000
+    hierachy: 21
+  obsidian_4:
+    display-name: '&8&lObsidienne &0&lIV'
+    added-version: 0.0
+    required-xp: 40000
+    hierachy: 22
+  emerald:
+    display-name: '&a&lEmeraude'
+    added-version: 0.0
+    required-xp: 45000
+    hierachy: 23
+  emerald_2:
+    display-name: '&a&lEmeraude &2&lII'
+    added-version: 0.0
+    required-xp: 50000
+    hierachy: 24
+  emerald_3:
+    display-name: '&a&lEmeraude &2&lIII'
+    added-version: 0.0
+    required-xp: 60000
+    hierachy: 25
+  emerald_4:
+    display-name: '&a&lEmeraude &2&lIV'
+    added-version: 0.0
+    required-xp: 75000
+    hierachy: 26
+  bedrock:
+    display-name: '&5&lBedrock'
+    added-version: 0.0
+    required-xp: 100000
+    hierachy: 27
+  bedrock_2:
+    display-name: '&5&lBedrock &0&lII'
+    added-version: 0.0
+    required-xp: 125000
+    hierachy: 28
+  bedrock_3:
+    display-name: '&5&lBedrock &0&lIII'
+    added-version: 0.0
+    required-xp: 150000
+    hierachy: 29
+  bedrock_4:
+    display-name: '&5&lBedrock &0&lIV'
+    added-version: 0.0
+    required-xp: 200000
+    hierachy: 30
+  bedrock_5:
+    display-name: '&5&lBedrock &0&lV'
+    added-version: 0.0
+    required-xp: 300000
+    hierachy: 31

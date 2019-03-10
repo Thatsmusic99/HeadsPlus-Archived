@@ -1,0 +1,593 @@
+# HeadsPlus by Thatsmusic99 - Challenge configuration
+# Key for challenges:
+# Header - what is displayed as the challenge title.
+# Description - Description for the challenge.
+# Type - what kind of challenge it is, valid values: SELLHEAD, CRAFTING AND LEADERBOARD
+# Min - The minimum amount of heads required to complete the challenge, if required.
+# Reward type - The type of reward at hand, valid values: ECO (to give money), ADD_GROUP (to give someone a new group), REMOVE_GROUP (to remove someone from a group because LOL), and GIVE_ITEM
+# Reward value - What the reward is, for example: if Reward type is set to ECO, it would be for example 500, if ADD_GROUP, it would be the group name, etc.
+# Item Amount - If using GIVE_ITEM as a reward type, you can set an it
+# Head type - The head type required to complete the challenge, use "total" for all types.
+# XP - Amount of XP (HeadsPlus levels) that will be received.
+
+# Traduit par Cyrex/Alexisparis007 (merci beaucoup!)
+challenges:
+  options:
+    current-version: 1.1
+  EASY:
+    starter:
+      name: Starter
+      header: '&8[&6&lStarter Challenge&8]'
+      description:
+      - '&7Ne t''inquiète pas, juste'
+      - '&7essaye ça ;)'
+      type: MISC
+      min: 0
+      reward-type: ECO
+      reward-value: 50
+      item-amount: 0
+      head-type: ''
+      xp: 20
+    first_heads_sold:
+      name: Première tête vendue
+      header: '&8[&a&lPremière tête vendue&8]'
+      description:
+      - '&7Vends tes 5'
+      - '&7premières têtes'
+      type: SELLHEAD
+      min: 5
+      reward-type: ECO
+      reward-value: 100
+      item-amount: 0
+      head-type: total
+      xp: 50
+    beginning_crafter:
+      name: Devenir un Crafter
+      header: '&8[&e&lDevenir un Crafter&8]'
+      description:
+      - '&7Craft tes 3'
+      - '&7premières têtes'
+      type: CRAFTING
+      min: 3
+      reward-type: ECO
+      reward-value: 100
+      item-amount: 0
+      head-type: total
+      xp: 50
+    hunting_starter:
+      name: Chasseur
+      header: '&8[&c&lChasseur&8]'
+      description:
+      - '&7Tue des mobs jusqu''à'
+      - '&7avoir 5 têtes'
+      type: LEADERBOARD
+      min: 5
+      reward-type: ECO
+      reward-value: 100
+      item-amount: 0
+      head-type: total
+      xp: 50
+    new_player_hunter:
+      name: Chasseur de Joueur
+      header: '&8[&c&lChasseur de Joueur&8]'
+      description:
+      - '&7Tue un joueur et obtiens'
+      - '&7sa tête ! :o'
+      type: LEADERBOARD
+      min: 1
+      reward-type: ECO
+      reward-value: 150
+      item-amount: 0
+      head-type: player
+      xp: 200
+    mob_hunter:
+      name: Chasseur de Zombie
+      header: '&8[&c&lChasseur de Zombie&8]'
+      description:
+      - '&7Obtiens 5 têtes'
+      - '&7de Zombie !'
+      type: LEADERBOARD
+      min: 5
+      reward-type: ECO
+      reward-value: 200
+      item-amount: 0
+      head-type: zombie
+      xp: 150
+    profit:
+      name: Profit
+      header: '&8[&a&lProfit !&8]'
+      description:
+      - '&7Vends 15 têtes !'
+      type: SELLHEAD
+      min: 15
+      reward-type: ECO
+      reward-value: 200
+      item-amount: 0
+      head-type: total
+      xp: 150
+    wb_works:
+      name: Crafter +
+      header: '&8[&e&lLe Craft, Sa marche !&8]'
+      description:
+      - '&7Craft un total'
+      - '&7de 15 têtes !'
+      type: CRAFTING
+      min: 15
+      reward-type: ECO
+      reward-value: 200
+      item-amount: 0
+      head-type: total
+      xp: 150
+  EASY_MEDIUM:
+    broken_bones:
+      name: Casseur d'Os
+      header: '&8[&c&lCasseur d''Os&8]'
+      description:
+      - '&7Obtiens 10 têtes'
+      - '&7de squelette'
+      type: LEADERBOARD
+      min: 10
+      reward-type: GIVE_ITEM
+      reward-value: REDSTONE
+      item-amount: 5
+      head-type: skeleton
+      xp: 300
+    pvp_fan:
+      name: PVP Fan
+      header: '&8[&c&lPVP Fan&8]'
+      description:
+      - '&7Arraches de 10 joueurs'
+      type: LEADERBOARD
+      min: 10
+      reward-type: ECO
+      reward-value: 200
+      item-amount: 0
+      head-type: player
+      xp: 350
+    crafting_hobbyist:
+      name: Expert en Craft
+      header: '&8[&e&lExpert en Craft&8]'
+      description:
+      - '&7Craft un total'
+      - '&7de 30 têtes'
+      type: CRAFTING
+      min: 30
+      reward-type: ECO
+      reward-value: 200
+      item-amount: 0
+      head-type: total
+      xp: 250
+    jab_bloodthirsty:
+      name: Violance !
+      header: '&8[&c&lJuste un peu violant ...&8]'
+      description:
+      - '&7Obtiens un total'
+      - '&7de 30 têtes !'
+      type: LEADERBOARD
+      min: 30
+      reward-type: ECO
+      reward-value: 350
+      item-amount: 0
+      head-type: total
+      xp: 400
+    town_market_owner:
+      name: Commercial
+      header: '&8[&a&lCommercial&8]'
+      description:
+      - '&7Vends un total de'
+      - '&725 têtes'
+      type: SELLHEAD
+      min: 25
+      reward-type: GIVE_ITEM
+      reward-value: IRON_INGOT
+      item-amount: 2
+      head-type: total
+      xp: 350
+  MEDIUM:
+    dr_frankenstein:
+      name: Dr. Frankenstein
+      header: '&8[&e&lDr. Frankenstein&8]'
+      description:
+      - '&7Craft un total'
+      - '&7de 30 têtes de Zombie'
+      type: CRAFTING
+      min: 30
+      reward-type: ECO
+      reward-value: 400
+      item-amount: 0
+      head-type: zombie
+      xp: 400
+    butcher:
+      name: Vegan
+      header: '&8[&c&lVegan&8]'
+      description:
+      - '&7Obtiens un total de'
+      - '&725 têtes de Cochon'
+      type: LEADERBOARD
+      min: 25
+      reward-type: GIVE_ITEM
+      reward-value: COOKED_PORKCHOP
+      item-amount: 10
+      head-type: pig
+      xp: 450
+    evil_laugh:
+      name: '"Nyehehe..."'
+      header: '&8[&c&lNyehehe...&8]'
+      description:
+      - '&7Obtiens un total'
+      - '&7de 30 têtes'
+      type: LEADERBOARD
+      min: 60
+      reward-type: GIVE_ITEM
+      reward-value: DIAMOND
+      item-amount: 2
+      head-type: total
+      xp: 500
+    start_business:
+      name: Ingénieur Commercial
+      header: '&8[&a&lIngénieur Commercial&8]'
+      description:
+      - '&7Vends un total'
+      - '&7de 40 têtes'
+      type: SELLHEAD
+      min: 40
+      reward-type: ECO
+      reward-value: 350
+      item-amount: 0
+      head-type: total
+      xp: 400
+    dont_need:
+      name: J'ai pas besoin de ça
+      header: '&8[&a&lJ''ai pas besoin de ça&8]'
+      description:
+      - '&7Vends 20 têtes de'
+      - '&creeper, avant'
+      - '&7qu''il ne t''explose ...'
+      type: SELLHEAD
+      min: 20
+      reward-type: ECO
+      reward-value: 300
+      item-amount: 0
+      head-type: creeper
+      xp: 400
+    stronger_steel:
+      name: TITAN
+      header: '&8[&c&lTITAN&8]'
+      description:
+      - '&7Obtiens 15 têtes'
+      - '&7d''iron golem'
+      type: LEADERBOARD
+      min: 15
+      reward-type: GIVE_ITEM
+      reward-value: EMERALD
+      item-amount: 3
+      head-type: irongolem
+      xp: 450
+    no_end:
+      name: Il n'y a pas de Fin !
+      header: '&8[&c&lIl n''y a pas de Fin !&8]'
+      description:
+      - '&7Tue et obtiens'
+      - '&725 têtes'
+      - '&7d''enderman !'
+      type: LEADERBOARD
+      min: 25
+      reward-type: ECO
+      reward-value: 400
+      item-amount: 0
+      head-type: enderman
+      xp: 400
+  MEDIUM_HARD:
+    off_head:
+      name: Tueur en Série
+      header: '&8[&c&lTueur en Série !&8]'
+      description:
+      - '&7Obtiens un total de'
+      - '&735 têtes de joueur'
+      type: LEADERBOARD
+      min: 35
+      reward-type: ECO
+      reward-value: 500
+      item-amount: 0
+      head-type: player
+      xp: 450
+    walmart_boss:
+      name: Le loup de wall street
+      header: '&8[&a&lLe loup de wall street&8]'
+      description:
+      - '&7Vends un total de'
+      - '&760 têtes'
+      type: SELLHEAD
+      min: 60
+      reward-type: ECO
+      reward-value: 400
+      item-amount: 0
+      head-type: total
+      xp: 400
+    true_craftsman:
+      name: God of Crafter
+      header: '&8[&e&lGod of Craft&8]'
+      description:
+      - '&7Craft un total de'
+      - '&750 têtes'
+      type: CRAFTING
+      min: 50
+      reward-type: ECO
+      reward-value: 500
+      item-amount: 0
+      head-type: total
+      xp: 550
+    secretly_antvenom:
+      name: Vegan +
+      header: '&8[&c&lVegan +&8]'
+      description:
+      - '&7Obtiens 40 têtes de Vache'
+      type: LEADERBOARD
+      min: 40
+      reward-type: ECO
+      reward-value: 550
+      item-amount: 0
+      head-type: cow
+      xp: 550
+    on_fire:
+      name: En Feu !
+      header: '&8[&c&lEn Feu&8]'
+      description:
+      - '&7Obtiens un total de'
+      - '&740 têtes de blaze !'
+      type: LEADERBOARD
+      min: 40
+      reward-type: GIVE_ITEM
+      reward-value: BLAZE_POWDER
+      item-amount: 10
+      head-type: blaze
+      xp: 600
+    slimy_work:
+      name: Slime !
+      header: '&8[&e&lSlime&8]'
+      description:
+      - '&7Craft un total de'
+      - '&735 têtes de slime'
+      type: CRAFTING
+      min: 35
+      reward-type: ECO
+      reward-value: 500
+      item-amount: 0
+      head-type: slime
+      xp: 550
+    most_wanted:
+      name: Le plus recherché !
+      header: '&8[&c&lLe plus recherché !&8]'
+      description:
+      - '&7Obtiens'
+      - '&775 têtes !'
+      type: LEADERBOARD
+      min: 75
+      reward-type: ECO
+      reward-value: 750
+      item-amount: 0
+      head-type: total
+      xp: 650
+  HARD:
+    the_reaper:
+      name: Le Faucheur !
+      header: '&8[&c&lLe Faucheur&8]'
+      description:
+      - '&7Obtiens un total de'
+      - '&7100 têtes !'
+      type: LEADERBOARD
+      min: 100
+      reward-type: ECO
+      reward-value: 900
+      item-amount: 0
+      head-type: total
+      xp: 850
+    amazon_prime:
+      name: Amazon Prime
+      header: '&8[&a&lAmazon Prime&8]'
+      description:
+      - '&7Vends un total'
+      - '&7de 90 têtes !'
+      type: SELLHEAD
+      min: 90
+      reward-type: GIVE_ITEM
+      reward-value: GOLD_INGOT
+      item-amount: 20
+      head-type: total
+      xp: 800
+    more_tear:
+      name: Plus que des Larmes
+      header: '&8[&c&lPlus que des Larmes&8]'
+      description:
+      - '&7Obtiens un total de'
+      - '&730 têtes de ghast'
+      type: LEADERBOARD
+      min: 30
+      reward-type: ECO
+      reward-value: 850
+      item-amount: 0
+      head-type: ghast
+      xp: 850
+    new_owner:
+      name: Nouveau Propriétaire
+      header: '&8[&c&lNouveau Propriétaire&8]'
+      description:
+      - '&7Après avoir eu 70'
+      - '&7têtes de joueur, il n''y a'
+      - '&7suremenet plus personne ...'
+      type: LEADERBOARD
+      min: 70
+      reward-type: GIVE_ITEM
+      reward-value: DIAMOND
+      item-amount: 10
+      head-type: player
+      xp: 900
+    the_walking_dead:
+      name: The Walking Dead
+      header: '&8[&c&lThe Walking Dead&8]'
+      description:
+      - '&7Obtiens un total de'
+      - '&760 têtes de zombie,'
+      - '&7Mon dieu...'
+      type: LEADERBOARD
+      min: 60
+      reward-type: ECO
+      reward-value: 750
+      item-amount: 0
+      head-type: zombie
+      xp: 800
+    genocide:
+      name: Hades !
+      header: '&8&k[&c&lHades !&8&k]'
+      description:
+      - '&7Prends le temps'
+      - '&7d''obtenir 200 têtes ...'
+      type: LEADERBOARD
+      min: 200
+      reward-type: ECO
+      reward-value: 1000
+      item-amount: 0
+      head-type: total
+      xp: 1500
+    ambidextrous:
+      name: Ambidextre
+      header: '&8&k[&e&lAmbidextre&8&k]'
+      description:
+      - '&7Combien de tête'
+      - '&7peux-tu crafter ?'
+      - '&7150 ?'
+      type: CRAFTING
+      min: 150
+      reward-type: ECO
+      reward-value: 1000
+      item-amount: 0
+      head-type: total
+      xp: 1500
+    millionaire:
+      name: Millionaire
+      header: '&8&k[&&a&lMILLIONAIRE&8&k]'
+      description:
+      - '&7Je parie que tu ne peux pas'
+      - '&7vendre 250 têtes ...'
+      type: SELLHEAD
+      min: 250
+      reward-type: ECO
+      reward-value: 1000
+      item-amount: 0
+      head-type: total
+      xp: 1500
+server-total:
+  sellhead:
+    total: 0
+    BAT: 0
+    BLAZE: 0
+    CAVE_SPIDER: 0
+    CHICKEN: 0
+    COW: 0
+    CREEPER: 0
+    ENDER_DRAGON: 0
+    ENDERMAN: 0
+    ENDERMITE: 0
+    GHAST: 0
+    GUARDIAN: 0
+    HORSE: 0
+    IRON_GOLEM: 0
+    MAGMA_CUBE: 0
+    MUSHROOM_COW: 0
+    OCELOT: 0
+    PIG: 0
+    PIG_ZOMBIE: 0
+    RABBIT: 0
+    SHEEP: 0
+    SILVERFISH: 0
+    SKELETON: 0
+    SLIME: 0
+    SNOWMAN: 0
+    SPIDER: 0
+    SQUID: 0
+    VILLAGER: 0
+    WITCH: 0
+    WITHER: 0
+    ZOMBIE: 0
+    WOLF: 0
+    DONKEY: 0
+    ELDER_GUARDIAN: 0
+    EVOKER: 0
+    HUSK: 0
+    LLAMA: 0
+    MULE: 0
+    PARROT: 0
+    POLAR_BEAR: 0
+    SHULKER: 0
+    SKELETON_HORSE: 0
+    STRAY: 0
+    VEX: 0
+    VINDICATOR: 0
+    WITHER_SKELETON: 0
+    COD: 0
+    SALMON: 0
+    TROPICAL_FISH: 0
+    PUFFERFISH: 0
+    PHANTOM: 0
+    TURTLE: 0
+    DOLPHIN: 0
+    DROWNED: 0
+    ZOMBIE_HORSE: 0
+    ZOMBIE_VILLAGER: 0
+  crafting:
+    total: 0
+    BAT: 0
+    BLAZE: 0
+    CAVE_SPIDER: 0
+    CHICKEN: 0
+    COW: 0
+    CREEPER: 0
+    ENDER_DRAGON: 0
+    ENDERMAN: 0
+    ENDERMITE: 0
+    GHAST: 0
+    GUARDIAN: 0
+    HORSE: 0
+    IRON_GOLEM: 0
+    MAGMA_CUBE: 0
+    MUSHROOM_COW: 0
+    OCELOT: 0
+    PIG: 0
+    PIG_ZOMBIE: 0
+    RABBIT: 0
+    SHEEP: 0
+    SILVERFISH: 0
+    SKELETON: 0
+    SLIME: 0
+    SNOWMAN: 0
+    SPIDER: 0
+    SQUID: 0
+    VILLAGER: 0
+    WITCH: 0
+    WITHER: 0
+    ZOMBIE: 0
+    WOLF: 0
+    DONKEY: 0
+    ELDER_GUARDIAN: 0
+    EVOKER: 0
+    HUSK: 0
+    LLAMA: 0
+    MULE: 0
+    PARROT: 0
+    POLAR_BEAR: 0
+    SHULKER: 0
+    SKELETON_HORSE: 0
+    STRAY: 0
+    VEX: 0
+    VINDICATOR: 0
+    WITHER_SKELETON: 0
+    COD: 0
+    SALMON: 0
+    TROPICAL_FISH: 0
+    PUFFERFISH: 0
+    PHANTOM: 0
+    TURTLE: 0
+    DOLPHIN: 0
+    DROWNED: 0
+    ZOMBIE_HORSE: 0
+    ZOMBIE_VILLAGER: 0

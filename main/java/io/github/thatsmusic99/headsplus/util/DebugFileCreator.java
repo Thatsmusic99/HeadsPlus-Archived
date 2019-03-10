@@ -125,7 +125,9 @@ public class DebugFileCreator {
         o2.put("Durability", s.getDurability());
         o2.put("Display name", s.getItemMeta().getDisplayName());
         try {
-            o2.put("Lore", new JSONArray().addAll(s.getItemMeta().getLore()));
+            JSONArray ee = new JSONArray();
+            ee.addAll(s.getItemMeta().getLore());
+            o2.put("Lore", ee);
         } catch (NullPointerException ignored) {
         }
         try {

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Air implements Icon {
+    // ABCDEFGHIJKLMNOPRSTVXZ
     @Override
     public String getIconName() {
         return "air";
@@ -41,5 +42,10 @@ public class Air implements Icon {
     @Override
     public List<String> getLore() {
         return HeadsPlus.getInstance().getItems().getConfig().getStringList("icons." + getIconName() + ".lore");
+    }
+
+    @Override
+    public String getSingleLetter() {
+        return "A";
     }
 }

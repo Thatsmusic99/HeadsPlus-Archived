@@ -298,21 +298,6 @@ public class en_uk implements Locale {
     }
 
     @Override
-    public String versionWord() {
-        return "Version: ";
-    }
-
-    @Override
-    public String author() {
-        return "Author: ";
-    }
-
-    @Override
-    public String language() {
-        return "Language: ";
-    }
-
-    @Override
     public String descBlacklistAdd() {
         return "Adds a head to the blacklist.";
     }
@@ -533,11 +518,6 @@ public class en_uk implements Locale {
     }
 
     @Override
-    public String contributors() {
-        return "Contributors: ";
-    }
-
-    @Override
     public String getPluginUpToDate() {
         return "{header} &3Plugin is up to date!";
     }
@@ -598,31 +578,6 @@ public class en_uk implements Locale {
     }
 
     @Override
-    public String type() {
-        return "Type:";
-    }
-
-    @Override
-    public String interactName() {
-        return "Interact name:";
-    }
-
-    @Override
-    public String displayName() {
-        return "Display name:";
-    }
-
-    @Override
-    public String price() {
-        return "Price:";
-    }
-
-    @Override
-    public String chance() {
-        return "Chance:";
-    }
-
-    @Override
     public String descHeadView() {
         return "Displays/modifies information about a specific entity's head.";
     }
@@ -660,5 +615,10 @@ public class en_uk implements Locale {
     @Override
     public String lostMoney() {
         return "&cBecause you got killed by {player}, you lost {price}!";
+    }
+
+    @Override
+    public String descConjure() {
+        return "Retreives a head of a specific type.";
     }
 }

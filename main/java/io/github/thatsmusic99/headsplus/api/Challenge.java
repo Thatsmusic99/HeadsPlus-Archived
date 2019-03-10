@@ -12,7 +12,6 @@ import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -25,6 +24,7 @@ import java.util.logging.Logger;
 
 public class Challenge {
 
+    // I
     private String configName;
     private String mainName;
     private String header;
@@ -36,9 +36,10 @@ public class Challenge {
     private int rewardItemAmount;
     private String headType;
     private int gainedXP;
+    private String sender;
     private HeadsPlusChallengeDifficulty difficulty;
 
-    public Challenge(String configName, String mainName, String header, List<String> description, int requiredHeadAmount, HeadsPlusChallengeTypes challengeType, HPChallengeRewardTypes rewardType, Object rewardValue, int rewardItemAmount, String headType, int gainedXP, HeadsPlusChallengeDifficulty difficulty) {
+    public Challenge(String configName, String mainName, String header, List<String> description, int requiredHeadAmount, HeadsPlusChallengeTypes challengeType, HPChallengeRewardTypes rewardType, Object rewardValue, int rewardItemAmount, String headType, int gainedXP, HeadsPlusChallengeDifficulty difficulty, String send) {
         this.configName = configName;
         this.mainName = mainName;
         this.header = header;
@@ -51,6 +52,7 @@ public class Challenge {
         this.headType = headType;
         this.gainedXP = gainedXP;
         this.difficulty = difficulty;
+        this.sender = send;
     }
 
     public String getConfigName() {
@@ -115,13 +117,7 @@ public class Challenge {
     }
 
     public boolean isComplete(Player p) {
-        FileConfiguration c = HeadsPlus.getInstance().getChallengeConfig().getConfig();
-        if (c.getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").size() <= 0) {
-            HeadsPlus.getInstance().getChallengeConfig().getConfig().addDefault("player-data." + p.getUniqueId().toString() + ".completed-challenges", new ArrayList<>());
-            return false;
-        } else {
-            return c.getStringList("player-data." + p.getUniqueId().toString() + ".completed-challenges").contains(getConfigName());
-        }
+        return HeadsPlus.getInstance().getScores().getCompletedChallenges(p.getUniqueId().toString()).contains(getConfigName());
     }
 
     public void complete(Player p, Inventory i, int slot) {
@@ -135,32 +131,38 @@ public class Challenge {
         for (String st : getDescription()) {
             lore.add(ChatColor.translateAlternateColorCodes('&', st));
         }
-        StringBuilder sb = new StringBuilder();
-        sb.append(ChatColor.GOLD).append("Reward: ");
-        HPChallengeRewardTypes re = rewardType;
         StringBuilder sb2 = new StringBuilder();
-        if (re == HPChallengeRewardTypes.ECO) {
-            sb.append(ChatColor.GREEN).append("$").append(getRewardValue());
-            sb2.append("$").append(getRewardValue());
-        } else if (re == HPChallengeRewardTypes.GIVE_ITEM) {
-            try {
-                Material.valueOf(getRewardValue().toString().toUpperCase());
-                sb
-                        .append(ChatColor.GREEN)
-                        .append(getRewardItemAmount())
-                        .append(" ")
-                        .append(WordUtils.capitalize(getRewardValue().toString().replaceAll("_", " ")))
-                        .append(getRewardItemAmount() > 1 ? "(s)" : "");
-                sb2
-                        .append(getRewardItemAmount())
-                        .append(" ")
-                        .append(getRewardValue().toString().replaceAll("_", " "))
-                        .append(getRewardItemAmount() > 1 ? "(s)" : "");
-            } catch (IllegalArgumentException e) {
-                //
+        HPChallengeRewardTypes re = rewardType;
+        if (re != HPChallengeRewardTypes.RUN_COMMAND) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(ChatColor.GOLD).append("Reward: ");
+
+
+            if (re == HPChallengeRewardTypes.ECO) {
+                sb.append(ChatColor.GREEN).append("$").append(getRewardValue());
+                sb2.append("$").append(getRewardValue());
+            } else if (re == HPChallengeRewardTypes.GIVE_ITEM) {
+                try {
+                    Material.valueOf(getRewardValue().toString().toUpperCase());
+                    sb
+                            .append(ChatColor.GREEN)
+                            .append(getRewardItemAmount())
+                            .append(" ")
+                            .append(WordUtils.capitalize(getRewardValue().toString().replaceAll("_", " ")))
+                            .append(getRewardItemAmount() > 1 ? "(s)" : "");
+                    sb2
+                            .append(getRewardItemAmount())
+                            .append(" ")
+                            .append(getRewardValue().toString().replaceAll("_", " "))
+                            .append(getRewardItemAmount() > 1 ? "(s)" : "");
+                } catch (IllegalArgumentException e) {
+                    //
+                }
             }
+            lore.add(sb.toString());
         }
-        lore.add(sb.toString());
+
+
         lore.add(ChatColor.GOLD + "XP: " + ChatColor.GREEN + getGainedXP());
         lore.add(ChatColor.GREEN + "Completed!");
         im.setLore(lore);
@@ -173,7 +175,10 @@ public class Challenge {
                     .replaceAll("\\{challenge}", getMainName())
                     .replaceAll("\\{name}", p.getName()));
         }
-        p.sendMessage(hp.getThemeColour(4) + LocaleManager.getLocale().getReward() + hp.getThemeColour(2) + sb2.toString());
+        if (re != HPChallengeRewardTypes.RUN_COMMAND) {
+            p.sendMessage(hp.getThemeColour(4) + LocaleManager.getLocale().getReward() + hp.getThemeColour(2) + sb2.toString());
+        }
+
         p.sendMessage(hp.getThemeColour(4) + "XP: " + hp.getThemeColour(2) + getGainedXP());
     }
 
@@ -220,6 +225,14 @@ public class Challenge {
                 log.warning("Difficulty: " + getChallengeType().name());
                 log.warning("Item name: " + getRewardValue());
                 log.warning("Item amount: " + getRewardItemAmount());
+            }
+        } else if (re == HPChallengeRewardTypes.RUN_COMMAND) {
+            if (sender == null
+                    || sender.isEmpty()
+                    || sender.equalsIgnoreCase("player")) {
+                p.performCommand(String.valueOf(getRewardValue()));
+            } else if (sender.equalsIgnoreCase("console")) {
+                Bukkit.dispatchCommand(hp.getServer().getConsoleSender(), String.valueOf(getRewardValue()));
             }
         }
     }

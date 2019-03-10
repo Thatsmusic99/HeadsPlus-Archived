@@ -13,7 +13,8 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import java.util.HashMap;
 
 public class BlacklistwToggle implements IHeadsPlusCommand {
-	
+
+    // A
 	private final HeadsPlus hp = HeadsPlus.getInstance();
 	private final HeadsPlusMessagesConfig hpc = hp.getMessagesConfig();
 

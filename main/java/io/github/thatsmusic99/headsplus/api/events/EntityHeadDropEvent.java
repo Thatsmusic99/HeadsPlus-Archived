@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class EntityHeadDropEvent extends Event implements Cancellable {
 
+    // O
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled;
     private ItemStack skull;

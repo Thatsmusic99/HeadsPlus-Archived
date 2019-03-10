@@ -48,4 +48,9 @@ public class Favourites extends ItemStack implements Icon {
     public List<String> getLore() {
         return HeadsPlus.getInstance().getItems().getConfig().getStringList("icons." + getIconName() + ".lore");
     }
+
+    @Override
+    public String getSingleLetter() {
+        return "F";
+    }
 }

@@ -142,12 +142,6 @@ public interface Locale {
 
     String getBuySuccess();
 
-    String versionWord();
-
-    String author();
-
-    String language();
-
     String descBlacklistAdd();
 
     String descBlacklistDelete();
@@ -236,8 +230,6 @@ public interface Locale {
 
     String getAchievedNextLevel();
 
-    String contributors();
-
     String getPluginUpToDate();
 
     String getEnabled();
@@ -262,16 +254,6 @@ public interface Locale {
 
     String noMaskData();
 
-    String type();
-
-    String interactName();
-
-    String displayName();
-
-    String price();
-
-    String chance();
-
     String descHeadView();
 
     String setValue();
@@ -287,5 +269,7 @@ public interface Locale {
     String completed();
 
     String lostMoney();
+
+    String descConjure();
 
 }

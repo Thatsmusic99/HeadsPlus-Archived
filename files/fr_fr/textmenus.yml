@@ -1,0 +1,87 @@
+# Traduit par Cyrex/Alexisparis007 (merci beaucoup!)
+default-header: '{1}=============== {2}HeadsPlus {1}==============='
+default-header-paged: '{1}=============== {2}HeadsPlus {3}{page}/{pages} {1}==============='
+help:
+  header: '{default-paged}'
+  for-each-line: '{3}{usage} - {4}{description}'
+  lines-per-page: 8
+  command-help:
+    header: '{default}'
+    layout:
+    - '{header}'
+    - '{3}Utilisation - {4}{usage}'
+    - '{3}Description - {4}{description}'
+    - '{3}Permission - {4}{permission}'
+    - '{3}Autres usages - {4}{further-usage}'
+head-info:
+  header: '{default}'
+  normal-layout:
+  - '{header}'
+  - '{4}Type: {3}{type}'
+  - '{4}Nom: {3}{display-name}'
+  - '{4}Prix: {3}{price}'
+  - '{4}Nom d''interaction: {3}{interact-name}'
+  - '{4}Chance: {3}{chance}'
+  mask-info:
+    header: '{default}'
+    first-line: '{4}Type: {3}{type}'
+    for-each-line: '{3}{effect} ({amplifier})'
+    lines-per-page: 8
+  lore-info:
+    header: '{default}'
+    first-line: '{4}Type: {3}{type}'
+    for-each-line: '{3}{lore}'
+    lines-per-page: 8
+  name-info:
+    colored:
+      header: '{default}'
+      first-line: '{4}Type: {3}{type}'
+      for-each-line: '{3}{name} ({color})'
+      lines-per-page: 8
+    default:
+      header: '{default}'
+      first-line: '{4}Type: {3}{type}'
+      for-each-line: '{3}{name}'
+      lines-per-page: 8
+profile:
+  header: '{default}'
+  layout:
+  - '{header}'
+  - '{4}Joueur: {2}{player}'
+  - '{4}XP: {2}{xp}'
+  - '{4}Challenges complétés: {2}{completed-challenges}'
+  - '{4}Total de têtes dropées: {2}{hunter-counter}'
+  - '{4}Total de têtes vendus: {2}{sellhead-counter}'
+  - '{4}Total de tête craftés: {2}{crafting-counter}'
+  - '{4}Niveau acutel: {2}{level}'
+  - '{4}XP jusqu''au niveau suivant: {2}{next-level}'
+blacklist:
+  default:
+    header: '{1}============ {2}Blacklist: {3}{page}/{pages} {1}============'
+    for-each-line: '{4}{name}'
+    lines-per-page: 8
+  world:
+    header: '{1}============ {2}Monde Blacklist: {3}{page}/{pages} {1}============'
+    for-each-line: '{4}{name}'
+    lines-per-page: 8
+whitelist:
+  default:
+    header: '{1}============ {2}Whitelist: {3}{page}/{pages} {1}============'
+    for-each-line: '{4}{name}'
+    lines-per-page: 8
+  world:
+    header: '{1}============ {2}Monde Whitelist: {3}{page}/{pages} {1}============'
+    for-each-line: '{4}{name}'
+    lines-per-page: 8
+leaderboard:
+  header: '{1}======= {2}HeadsPlus Leaderboards: {section} {3}{page}/{pages} {1}======='
+  for-each-line: '{4}{pos}. {2}{name} {3}- {2}{score}'
+  lines-per-page: 8
+info:
+  header: '{default}'
+  layout:
+  - '{header}'
+  - '{4}Version: {3}{version}'
+  - '{4}Auteur: {3}{author}'
+  - '{4}Langage: {3}{locale}'
+  - '{4}Contributeurs: {3}{contributors}'

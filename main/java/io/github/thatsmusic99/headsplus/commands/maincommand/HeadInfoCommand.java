@@ -2,23 +2,20 @@ package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
-import io.github.thatsmusic99.headsplus.locale.Locale;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigTextMenu;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
-import io.github.thatsmusic99.headsplus.util.HPUtils;
-import io.github.thatsmusic99.headsplus.util.PagedLists;
-import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class HeadInfoCommand implements IHeadsPlusCommand {
 
+    // A
     private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @Override
@@ -213,18 +210,18 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
                         }
                     } else if (args[3].equalsIgnoreCase("mask")) {
                         if (args.length > 4) {
-                            sender.sendMessage(printMaskInfo(type, Integer.parseInt(args[4])));
+                            sender.sendMessage(HeadsPlusConfigTextMenu.HeadInfoTranslator.translateMaskInfo(type, Integer.parseInt(args[4])));
                         } else {
-                            sender.sendMessage(printMaskInfo(type, 1));
+                            sender.sendMessage(HeadsPlusConfigTextMenu.HeadInfoTranslator.translateMaskInfo(type, 1));
                         }
                     } else if (args[3].equalsIgnoreCase("lore")) {
                         if (args.length > 4) {
-                            sender.sendMessage(printLoreInfo(type, Integer.parseInt(args[4])));
+                            sender.sendMessage(HeadsPlusConfigTextMenu.HeadInfoTranslator.translateLoreInfo(type, Integer.parseInt(args[4])));
                         } else {
-                            sender.sendMessage(printLoreInfo(type, 1));
+                            sender.sendMessage(HeadsPlusConfigTextMenu.HeadInfoTranslator.translateLoreInfo(type, 1));
                         }
                     } else {
-                        sender.sendMessage(printInfo(type));
+                        sender.sendMessage(HeadsPlusConfigTextMenu.HeadInfoTranslator.translateNormal(type));
                     }
                     return true;
                 } else if (args[1].equalsIgnoreCase("set")) {
@@ -321,7 +318,7 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
                 hpch.save();
                 return true;
             } else {
-                sender.sendMessage(printInfo(type));
+                sender.sendMessage(HeadsPlusConfigTextMenu.HeadInfoTranslator.translateNormal(type));
             }
         } catch (IndexOutOfBoundsException ex) {
             sender.sendMessage(hpc.getString("invalid-args"));
@@ -345,127 +342,19 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
         }
     }
 
-    private String printInfo(String type) {
-        StringBuilder sb = new StringBuilder();
-        HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
-        Locale l = LocaleManager.getLocale();
-        HeadsPlus hp = HeadsPlus.getInstance();
-        sb.append(hp.getThemeColour(1)).append("===============").append(hp.getThemeColour(2)).append(" HeadsPlus ").append(hp.getThemeColour(1)).append("===============");
-        sb.append(hp.getThemeColour(4)).append("\n").append(l.type()).append(" ").append(hp.getThemeColour(3)).append(type);
-        sb.append(hp.getThemeColour(4)).append("\n").append(l.displayName()).append(" ").append(hp.getThemeColour(3)).append(hpch.getDisplayName(type));
-        sb.append(hp.getThemeColour(4)).append("\n").append(l.price()).append(" ").append(hp.getThemeColour(3)).append(hpch.getPrice(type) );
-        sb.append(hp.getThemeColour(4)).append("\n").append(l.interactName()).append(" ").append(hp.getThemeColour(3)).append(hpch.getInteractName(type));
-        sb.append(hp.getThemeColour(4)).append("\n").append(l.chance()).append(" ").append(hp.getThemeColour(3)).append(hpch.getConfig().getDouble(type + ".chance"));
-        return sb.toString();
-    }
-
     private String printNameInfo(String type, int page) {
         try {
-            Locale l = LocaleManager.getLocale();
-            HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
-            HeadsPlus hp = HeadsPlus.getInstance();
-            if (type.equalsIgnoreCase("sheep")) {
-                List<Head> h = new ArrayList<>();
-                for (String t : hpch.getConfig().getConfigurationSection("sheep.name").getKeys(false)) {
-                    for (String r : hpch.getConfig().getStringList("sheep.name." + t)) {
-                        h.add(new Head(r, t));
-                    }
-                }
-                PagedLists<Head> hs = new PagedLists<>(h, 8);
-                StringBuilder sb = new StringBuilder();
-                sb.append(hp.getThemeColour(1)).append("===============").append(hp.getThemeColour(2)).append(" HeadsPlus ").append(hp.getThemeColour(3)).append(page).append("/").append(hs.getTotalPages()).append(" ").append(hp.getThemeColour(1)).append("===============\n");
-                sb.append(hp.getThemeColour(4)).append(l.type()).append(" ").append(hp.getThemeColour(3)).append(type).append("\n");
-                for (Head o : hs.getContentsInPage(page)) {
-                    sb.append(hp.getThemeColour(3)).append(o.type).append(" (").append(o.colour).append(")\n");
-                }
-                return sb.toString();
+            if (type.equalsIgnoreCase("sheep")
+                    || type.equalsIgnoreCase("parrot")
+                    || type.equalsIgnoreCase("llama")
+                    || type.equalsIgnoreCase("horse")) {
+                return HeadsPlusConfigTextMenu.HeadInfoTranslator.translateColored(type, page);
             } else {
-                PagedLists<String> names = new PagedLists<>(hpch.getConfig().getStringList(type + ".name"), 8);
-                StringBuilder sb = new StringBuilder();
-                sb.append(hp.getThemeColour(1)).append("===============").append(hp.getThemeColour(2)).append(" HeadsPlus ").append(hp.getThemeColour(3)).append(page).append("/").append(names.getTotalPages()).append(" ").append(hp.getThemeColour(1)).append("===============\n");
-                sb.append(hp.getThemeColour(4)).append(l.type()).append(" ").append(hp.getThemeColour(3)).append(type).append("\n");
-                for (String s : names.getContentsInPage(page)) {
-                    sb.append(hp.getThemeColour(3)).append(s).append("\n");
-                }
-                return sb.toString();
+                return HeadsPlusConfigTextMenu.HeadInfoTranslator.translateNormal(type);
             }
         } catch (IllegalArgumentException ex) {
             return hpc.getString("invalid-pg-no");
         }
 
-    }
-
-    private String printMaskInfo(String type, int page) {
-        try {
-            HeadsPlus hp = HeadsPlus.getInstance();
-            HeadsPlusConfigHeads hpch = hp.getHeadsConfig();
-            List<Mask> m = new ArrayList<>();
-            Locale l = LocaleManager.getLocale();
-            StringBuilder sb = new StringBuilder();
-
-            if (hpch.getConfig().getStringList(type + ".mask-effects").size() < 1) {
-                return hpc.getString("no-mask-data");
-            }
-            for (int i = 0; i < hpch.getConfig().getStringList(type + ".mask-effects").size(); i++) {
-                String s = hpch.getConfig().getStringList(type + ".mask-effects").get(i);
-                int a;
-                try {
-                    a = hpch.getConfig().getIntegerList(type + ".mask-amplifiers").get(i) + 1;
-                } catch (IndexOutOfBoundsException ex) {
-                    a = 1;
-                }
-                m.add(new Mask(type, a, s));
-
-            }
-            PagedLists<Mask> s = new PagedLists<>(m, 8);
-            sb.append(HPUtils.getHeader(page, s.getTotalPages()));
-            sb.append(hp.getThemeColour(4)).append(l.type()).append(" ").append(hp.getThemeColour(3)).append(type).append("\n");
-            for (Mask sm : s.getContentsInPage(page)) {
-                sb.append(hp.getThemeColour(3)).append(sm.effect).append(" (").append(sm.amplifier).append(")\n");
-            }
-            return sb.toString();
-        } catch (IllegalArgumentException ex) {
-            return hpc.getString("invalid-pg-no");
-        }
-    }
-
-    private String printLoreInfo(String type, int page) {
-        try {
-            HeadsPlus hp = HeadsPlus.getInstance();
-            HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
-            Locale l = LocaleManager.getLocale();
-            PagedLists<String> lore = new PagedLists<>(hpch.getConfig().getStringList(type + ".lore"), 8);
-            StringBuilder sb = new StringBuilder();
-            sb.append(HPUtils.getHeader(page, lore.getTotalPages()));
-            sb.append(hp.getThemeColour(4)).append(l.type()).append(" ").append(hp.getThemeColour(3)).append(type).append("\n");
-            for (String s : lore.getContentsInPage(page)) {
-                sb.append(hp.getThemeColour(3)).append(ChatColor.translateAlternateColorCodes('&', s));
-            }
-            return sb.toString();
-        } catch (IllegalArgumentException ex) {
-            return hpc.getString("invalid-pg-no");
-        }
-    }
-
-    private class Head {
-        String type;
-        String colour;
-
-        Head(String t, String c) {
-            type = t;
-            colour = c;
-        }
-    }
-
-    private class Mask {
-        String type;
-        int amplifier;
-        String effect;
-
-        Mask(String t, int a, String e) {
-            type = t;
-            amplifier = a;
-            effect = e;
-        }
     }
 }

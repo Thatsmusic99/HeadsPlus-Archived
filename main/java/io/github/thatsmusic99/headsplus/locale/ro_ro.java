@@ -301,21 +301,6 @@ public class ro_ro implements Locale {
     }
 
     @Override
-    public String versionWord() {
-        return "Versiune: ";
-    }
-
-    @Override
-    public String author() {
-        return "Autor: ";
-    }
-
-    @Override
-    public String language() {
-        return "Limba: ";
-    }
-
-    @Override
     public String descBlacklistAdd() {
         return "Adauga un cap pe lista celor interzise.";
     }
@@ -536,11 +521,6 @@ public class ro_ro implements Locale {
     }
 
     @Override
-    public String contributors() {
-        return "Contribuabili: ";
-    }
-
-    @Override
     public String getPluginUpToDate() {
         return "%h &3Plugin-ul este actualizat!";
     }
@@ -601,31 +581,6 @@ public class ro_ro implements Locale {
     }
 
     @Override
-    public String type() {
-        return "Tip:";
-    }
-
-    @Override
-    public String interactName() {
-        return "Interactati numele:";
-    }
-
-    @Override
-    public String displayName() {
-        return "Numele afisat:";
-    }
-
-    @Override
-    public String price() {
-        return "Pret";
-    }
-
-    @Override
-    public String chance() {
-        return "Sansa:";
-    }
-
-    @Override
     public String descHeadView() {
         return "Afiseaza/modifica informatii despre capul entitatii specifice.";
     }
@@ -663,5 +618,10 @@ public class ro_ro implements Locale {
     @Override
     public String lostMoney() {
         return "&cPentru ca ai fost ucis de {player}, ai pierdut {price}!";
+    }
+
+    @Override
+    public String descConjure() {
+        return "Retreife un cap de un anumit tip.";
     }
 }

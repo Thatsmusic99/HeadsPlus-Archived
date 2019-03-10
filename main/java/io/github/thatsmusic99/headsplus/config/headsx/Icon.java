@@ -54,7 +54,21 @@ public interface Icon {
         icons.add(new ChallengeSection.Medium());
         icons.add(new ChallengeSection.MediumHard());
         icons.add(new ChallengeSection.Hard());
+        icons.add(new ChallengeSection.Tedious());
+        icons.add(new ChallengeSection.TediousPainful());
+        icons.add(new ChallengeSection.Painful());
+        icons.add(new ChallengeSection.PainfulDeadly());
+        icons.add(new ChallengeSection.Deadly());
         return icons;
+    }
+
+    static Icon getIconFromSingleLetter(String s) {
+        for (Icon i : getIcons()) {
+            if (i.getSingleLetter().equalsIgnoreCase(s) && !(i instanceof Air)) {
+                return i;
+            }
+        }
+        return null;
     }
 
     default Material getMaterial() {
@@ -68,5 +82,7 @@ public interface Icon {
     default String getDisplayName() {
         return HeadsPlus.getInstance().getItems().getConfig().getString("icons." + getIconName() + ".display-name");
     }
+
+    String getSingleLetter();
 
 }

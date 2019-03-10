@@ -74,4 +74,9 @@ io.github.thatsmusic99.headsplus.api.Challenge challenge = HeadsPlus.getInstance
     public List<String> getLore() {
         return HeadsPlus.getInstance().getItems().getConfig().getStringList("icons." + getIconName() + ".lore");
     }
+
+    @Override
+    public String getSingleLetter() {
+        return "C";
+    }
 }

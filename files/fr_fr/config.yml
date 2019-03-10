@@ -1,0 +1,79 @@
+# HeadsPlus by Thatsmusic99 - Config wiki: https://github.com/Thatsmusic99/HeadsPlus/wiki/Configuration
+# Traduit par Cyrex/Alexisparis007 (merci beaucoup!)
+blacklist:
+  default:
+    enabled: true
+    list: []
+  world:
+    enabled: true
+    list: []
+whitelist:
+  default:
+    enabled: false
+    list: []
+  world:
+    enabled: false
+    list: []
+mysql:
+  host: localhost
+  port: '3306'
+  database: db
+  username: username
+  password: password
+  enabled: false
+theme-colours:
+  '1': DARK_BLUE
+  '2': GOLD
+  '3': GRAY
+  '4': DARK_AQUA
+plugin:
+  perks:
+    sell-heads: true
+    drop-heads: true
+    drops:
+      ignore-players: []
+    craft-heads: false
+    disable-crafting: false
+    heads-selector: true
+    challenges: true
+    leaderboards: true
+    levels: true
+    player-death-messages: false
+    death-messages:
+    - '&b{player} &3a été tué par &b{killer} &3et avait la tête enlevée'
+    - '&b{killer} &3a terminé le travail et a enlevé la pire partie de &b{player}&3: La
+      Tête'
+    - '&3L''admin du serveur a crié &3"QU''ON ME RAPPORTE LA TETE DE &b{player} !!"&3. &b{killer}
+      &3a terminé le travail'
+    smite-player-if-they-get-a-head: false
+    mask-powerups: true
+    pvp:
+      player-balance-competition: false
+      percentage-lost: 0.05
+      percentage-balance-for-head: 0.05
+  mechanics:
+    theme: classic
+    plugin-theme-dont-change: classic
+    update:
+      check: true
+      notify: true
+    allow-looting-enchantment: true
+    looting:
+      ignored-entities: []
+    stop-placement-of-sellable-heads: false
+    sellhead-gui: true
+    debug:
+      create-debug-files: true
+      print-stacktraces-in-console: true
+      console:
+        enabled: false
+        level: 1
+    anvil-menu-search: false
+    mythicmobs:
+      no-hp-drops: true
+    round-balance-to-2-d-p: true
+    boss-bar:
+      enabled: true
+      color: RED
+      title: '&c&lXP jusqu''au prochain niveau'
+      lifetime: 5

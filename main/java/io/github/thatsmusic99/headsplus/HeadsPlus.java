@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException;
 import io.github.thatsmusic99.headsplus.api.Challenge;
+import io.github.thatsmusic99.headsplus.api.RLevel;
 import io.github.thatsmusic99.headsplus.api.events.CommunicateEvent;
 import io.github.thatsmusic99.headsplus.api.HeadsPlusAPI;
 import io.github.thatsmusic99.headsplus.api.Level;
@@ -27,6 +28,7 @@ import io.github.thatsmusic99.headsplus.nms.v1_8_R3_NMS.v1_8_R3NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_9_NMS.v1_9_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_9_R2_NMS.V1_9_NMS2;
 import io.github.thatsmusic99.headsplus.storage.Favourites;
+import io.github.thatsmusic99.headsplus.storage.PlayerScores;
 import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import io.github.thatsmusic99.headsplus.util.MySQLAPI;
 import io.github.thatsmusic99.og.OreGenerator;
@@ -78,12 +80,14 @@ public class HeadsPlus extends JavaPlugin {
     private HeadsPlusMainConfig config;
     private HeadsPlusConfigItems items;
     private HeadsPlusConfigSounds sounds;
+    private HeadsPlusConfigTextMenu menus;
     private final List<Challenge> challenges = new ArrayList<>();
     private NMSManager nms;
     private final List<IHeadsPlusCommand> commands = new ArrayList<>();
-    private HashMap<Integer, Level> levels = new HashMap<>();
+    private HashMap<Integer, RLevel> levels = new HashMap<>();
     private List<ConfigSettings> cs = new ArrayList<>();
     private Favourites favourites;
+    private PlayerScores scores;
 
     @Override
     public void onEnable() {
@@ -102,11 +106,8 @@ public class HeadsPlus extends JavaPlugin {
             debug("- Checking plugin theme.", 1);
             checkTheme();
             debug("- Setting up favourites.json.", 1);
-            setupJSON();
-            if (getConfiguration().getMySQL().getBoolean("enabled")) {
-                debug("- MySQL is to be enabled. Opening connection...", 1);
-                openConnection();
-            }
+
+
             if (!getConfiguration().getPerks().getBoolean("disable-crafting")) {
                 debug("- Recipes may be added. Creating...", 1);
                 getServer().getPluginManager().registerEvents(new RecipePerms(), this);
@@ -192,6 +193,11 @@ public class HeadsPlus extends JavaPlugin {
         } catch (IOException e) {
             new DebugPrint(e, "Disabling (saving favourites)", false, null);
         }
+        try {
+            scores.save();
+        } catch (IOException e) {
+            new DebugPrint(e, "Disabling (saving scores)", false, null);
+        }
         log.info(hpc.getString("plugin-disabled"));
     }
 
@@ -209,6 +215,7 @@ public class HeadsPlus extends JavaPlugin {
             return false;
         }
         econ = rsp.getProvider();
+
         return econ != null;
     }
 
@@ -223,7 +230,7 @@ public class HeadsPlus extends JavaPlugin {
             }
             Class.forName("com.mysql.jdbc.Driver");
             ConfigurationSection mysql = getConfiguration().getMySQL();
-            connection = DriverManager.getConnection("jdbc:mysql://" + mysql.getString("host") + ":" + mysql.getString("port") + "/" + mysql.getString("database") + "?useSSL=false", mysql.getString("username"), mysql.getString("password"));
+            connection = DriverManager.getConnection("jdbc:mysql://" + mysql.getString("host") + ":" + mysql.getString("port") + "/" + mysql.getString("database") + "?useSSL=false&autoReconnect=true", mysql.getString("username"), mysql.getString("password"));
             Statement st = connection.createStatement();
             for (String str : Arrays.asList("headspluslb", "headsplussh", "headspluscraft")) {
                 debug("- Creating database for " + str + "...", 2);
@@ -332,8 +339,7 @@ public class HeadsPlus extends JavaPlugin {
     private void registerCommands() {
         debug("- Registering /headsplus...", 3);
         getCommand("headsplus").setExecutor(new HeadsPlusCommand());
-        debug("- Registering /hp...", 3);
-        getCommand("hp").setExecutor(new HeadsPlusCommand());
+     //   getCommand("hp").setExecutor(new HeadsPlusCommand());
         debug("- Registering /hp's tab completer..", 3);
         getCommand("hp").setTabCompleter(new TabComplete());
         debug("- Registering /head...", 3);
@@ -379,8 +385,21 @@ public class HeadsPlus extends JavaPlugin {
         hpchl = new HeadsPlusChallenges();
         cs.add(hpchl);
         debug("- Instance for HeadsPlusChallenges created!", 3);
+        try {
+            setupJSON();
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
         hapi = new HeadsPlusAPI();
         debug("- Instance for HeadsPlus's API created!", 3);
+        if (getConfiguration().getMySQL().getBoolean("enabled")) {
+            debug("- MySQL is to be enabled. Opening connection...", 1);
+            try {
+                openConnection();
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
         mySQLAPI = new MySQLAPI();
         debug("- Instance for MySQL created!", 3);
         hpl = new HeadsPlusLevels();
@@ -392,6 +411,10 @@ public class HeadsPlus extends JavaPlugin {
         sounds = new HeadsPlusConfigSounds();
         cs.add(sounds);
         debug("- Instance for HeadsPlusConfigSounds created!", 3);
+
+        menus = new HeadsPlusConfigTextMenu();
+        cs.add(menus);
+        debug("- Instance for HeadsPlusConfigTextMenu created!", 3);
         debug("Instances created.", 1);
     }
 
@@ -405,6 +428,9 @@ public class HeadsPlus extends JavaPlugin {
         favourites = new Favourites();
         favourites.create();
         favourites.read();
+        scores = new PlayerScores();
+        scores.create();
+        scores.read();
     }
 
 
@@ -467,6 +493,7 @@ public class HeadsPlus extends JavaPlugin {
         commands.add(new SellHead());
         commands.add(new DebugPrint());
         commands.add(new HeadInfoCommand());
+        commands.add(new Conjure());
     }
 
     // GETTERS
@@ -474,6 +501,10 @@ public class HeadsPlus extends JavaPlugin {
 
     public Favourites getFavourites() {
         return favourites;
+    }
+
+    public PlayerScores getScores() {
+        return scores;
     }
 
     public String getVersion() {
@@ -512,12 +543,16 @@ public class HeadsPlus extends JavaPlugin {
         return getConfiguration().getMechanics().getBoolean("stop-placement-of-sellable-heads");
     }
 
-    public HashMap<Integer, Level> getLevels() {
+    public HashMap<Integer, RLevel> getLevels() {
         return levels;
     }
 
     public boolean isUsingLeaderboards() {
         return getConfiguration().getPerks().getBoolean("leaderboards");
+    }
+
+    public HeadsPlusConfigTextMenu getMenus() {
+        return menus;
     }
 
     public Economy getEconomy() {
@@ -635,16 +670,13 @@ public class HeadsPlus extends JavaPlugin {
         try {
             if (Bukkit.getServer().getPluginManager().getPlugin("ProjectPG-PRO") instanceof Core) {
                 getLogger().info("I think I see ProjectPG here... are you ready, Aaron?");
-                // Although I have my suspicions about those lot.
-                // Here's my reason.
-                // Error is dead, right?
-                // Or at least... TM's alive. But that AI isn't running...
-                // The only ones running are the SE1s.
-                // Although I think in 2019... something is going to happen.
-                // I'm not looking forward to it.
-                // Let's see though, let's see.
-                //
-                // ProjectPG - SE1, where it all begins.
+                // "I think we need to get out of here. I'm gonna be dead honest..."
+                // "Oh? Remember what the government said though: we're practically in a permanent curfew?"
+                // ...
+
+                // "Yes, I do. However, if we don't get out of here, we're going to die here. And we can't do that to your sister."
+
+                // PROJECT PG SE0
                 Bukkit.getPluginManager().callEvent(new CommunicateEvent("ProjectPG"));
             }
             if (Bukkit.getServer().getPluginManager().getPlugin("AdvancedOreGenerator") instanceof OreGenerator) {

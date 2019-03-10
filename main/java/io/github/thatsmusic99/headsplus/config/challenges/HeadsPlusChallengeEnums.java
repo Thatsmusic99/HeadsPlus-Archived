@@ -44,7 +44,10 @@ public enum HeadsPlusChallengeEnums {
     WALKING_DEAD("the_walking_dead", "The Walking Dead", "&8[&c&lThe Walking Dead&8]", Arrays.asList("&7Get a total of", "&760 zombie heads,", "&7dear God..."), 60, HeadsPlusChallengeTypes.LEADERBOARD, HPChallengeRewardTypes.ECO, 750, 0, HeadsPlusChallengeDifficulty.HARD, "zombie", 800, 0.0),
     GENOCIDE("genocide", "Genocide", "&8&k[&c&lGENOCIDE&8&k]", Arrays.asList("&7Takes time to", "&7get 200 heads..."), 200, HeadsPlusChallengeTypes.LEADERBOARD, HPChallengeRewardTypes.ECO, 1000, 0, HeadsPlusChallengeDifficulty.HARD, "total", 1500, 0.0),
     AMBIDEXTROUS("ambidextrous", "Ambidextrous", "&8&k[&e&lAMBIDEXTROUS&8&k]", Arrays.asList("&7How many heads", "&7can you craft?", "&7150?"), 150, HeadsPlusChallengeTypes.CRAFTING, HPChallengeRewardTypes.ECO, 1000, 0, HeadsPlusChallengeDifficulty.HARD, "total", 1500, 0.0),
-    MILLIONAIRE("millionaire", "Millionaire", "&8&k[&&a&lMILLIONAIRE&8&k]", Arrays.asList("&7Bet you can't", "&7sell 250 heads..."), 250, HeadsPlusChallengeTypes.SELLHEAD, HPChallengeRewardTypes.ECO, 1000, 0, HeadsPlusChallengeDifficulty.HARD, "total", 1500, 0.0);
+    MILLIONAIRE("millionaire", "Millionaire", "&8&k[&a&lMILLIONAIRE&8&k]", Arrays.asList("&7Bet you can't", "&7sell 250 heads..."), 250, HeadsPlusChallengeTypes.SELLHEAD, HPChallengeRewardTypes.ECO, 1000, 0, HeadsPlusChallengeDifficulty.HARD, "total", 1500, 0.0),
+    BACK_AGAIN("back_again", "Back again", "&8[&9&lBack again...&8]", Arrays.asList("&7Welcome back,", "&7help me get", "&7400 heads..."), 400, HeadsPlusChallengeTypes.LEADERBOARD,  HPChallengeRewardTypes.ECO, 1500, 0, HeadsPlusChallengeDifficulty.TEDIOUS, "total", 2000, 1.2),
+    RESTARTING_THE_BUSINESS("restarting_business", "Restarting the business", "&8[&9&lRestarting the business&8]", Collections.singletonList("&7Sell 450 heads."), 450, HeadsPlusChallengeTypes.SELLHEAD, HPChallengeRewardTypes.ECO, 1750, 0, HeadsPlusChallengeDifficulty.TEDIOUS, "total", 2000, 1.2),
+    CRAFTING_RETURN("crafting_return", "Crafting return", "&8[&9&lReturning back to crafting&8]", Arrays.asList("&7Craft 450 heads."), 450, HeadsPlusChallengeTypes.CRAFTING, HPChallengeRewardTypes.ECO, 1750, 0, HeadsPlusChallengeDifficulty.TEDIOUS, "total", 2000, 1.2);
 
     public String n;
     public String dName;

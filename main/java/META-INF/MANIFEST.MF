@@ -2,5 +2,4 @@ Manifest-Version: 1.0
 Class-Path: spigot-1.9-R0.1-SNAPSHOT-latest.jar spigot-1.8.8-R0.1-SNAP
  SHOT-latest.jar spigot-1.9.4-R0.1-SNAPSHOT-latest.jar bukkit.jar spig
  ot-1.12.jar spigot-1.10.2-R0.1-SNAPSHOT-latest.jar
-Main-Class: 
 

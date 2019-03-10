@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class HeadCraftEvent extends Event implements Cancellable {
 
+    // M
     private boolean cancelled;
     private static final HandlerList handlers = new HandlerList();
     private Player player;

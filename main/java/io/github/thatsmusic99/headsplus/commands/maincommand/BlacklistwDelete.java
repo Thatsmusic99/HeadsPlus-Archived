@@ -13,7 +13,8 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 
 public class BlacklistwDelete implements IHeadsPlusCommand {
-	
+
+	// A
 	private final HeadsPlusMainConfig config = HeadsPlus.getInstance().getConfiguration();
 	private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 

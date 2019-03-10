@@ -12,6 +12,7 @@ import java.io.File;
 import java.sql.*;
 import java.util.*;
 
+@Deprecated
 public class HeadsPlusLeaderboards extends ConfigSettings {
 
     private final DeathEvents de = HeadsPlus.getInstance().getDeathEvents();
@@ -359,5 +360,9 @@ public class HeadsPlusLeaderboards extends ConfigSettings {
                 return false;
             }
         }
+    }
+
+    public void selfDestruct() {
+        configF.delete();
     }
 }

@@ -36,7 +36,7 @@ public class DeathEvents implements Listener {
 	public final List<EntityType> ableEntities = new ArrayList<>(Arrays.asList(EntityType.BAT, EntityType.BLAZE, EntityType.CAVE_SPIDER, EntityType.CHICKEN, EntityType.COW, EntityType.CREEPER, EntityType.ENDER_DRAGON, EntityType.ENDERMAN, EntityType.ENDERMITE, EntityType.GHAST, EntityType.GUARDIAN, EntityType.HORSE, EntityType.IRON_GOLEM, EntityType.MAGMA_CUBE, EntityType.MUSHROOM_COW, EntityType.OCELOT, EntityType.PIG, EntityType.PIG_ZOMBIE, EntityType.RABBIT, EntityType.SHEEP, EntityType.SILVERFISH, EntityType.SKELETON, EntityType.SLIME, EntityType.SNOWMAN, EntityType.SPIDER, EntityType.SQUID, EntityType.VILLAGER, EntityType.WITCH, EntityType.WITHER, EntityType.ZOMBIE, EntityType.WOLF));
     private final HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().getHeadsXConfig();
     private final HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
-    private final HashMap<EntityType, HashMap<String, List<ItemStack>>> heads = new HashMap<>();
+    public final HashMap<EntityType, HashMap<String, List<ItemStack>>> heads = new HashMap<>();
 
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent e) {
@@ -55,6 +55,7 @@ public class DeathEvents implements Listener {
                         }
                     }
                     if (!c.getBlacklist("world").getStringList("list").contains(e.getEntity().getWorld().getName()) || e.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !c.getBlacklist("world").getBoolean("enabled")) {
+
 
                         String entity = e.getEntityType().toString().toLowerCase().replaceAll("_", "");
                         Random rand = new Random();
@@ -104,7 +105,9 @@ public class DeathEvents implements Listener {
                     if (chance1 == 0.0) return;
                     if (chance2 <= chance1) {
                         int a = 1;
-                        if (nms.getItemInHand(ep.getEntity().getKiller()).containsEnchantment(Enchantment.LOOT_BONUS_MOBS) && c.getMechanics().getBoolean("allow-looting-enchantment")) {
+                        if (nms.getItemInHand(ep.getEntity().getKiller()).containsEnchantment(Enchantment.LOOT_BONUS_MOBS)
+                                && c.getMechanics().getBoolean("allow-looting-enchantment")
+                                && !(c.getMechanics().getStringList("looting.ignored-entities").contains("player"))) {
                             a += nms.getItemInHand(ep.getEntity().getKiller()).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
                         }
                         ItemStack head = nms.getSkullMaterial(a);
@@ -374,7 +377,9 @@ public class DeathEvents implements Listener {
         }
         int a = 1;
 
-        if (nms.getItemInHand(k).containsEnchantment(Enchantment.LOOT_BONUS_MOBS)  && HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("allow-looting-enchantment")) {
+        if (nms.getItemInHand(k).containsEnchantment(Enchantment.LOOT_BONUS_MOBS)
+                && HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("allow-looting-enchantment")
+                && !(HeadsPlus.getInstance().getConfiguration().getMechanics().getStringList("looting.ignored-entities").contains(mobName))) {
             a += nms.getItemInHand(k).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
         }
         double price = hpch.getPrice(mobName);
@@ -413,5 +418,14 @@ public class DeathEvents implements Listener {
         }
 
         return false;
+    }
+
+    public EntityType prettyStringToEntity(String s) {
+	    for (EntityType e : ableEntities) {
+	        if (e.name().replaceAll("_", "").equalsIgnoreCase(s)) {
+	            return e;
+            }
+        }
+        return null;
     }
 }

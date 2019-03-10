@@ -300,21 +300,6 @@ public class es_es implements Locale {
     }
 
     @Override
-    public String versionWord() {
-        return "Versión: ";
-    }
-
-    @Override
-    public String author() {
-        return "Autor: ";
-    }
-
-    @Override
-    public String language() {
-        return "Lenguaje: ";
-    }
-
-    @Override
     public String descBlacklistAdd() {
         return "Añade cabezas a la lista negra.";
     }
@@ -535,11 +520,6 @@ public class es_es implements Locale {
     }
 
     @Override
-    public String contributors() {
-        return "Colaboradores: ";
-    }
-
-    @Override
     public String getPluginUpToDate() {
         return "{header} &3El plugin está actualizado.";
     }
@@ -600,31 +580,6 @@ public class es_es implements Locale {
     }
 
     @Override
-    public String type() {
-        return "Tipo:";
-    }
-
-    @Override
-    public String interactName() {
-        return "Nombre para Interact:";
-    }
-
-    @Override
-    public String displayName() {
-        return "Nombre para mostrar:";
-    }
-
-    @Override
-    public String price() {
-        return "Precio:";
-    }
-
-    @Override
-    public String chance() {
-        return "Posibilidad:";
-    }
-
-    @Override
     public String descHeadView() {
         return "Muestra/Modifica información sobre la cabeza de una entidad específica.";
     }
@@ -662,5 +617,10 @@ public class es_es implements Locale {
     @Override
     public String lostMoney() {
         return "&c¡Porque te mató {player}, perdiste {price}!";
+    }
+
+    @Override
+    public String descConjure() {
+        return "Recupera una cabeza de un tipo específico.";
     }
 }

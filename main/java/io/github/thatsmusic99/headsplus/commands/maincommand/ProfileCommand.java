@@ -2,11 +2,10 @@ package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
-import io.github.thatsmusic99.headsplus.api.HeadsPlusAPI;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigTextMenu;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
-import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -16,21 +15,11 @@ import java.util.HashMap;
 
 public class ProfileCommand implements IHeadsPlusCommand {
 
+    // F
     private String prof(OfflinePlayer p) throws SQLException {
         try {
-            HeadsPlus hp = HeadsPlus.getInstance();
             HPPlayer pl = HPPlayer.getHPPlayer(p);
-            HeadsPlusAPI api = hp.getAPI();
-            return String.valueOf(hp.getThemeColour(1) + "===============" + hp.getThemeColour(2) + " HeadsPlus " + hp.getThemeColour(1) + "===============" +
-                    "\n" + hp.getThemeColour(4) + "Player: " + hp.getThemeColour(2) + p.getName() +
-                    "\n" + hp.getThemeColour(4) + "XP: " + hp.getThemeColour(2) + pl.getXp() +
-                    "\n" + hp.getThemeColour(4) + "Completed challenges: " + hp.getThemeColour(2) + pl.getCompleteChallenges().size() +
-                    "\n" + hp.getThemeColour(4) + "Total heads dropped: " + hp.getThemeColour(2) + api.getPlayerInLeaderboards(p, "total", "headspluslb") +
-                    "\n" + hp.getThemeColour(4) + "Total heads sold: " + hp.getThemeColour(2) + api.getPlayerInLeaderboards(p, "total", "headsplussh") +
-                    "\n" + hp.getThemeColour(4) + "Total heads crafted: " + hp.getThemeColour(2) + api.getPlayerInLeaderboards(p, "total", "headspluscraft") +
-                    (hp.usingLevels() ? ("\n" + hp.getThemeColour(4) + "Current level: " + hp.getThemeColour(2) + ChatColor.translateAlternateColorCodes('&', pl.getLevel().getDisplayName()) +
-                    "\n" + hp.getThemeColour(4) + "XP until next level: " + hp.getThemeColour(2) + (pl.getNextLevel() != null ? (pl.getNextLevel().getRequiredXP() - pl.getXp()) : 0)) : ""));
-
+            return HeadsPlusConfigTextMenu.ProfileTranslator.translate(pl);
         } catch (NullPointerException ex) {
             return HeadsPlus.getInstance().getMessagesConfig().getString("no-data");
         }

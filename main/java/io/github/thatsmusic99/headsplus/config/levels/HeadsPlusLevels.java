@@ -3,7 +3,10 @@ package io.github.thatsmusic99.headsplus.config.levels;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.CLevel;
 import io.github.thatsmusic99.headsplus.api.Level;
+import io.github.thatsmusic99.headsplus.api.RLevel;
 import io.github.thatsmusic99.headsplus.config.ConfigSettings;
+import io.github.thatsmusic99.headsplus.config.challenges.HPChallengeRewardTypes;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -51,7 +54,18 @@ public class HeadsPlusLevels extends ConfigSettings {
                 double av = getConfig().getDouble("levels." + s + ".added-version");
                 int rxp = getConfig().getInt("levels." + s + ".required-xp");
                 int h = getConfig().getInt("levels." + s + ".hierachy");
-                CLevel c = new CLevel(s, dn, rxp, av);
+                boolean e = getConfig().getBoolean("levels." + s + ".rewards.enabled", false);
+                HPChallengeRewardTypes reward;
+                try {
+
+                    reward = HPChallengeRewardTypes.valueOf(getConfig().getString("levels." + s + ".rewards.reward-type").toUpperCase());
+                } catch (Exception ex) {
+                    continue;
+                }
+                Object rewardVal = getConfig().get("levels." + s + ".rewards.reward-value");
+                int items = getConfig().getInt("levels." + s + ".rewards.item-amount");
+                String sender = getConfig().getString("levels." + s + ".rewards.command-sender");
+                CLevel c = new CLevel(s, dn, rxp, av, e, reward, rewardVal, items, sender);
                 hp.getLevels().put(h, c);
             }
         }
@@ -67,6 +81,11 @@ public class HeadsPlusLevels extends ConfigSettings {
             getConfig().addDefault("levels." + l.getConfigName() + ".added-version", l.getAddedVersion());
             getConfig().addDefault("levels." + l.getConfigName() + ".required-xp", l.getRequiredXP());
             getConfig().addDefault("levels." + l.getConfigName() + ".hierachy", i);
+            getConfig().addDefault("levels." + l.getConfigName() + ".rewards.enabled", false);
+            getConfig().addDefault("levels." + l.getConfigName() + ".rewards.reward-type", HPChallengeRewardTypes.ECO.name());
+            getConfig().addDefault("levels." + l.getConfigName() + ".rewards.reward-value", 300);
+            getConfig().addDefault("levels." + l.getConfigName() + ".rewards.item-amount", 0);
+            getConfig().addDefault("levels." + l.getConfigName() + ".rewards.command-sender", "player");
           //  }
         }
         save();

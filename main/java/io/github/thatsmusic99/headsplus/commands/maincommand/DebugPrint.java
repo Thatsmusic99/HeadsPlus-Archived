@@ -78,7 +78,7 @@ public class DebugPrint implements IHeadsPlusCommand {
 
     @Override
     public String getUsage() {
-        return "/hp debug <dump|head|player|clearim|item> <Player IGN>";
+        return "/hp debug <dump|head|player|clearim|item|delete> <Player IGN>";
     }
 
     @Override
@@ -111,7 +111,7 @@ public class DebugPrint implements IHeadsPlusCommand {
             } else if (args[1].equalsIgnoreCase("player")) {
                 if (args.length > 2) {
                     HPPlayer pl = HPPlayer.getHPPlayer(Bukkit.getOfflinePlayer(args[2]));
-                    if (pl.getCompleteChallenges().size() > 0) {
+                    if (pl != null) {
                         h.put(true, "");
                     } else {
                         h.put(false, HeadsPlus.getInstance().getMessagesConfig().getString("no-data"));
@@ -129,6 +129,15 @@ public class DebugPrint implements IHeadsPlusCommand {
                     }
                 } else {
                     h.put(false, "[HeadsPlus] You have to be a player to run this command!");
+                }
+            } else if (args[1].equalsIgnoreCase("delete")) {
+                if (args.length > 2) {
+                    HPPlayer pl = HPPlayer.getHPPlayer(Bukkit.getOfflinePlayer(args[2]));
+                    if (pl != null) {
+                        h.put(true, "");
+                    } else {
+                        h.put(false, HeadsPlus.getInstance().getMessagesConfig().getString("no-data"));
+                    }
                 }
             } else {
                 h.put(false, HeadsPlus.getInstance().getMessagesConfig().getString("invalid-args"));
@@ -170,6 +179,9 @@ public class DebugPrint implements IHeadsPlusCommand {
                     sender.sendMessage(ChatColor.GREEN + "Report name: " + s);
                 }
 
+            } else if (args[1].equalsIgnoreCase("delete")) {
+                HeadsPlus.getInstance().getScores().deletePlayer(Bukkit.getOfflinePlayer(args[2]).getPlayer());
+                sender.sendMessage(ChatColor.GREEN + "Player data for " + args[2] + " cleared.");
             }
         } catch (IOException | NoSuchFieldException | IllegalAccessException e) {
             if (HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("debug.print-stacktraces-in-console")) {

@@ -1,7 +1,5 @@
 package io.github.thatsmusic99.headsplus.config.challenges;
 
-import io.github.thatsmusic99.headsplus.locale.LocaleManager;
-import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 
 public enum HeadsPlusChallengeDifficulty {

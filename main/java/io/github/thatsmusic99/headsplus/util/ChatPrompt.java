@@ -6,6 +6,8 @@ import org.bukkit.conversations.Prompt;
 import org.bukkit.conversations.StringPrompt;
 
 public class ChatPrompt extends StringPrompt {
+
+
     @Override
     public String getPromptText(ConversationContext conversationContext) {
         return HeadsPlus.getInstance().getMessagesConfig().getString("chat-input");

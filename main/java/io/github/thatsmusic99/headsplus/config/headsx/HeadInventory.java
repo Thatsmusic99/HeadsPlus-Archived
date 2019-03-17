@@ -154,7 +154,7 @@ public abstract class HeadInventory {
                             } else if (re == HPChallengeRewardTypes.GIVE_ITEM) {
                                 try {
                                     Material.valueOf(c.getRewardValue().toString());
-                                    sb.append(c.getRewardItemAmount()).append(" ").append(WordUtils.capitalize(c.getRewardValue().toString().toLowerCase().replaceAll("_", " "))).append("(s)");
+                                    sb.append(c.getRewardItemAmount()).append(" ").append(WordUtils.capitalize(c.getRewardValue().toString().toLowerCase().replaceAll("_", " ")));//.append("(s)");
                                 } catch (IllegalArgumentException ignored) {
 
                                 }

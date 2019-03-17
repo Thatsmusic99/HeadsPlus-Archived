@@ -149,7 +149,9 @@ public abstract class HeadInventory {
                         if (getIconArray(inv.getPage())[o].getLore().get(z).contains("{challenge-reward}")) {
                             StringBuilder sb = new StringBuilder();
                             HPChallengeRewardTypes re = c.getRewardType();
-                            if (re == HPChallengeRewardTypes.ECO) {
+                            if (c.getRewardString() != null) {
+                                sb.append(c.getRewardString());
+                            } else if (re == HPChallengeRewardTypes.ECO) {
                                 sb.append("$").append(c.getRewardValue().toString());
                             } else if (re == HPChallengeRewardTypes.GIVE_ITEM) {
                                 try {

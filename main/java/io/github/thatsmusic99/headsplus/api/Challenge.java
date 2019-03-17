@@ -38,8 +38,9 @@ public class Challenge {
     private int gainedXP;
     private String sender;
     private HeadsPlusChallengeDifficulty difficulty;
+    private String rewardString = null;
 
-    public Challenge(String configName, String mainName, String header, List<String> description, int requiredHeadAmount, HeadsPlusChallengeTypes challengeType, HPChallengeRewardTypes rewardType, Object rewardValue, int rewardItemAmount, String headType, int gainedXP, HeadsPlusChallengeDifficulty difficulty, String send) {
+    public Challenge(String configName, String mainName, String header, List<String> description, int requiredHeadAmount, HeadsPlusChallengeTypes challengeType, HPChallengeRewardTypes rewardType, Object rewardValue, int rewardItemAmount, String headType, int gainedXP, HeadsPlusChallengeDifficulty difficulty, String send, String... rewardString) {
         this.configName = configName;
         this.mainName = mainName;
         this.header = header;
@@ -53,6 +54,9 @@ public class Challenge {
         this.gainedXP = gainedXP;
         this.difficulty = difficulty;
         this.sender = send;
+        if (rewardString.length > 0) {
+            this.rewardString = rewardString[0];
+        }
     }
 
     public String getConfigName() {
@@ -103,6 +107,10 @@ public class Challenge {
         return difficulty;
     }
 
+    public String getRewardString() {
+        return rewardString;
+    }
+
     public boolean canComplete(Player p) throws SQLException {
         HeadsPlusAPI hapi = HeadsPlus.getInstance().getAPI();
         if (getChallengeType() == HeadsPlusChallengeTypes.MISC) {
@@ -137,8 +145,10 @@ public class Challenge {
             StringBuilder sb = new StringBuilder();
             sb.append(ChatColor.GOLD).append("Reward: ");
 
-
-            if (re == HPChallengeRewardTypes.ECO) {
+            if (rewardString != null) {
+                sb.append(ChatColor.GREEN).append(rewardString);
+                sb2.append(rewardString);
+            } else if (re == HPChallengeRewardTypes.ECO) {
                 sb.append(ChatColor.GREEN).append("$").append(getRewardValue());
                 sb2.append("$").append(getRewardValue());
             } else if (re == HPChallengeRewardTypes.GIVE_ITEM) {
@@ -148,13 +158,11 @@ public class Challenge {
                             .append(ChatColor.GREEN)
                             .append(getRewardItemAmount())
                             .append(" ")
-                            .append(WordUtils.capitalize(getRewardValue().toString().replaceAll("_", " ")))
-                            .append(getRewardItemAmount() > 1 ? "(s)" : "");
+                            .append(WordUtils.capitalize(getRewardValue().toString().replaceAll("_", " ")));
                     sb2
                             .append(getRewardItemAmount())
                             .append(" ")
-                            .append(getRewardValue().toString().replaceAll("_", " "))
-                            .append(getRewardItemAmount() > 1 ? "(s)" : "");
+                            .append(getRewardValue().toString().replaceAll("_", " "));
                 } catch (IllegalArgumentException e) {
                     //
                 }
@@ -176,10 +184,7 @@ public class Challenge {
                     .replaceAll("\\{challenge}", getMainName())
                     .replaceAll("\\{name}", p.getName()));
         }
-        if (re != HPChallengeRewardTypes.RUN_COMMAND) {
-            p.sendMessage(hp.getThemeColour(4) + LocaleManager.getLocale().getReward() + hp.getThemeColour(2) + sb2.toString());
-        }
-
+        p.sendMessage(hp.getThemeColour(4) + LocaleManager.getLocale().getReward() + hp.getThemeColour(2) + sb2.toString());
         p.sendMessage(hp.getThemeColour(4) + "XP: " + hp.getThemeColour(2) + getGainedXP());
     }
 

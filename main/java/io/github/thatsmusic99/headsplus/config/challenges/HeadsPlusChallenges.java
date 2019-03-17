@@ -123,7 +123,8 @@ public class HeadsPlusChallenges extends ConfigSettings {
                 String headType = config.getString("challenges." + st + "." + s + ".head-type");
                 int xp = config.getInt("challenges." + st + "." + s + ".xp");
                 String sender = config.getString("challenges." + st + "." + s + ".command-sender");
-                Challenge c = new Challenge(s, name, header, desc, min, type, reward, rewardVal, items, headType, xp, HeadsPlusChallengeDifficulty.valueOf(st.toUpperCase()), sender);
+                String rewardString = config.getString("challenges." + st + "." + s + ".reward-string");
+                Challenge c = new Challenge(s, name, header, desc, min, type, reward, rewardVal, items, headType, xp, HeadsPlusChallengeDifficulty.valueOf(st.toUpperCase()), sender, rewardString);
                 HeadsPlus.getInstance().getChallenges().add(c);
 
             }

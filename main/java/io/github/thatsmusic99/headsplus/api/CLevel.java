@@ -123,9 +123,9 @@ public class CLevel implements RLevel {
             if (sender == null
                     || sender.isEmpty()
                     || sender.equalsIgnoreCase("player")) {
-                p.performCommand(String.valueOf(getRewardValue()));
+                p.performCommand(String.valueOf(getRewardValue()).replaceAll("\\{player}", p.getName()));
             } else if (sender.equalsIgnoreCase("console")) {
-                Bukkit.dispatchCommand(hp.getServer().getConsoleSender(), String.valueOf(getRewardValue()));
+                Bukkit.dispatchCommand(hp.getServer().getConsoleSender(), String.valueOf(getRewardValue()).replace("\\{player}", p.getName()));
             }
         }
     }

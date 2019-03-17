@@ -167,6 +167,7 @@ public class Challenge {
         lore.add(ChatColor.GREEN + "Completed!");
         im.setLore(lore);
         is.setItemMeta(im);
+        is = hp.getNMS().setIcon(is, new io.github.thatsmusic99.headsplus.config.headsx.icons.Challenge());
         i.setItem(slot, is);
         player.addXp(getGainedXP());
         reward(p);
@@ -230,9 +231,9 @@ public class Challenge {
             if (sender == null
                     || sender.isEmpty()
                     || sender.equalsIgnoreCase("player")) {
-                p.performCommand(String.valueOf(getRewardValue()));
+                p.performCommand(String.valueOf(getRewardValue()).replaceAll("\\{player}", p.getName()));
             } else if (sender.equalsIgnoreCase("console")) {
-                Bukkit.dispatchCommand(hp.getServer().getConsoleSender(), String.valueOf(getRewardValue()));
+                Bukkit.dispatchCommand(hp.getServer().getConsoleSender(), String.valueOf(getRewardValue()).replaceAll("\\{player}", p.getName()));
             }
         }
     }

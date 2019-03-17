@@ -224,26 +224,49 @@ public class InventoryManager {
             }
         } else {
             HeadsPlusConfigHeads hpch = hp.getHeadsConfig();
-            List<String> s = new ArrayList<>();
+            HashMap<String, String> s = new HashMap<>();
             for (String o : hpch.mHeads) {
                 if (!hpch.getConfig().getStringList(o + ".name").isEmpty()) {
-                    s.add(o);
+                    s.put(o, o + ".name");
+                } else {
+                    try {
+                        for (String str : hpch.getConfig().getConfigurationSection(o + ".name").getKeys(false)) {
+                            if (!hpch.getConfig().getStringList(o + ".name." + str).isEmpty()) {
+                                s.put(o, o + ".name." + str);
+                                break;
+                            }
+                        }
+                    } catch (NullPointerException ignored) {
+
+                    }
+
                 }
             }
             for (String o : hpch.uHeads) {
                 if (!hpch.getConfig().getStringList(o + ".name").isEmpty()) {
-                    s.add(o);
+                    s.put(o, o + ".name");
+                } else {
+                    try {
+                        for (String str : hpch.getConfig().getConfigurationSection(o + ".name").getKeys(false)) {
+                            if (!hpch.getConfig().getStringList(o + ".name." + str).isEmpty()) {
+                                s.put(o, o + ".name." + str);
+                                break;
+                            }
+                        }
+                    } catch (NullPointerException ignored) {
+
+                    }
                 }
             }
 
             List<ItemStack> items = new ArrayList<>();
             NMSManager nms = hp.getNMS();
-            for (String o : s) {
+            for (String o : s.keySet()) {
 
                 ItemStack it = nms.getSkullMaterial(1);
                 SkullMeta sm = (SkullMeta) it.getItemMeta();
-                sm = nms.setSkullOwner(hpch.getConfig().getStringList(o + ".name").get(0), sm);
-                sm.setDisplayName(hpch.getConfig().getString(o + ".display-name"));
+                sm = nms.setSkullOwner(hpch.getConfig().getStringList(s.get(o)).get(0), sm);
+                sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpch.getConfig().getString(o + ".display-name")));
                 List<String> d = new ArrayList<>();
                 for (String a : hpch.getConfig().getStringList(o + ".lore")) {
                     d.add(ChatColor.translateAlternateColorCodes('&', a).replaceAll("\\{price}", String.valueOf(hpch.getConfig().getDouble(o + ".price"))).replaceAll("\\{type}", o));

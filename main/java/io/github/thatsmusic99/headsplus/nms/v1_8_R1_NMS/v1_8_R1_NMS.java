@@ -129,7 +129,7 @@ public class v1_8_R1_NMS implements NMSManager {
     }
 
     public ItemStack getOffHand(Player p) {
-        return new ItemStack(Material.AIR);
+        return null;
     }
 
     @Override

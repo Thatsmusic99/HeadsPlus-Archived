@@ -128,7 +128,7 @@ public class v1_8_R3NMS implements NMSManager {
     }
 
     public org.bukkit.inventory.ItemStack getOffHand(Player p) {
-        return new org.bukkit.inventory.ItemStack(Material.AIR);
+        return null;
     }
 
     @Override

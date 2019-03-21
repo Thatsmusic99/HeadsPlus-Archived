@@ -78,10 +78,7 @@ public class Head extends ItemStack implements Icon {
             } */
      //   }
         if (im.getType().equalsIgnoreCase("sellhead")) {
-            System.out.println("A");
-            System.out.println(nms.getType(e.getCurrentItem()));
             if (!nms.getType(e.getCurrentItem()).isEmpty()) {
-                System.out.println("B");
                 if (e.isRightClick()) {
                     e.setCancelled(true);
                     p.performCommand("sellhead " + nms.getType(e.getCurrentItem()) + " 1");

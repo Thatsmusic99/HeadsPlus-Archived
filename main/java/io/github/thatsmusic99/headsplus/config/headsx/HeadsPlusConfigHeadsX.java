@@ -139,7 +139,7 @@ public class HeadsPlusConfigHeadsX extends ConfigSettings {
 
     public ItemStack setTexture(String tex, ItemStack is) throws IllegalAccessException, NoSuchFieldException {
         SkullMeta sm = (SkullMeta) is.getItemMeta();
-        GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
+        GameProfile gm = new GameProfile(UUID.fromString("7091cdbc-ebdc-4eac-a6b2-25dd8acd3a0e"), "HPXHead");
         gm.getProperties().put("textures", new Property("texture", tex.replaceAll("=", "")));
 
 

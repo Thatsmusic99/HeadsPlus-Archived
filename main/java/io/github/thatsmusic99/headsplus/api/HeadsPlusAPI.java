@@ -40,7 +40,7 @@ public class HeadsPlusAPI {
         NMSManager nms = hp.getNMS();
         ItemStack s = nms.getSkullMaterial(1);
         SkullMeta sm = (SkullMeta) s.getItemMeta();
-        GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
+        GameProfile gm = new GameProfile(UUID.fromString("7091cdbc-ebdc-4eac-a6b2-25dd8acd3a0e"), "HPXHead");
         gm.getProperties().put("textures", new Property("texture", texture));
 
         Field profileField = null;
@@ -71,7 +71,7 @@ public class HeadsPlusAPI {
     }
 
     public SkullMeta setSkullMeta(SkullMeta m, String t) {
-        GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
+        GameProfile gm = new GameProfile(UUID.fromString("7091cdbc-ebdc-4eac-a6b2-25dd8acd3a0e"), "HPXHead");
         gm.getProperties().put("textures", new Property("texture", t));
 
         Field profileField = null;

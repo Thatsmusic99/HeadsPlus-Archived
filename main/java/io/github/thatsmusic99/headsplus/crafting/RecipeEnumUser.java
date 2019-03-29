@@ -68,7 +68,7 @@ public class RecipeEnumUser {
                             i.setItemMeta(setupItemMeta(im, key));
                             i = makeSell(i, key);
 
-                            ShapelessRecipe recipe = nms.getRecipe(i, "hp" + d.name().toLowerCase() + key);
+                            ShapelessRecipe recipe = nms.getRecipe(i, "hp_" + d.name().toLowerCase() + key);
                             List<String> ingrs = new ArrayList<>();
                             for (String key2 : crafting.getStringList(key + "." + d.name() + ".ingredients")) {
                                 try {
@@ -120,7 +120,7 @@ public class RecipeEnumUser {
                             i.setType(nms.getSkull(3).getType());
                         }
                     }
-                    ShapelessRecipe recipe = nms.getRecipe(i, "hp" + key);
+                    ShapelessRecipe recipe = nms.getRecipe(i, "hp_" + key);
                     List<String> ingrs = new ArrayList<>();
                     for (String key2 : crafting.getStringList(key + ".ingredients")) {
                         try {
@@ -184,7 +184,7 @@ public class RecipeEnumUser {
                                 i.setType(nms.getSkull(3).getType());
                             }
                         }
-                        ShapelessRecipe recipe = nms.getRecipe(i, "hp" + key);
+                        ShapelessRecipe recipe = nms.getRecipe(i, "hp_" + key);
                         List<String> ingrs = new ArrayList<>();
                         if (crafting.getStringList(key + ".ingredients") != null) {
                             ingrs = crafting.getStringList(key + ".ingredients");

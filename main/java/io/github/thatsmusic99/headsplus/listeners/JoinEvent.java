@@ -56,7 +56,7 @@ public class JoinEvent implements Listener {
                 public void run() {
                     new RecipeEnumUser();
                 }
-            }.runTaskLaterAsynchronously(HeadsPlus.getInstance(), 20);
+            }.runTaskLater(HeadsPlus.getInstance(), 20);
             reloaded = true;
         }
 

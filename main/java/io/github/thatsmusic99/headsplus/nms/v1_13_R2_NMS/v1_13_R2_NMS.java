@@ -54,7 +54,7 @@ public class v1_13_R2_NMS implements NewNMSManager {
 
     @Override
     public ShapelessRecipe getRecipe(org.bukkit.inventory.ItemStack i, String name) {
-        return new ShapelessRecipe(new NamespacedKey(HeadsPlus.getInstance(), "HeadsPlus_" + name), i);
+        return new ShapelessRecipe(new NamespacedKey(HeadsPlus.getInstance(), name), i);
     }
 
     @Override

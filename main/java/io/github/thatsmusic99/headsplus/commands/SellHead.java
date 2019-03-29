@@ -8,8 +8,10 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
+import io.github.thatsmusic99.headsplus.nms.v1_8_R1_NMS.v1_8_R1_NMS;
+import io.github.thatsmusic99.headsplus.nms.v1_8_R2_NMS.v1_8_R2_NMS;
+import io.github.thatsmusic99.headsplus.nms.v1_8_R3_NMS.v1_8_R3NMS;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
-import io.github.thatsmusic99.headsplus.util.SellheadInventory;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
@@ -131,17 +133,22 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                         }
                                     }
                                 }
-                                ItemStack i = p.getInventory().getHelmet();
-                                if (i != null) {
-                                    if (nms().isSellable(i)) {
-                                        String st = nms().getType(i).toLowerCase();
-                                        if (st.equalsIgnoreCase(args[0])) {
-                                            if (is != limit) {
-                                                price = setPrice(price, args, i, p, limit);
+                                if (nms() instanceof v1_8_R1_NMS
+                                        || nms() instanceof v1_8_R2_NMS
+                                        || nms() instanceof v1_8_R3NMS) {
+                                    ItemStack i = p.getInventory().getHelmet();
+                                    if (i != null) {
+                                        if (nms().isSellable(i)) {
+                                            String st = nms().getType(i).toLowerCase();
+                                            if (st.equalsIgnoreCase(args[0])) {
+                                                if (is != limit) {
+                                                    price = setPrice(price, args, i, p, limit);
+                                                }
                                             }
                                         }
                                     }
                                 }
+
                                 ItemStack is2 = nms().getOffHand(p);
                                 if (is2 != null) {
                                     if (nms().isSellable(is2)) {
@@ -160,7 +167,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                     return true;
                                 }
                                 tests.put("Any heads", true);
-                                pay(p, args, new ItemStack(Material.AIR), price, limit);
+                                pay(p, args, price, limit);
                                 return true;
                             }
                         } else {
@@ -302,18 +309,24 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 	}
 	private void sellAll(Player p, String[] a) {
 		Double price = 0.0;
-        ItemStack i = p.getInventory().getHelmet();
-        if (i != null) {
-            if (nms().isSellable(i)) {
-                price = setPrice(price, a, i, p, -1);
+
+        if (nms() instanceof v1_8_R1_NMS
+                || nms() instanceof v1_8_R2_NMS
+                || nms() instanceof v1_8_R3NMS) {
+            ItemStack i = p.getInventory().getHelmet();
+            if (i != null) {
+                if (nms().isSellable(i)) {
+                    price = setPrice(price, a, i, p, -1);
+                }
             }
         }
-        ItemStack is2 = nms().getOffHand(p);
+
+    /*    ItemStack is2 = nms().getOffHand(p);
         if (is2 != null) {
             if (nms().isSellable(is2)) {
                 price = setPrice(price, a, is2, p, -1);
             }
-        }
+        } */
 		for (ItemStack is : p.getInventory()) {
             if (is != null) {
                 price = setPrice(price, a, is, p, -1);
@@ -335,9 +348,9 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
             return;
         }
 
-		pay(p, a, i, price, -1);
+		pay(p, a, price, -1);
 	}
-	private void pay(Player p, String[] a, ItemStack i, double pr, int limit) {
+	private void pay(Player p, String[] a, double pr, int limit) {
 		Economy econ = HeadsPlus.getInstance().getEconomy();
 		SellHeadEvent she = new SellHeadEvent(pr, soldHeads, p, econ.getBalance(p), econ.getBalance(p) + pr, hm);
 		Bukkit.getServer().getPluginManager().callEvent(she);

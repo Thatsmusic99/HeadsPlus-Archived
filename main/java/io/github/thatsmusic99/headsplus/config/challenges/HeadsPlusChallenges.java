@@ -26,8 +26,9 @@ public class HeadsPlusChallenges extends ConfigSettings {
         if (configF.length() < 20) {
             load(false);
         }
+        boolean b = getConfig().getBoolean("challenges.options.update-challenges");
         double v = getConfig().getDouble("challenges.options.current-version");
-        if (v < 1.2) {
+        if (v < 1.2 && b) {
             for (HeadsPlusChallengeEnums hpc : HeadsPlusChallengeEnums.values()) {
                 if (hpc.v > v) {
                     getConfig().addDefault("challenges." + hpc.cd.name() + "." + hpc.n + ".name", hpc.dName);
@@ -93,6 +94,7 @@ public class HeadsPlusChallenges extends ConfigSettings {
                 getConfig().addDefault("server-total.crafting." + e.name(), 0);
             }
         }
+        getConfig().addDefault("challenges.options.update-challenges", true);
         getConfig().options().copyDefaults(true);
         save();
     }

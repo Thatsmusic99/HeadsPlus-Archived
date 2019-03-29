@@ -44,6 +44,7 @@ public class HeadsPlusConfigHeadsX extends ConfigSettings {
         }
 
 
+
         getConfig().options().copyDefaults(true);
         save();
     }
@@ -55,6 +56,7 @@ public class HeadsPlusConfigHeadsX extends ConfigSettings {
             configF = new File(HeadsPlus.getInstance().getDataFolder(), "headsx.yml");
         }
         config = YamlConfiguration.loadConfiguration(configF);
+        getConfig().addDefault("options.update-heads", true);
         getConfig().addDefault("options.version", cVersion);
         getConfig().addDefault("options.default-price", 10.00);
      //   getConfig().addDefault("options.price-per-world.example-one", 15.00);
@@ -70,7 +72,8 @@ public class HeadsPlusConfigHeadsX extends ConfigSettings {
         if (configF.length() <= 500) {
             loadHeadsX();
         }
-        if (getConfig().getDouble("options.version") < cVersion) {
+        boolean b = getConfig().getBoolean("options.update-heads");
+        if (getConfig().getDouble("options.version") < cVersion && b) {
             for (String str : getConfig().getConfigurationSection("heads").getKeys(false)) {
                 getConfig().addDefault("heads." + str + ".price", "default");
             }

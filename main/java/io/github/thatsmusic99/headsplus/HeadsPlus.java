@@ -5,7 +5,6 @@ import io.github.thatsmusic99.headsplus.api.Challenge;
 import io.github.thatsmusic99.headsplus.api.RLevel;
 import io.github.thatsmusic99.headsplus.api.events.CommunicateEvent;
 import io.github.thatsmusic99.headsplus.api.HeadsPlusAPI;
-import io.github.thatsmusic99.headsplus.api.Level;
 import io.github.thatsmusic99.headsplus.commands.*;
 import io.github.thatsmusic99.headsplus.commands.maincommand.*;
 import io.github.thatsmusic99.headsplus.config.*;
@@ -57,6 +56,7 @@ import java.util.logging.Logger;
 
 public class HeadsPlus extends JavaPlugin {
 
+    // Private variables for the plugin
     public final Logger log = Logger.getLogger("Minecraft");
     private static HeadsPlus instance;
     private final PluginDescriptionFile pluginYml = getDescription();
@@ -67,6 +67,7 @@ public class HeadsPlus extends JavaPlugin {
     private static Object[] update = null;
     private Connection connection;
     private boolean con = false;
+    // Config variables
     private HeadsPlusMessagesConfig hpc;
     private HeadsPlusConfigHeads hpch;
     private HeadsPlusConfigHeadsX hpchx;
@@ -81,6 +82,7 @@ public class HeadsPlus extends JavaPlugin {
     private HeadsPlusConfigItems items;
     private HeadsPlusConfigSounds sounds;
     private HeadsPlusConfigTextMenu menus;
+    // Other management stuff
     private final List<Challenge> challenges = new ArrayList<>();
     private NMSManager nms;
     private final List<IHeadsPlusCommand> commands = new ArrayList<>();
@@ -92,8 +94,13 @@ public class HeadsPlus extends JavaPlugin {
     @Override
     public void onEnable() {
         try {
+            // Set the instance
             instance = this;
+
+            // Set up the NMS
             setupNMS();
+
+            // See if Messages config has to be set up before the locale (if NPE is thrown)
             try {
                 hpc.getString("locale");
                 LocaleManager.class.newInstance().setupLocale();
@@ -101,27 +108,35 @@ public class HeadsPlus extends JavaPlugin {
                 hpc = new HeadsPlusMessagesConfig(true);
                 LocaleManager.class.newInstance().setupLocale();
             }
+
+            // Build plugin instances
             createInstances();
 
+            // Checks theme, believe it or not!
             debug("- Checking plugin theme.", 1);
             checkTheme();
             debug("- Setting up favourites.json.", 1);
 
-
+            // Handles recipes
             if (!getConfiguration().getPerks().getBoolean("disable-crafting")) {
                 debug("- Recipes may be added. Creating...", 1);
                 getServer().getPluginManager().registerEvents(new RecipePerms(), this);
             }
+            // If sellable heads are enabled and yet there isn't Vault
             if (!(econ()) && (getConfiguration().getPerks().getBoolean("sellHeads"))) {
                 log.warning(hpc.getString("no-vault"));
             }
+
+            // If Vault exists
             if (econ()) {
                 setupPermissions();
             }
 
-
+            // Registers plugin events
             debug("- Registering listeners!", 1);
             registerEvents();
+
+            // Register
             debug("- Registering commands!", 1);
             registerCommands();
             debug("- Registering subcommands!", 1);
@@ -693,5 +708,9 @@ public class HeadsPlus extends JavaPlugin {
 
 
 
+    }
+
+    public void reloadDE() {
+        de.reload();
     }
 }

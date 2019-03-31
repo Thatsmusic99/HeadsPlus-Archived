@@ -68,7 +68,7 @@ public class MCReload implements IHeadsPlusCommand{
                     HPPlayer.players.clear();
                 }
             }.runTaskLaterAsynchronously(HeadsPlus.getInstance(), 2);
-
+            HeadsPlus.getInstance().reloadDE();
 			sender.sendMessage(reloadM);
 
 

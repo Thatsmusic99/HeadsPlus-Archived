@@ -325,13 +325,19 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
                         .replaceAll("\\{page}", String.valueOf(page))
                         .replaceAll("\\{pages}", String.valueOf(ph.getTotalPages()))));
                 Set<OfflinePlayer> it = ph.getContentsInPage(page).keySet();
+               // System.out.println(it.size());
                 Collection<Integer> it2 = ph.getContentsInPage(page).values();
+              //  System.out.println(it2.size());
                 for (int i = 0; i < it.size(); i++) {
-                    int in = i + (ph.getContentsPerPage() * (ph.getCurrentPage() - 1));
-                    sb.append("\n").append(translateColors(ht.getConfig().getString("leaderboard.for-each-line")
-                            .replaceAll("\\{pos}", String.valueOf(in))
-                            .replaceAll("\\{name}", ((OfflinePlayer)it.toArray()[i]).getName())
-                            .replaceAll("\\{score}", String.valueOf(it2.toArray()[i]))));
+                    try {
+                        int in = i + (ph.getContentsPerPage() * (ph.getCurrentPage() - 1));
+                        sb.append("\n").append(translateColors(ht.getConfig().getString("leaderboard.for-each-line")
+                                .replaceAll("\\{pos}", String.valueOf(in))
+                                .replaceAll("\\{name}", ((OfflinePlayer)it.toArray()[i]).getName())
+                                .replaceAll("\\{score}", String.valueOf(it2.toArray()[i]))));
+                    } catch (NullPointerException ignored) {
+                    }
+
                 }
                 return sb.toString();
             } catch (IllegalArgumentException ex) {

@@ -36,7 +36,7 @@ public class DeathEvents implements Listener {
 	public final List<EntityType> ableEntities = new ArrayList<>(Arrays.asList(EntityType.BAT, EntityType.BLAZE, EntityType.CAVE_SPIDER, EntityType.CHICKEN, EntityType.COW, EntityType.CREEPER, EntityType.ENDER_DRAGON, EntityType.ENDERMAN, EntityType.ENDERMITE, EntityType.GHAST, EntityType.GUARDIAN, EntityType.HORSE, EntityType.IRON_GOLEM, EntityType.MAGMA_CUBE, EntityType.MUSHROOM_COW, EntityType.OCELOT, EntityType.PIG, EntityType.PIG_ZOMBIE, EntityType.RABBIT, EntityType.SHEEP, EntityType.SILVERFISH, EntityType.SKELETON, EntityType.SLIME, EntityType.SNOWMAN, EntityType.SPIDER, EntityType.SQUID, EntityType.VILLAGER, EntityType.WITCH, EntityType.WITHER, EntityType.ZOMBIE, EntityType.WOLF));
     private final HeadsPlusConfigHeadsX hpchx = HeadsPlus.getInstance().getHeadsXConfig();
     private final HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
-    public final HashMap<EntityType, HashMap<String, List<ItemStack>>> heads = new HashMap<>();
+    public static HashMap<EntityType, HashMap<String, List<ItemStack>>> heads = new HashMap<>();
 
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent e) {
@@ -46,40 +46,46 @@ public class DeathEvents implements Listener {
 	        if (checkForMythicMob(e.getEntity())) return;
             HeadsPlusMainConfig c = hp.getConfiguration();
             if (ableEntities.contains(e.getEntityType())) {
-                if (e.getEntity().getKiller() != null) {
-                    if (!c.getWhitelist("world").getStringList("list").contains(e.getEntity().getWorld().getName())) {
+                if (!c.getWhitelist("world").getStringList("list").contains(e.getEntity().getWorld().getName())) {
+                    if (e.getEntity().getKiller() != null) {
                         if (!e.getEntity().getKiller().hasPermission("headsplus.bypass.whitelistw")) {
                             if (c.getWhitelist("world").getBoolean("enabled")) {
                                 return;
                             }
                         }
                     }
-                    if (!c.getBlacklist("world").getStringList("list").contains(e.getEntity().getWorld().getName()) || e.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !c.getBlacklist("world").getBoolean("enabled")) {
-
+                    if (c.getWhitelist("world").getBoolean("enabled")) {
+                        return;
+                    }
+                }
+                if (!c.getBlacklist("world").getStringList("list").contains(e.getEntity().getWorld().getName()) || e.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !c.getBlacklist("world").getBoolean("enabled")) {
 
                         String entity = e.getEntityType().toString().toLowerCase().replaceAll("_", "");
                         Random rand = new Random();
                         double chance1 = hpch.getConfig().getDouble(entity + ".chance");
                         double chance2 = (double) rand.nextInt(100);
-                        if (HeadsPlus.getInstance().getNMS().getItemInHand(e.getEntity().getKiller()).containsEnchantment(Enchantment.LOOT_BONUS_MOBS)
-                                && HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("allow-looting-enchantment")
-                                && !(HeadsPlus.getInstance().getConfiguration().getMechanics().getStringList("looting.ignored-entities").contains(e.getEntityType().name().replaceAll("_", "").toLowerCase()))) {
-                            chance1 *= HeadsPlus.getInstance().getNMS().getItemInHand(e.getEntity().getKiller()).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
+                        if (e.getEntity().getKiller() != null) {
+                            if (HeadsPlus.getInstance().getNMS().getItemInHand(e.getEntity().getKiller()).containsEnchantment(Enchantment.LOOT_BONUS_MOBS)
+                                    && HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("allow-looting-enchantment")
+                                    && !(HeadsPlus.getInstance().getConfiguration().getMechanics().getStringList("looting.ignored-entities").contains(e.getEntityType().name().replaceAll("_", "").toLowerCase()))) {
+                                chance1 *= HeadsPlus.getInstance().getNMS().getItemInHand(e.getEntity().getKiller()).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
+                            }
                         }
+
                         if (chance1 == 0.0) return;
                         if (chance2 <= chance1) {
                             if (entity.equalsIgnoreCase("sheep") ||
                                     entity.equalsIgnoreCase("parrot") ||
                                     entity.equalsIgnoreCase("horse") ||
                                     entity.equalsIgnoreCase("llama")) {
-                                dropHead(e.getEntity(), e.getEntity().getKiller(), chance1 / 100 == 0 ? 1 : (int) (chance1 / 100));
+                                dropHead(e.getEntity(), e.getEntity().getKiller(), ((int) chance1 / 100) == 0 ? 1 : (int) (chance1 / 100));
                             } else {
                                 if (hpch.getConfig().getStringList(entity + ".name").isEmpty()) return;
                                 dropHead(e.getEntity(), e.getEntity().getKiller(), ((int) chance1 / 100) == 0 ? 1 : (int) (chance1 / 100));
                             }
                         }
                     }
-                }
+
             }
         } catch (Exception ex) {
 	        new DebugPrint(ex, "Event (DeathEvents)", false, null);
@@ -94,10 +100,15 @@ public class DeathEvents implements Listener {
             HeadsPlusMainConfig c = hp.getConfiguration();
             if (ep.getEntity().getKiller() != null) {
                 if (!c.getWhitelist("world").getStringList("list").contains(ep.getEntity().getWorld().getName())) {
-                    if (!ep.getEntity().getKiller().hasPermission("headsplus.bypass.whitelistw")) {
-                        if (c.getWhitelist("world").getBoolean("enabled")) {
-                            return;
+                    if (ep.getEntity().getKiller() != null) {
+                        if (!ep.getEntity().getKiller().hasPermission("headsplus.bypass.whitelistw")) {
+                            if (c.getWhitelist("world").getBoolean("enabled")) {
+                                return;
+                            }
                         }
+                    }
+                    if (c.getWhitelist("world").getBoolean("enabled")) {
+                        return;
                     }
                 }
                 if (c.getPerks().getStringList("drops.ignore-players").contains(ep.getEntity().getUniqueId().toString())
@@ -107,10 +118,12 @@ public class DeathEvents implements Listener {
                     double chance1 = hpch.getConfig().getDouble("player.chance");
                     double chance2 = (double) rand.nextInt(100);
                     NMSManager nms = hp.getNMS();
-                    if (nms.getItemInHand(ep.getEntity().getKiller()).containsEnchantment(Enchantment.LOOT_BONUS_MOBS)
-                            && c.getMechanics().getBoolean("allow-looting-enchantment")
-                            && !(c.getMechanics().getStringList("looting.ignored-entities").contains("player"))) {
-                        chance1 *= HeadsPlus.getInstance().getNMS().getItemInHand(ep.getEntity().getKiller()).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
+                    if (ep.getEntity().getKiller() != null) {
+                        if (nms.getItemInHand(ep.getEntity().getKiller()).containsEnchantment(Enchantment.LOOT_BONUS_MOBS)
+                                && c.getMechanics().getBoolean("allow-looting-enchantment")
+                                && !(c.getMechanics().getStringList("looting.ignored-entities").contains("player"))) {
+                            chance1 *= HeadsPlus.getInstance().getNMS().getItemInHand(ep.getEntity().getKiller()).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
+                        }
                     }
                     if (chance1 == 0.0) return;
                     if (chance2 <= chance1) {
@@ -148,7 +161,7 @@ public class DeathEvents implements Listener {
                         PlayerHeadDropEvent event = new PlayerHeadDropEvent(ep.getEntity(), ep.getEntity().getKiller(), head, world, entityLoc);
                         Bukkit.getServer().getPluginManager().callEvent(event);
                         if (!event.isCancelled()) {
-                            if (b) {
+                            if (b && ep.getEntity().getKiller() != null) {
                                 hp.getEconomy().withdrawPlayer(ep.getEntity(), lostprice);
                                 ep.getEntity().sendMessage(hp.getMessagesConfig().getString("lost-money").replaceAll("\\{player}", ep.getEntity().getKiller().getName()).replaceAll("\\{price}", String.valueOf(lostprice)));
                             }
@@ -345,11 +358,11 @@ public class DeathEvents implements Listener {
 	    int thing;
 	    ItemStack i;
 	    List<ItemStack> af = hasColor(e);
+
 	    String mobName = e.getType().name().replaceAll("_", "").toLowerCase();
 	    NMSManager nms = HeadsPlus.getInstance().getNMS();
 	    try {
             if (af != null && !af.isEmpty()) {
-
                 thing = r.nextInt(af.size());
                 i = af.get(thing);
             } else {
@@ -357,10 +370,7 @@ public class DeathEvents implements Listener {
                 if (heads.get(e.getType()).get("default") == null) return;
                 if (heads.get(e.getType()).get("default").size() < 1) return;
                 if (e instanceof Sheep) {
-
                     thing = r.nextInt(hpch.getConfig().getStringList("sheep.name.default").size());
-
-
                 } else if (e instanceof Horse) {
                     thing = r.nextInt(hpch.getConfig().getStringList("horse.name.default").size());
                 } else if (nms instanceof v1_12_NMS
@@ -404,7 +414,9 @@ public class DeathEvents implements Listener {
         Bukkit.getServer().getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
             world.dropItem(event.getLocation(), event.getSkull());
-            HPPlayer.getHPPlayer(k).addXp(10);
+            if (k != null) {
+                HPPlayer.getHPPlayer(k).addXp(10);
+            }
         }
     }
 
@@ -426,5 +438,11 @@ public class DeathEvents implements Listener {
             }
         }
         return null;
+    }
+
+    public void reload() {
+	    heads = new HashMap<>();
+        createList();
+        setupHeads();
     }
 }

@@ -18,13 +18,15 @@ public class LBEvents implements Listener {
     public void onHeadDrop(EntityHeadDropEvent e) {
         try {
             if (!e.isCancelled()) {
-                if (hp.isUsingLeaderboards()) {
-                    if (hp.getConfiguration().getPerks().getBoolean("smite-player-if-they-get-a-head")) {
-                        for (int i = 0; i < 5; i++) {
-                            e.getLocation().getWorld().strikeLightning(e.getPlayer().getLocation());
+                if (e.getPlayer() != null) {
+                    if (hp.isUsingLeaderboards()) {
+                        if (hp.getConfiguration().getPerks().getBoolean("smite-player-if-they-get-a-head")) {
+                            for (int i = 0; i < 5; i++) {
+                                e.getLocation().getWorld().strikeLightning(e.getPlayer().getLocation());
+                            }
                         }
+                        hp.getMySQLAPI().addOntoValue(e.getPlayer(), e.getEntityType().name(), "headspluslb", 1);
                     }
-                    hp.getMySQLAPI().addOntoValue(e.getPlayer(), e.getEntityType().name(), "headspluslb", 1);
                 }
             }
         } catch (Exception ex) {
@@ -37,13 +39,15 @@ public class LBEvents implements Listener {
     public void onPHeadDrop(PlayerHeadDropEvent e) {
         try {
             if (!e.isCancelled()) {
-                if (hp.isUsingLeaderboards()) {
-                    if (hp.getConfiguration().getPerks().getBoolean("smite-player-if-they-get-a-head")) {
-                        for (int i = 0; i < 5; i++) {
-                            e.getLocation().getWorld().strikeLightning(e.getKiller().getLocation());
+                if (e.getKiller() != null) {
+                    if (hp.isUsingLeaderboards()) {
+                        if (hp.getConfiguration().getPerks().getBoolean("smite-player-if-they-get-a-head")) {
+                            for (int i = 0; i < 5; i++) {
+                                e.getLocation().getWorld().strikeLightning(e.getKiller().getLocation());
+                            }
                         }
+                        hp.getMySQLAPI().addOntoValue(e.getKiller(), "player", "headspluslb", 1);
                     }
-                    hp.getMySQLAPI().addOntoValue(e.getKiller(), "player", "headspluslb", 1);
                 }
             }
         } catch (Exception ex) {

@@ -11,6 +11,13 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
+@CommandInfo(
+        commandname = "hpc",
+        permission = "headsplus.challenges",
+        subcommand = "Hpc",
+        maincommand = false,
+        usage = "/hpc"
+)
 public class ChallengeCommand implements CommandExecutor, IHeadsPlusCommand {
 
     private final HashMap<String, Boolean> tests = new HashMap<>();
@@ -53,28 +60,8 @@ public class ChallengeCommand implements CommandExecutor, IHeadsPlusCommand {
     }
 
     @Override
-    public String getCmdName() {
-        return "hpc";
-    }
-
-    @Override
-    public String getPermission() {
-        return "headsplus.challenges";
-    }
-
-    @Override
     public String getCmdDescription() {
         return LocaleManager.getLocale().descChallenges();
-    }
-
-    @Override
-    public String getSubCommand() {
-        return "Hpc";
-    }
-
-    @Override
-    public String getUsage() {
-        return "/hpc";
     }
 
     @Override
@@ -82,11 +69,6 @@ public class ChallengeCommand implements CommandExecutor, IHeadsPlusCommand {
         HashMap<Boolean, String> h = new HashMap<>();
         h.put(true, "");
         return h;
-    }
-
-    @Override
-    public boolean isMainCommand() {
-        return false;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.commands.CommandInfo;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigTextMenu;
@@ -13,34 +14,21 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.HashMap;
 import java.util.List;
 
+@CommandInfo(
+        commandname = "headinfo",
+        permission = "headsplus.maincommand.headinfo",
+        subcommand = "Headinfo",
+        maincommand = true,
+        usage = "/hp headinfo <view> <Entity Type> [Name|Mask|Lore] [Page]"
+)
 public class HeadInfoCommand implements IHeadsPlusCommand {
 
     // A
     private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @Override
-    public String getCmdName() {
-        return "headinfo";
-    }
-
-    @Override
-    public String getPermission() {
-        return "headsplus.maincommand.headinfo";
-    }
-
-    @Override
     public String getCmdDescription() {
         return LocaleManager.getLocale().descHeadView();
-    }
-
-    @Override
-    public String getSubCommand() {
-        return "headinfo";
-    }
-
-    @Override
-    public String getUsage() {
-        return "/hp headinfo <view> <Entity Type> [Name|Mask|Lore] [Page]";
     }
 
     @Override
@@ -187,11 +175,6 @@ public class HeadInfoCommand implements IHeadsPlusCommand {
             g.put(false, hpc.getString("invalid-args"));
         }
         return g;
-    }
-
-    @Override
-    public boolean isMainCommand() {
-        return true;
     }
 
     @Override

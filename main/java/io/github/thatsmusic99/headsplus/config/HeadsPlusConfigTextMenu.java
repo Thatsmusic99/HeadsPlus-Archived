@@ -3,6 +3,7 @@ package io.github.thatsmusic99.headsplus.config;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.api.HeadsPlusAPI;
+import io.github.thatsmusic99.headsplus.commands.CommandInfo;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.util.PagedHashmaps;
@@ -267,7 +268,8 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
             HeadsPlusConfigTextMenu ht = HeadsPlus.getInstance().getMenus();
             List<IHeadsPlusCommand> headPerms = new ArrayList<>();
             for (IHeadsPlusCommand key : hp.getCommands()) {
-                if (sender.hasPermission(key.getPermission())) {
+                CommandInfo c = key.getClass().getAnnotation(CommandInfo.class);
+                if (sender.hasPermission(c.permission())) {
                     headPerms.add(key);
                 }
             }
@@ -279,11 +281,12 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
                 sender.sendMessage(translateColors(ht.getConfig().getString("help.header")).replaceAll("\\{page}", String.valueOf(page))
                         .replaceAll("\\{pages}", String.valueOf(pl.getTotalPages())));
                 for (IHeadsPlusCommand key : pl.getContentsInPage(page)) {
+                    CommandInfo c = key.getClass().getAnnotation(CommandInfo.class);
                     new FancyMessage()
                             .text(translateColors(ht.getConfig().getString("help.for-each-line")
-                                    .replaceAll("\\{usage}", key.getUsage())
+                                    .replaceAll("\\{usage}", c.usage())
                                     .replaceAll("\\{description}", key.getCmdDescription())))
-                            .command("/hp help " + key.getSubCommand())
+                            .command("/hp help " + c.subcommand())
                             .send(sender);
                 }
             }
@@ -300,9 +303,10 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
                             sb.append("\n").append(HeadsPlus.getInstance().getThemeColour(4)).append(translateColors(s2));
                         }
                     } else if (!s.contains("{further-usage}")){
+                        CommandInfo c = key.getClass().getAnnotation(CommandInfo.class);
                         sb.append("\n").append(translateColors(s.replaceAll("\\{header}", ht.getConfig().getString("help.command-help.header"))
-                                .replaceAll("\\{description}", key.getCmdDescription()).replaceAll("\\{usage}", key.getUsage()))
-                                .replaceAll("\\{permission}", key.getPermission()));
+                                .replaceAll("\\{description}", key.getCmdDescription()).replaceAll("\\{usage}", c.usage()))
+                                .replaceAll("\\{permission}", c.permission()));
                     }
                 }
             }

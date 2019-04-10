@@ -3,6 +3,7 @@ package io.github.thatsmusic99.headsplus.commands.maincommand;
 import java.util.HashMap;
 import java.util.List;
 
+import io.github.thatsmusic99.headsplus.commands.CommandInfo;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
@@ -11,6 +12,13 @@ import org.bukkit.command.CommandSender;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 
+@CommandInfo(
+		commandname = "blacklistdel",
+		permission = "headsplus.maincommand.blacklist.delete",
+		subcommand = "Blacklistdel",
+		maincommand = true,
+		usage = "/hp blacklistdel <Username>"
+)
 public class BlacklistDelete implements IHeadsPlusCommand {
 
 	// E
@@ -18,28 +26,8 @@ public class BlacklistDelete implements IHeadsPlusCommand {
 	private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
 	@Override
-	public String getCmdName() {
-		return "blacklistdel";
-	}
-
-	@Override
-	public String getPermission() {
-		return "headsplus.maincommand.blacklist.delete";
-	}
-
-	@Override
 	public String getCmdDescription() {
 		return LocaleManager.getLocale().descBlacklistDelete();
-	}
-
-	@Override
-	public String getSubCommand() {
-		return "Blacklistdel";
-	}
-
-	@Override
-	public String getUsage() {
-		return "/hp blacklistdel <Username|UUID>";
 	}
 
     @Override
@@ -56,11 +44,6 @@ public class BlacklistDelete implements IHeadsPlusCommand {
         }
         return h;
     }
-
-    @Override
-	public boolean isMainCommand() {
-		return true;
-	}
 
 	@Override
 	public boolean fire(String[] args, CommandSender sender) {

@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
+import io.github.thatsmusic99.headsplus.commands.CommandInfo;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigTextMenu;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
@@ -13,6 +14,13 @@ import org.bukkit.entity.Player;
 import java.sql.SQLException;
 import java.util.HashMap;
 
+@CommandInfo(
+        commandname = "profile",
+        permission = "headsplus.maincommand.profile",
+        subcommand = "Profile",
+        maincommand = true,
+        usage = "/hp profile [Player]"
+)
 public class ProfileCommand implements IHeadsPlusCommand {
 
     // F
@@ -26,28 +34,8 @@ public class ProfileCommand implements IHeadsPlusCommand {
     }
 
     @Override
-    public String getCmdName() {
-        return "profile";
-    }
-
-    @Override
-    public String getPermission() {
-        return "headsplus.maincommand.profile";
-    }
-
-    @Override
     public String getCmdDescription() {
         return LocaleManager.getLocale().descProfile();
-    }
-
-    @Override
-    public String getSubCommand() {
-        return "Profile";
-    }
-
-    @Override
-    public String getUsage() {
-        return "/hp profile [Player]";
     }
 
     @Override
@@ -55,11 +43,6 @@ public class ProfileCommand implements IHeadsPlusCommand {
         HashMap<Boolean, String> h = new HashMap<>();
         h.put(true, "");
         return h;
-    }
-
-    @Override
-    public boolean isMainCommand() {
-        return true;
     }
 
     @Override

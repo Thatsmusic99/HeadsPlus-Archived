@@ -1,5 +1,6 @@
 package io.github.thatsmusic99.headsplus.commands.maincommand;
 
+import io.github.thatsmusic99.headsplus.commands.CommandInfo;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
@@ -13,6 +14,13 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 
 import java.util.HashMap;
 
+@CommandInfo(
+		commandname = "blacklist",
+		permission = "headsplus.maincommand.blacklist.toggle",
+		subcommand = "Blacklist",
+		maincommand = true,
+		usage = "/hp blacklistadd [On|Off]"
+)
 public class BlacklistToggle implements IHeadsPlusCommand {
 
 	// F
@@ -21,28 +29,8 @@ public class BlacklistToggle implements IHeadsPlusCommand {
 	private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
 	@Override
-	public String getCmdName() {
-		return "blacklist";
-	}
-
-	@Override
-	public String getPermission() {
-		return "headsplus.maincommand.blacklist.toggle";
-	}
-
-	@Override
 	public String getCmdDescription() {
 		return LocaleManager.getLocale().descBlacklistToggle();
-	}
-
-	@Override
-	public String getSubCommand() {
-		return "Blacklist";
-	}
-
-	@Override
-	public String getUsage() {
-		return "/hp blacklist [On|Off]";
 	}
 
 	@Override
@@ -50,11 +38,6 @@ public class BlacklistToggle implements IHeadsPlusCommand {
 		HashMap<Boolean, String> h = new HashMap<>();
 		h.put(true, "");
 		return h;
-	}
-
-	@Override
-	public boolean isMainCommand() {
-		return true;
 	}
 
 	@Override
@@ -83,7 +66,7 @@ public class BlacklistToggle implements IHeadsPlusCommand {
 						sender.sendMessage(hpc.getString("bl-a-off"));
 					}
 				} else {
-					sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());
+					sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getClass().getAnnotation(CommandInfo.class).usage());
 				}
 			}
 		} catch (Exception e) {

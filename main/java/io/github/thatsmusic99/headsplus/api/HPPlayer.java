@@ -27,10 +27,12 @@ public class HPPlayer {
     private List<PotionEffect> activeMasks;
     public static List<HPPlayer> players = new ArrayList<>();
     private List<String> favouriteHeads;
+    private boolean ignoreFallDamage;
 
     public HPPlayer(OfflinePlayer p) {
         activeMasks = new ArrayList<>();
         favouriteHeads = new ArrayList<>();
+        ignoreFallDamage = false;
         this.player = p;
         try {
             for (Object o : (JSONArray) HeadsPlus.getInstance().getFavourites().getJSON().get(p.getUniqueId().toString())) {
@@ -82,6 +84,7 @@ public class HPPlayer {
         for (PotionEffect p : getActiveMasks()) {
             ((Player) getPlayer()).removePotionEffect(p.getType());
         }
+        ignoreFallDamage = false;
         activeMasks.clear();
     }
 
@@ -90,7 +93,17 @@ public class HPPlayer {
         List<PotionEffect> po = new ArrayList<>();
         for (int i = 0; i < hpch.getConfig().getStringList(s + ".mask-effects").size(); i++) {
             String is = hpch.getConfig().getStringList(s + ".mask-effects").get(i).toUpperCase();
-            int amp = hpch.getConfig().getIntegerList(s + ".mask-amplifiers").get(i);
+            if (is.equalsIgnoreCase("ignore-fall-damage")) {
+                ignoreFallDamage = true;
+                continue;
+            }
+            int amp;
+            if (ignoreFallDamage) {
+                amp = hpch.getConfig().getIntegerList(s + ".mask-amplifiers").get(i - 1);
+            } else {
+                amp = hpch.getConfig().getIntegerList(s + ".mask-amplifiers").get(i);
+            }
+
             try {
                 PotionEffect p = new PotionEffect(PotionEffectType.getByName(is), 1000000, amp);
                 p.apply((Player) this.getPlayer());
@@ -192,6 +205,10 @@ public class HPPlayer {
     public void removeFavourite(String s) {
         favouriteHeads.remove(s);
         HeadsPlus.getInstance().getFavourites().removeHead(player, s);
+    }
+
+    public boolean isIgnoringFallDamage() {
+        return ignoreFallDamage;
     }
 
     public List<String> getFavouriteHeads() {

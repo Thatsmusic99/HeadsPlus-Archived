@@ -21,6 +21,13 @@ import java.util.List;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 
+@CommandInfo(
+        commandname = "head",
+        permission = "headsplus.head",
+        subcommand = "Head",
+        maincommand = false,
+        usage = "/head <IGN> [Player]"
+)
 public class Head implements CommandExecutor, IHeadsPlusCommand {
 
     private final HeadsPlus hp = HeadsPlus.getInstance();
@@ -125,28 +132,8 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
     }
 
     @Override
-    public String getCmdName() {
-        return "head";
-    }
-
-    @Override
-    public String getPermission() {
-        return "headsplus.head";
-    }
-
-    @Override
     public String getCmdDescription() {
         return LocaleManager.getLocale().descHead();
-    }
-
-    @Override
-    public String getSubCommand() {
-        return "Head";
-    }
-
-    @Override
-    public String getUsage() {
-        return "/head <IGN> [Player]";
     }
 
     @Override
@@ -170,11 +157,6 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
             h.put(false, hpc.getString("invalid-args"));
         }
         return h;
-    }
-
-    @Override
-    public boolean isMainCommand() {
-        return false;
     }
 
     @Override

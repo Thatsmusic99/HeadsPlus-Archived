@@ -1,5 +1,6 @@
 package io.github.thatsmusic99.headsplus.commands.maincommand;
 
+import io.github.thatsmusic99.headsplus.commands.CommandInfo;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
@@ -12,6 +13,13 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 
 import java.util.HashMap;
 
+@CommandInfo(
+        commandname = "blacklistw",
+        permission = "headsplus.maincommand.blacklistw.toggle",
+        subcommand = "Blacklistw",
+        maincommand = true,
+        usage = "/hp blacklistw [On|Off]"
+)
 public class BlacklistwToggle implements IHeadsPlusCommand {
 
     // A
@@ -19,28 +27,8 @@ public class BlacklistwToggle implements IHeadsPlusCommand {
 	private final HeadsPlusMessagesConfig hpc = hp.getMessagesConfig();
 
 	@Override
-	public String getCmdName() {
-		return "blacklistw";
-	}
-
-	@Override
-	public String getPermission() {
-		return "headsplus.maincommand.blacklistw.toggle";
-	}
-
-	@Override
 	public String getCmdDescription() {
 		return LocaleManager.getLocale().descBlacklistwToggle();
-	}
-
-	@Override
-	public String getSubCommand() {
-		return "Blacklistw";
-	}
-
-	@Override
-	public String getUsage() {
-		return "/hp blacklistw [On|Off]";
 	}
 
     @Override
@@ -49,11 +37,6 @@ public class BlacklistwToggle implements IHeadsPlusCommand {
         h.put(true, "");
         return h;
     }
-
-    @Override
-	public boolean isMainCommand() {
-		return true;
-	}
 
 	@Override
 	public boolean fire(String[] args, CommandSender sender) {
@@ -82,7 +65,7 @@ public class BlacklistwToggle implements IHeadsPlusCommand {
                         sender.sendMessage(hpc.getString("blw-a-off"));
                     }
                 } else {
-                    sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());
+                    sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getClass().getAnnotation(CommandInfo.class).usage());
                 }
             }
 		} catch (Exception e) {

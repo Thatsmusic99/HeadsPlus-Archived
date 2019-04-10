@@ -43,6 +43,7 @@ public class HeadsPlusMainConfig extends ConfigSettings {
         getConfig().addDefault("plugin.perks.sell-heads", true);
         getConfig().addDefault("plugin.perks.drop-heads", true);
         getConfig().addDefault("plugin.perks.drops.ignore-players", new ArrayList<>());
+        getConfig().addDefault("plugin.perks.drops.needs-killer", false);
         getConfig().addDefault("plugin.perks.craft-heads", false);
         getConfig().addDefault("plugin.perks.disable-crafting", false);
         getConfig().addDefault("plugin.perks.heads-selector", true);
@@ -60,12 +61,13 @@ public class HeadsPlusMainConfig extends ConfigSettings {
         getConfig().addDefault("plugin.perks.pvp.percentage-lost", 0.05);
         getConfig().addDefault("plugin.perks.pvp.percentage-balance-for-head", 0.05);
         getConfig().addDefault("plugin.perks.houses.enabled", true);
-        getConfig().addDefault("plugin.mechanics.theme", "classic");
+        getConfig().addDefault("plugin.mechanics.theme", "easter");
         getConfig().addDefault("plugin.mechanics.plugin-theme-dont-change", "classic");
         getConfig().addDefault("plugin.mechanics.update.check", true);
         getConfig().addDefault("plugin.mechanics.update.notify", true);
         getConfig().addDefault("plugin.mechanics.allow-looting-enchantment", true);
         getConfig().addDefault("plugin.mechanics.looting.ignored-entities", new ArrayList<>());
+        getConfig().addDefault("plugin.mechanics.looting.use-old-system", false);
         getConfig().addDefault("plugin.mechanics.stop-placement-of-sellable-heads", false);
         getConfig().addDefault("plugin.mechanics.sellhead-gui", true);
         getConfig().addDefault("plugin.mechanics.debug.create-debug-files", true);

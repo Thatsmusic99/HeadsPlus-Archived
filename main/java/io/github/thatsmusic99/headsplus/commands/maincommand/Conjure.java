@@ -1,12 +1,14 @@
 package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.commands.CommandInfo;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.listeners.DeathEvents;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -17,21 +19,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@CommandInfo(
+        commandname = "conjure",
+        permission = "headsplus.maincommand.conjure",
+        subcommand = "Conjure",
+        maincommand = true,
+        usage = "/hp conjure <Entity> [Amount] [Player] [Index] [Colour]"
+)
 public class Conjure implements IHeadsPlusCommand {
 
     // F
     private ItemStack head = null;
+    private Player p = null;
     HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
-
-    @Override
-    public String getCmdName() {
-        return "conjure";
-    }
-
-    @Override
-    public String getPermission() {
-        return "headsplus.maincommand.conjure";
-    }
 
     @Override
     public String getCmdDescription() {
@@ -39,19 +39,9 @@ public class Conjure implements IHeadsPlusCommand {
     }
 
     @Override
-    public String getSubCommand() {
-        return "conjure";
-    }
-
-    @Override
-    public String getUsage() {
-        return "/hp conjure <Entity> [Amount] [Index] [Colour]";
-    }
-
-    @Override
     public HashMap<Boolean, String> isCorrectUsage(String[] args, CommandSender sender) {
         HashMap<Boolean, String> h = new HashMap<>();
-        if (sender instanceof Player) {
+
             if (args.length > 1) {
                 HeadsPlusConfigHeads heads = HeadsPlus.getInstance().getHeadsConfig();
                 List<String> mHeads = heads.mHeads;
@@ -68,14 +58,26 @@ public class Conjure implements IHeadsPlusCommand {
                     int index = 0;
                     String type = "default";
                     if (args.length > 3) {
-                        if (args[3].matches("^[0-9]+$")) {
-                            index = Integer.parseInt(args[3]);
+                        if (Bukkit.getPlayer(args[3]) != null && Bukkit.getPlayer(args[3]).isOnline()) {
+                            p = Bukkit.getPlayer(args[3]);
+                        }
+                    }
+                    if (p == null) {
+                        if (sender instanceof Player) {
+                            p = (Player) sender;
+                        } else {
+                            h.put(false, ChatColor.RED + "You must be a player to run this command!");
+                        }
+                    }
+                    if (args.length > 4) {
+                        if (args[4].matches("^[0-9]+$")) {
+                            index = Integer.parseInt(args[4]);
                         } else {
                             h.put(false, hpc.getString("invalid-input-int"));
                         }
                     }
-                    if (args.length > 4) {
-                        type = args[4];
+                    if (args.length > 5) {
+                        type = args[5];
                     }
                     DeathEvents de = HeadsPlus.getInstance().getDeathEvents();
                     try {
@@ -110,20 +112,13 @@ public class Conjure implements IHeadsPlusCommand {
             } else {
                 h.put(false, hpc.getString("invalid-args"));
             }
-        } else {
-            h.put(false, ChatColor.RED + "You must be a player to run this command!");
-        }
+
         return h;
     }
 
     @Override
-    public boolean isMainCommand() {
-        return true;
-    }
-
-    @Override
     public boolean fire(String[] args, CommandSender sender) {
-        ((Player) sender).getWorld().dropItem(((Player) sender).getLocation(), head).setPickupDelay(0);
+        p.getWorld().dropItem(p.getLocation(), head).setPickupDelay(0);
         return false;
     }
 }

@@ -3,6 +3,7 @@ package io.github.thatsmusic99.headsplus.commands.maincommand;
 import java.util.HashMap;
 import java.util.List;
 
+import io.github.thatsmusic99.headsplus.commands.CommandInfo;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
@@ -12,6 +13,13 @@ import org.bukkit.command.CommandSender;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 
+@CommandInfo(
+		commandname = "blacklistwdel",
+		permission = "headsplus.maincommand.blacklistw.delete",
+		subcommand = "Blacklistwdel",
+		maincommand = true,
+		usage = "/hp blacklistwdel <World Name>"
+)
 public class BlacklistwDelete implements IHeadsPlusCommand {
 
 	// A
@@ -19,28 +27,8 @@ public class BlacklistwDelete implements IHeadsPlusCommand {
 	private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
 	@Override
-	public String getCmdName() {
-		return "blacklistwdel";
-	}
-
-	@Override
-	public String getPermission() {
-		return "headsplus.maincommand.blacklistw.delete";
-	}
-
-	@Override
 	public String getCmdDescription() {
 		return LocaleManager.getLocale().descBlacklistwDelete();
-	}
-
-	@Override
-	public String getSubCommand() {
-		return "Blacklistwdel";
-	}
-
-	@Override
-	public String getUsage() {
-		return "/hp blacklistwdel <World Name>";
 	}
 
 	@Override
@@ -57,11 +45,6 @@ public class BlacklistwDelete implements IHeadsPlusCommand {
 		}
 
 		return h;
-	}
-
-	@Override
-	public boolean isMainCommand() {
-		return true;
 	}
 
 	@Override
@@ -87,7 +70,7 @@ public class BlacklistwDelete implements IHeadsPlusCommand {
 				sender.sendMessage(hpc.getString("alpha-names"));
 			}
 		} else {
-            sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());
+            sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getClass().getAnnotation(CommandInfo.class).usage());
         }
 		return true;
 	}

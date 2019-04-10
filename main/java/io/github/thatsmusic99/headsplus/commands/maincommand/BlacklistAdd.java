@@ -3,6 +3,7 @@ package io.github.thatsmusic99.headsplus.commands.maincommand;
 import java.util.HashMap;
 import java.util.List;
 
+import io.github.thatsmusic99.headsplus.commands.CommandInfo;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
@@ -10,6 +11,13 @@ import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import org.bukkit.command.CommandSender;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 
+@CommandInfo(
+        commandname = "blacklistadd",
+        permission = "headsplus.maincommand.blacklist.add",
+        subcommand = "Blacklistadd",
+        maincommand = true,
+        usage = "/hp blacklistadd <Username>"
+)
 public class BlacklistAdd implements IHeadsPlusCommand {
 
 	// S
@@ -17,28 +25,8 @@ public class BlacklistAdd implements IHeadsPlusCommand {
 	private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
 	@Override
-	public String getCmdName() {
-		return "blacklistadd";
-	}
-
-	@Override
-	public String getPermission() {
-		return "headsplus.maincommand.blacklist.add";
-	}
-
-	@Override
 	public String getCmdDescription() {
 		return LocaleManager.getLocale().descBlacklistAdd();
-	}
-
-	@Override
-	public String getSubCommand() {
-		return "Blacklistadd";
-	}
-
-	@Override
-	public String getUsage() {
-		return "/hp blacklistadd <Username|UUID>";
 	}
 
 	@Override
@@ -55,11 +43,6 @@ public class BlacklistAdd implements IHeadsPlusCommand {
         }
 
 		return h;
-	}
-
-	@Override
-	public boolean isMainCommand() {
-		return true;
 	}
 
 	@Override

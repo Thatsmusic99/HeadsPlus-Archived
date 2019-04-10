@@ -12,6 +12,13 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
+@CommandInfo(
+        commandname = "heads",
+        permission = "headsplus.heads",
+        subcommand = "Heads",
+        maincommand = false,
+        usage = "/heads"
+)
 public class Heads implements CommandExecutor, IHeadsPlusCommand {
 
     private final HashMap<String, Boolean> tests = new HashMap<>();
@@ -51,28 +58,8 @@ public class Heads implements CommandExecutor, IHeadsPlusCommand {
     }
 
     @Override
-    public String getCmdName() {
-        return "heads";
-    }
-
-    @Override
-    public String getPermission() {
-        return "headsplus.heads";
-    }
-
-    @Override
     public String getCmdDescription() {
         return LocaleManager.getLocale().descHeads();
-    }
-
-    @Override
-    public String getSubCommand() {
-        return null;
-    }
-
-    @Override
-    public String getUsage() {
-        return "/heads";
     }
 
     @Override
@@ -80,11 +67,6 @@ public class Heads implements CommandExecutor, IHeadsPlusCommand {
         HashMap<Boolean, String> h = new HashMap<>();
         h.put(true, "");
         return h;
-    }
-
-    @Override
-    public boolean isMainCommand() {
-        return false;
     }
 
     @Override

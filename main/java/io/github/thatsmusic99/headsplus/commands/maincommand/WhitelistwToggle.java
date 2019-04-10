@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.commands.CommandInfo;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
@@ -11,20 +12,17 @@ import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.HashMap;
 
+@CommandInfo(
+        commandname = "whitelistw",
+        permission = "headsplus.maincommand.whitelistw.toggle",
+        subcommand = "Whitelistwl",
+        maincommand = true,
+        usage = "/hp whitelistwl [On|Off]"
+)
 public class WhitelistwToggle implements IHeadsPlusCommand{
 
     private final HeadsPlusMainConfig config = HeadsPlus.getInstance().getConfiguration();
     private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
-
-    @Override
-    public String getCmdName() {
-        return "whitelistw";
-    }
-
-    @Override
-    public String getPermission() {
-        return "headsplus.maincommand.whitelistw.toggle";
-    }
 
     @Override
     public String getCmdDescription() {
@@ -32,25 +30,10 @@ public class WhitelistwToggle implements IHeadsPlusCommand{
     }
 
     @Override
-    public String getSubCommand() {
-        return "Whitelistw";
-    }
-
-    @Override
-    public String getUsage() {
-        return "/hp whitelistw [On|Off]";
-    }
-
-    @Override
     public HashMap<Boolean, String> isCorrectUsage(String[] args, CommandSender sender) {
         HashMap<Boolean, String> h = new HashMap<>();
         h.put(true, "");
         return h;
-    }
-
-    @Override
-    public boolean isMainCommand() {
-        return true;
     }
 
     @Override

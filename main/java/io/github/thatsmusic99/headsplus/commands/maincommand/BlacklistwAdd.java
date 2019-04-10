@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.commands.CommandInfo;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
@@ -11,34 +12,21 @@ import org.bukkit.command.CommandSender;
 import java.util.HashMap;
 import java.util.List;
 
+@CommandInfo(
+        commandname = "blacklistwadd",
+        permission = "headsplus.maincommand.blacklistw.add",
+        subcommand = "Blacklistwadd",
+        maincommand = true,
+        usage = "/hp blacklistwadd <World Name>"
+)
 public class BlacklistwAdd implements IHeadsPlusCommand {
 
     // I
 	private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
 	@Override
-	public String getCmdName() {
-		return "blacklistwadd";
-	}
-
-	@Override
-	public String getPermission() {
-		return "headsplus.maincommand.blacklistw.add";
-	}
-
-	@Override
 	public String getCmdDescription() {
 		return LocaleManager.getLocale().descBlacklistwAdd();
-	}
-
-	@Override
-	public String getSubCommand() {
-		return "Blacklistwadd";
-	}
-
-	@Override
-	public String getUsage() {
-		return "/hp blacklistwadd <World Name>";
 	}
 
     @Override
@@ -56,11 +44,6 @@ public class BlacklistwAdd implements IHeadsPlusCommand {
 
         return h;
     }
-
-    @Override
-	public boolean isMainCommand() {
-		return true;
-	}
 
 	@Override
 	public boolean fire(String[] args, CommandSender sender) {
@@ -86,7 +69,7 @@ public class BlacklistwAdd implements IHeadsPlusCommand {
                 sender.sendMessage(hpc.getString("alpha-names"));
             }
         } else {
-            sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());
+            sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getClass().getAnnotation(CommandInfo.class).usage());
         }
 		return false;
 	}

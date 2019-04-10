@@ -10,6 +10,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -49,6 +50,19 @@ public class MaskEvent implements Listener {
                             maskMonitors.get(e.getWhoClicked()).runTaskTimer(HeadsPlus.getInstance(), 20, 40);
                         }
                     }
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerFall(EntityDamageEvent e) {
+        if (e.getEntity() instanceof Player) {
+            HeadsPlus hp = HeadsPlus.getInstance();
+            if (hp.getConfiguration().getPerks().getBoolean("mask-powerups")) {
+                HPPlayer pl = HPPlayer.getHPPlayer((Player) e.getEntity());
+                if (pl.isIgnoringFallDamage()) {
+                    e.setCancelled(true);
                 }
             }
         }

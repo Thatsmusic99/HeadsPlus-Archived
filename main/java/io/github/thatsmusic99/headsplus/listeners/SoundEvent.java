@@ -62,9 +62,14 @@ public class SoundEvent implements Listener {
     }
 
     private void playSound(Location l, String st) {
-        Sound s = Sound.valueOf(sounds.getConfig().getString("sounds." + st + ".sound"));
-        float vol = (float) sounds.getConfig().getDouble("sounds." + st + ".volume");
-        float pitch = (float) sounds.getConfig().getDouble("sounds." + st + ".pitch");
-        l.getWorld().playSound(l, s, vol, pitch);
+        try {
+            Sound s = Sound.valueOf(sounds.getConfig().getString("sounds." + st + ".sound"));
+            float vol = (float) sounds.getConfig().getDouble("sounds." + st + ".volume");
+            float pitch = (float) sounds.getConfig().getDouble("sounds." + st + ".pitch");
+            l.getWorld().playSound(l, s, vol, pitch);
+        } catch (IllegalArgumentException ex) {
+            HeadsPlus.getInstance().getLogger().warning("Could not find sound " + sounds.getConfig().getString("sounds." + st + ".sound") + "!");
+        }
+
     }
 }

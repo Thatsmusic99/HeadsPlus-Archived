@@ -287,7 +287,7 @@ public class InventoryManager {
         NMSManager nms = HeadsPlus.getInstance().getNMS();
         ItemStack s = nms.getSkullMaterial(1);
         SkullMeta sm = (SkullMeta) s.getItemMeta();
-        GameProfile gm = new GameProfile(UUID.fromString("7091cdbc-ebdc-4eac-a6b2-25dd8acd3a0e"), "HPXHead");
+        GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
         if (hpchx.getConfig().getBoolean("heads." + str + ".encode")) {
             byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", hpchx.getConfig().getString(str + ".texture")).getBytes());
             gm.getProperties().put("textures", new Property("texture", Arrays.toString(encodedData)));

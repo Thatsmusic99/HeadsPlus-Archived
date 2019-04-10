@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.commands.CommandInfo;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
@@ -10,33 +11,20 @@ import org.bukkit.command.CommandSender;
 import java.util.HashMap;
 import java.util.List;
 
+@CommandInfo(
+        commandname = "whitelistdel",
+        permission = "headsplus.maincommand.whitelist.delete",
+        subcommand = "Whitelistdel",
+        maincommand = true,
+        usage = "/hp whitelistdel <Username>"
+)
 public class WhitelistDel implements IHeadsPlusCommand {
 
     private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @Override
-    public String getCmdName() {
-        return "whitelistdel";
-    }
-
-    @Override
-    public String getPermission() {
-        return "headsplus.maincommand.whitelist.delete";
-    }
-
-    @Override
     public String getCmdDescription() {
         return LocaleManager.getLocale().descWhitelistDelete();
-    }
-
-    @Override
-    public String getSubCommand() {
-        return "Whitelistdel";
-    }
-
-    @Override
-    public String getUsage() {
-        return "/hp whitelistdel";
     }
 
     @Override
@@ -53,11 +41,6 @@ public class WhitelistDel implements IHeadsPlusCommand {
         }
 
         return h;
-    }
-
-    @Override
-    public boolean isMainCommand() {
-        return true;
     }
 
     @Override

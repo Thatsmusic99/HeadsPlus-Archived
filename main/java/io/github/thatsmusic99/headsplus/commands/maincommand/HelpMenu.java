@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.commands.CommandInfo;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigTextMenu;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
@@ -8,6 +9,13 @@ import org.bukkit.command.CommandSender;
 
 import java.util.HashMap;
 
+@CommandInfo(
+        commandname = "help",
+        permission = "headsplus.maincommand",
+        subcommand = "Help",
+        maincommand = true,
+        usage = "/hp <help|Page No.> [Page No.]"
+)
 public class HelpMenu implements IHeadsPlusCommand {
 
     // I
@@ -23,7 +31,7 @@ public class HelpMenu implements IHeadsPlusCommand {
         if (cs.hasPermission("headsplus.maincommand")) {
             IHeadsPlusCommand pe = null;
             for (IHeadsPlusCommand key : HeadsPlus.getInstance().getCommands()) {
-                if (key.getCmdName().equalsIgnoreCase(cmdName)) {
+                if (key.getClass().getAnnotation(CommandInfo.class).commandname().equalsIgnoreCase(cmdName)) {
                     pe = key;
                     break;
                 }
@@ -37,28 +45,8 @@ public class HelpMenu implements IHeadsPlusCommand {
     }
 
 	@Override
-	public String getCmdName() {
-		return "help";
-	}
-
-	@Override
-	public String getPermission() {
-		return "headsplus.maincommand";
-	}
-
-	@Override
 	public String getCmdDescription() {
 		return LocaleManager.getLocale().descHelpMenu();
-	}
-
-	@Override
-	public String getSubCommand() {
-		return "Help";
-	}
-
-	@Override
-	public String getUsage() {
-		return "/hp <help|Page No.> [Page No.]";
 	}
 
     @Override
@@ -67,11 +55,6 @@ public class HelpMenu implements IHeadsPlusCommand {
         h.put(true, "");
         return h;
     }
-
-    @Override
-	public boolean isMainCommand() {
-		return true;
-	}
 
 	@Override
 	public boolean fire(String[] args, CommandSender sender) {

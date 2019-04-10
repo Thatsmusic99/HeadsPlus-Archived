@@ -29,17 +29,18 @@ public class HeadsPlusCommand implements CommandExecutor {
                     if (getCommandByName(args[0]) != null) {
                         IHeadsPlusCommand command = getCommandByName(args[0]);
                         assert command != null;
-                        tests.put("No Permission", !sender.hasPermission(command.getPermission()));
-                        tests.put("Main command", command.isMainCommand());
+                        CommandInfo c = command.getClass().getAnnotation(CommandInfo.class);
+                        tests.put("No Permission", !sender.hasPermission(c.permission()));
+                        tests.put("Main command", c.maincommand());
                         tests.put("Correct Usage", command.isCorrectUsage(args, sender).get(true) != null);
-                        if (sender.hasPermission(command.getPermission())) {
-                            if (command.isMainCommand()) {
+                        if (sender.hasPermission(c.permission())) {
+                            if (c.maincommand()) {
                                 if (command.isCorrectUsage(args, sender).get(true) != null) {
                                     command.printDebugResults(tests, true);
                                     return command.fire(args, sender);
                                 } else {
                                     sender.sendMessage(command.isCorrectUsage(args, sender).get(false));
-                                    sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + command.getUsage());
+                                    sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + c.usage());
                                     if (command.advancedUsages().length != 0) {
                                         sender.sendMessage(ChatColor.DARK_RED + "Further usages:");
                                         for (String s : command.advancedUsages()) {
@@ -71,8 +72,9 @@ public class HeadsPlusCommand implements CommandExecutor {
 
 	private IHeadsPlusCommand getCommandByName(String name) {
 	    for (IHeadsPlusCommand hpc : HeadsPlus.getInstance().getCommands()) {
-	        if (hpc.getCmdName().equalsIgnoreCase(name)) {
-	            if (hpc.isMainCommand()){
+            CommandInfo c = hpc.getClass().getAnnotation(CommandInfo.class);
+	        if (c.commandname().equalsIgnoreCase(name)) {
+	            if (c.maincommand()){
                     return hpc;
                 }
             }

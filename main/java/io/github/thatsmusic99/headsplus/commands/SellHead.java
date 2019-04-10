@@ -24,6 +24,13 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
+@CommandInfo(
+        commandname = "sellhead",
+        permission = "headsplus.sellhead",
+        subcommand = "sellead",
+        maincommand = false,
+        usage = "/sellhead [All|Entity|#] [#]"
+)
 public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 
 	private final HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
@@ -418,28 +425,8 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
     }
 
     @Override
-    public String getCmdName() {
-        return "sellhead";
-    }
-
-    @Override
-    public String getPermission() {
-        return "headsplus.sellhead";
-    }
-
-    @Override
     public String getCmdDescription() {
         return LocaleManager.getLocale().descSellhead();
-    }
-
-    @Override
-    public String getSubCommand() {
-        return "Sellhead";
-    }
-
-    @Override
-    public String getUsage() {
-        return "/sellhead [All|Entity|#] [#]";
     }
 
     @Override
@@ -456,11 +443,6 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
         }
 
         return h;
-    }
-
-    @Override
-    public boolean isMainCommand() {
-        return false;
     }
 
     @Override

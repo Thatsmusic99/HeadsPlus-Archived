@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
+import io.github.thatsmusic99.headsplus.commands.CommandInfo;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
@@ -23,6 +24,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
+@CommandInfo(
+        commandname = "debug",
+        permission = "headsplus.maincommand.debug",
+        subcommand = "Debug",
+        maincommand = true,
+        usage = "/hp debug <dump|head|player|clearim|item|delete> <Player IGN>"
+)
 public class DebugPrint implements IHeadsPlusCommand {
 
     // R
@@ -56,29 +64,10 @@ public class DebugPrint implements IHeadsPlusCommand {
     public DebugPrint() {
 
     }
-    @Override
-    public String getCmdName() {
-        return "debug";
-    }
-
-    @Override
-    public String getPermission() {
-        return "headsplus.maincommand.debug";
-    }
 
     @Override
     public String getCmdDescription() {
         return LocaleManager.getLocale().descDebug();
-    }
-
-    @Override
-    public String getSubCommand() {
-        return "Debug";
-    }
-
-    @Override
-    public String getUsage() {
-        return "/hp debug <dump|head|player|clearim|item|delete> <Player IGN>";
     }
 
     @Override
@@ -146,11 +135,6 @@ public class DebugPrint implements IHeadsPlusCommand {
             h.put(false, HeadsPlus.getInstance().getMessagesConfig().getString("invalid-args"));
         }
         return h;
-    }
-
-    @Override
-    public boolean isMainCommand() {
-        return true;
     }
 
     @Override

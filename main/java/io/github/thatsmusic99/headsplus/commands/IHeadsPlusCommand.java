@@ -7,19 +7,9 @@ import java.util.HashMap;
 
 public interface IHeadsPlusCommand {
 
-    String getCmdName();
-
-    String getPermission();
-
-    String getCmdDescription();
-
-    String getSubCommand();
-
-    String getUsage();
-
     HashMap<Boolean, String> isCorrectUsage(String[] args, CommandSender sender);
 
-    boolean isMainCommand();
+    String getCmdDescription();
 
     boolean fire(String[] args, CommandSender sender);
 
@@ -29,9 +19,12 @@ public interface IHeadsPlusCommand {
 
     default void printDebugResults(HashMap<String, Boolean> results, boolean success) {
         HeadsPlus hp = HeadsPlus.getInstance();
-        hp.debug("- Tests for " + getCmdName() + " were " + (success ? "" : "not ") + "passed!", 1);
-        for (String r : results.keySet()) {
-            hp.debug("- " + r + ": " + results.get(r), 3);
+        if (getClass().isAnnotationPresent(CommandInfo.class)) {
+            hp.debug("- Tests for " + getClass().getAnnotation(CommandInfo.class).commandname() + " were " + (success ? "" : "not ") + "passed!", 1);
+            for (String r : results.keySet()) {
+                hp.debug("- " + r + ": " + results.get(r), 3);
+            }
         }
+
     }
 }

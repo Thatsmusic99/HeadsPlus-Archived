@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.commands.CommandInfo;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigTextMenu;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
@@ -10,33 +11,20 @@ import org.bukkit.command.CommandSender;
 import java.util.HashMap;
 import java.util.List;
 
+@CommandInfo(
+        commandname = "whitelistwl",
+        permission = "headsplus.maincommand.whitelistw.list",
+        subcommand = "Whitelistwl",
+        maincommand = true,
+        usage = "/hp whitelistwl [Page No.]"
+)
 public class WhitelistwList implements IHeadsPlusCommand {
 
     private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @Override
-    public String getCmdName() {
-        return "whitelistwl";
-    }
-
-    @Override
-    public String getPermission() {
-        return "headsplus.maincommand.whitelistw.list";
-    }
-
-    @Override
     public String getCmdDescription() {
         return LocaleManager.getLocale().descWhitelistwList();
-    }
-
-    @Override
-    public String getSubCommand() {
-        return "Whitelistwl";
-    }
-
-    @Override
-    public String getUsage() {
-        return "/hp whitelistwl [Page No.]";
     }
 
     @Override
@@ -52,11 +40,6 @@ public class WhitelistwList implements IHeadsPlusCommand {
             h.put(true, "");
         }
         return h;
-    }
-
-    @Override
-    public boolean isMainCommand() {
-        return true;
     }
 
     @Override

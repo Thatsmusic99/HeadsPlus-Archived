@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.commands.CommandInfo;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
@@ -11,6 +12,13 @@ import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.HashMap;
 
+@CommandInfo(
+        commandname = "whitelist",
+        permission = "headsplus.maincommand.whitelist.toggle",
+        subcommand = "Whitelist",
+        maincommand = true,
+        usage = "/hp whitelist [On|Off]"
+)
 public class WhitelistToggle implements IHeadsPlusCommand {
 
     private final HeadsPlusMainConfig config = HeadsPlus.getInstance().getConfiguration();
@@ -18,28 +26,8 @@ public class WhitelistToggle implements IHeadsPlusCommand {
     private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @Override
-    public String getCmdName() {
-        return "whitelist";
-    }
-
-    @Override
-    public String getPermission() {
-        return "headsplus.maincommand.whitelist.toggle";
-    }
-
-    @Override
     public String getCmdDescription() {
         return LocaleManager.getLocale().descWhitelistToggle();
-    }
-
-    @Override
-    public String getSubCommand() {
-        return "Whitelist";
-    }
-
-    @Override
-    public String getUsage() {
-        return "/hp whitelist [On|Off]";
     }
 
     @Override
@@ -47,11 +35,6 @@ public class WhitelistToggle implements IHeadsPlusCommand {
         HashMap<Boolean, String> h = new HashMap<>();
         h.put(true, "");
         return h;
-    }
-
-    @Override
-    public boolean isMainCommand() {
-        return true;
     }
 
     @Override
@@ -86,7 +69,7 @@ public class WhitelistToggle implements IHeadsPlusCommand {
                         sender.sendMessage(hpc.getString("wl-a-off"));
                     }
                 } else if (!(str.equalsIgnoreCase("on"))) {
-                    sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());
+                    sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getClass().getAnnotation(CommandInfo.class).usage());
                 }
             }
         } catch (Exception e) {

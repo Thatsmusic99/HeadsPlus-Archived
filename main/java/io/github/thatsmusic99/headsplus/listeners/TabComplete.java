@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.listeners;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.commands.CommandInfo;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -21,9 +22,10 @@ public class TabComplete implements TabCompleter {
             List<String> f = new ArrayList<>();
             List<String> c = new ArrayList<>();
             for (IHeadsPlusCommand key : HeadsPlus.getInstance().getCommands()) {
-                if (cs.hasPermission(key.getPermission())) {
-                    if (key.isMainCommand()) {
-                        c.add(key.getSubCommand());
+                CommandInfo cmd = key.getClass().getAnnotation(CommandInfo.class);
+                if (cs.hasPermission(cmd.permission())) {
+                    if (cmd.maincommand()) {
+                        c.add(cmd.subcommand());
                     }
                 }
             }

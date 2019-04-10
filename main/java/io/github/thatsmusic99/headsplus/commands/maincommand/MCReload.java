@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
+import io.github.thatsmusic99.headsplus.commands.CommandInfo;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.ConfigSettings;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
@@ -12,18 +13,16 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 
+@CommandInfo(
+		commandname = "reload",
+		permission = "headsplus.maincommand.reload",
+		subcommand = "Reload",
+		maincommand = true,
+		usage = "/hp reload"
+)
 public class MCReload implements IHeadsPlusCommand{
 
 	// O
-	@Override
-	public String getCmdName() {
-		return "reload";
-	}
-
-	@Override
-	public String getPermission() {
-		return "headsplus.maincommand.reload";
-	}
 
 	@Override
 	public String getCmdDescription() {
@@ -31,25 +30,10 @@ public class MCReload implements IHeadsPlusCommand{
 	}
 
 	@Override
-	public String getSubCommand() {
-		return "Reload";
-	}
-
-	@Override
-	public String getUsage() {
-		return "/hp reload";
-	}
-
-	@Override
 	public HashMap<Boolean, String> isCorrectUsage(String[] args, CommandSender sender) {
 		HashMap<Boolean, String> h = new HashMap<>();
 		h.put(true, "");
 		return h;
-	}
-
-    @Override
-	public boolean isMainCommand() {
-		return true;
 	}
 
 	@Override

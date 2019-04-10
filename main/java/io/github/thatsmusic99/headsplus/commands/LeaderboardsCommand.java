@@ -12,6 +12,13 @@ import org.bukkit.entity.EntityType;
 import java.sql.SQLException;
 import java.util.HashMap;
 
+@CommandInfo(
+        commandname = "hplb",
+        permission = "headsplus.leaderboards",
+        subcommand = "Hplb",
+        maincommand = false,
+        usage = "/hplb [Total|Entity|Page No.] [Page No.] [Hunting|Selling|Crafting]"
+)
 public class LeaderboardsCommand implements CommandExecutor, IHeadsPlusCommand {
 
     private final HashMap<String, Boolean> tests = new HashMap<>();
@@ -161,28 +168,8 @@ public class LeaderboardsCommand implements CommandExecutor, IHeadsPlusCommand {
     }
 
     @Override
-    public String getCmdName() {
-        return "hplb";
-    }
-
-    @Override
-    public String getPermission() {
-        return "headsplus.leaderboards";
-    }
-
-    @Override
     public String getCmdDescription() {
         return LocaleManager.getLocale().descHPLeaderboards();
-    }
-
-    @Override
-    public String getSubCommand() {
-        return "Hplb";
-    }
-
-    @Override
-    public String getUsage() {
-        return "/hplb [Total|Entity|Page No.] [Page No.] [Hunting|Selling|Crafting]";
     }
 
     @Override
@@ -190,11 +177,6 @@ public class LeaderboardsCommand implements CommandExecutor, IHeadsPlusCommand {
         HashMap<Boolean, String> h = new HashMap<>();
         h.put(true, "");
         return h;
-    }
-
-    @Override
-    public boolean isMainCommand() {
-        return false;
     }
 
     @Override

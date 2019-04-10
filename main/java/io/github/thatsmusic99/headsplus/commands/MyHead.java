@@ -22,6 +22,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@CommandInfo(
+        commandname = "myhead",
+        permission = "headsplus.myhead",
+        subcommand = "Myhead",
+        maincommand = false,
+        usage = "/myhead"
+)
 public class MyHead implements CommandExecutor, IHeadsPlusCommand {
 
     private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
@@ -30,7 +37,7 @@ public class MyHead implements CommandExecutor, IHeadsPlusCommand {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String l, String[] args) {
         try {
-            if (sender.hasPermission(getPermission())) {
+            if (sender.hasPermission("headsplus.myhead")) {
 
 
                 if (sender instanceof BlockCommandSender) {
@@ -155,28 +162,8 @@ public class MyHead implements CommandExecutor, IHeadsPlusCommand {
     }
 
     @Override
-    public String getCmdName() {
-        return "myhead";
-    }
-
-    @Override
-    public String getPermission() {
-        return "headsplus.myhead";
-    }
-
-    @Override
     public String getCmdDescription() {
         return LocaleManager.getLocale().descMyHead();
-    }
-
-    @Override
-    public String getSubCommand() {
-        return "Myhead";
-    }
-
-    @Override
-    public String getUsage() {
-        return "/myhead";
     }
 
     @Override
@@ -184,11 +171,6 @@ public class MyHead implements CommandExecutor, IHeadsPlusCommand {
         HashMap<Boolean, String> h = new HashMap<>();
         h.put(true, "");
         return h;
-    }
-
-    @Override
-    public boolean isMainCommand() {
-        return false;
     }
 
     @Override

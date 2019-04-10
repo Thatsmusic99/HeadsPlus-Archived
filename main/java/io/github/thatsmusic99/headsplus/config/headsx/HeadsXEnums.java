@@ -272,7 +272,16 @@ public enum HeadsXEnums {
     DARK_OAK_PLANKS("dark_oak_planks", "&8[&7Dark Oak Planks&8]", HPStrings.wood + "MjZmYjc4NGRmZjFhNzYxNjNiNGE3MTc2ZjBiZDY2MjMwZWE5MDZiODJmODVlNDA5NGY0MTM0YTUwYzU5OTI4MSJ9fX0", "blocks", 1.8),
     BONE_BLOCK("bone_block", "&8[&fBone Block&8]", HPStrings.wood + "YjQzMGFiNTQ1YjE0MjgyN2I5MzVmYzdlMzBmZDFhMTczZmE5MWI5M2NhYmJhNDVmODVmMjJhZWVkMGFlZmFjNyJ9fX0", "blocks", 1.8),
     SNOWBALL("snowball", "&8[&fSnowball&8]", HPStrings.wood + "MWRmZDc3MjRjNjlhMDI0ZGNmYzYwYjE2ZTAwMzM0YWI1NzM4ZjRhOTJiYWZiOGZiYzc2Y2YxNTMyMmVhMDI5MyJ9fX0", "blocks", 1.8),
-    SNOWMAN("snowman", "&8[&fSnowman&8]", HPStrings.wood + "NWY4NDZhZmM4OWU2Y2FiYTA1Y2Q2YzJjZTlkNTgzOTcyMDgwNTZlNmVlODI1OTM3ODc5ZTVkNmRiMTEyMWYifX19", "decoration", 2.2);
+    SNOWMAN("snowman", "&8[&fSnowman&8]", HPStrings.wood + "NWY4NDZhZmM4OWU2Y2FiYTA1Y2Q2YzJjZTlkNTgzOTcyMDgwNTZlNmVlODI1OTM3ODc5ZTVkNmRiMTEyMWYifX19", "decoration", 2.2),
+    PINK_EGG("pink_egg", "&8[&dPink Egg&8]", HPStrings.wood + "NThiOWUyOWFiMWE3OTVlMmI4ODdmYWYxYjFhMzEwMjVlN2NjMzA3MzMzMGFmZWMzNzUzOTNiNDVmYTMzNWQxIn19fQ", "easter", 2.3),
+    ORANGE_EGG("orange_egg", "&8[&6Orange Egg&8]", HPStrings.wood + "ZmI4YjJiZGZjNWQxM2I5ZjQ1OTkwZWUyZWFhODJlNDRhZmIyYTY5YjU2YWM5Mjc2YTEzMjkyYjI0YzNlMWRlIn19fQ", "easter", 2.3),
+    PURPLE_EGG("purple_egg", "&8[&5Purple Egg&8]", HPStrings.wood + "OTg4OWYxMWM4ODM4YzA5ZTFlY2YyZjgzNDM5ZWJjYjlmMzI0ZTU2N2IwZTlkYzRiN2MyNWQ5M2U1MGZmMmIifX19", "easter", 2.3),
+    YELLOW_EGG("yellow_egg", "&8{&eYellow Egg&8]", HPStrings.wood + "ZDM2ZmU4M2M0MmM2Y2U3Mzg2Y2YyMzMzYTFjNTk1ZDBiNDMzZGE3YmM1NTkyYjg2ODY2ODU1MWQ2OWI5YjAifX19", "easter", 2.3),
+    BLUE_EGG("blue_egg", "&8[&bBlue Egg&8]", HPStrings.wood + "ZWViMzM1MTgyZGI1ZjNiZTgwZmNjZjZlYWJlNTk5ZjQxMDdkNGZmMGU5ZjQ0ZjM0MTc0Y2VmYTZlMmI1NzY4In19fQ", "easter", 2.3),
+    GREEN_EGG("green_egg", "&8[&aGreen Egg&8]", HPStrings.wood + "MWYxOGI5YTQzNmEyN2Y4MTNjMjg3ZWI2NzM3OWVmOGFkYmZkYzcwYWZhZjMwNGM0M2IxNjZjZTk4NmRkOCJ9fX0", "easter", 2.3),
+    RED_EGG("red_egg", "&8[&cRed Egg&8]", HPStrings.wood + "YjNkNjliMjNhZTU5MmM2NDdlYjhkY2ViOWRhYWNlNDQxMzlmNzQ4ZTczNGRjODQ5NjI2MTNjMzY2YTA4YiJ9fX0", "easter", 2.3),
+    WHITE_EGG("white_egg", "&8[&fWhite Egg&8]", HPStrings.wood + "MjY0NDMwZTQ5M2ZlYjVlYWExNDU1ODJlNTRlNzYxYTg2MDNmYjE2Y2MwZmYxMjY4YTVkMWU4NjRlNmY0NzlmNiJ9fX0", "easter", 2.3),
+    EASTER_BASKET("easter_basket", "&8[&6Easter Basket&8]", HPStrings.wood + "ODNjMjVhN2ExODgxOTZiMTg3MTcyNjRmZmU4MzdjYTM0OGNmNzE5ZTgyNzE3OWVkYzRiNzhjYmNiOGM3ZGQ4In19fQ", "easter", 2.3);
 
     final String name;
     final String dn;

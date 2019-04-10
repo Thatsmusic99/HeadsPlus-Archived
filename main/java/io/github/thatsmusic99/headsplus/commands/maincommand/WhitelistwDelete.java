@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.commands.maincommand;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.commands.CommandInfo;
 import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
@@ -11,33 +12,20 @@ import org.bukkit.command.CommandSender;
 import java.util.HashMap;
 import java.util.List;
 
+@CommandInfo(
+        commandname = "whitelistwdel",
+        permission = "headsplus.maincommand.whitelistw.delete",
+        subcommand = "Whitelistwdel",
+        maincommand = true,
+        usage = "/hp whitelistwdel <World Name>"
+)
 public class WhitelistwDelete implements IHeadsPlusCommand {
     private final HeadsPlusMainConfig config = HeadsPlus.getInstance().getConfiguration();
     private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @Override
-    public String getCmdName() {
-        return "whitelistwdel";
-    }
-
-    @Override
-    public String getPermission() {
-        return "headsplus.maincommand.whitelistw.delete";
-    }
-
-    @Override
     public String getCmdDescription() {
         return LocaleManager.getLocale().descWhitelistwDelete();
-    }
-
-    @Override
-    public String getSubCommand() {
-        return "Whitelistwdel";
-    }
-
-    @Override
-    public String getUsage() {
-        return "/hp whitelistwdel <World Name>";
     }
 
     @Override
@@ -54,11 +42,6 @@ public class WhitelistwDelete implements IHeadsPlusCommand {
         }
 
         return h;
-    }
-
-    @Override
-    public boolean isMainCommand() {
-        return true;
     }
 
     @Override
@@ -80,7 +63,7 @@ public class WhitelistwDelete implements IHeadsPlusCommand {
                     sender.sendMessage(hpc.getString("alpha-names"));
                 }
             } else {
-                sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getUsage());
+                sender.sendMessage(ChatColor.DARK_RED + "Usage: " + ChatColor.RED + getClass().getAnnotation(CommandInfo.class).usage());
             }
         } catch (Exception e) {
             new DebugPrint(e, "Subcommand (whitelistwdel)", true, sender);

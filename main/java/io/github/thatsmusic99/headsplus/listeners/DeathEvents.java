@@ -132,7 +132,7 @@ public class DeathEvents implements Listener {
                                 && c.getMechanics().getBoolean("allow-looting-enchantment")
                                 && !(c.getMechanics().getStringList("looting.ignored-entities").contains("player"))) {
                             if (c.getMechanics().getBoolean("looting.use-old-system")) {
-                                a = HeadsPlus.getInstance().getNMS().getItemInHand(ep.getEntity().getKiller()).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS) + 1;
+                                a = HeadsPlus.getInstance().getNMS().getItemInHand(ep.getEntity().getKiller()).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
                             } else {
                                 chance1 *= HeadsPlus.getInstance().getNMS().getItemInHand(ep.getEntity().getKiller()).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
                                 a = ((int) chance1 / 100) == 0 ? 1 : (int) (chance1 / 100);

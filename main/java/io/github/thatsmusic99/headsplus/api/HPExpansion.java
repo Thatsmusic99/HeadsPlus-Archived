@@ -1,10 +1,20 @@
 package io.github.thatsmusic99.headsplus.api;
 
+import io.github.thatsmusic99.headsplus.HeadsPlus;
+import me.clip.placeholderapi.PlaceholderAPI;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+
+import java.sql.SQLException;
 
 public class HPExpansion extends PlaceholderExpansion {
 
+    private HeadsPlus hp;
+
+    public HPExpansion(HeadsPlus headsPlus) {
+        hp = headsPlus;
+    }
     @Override
     public boolean canRegister(){
         return true;
@@ -22,7 +32,20 @@ public class HPExpansion extends PlaceholderExpansion {
 
     @Override
     public String getVersion() {
-        return "1.0.0";
+        return hp.getVersion();
+    }
+
+    @Override
+    public boolean register(){
+        if(!canRegister()){
+            return false;
+        }
+        hp = (HeadsPlus) Bukkit.getPluginManager().getPlugin("HeadsPlus");
+
+        if(hp == null){
+            return false;
+        }
+        return PlaceholderAPI.registerPlaceholderHook(getIdentifier(), this);
     }
 
     @Override
@@ -37,8 +60,39 @@ public class HPExpansion extends PlaceholderExpansion {
         }
 
         // %example_placeholder2%
-        if(identifier.equals("placeholder2")){
-            return "placeholder2 works";
+        if(identifier.equals("completed_challenges_total")){
+            return String.valueOf(pl.getCompleteChallenges().size());
+        }
+
+        if (identifier.equals("level")) {
+            return pl.getLevel().getDisplayName();
+        }
+
+        if (identifier.startsWith("hunting")) {
+            try {
+                return String.valueOf(hp.getAPI().getPlayerInLeaderboards(player, identifier.split("_")[1], "hunting"));
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return "0";
+            }
+        }
+
+        if (identifier.startsWith("crafting")) {
+            try {
+                return String.valueOf(HeadsPlus.getInstance().getAPI().getPlayerInLeaderboards(player, identifier.split("_")[1], "crafting"));
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return "0";
+            }
+        }
+
+        if (identifier.startsWith("selling")) {
+            try {
+                return String.valueOf(HeadsPlus.getInstance().getAPI().getPlayerInLeaderboards(player, identifier.split("_")[1], "selling"));
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return "0";
+            }
         }
 
         // We return null if an invalid placeholder (f.e. %example_placeholder3%)

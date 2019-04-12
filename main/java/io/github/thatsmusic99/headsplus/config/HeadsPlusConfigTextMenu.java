@@ -329,9 +329,7 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
                         .replaceAll("\\{page}", String.valueOf(page))
                         .replaceAll("\\{pages}", String.valueOf(ph.getTotalPages()))));
                 Set<OfflinePlayer> it = ph.getContentsInPage(page).keySet();
-               // System.out.println(it.size());
                 Collection<Integer> it2 = ph.getContentsInPage(page).values();
-              //  System.out.println(it2.size());
                 for (int i = 0; i < it.size(); i++) {
                     try {
                         int in = i + (ph.getContentsPerPage() * (ph.getCurrentPage() - 1));

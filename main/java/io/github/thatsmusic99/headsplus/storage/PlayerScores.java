@@ -125,12 +125,15 @@ public class PlayerScores implements JSONFile {
         String s = "";
         switch (db) {
             case "headspluslb":
+            case "hunting":
                 s = "hunting";
                 break;
             case "headsplussh":
+            case "selling":
                 s = "sellhead";
                 break;
             case "headspluscraft":
+            case "crafting":
                 s = "crafting";
                 break;
         }

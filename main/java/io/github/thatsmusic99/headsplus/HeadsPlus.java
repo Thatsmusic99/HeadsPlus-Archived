@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException;
 import io.github.thatsmusic99.headsplus.api.Challenge;
+import io.github.thatsmusic99.headsplus.api.HPExpansion;
 import io.github.thatsmusic99.headsplus.api.RLevel;
 import io.github.thatsmusic99.headsplus.api.events.CommunicateEvent;
 import io.github.thatsmusic99.headsplus.api.HeadsPlusAPI;
@@ -115,7 +116,6 @@ public class HeadsPlus extends JavaPlugin {
             // Checks theme, believe it or not!
             debug("- Checking plugin theme.", 1);
             checkTheme();
-            debug("- Setting up favourites.json.", 1);
 
             // Handles recipes
             if (!getConfiguration().getPerks().getBoolean("disable-crafting")) {
@@ -136,12 +136,21 @@ public class HeadsPlus extends JavaPlugin {
             debug("- Registering listeners!", 1);
             registerEvents();
 
-            // Register
+            // Registers commands
             debug("- Registering commands!", 1);
             registerCommands();
+
+            // Registers subcommands
             debug("- Registering subcommands!", 1);
             registerSubCommands();
             JoinEvent.reloaded = false;
+
+            // Hooks PlaceholderAPI
+            if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+                new HPExpansion(this).register();
+            }
+
+            // Sets up Metrics
             debug("- Creating Metrics!", 1);
             Metrics metrics = new Metrics(this);
             metrics.addCustomChart(new Metrics.SimplePie("languages", () -> LocaleManager.getLocale().getLanguage()));
@@ -402,6 +411,7 @@ public class HeadsPlus extends JavaPlugin {
         debug("- Instance for HeadsPlusChallenges created!", 3);
         try {
             setupJSON();
+            debug("- Set up favourites.json and playerinfo.json!", 1);
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }

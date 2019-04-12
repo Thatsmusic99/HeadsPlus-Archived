@@ -50,12 +50,10 @@ public class MCReload implements IHeadsPlusCommand{
                         cs.reloadC(false);
                     }
                     HPPlayer.players.clear();
+                    HeadsPlus.getInstance().reloadDE();
+                    sender.sendMessage(reloadM);
                 }
             }.runTaskLaterAsynchronously(HeadsPlus.getInstance(), 2);
-            HeadsPlus.getInstance().reloadDE();
-			sender.sendMessage(reloadM);
-
-
 		} catch (Exception e) {
 		    new DebugPrint(e, "Subcommand (reload)", true, sender);
 		}

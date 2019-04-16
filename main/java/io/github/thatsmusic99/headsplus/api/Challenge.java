@@ -236,9 +236,21 @@ public class Challenge {
             if (sender == null
                     || sender.isEmpty()
                     || sender.equalsIgnoreCase("player")) {
-                p.performCommand(String.valueOf(getRewardValue()).replaceAll("\\{player}", p.getName()));
+                if (rewardValue instanceof List) {
+                    for (String str : (List<String>) rewardValue) {
+                        p.performCommand(String.valueOf(str).replaceAll("\\{player}", p.getName()));
+                    }
+                } else {
+                    p.performCommand(String.valueOf(getRewardValue()).replaceAll("\\{player}", p.getName()));
+                }
             } else if (sender.equalsIgnoreCase("console")) {
-                Bukkit.dispatchCommand(hp.getServer().getConsoleSender(), String.valueOf(getRewardValue()).replaceAll("\\{player}", p.getName()));
+                if (rewardValue instanceof List) {
+                    for (String str : (List<String>) rewardValue) {
+                        Bukkit.dispatchCommand(hp.getServer().getConsoleSender(), String.valueOf(str).replaceAll("\\{player}", p.getName()));
+                    }
+                } else {
+                    Bukkit.dispatchCommand(hp.getServer().getConsoleSender(), String.valueOf(getRewardValue()).replaceAll("\\{player}", p.getName()));
+                }
             }
         }
     }

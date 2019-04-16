@@ -84,5 +84,4 @@ public interface Icon {
     }
 
     String getSingleLetter();
-
 }

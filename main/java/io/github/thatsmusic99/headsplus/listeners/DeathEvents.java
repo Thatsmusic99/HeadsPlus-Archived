@@ -460,4 +460,16 @@ public class DeathEvents implements Listener {
         createList();
         setupHeads();
     }
+
+    private boolean runAcceptTests(LivingEntity e) {
+        HeadsPlusMainConfig c = HeadsPlus.getInstance().getConfiguration();
+	    if (e.getKiller() == null) {
+	        if (c.getPerks().getStringList("drops.entities-requiring-killer").contains(e.getName().replaceAll("_", "").toLowerCase())) {
+	            return false;
+            } else if (c.getPerks().getBoolean("drops.needs-killer")) {
+	            return false;
+            }
+        }
+        return true;
+    }
 }

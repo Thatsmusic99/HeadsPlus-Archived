@@ -334,7 +334,7 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
                     try {
                         int in = i + (ph.getContentsPerPage() * (ph.getCurrentPage() - 1));
                         sb.append("\n").append(translateColors(ht.getConfig().getString("leaderboard.for-each-line")
-                                .replaceAll("\\{pos}", String.valueOf(in))
+                                .replaceAll("\\{pos}", String.valueOf(in + 1))
                                 .replaceAll("\\{name}", ((OfflinePlayer)it.toArray()[i]).getName())
                                 .replaceAll("\\{score}", String.valueOf(it2.toArray()[i]))));
                     } catch (NullPointerException ignored) {

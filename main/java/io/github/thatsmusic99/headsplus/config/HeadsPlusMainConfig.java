@@ -6,6 +6,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class HeadsPlusMainConfig extends ConfigSettings {
 
@@ -44,6 +45,7 @@ public class HeadsPlusMainConfig extends ConfigSettings {
         getConfig().addDefault("plugin.perks.drop-heads", true);
         getConfig().addDefault("plugin.perks.drops.ignore-players", new ArrayList<>());
         getConfig().addDefault("plugin.perks.drops.needs-killer", false);
+        getConfig().addDefault("plugin.perks.drops.entities-requiring-killer", new ArrayList<>(Collections.singleton("player")));
         getConfig().addDefault("plugin.perks.craft-heads", false);
         getConfig().addDefault("plugin.perks.disable-crafting", false);
         getConfig().addDefault("plugin.perks.heads-selector", true);

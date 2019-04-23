@@ -7,7 +7,6 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import org.apache.commons.io.Charsets;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -71,7 +70,7 @@ public class DebugFileCreator {
             }
             o4.put("Fired when", when);
             JSONArray array = new JSONArray();
-            array.addAll(Arrays.asList(ExceptionUtils.getStackTrace(e).split("\r\n\t")));
+            array.addAll(Arrays.asList(getStackTrace(e).split("\r\n\t")));
             o4.put("Stacktrace", array);
             o1.put("Exception details", o4);
         }
@@ -322,5 +321,13 @@ public class DebugFileCreator {
         msgs.add("Y tho?");
         int random = new Random().nextInt(msgs.size());
         return msgs.get(random);
+    }
+
+    // From the ExceptionUtils in Apache Commons Language 3 library which got f*king removed ;-;
+    private static String getStackTrace(Throwable var0) {
+        StringWriter var1 = new StringWriter();
+        PrintWriter var2 = new PrintWriter(var1, true);
+        var0.printStackTrace(var2);
+        return var1.getBuffer().toString();
     }
 }

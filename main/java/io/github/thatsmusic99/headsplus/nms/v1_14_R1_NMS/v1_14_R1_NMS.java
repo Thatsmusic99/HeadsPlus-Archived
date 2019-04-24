@@ -1,27 +1,43 @@
 package io.github.thatsmusic99.headsplus.nms.v1_14_R1_NMS;
 
 import com.mojang.authlib.GameProfile;
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.Challenge;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.nms.NewNMSManager;
 import io.github.thatsmusic99.headsplus.nms.SearchGUI;
 import io.github.thatsmusic99.headsplus.util.AdventCManager;
+import net.minecraft.server.v1_14_R1.EntityPlayer;
+import net.minecraft.server.v1_14_R1.NBTTagCompound;
+import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.craftbukkit.v1_14_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_14_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class v1_14_R1_NMS implements NewNMSManager {
     @Override
     public ItemStack addNBTTag(Object item) {
-        return null;
+        net.minecraft.server.v1_14_R1.ItemStack is = CraftItemStack.asNMSCopy((org.bukkit.inventory.ItemStack) item);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setBoolean("headsplus-sell", true);
+        return CraftItemStack.asBukkitCopy(is);
     }
 
     @Override
     public boolean isSellable(Object item) {
+        if (CraftItemStack.asNMSCopy((org.bukkit.inventory.ItemStack) item).getTag() != null) {
+            return CraftItemStack.asNMSCopy((org.bukkit.inventory.ItemStack) item).getTag().getBoolean("headsplus-sell");
+        }
         return false;
     }
 
@@ -32,126 +48,215 @@ public class v1_14_R1_NMS implements NewNMSManager {
 
     @Override
     public String getSkullOwnerName(SkullMeta m) {
-        return null;
+        return m.getOwner();
     }
 
     @Override
     public ShapelessRecipe getRecipe(ItemStack i, String name) {
-        return null;
+        return new ShapelessRecipe(new NamespacedKey(HeadsPlus.getInstance(), name), i);
     }
 
     @Override
     public OfflinePlayer getOfflinePlayer(String name) {
-        return null;
+        return Bukkit.getOfflinePlayer(name);
     }
 
     @Override
     public Player getPlayer(String name) {
-        return null;
+        return Bukkit.getPlayer(name);
     }
 
     @Override
     public GameProfile getGameProfile(ItemStack s) {
-        return null;
+        EntityPlayer e = ((CraftPlayer) ((SkullMeta) s.getItemMeta()).getOwningPlayer().getPlayer()).getHandle();
+        return e.getProfile();
     }
 
     @Override
     public ItemStack getItemInHand(Player p) {
-        return null;
+        return p.getInventory().getItemInMainHand();
     }
 
     @Override
     public ItemStack setType(String s, ItemStack i) {
-        return null;
+        net.minecraft.server.v1_14_R1.ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setString("headsplus-type", s);
+        return CraftItemStack.asBukkitCopy(is);
     }
 
     @Override
     public String getType(ItemStack i) {
-        return null;
+        if (CraftItemStack.asNMSCopy(i).getTag() != null) {
+            return Objects.requireNonNull(CraftItemStack.asNMSCopy(i).getTag()).getString("headsplus-type");
+        }
+        return "";
     }
 
     @Override
-    public ItemStack addDatabaseHead(ItemStack is, String id, double price) {
-        return null;
+    public ItemStack addDatabaseHead(ItemStack i, String id, double price) {
+        net.minecraft.server.v1_14_R1.ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setString("head-id", id);
+        is.getTag().setDouble("head-price", price);
+        return CraftItemStack.asBukkitCopy(is);
     }
 
     @Override
     public double getPrice(ItemStack is) {
-        return 0;
+        net.minecraft.server.v1_14_R1.ItemStack i = CraftItemStack.asNMSCopy(is);
+        if (i.getTag() != null) {
+            return Objects.requireNonNull(CraftItemStack.asNMSCopy(is).getTag()).getDouble("head-price");
+        }
+        return -1;
     }
 
     @Override
     public String getId(ItemStack id) {
-        return null;
+        net.minecraft.server.v1_14_R1.ItemStack i = CraftItemStack.asNMSCopy(id);
+        if (i.getTag() != null) {
+            return Objects.requireNonNull(CraftItemStack.asNMSCopy(id).getTag()).getString("head-id");
+        }
+        return "";
     }
 
     @Override
-    public ItemStack addSection(ItemStack is, String sec) {
-        return null;
+    public ItemStack addSection(ItemStack i, String sec) {
+        net.minecraft.server.v1_14_R1.ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setString("head-section", sec);
+        return CraftItemStack.asBukkitCopy(is);
     }
 
     @Override
     public String getSection(ItemStack is) {
-        return null;
+        net.minecraft.server.v1_14_R1.ItemStack i = CraftItemStack.asNMSCopy(is);
+        if (i.getTag() != null) {
+            return Objects.requireNonNull(i.getTag()).getString("head-section");
+        }
+        return "";
     }
 
     @Override
     public ItemStack setIcon(ItemStack i, Icon o) {
-        return null;
+        net.minecraft.server.v1_14_R1.ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is == null) return i;
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setString("icon", o.getIconName());
+        return CraftItemStack.asBukkitCopy(is);
     }
 
     @Override
-    public Icon getIcon(ItemStack i) {
+    public Icon getIcon(ItemStack is) {
+        net.minecraft.server.v1_14_R1.ItemStack i = CraftItemStack.asNMSCopy(is);
+        if (i == null) return null;
+        if (i.getTag() != null) {
+            return Icon.getIconFromName(Objects.requireNonNull(i.getTag()).getString("icon"));
+        }
         return null;
     }
 
     @Override
     public ItemStack setCalendarValue(ItemStack i, String value) {
-        return null;
+        net.minecraft.server.v1_14_R1.ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is == null) return i;
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setString("advent-value", value);
+        return CraftItemStack.asBukkitCopy(is);
     }
 
     @Override
-    public AdventCManager getCalendarValue(ItemStack i) {
+    public AdventCManager getCalendarValue(ItemStack is) {
+        net.minecraft.server.v1_14_R1.ItemStack i = CraftItemStack.asNMSCopy(is);
+        if (i == null) return null;
+        if (i.getTag() != null) {
+            return AdventCManager.valueOf(Objects.requireNonNull(i.getTag()).getString("advent-value"));
+        }
         return null;
     }
 
     @Override
     public ItemStack setChallenge(ItemStack i, Challenge a) {
-        return null;
+        net.minecraft.server.v1_14_R1.ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setString("challenge", a.getConfigName());
+        return CraftItemStack.asBukkitCopy(is);
     }
 
     @Override
     public Challenge getChallenge(ItemStack is) {
+        net.minecraft.server.v1_14_R1.ItemStack i = CraftItemStack.asNMSCopy(is);
+        if (i.getTag() != null) {
+            return HeadsPlus.getInstance().getChallengeByName(Objects.requireNonNull(i.getTag()).getString("challenge"));
+        }
         return null;
     }
 
     @Override
     public ItemStack removeIcon(ItemStack i) {
-        return null;
+        net.minecraft.server.v1_14_R1.ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().remove("icon");
+        return CraftItemStack.asBukkitCopy(is);
     }
 
     @Override
     public String getNMSVersion() {
-        return null;
+        return "v1_14_R1";
     }
 
     @Override
     public ItemStack setOpen(ItemStack i, boolean value) {
-        return null;
+        net.minecraft.server.v1_14_R1.ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setBoolean("advent-open", value);
+        return CraftItemStack.asBukkitCopy(is);
     }
 
     @Override
     public boolean isOpen(ItemStack is) {
+        net.minecraft.server.v1_14_R1.ItemStack i = CraftItemStack.asNMSCopy(is);
+        if (i.getTag() != null) {
+            return Objects.requireNonNull(i.getTag()).getBoolean("advent-open");
+        }
         return false;
     }
 
     @Override
     public HashMap<String, String> getNBTTags(ItemStack item) {
-        return null;
+        net.minecraft.server.v1_14_R1.ItemStack i = CraftItemStack.asNMSCopy(item);
+        HashMap<String, String> keys = new HashMap<>();
+        if (i.getTag() != null) {
+            for (String str : i.getTag().getKeys()) {
+                keys.put(str, i.getTag().get(str).toString());
+            }
+        }
+        return keys;
     }
 
     @Override
     public ItemStack setPrice(ItemStack i, double price) {
-        return null;
+        net.minecraft.server.v1_14_R1.ItemStack is = CraftItemStack.asNMSCopy(i);
+        if (is.getTag() == null) {
+            is.setTag(new NBTTagCompound());
+        }
+        is.getTag().setDouble("head-price", price);
+        return CraftItemStack.asBukkitCopy(is);
     }
 }

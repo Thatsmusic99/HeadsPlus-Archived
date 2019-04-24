@@ -31,7 +31,7 @@ public class Search extends ItemStack implements Icon {
         p.closeInventory();
         final InventoryClickEvent ev = e;
         try {
-            if (HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("anvil-menu-search")) {
+            /* if (HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("anvil-menu-search")) {
                 SearchGUI s = HeadsPlus.getInstance().getNMS().getSearchGUI(p, event -> {
 
                     if (event.getSlot().equals(SearchGUI.AnvilSlot.OUTPUT)) {
@@ -47,7 +47,7 @@ public class Search extends ItemStack implements Icon {
                 });
                 s.setSlot(SearchGUI1_12.AnvilSlot.INPUT_LEFT, new ItemStack(Material.NAME_TAG));
                 s.open();
-            } else {
+            } else { */
                 ConversationFactory c = new ConversationFactory(HeadsPlus.getInstance());
                 Conversation conv = c.withFirstPrompt(new ChatPrompt()).withLocalEcho(false).buildConversation(p);
                 conv.addConversationAbandonedListener(event -> {
@@ -64,7 +64,7 @@ public class Search extends ItemStack implements Icon {
 
                 });
                 conv.begin();
-            }
+           // }
 
         } catch (Exception ex) {
             new DebugPrint(ex, "Event (InventoryEvent)", false, null);

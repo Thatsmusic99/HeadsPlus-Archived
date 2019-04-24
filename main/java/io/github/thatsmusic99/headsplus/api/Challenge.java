@@ -8,7 +8,6 @@ import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallengeType
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.util.MaterialTranslator;
 import net.milkbowl.vault.permission.Permission;
-import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -158,7 +157,7 @@ public class Challenge {
                             .append(ChatColor.GREEN)
                             .append(getRewardItemAmount())
                             .append(" ")
-                            .append(WordUtils.capitalize(getRewardValue().toString().replaceAll("_", " ")));
+                            .append(HeadsPlus.capitalize(getRewardValue().toString().replaceAll("_", " ")));
                     sb2
                             .append(getRewardItemAmount())
                             .append(" ")

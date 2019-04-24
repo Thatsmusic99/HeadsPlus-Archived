@@ -22,6 +22,7 @@ import io.github.thatsmusic99.headsplus.nms.v1_11_NMS.v1_11_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_12_NMS.v1_12_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_13_NMS.v1_13_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_13_R2_NMS.v1_13_R2_NMS;
+import io.github.thatsmusic99.headsplus.nms.v1_14_R1_NMS.v1_14_R1_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_8_R1_NMS.v1_8_R1_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_8_R2_NMS.v1_8_R2_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_8_R3_NMS.v1_8_R3NMS;
@@ -36,7 +37,6 @@ import io.github.thatsmusic99.pg.Core;
 import io.github.thatsmusic99.specprotect.CoreClass;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
-import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
@@ -154,7 +154,7 @@ public class HeadsPlus extends JavaPlugin {
             debug("- Creating Metrics!", 1);
             Metrics metrics = new Metrics(this);
             metrics.addCustomChart(new Metrics.SimplePie("languages", () -> LocaleManager.getLocale().getLanguage()));
-            metrics.addCustomChart(new Metrics.SimplePie("theme", () -> WordUtils.capitalize(getConfiguration().getMechanics().getString("plugin-theme-dont-change").toLowerCase())));
+            metrics.addCustomChart(new Metrics.SimplePie("theme", () -> capitalize(getConfiguration().getMechanics().getString("plugin-theme-dont-change").toLowerCase())));
             debug("- Metrics complete, can be found at https://bstats.org/plugin/bukkit/HeadsPlus", 2);
             if (getConfiguration().getMechanics().getBoolean("update.check")) {
                 new BukkitRunnable() {
@@ -195,6 +195,10 @@ public class HeadsPlus extends JavaPlugin {
             } catch (Exception ex) {
                 getLogger().severe("HeadsPlus has failed to start up correctly and can not read the config. An error report has been made in /plugins/HeadsPlus/debug");
                 try {
+                    getLogger().info("First stacktrace: ");
+                    e.printStackTrace();
+                    getLogger().info("Second stacktrace: ");
+                    ex.printStackTrace();
                     String s = new DebugFileCreator().createReport(e, "Startup");
                     getLogger().severe("Report name: " + s);
                     getLogger().severe("Please submit this report to the developer at one of the following links:");
@@ -471,11 +475,21 @@ public class HeadsPlus extends JavaPlugin {
         managers.add(new v1_12_NMS());
         managers.add(new v1_13_NMS());
         managers.add(new v1_13_R2_NMS());
+        managers.add(new v1_14_R1_NMS());
         String a = getServer().getClass().getPackage().getName();
         String version = a.substring(a.lastIndexOf('.') + 1);
         for (NMSManager nms : managers) {
             if (nms.getNMSVersion().equalsIgnoreCase(version)) {
                 this.nms = nms;
+            }
+        }
+        if (nms instanceof v1_14_R1_NMS) {
+            String supportedHash = "8b7fe9012a93b36df04844a6c990de27";
+            getLogger().info("1.14 detected! NMS mapping version: " + ((org.bukkit.craftbukkit.v1_14_R1.util.CraftMagicNumbers) getServer().getUnsafe()).getMappingsVersion());
+            if (supportedHash.equalsIgnoreCase(((org.bukkit.craftbukkit.v1_14_R1.util.CraftMagicNumbers) getServer().getUnsafe()).getMappingsVersion())) {
+                getLogger().info("Current hash is supported.");
+            } else {
+                getLogger().info("Current hash is not supported. If any issues arise, let the developer know!");
             }
         }
         if (this.nms == null) {
@@ -722,5 +736,51 @@ public class HeadsPlus extends JavaPlugin {
 
     public void reloadDE() {
         de.reload();
+    }
+
+    public static String capitalize(String str) {
+        return capitalize(str, null);
+    }
+
+    public static String capitalize(String str, char[] delimiters) {
+        int delimLen = delimiters == null ? -1 : delimiters.length;
+        if (str != null && str.length() != 0 && delimLen != 0) {
+            int strLen = str.length();
+            StringBuffer buffer = new StringBuffer(strLen);
+            boolean capitalizeNext = true;
+
+            for(int i = 0; i < strLen; ++i) {
+                char ch = str.charAt(i);
+                if (isDelimiter(ch, delimiters)) {
+                    buffer.append(ch);
+                    capitalizeNext = true;
+                } else if (capitalizeNext) {
+                    buffer.append(Character.toTitleCase(ch));
+                    capitalizeNext = false;
+                } else {
+                    buffer.append(ch);
+                }
+            }
+
+            return buffer.toString();
+        } else {
+            return str;
+        }
+    }
+
+    private static boolean isDelimiter(char ch, char[] delimiters) {
+        if (delimiters == null) {
+            return Character.isWhitespace(ch);
+        } else {
+            int i = 0;
+
+            for(int isize = delimiters.length; i < isize; ++i) {
+                if (ch == delimiters[i]) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

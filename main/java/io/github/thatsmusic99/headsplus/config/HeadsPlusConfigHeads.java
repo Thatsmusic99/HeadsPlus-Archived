@@ -114,7 +114,7 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
 					&& !key.equals("sheep")
                     && !key.equals("llama")
                     && !key.equals("parrot")) {
-    		    getConfig().addDefault(key + ".name", new ArrayList<>(Collections.singleton("MHF_" + WordUtils.capitalize(key))));
+    		    getConfig().addDefault(key + ".name", new ArrayList<>(Collections.singleton("MHF_" + HeadsPlus.capitalize(key))));
     		    
     		} else if (key.equals("irongolem")) {
     			getConfig().addDefault(key + ".name", new ArrayList<>(Collections.singleton("MHF_Golem")));

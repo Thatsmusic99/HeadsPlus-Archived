@@ -6,7 +6,6 @@ import com.mojang.authlib.GameProfile;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
-import org.apache.commons.io.Charsets;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -87,11 +86,12 @@ public class DebugFileCreator {
             }
             File f = new File(hp.getDataFolder() + "/debug/", date.replaceAll(":", "_").replaceAll("/", ".") + "-REPORT-" + i + ".json");
             if (!f.exists()) {
+                f.createNewFile();
                 fr = f;
                 cancelled = true;
             }
         }
-        fw = new OutputStreamWriter(new FileOutputStream(fr), Charsets.UTF_8);
+        fw = new OutputStreamWriter(new FileOutputStream(fr));
         try {
             fw.write(str.replace("\u0026", "&"));
         } finally {
@@ -162,7 +162,7 @@ public class DebugFileCreator {
                 cancelled = true;
             }
         }
-        fw = new OutputStreamWriter(new FileOutputStream(fr), Charsets.UTF_8);
+        fw = new OutputStreamWriter(new FileOutputStream(fr));
         try {
             fw.write(str.replace("\u0026", "&"));
         } finally {
@@ -224,7 +224,7 @@ public class DebugFileCreator {
                 cancelled = true;
             }
         }
-        fw = new OutputStreamWriter(new FileOutputStream(fr), Charsets.UTF_8);
+        fw = new OutputStreamWriter(new FileOutputStream(fr));
         try {
             fw.write(str.replace("\u0026", "&"));
         } finally {
@@ -277,7 +277,7 @@ public class DebugFileCreator {
                 cancelled = true;
             }
         }
-        fw = new OutputStreamWriter(new FileOutputStream(fr), Charsets.UTF_8);
+        fw = new OutputStreamWriter(new FileOutputStream(fr));
         try {
             fw.write(str.replace("\u0026", "&"));
         } finally {

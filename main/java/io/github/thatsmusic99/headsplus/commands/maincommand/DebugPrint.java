@@ -29,7 +29,7 @@ import java.util.logging.Logger;
         permission = "headsplus.maincommand.debug",
         subcommand = "Debug",
         maincommand = true,
-        usage = "/hp debug <dump|head|player|clearim|item|delete> <Player IGN>"
+        usage = "/hp debug <dump|head|player|clearim|item|delete|save> <Player IGN>"
 )
 public class DebugPrint implements IHeadsPlusCommand {
 
@@ -74,7 +74,7 @@ public class DebugPrint implements IHeadsPlusCommand {
     public HashMap<Boolean, String> isCorrectUsage(String[] args, CommandSender sender) {
         HashMap<Boolean, String> h = new HashMap<>();
         if (args.length > 1) {
-            if(args[1].equalsIgnoreCase("dump") || args[1].equalsIgnoreCase("clearim")) {
+            if(args[1].equalsIgnoreCase("dump") || args[1].equalsIgnoreCase("clearim") || args[1].equalsIgnoreCase("save")) {
                 h.put(true, "");
             } else if (args[1].equalsIgnoreCase("head")) {
                 if (sender instanceof Player) {
@@ -166,6 +166,18 @@ public class DebugPrint implements IHeadsPlusCommand {
             } else if (args[1].equalsIgnoreCase("delete")) {
                 HeadsPlus.getInstance().getScores().deletePlayer(Bukkit.getOfflinePlayer(args[2]).getPlayer());
                 sender.sendMessage(ChatColor.GREEN + "Player data for " + args[2] + " cleared.");
+            } else if (args[1].equalsIgnoreCase("save")) {
+                try {
+                    HeadsPlus.getInstance().getFavourites().save();
+                } catch (IOException e) {
+                    new DebugPrint(e, "Debug (saving favourites)", false, sender);
+                }
+                try {
+                    HeadsPlus.getInstance().getScores().save();
+                } catch (IOException e) {
+                    new DebugPrint(e, "Debug (saving scores)", false, sender);
+                }
+                sender.sendMessage(ChatColor.GREEN + "Data has been saved.");
             }
         } catch (IOException | NoSuchFieldException | IllegalAccessException e) {
             if (HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("debug.print-stacktraces-in-console")) {

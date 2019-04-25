@@ -17,7 +17,7 @@ import java.util.UUID;
 public class HeadsPlusConfigHeadsX extends ConfigSettings {
 
     public boolean s = false;
-    private final double cVersion = 2.3;
+    private final double cVersion = 2.4;
 
     public HeadsPlusConfigHeadsX() {
         this.conName = "headsx";

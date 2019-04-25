@@ -45,53 +45,36 @@ public class DeathEvents implements Listener {
 	        if (!hp.isDropsEnabled()) return;
 	        if (checkForMythicMob(e.getEntity())) return;
             HeadsPlusMainConfig c = hp.getConfiguration();
-            if (ableEntities.contains(e.getEntityType())) {
-                if (e.getEntity().getKiller() != null || !c.getPerks().getBoolean("drops.needs-killer")) {
-                    if (!c.getWhitelist("world").getStringList("list").contains(e.getEntity().getWorld().getName())) {
-                        if (e.getEntity().getKiller() != null) {
-                            if (!e.getEntity().getKiller().hasPermission("headsplus.bypass.whitelistw")) {
-                                if (c.getWhitelist("world").getBoolean("enabled")) {
-                                    return;
-                                }
-                            }
+            if (runAcceptTests(e.getEntity())) {
+                String entity = e.getEntityType().toString().toLowerCase().replaceAll("_", "");
+                Random rand = new Random();
+                double chance1 = hpch.getConfig().getDouble(entity + ".chance");
+                double chance2 = (double) rand.nextInt(100);
+                int amount = 1;
+                if (e.getEntity().getKiller() != null) {
+                    if (HeadsPlus.getInstance().getNMS().getItemInHand(e.getEntity().getKiller()).containsEnchantment(Enchantment.LOOT_BONUS_MOBS)
+                            && HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("allow-looting-enchantment")
+                            && !(HeadsPlus.getInstance().getConfiguration().getMechanics().getStringList("looting.ignored-entities").contains(e.getEntityType().name().replaceAll("_", "").toLowerCase()))) {
+                        if (c.getMechanics().getBoolean("looting.use-old-system")) {
+                            amount += HeadsPlus.getInstance().getNMS().getItemInHand(e.getEntity().getKiller()).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS) + 1;
+                        } else {
+                            chance1 *= (HeadsPlus.getInstance().getNMS().getItemInHand(e.getEntity().getKiller()).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS) + 1);
+                            amount = ((int) chance1 / 100) == 0 ? 1 : (int) (chance1 / 100);
                         }
-                        if (c.getWhitelist("world").getBoolean("enabled")) {
-                            return;
-                        }
+
                     }
-                    if (!c.getBlacklist("world").getStringList("list").contains(e.getEntity().getWorld().getName()) || e.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !c.getBlacklist("world").getBoolean("enabled")) {
+                }
+                if (chance1 == 0.0) return;
+                if (chance2 <= chance1) {
 
-                        String entity = e.getEntityType().toString().toLowerCase().replaceAll("_", "");
-                        Random rand = new Random();
-                        double chance1 = hpch.getConfig().getDouble(entity + ".chance");
-                        double chance2 = (double) rand.nextInt(100);
-                        int amount = 1;
-                        if (e.getEntity().getKiller() != null) {
-                            if (HeadsPlus.getInstance().getNMS().getItemInHand(e.getEntity().getKiller()).containsEnchantment(Enchantment.LOOT_BONUS_MOBS)
-                                    && HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("allow-looting-enchantment")
-                                    && !(HeadsPlus.getInstance().getConfiguration().getMechanics().getStringList("looting.ignored-entities").contains(e.getEntityType().name().replaceAll("_", "").toLowerCase()))) {
-                                if (c.getMechanics().getBoolean("looting.use-old-system")) {
-                                    amount += HeadsPlus.getInstance().getNMS().getItemInHand(e.getEntity().getKiller()).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS) + 1;
-                                } else {
-                                    chance1 *= (HeadsPlus.getInstance().getNMS().getItemInHand(e.getEntity().getKiller()).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS) + 1);
-                                    amount = ((int) chance1 / 100) == 0 ? 1 : (int) (chance1 / 100);
-                                }
-
-                            }
-                        }
-                        if (chance1 == 0.0) return;
-                        if (chance2 <= chance1) {
-
-                            if (entity.equalsIgnoreCase("sheep") ||
-                                    entity.equalsIgnoreCase("parrot") ||
-                                    entity.equalsIgnoreCase("horse") ||
-                                    entity.equalsIgnoreCase("llama")) {
-                                dropHead(e.getEntity(), e.getEntity().getKiller(), amount);
-                            } else {
-                                if (hpch.getConfig().getStringList(entity + ".name").isEmpty()) return;
-                                dropHead(e.getEntity(), e.getEntity().getKiller(), amount);
-                            }
-                        }
+                    if (entity.equalsIgnoreCase("sheep") ||
+                            entity.equalsIgnoreCase("parrot") ||
+                            entity.equalsIgnoreCase("horse") ||
+                            entity.equalsIgnoreCase("llama")) {
+                        dropHead(e.getEntity(), e.getEntity().getKiller(), amount);
+                    } else {
+                        if (hpch.getConfig().getStringList(entity + ".name").isEmpty()) return;
+                        dropHead(e.getEntity(), e.getEntity().getKiller(), amount);
                     }
                 }
             }
@@ -106,82 +89,66 @@ public class DeathEvents implements Listener {
             HeadsPlus hp = HeadsPlus.getInstance();
             if (!hp.isDropsEnabled()) return;
             HeadsPlusMainConfig c = hp.getConfiguration();
-            if (ep.getEntity().getKiller() != null || !c.getPerks().getBoolean("drops.needs-killer")) {
-                if (!c.getWhitelist("world").getStringList("list").contains(ep.getEntity().getWorld().getName())) {
-                    if (ep.getEntity().getKiller() != null) {
-                        if (!ep.getEntity().getKiller().hasPermission("headsplus.bypass.whitelistw")) {
-                            if (c.getWhitelist("world").getBoolean("enabled")) {
-                                return;
-                            }
+            if (runAcceptTests(ep.getEntity())) {
+                Random rand = new Random();
+                double chance1 = hpch.getConfig().getDouble("player.chance");
+                double chance2 = (double) rand.nextInt(100);
+                NMSManager nms = hp.getNMS();
+                int a = 1;
+                if (ep.getEntity().getKiller() != null) {
+                    if (nms.getItemInHand(ep.getEntity().getKiller()).containsEnchantment(Enchantment.LOOT_BONUS_MOBS)
+                            && c.getMechanics().getBoolean("allow-looting-enchantment")
+                            && !(c.getMechanics().getStringList("looting.ignored-entities").contains("player"))) {
+                        if (c.getMechanics().getBoolean("looting.use-old-system")) {
+                            a = HeadsPlus.getInstance().getNMS().getItemInHand(ep.getEntity().getKiller()).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
+                        } else {
+                            chance1 *= HeadsPlus.getInstance().getNMS().getItemInHand(ep.getEntity().getKiller()).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
+                            a = ((int) chance1 / 100) == 0 ? 1 : (int) (chance1 / 100);
                         }
-                    }
-                    if (c.getWhitelist("world").getBoolean("enabled")) {
-                        return;
                     }
                 }
-                if (c.getPerks().getStringList("drops.ignore-players").contains(ep.getEntity().getUniqueId().toString())
-                        || c.getPerks().getStringList("drops.ignore-players").contains(ep.getEntity().getName())) return;
-                if (!c.getBlacklist("world").getStringList("list").contains(ep.getEntity().getWorld().getName()) || ep.getEntity().getKiller().hasPermission("headsplus.bypass.blacklistw") || !c.getBlacklist("world").getBoolean("enabled")) {
-                    Random rand = new Random();
-                    double chance1 = hpch.getConfig().getDouble("player.chance");
-                    double chance2 = (double) rand.nextInt(100);
-                    NMSManager nms = hp.getNMS();
-                    int a = 1;
-                    if (ep.getEntity().getKiller() != null) {
-                        if (nms.getItemInHand(ep.getEntity().getKiller()).containsEnchantment(Enchantment.LOOT_BONUS_MOBS)
-                                && c.getMechanics().getBoolean("allow-looting-enchantment")
-                                && !(c.getMechanics().getStringList("looting.ignored-entities").contains("player"))) {
-                            if (c.getMechanics().getBoolean("looting.use-old-system")) {
-                                a = HeadsPlus.getInstance().getNMS().getItemInHand(ep.getEntity().getKiller()).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
-                            } else {
-                                chance1 *= HeadsPlus.getInstance().getNMS().getItemInHand(ep.getEntity().getKiller()).getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
-                                a = ((int) chance1 / 100) == 0 ? 1 : (int) (chance1 / 100);
-                            }
-                        }
+
+                if (chance1 == 0.0) return;
+                if (chance2 <= chance1) {
+
+
+                    ItemStack head = nms.getSkullMaterial(a);
+                    SkullMeta headM = (SkullMeta) head.getItemMeta();
+                    headM = nms.setSkullOwner(ep.getEntity().getName(), headM);
+                    headM.setDisplayName(hpch.getDisplayName("player").replaceAll("\\{player}", ep.getEntity().getName()));
+
+
+                    Location entityLoc = ep.getEntity().getLocation();
+                    double entityLocY = entityLoc.getY() + 1;
+                    entityLoc.setY(entityLocY);
+                    World world = ep.getEntity().getWorld();
+
+                    double price = hpch.getPrice("player");
+                    boolean b = hp.getConfiguration().getPerks().getBoolean("pvp.player-balance-competition");
+                    double lostprice = 0.0;
+                    if (b) {
+                        double playerprice = HeadsPlus.getInstance().getEconomy().getBalance(ep.getEntity());
+                        price = playerprice * hp.getConfiguration().getPerks().getDouble("pvp.percentage-balance-for-head");
+                        lostprice = HeadsPlus.getInstance().getEconomy().getBalance(ep.getEntity()) * hp.getConfiguration().getPerks().getDouble("pvp.percentage-lost");
                     }
 
-                    if (chance1 == 0.0) return;
-                    if (chance2 <= chance1) {
-
-
-                        ItemStack head = nms.getSkullMaterial(a);
-                        SkullMeta headM = (SkullMeta) head.getItemMeta();
-                        headM = nms.setSkullOwner(ep.getEntity().getName(), headM);
-                        headM.setDisplayName(hpch.getDisplayName("player").replaceAll("\\{player}", ep.getEntity().getName()));
-
-
-                        Location entityLoc = ep.getEntity().getLocation();
-                        double entityLocY = entityLoc.getY() + 1;
-                        entityLoc.setY(entityLocY);
-                        World world = ep.getEntity().getWorld();
-
-                        double price = hpch.getPrice("player");
-                        boolean b = hp.getConfiguration().getPerks().getBoolean("pvp.player-balance-competition");
-                        double lostprice = 0.0;
-                        if (b) {
-                            double playerprice = HeadsPlus.getInstance().getEconomy().getBalance(ep.getEntity());
-                            price = playerprice * hp.getConfiguration().getPerks().getDouble("pvp.percentage-balance-for-head");
-                            lostprice = HeadsPlus.getInstance().getEconomy().getBalance(ep.getEntity()) * hp.getConfiguration().getPerks().getDouble("pvp.percentage-lost");
+                    List<String> strs = new ArrayList<>();
+                    for (String str : hpch.getLore("player")) {
+                        strs.add(ChatColor.translateAlternateColorCodes('&', str.replaceAll("\\{player}", ep.getEntity().getName()).replaceAll("\\{price}", String.valueOf(price))));
+                    }
+                    headM.setLore(strs);
+                    head.setItemMeta(headM);
+                    head = nms.addNBTTag(head);
+                    head = nms.setType("player", head);
+                    head = nms.setPrice(head, price);
+                    PlayerHeadDropEvent event = new PlayerHeadDropEvent(ep.getEntity(), ep.getEntity().getKiller(), head, world, entityLoc);
+                    Bukkit.getServer().getPluginManager().callEvent(event);
+                    if (!event.isCancelled()) {
+                        if (b && ep.getEntity().getKiller() != null) {
+                            hp.getEconomy().withdrawPlayer(ep.getEntity(), lostprice);
+                            ep.getEntity().sendMessage(hp.getMessagesConfig().getString("lost-money").replaceAll("\\{player}", ep.getEntity().getKiller().getName()).replaceAll("\\{price}", String.valueOf(lostprice)));
                         }
-
-                        List<String> strs = new ArrayList<>();
-                        for (String str : hpch.getLore("player")) {
-                            strs.add(ChatColor.translateAlternateColorCodes('&', str.replaceAll("\\{player}", ep.getEntity().getName()).replaceAll("\\{price}", String.valueOf(price))));
-                        }
-                        headM.setLore(strs);
-                        head.setItemMeta(headM);
-                        head = nms.addNBTTag(head);
-                        head = nms.setType("player", head);
-                        head = nms.setPrice(head, price);
-                        PlayerHeadDropEvent event = new PlayerHeadDropEvent(ep.getEntity(), ep.getEntity().getKiller(), head, world, entityLoc);
-                        Bukkit.getServer().getPluginManager().callEvent(event);
-                        if (!event.isCancelled()) {
-                            if (b && ep.getEntity().getKiller() != null) {
-                                hp.getEconomy().withdrawPlayer(ep.getEntity(), lostprice);
-                                ep.getEntity().sendMessage(hp.getMessagesConfig().getString("lost-money").replaceAll("\\{player}", ep.getEntity().getKiller().getName()).replaceAll("\\{price}", String.valueOf(lostprice)));
-                            }
-                            world.dropItem(event.getLocation(), event.getSkull());
-                        }
+                        world.dropItem(event.getLocation(), event.getSkull());
                     }
                 }
             }
@@ -207,6 +174,7 @@ public class DeathEvents implements Listener {
         }
         if (bukkitVersion.contains("1.14")) {
             ableEntities.addAll(Arrays.asList(EntityType.FOX, EntityType.CAT, EntityType.PANDA, EntityType.PILLAGER, EntityType.RAVAGER, EntityType.TRADER_LLAMA, EntityType.WANDERING_TRADER, EntityType.DONKEY, EntityType.ELDER_GUARDIAN, EntityType.EVOKER, EntityType.HUSK, EntityType.LLAMA, EntityType.MULE, EntityType.PARROT, EntityType.POLAR_BEAR, EntityType.SHULKER, EntityType.SKELETON_HORSE, EntityType.STRAY, EntityType.VEX, EntityType.VINDICATOR, EntityType.WITHER_SKELETON, EntityType.COD, EntityType.SALMON, EntityType.TROPICAL_FISH, EntityType.PUFFERFISH, EntityType.PHANTOM, EntityType.TURTLE, EntityType.DOLPHIN, EntityType.DROWNED, EntityType.ZOMBIE_HORSE, EntityType.ZOMBIE_VILLAGER));
+        }
 	}
 
 	private void setupHeads() {
@@ -465,6 +433,7 @@ public class DeathEvents implements Listener {
 
     private boolean runAcceptTests(LivingEntity e) {
         HeadsPlusMainConfig c = HeadsPlus.getInstance().getConfiguration();
+        // Killer checks
 	    if (e.getKiller() == null) {
 	        if (c.getPerks().getStringList("drops.entities-requiring-killer").contains(e.getName().replaceAll("_", "").toLowerCase())) {
 	            return false;
@@ -472,6 +441,28 @@ public class DeathEvents implements Listener {
 	            return false;
             }
         }
-        return true;
+        // Whitelist checks
+        if (c.getWhitelist("world").getBoolean("enabled")) {
+	        if (!c.getWhitelist("world").getStringList("list").contains(e.getWorld().getName())) {
+	            if (e.getKiller().hasPermission("headsplus.bypass.whitelistw")) {
+                    return false;
+                }
+            }
+        }
+        // Blacklist checks
+        if (c.getBlacklist("world").getBoolean("enabled")) {
+            if (!c.getBlacklist("world").getStringList("list").contains(e.getWorld().getName())) {
+                if (e.getKiller().hasPermission("headsplus.bypass.blacklistw")) {
+                    return false;
+                }
+            }
+        }
+        if (e instanceof Player) {
+	        return !(c.getPerks().getStringList("drops.ignore-players").contains(e.getUniqueId().toString())
+                    || c.getPerks().getStringList("drops.ignore-players").contains(e.getName()));
+        } else {
+            return ableEntities.contains(e.getType());
+        }
+
     }
 }

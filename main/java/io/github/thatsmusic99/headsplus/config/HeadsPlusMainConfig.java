@@ -63,7 +63,7 @@ public class HeadsPlusMainConfig extends ConfigSettings {
         getConfig().addDefault("plugin.perks.pvp.percentage-lost", 0.05);
         getConfig().addDefault("plugin.perks.pvp.percentage-balance-for-head", 0.05);
         getConfig().addDefault("plugin.perks.houses.enabled", true);
-        getConfig().addDefault("plugin.mechanics.theme", "easter");
+        getConfig().addDefault("plugin.mechanics.theme", "classic");
         getConfig().addDefault("plugin.mechanics.plugin-theme-dont-change", "classic");
         getConfig().addDefault("plugin.mechanics.update.check", true);
         getConfig().addDefault("plugin.mechanics.update.notify", true);

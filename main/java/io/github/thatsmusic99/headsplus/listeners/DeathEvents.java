@@ -443,8 +443,8 @@ public class DeathEvents implements Listener {
         }
         // Whitelist checks
         if (c.getWhitelist("world").getBoolean("enabled")) {
-	        if (!c.getWhitelist("world").getStringList("list").contains(e.getWorld().getName())) {
-	            if (e.getKiller().hasPermission("headsplus.bypass.whitelistw")) {
+	        if (c.getWhitelist("world").getStringList("list").contains(e.getWorld().getName())) {
+	            if (!e.getKiller().hasPermission("headsplus.bypass.whitelistw")) {
                     return false;
                 }
             }
@@ -452,8 +452,10 @@ public class DeathEvents implements Listener {
         // Blacklist checks
         if (c.getBlacklist("world").getBoolean("enabled")) {
             if (!c.getBlacklist("world").getStringList("list").contains(e.getWorld().getName())) {
-                if (e.getKiller().hasPermission("headsplus.bypass.blacklistw")) {
-                    return false;
+                if (e.getKiller() != null) {
+                    if (!e.getKiller().hasPermission("headsplus.bypass.blacklistw")) {
+                        return false;
+                    }
                 }
             }
         }

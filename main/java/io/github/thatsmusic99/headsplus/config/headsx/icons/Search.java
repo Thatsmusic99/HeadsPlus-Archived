@@ -31,7 +31,7 @@ public class Search extends ItemStack implements Icon {
         p.closeInventory();
         final InventoryClickEvent ev = e;
         try {
-            /* if (HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("anvil-menu-search")) {
+           /*  if (HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("anvil-menu-search")) {
                 SearchGUI s = HeadsPlus.getInstance().getNMS().getSearchGUI(p, event -> {
 
                     if (event.getSlot().equals(SearchGUI.AnvilSlot.OUTPUT)) {
@@ -45,7 +45,7 @@ public class Search extends ItemStack implements Icon {
 
                     ev.setCancelled(true);
                 });
-                s.setSlot(SearchGUI1_12.AnvilSlot.INPUT_LEFT, new ItemStack(Material.NAME_TAG));
+                s.setSlot(SearchGUI.AnvilSlot.INPUT_LEFT, new ItemStack(Material.NAME_TAG));
                 s.open();
             } else { */
                 ConversationFactory c = new ConversationFactory(HeadsPlus.getInstance());

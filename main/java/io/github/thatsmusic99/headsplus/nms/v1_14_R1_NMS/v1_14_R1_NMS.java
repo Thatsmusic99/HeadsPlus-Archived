@@ -43,7 +43,7 @@ public class v1_14_R1_NMS implements NewNMSManager {
 
     @Override
     public SearchGUI getSearchGUI(Player p, SearchGUI.AnvilClickEventHandler a) {
-        return null;
+        return new SearchGUI1_14_R1(p, a);
     }
 
     @Override

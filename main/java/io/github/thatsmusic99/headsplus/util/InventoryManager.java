@@ -303,7 +303,17 @@ public class InventoryManager {
         List<String> price = new ArrayList<>();
         double pr = 0.0;
         if (HeadsPlus.getInstance().econ()) {
-            if (hpchx.getConfig().get("heads." + str + ".price") instanceof String) {
+            if (hpchx.getConfig().get("options.price-per-world." + p.getWorld().getName()) instanceof String) {
+                if (((String) hpchx.getConfig().get("options.price-per-world." + p.getWorld().getName())).equalsIgnoreCase("default")) {
+                    if (!hpchx.getConfig().get("options.default-price").equals("free")) {
+                        pr = hpchx.getConfig().getDouble("options.default-price");
+                    }
+                } else {
+                    pr = hpchx.getConfig().getDouble("options.price-per-world." + p.getWorld().getName());
+                }
+            } else if (hpchx.getConfig().get("options.price-per-world." + p.getWorld().getName()) instanceof Double) {
+                pr = hpchx.getConfig().getDouble("options.price-per-world." + p.getWorld().getName());
+            } else if (hpchx.getConfig().get("heads." + str + ".price") instanceof String) {
                 if (!((String) hpchx.getConfig().get("heads." + str + ".price")).equalsIgnoreCase("free")) {
                     if (((String) hpchx.getConfig().get("heads." + str + ".price")).equalsIgnoreCase("default")) {
                         if (!hpchx.getConfig().get("options.default-price").equals("free")) {

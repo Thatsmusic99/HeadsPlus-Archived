@@ -59,7 +59,8 @@ public class HeadsPlusConfigHeadsX extends ConfigSettings {
         getConfig().addDefault("options.update-heads", true);
         getConfig().addDefault("options.version", cVersion);
         getConfig().addDefault("options.default-price", 10.00);
-     //   getConfig().addDefault("options.price-per-world.example-one", 15.00);
+        getConfig().addDefault("options.price-per-world.example-one", 15.00);
+        getConfig().options().copyDefaults(true);
      //   getConfig().addDefault("options.advent-calendar", true);
     //    getConfig().addDefault("options.advent-texture", "HP#snowman");
     //    getConfig().addDefault("options.advent-display-name", "&4[&a&lHeadsPlus &c&lAdvent Calendar!&2]");

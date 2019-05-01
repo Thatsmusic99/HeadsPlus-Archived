@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.nms.v1_9_R2_NMS;
 
 import io.github.thatsmusic99.headsplus.nms.SearchGUI;
+import io.github.thatsmusic99.headsplus.util.AnvilSlot;
 import net.minecraft.server.v1_9_R2.*;
 import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;

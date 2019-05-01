@@ -1,6 +1,7 @@
 package io.github.thatsmusic99.headsplus.nms;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.util.AnvilSlot;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,31 +18,6 @@ import java.util.HashMap;
 
 public class SearchGUI {
 
-    public enum AnvilSlot {
-        INPUT_LEFT(0),
-        INPUT_RIGHT(1),
-        OUTPUT(2);
-
-        private final int slot;
-
-        AnvilSlot(int slot) {
-            this.slot = slot;
-        }
-
-        public int getSlot() {
-            return slot;
-        }
-
-        public static AnvilSlot bySlot(int slot) {
-            for (AnvilSlot anvilSlot : values()) {
-                if (anvilSlot.getSlot() == slot) {
-                    return anvilSlot;
-                }
-            }
-
-            return null;
-        }
-    }
 
     public class AnvilClickEvent {
         private final AnvilSlot slot;

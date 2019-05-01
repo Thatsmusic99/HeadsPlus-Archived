@@ -6,6 +6,8 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.nms.SearchGUI;
 import io.github.thatsmusic99.headsplus.nms.v1_12_NMS.SearchGUI1_12;
+import io.github.thatsmusic99.headsplus.nms.v1_14_R1_NMS.SearchGUI1_14_R1;
+import io.github.thatsmusic99.headsplus.util.AnvilSlot;
 import io.github.thatsmusic99.headsplus.util.ChatPrompt;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import org.bukkit.Material;
@@ -34,7 +36,7 @@ public class Search extends ItemStack implements Icon {
            /*  if (HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("anvil-menu-search")) {
                 SearchGUI s = HeadsPlus.getInstance().getNMS().getSearchGUI(p, event -> {
 
-                    if (event.getSlot().equals(SearchGUI.AnvilSlot.OUTPUT)) {
+                    if (event.getSlot().equals(AnvilSlot.OUTPUT)) {
                         event.setWillClose(false);
                         event.setWillDestroy(false);
                         im.setSection("search:" + event.getName());
@@ -45,7 +47,7 @@ public class Search extends ItemStack implements Icon {
 
                     ev.setCancelled(true);
                 });
-                s.setSlot(SearchGUI.AnvilSlot.INPUT_LEFT, new ItemStack(Material.NAME_TAG));
+                s.setSlot(AnvilSlot.INPUT_LEFT, new ItemStack(Material.NAME_TAG));
                 s.open();
             } else { */
                 ConversationFactory c = new ConversationFactory(HeadsPlus.getInstance());
@@ -64,7 +66,7 @@ public class Search extends ItemStack implements Icon {
 
                 });
                 conv.begin();
-           // }
+         //   }
 
         } catch (Exception ex) {
             new DebugPrint(ex, "Event (InventoryEvent)", false, null);

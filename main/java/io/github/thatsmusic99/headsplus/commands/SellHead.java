@@ -340,15 +340,6 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 
             }
         }
-        try {
-            if (hm.get("sheep") != 0 || hm.get("sheep") != null) {
-                if (hm.get("sheep") % 3 == 0) {
-                    hm.put("sheep", hm.get("sheep") / 3);
-                }
-            }
-        } catch (Exception ignored) {
-
-        }
 
         if (price == 0) {
             p.sendMessage(hpc.getString("no-heads"));

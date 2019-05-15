@@ -134,15 +134,25 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
             HeadsPlusConfigTextMenu h = HeadsPlus.getInstance().getMenus();
             HeadsPlusAPI api = HeadsPlus.getInstance().getAPI();
             for (String str : h.getConfig().getStringList("profile.layout")) {
-                sb.append(translateColors(str.replaceAll("\\{player}", p.getPlayer().getName())
-                .replaceAll("\\{xp}", String.valueOf(p.getXp()))
-                .replaceAll("\\{completed-challenges}", String.valueOf(p.getCompleteChallenges().size()))
-                .replaceAll("\\{hunter-counter}", String.valueOf(api.getPlayerInLeaderboards(p.getPlayer(), "total", "headspluslb")))
-                .replaceAll("\\{sellhead-counter}", String.valueOf(api.getPlayerInLeaderboards(p.getPlayer(), "total", "headsplussh")))
-                .replaceAll("\\{crafting-counter}", String.valueOf(api.getPlayerInLeaderboards(p.getPlayer(), "total", "headspluscraft")))
-                .replaceAll("\\{level}", ChatColor.translateAlternateColorCodes('&', p.getLevel().getDisplayName()))
-                .replaceAll("\\{next-level}", String.valueOf((p.getNextLevel() != null ? (p.getNextLevel().getRequiredXP() - p.getXp()) : 0)))
-                .replaceAll("\\{header}", h.getConfig().getString("profile.header")))).append("\n");
+                try {
+                    String stri = translateColors(str.replaceAll("\\{player}", p.getPlayer().getName())
+                            .replaceAll("\\{xp}", String.valueOf(p.getXp()))
+                            .replaceAll("\\{completed-challenges}", String.valueOf(p.getCompleteChallenges().size()))
+                            .replaceAll("\\{hunter-counter}", String.valueOf(api.getPlayerInLeaderboards(p.getPlayer(), "total", "headspluslb")))
+                            .replaceAll("\\{sellhead-counter}", String.valueOf(api.getPlayerInLeaderboards(p.getPlayer(), "total", "headsplussh")))
+                            .replaceAll("\\{crafting-counter}", String.valueOf(api.getPlayerInLeaderboards(p.getPlayer(), "total", "headspluscraft")))
+                            .replaceAll("\\{header}", h.getConfig().getString("profile.header")));
+                    if (!(stri.contains("{level}") || (stri.contains("{next-level}")))) {
+                        sb.append(stri).append("\n");
+                    } else {
+                        stri = stri.replaceAll("\\{level}", ChatColor.translateAlternateColorCodes('&', p.getLevel().getDisplayName()))
+                                .replaceAll("\\{next-level}", String.valueOf((p.getNextLevel() != null ? (p.getNextLevel().getRequiredXP() - p.getXp()) : 0)));
+                        sb.append(stri).append("\n");
+                    }
+
+                } catch (NullPointerException ignored) {
+
+                }
             }
             return sb.toString();
         }

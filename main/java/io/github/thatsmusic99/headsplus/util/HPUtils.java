@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus.util;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.boss.BarColor;
@@ -11,8 +12,11 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashMap;
+
 public class HPUtils {
 
+    private static HashMap<Player, BossBar> bossBars = new HashMap<>();
     public static boolean switchBoolean(boolean b) {
         return !b;
     }
@@ -22,19 +26,25 @@ public class HPUtils {
         ConfigurationSection c = HeadsPlus.getInstance().getConfiguration().getMechanics();
         if (c.getBoolean("boss-bar.enabled")) {
             if (p.getNextLevel() != null) {
-                String s = ChatColor.translateAlternateColorCodes('&', c.getString("boss-bar.title"));
                 try {
-                    BossBar b = HeadsPlus.getInstance().getServer().createBossBar(s, BarColor.valueOf(c.getString("boss-bar.color")), BarStyle.SEGMENTED_6);
-                    b.addPlayer((Player) p.getPlayer());
-                    Double d = ((double) p.getNextLevel().getRequiredXP() - p.getXp()) / (double) p.getNextLevel().getRequiredXP();
-                    b.setProgress(d);
-                    b.setVisible(true);
-                    new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            b.setVisible(false);
-                        }
-                    }.runTaskLater(HeadsPlus.getInstance(), c.getInt("boss-bar.lifetime") * 20);
+                    if (!bossBars.containsKey(pl.getPlayer())) {
+                        String s = ChatColor.translateAlternateColorCodes('&', c.getString("boss-bar.title"));
+                        BossBar bossBar = Bukkit.getServer().createBossBar(s, BarColor.valueOf(c.getString("boss-bar.color")), BarStyle.SEGMENTED_6);
+                        bossBar.addPlayer(pl.getPlayer());
+                        Double d = ((double) p.getNextLevel().getRequiredXP() - p.getXp()) / (double) p.getNextLevel().getRequiredXP();
+                        bossBar.setProgress(d);
+                        bossBar.setVisible(true);
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                bossBar.setVisible(false);
+                                bossBar.removePlayer(pl.getPlayer());
+                            }
+                        }.runTaskLater(HeadsPlus.getInstance(), c.getInt("boss-bar.lifetime") * 20);
+                    } else {
+                        Double d = ((double) p.getNextLevel().getRequiredXP() - p.getXp()) / (double) p.getNextLevel().getRequiredXP();
+                        bossBars.get(pl.getPlayer()).setProgress(d);
+                    }
                 } catch (NoClassDefFoundError ignored) {
 
                 }

@@ -11,10 +11,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.*;
 
 public class MySQLAPI {
@@ -30,12 +27,12 @@ public class MySQLAPI {
         hpc = hp.getChallengeConfig();
         de = hp.getDeathEvents();
         if (hpc.getConfig().get("player-data") instanceof ConfigurationSection) {
-            HeadsPlus.getInstance().getLogger().info("Old storage detected! Transfering data (this will be saved when the server stops)...");
+            hp.getLogger().info("Old storage detected! Transfering data (this will be saved when the server stops)...");
             transferScoresToJSON();
         }
     }
 
-    private void addNewPlayerValue(Player p, String section, String database, int shAmount) throws SQLException {
+    private void addNewPlayerValue(OfflinePlayer p, String section, String database, int shAmount) throws SQLException {
         String uuid = p.getUniqueId().toString();
         if (hp.isConnectedToMySQLDatabase()) {
             Connection c = hp.getConnection();
@@ -44,66 +41,63 @@ public class MySQLAPI {
             s = c.createStatement();
 
             try {
-                rs = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + uuid + "'");
-                Integer.parseInt(rs.getString(section)); // I don't care if it's ignored
-            } catch (SQLException ex) {
-                StringBuilder sb2 = new StringBuilder();
-                sb2.append("INSERT INTO `").append(database).append("` (uuid, total");
-                for (EntityType e : de.ableEntities) {
-                    sb2.append(", ").append(e.name());
-                }
-                sb2.append(") VALUES('").append(p.getUniqueId().toString()).append("', '0'");
-                for (EntityType ignored : de.ableEntities) {
-                    sb2.append(", '0'");
-                }
-                sb2.append(");");
-
-                s.executeUpdate(sb2.toString());
-
-                rs = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + uuid + "'");
+                PreparedStatement st = c.prepareStatement("SELECT " + section + " FROM `" + database + "` WHERE `uuid`=?");
+                st.setString(1, uuid);
+                rs = st.executeQuery();
                 rs.next();
-                int val = Integer.parseInt(rs.getString(section));
+                rs.getInt(section); // I don't care if it's ignored
+            } catch (SQLException | NumberFormatException ex) {
+                if (ex instanceof SQLException) {
+                    StringBuilder sb2 = new StringBuilder();
+                    sb2.append("INSERT INTO `").append(database).append("` (uuid, total");
+                    for (EntityType e : de.ableEntities) {
+                        sb2.append(", ").append(e.name());
+                    }
+                    sb2.append(") VALUES('").append(p.getUniqueId().toString()).append("', '0'");
+                    for (EntityType ignored : de.ableEntities) {
+                        sb2.append(", '0'");
+                    }
+                    sb2.append(");");
 
+                    s.executeUpdate(sb2.toString());
+                }
+
+                PreparedStatement st = c.prepareStatement("SELECT "  + section + ", total FROM `" + database + "` WHERE `uuid`=?");
+                st.setString(1, uuid);
+                rs = st.executeQuery();
+                int val = 0;
+                int val2 = 0;
+                if (rs.next()) {
+                    val = rs.getInt(section);
+                    val2 = rs.getInt("total");
+                }
                 val += shAmount;
-                s.executeUpdate("UPDATE `" + database + "` SET `" + section + "`='" + val + "' WHERE `uuid`='" + uuid + "'");
-                int val2;
-                ResultSet rs3 = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + uuid + "'");
-                rs3.next();
-                val2 = Integer.parseInt(rs3.getString("total"));
-
                 val2 += shAmount;
-                s.executeUpdate("UPDATE `" + database + "` SET total='" + val2 + "' WHERE `uuid`='" + uuid + "'");
-
-                ResultSet rs4 = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='server-total'");
-
-                rs4.next();
-
-                int val3 = Integer.parseInt(rs4.getString(section));
-                val3++;
-                s.executeUpdate("UPDATE `" + database + "` SET `" + section + "`='" + val3 + "' WHERE `uuid`='server-total'");
-
-                ResultSet rs2;
-                rs2 = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='server-total'");
-
-                rs2.next();
-
-                val2 = Integer.parseInt(rs2.getString("total"));
-
-                val2 += shAmount;
-                s.executeUpdate("UPDATE `" + database + "` SET total='" + val2 + "' WHERE `uuid`='server-total'");
+                s.executeUpdate("UPDATE `" + database + "` SET `" + section + "`='" + val + "', `total`='" + val2 + "' WHERE `uuid`='" + uuid + "'");
+                ResultSet rs4 = s.executeQuery("SELECT " + section + ", total FROM `" + database + "` WHERE `uuid`='server-total'");
+                int val3 = 0;
+                int val4 = 0;
+                if (rs4.next()) {
+                    val3 = rs4.getInt(section);
+                    val4 = rs4.getInt("total");
+                }
+                val3 += shAmount;
+                val4 += shAmount;
+                s.executeUpdate("UPDATE `" + database + "` SET `" + section + "`='" + val3 + "', `total`='" + val4 + "' WHERE `uuid`='server-total'");
 
             }
         } else {
+            PlayerScores scores = hp.getScores();
             if (database.equalsIgnoreCase("headspluslb")) {
-                HeadsPlus.getInstance().getScores().setPlayerTotal(uuid, section, database, 0);
-                HeadsPlus.getInstance().getScores().addPlayerTotal("server-total", section.toUpperCase(), database, 1);
+                scores.setPlayerTotal(uuid, section, database, 0);
+                scores.addPlayerTotal("server-total", section.toUpperCase(), database, 1);
             } else if (database.equalsIgnoreCase("headsplussh")) {
-                HeadsPlus.getInstance().getScores().setPlayerTotal(uuid, section, database, 0);
-                HeadsPlus.getInstance().getScores().addPlayerTotal("server-total", section.toUpperCase(), database, shAmount);
+                scores.setPlayerTotal(uuid, section, database, 0);
+                scores.addPlayerTotal("server-total", section.toUpperCase(), database, shAmount);
             } else {
                 try {
-                    HeadsPlus.getInstance().getScores().setPlayerTotal(uuid, section, database, 0);
-                    HeadsPlus.getInstance().getScores().addPlayerTotal("server-total", section.toUpperCase(), database, shAmount);
+                    scores.setPlayerTotal(uuid, section, database, 0);
+                    scores.addPlayerTotal("server-total", section.toUpperCase(), database, shAmount);
                 } catch (IllegalArgumentException ignored) { // Idk why the hell this happens????
 
                 }
@@ -113,44 +107,51 @@ public class MySQLAPI {
         }
     }
 
-    public void addOntoValue(Player p, String section, String database, int shAmount) throws SQLException {
+    public void addOntoValue(OfflinePlayer p, String section, String database, int shAmount) throws SQLException {
         String uuid = p.getUniqueId().toString();
+        section = section.toUpperCase();
         if (hp.isConnectedToMySQLDatabase()) {
             try {
 
                 Connection c = hp.getConnection();
                 Statement s = c.createStatement();
+                // Update player
                 ResultSet rs;
-                rs = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + uuid + "'");
-                rs.next();
-                int val = Integer.parseInt(rs.getString(section));
+                rs = s.executeQuery("SELECT " + section + ", total FROM `" + database + "` WHERE uuid='" + uuid + "'");
+                int val;
+                int val2;
+                if (rs.next()) {
+                    val = rs.getInt(section);
+                    val2 = rs.getInt("total");
+                } else {
+                    addNewPlayerValue(p, section, database, shAmount);
+                    return;
+                }
                 val += shAmount;
-                s.executeUpdate("UPDATE `" + database + "` SET `" + section + "`='" + val + "' WHERE `uuid`='" + uuid + "'");
-                ResultSet rs3 = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='" + uuid + "'");
-                rs3.next();
-                int val2 = Integer.parseInt(rs3.getString("total"));
                 val2 += shAmount;
-                s.executeUpdate("UPDATE `" + database + "` SET `total`='" + val2 + "' WHERE `uuid`='" + uuid + "'");
+                s.executeUpdate("UPDATE `" + database + "` SET `" + section + "`='" + val + "', `total`='" + val2 + "' WHERE `uuid`='" + uuid + "'");
+                // Update server total
                 ResultSet rs2;
-                rs2 = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='server-total'");
-                rs2.next();
-                int val3 = Integer.parseInt(rs2.getString(section));
+                rs2 = s.executeQuery("SELECT " + section + ", total FROM `" + database + "` WHERE `uuid`='server-total'");
+                int val3 = 0;
+                int val4 = 0;
+                if (rs2.next()) {
+                    val3 = rs2.getInt(section);
+                    val4 = rs2.getInt("total");
+                }
                 val3 += shAmount;
-                s.executeUpdate("UPDATE `" + database + "` SET `" + section + "`='" + val3 + "' WHERE `uuid`='server-total'");
-                ResultSet rs4 = s.executeQuery("SELECT * FROM `" + database + "` WHERE uuid='server-total'");
-                rs4.next();
-                val2 = Integer.parseInt(rs4.getString("total"));
-                val2 += shAmount;
-                s.executeUpdate("UPDATE `" + database + "` SET `total`='" + val2 + "' WHERE `uuid`='server-total'");
+                val4 += shAmount;
+                s.executeUpdate("UPDATE `" + database + "` SET `" + section + "`='" + val3 + "', `total`='" + val4 + "' WHERE `uuid`='server-total'");
             } catch (SQLException e) {
                 addNewPlayerValue(p, section, database, shAmount);
             }
 
         } else {
+            PlayerScores scores = hp.getScores();
             if (database.equalsIgnoreCase("headspluslb")) {
                 try {
-                    HeadsPlus.getInstance().getScores().addPlayerTotal(uuid, section.toUpperCase(), database, 1);
-                    HeadsPlus.getInstance().getScores().addPlayerTotal("server-total", section.toUpperCase(), database, 1);
+                    scores.addPlayerTotal(uuid, section.toUpperCase(), database, 1);
+                    scores.addPlayerTotal("server-total", section.toUpperCase(), database, 1);
                 } catch (Exception e) {
                     e.printStackTrace();
                     addNewPlayerValue(p, section, database, shAmount);
@@ -158,15 +159,15 @@ public class MySQLAPI {
             } else {
                 if (database.equalsIgnoreCase("headsplussh")) {
                     try {
-                        HeadsPlus.getInstance().getScores().addPlayerTotal(uuid, section.toUpperCase(), database, shAmount);
-                        HeadsPlus.getInstance().getScores().addPlayerTotal("server-total", section.toUpperCase(), database, shAmount);
+                        scores.addPlayerTotal(uuid, section.toUpperCase(), database, shAmount);
+                        scores.addPlayerTotal("server-total", section.toUpperCase(), database, shAmount);
                     } catch (Exception e) {
                         addNewPlayerValue(p, section, database, shAmount);
                     }
                 } else {
                     try {
-                        HeadsPlus.getInstance().getScores().addPlayerTotal(uuid, section.toUpperCase(), database, shAmount);
-                        HeadsPlus.getInstance().getScores().addPlayerTotal("server-total", section.toUpperCase(), database, shAmount);
+                        scores.addPlayerTotal(uuid, section.toUpperCase(), database, shAmount);
+                        scores.addPlayerTotal("server-total", section.toUpperCase(), database, shAmount);
                     } catch (Exception e) {
                         e.printStackTrace();
                         addNewPlayerValue(p, section, database, shAmount);
@@ -177,11 +178,25 @@ public class MySQLAPI {
     }
 
     public LinkedHashMap<OfflinePlayer, Integer> getScores(String section, String database) throws SQLException {
-        if (hp.isConnectedToMySQLDatabase()) {
+        return getScores(section, database, false);
+    }
+    public LinkedHashMap<OfflinePlayer, Integer> getScores(String section, String database, boolean transfer) throws SQLException {
+        if (hp.isConnectedToMySQLDatabase() && !transfer) {
             LinkedHashMap<OfflinePlayer, Integer> hs = new LinkedHashMap<>();
             Connection c = hp.getConnection();
             Statement s = c.createStatement();
-            ResultSet rs = s.executeQuery("SELECT * FROM `" + database + "` ORDER BY id");
+            switch (database) {
+                case "hunting":
+                    database = "headspluslb";
+                    break;
+                case "selling":
+                    database = "headsplussh";
+                    break;
+                case "crafting":
+                    database = "headspluscraft";
+                    break;
+            }
+            ResultSet rs = s.executeQuery("SELECT uuid, " + section + " FROM `" + database + "` ORDER BY id");
             while (rs.next()) {
 
                 boolean player = false;
@@ -195,26 +210,18 @@ public class MySQLAPI {
                 }
                 if (player) {
                     name = Bukkit.getOfflinePlayer(uuid);
-                    Statement st = c.createStatement();
-                    ResultSet rs2 = st.executeQuery("SELECT * FROM `" + database + "` WHERE `uuid`='" + name.getUniqueId().toString() + "'");
-                    rs2.next();
-                    try {
-                        hs.put(name, Integer.valueOf(rs2.getString(section)));
-                    } catch (NumberFormatException ex) {
-                        //
-                    }
-
+                    hs.put(name, rs.getInt(section));
                 }
             }
             hs = sortHashMapByValues(hs);
             return hs;
         } else {
-            PlayerScores scores = HeadsPlus.getInstance().getScores();
+            PlayerScores scores = hp.getScores();
             LinkedHashMap<OfflinePlayer, Integer> hs = new LinkedHashMap<>();
             for (Object cs : scores.getJSON().keySet()) {
                 if (String.valueOf(cs).equalsIgnoreCase("server-total")) continue;
                 OfflinePlayer p = Bukkit.getOfflinePlayer(UUID.fromString(String.valueOf(cs)));
-                int i = HeadsPlus.getInstance().getScores().getPlayerTotal(String.valueOf(cs), (section.equalsIgnoreCase("total") || section.equalsIgnoreCase("player") ? section : section.toUpperCase()), database);
+                int i = hp.getScores().getPlayerTotal(String.valueOf(cs), (section.equalsIgnoreCase("total") ? section : section.toUpperCase()), database);
                 hs.put(p, i);
             }
             hs = sortHashMapByValues(hs);
@@ -251,9 +258,9 @@ public class MySQLAPI {
     }
 
     private void transferScoresToJSON() {
-        PlayerScores scores = HeadsPlus.getInstance().getScores();
+        PlayerScores scores = hp.getScores();
         for (String uuid : hpc.getConfig().getConfigurationSection("player-data").getKeys(false)) {
-            if (!HeadsPlus.getInstance().isConnectedToMySQLDatabase()) {
+            if (!hp.isConnectedToMySQLDatabase()) {
                 for (String database : hpc.getConfig().getConfigurationSection("player-data." + uuid).getKeys(false)) {
                     if (database.equalsIgnoreCase("sellhead") || database.equalsIgnoreCase("crafting")) {
                         for (String section : hpc.getConfig().getConfigurationSection("player-data." + uuid + "." + database).getKeys(false)) {
@@ -271,26 +278,26 @@ public class MySQLAPI {
             scores.setXp(uuid, hpc.getConfig().getInt("player-data." + uuid + ".profile.xp"));
             scores.setLevel(uuid, hpc.getConfig().getString("player-data." + uuid + ".profile.level"));
         }
-        if (!HeadsPlus.getInstance().isConnectedToMySQLDatabase()) {
+        if (!hp.isConnectedToMySQLDatabase()) {
             try {
                 for (String uuid : hpl.getConfig().getConfigurationSection("player-data").getKeys(false)) {
                     for (String section : hpl.getConfig().getConfigurationSection("player-data." + uuid).getKeys(false)) {
-                        HeadsPlus.getInstance().getScores().setPlayerTotal(uuid, section, "headspluslb",
+                        scores.setPlayerTotal(uuid, section, "headspluslb",
                                 hpl.getConfig().getInt("player-data." + uuid + "." + section));
                     }
                 }
                 for (String section : hpl.getConfig().getConfigurationSection("server-total").getKeys(false)) {
-                    HeadsPlus.getInstance().getScores().setPlayerTotal("server-total", section, "headspluslb",
+                    scores.setPlayerTotal("server-total", section, "headspluslb",
                             hpl.getConfig().getInt("server-total." + section));
                 }
                 for (String database : hpc.getConfig().getConfigurationSection("server-total").getKeys(false)) {
                     for (String section : hpc.getConfig().getConfigurationSection("server-total." +  database).getKeys(false)) {
-                        HeadsPlus.getInstance().getScores().setPlayerTotal("server-total", section, database,
+                        scores.setPlayerTotal("server-total", section, database,
                                 hpc.getConfig().getInt("server-total." + database + section));
                     }
                 }
             } catch (NullPointerException ex) {
-                HeadsPlus.getInstance().getLogger().warning("leaderboards.yml wasn't found - has it already been deleted..?");
+                hp.getLogger().warning("leaderboards.yml wasn't found - has it already been deleted..?");
             }
 
         }

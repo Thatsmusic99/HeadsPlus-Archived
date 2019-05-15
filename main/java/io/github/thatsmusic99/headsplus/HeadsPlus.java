@@ -31,6 +31,7 @@ import io.github.thatsmusic99.headsplus.nms.v1_9_R2_NMS.V1_9_NMS2;
 import io.github.thatsmusic99.headsplus.storage.Favourites;
 import io.github.thatsmusic99.headsplus.storage.PlayerScores;
 import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
+import io.github.thatsmusic99.headsplus.util.HPUtils;
 import io.github.thatsmusic99.headsplus.util.MySQLAPI;
 import io.github.thatsmusic99.og.OreGenerator;
 import io.github.thatsmusic99.pg.Core;
@@ -271,37 +272,38 @@ public class HeadsPlus extends JavaPlugin {
                 sb.append(", PRIMARY KEY (`id`))");
                 st.executeUpdate(sb.toString());
 
-
-                StringBuilder sb2 = new StringBuilder();
-                sb2.append("INSERT INTO `").append(str).append("` (uuid, total");
-                for (EntityType e : de.ableEntities) {
-                    sb2.append(", ").append(e.name());
-                }
-                sb2.append(", PLAYER) VALUES('server-total', '0'");
-                for (EntityType ignored : de.ableEntities) {
-                    sb2.append(", '0'");
-                }
-                sb2.append(", '0'");
-                sb2.append(")");
-                try {
-                    st.executeUpdate(sb2.toString());
-                } catch (MySQLSyntaxErrorException ex) {
-                    debug("- MySQL error thrown. Must be old database. No worries - I'm on it.", 1);
+                ResultSet rs2 = st.executeQuery("SELECT * FROM `" + str + "` WHERE `uuid`='server-total'");
+                if (!rs2.next()) {
+                    StringBuilder sb2 = new StringBuilder();
+                    sb2.append("INSERT INTO `").append(str).append("` (uuid, total");
                     for (EntityType e : de.ableEntities) {
-                        ResultSet rs2 = st.executeQuery("SELECT * FROM `" + str + "` WHERE `uuid`='server-total'");
-                        rs2.next();
-                        try {
-                            rs2.getString(e.name());
-                        } catch (SQLException owowhatsthis) {
+                        sb2.append(", ").append(e.name());
+                    }
+                    sb2.append(", PLAYER) VALUES('server-total', '0'");
+                    for (EntityType ignored : de.ableEntities) {
+                        sb2.append(", '0'");
+                    }
+                    sb2.append(", '0'");
+                    sb2.append(")");
+                    try {
+                        st.executeUpdate(sb2.toString());
+                    } catch (MySQLSyntaxErrorException ex) {
+                        debug("- MySQL error thrown. Must be old database. No worries - I'm on it.", 1);
+                        for (EntityType e : de.ableEntities) {
+                            ResultSet rs3 = st.executeQuery("SELECT " + e.name() + " FROM `" + str + "` WHERE `uuid`='server-total'");
+                            rs3.next();
                             try {
-                                st.executeUpdate("ALTER TABLE `" + str + "` ADD COLUMN `" + e.name() + "` VARCHAR(45)");
-                                st.executeUpdate("INSERT INTO `" + str + "` (" + e.name() + ") VALUES('0')");
-                            } catch (MySQLSyntaxErrorException ignored) { // huh
+                                rs3.getString(e.name());
+                            } catch (SQLException owowhatsthis) {
+                                try {
+                                    st.executeUpdate("ALTER TABLE `" + str + "` ADD COLUMN `" + e.name() + "` VARCHAR(45)");
+                                    st.executeUpdate("INSERT INTO `" + str + "` (" + e.name() + ") VALUES('0')");
+                                } catch (MySQLSyntaxErrorException ignored) { // huh
+
+                                }
 
                             }
-
                         }
-                    }
                   /*  getLogger().severe("MYSQL ERROR: If you're migrating from an old HeadsPlus version, please reset all of the HeadsPlus tables. If this error persists after you've reset the tables, a report has been made for you to send.");
                     try {
                         String s = new DebugFileCreator().createReport(ex, "Startup");
@@ -314,7 +316,9 @@ public class HeadsPlus extends JavaPlugin {
                     } catch (IOException ignored) {
 
                     } */
+                    }
                 }
+
 
 
             }

@@ -126,7 +126,7 @@ public class DeathEvents implements Listener {
                     double price = hpch.getPrice("player");
                     boolean b = hp.getConfiguration().getPerks().getBoolean("pvp.player-balance-competition");
                     double lostprice = 0.0;
-                    if (b) {
+                    if (b && HeadsPlus.getInstance().getEconomy().getBalance(ep.getEntity()) > 0.0) {
                         double playerprice = HeadsPlus.getInstance().getEconomy().getBalance(ep.getEntity());
                         price = playerprice * hp.getConfiguration().getPerks().getDouble("pvp.percentage-balance-for-head");
                         lostprice = HeadsPlus.getInstance().getEconomy().getBalance(ep.getEntity()) * hp.getConfiguration().getPerks().getDouble("pvp.percentage-lost");
@@ -134,7 +134,7 @@ public class DeathEvents implements Listener {
 
                     List<String> strs = new ArrayList<>();
                     for (String str : hpch.getLore("player")) {
-                        strs.add(ChatColor.translateAlternateColorCodes('&', str.replaceAll("\\{player}", ep.getEntity().getName()).replaceAll("\\{price}", String.valueOf(price))));
+                        strs.add(ChatColor.translateAlternateColorCodes('&', str.replaceAll("\\{player}", ep.getEntity().getName()).replaceAll("\\{price}", String.valueOf(HeadsPlus.getInstance().getConfiguration().fixBalanceStr(price)))));
                     }
                     headM.setLore(strs);
                     head.setItemMeta(headM);
@@ -146,7 +146,7 @@ public class DeathEvents implements Listener {
                     if (!event.isCancelled()) {
                         if (b && ep.getEntity().getKiller() != null) {
                             hp.getEconomy().withdrawPlayer(ep.getEntity(), lostprice);
-                            ep.getEntity().sendMessage(hp.getMessagesConfig().getString("lost-money").replaceAll("\\{player}", ep.getEntity().getKiller().getName()).replaceAll("\\{price}", String.valueOf(lostprice)));
+                            ep.getEntity().sendMessage(hp.getMessagesConfig().getString("lost-money").replaceAll("\\{player}", ep.getEntity().getKiller().getName()).replaceAll("\\{price}", String.valueOf(HeadsPlus.getInstance().getConfiguration().fixBalanceStr(price))));
                         }
                         world.dropItem(event.getLocation(), event.getSkull());
                     }
@@ -384,7 +384,7 @@ public class DeathEvents implements Listener {
         List<String> strs = new ArrayList<>();
         List<String> lore = hpch.getLore(mobName);
         for (String str : lore) {
-            strs.add(ChatColor.translateAlternateColorCodes('&', str.replaceAll("\\{type}", mobName).replaceAll("\\{price}", String.valueOf(price))));
+            strs.add(ChatColor.translateAlternateColorCodes('&', str.replaceAll("\\{type}", mobName).replaceAll("\\{price}", String.valueOf(HeadsPlus.getInstance().getConfiguration().fixBalanceStr(price)))));
         }
         sm.setLore(strs);
         i.setItemMeta(sm);
@@ -437,6 +437,10 @@ public class DeathEvents implements Listener {
 	    if (e.getKiller() == null) {
 	        if (c.getPerks().getStringList("drops.entities-requiring-killer").contains(e.getName().replaceAll("_", "").toLowerCase())) {
 	            return false;
+            } else if (e instanceof Player) {
+                if (c.getPerks().getStringList("drops.entities-requiring-killer").contains("player")) {
+                    return false;
+                }
             } else if (c.getPerks().getBoolean("drops.needs-killer")) {
 	            return false;
             }

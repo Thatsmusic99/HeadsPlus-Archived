@@ -29,6 +29,7 @@ public class ProfileCommand implements IHeadsPlusCommand {
             HPPlayer pl = HPPlayer.getHPPlayer(p);
             return HeadsPlusConfigTextMenu.ProfileTranslator.translate(pl);
         } catch (NullPointerException ex) {
+            ex.printStackTrace();
             return HeadsPlus.getInstance().getMessagesConfig().getString("no-data");
         }
     }

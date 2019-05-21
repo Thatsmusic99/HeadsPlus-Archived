@@ -31,18 +31,22 @@ public class HPUtils {
                         String s = ChatColor.translateAlternateColorCodes('&', c.getString("boss-bar.title"));
                         BossBar bossBar = Bukkit.getServer().createBossBar(s, BarColor.valueOf(c.getString("boss-bar.color")), BarStyle.SEGMENTED_6);
                         bossBar.addPlayer(pl.getPlayer());
-                        Double d = ((double) p.getNextLevel().getRequiredXP() - p.getXp()) / (double) p.getNextLevel().getRequiredXP();
+                        Double d = (double) (p.getNextLevel().getRequiredXP() - p.getXp()) / (double) (p.getNextLevel().getRequiredXP() - p.getLevel().getRequiredXP());
+                        d = 1 - d;
                         bossBar.setProgress(d);
                         bossBar.setVisible(true);
+                        bossBars.put(pl.getPlayer(), bossBar);
                         new BukkitRunnable() {
                             @Override
                             public void run() {
                                 bossBar.setVisible(false);
                                 bossBar.removePlayer(pl.getPlayer());
+                                bossBars.remove(pl.getPlayer());
                             }
                         }.runTaskLater(HeadsPlus.getInstance(), c.getInt("boss-bar.lifetime") * 20);
                     } else {
-                        Double d = ((double) p.getNextLevel().getRequiredXP() - p.getXp()) / (double) p.getNextLevel().getRequiredXP();
+                        Double d = (double) (p.getNextLevel().getRequiredXP() - p.getXp()) / (double) (p.getNextLevel().getRequiredXP() - p.getLevel().getRequiredXP());
+                        d = 1 - d;
                         bossBars.get(pl.getPlayer()).setProgress(d);
                     }
                 } catch (NoClassDefFoundError ignored) {

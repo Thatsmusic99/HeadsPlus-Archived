@@ -1,5 +1,6 @@
 package io.github.thatsmusic99.headsplus.util;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallenges;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusLeaderboards;
@@ -47,20 +48,13 @@ public class MySQLAPI {
                 rs.next();
                 rs.getInt(section); // I don't care if it's ignored
             } catch (SQLException | NumberFormatException ex) {
-                if (ex instanceof SQLException) {
-                    StringBuilder sb2 = new StringBuilder();
-                    sb2.append("INSERT INTO `").append(database).append("` (uuid, total");
-                    for (EntityType e : de.ableEntities) {
-                        sb2.append(", ").append(e.name());
-                    }
-                    sb2.append(") VALUES('").append(p.getUniqueId().toString()).append("', '0'");
-                    for (EntityType ignored : de.ableEntities) {
-                        sb2.append(", '0'");
-                    }
-                    sb2.append(");");
-
-                    s.executeUpdate(sb2.toString());
+                if (ex instanceof MySQLSyntaxErrorException) {
+                    s.executeUpdate("ALTER TABLE `" + database + "` ADD COLUMN `" + section + "` VARCHAR(45)");
                 }
+                String sb2 = "INSERT INTO `" + database + "` (uuid)" +
+                        " VALUES('" + p.getUniqueId().toString() +
+                                "') WHERE NOT EXISTS (SELECT * FROM `" + database + "` WHERE uuid=`" + p.getUniqueId().toString() + "`);";
+                        s.executeUpdate(sb2);
 
                 PreparedStatement st = c.prepareStatement("SELECT "  + section + ", total FROM `" + database + "` WHERE `uuid`=?");
                 st.setString(1, uuid);

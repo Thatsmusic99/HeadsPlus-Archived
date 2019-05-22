@@ -12,6 +12,7 @@ import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.nms.v1_12_NMS.v1_12_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_13_NMS.v1_13_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_13_R2_NMS.v1_13_R2_NMS;
+import io.github.thatsmusic99.headsplus.nms.v1_14_R1_NMS.v1_14_R1_NMS;
 import io.lumine.xikage.mythicmobs.MythicMobs;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
@@ -158,22 +159,22 @@ public class DeathEvents implements Listener {
 	}
 
 	private void createList() {
-        String bukkitVersion = org.bukkit.Bukkit.getVersion();
-        bukkitVersion = bukkitVersion.substring(bukkitVersion.indexOf("MC: ") + 4, bukkitVersion.length() - 1);
-        if (bukkitVersion.contains("1.9")) {
-            ableEntities.addAll(Collections.singletonList(EntityType.SHULKER));
-        }
-        if (bukkitVersion.contains("1.11")) {
-			ableEntities.addAll(Arrays.asList(EntityType.DONKEY, EntityType.ELDER_GUARDIAN, EntityType.EVOKER, EntityType.HUSK, EntityType.LLAMA, EntityType.MULE, EntityType.POLAR_BEAR, EntityType.SHULKER, EntityType.SKELETON_HORSE, EntityType.STRAY, EntityType.VEX, EntityType.VINDICATOR, EntityType.WITHER_SKELETON, EntityType.ZOMBIE_HORSE));
-		}
-		if (bukkitVersion.contains("1.12")) {
-			ableEntities.addAll(Arrays.asList(EntityType.DONKEY, EntityType.ELDER_GUARDIAN, EntityType.EVOKER, EntityType.HUSK, EntityType.LLAMA, EntityType.MULE, EntityType.PARROT, EntityType.POLAR_BEAR, EntityType.SHULKER, EntityType.SKELETON_HORSE, EntityType.STRAY, EntityType.VEX, EntityType.VINDICATOR, EntityType.WITHER_SKELETON, EntityType.ZOMBIE_HORSE));
-		}
-		if (bukkitVersion.contains("1.13")) {
-            ableEntities.addAll(Arrays.asList(EntityType.DONKEY, EntityType.ELDER_GUARDIAN, EntityType.EVOKER, EntityType.HUSK, EntityType.LLAMA, EntityType.MULE, EntityType.PARROT, EntityType.POLAR_BEAR, EntityType.SHULKER, EntityType.SKELETON_HORSE, EntityType.STRAY, EntityType.VEX, EntityType.VINDICATOR, EntityType.WITHER_SKELETON, EntityType.COD, EntityType.SALMON, EntityType.TROPICAL_FISH, EntityType.PUFFERFISH, EntityType.PHANTOM, EntityType.TURTLE, EntityType.DOLPHIN, EntityType.DROWNED, EntityType.ZOMBIE_HORSE, EntityType.ZOMBIE_VILLAGER));
-        }
-        if (bukkitVersion.contains("1.14")) {
-            ableEntities.addAll(Arrays.asList(EntityType.FOX, EntityType.CAT, EntityType.PANDA, EntityType.PILLAGER, EntityType.RAVAGER, EntityType.TRADER_LLAMA, EntityType.WANDERING_TRADER, EntityType.DONKEY, EntityType.ELDER_GUARDIAN, EntityType.EVOKER, EntityType.HUSK, EntityType.LLAMA, EntityType.MULE, EntityType.PARROT, EntityType.POLAR_BEAR, EntityType.SHULKER, EntityType.SKELETON_HORSE, EntityType.STRAY, EntityType.VEX, EntityType.VINDICATOR, EntityType.WITHER_SKELETON, EntityType.COD, EntityType.SALMON, EntityType.TROPICAL_FISH, EntityType.PUFFERFISH, EntityType.PHANTOM, EntityType.TURTLE, EntityType.DOLPHIN, EntityType.DROWNED, EntityType.ZOMBIE_HORSE, EntityType.ZOMBIE_VILLAGER));
+        String bukkitVersion = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
+        switch (bukkitVersion) {
+            case "v1_14_R1":
+                ableEntities.addAll(Arrays.asList(EntityType.CAT, EntityType.FOX, EntityType.PANDA, EntityType.PILLAGER, EntityType.RAVAGER, EntityType.TRADER_LLAMA, EntityType.WANDERING_TRADER));
+            case "v1_13_R1":
+            case "v1_13_R2":
+                ableEntities.addAll(Arrays.asList(EntityType.COD, EntityType.SALMON, EntityType.TROPICAL_FISH, EntityType.PUFFERFISH, EntityType.PHANTOM, EntityType.TURTLE, EntityType.DOLPHIN, EntityType.DROWNED, EntityType.ZOMBIE_VILLAGER));
+            case "v1_12_R1":
+                ableEntities.addAll(Collections.singletonList(EntityType.PARROT));
+            case "v1_11_R1":
+                ableEntities.addAll(Arrays.asList(EntityType.DONKEY, EntityType.ELDER_GUARDIAN, EntityType.EVOKER, EntityType.HUSK, EntityType.LLAMA, EntityType.MULE, EntityType.POLAR_BEAR, EntityType.SKELETON_HORSE, EntityType.STRAY, EntityType.VEX, EntityType.VINDICATOR, EntityType.WITHER_SKELETON, EntityType.ZOMBIE_HORSE));
+            case "v1_10_R1":
+            case "v1_9_R1":
+            case "v1_9_R2":
+                ableEntities.addAll(Collections.singletonList(EntityType.SHULKER));
+                break;
         }
 	}
 
@@ -191,7 +192,8 @@ public class DeathEvents implements Listener {
                 }
                 if (nms instanceof v1_12_NMS
                         || nms instanceof v1_13_NMS
-                        || nms instanceof v1_13_R2_NMS) {
+                        || nms instanceof v1_13_R2_NMS
+                        || nms instanceof v1_14_R1_NMS) {
                     if (e == EntityType.LLAMA) {
                         keys = a("llama", keys);
                         this.heads.put(e, keys);
@@ -208,7 +210,8 @@ public class DeathEvents implements Listener {
                     this.heads.put(e, keys);
                     continue;
                 }
-                for (String name : hpch.getConfig().getStringList(e.name().toLowerCase().replaceAll("_", "") + ".name")) {
+                String fancyName = e.name().toLowerCase().replaceAll("_", "");
+                for (String name : hpch.getConfig().getStringList(fancyName + ".name")) {
 
                     ItemStack is = null;
                     if (hpchx.isHPXSkull(name)) {
@@ -241,9 +244,20 @@ public class DeathEvents implements Listener {
                     } else {
 
                         is = nms.getSkullMaterial(1);
+                        double price = hpch.getPrice(fancyName);
                         SkullMeta sm = (SkullMeta) is.getItemMeta();
                         sm = nms.setSkullOwner(name, sm);
+                        sm.setDisplayName(hpch.getDisplayName(fancyName));
+                        List<String> strs = new ArrayList<>();
+                        List<String> lore = hpch.getLore(fancyName);
+                        for (String str2 : lore) {
+                            strs.add(ChatColor.translateAlternateColorCodes('&', str2.replaceAll("\\{type}", fancyName).replaceAll("\\{price}", String.valueOf(HeadsPlus.getInstance().getConfiguration().fixBalanceStr(price)))));
+                        }
+                        sm.setLore(strs);
                         is.setItemMeta(sm);
+                        is = nms.addNBTTag(is);
+                        is = nms.setType(fancyName, is);
+                        is = nms.setPrice(is, price);
                     }
                     heads.add(is);
 
@@ -252,6 +266,7 @@ public class DeathEvents implements Listener {
                 this.heads.put(e, keys);
             } catch (Exception ex) {
 	            HeadsPlus.getInstance().getLogger().severe("Error thrown when creating the head for " + e.name() + ". If it's a custom head, please double check the name.");
+	            ex.printStackTrace();
             }
 
         }
@@ -274,9 +289,20 @@ public class DeathEvents implements Listener {
                 } else {
                     NMSManager nms = HeadsPlus.getInstance().getNMS();
                     is = nms.getSkullMaterial(1);
+                    double price = hpch.getPrice(en);
                     SkullMeta sm = (SkullMeta) is.getItemMeta();
                     sm = nms.setSkullOwner(name, sm);
+                    sm.setDisplayName(hpch.getDisplayName(en));
+                    List<String> strs = new ArrayList<>();
+                    List<String> lore = hpch.getLore(en);
+                    for (String str2 : lore) {
+                        strs.add(ChatColor.translateAlternateColorCodes('&', str2.replaceAll("\\{type}", en).replaceAll("\\{price}", String.valueOf(HeadsPlus.getInstance().getConfiguration().fixBalanceStr(price)))));
+                    }
+                    sm.setLore(strs);
                     is.setItemMeta(sm);
+                    is = nms.addNBTTag(is);
+                    is = nms.setType(en, is);
+                    is = nms.setPrice(is, price);
                 }
                 heads.add(is);
 
@@ -376,9 +402,9 @@ public class DeathEvents implements Listener {
         } catch (IndexOutOfBoundsException ex) {
 	        return;
         }
-        double price = hpch.getPrice(mobName);
+      //  double price = hpch.getPrice(mobName);
         i.setAmount(a);
-        SkullMeta sm = (SkullMeta) i.getItemMeta();
+     /*   SkullMeta sm = (SkullMeta) i.getItemMeta();
         String displayname = hpch.getDisplayName(mobName);
         sm.setDisplayName(displayname);
         List<String> strs = new ArrayList<>();
@@ -388,13 +414,14 @@ public class DeathEvents implements Listener {
         }
         sm.setLore(strs);
         i.setItemMeta(sm);
+
+        i = nms.addNBTTag(i);
+        i = nms.setType(mobName, i);
+        i = nms.setPrice(i, price); */
         Location entityLoc = e.getLocation();
         double entityLocY = entityLoc.getY() + 1;
         entityLoc.setY(entityLocY);
         World world = e.getWorld();
-        i = nms.addNBTTag(i);
-        i = nms.setType(mobName, i);
-        i = nms.setPrice(i, price);
         EntityHeadDropEvent event = new EntityHeadDropEvent(k, i, world, entityLoc, e.getType());
         Bukkit.getServer().getPluginManager().callEvent(event);
         if (!event.isCancelled()) {

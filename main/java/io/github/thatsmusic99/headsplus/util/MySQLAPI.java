@@ -51,10 +51,18 @@ public class MySQLAPI {
                 if (ex instanceof MySQLSyntaxErrorException) {
                     s.executeUpdate("ALTER TABLE `" + database + "` ADD COLUMN `" + section + "` VARCHAR(45)");
                 }
-                String sb2 = "INSERT INTO `" + database + "` (uuid)" +
-                        " VALUES('" + p.getUniqueId().toString() +
-                                "') WHERE NOT EXISTS (SELECT * FROM `" + database + "` WHERE uuid=`" + p.getUniqueId().toString() + "`);";
-                        s.executeUpdate(sb2);
+
+                // Correct MySQL version of inserting new value based on existence of old row:
+                //String sb2 = "INSERT INTO `" + database + "` (uuid)" +
+                //        " SELECT '" + p.getUniqueId().toString() + "' FROM DUAL"
+                //        " WHERE NOT EXISTS (SELECT uuid FROM `" + database + "` WHERE uuid=`" + p.getUniqueId().toString() + "`);";
+                // But we don't need to do this, really - this creates duplicate rows (id is the pk, not uuid);
+                ResultSet rs_uuid = s.executeQuery("SELECT uuid FROM `" + database + "` WHERE uuid=`" + p.getUniqueId().toString() + "`;");
+                if(!rs_uuid.next()) {
+                    // no row - add one!
+                    s.executeUpdate("INSERT INTO `" + database + "` (uuid) VALUE (`" + p.getUniqueId().toString() + "`);");
+                }
+                rs_uuid.close();
 
                 PreparedStatement st = c.prepareStatement("SELECT "  + section + ", total FROM `" + database + "` WHERE `uuid`=?");
                 st.setString(1, uuid);

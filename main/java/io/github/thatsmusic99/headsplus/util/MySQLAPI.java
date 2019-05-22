@@ -19,14 +19,12 @@ public class MySQLAPI {
 
     private final HeadsPlusLeaderboards hpl;
     private final HeadsPlusChallenges hpc;
-    private final DeathEvents de;
     private final HeadsPlus hp;
 
     public MySQLAPI() {
         hp = HeadsPlus.getInstance();
         hpl = hp.getLeaderboardsConfig();
         hpc = hp.getChallengeConfig();
-        de = hp.getDeathEvents();
         if (hpc.getConfig().get("player-data") instanceof ConfigurationSection) {
             hp.getLogger().info("Old storage detected! Transfering data (this will be saved when the server stops)...");
             transferScoresToJSON();

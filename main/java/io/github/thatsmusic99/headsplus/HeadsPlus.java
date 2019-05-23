@@ -32,6 +32,7 @@ import io.github.thatsmusic99.headsplus.storage.Favourites;
 import io.github.thatsmusic99.headsplus.storage.PlayerScores;
 import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
 import io.github.thatsmusic99.headsplus.util.HPUtils;
+import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import io.github.thatsmusic99.headsplus.util.MySQLAPI;
 import io.github.thatsmusic99.og.OreGenerator;
 import io.github.thatsmusic99.pg.Core;
@@ -55,6 +56,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
+import org.bukkit.entity.Player;
 
 public class HeadsPlus extends JavaPlugin {
 
@@ -217,6 +219,12 @@ public class HeadsPlus extends JavaPlugin {
 
     @Override
     public void onDisable() {
+		// close any open interfaces
+		for(Player p : InventoryManager.pls.keySet()) {
+			if(InventoryManager.getIM(p) != null) {
+				p.closeInventory();
+			}
+		}
         try {
             favourites.save();
         } catch (IOException e) {

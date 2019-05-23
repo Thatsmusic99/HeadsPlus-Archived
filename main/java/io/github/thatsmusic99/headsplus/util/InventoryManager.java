@@ -1,7 +1,5 @@
 package io.github.thatsmusic99.headsplus.util;
 
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.Challenge;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
@@ -17,7 +15,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import java.lang.reflect.Field;
 import java.util.*;
 
 public class InventoryManager {

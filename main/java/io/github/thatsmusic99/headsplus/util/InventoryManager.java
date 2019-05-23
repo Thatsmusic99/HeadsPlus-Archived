@@ -10,7 +10,6 @@ import io.github.thatsmusic99.headsplus.config.headsx.HeadInventory;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.config.headsx.inventories.*;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
-import org.apache.commons.codec.binary.Base64;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -55,9 +54,9 @@ public class InventoryManager {
         HeadsPlus hp = HeadsPlus.getInstance();
         PagedLists<ItemStack> paged;
         if (next) {
-            cPage++;
+            ++cPage;
         } else {
-            cPage--;
+            --cPage;
         }
         if (start) {
             cPage = 1;
@@ -71,7 +70,7 @@ public class InventoryManager {
                 HeadMenu headmenu = new HeadMenu();
                 inventory = headmenu;
                 if (hpchx.getConfig().getBoolean("options.advent-calendar")) {
-                    sections++;
+                    ++sections;
                 }
                 List<ItemStack> heads = new ArrayList<>();
                  for (String str : new ArrayList<>(hpchx.getConfig().getConfigurationSection("sections").getKeys(false))) {
@@ -284,22 +283,7 @@ public class InventoryManager {
     }
 
     private ItemStack skull(String str, Player p) throws NoSuchFieldException, IllegalAccessException {
-        NMSManager nms = HeadsPlus.getInstance().getNMS();
-        ItemStack s = nms.getSkullMaterial(1);
-        SkullMeta sm = (SkullMeta) s.getItemMeta();
-        GameProfile gm = new GameProfile(UUID.randomUUID(), "HPXHead");
-        if (hpchx.getConfig().getBoolean("heads." + str + ".encode")) {
-            byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", hpchx.getConfig().getString(str + ".texture")).getBytes());
-            gm.getProperties().put("textures", new Property("texture", Arrays.toString(encodedData)));
-        } else {
-            gm.getProperties().put("textures", new Property("texture", hpchx.getConfig().getString("heads." + str + ".texture")));
-        }
-
-        Field profileField;
-        profileField = sm.getClass().getDeclaredField("profile");
-        profileField.setAccessible(true);
-        profileField.set(sm, gm);
-        sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', hpchx.getConfig().getString("heads." + str + ".displayname")));
+		ItemStack s = hpchx.getSkull(str);
         List<String> price = new ArrayList<>();
         double pr = 0.0;
         if (HeadsPlus.getInstance().econ()) {
@@ -335,9 +319,10 @@ public class InventoryManager {
         if (hps.hasHeadFavourited(str) && !(cSection.equalsIgnoreCase("menu"))) {
             price.add(ChatColor.GOLD + "Favourite!");
         }
+		ItemMeta sm = s.getItemMeta();
         sm.setLore(price);
         s.setItemMeta(sm);
-        s = nms.addDatabaseHead(s, str, pr);
+        s = HeadsPlus.getInstance().getNMS().addDatabaseHead(s, str, pr);
         return s;
     }
 
@@ -347,9 +332,9 @@ public class InventoryManager {
 
     private int charOccurance(String s, String c) {
         int count = 0;
-        for (int i = 0; i < s.length(); i++) {
+        for (int i = 0; i < s.length(); ++i) {
             if (String.valueOf(s.charAt(i)).equalsIgnoreCase(c)) {
-                count++;
+                ++count;
             }
         }
         return count;

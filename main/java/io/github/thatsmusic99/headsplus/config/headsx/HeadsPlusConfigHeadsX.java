@@ -5,6 +5,7 @@ import com.mojang.authlib.properties.Property;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.ConfigSettings;
+import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -12,6 +13,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.util.Base64;
 import java.util.UUID;
 
 public class HeadsPlusConfigHeadsX extends ConfigSettings {
@@ -120,14 +122,31 @@ public class HeadsPlusConfigHeadsX extends ConfigSettings {
     }
 
     public ItemStack getSkull(String s) throws NoSuchFieldException, IllegalAccessException {
-        String st = s.split("#")[1];
-        ItemStack i = HeadsPlus.getInstance().getNMS().getSkullMaterial(1);
+		final String key = s.contains("#") ? s.split("#")[1] : s;
+		
+		NMSManager nms = HeadsPlus.getInstance().getNMS();
+        ItemStack i = nms.getSkullMaterial(1);
         SkullMeta sm = (SkullMeta) i.getItemMeta();
-        sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', getConfig().getString("heads." + st + ".displayname")));
+        GameProfile gm;
+        if (getConfig().getBoolean("heads." + key + ".encode")) {
+			final String txtURL = getConfig().getString("heads." + key + ".texture");
+			gm = new GameProfile(UUID.nameUUIDFromBytes(txtURL.getBytes()), "HPXHead");
+			byte[] encodedData = Base64.getEncoder().encode(String.format("{textures:{SKIN:{url:\"http://textures.minecraft.net/texture/%s\"}}}", txtURL).getBytes());
+			gm.getProperties().put("textures", new Property("textures", new String(encodedData)));
+        } else {
+			gm = new GameProfile(UUID.randomUUID(), "HPXHead");
+            gm.getProperties().put("textures", new Property("texture", getConfig().getString("heads." + key + ".texture").replaceAll("=", "")));
+        }
+
+        Field profileField;
+        profileField = sm.getClass().getDeclaredField("profile");
+        profileField.setAccessible(true);
+        profileField.set(sm, gm);
+        sm.setDisplayName(ChatColor.translateAlternateColorCodes('&', getConfig().getString("heads." + key + ".displayname")));
         i.setItemMeta(sm);
-        i = setTexture(getTextures(s).replaceAll("=", ""), i);
         return i;
     }
+
     public String getTextures(String s) {
         String[] st = s.split("#");
         try {

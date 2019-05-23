@@ -2,11 +2,8 @@ package io.github.thatsmusic99.headsplus.config.headsx.icons;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.nms.SearchGUI;
-import io.github.thatsmusic99.headsplus.nms.v1_12_NMS.SearchGUI1_12;
-import io.github.thatsmusic99.headsplus.nms.v1_14_R1_NMS.SearchGUI1_14_R1;
 import io.github.thatsmusic99.headsplus.util.AnvilSlot;
 import io.github.thatsmusic99.headsplus.util.ChatPrompt;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
@@ -33,40 +30,27 @@ public class Search extends ItemStack implements Icon {
         p.closeInventory();
         final InventoryClickEvent ev = e;
         try {
-           /*  if (HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("anvil-menu-search")) {
+            if (HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("anvil-menu-search", false)) {
                 SearchGUI s = HeadsPlus.getInstance().getNMS().getSearchGUI(p, event -> {
-
+                    ev.setCancelled(true);
                     if (event.getSlot().equals(AnvilSlot.OUTPUT)) {
                         event.setWillClose(false);
                         event.setWillDestroy(false);
-                        im.setSection("search:" + event.getName());
-                        event.getPlayer().closeInventory();
-                        event.getPlayer().openInventory(im.changePage(false, true, event.getPlayer(), "search:" + event.getName()));
+                        im.showSearch(event.getName());
                     }
-
-
-                    ev.setCancelled(true);
                 });
                 s.setSlot(AnvilSlot.INPUT_LEFT, new ItemStack(Material.NAME_TAG));
                 s.open();
-            } else { */
+            } else {
                 ConversationFactory c = new ConversationFactory(HeadsPlus.getInstance());
                 Conversation conv = c.withFirstPrompt(new ChatPrompt()).withLocalEcho(false).buildConversation(p);
                 conv.addConversationAbandonedListener(event -> {
                     if (event.gracefulExit()) {
-                        String input = String.valueOf(event.getContext().getSessionData("term"));
-                        im.setSection(input);
-                        p.closeInventory();
-                        try {
-                            p.openInventory(im.changePage(false, true, p, "search:" + input));
-                        } catch (NoSuchFieldException | IllegalAccessException e1) {
-                            e1.printStackTrace();
-                        }
+                        im.showSearch(String.valueOf(event.getContext().getSessionData("term")));
                     }
-
                 });
                 conv.begin();
-         //   }
+            }
 
         } catch (Exception ex) {
             new DebugPrint(ex, "Event (InventoryEvent)", false, null);

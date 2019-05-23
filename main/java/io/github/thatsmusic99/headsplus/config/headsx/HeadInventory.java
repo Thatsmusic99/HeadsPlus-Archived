@@ -69,7 +69,7 @@ public abstract class HeadInventory {
         } catch (IndexOutOfBoundsException e) {
             l = s[0];
         }
-        for (int i = 0; i < getSize(); i++) {
+        for (int i = 0; i < getSize(); ++i) {
             icons[i] = Icon.getIconFromSingleLetter(String.valueOf(l.charAt(i)));
         }
         return icons;
@@ -82,17 +82,31 @@ public abstract class HeadInventory {
     public int getSize() {
         return HeadsPlus.getInstance().getItems().getConfig().getInt("inventories." + getName() + ".size");
     }
+    
+    public Inventory build(Player sender, List<ItemStack> list, String section, int page, int pages, boolean showTopMenu, boolean wideMenu) {
+        Inventory inventory = Bukkit.createInventory(null, getSize(), getTitle()
+                .replaceAll("\\{page}", String.valueOf(page + 1))
+                .replaceAll("\\{pages}", list == null ? "" : String.valueOf(pages))
+                .replaceAll("\\{section}", section));
+        HeadsPlus hp = HeadsPlus.getInstance();
+        NMSManager nms = hp.getNMS();
+        
+        
+        return inventory;
+    }
 
-    public Inventory build(PagedLists<ItemStack> list, Player sender) {
-        InventoryManager inv = InventoryManager.getIM(sender);
-        Inventory i = Bukkit.createInventory(null, getSize(), getTitle()
+    public Inventory build(boolean deprecated, PagedLists<ItemStack> list, Player sender) {
+        InventoryManager inv = InventoryManager.get(sender);
+        
+        
+        Inventory inventory = Bukkit.createInventory(null, getSize(), getTitle()
                 .replaceAll("\\{page}", String.valueOf(inv.getPage()))
                 .replaceAll("\\{pages}", list == null ? "" : String.valueOf(list.getTotalPages()))
                 .replaceAll("\\{section}", inv.getSection()));
         HeadsPlus hp = HeadsPlus.getInstance();
         NMSManager nms = hp.getNMS();
         int h = 0;
-        for (int o = 0; o < getSize(); o++) {
+        for (int o = 0; o < getSize(); ++o) {
             if (getIconArray(inv.getPage())[o] instanceof Head || getIconArray(inv.getPage())[o] instanceof io.github.thatsmusic99.headsplus.config.headsx.icons.HeadSection) {
                 try {
                     ItemStack is = list.getContentsInPage(inv.getPage()).get(h);
@@ -116,7 +130,7 @@ public abstract class HeadInventory {
                     is.setItemMeta(im);
                     is = nms.setIcon(is, getIconArray(inv.getPage())[o]);
                     is = nms.setType(s, is);
-                    i.setItem(o, is);
+                    inventory.setItem(o, is);
                     h++;
                 } catch (IndexOutOfBoundsException ex) {
                     Icon ic = getIconArray(inv.getPage())[o].getReplacementIcon();
@@ -130,7 +144,7 @@ public abstract class HeadInventory {
 
                     }
                     is = nms.setIcon(is, ic);
-                    i.setItem(o, is);
+                    inventory.setItem(o, is);
                 }
             } else if (getIconArray(inv.getPage())[o] instanceof Challenge) {
                 try {
@@ -179,7 +193,7 @@ public abstract class HeadInventory {
                     im.setLore(lore);
                     is.setItemMeta(im);
                     is = nms.setIcon(is, getIconArray(inv.getPage())[o]);
-                    i.setItem(o, is);
+                    inventory.setItem(o, is);
                     h++;
                 } catch (IndexOutOfBoundsException ex) {
                     Icon ic = getIconArray(inv.getPage())[o].getReplacementIcon();
@@ -197,7 +211,7 @@ public abstract class HeadInventory {
 
                     }
                     is = nms.setIcon(is, ic);
-                    i.setItem(o, is);
+                    inventory.setItem(o, is);
                 }
 
             } else if (getIconArray(inv.getPage())[o] instanceof Stats) {
@@ -222,13 +236,11 @@ public abstract class HeadInventory {
                 im.setLore(ls);
                 is.setItemMeta(im);
                 is = nms.setIcon(is, getIconArray(inv.getPage())[o]);
-                i.setItem(o, is);
-            } else if ((getIconArray(inv.getPage())[o] instanceof Next)
-                    || (getIconArray(inv.getPage())[o] instanceof Back)
-                    || (getIconArray(inv.getPage())[o] instanceof Menu)) {
+                inventory.setItem(o, is);
+            } else if (getIconArray(inv.getPage())[o] instanceof Nav) {
                 ItemStack is;
                 Icon oof;
-                if (getIconArray(inv.getPage())[o] instanceof Next) {
+                if (getIconArray(inv.getPage())[o] instanceof Nav) {
                     if (inv.getPages() == inv.getPage()) {
                         oof = getIconArray(inv.getPage())[o].getReplacementIcon();
                     } else {
@@ -271,7 +283,7 @@ public abstract class HeadInventory {
                 im.setLore(ls);
                 is.setItemMeta(im);
                 is = nms.setIcon(is, oof);
-                i.setItem(o, is);
+                inventory.setItem(o, is);
             } else {
                 try {
                     ItemStack is = new ItemStack(getIconArray(inv.getPage())[o].getMaterial(), 1, (byte) hp.getItems().getConfig().getInt("icons." + getIconArray(inv.getPage())[o].getIconName() + ".data-value"));
@@ -284,13 +296,13 @@ public abstract class HeadInventory {
                     im.setLore(ls);
                     is.setItemMeta(im);
                     is = nms.setIcon(is, getIconArray(inv.getPage())[o]);
-                    i.setItem(o, is);
+                    inventory.setItem(o, is);
                 } catch (NullPointerException ignored) {
                 }
 
             }
         }
-        return i;
+        return inventory;
     }
 
 }

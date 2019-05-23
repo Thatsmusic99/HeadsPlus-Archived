@@ -12,15 +12,21 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Next extends ItemStack implements Icon {
+public class Nav extends ItemStack implements Icon {
 
-    public Next() {
-
-    }
+	final InventoryManager.Page direction;
+	final String title;
+	final Material mat;
+	
+	public Nav(InventoryManager.Page direction, String title, Material material) {
+		this.direction = direction;
+		this.title = title;
+		this.mat = material;
+	}
 
     @Override
     public String getIconName() {
-        return "next";
+        return direction.name().toLowerCase();
     }
 
     @Override
@@ -28,15 +34,15 @@ public class Next extends ItemStack implements Icon {
         e.setCancelled(true);
         p.closeInventory();
         try {
-            p.openInventory(im.changePage(true, false, p, im.getSection()));
-        } catch (NoSuchFieldException | IllegalAccessException e1) {
+			im.showPage(direction);
+        } catch (Exception e1) {
             new DebugPrint(e1, "Changing page (next)", false, p);
         }
     }
 
     @Override
     public Material getDefaultMaterial() {
-        return Material.ARROW;
+        return mat;
     }
 
     @Override
@@ -46,7 +52,7 @@ public class Next extends ItemStack implements Icon {
 
     @Override
     public String getDefaultDisplayName() {
-        return "&a&lNext";
+        return "&a&l" + title;
     }
 
     @Override
@@ -56,7 +62,7 @@ public class Next extends ItemStack implements Icon {
 
     @Override
     public String getSingleLetter() {
-        return "N";
+        return String.valueOf(direction.shortHand);
     }
 
 

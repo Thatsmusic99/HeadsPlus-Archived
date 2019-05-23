@@ -37,14 +37,22 @@ public interface Icon {
 
     static List<Icon> getIcons() {
         List<Icon> icons = new ArrayList<>();
-        icons.add(new Back());
         icons.add(new Challenge());
         icons.add(new Close());
         icons.add(new Favourites());
         icons.add(new Glass());
         icons.add(new Head());
-        icons.add(new Menu());
-        icons.add(new Next());
+
+        icons.add(new Nav(InventoryManager.Page.MENU, "Main Menu", Material.NETHER_STAR));
+        icons.add(new Nav(InventoryManager.Page.START, "First Page", Material.ARROW));
+        icons.add(new Nav(InventoryManager.Page.LAST, "Last Page", Material.ARROW));
+        icons.add(new Nav(InventoryManager.Page.BACK, "Back", Material.ARROW));
+        icons.add(new Nav(InventoryManager.Page.BACK_2, "Back 2", Material.ARROW));
+        icons.add(new Nav(InventoryManager.Page.BACK_3, "Back 3", Material.ARROW));
+        icons.add(new Nav(InventoryManager.Page.NEXT, "Next", Material.ARROW));
+        icons.add(new Nav(InventoryManager.Page.NEXT_2, "Next 2", Material.ARROW));
+        icons.add(new Nav(InventoryManager.Page.NEXT_3, "Next 3", Material.ARROW));
+
         icons.add(new Search());
         icons.add(new Stats());
         icons.add(new Air());

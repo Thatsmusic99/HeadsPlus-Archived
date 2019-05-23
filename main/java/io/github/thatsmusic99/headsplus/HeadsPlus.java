@@ -113,6 +113,10 @@ public class HeadsPlus extends JavaPlugin {
                 LocaleManager.class.newInstance().setupLocale();
             }
 
+            if(getConfiguration().getMechanics().getBoolean("anvil-menu-search", false)) {
+                log.warning("Warning: anvil-menu-search has proven to be buggy in some versions - use with caution");
+            }
+
             // Build plugin instances
             createInstances();
 
@@ -221,7 +225,7 @@ public class HeadsPlus extends JavaPlugin {
     public void onDisable() {
 		// close any open interfaces
 		for(Player p : InventoryManager.pls.keySet()) {
-			if(InventoryManager.getIM(p) != null) {
+			if(InventoryManager.get(p).getInventory() != null) {
 				p.closeInventory();
 			}
 		}

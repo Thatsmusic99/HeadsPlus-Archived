@@ -20,22 +20,18 @@ public class InventoryEvent implements Listener {
             if (!(e.getWhoClicked() instanceof Player)) return;
             Player p = (Player) e.getWhoClicked();
             if (e.getRawSlot() > 53) return;
-            if (InventoryManager.getIM(p) == null) return;
-            final InventoryManager im = InventoryManager.getIM(p);
+            if (InventoryManager.get(p) == null) return;
+            final InventoryManager im = InventoryManager.get(p);
             NMSManager nms = HeadsPlus.getInstance().getNMS();
             // int month = Calendar.getInstance().get(Calendar.MONTH);
-            if (im.getType().equalsIgnoreCase("heads")) {
+            if (im.getType().name().startsWith("LIST")) {
                 Icon i = nms.getIcon(e.getCurrentItem());
                 if (i == null) return;
                 if (e.getRawSlot() < 54) {
                     e.setCancelled(true);
                 }
                 i.onClick(p, im, e);
-            } else if (im.getType().equalsIgnoreCase("chal")) {
-                Icon i = nms.getIcon(e.getCurrentItem());
-                if (i == null) return;
-                i.onClick(p, im, e);
-            } else if (im.getType().equalsIgnoreCase("sellhead")) {
+            } else {
                 Icon i = nms.getIcon(e.getCurrentItem());
                 if (i == null) return;
                 i.onClick(p, im, e);
@@ -49,7 +45,7 @@ public class InventoryEvent implements Listener {
     public void onClose(InventoryCloseEvent e) {
         try {
 			if(!(e.getPlayer() instanceof Player)) return;
-			InventoryManager.pls.remove((Player) e.getPlayer());
+			InventoryManager.close((Player) e.getPlayer());
 		} catch (Exception ex) {
             new DebugPrint(ex, "Event (InventoryCloseEvent)", false, null);
         }

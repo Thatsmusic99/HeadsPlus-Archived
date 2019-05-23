@@ -2,7 +2,15 @@ package io.github.thatsmusic99.headsplus.nms.v1_14_R1_NMS;
 
 import io.github.thatsmusic99.headsplus.nms.SearchGUI;
 import io.github.thatsmusic99.headsplus.util.AnvilSlot;
-import net.minecraft.server.v1_14_R1.*;
+import net.minecraft.server.v1_14_R1.BlockPosition;
+import net.minecraft.server.v1_14_R1.ChatMessage;
+import net.minecraft.server.v1_14_R1.Container;
+import net.minecraft.server.v1_14_R1.ContainerAccess;
+import net.minecraft.server.v1_14_R1.ContainerAnvil;
+import net.minecraft.server.v1_14_R1.Containers;
+import net.minecraft.server.v1_14_R1.EntityHuman;
+import net.minecraft.server.v1_14_R1.EntityPlayer;
+import net.minecraft.server.v1_14_R1.PacketPlayOutOpenWindow;
 import org.bukkit.craftbukkit.v1_14_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
@@ -29,19 +37,20 @@ public class SearchGUI1_14_R1 extends SearchGUI {
 
     public void open() {
         EntityPlayer p = ((CraftPlayer) getPlayer()).getHandle();
-        AnvilContainer container = new AnvilContainer(p.nextContainerCounter(), p);
+        final int id = p.nextContainerCounter();
+        AnvilContainer container = new AnvilContainer(id, p);
         inv = container.getBukkitView().getTopInventory();
         for (AnvilSlot slot : items.keySet()) {
             inv.setItem(slot.getSlot(), items.get(slot));
         }
-        p.playerConnection.sendPacket(new PacketPlayOutOpenWindow(p.nextContainerCounter(), Containers.ANVIL, new ChatMessage("Repairing")));
+        p.playerConnection.sendPacket(new PacketPlayOutOpenWindow(id, Containers.ANVIL, new ChatMessage("Repairing")));
         p.activeContainer = container;
 
         try {
             Field profileField;
             profileField = Container.class.getDeclaredField("windowId");
             profileField.setAccessible(true);
-            profileField.set(p.activeContainer, p.nextContainerCounter());
+            profileField.set(p.activeContainer, id);
         } catch (IllegalAccessException | NoSuchFieldException e) {
             e.printStackTrace();
         }

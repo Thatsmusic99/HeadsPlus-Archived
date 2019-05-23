@@ -23,13 +23,7 @@ public class ChallengeSection {
         @Override
         public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
             e.setCancelled(true);
-            p.closeInventory();
-            im.setSection("easy");
-            try {
-                p.openInventory(im.changePage(false, true, p, im.getSection()));
-            } catch (NoSuchFieldException | IllegalAccessException e1) {
-                e1.printStackTrace();
-            }
+            im.showChallengeSection("easy");
         }
 
         @Override
@@ -63,13 +57,7 @@ public class ChallengeSection {
         @Override
         public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
             e.setCancelled(true);
-            p.closeInventory();
-            im.setSection("easy_medium");
-            try {
-                p.openInventory(im.changePage(false, true, p, im.getSection()));
-            } catch (NoSuchFieldException | IllegalAccessException e1) {
-                e1.printStackTrace();
-            }
+            im.showChallengeSection("easy_medium");
         }
 
         @Override
@@ -103,13 +91,7 @@ public class ChallengeSection {
         @Override
         public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
             e.setCancelled(true);
-            p.closeInventory();
-            im.setSection("medium");
-            try {
-                p.openInventory(im.changePage(false, true, p, im.getSection()));
-            } catch (NoSuchFieldException | IllegalAccessException e1) {
-                e1.printStackTrace();
-            }
+            im.showChallengeSection("medium");
         }
 
         @Override
@@ -143,13 +125,7 @@ public class ChallengeSection {
         @Override
         public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
             e.setCancelled(true);
-            p.closeInventory();
-            im.setSection("medium_hard");
-            try {
-                p.openInventory(im.changePage(false, true, p, im.getSection()));
-            } catch (NoSuchFieldException | IllegalAccessException e1) {
-                e1.printStackTrace();
-            }
+            im.showChallengeSection("medium_hard");
         }
 
         @Override
@@ -183,13 +159,7 @@ public class ChallengeSection {
         @Override
         public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
             e.setCancelled(true);
-            p.closeInventory();
-            im.setSection("hard");
-            try {
-                p.openInventory(im.changePage(false, true, p, im.getSection()));
-            } catch (NoSuchFieldException | IllegalAccessException e1) {
-                e1.printStackTrace();
-            }
+            im.showChallengeSection("hard");
         }
 
         @Override
@@ -228,13 +198,7 @@ public class ChallengeSection {
         @Override
         public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
             e.setCancelled(true);
-            p.closeInventory();
-            im.setSection("tedious");
-            try {
-                p.openInventory(im.changePage(false, true, p, im.getSection()));
-            } catch (NoSuchFieldException | IllegalAccessException e1) {
-                e1.printStackTrace();
-            }
+            im.showChallengeSection("tedious");
         }
 
         @Override
@@ -268,13 +232,7 @@ public class ChallengeSection {
         @Override
         public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
             e.setCancelled(true);
-            p.closeInventory();
-            im.setSection("tedious-painful");
-            try {
-                p.openInventory(im.changePage(false, true, p, im.getSection()));
-            } catch (NoSuchFieldException | IllegalAccessException e1) {
-                e1.printStackTrace();
-            }
+            im.showChallengeSection("tedious-painful");
         }
 
         @Override
@@ -308,13 +266,7 @@ public class ChallengeSection {
         @Override
         public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
             e.setCancelled(true);
-            p.closeInventory();
-            im.setSection("tedious-painful");
-            try {
-                p.openInventory(im.changePage(false, true, p, im.getSection()));
-            } catch (NoSuchFieldException | IllegalAccessException e1) {
-                e1.printStackTrace();
-            }
+            im.showChallengeSection("tedious-painful");
         }
 
         @Override
@@ -348,13 +300,7 @@ public class ChallengeSection {
         @Override
         public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
             e.setCancelled(true);
-            p.closeInventory();
-            im.setSection("painful-deadly");
-            try {
-                p.openInventory(im.changePage(false, true, p, im.getSection()));
-            } catch (NoSuchFieldException | IllegalAccessException e1) {
-                e1.printStackTrace();
-            }
+            im.showChallengeSection("painful-deadly");
         }
 
         @Override
@@ -388,13 +334,7 @@ public class ChallengeSection {
         @Override
         public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
             e.setCancelled(true);
-            p.closeInventory();
-            im.setSection("deadly");
-            try {
-                p.openInventory(im.changePage(false, true, p, im.getSection()));
-            } catch (NoSuchFieldException | IllegalAccessException e1) {
-                e1.printStackTrace();
-            }
+            im.showChallengeSection("deadly");
         }
 
         @Override

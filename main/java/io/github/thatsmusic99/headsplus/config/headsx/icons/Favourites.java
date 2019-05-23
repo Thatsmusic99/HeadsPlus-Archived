@@ -21,12 +21,7 @@ public class Favourites extends ItemStack implements Icon {
     @Override
     public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
         e.setCancelled(true);
-        p.closeInventory();
-        try {
-            p.openInventory(im.changePage(false, true, p, "favourites"));
-        } catch (NoSuchFieldException | IllegalAccessException e1) {
-            new DebugPrint(e1, "Favourites menu", false, p);
-        }
+        im.showScreen(InventoryManager.Type.LIST_FAVORITES);
     }
 
     @Override

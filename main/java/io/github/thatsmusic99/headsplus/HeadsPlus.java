@@ -116,6 +116,10 @@ public class HeadsPlus extends JavaPlugin {
             // Build plugin instances
             createInstances();
 
+            if(getConfiguration().getMechanics().getBoolean("anvil-menu-search", false)) {
+                log.warning("Warning: anvil-menu-search has proven to be buggy in some versions - use with caution");
+            }
+
             // Checks theme, believe it or not!
             debug("- Checking plugin theme.", 1);
             checkTheme();
@@ -221,7 +225,7 @@ public class HeadsPlus extends JavaPlugin {
     public void onDisable() {
 		// close any open interfaces
 		for(Player p : InventoryManager.pls.keySet()) {
-			if(InventoryManager.getIM(p) != null) {
+			if(InventoryManager.get(p).getInventory() != null) {
 				p.closeInventory();
 			}
 		}

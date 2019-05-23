@@ -77,7 +77,7 @@ public class Head extends ItemStack implements Icon {
 
             } */
      //   }
-        if (im.getType().equalsIgnoreCase("sellhead")) {
+        if (im.getType() == InventoryManager.Type.SELL) {
             if (!nms.getType(e.getCurrentItem()).isEmpty()) {
                 if (e.isRightClick()) {
                     e.setCancelled(true);

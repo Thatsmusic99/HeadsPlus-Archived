@@ -16,7 +16,7 @@ public class ChallengeSection extends HeadInventory {
                 "GCCCCCCCG" +
                 "GCCCCCCCG" +
                 "GCCCCCCCG" +
-                "MGGBXNGGG";
+                "<{[BMN]}>";
     }
 
     @Override

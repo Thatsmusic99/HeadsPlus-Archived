@@ -378,7 +378,7 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
                         .replaceAll("\\{header}", h.getConfig().getString("info.header"))
                         .replaceAll("\\{author}", String.valueOf(hp.getAuthor()))
                         .replaceAll("\\{locale}", LocaleManager.getLocale().getLanguage())
-                        .replaceAll("\\{contributors}", "Toldi, DariusTK, AlansS53, Gneiwny, steve4744, Niestrat99, Alexisparis007")));
+                        .replaceAll("\\{contributors}", "Toldi, DariusTK, AlansS53, Gneiwny, steve4744, Niestrat99, Alexisparis007, jascotty2")));
             }
             return sb.toString();
         }

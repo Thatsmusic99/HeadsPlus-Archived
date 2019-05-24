@@ -69,6 +69,18 @@ public abstract class HeadInventory {
     public int getSize() {
         return HeadsPlus.getInstance().getItems().getConfig().getInt("inventories." + getName() + ".size");
     }
+    
+    public Inventory build(Player sender, List<ItemStack> list, String section, int page, int pages, boolean showTopMenu, boolean wideMenu) {
+        Inventory inventory = Bukkit.createInventory(null, getSize(), getTitle()
+                .replaceAll("\\{page}", String.valueOf(page + 1))
+                .replaceAll("\\{pages}", list == null ? "" : String.valueOf(pages))
+                .replaceAll("\\{section}", section));
+        HeadsPlus hp = HeadsPlus.getInstance();
+        NMSManager nms = hp.getNMS();
+        
+        
+        return inventory;
+    }
 
     public Icon[] getIconArray(int page, boolean wide, boolean replaceTop) {
         FileConfiguration fc = HeadsPlus.getInstance().getItems().getConfig();

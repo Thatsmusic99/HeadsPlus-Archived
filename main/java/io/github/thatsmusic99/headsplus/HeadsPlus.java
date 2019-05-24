@@ -113,6 +113,10 @@ public class HeadsPlus extends JavaPlugin {
                 LocaleManager.class.newInstance().setupLocale();
             }
 
+            if(getConfiguration().getMechanics().getBoolean("anvil-menu-search", false)) {
+                log.warning("Warning: anvil-menu-search has proven to be buggy in some versions - use with caution");
+            }
+
             // Build plugin instances
             createInstances();
 

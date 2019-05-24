@@ -22,11 +22,19 @@ import java.util.logging.Level;
 public class InventoryManager {
 
     public static enum Type {
-
-        SELL, LIST_MENU, LIST_CATEGORY, LIST_SEARCH, LIST_FAVORITES, CHALLENGES_MENU, CHALLENGES_LIST, SEARCH
+        SELL, LIST_MENU, LIST_CATEGORY, LIST_SEARCH, LIST_FAVORITES, CHALLENGES_MENU, CHALLENGES_LIST
     }
 
-    public static final HashMap<Player, InventoryManager> pls = new HashMap<>();
+    public static enum Page {
+
+        MENU('M'), START('<'), BACK('B'), NEXT('N'), BACK_2('['), BACK_3('{'), NEXT_2(']'), NEXT_3('}'), LAST('>');
+        public final char shortHand;
+
+        private Page(char shortHand) {
+            this.shortHand = shortHand;
+        }
+    }
+    public static final HashMap<Player, InventoryManager> pls = new HashMap();
 
     private final Player player;
     private int pages;
@@ -200,7 +208,7 @@ public class InventoryManager {
             max = (plugin.getItems().getConfig().getInt("inventories.headmenu.size") - 9);
             wide = true;
         }
-        List<ItemStack> heads = new ArrayList<>();
+        List<ItemStack> heads = new ArrayList();
         int start = currentPage * max;
         String[] sections = hpchx.sections.keySet().toArray(new String[0]);
         int categories = sections.length;
@@ -258,7 +266,7 @@ public class InventoryManager {
             wide = true;
         }
 
-        HashMap<String, String> s = new HashMap<>();
+        HashMap<String, String> s = new HashMap();
         for (String o : hpch.mHeads) {
             if (!hpch.getConfig().getStringList(o + ".name").isEmpty()) {
                 s.put(o, o + ".name");

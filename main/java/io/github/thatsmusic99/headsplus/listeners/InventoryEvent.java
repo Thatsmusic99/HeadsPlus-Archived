@@ -45,7 +45,7 @@ public class InventoryEvent implements Listener {
     public void onClose(InventoryCloseEvent e) {
         try {
 			if(!(e.getPlayer() instanceof Player)) return;
-			InventoryManager.close((Player) e.getPlayer());
+			InventoryManager.inventoryClosed((Player) e.getPlayer());
 		} catch (Exception ex) {
             new DebugPrint(ex, "Event (InventoryCloseEvent)", false, null);
         }

@@ -43,6 +43,7 @@ public class InventoryManager {
     private int headsInSection;
     private int currentPage = 0;
     private HeadInventory inventory;
+    public boolean searchAnvilOpen = false;
     private Type type;
     private final HeadsPlus plugin;
     private final boolean largerMenu;
@@ -91,10 +92,11 @@ public class InventoryManager {
         return im;
     }
 
-    public static void close(Player p) {
+    public static void inventoryClosed(Player p) {
         InventoryManager im = pls.get(p);
         if (im != null) {
             im.inventory = null;
+            im.searchAnvilOpen = false;
         }
     }
 

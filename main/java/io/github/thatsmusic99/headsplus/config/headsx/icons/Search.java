@@ -46,6 +46,7 @@ public class Search extends ItemStack implements Icon {
                 is.setItemMeta(ism);
                 s.setSlot(AnvilSlot.INPUT_LEFT, is);
                 s.open();
+                im.searchAnvilOpen = true;
             } else {
                 ConversationFactory c = new ConversationFactory(HeadsPlus.getInstance());
                 Conversation conv = c.withFirstPrompt(new ChatPrompt()).withLocalEcho(false).buildConversation(p);

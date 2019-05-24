@@ -216,13 +216,12 @@ public class HeadsPlus extends JavaPlugin {
         }
     }
 
-    
-
     @Override
     public void onDisable() {
 		// close any open interfaces
 		for(Player p : InventoryManager.pls.keySet()) {
-			if(InventoryManager.get(p).getInventory() != null) {
+            final InventoryManager im = InventoryManager.pls.get(p);
+			if(im.searchAnvilOpen || im.getInventory() != null) {
 				p.closeInventory();
 			}
 		}

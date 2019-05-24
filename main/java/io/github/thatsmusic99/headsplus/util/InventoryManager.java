@@ -321,7 +321,7 @@ public class InventoryManager {
         pages = ps.getTotalPages();
 
         inventory = new SellheadMenu();
-        return new SellheadMenu().build(player, ps.getContentsInPage(currentPage), "Sell", currentPage, pages, headsInSection, wide);
+        return new SellheadMenu().build(player, ps.getContentsInPage(currentPage + 1), "Sell", currentPage, pages, headsInSection, wide);
     }
 
     private List<String> searchHeads(String term) {

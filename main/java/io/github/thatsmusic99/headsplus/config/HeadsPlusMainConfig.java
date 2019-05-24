@@ -83,6 +83,8 @@ public class HeadsPlusMainConfig extends ConfigSettings {
         getConfig().addDefault("plugin.mechanics.boss-bar.color", "RED");
         getConfig().addDefault("plugin.mechanics.boss-bar.title", "&c&lXP to next HP level");
         getConfig().addDefault("plugin.mechanics.boss-bar.lifetime", 5);
+        getConfig().addDefault("plugin.mechanics.broadcasts.level-up", true);
+        getConfig().addDefault("plugin.mechanics.broadcasts.challenge-complete", true);
     //    getConfig().addDefault("plugin.mechanics.ignored-players-head-drops", new ArrayList<>());
         getConfig().set("mysql.passworld", null); // I still love this
         getConfig().options().copyDefaults(true);

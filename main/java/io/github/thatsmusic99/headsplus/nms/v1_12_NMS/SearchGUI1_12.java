@@ -23,7 +23,7 @@ public class SearchGUI1_12 extends SearchGUI {
             super(entity.inventory, entity.world,new BlockPosition(0, 0, 0), entity);
         }
 
-        public boolean a(EntityHuman entityhuman) {
+        public boolean canUse(EntityHuman entityhuman) {
             return true;
         }
     }

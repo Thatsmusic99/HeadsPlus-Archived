@@ -168,10 +168,12 @@ public class HPPlayer {
                     Bukkit.getPluginManager().callEvent(event);
                     if (!event.isCancelled()) {
                         level = nextLevel;
-                        for (Player p : Bukkit.getOnlinePlayers()) {
-                            p.sendMessage(HeadsPlus.getInstance().getMessagesConfig().getString("level-up")
-                                    .replaceAll("\\{name}", this.getPlayer().getName())
-                                    .replaceAll("\\{level}", ChatColor.translateAlternateColorCodes('&', level.getDisplayName())));
+                        if (hp.getConfiguration().getMechanics().getBoolean("broadcasts.level-up")) {
+                            for (Player p : Bukkit.getOnlinePlayers()) {
+                                p.sendMessage(HeadsPlus.getInstance().getMessagesConfig().getString("level-up")
+                                        .replaceAll("\\{name}", this.getPlayer().getName())
+                                        .replaceAll("\\{level}", ChatColor.translateAlternateColorCodes('&', level.getDisplayName())));
+                            }
                         }
                         HashMap<Integer, RLevel> levels = HeadsPlus.getInstance().getLevels();
                         scores.setLevel(player.getUniqueId().toString(), level.getConfigName());

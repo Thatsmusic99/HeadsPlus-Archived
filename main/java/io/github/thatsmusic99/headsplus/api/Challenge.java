@@ -178,11 +178,14 @@ public class Challenge {
         i.setItem(slot, is);
         player.addXp(getGainedXP());
         reward(p);
-        for (Player pl : Bukkit.getOnlinePlayers()) {
-            pl.sendMessage(hp.getMessagesConfig().getString("challenge-complete")
-                    .replaceAll("\\{challenge}", getMainName())
-                    .replaceAll("\\{name}", p.getName()));
+        if (hp.getConfiguration().getMechanics().getBoolean("broadcasts.challenge-complete")) {
+            for (Player pl : Bukkit.getOnlinePlayers()) {
+                pl.sendMessage(hp.getMessagesConfig().getString("challenge-complete")
+                        .replaceAll("\\{challenge}", getMainName())
+                        .replaceAll("\\{name}", p.getName()));
+            }
         }
+
         p.sendMessage(hp.getThemeColour(4) + LocaleManager.getLocale().getReward() + hp.getThemeColour(2) + sb2.toString());
         p.sendMessage(hp.getThemeColour(4) + "XP: " + hp.getThemeColour(2) + getGainedXP());
     }

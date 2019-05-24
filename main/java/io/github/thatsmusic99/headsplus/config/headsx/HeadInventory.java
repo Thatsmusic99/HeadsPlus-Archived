@@ -224,7 +224,7 @@ public abstract class HeadInventory {
                 im.setLore(ls);
                 is.setItemMeta(im);
                 is = nms.setIcon(is, oof);
-            } else {
+            } else if(icons[o] != null) {
                 is = new ItemStack(icons[o].getMaterial(), 1, (byte) hp.getItems().getConfig().getInt("icons." + icons[o].getIconName() + ".data-value"));
                 ItemMeta im = is.getItemMeta();
                 if (im != null) {

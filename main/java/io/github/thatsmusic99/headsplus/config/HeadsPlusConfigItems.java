@@ -17,7 +17,7 @@ public class HeadsPlusConfigItems extends ConfigSettings {
 
     @Override
     protected void load(boolean nullp) {
-        for (Icon i : Icon.getIcons()) {
+        for (Icon i : Icon.icons) {
             getConfig().addDefault("icons." + i.getIconName() + ".material", i.getDefaultMaterial().name());
             getConfig().addDefault("icons." + i.getIconName() + ".display-name", i.getDefaultDisplayName());
             getConfig().addDefault("icons." + i.getIconName() + ".lore", i.getDefaultLore());

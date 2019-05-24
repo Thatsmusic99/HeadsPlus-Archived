@@ -186,9 +186,16 @@ public class HeadsPlus extends JavaPlugin {
                         } else {
                             getLogger().info(hpc.getString("plugin-up-to-date"));
                         }
-                        checkForMutuals();
+
                     }
                 }.runTaskAsynchronously(this);
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        checkForMutuals();
+                    }
+                }.runTaskLater(this, 20);
+
             }
 
 

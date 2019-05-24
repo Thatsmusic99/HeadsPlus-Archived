@@ -123,7 +123,7 @@ public abstract class HeadInventory {
         Inventory inventory = Bukkit.createInventory(null, getSize(), getTitle()
                 .replace("{page}", String.valueOf(page + 1))
                 .replace("{pages}", list == null ? "" : String.valueOf(pages))
-                .replace("{section}", section));
+                .replace("{section}", section.isEmpty() ? "" : Character.toUpperCase(section.charAt(0)) + section.substring(1)));
         HeadsPlus hp = HeadsPlus.getInstance();
         NMSManager nms = hp.getNMS();
         Icon[] icons = getIconArray(page, wideMenu, true);

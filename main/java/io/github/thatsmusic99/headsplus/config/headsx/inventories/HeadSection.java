@@ -16,7 +16,7 @@ public class HeadSection extends HeadInventory
                 "GHHHHHHHG" +
                 "GHHHHHHHG" +
                 "GHHHHHHHG" +
-                "MGGBXNGGG";
+                "<{[BMN]}>";
     }
 
     @Override

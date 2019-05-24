@@ -215,11 +215,7 @@ public class DeathEvents implements Listener {
 
                     ItemStack is = null;
                     if (hpchx.isHPXSkull(name)) {
-                        try {
-                            is = hpchx.getSkull(name);
-                        } catch (NoSuchFieldException | IllegalAccessException e1) {
-                            e1.printStackTrace();
-                        }
+                        is = hpchx.getSkull(name);
                     } else if (name.equalsIgnoreCase("{mob-default}")) {
                         try {
                             if (e == EntityType.SKELETON) {
@@ -281,8 +277,6 @@ public class DeathEvents implements Listener {
                 if (HeadsPlus.getInstance().getHeadsXConfig().isHPXSkull(name)) {
                     try {
                         is = HeadsPlus.getInstance().getHeadsXConfig().getSkull(name);
-                    } catch (NoSuchFieldException | IllegalAccessException e1) {
-                        e1.printStackTrace();
                     } catch (NullPointerException ex) {
                         HeadsPlus.getInstance().getLogger().warning("WARNING: NPE thrown at " + str + ", " + name + ". If this is light_gray, please change HP#light_gray_sheep to HP#silver_sheep. If not, make sure your HP# head is valid.");
                     }

@@ -31,7 +31,7 @@ import io.github.thatsmusic99.headsplus.nms.v1_9_R2_NMS.V1_9_NMS2;
 import io.github.thatsmusic99.headsplus.storage.Favourites;
 import io.github.thatsmusic99.headsplus.storage.PlayerScores;
 import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
-import io.github.thatsmusic99.headsplus.util.HPUtils;
+import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import io.github.thatsmusic99.headsplus.util.MySQLAPI;
 import io.github.thatsmusic99.og.OreGenerator;
 import io.github.thatsmusic99.pg.Core;
@@ -54,12 +54,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Logger;
+import org.bukkit.entity.Player;
 
 public class HeadsPlus extends JavaPlugin {
 
     // Private variables for the plugin
-    public final Logger log = Logger.getLogger("Minecraft");
     private static HeadsPlus instance;
     private final PluginDescriptionFile pluginYml = getDescription();
     private final String author = pluginYml.getAuthors().toString();
@@ -114,6 +113,10 @@ public class HeadsPlus extends JavaPlugin {
             // Build plugin instances
             createInstances();
 
+            if(getConfiguration().getMechanics().getBoolean("anvil-menu-search", false)) {
+                getLogger().warning("Warning: anvil-menu-search has proven to be buggy in some versions - use with caution");
+            }
+
             // Checks theme, believe it or not!
             debug("- Checking plugin theme.", 1);
             checkTheme();
@@ -125,7 +128,7 @@ public class HeadsPlus extends JavaPlugin {
             }
             // If sellable heads are enabled and yet there isn't Vault
             if (!(econ()) && (getConfiguration().getPerks().getBoolean("sellHeads"))) {
-                log.warning(hpc.getString("no-vault"));
+                getLogger().warning(hpc.getString("no-vault"));
             }
 
             // If Vault exists
@@ -169,19 +172,19 @@ public class HeadsPlus extends JavaPlugin {
                         }
                         if (update != null) {
                             if (!((String) update[2]).equalsIgnoreCase("5.1.10")) {
-                                log.info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getUpdateFound())));
-                                log.info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getCurrentVersion()))
+                                getLogger().info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getUpdateFound())));
+                                getLogger().info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getCurrentVersion()))
                                         + getDescription().getVersion());
-                                log.info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getNewVersion() + update[2])));
+                                getLogger().info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getNewVersion() + update[2])));
                                 if (update[1].toString().length() > 50) {
                                     update[1] = update[1].toString().subSequence(0, 50) + "... (Check Spigot for more information)";
                                 }
-                                log.info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getDescription())) + update[1]);
-                                log.info("Download link: https://www.spigotmc.org/resources/headsplus-1-8-x-1-12-x.40265/");
+                                getLogger().info(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', LocaleManager.getLocale().getDescription())) + update[1]);
+                                getLogger().info("Download link: https://www.spigotmc.org/resources/headsplus-1-8-x-1-12-x.40265/");
 
                             }
                         } else {
-                            log.info(hpc.getString("plugin-up-to-date"));
+                            getLogger().info(hpc.getString("plugin-up-to-date"));
                         }
                         checkForMutuals();
                     }
@@ -189,7 +192,7 @@ public class HeadsPlus extends JavaPlugin {
             }
 
 
-            log.info(hpc.getString("plugin-enabled"));
+            getLogger().info(hpc.getString("plugin-enabled"));
         } catch (Exception e) {
             try {
                 new DebugPrint(e, "Startup", false, null);
@@ -213,10 +216,15 @@ public class HeadsPlus extends JavaPlugin {
         }
     }
 
-    
-
     @Override
     public void onDisable() {
+		// close any open interfaces
+		for(Player p : InventoryManager.pls.keySet()) {
+            final InventoryManager im = InventoryManager.pls.get(p);
+			if(im.searchAnvilOpen || im.getInventory() != null) {
+				p.closeInventory();
+			}
+		}
         try {
             favourites.save();
         } catch (IOException e) {
@@ -227,7 +235,7 @@ public class HeadsPlus extends JavaPlugin {
         } catch (IOException e) {
             new DebugPrint(e, "Disabling (saving scores)", false, null);
         }
-        log.info(hpc.getString("plugin-disabled"));
+        getLogger().info(hpc.getString("plugin-disabled"));
     }
 
     public static HeadsPlus getInstance() {
@@ -307,11 +315,11 @@ public class HeadsPlus extends JavaPlugin {
                   /*  getLogger().severe("MYSQL ERROR: If you're migrating from an old HeadsPlus version, please reset all of the HeadsPlus tables. If this error persists after you've reset the tables, a report has been made for you to send.");
                     try {
                         String s = new DebugFileCreator().createReport(ex, "Startup");
-                        log.severe("Report name: " + s);
-                        log.severe("If the issue persists, please send to one of the following links (I WILL ASK IF YOU'VE RESET YOUR MYSQL TABLES):");
-                        log.severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
-                        log.severe("https://discord.gg/nbT7wC2");
-                        log.severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
+                        getLogger().severe("Report name: " + s);
+                        getLogger().severe("If the issue persists, please send to one of the following links (I WILL ASK IF YOU'VE RESET YOUR MYSQL TABLES):");
+                        getLogger().severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
+                        getLogger().severe("https://discord.gg/nbT7wC2");
+                        getLogger().severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-12-x.237088/");
                         break;
                     } catch (IOException ignored) {
 
@@ -341,7 +349,7 @@ public class HeadsPlus extends JavaPlugin {
                 fc.save();
                 debug("- Theme set to " + mt.name() + "!", 1);
             } catch (Exception ex) {
-                log.warning("[HeadsPlus] Faulty theme was put in! No theme changes will be made.");
+                getLogger().warning("[HeadsPlus] Faulty theme was put in! No theme changes will be made.");
             }
         }
     }

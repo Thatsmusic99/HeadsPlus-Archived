@@ -2,7 +2,10 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.github.thatsmusic99</groupId>
   <artifactId>HeadsPlus</artifactId>
-  <version>5.1.12</version>
+  <version>6.1.3-SNAPSHOT-4</version>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
 <build>
    <plugins>
        <plugin>
@@ -11,18 +14,34 @@
            <configuration>
                <source>1.8</source>
                <target>1.8</target>
+
+           </configuration>
+       </plugin>
+       <plugin>
+           <groupId>org.apache.maven.plugins</groupId>
+           <artifactId>maven-jar-plugin</artifactId>
+           <version>2.3.1</version>
+           <configuration>
+               <outputDirectory>${project.basedir}/target</outputDirectory>
            </configuration>
        </plugin>
    </plugins>
 </build>  
 <dependencies>
+
     <dependency>
+        <groupId>org.spigotmc</groupId>
+        <artifactId>spigot-12</artifactId>
+        <version>1.14</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/resources/spigot-1.14.jar</systemPath>
+    </dependency>
+   <dependency>
            <groupId>org.spigotmc</groupId>
            <artifactId>spigot-10</artifactId>
            <version>1.13</version>
            <scope>system</scope>
-            <!-->Requires system path<\!-->
-           <systemPath></systemPath>
+           <systemPath>${project.basedir}/resources/spigot-1.13-R0.1-SNAPSHOT-b1851.jar</systemPath>
     </dependency>
     <dependency>
            <groupId>net.milkbowl.vault</groupId>
@@ -35,80 +54,70 @@
            <artifactId>spigot</artifactId>
            <version>1.8.8-R0.1-SNAPSHOT</version>
            <scope>system</scope>
-           <!-->Requires system path<\!-->
-           <systemPath></systemPath>
+           <systemPath>${project.basedir}/resources/spigot-1.8.8-R0.1-SNAPSHOT.jar</systemPath>
        </dependency>
        <dependency>
            <groupId>org.spigotmc</groupId>
            <artifactId>spigot-2</artifactId>
            <version>1.10.2-R0.1-SNAPSHOT</version>
            <scope>system</scope>
-           <!-->Requires system path<\!-->
-           <systemPath></systemPath>
+           <systemPath>${project.basedir}/resources/spigot-1.10.2-R0.1-SNAPSHOT.jar</systemPath>
        </dependency>
        <dependency>
            <groupId>org.spigotmc</groupId>
            <artifactId>spigot-3</artifactId>
            <version>1.9-R0.1-SNAPSHOT</version>
            <scope>system</scope>
-           <!-->Requires system path<\!-->
-           <systemPath></systemPath>
+           <systemPath>${project.basedir}/resources/spigot-1.9-R0.1-SNAPSHOT.jar</systemPath>
        </dependency>
     <dependency>
         <groupId>org.spigotmc</groupId>
         <artifactId>spigot-4</artifactId>
         <version>1.9.4-R0.1-SNAPSHOT</version>
         <scope>system</scope>
-        <!-->Requires system path<\!-->
-        <systemPath></systemPath>
+        <systemPath>${project.basedir}/resources/spigot-1.9.4-R0.1-SNAPSHOT.jar</systemPath>
     </dependency>
     <dependency>
         <groupId>org.spigotmc</groupId>
         <artifactId>spigot-5</artifactId>
         <version>1.12-R0.1-SNAPSHOT</version>
         <scope>system</scope>
-        <!-->Requires system path<\!-->
-        <systemPath></systemPath>
+        <systemPath>${project.basedir}/resources/spigot-1.12-R0.1-SNAPSHOT-b1376.jar</systemPath>
     </dependency>
     <dependency>
         <groupId>org.spigotmc</groupId>
         <artifactId>spigot-6</artifactId>
         <version>1.11.2-R0.1-SNAPSHOT</version>
         <scope>system</scope>
-        <!-->Requires system path<\!-->
-        <systemPath></systemPath>
+        <systemPath>${project.basedir}/resources/spigot-1.11.2-R0.1-SNAPSHOT.jar</systemPath>
     </dependency>
     <dependency>
         <groupId>org.spigotmc</groupId>
         <artifactId>spigot-7</artifactId>
         <version>1.8-R0.1-SNAPSHOT</version>
         <scope>system</scope>
-        <!-->Requires system path<\!-->
-        <systemPath></systemPath>
+        <systemPath>${project.basedir}/resources/spigot-1.8-R0.1-SNAPSHOT.jar</systemPath>
     </dependency>
     <dependency>
         <groupId>org.spigotmc</groupId>
         <artifactId>spigot-8</artifactId>
         <version>1.8.3-R0.1-SNAPSHOT</version>
         <scope>system</scope>
-        <!-->Requires system path<\!-->
-        <systemPath></systemPath>
+        <systemPath>${project.basedir}/resources/spigot-1.8.3-R0.1-SNAPSHOT.jar</systemPath>
     </dependency>
     <dependency>
         <groupId>org.spigotmc</groupId>
         <artifactId>spigot-9</artifactId>
         <version>1.13.1-R0.1</version>
         <scope>system</scope>
-        <!-->Requires system path<\!-->
-        <systemPath></systemPath>
+        <systemPath>${project.basedir}/resources/spigot-1.13.1-R0.1-SNAPSHOT-b1959.jar</systemPath>
     </dependency>
     <dependency>
         <groupId>org.spigotmc</groupId>
         <artifactId>spigot-11</artifactId>
         <version>1.13.2-R0.1</version>
         <scope>system</scope>
-        <!-->Requires system path<\!-->
-        <systemPath></systemPath>
+        <systemPath>${project.basedir}/resources/spigot-1.13.2-R0.1-SNAPSHOT-b2151.jar</systemPath>
     </dependency>
     <dependency>
         <groupId>io.github.thatsmusic99</groupId>
@@ -117,32 +126,39 @@
         <scope>system</scope>
         <!-->Download link - https://cdn.discordapp.com/attachments/269172690957369355/507140760286658580/ProjectPG-1.0-SNAPSHOT.jar <\!-->
         <!-->THIS IS A HIGH RISK AND UNFINISHED PLUGIN, NOT RECOMMENDED TO RUN ON SERVERS.<\!-->
-        <systemPath></systemPath>
+        <systemPath>${project.basedir}/resources/ProjectPG-1.0-SNAPSHOT.jar</systemPath>
     </dependency>
     <dependency>
         <groupId>io.github.thatsmusic99</groupId>
-        <artifactId>advancedoregenerator</artifactId>
+        <artifactId>aog</artifactId>
         <version>1.0.0</version>
         <scope>system</scope>
         <!--> https://www.spigotmc.org/resources/advancedoregenerator.51153/ </!-->
-        <systemPath></systemPath>
+        <systemPath>${project.basedir}/resources/AdvancedOreGenerator.jar</systemPath>
     </dependency>
     <dependency>
         <groupId>io.github.thatsmusic99</groupId>
-        <artifactId>spectateprotection</artifactId>
+        <artifactId>spec</artifactId>
         <version>1.0.0</version>
         <scope>system</scope>
         <!--> https://www.spigotmc.org/resources/spectateprotection.54828/ </!-->
-        <systemPath></systemPath>
+        <systemPath>${project.basedir}/resources/SpectateProtection-1.1.2.jar</systemPath>
     </dependency>
     <dependency>
-        <!--> MythicMobs. Don't know the packages. </!-->
-        <groupId>de.aaah</groupId>
-        <artifactId>idk</artifactId>
+        <groupId>io.lumine.xikage</groupId>
+        <artifactId>MythicMobs</artifactId>
         <version>1.0.0</version>
         <scope>system</scope>
-        <!--> https://www.mythicmobs.net/index.php?pages/download/&version=4.4.1 </!-->
-        <systemPath></systemPath>
+        <!--> https://www.mythicmobs.net/index.php?pages/download/ </!-->
+        <systemPath>${project.basedir}/resources/MythicMobs-4.4.1.jar</systemPath>
+    </dependency>
+    <dependency>
+        <groupId>me.clip</groupId>
+        <artifactId>placeholderapi</artifactId>
+        <version>1.0.0</version>
+        <scope>system</scope>
+        <!--> https://www.spigotmc.org/resources/placeholderapi.6245/ </!-->
+        <systemPath>${project.basedir}/resources/PlaceholderAPI-2.9.2.jar</systemPath>
     </dependency>
 
 
@@ -152,9 +168,9 @@
      <id>spigot-repo</id>
      <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
    </repository>
-   <repository>
-     <id>vault-repo</id>
-     <url>http://nexus.hc.to/content/repositories/pub_releases</url>
-   </repository>
+    <repository>
+        <id>essx-repo</id>
+        <url>https://ci.ender.zone/plugin/repository/everything/</url>
+    </repository>
 </repositories>
 </project>

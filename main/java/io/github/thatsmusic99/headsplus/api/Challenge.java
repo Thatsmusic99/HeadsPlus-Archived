@@ -197,7 +197,7 @@ public class Challenge {
             if (hp.econ()) {
                 hp.getEconomy().depositPlayer(p, Double.valueOf(String.valueOf(getRewardValue())));
             } else {
-                hp.log.warning(hpc.getString("no-vault-2"));
+                hp.getLogger().warning(hpc.getString("no-vault-2"));
             }
 
         } else if (re == HPChallengeRewardTypes.ADD_GROUP) {
@@ -206,7 +206,7 @@ public class Challenge {
                     perms.playerAddGroup(p, (String) getRewardValue());
                 }
             } else {
-                hp.log.warning(hpc.getString("no-vault-2"));
+                hp.getLogger().warning(hpc.getString("no-vault-2"));
             }
 
         } else if (re == HPChallengeRewardTypes.REMOVE_GROUP) {
@@ -215,7 +215,7 @@ public class Challenge {
                     perms.playerRemoveGroup(p, (String) getRewardValue());
                 }
             } else {
-                hp.log.warning(hpc.getString("no-vault-2"));
+                hp.getLogger().warning(hpc.getString("no-vault-2"));
             }
         } else if (re == HPChallengeRewardTypes.GIVE_ITEM) {
             try {

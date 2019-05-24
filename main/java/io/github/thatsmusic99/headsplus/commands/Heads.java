@@ -34,11 +34,8 @@ public class Heads implements CommandExecutor, IHeadsPlusCommand {
                 if (cs instanceof Player) {
                     Player p = (Player) cs;
                     if (cs.hasPermission("headsplus.heads")) {
-                        InventoryManager im2 = new InventoryManager("heads");
-                        InventoryManager.pls.put(p, im2);
-                        InventoryManager im = InventoryManager.getIM(p);
-                        im.setSection("Menu");
-                        p.openInventory(im.changePage(true, true, (Player) cs, "Menu"));
+                        InventoryManager im2 = InventoryManager.getOrCreate(p);
+                        im2.showScreen(InventoryManager.Type.LIST_MENU);
                         printDebugResults(tests, true);
                         return true;
                     } else {

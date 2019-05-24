@@ -57,11 +57,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                     if (args.length == 0 && (sender.hasPermission("headsplus.sellhead"))) { // If sold via hand
                         tests.put("No arguments", true);
                         if (hp.getConfiguration().getMechanics().getBoolean("sellhead-gui")) {
-                            InventoryManager im2 = new InventoryManager("sellhead");
-                            InventoryManager.pls.put(p, im2);
-                            InventoryManager im = InventoryManager.getIM(p);
-                            im.setSection("Menu");
-                            p.openInventory(im.changePage(true, true, (Player) sender, "Menu"));
+							InventoryManager.getOrCreate(p).showScreen(InventoryManager.Type.SELL);
                             printDebugResults(tests, true);
                             return true;
                         } else {
@@ -133,7 +129,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                             if (st.equalsIgnoreCase(args[0])) {
                                                 if (is != limit) {
                                                     price = setPrice(price, args, i, p, limit);
-                                                    is++;
+                                                    ++is;
                                                 }
 
                                             }

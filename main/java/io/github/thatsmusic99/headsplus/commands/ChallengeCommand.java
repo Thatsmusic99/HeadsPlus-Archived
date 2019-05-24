@@ -33,11 +33,7 @@ public class ChallengeCommand implements CommandExecutor, IHeadsPlusCommand {
                     Player p = (Player) cs;
                     if (cs.hasPermission("headsplus.challenges")) {
                         tests.put("Has permission", true);
-                        InventoryManager im2 = new InventoryManager("chal");
-                        InventoryManager.pls.put(p, im2);
-                        InventoryManager im = InventoryManager.getIM(p);
-                        im.setSection("Menu");
-                        p.openInventory(im.changePage(true, true, (Player) cs, "Menu"));
+                        InventoryManager.getOrCreate(p).showScreen(InventoryManager.Type.CHALLENGES_MENU);
                         printDebugResults(tests, true);
                         return true;
                     } else {

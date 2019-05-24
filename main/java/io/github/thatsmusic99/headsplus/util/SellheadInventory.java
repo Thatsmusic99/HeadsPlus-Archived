@@ -134,14 +134,8 @@ public class SellheadInventory {
             HeadsPlusConfigHeadsX hpchx = hp.getHeadsXConfig();
             try {
                 if (hpchx.isHPXSkull(hpch.getConfig().getStringList(o + ".name").get(0))) {
-                    try {
-                        it = hp.getHeadsXConfig().getSkull(hpch.getConfig().getStringList(o + ".name").get(0));
-                        sm = (SkullMeta) it.getItemMeta();
-                    } catch (NoSuchFieldException | IllegalAccessException e) {
-                        e.printStackTrace();
-                        it = null;
-                        sm = null;
-                    }
+                    it = hp.getHeadsXConfig().getSkull(hpch.getConfig().getStringList(o + ".name").get(0));
+                    sm = (SkullMeta) it.getItemMeta();
                 } else {
                     it = nms.getSkullMaterial(1);
                     sm = (SkullMeta) it.getItemMeta();
@@ -149,14 +143,8 @@ public class SellheadInventory {
                 }
             } catch (IndexOutOfBoundsException ex) {
                 if (hpchx.isHPXSkull(hpch.getConfig().getStringList(o + ".name.default").get(0))) {
-                    try {
-                        it = hp.getHeadsXConfig().getSkull(hpch.getConfig().getStringList(o + ".name.default").get(0));
-                        sm = (SkullMeta) it.getItemMeta();
-                    } catch (NoSuchFieldException | IllegalAccessException e) {
-                        e.printStackTrace();
-                        it = null;
-                        sm = null;
-                    }
+                    it = hp.getHeadsXConfig().getSkull(hpch.getConfig().getStringList(o + ".name.default").get(0));
+                    sm = (SkullMeta) it.getItemMeta();
                 } else {
                     it = nms.getSkullMaterial(1);
                     sm = (SkullMeta) it.getItemMeta();
@@ -187,12 +175,10 @@ public class SellheadInventory {
                     }
                 }
             } catch (IndexOutOfBoundsException ignored) {
-
             }
 
-
             i.setItem(pos()[io], it);
-            io++;
+            ++io;
         }
         DyeColor dc;
         try {

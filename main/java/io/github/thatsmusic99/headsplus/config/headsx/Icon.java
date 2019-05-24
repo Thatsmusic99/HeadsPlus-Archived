@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public interface Icon {
@@ -27,7 +28,7 @@ public interface Icon {
     }
 
     static Icon getIconFromName(String s) {
-        for (Icon i : getIcons()) {
+        for (Icon i : icons) {
             if (i.getIconName().equalsIgnoreCase(s) && !(i instanceof Air)) {
                 return i;
             }
@@ -35,35 +36,41 @@ public interface Icon {
         return null;
     }
 
-    static List<Icon> getIcons() {
-        List<Icon> icons = new ArrayList<>();
-        icons.add(new Back());
-        icons.add(new Challenge());
-        icons.add(new Close());
-        icons.add(new Favourites());
-        icons.add(new Glass());
-        icons.add(new Head());
-        icons.add(new Menu());
-        icons.add(new Next());
-        icons.add(new Search());
-        icons.add(new Stats());
-        icons.add(new Air());
-        icons.add(new HeadSection());
-        icons.add(new ChallengeSection.Easy());
-        icons.add(new ChallengeSection.EasyMedium());
-        icons.add(new ChallengeSection.Medium());
-        icons.add(new ChallengeSection.MediumHard());
-        icons.add(new ChallengeSection.Hard());
-        icons.add(new ChallengeSection.Tedious());
-        icons.add(new ChallengeSection.TediousPainful());
-        icons.add(new ChallengeSection.Painful());
-        icons.add(new ChallengeSection.PainfulDeadly());
-        icons.add(new ChallengeSection.Deadly());
-        return icons;
-    }
+    static List<Icon> icons = Arrays.asList(
+        new Challenge(),
+        new Close(),
+        new Favourites(),
+        new Glass(),
+        new Head(),
+
+        new Nav(Nav.Page.MENU, "Main Menu", Material.NETHER_STAR),
+        new Nav(Nav.Page.START, "First Page", Material.ARROW),
+        new Nav(Nav.Page.LAST, "Last Page", Material.ARROW),
+        new Nav(Nav.Page.BACK, "Back", Material.ARROW),
+        new Nav(Nav.Page.BACK_2, "Back 2", Material.ARROW),
+        new Nav(Nav.Page.BACK_3, "Back 3", Material.ARROW),
+        new Nav(Nav.Page.NEXT, "Next", Material.ARROW),
+        new Nav(Nav.Page.NEXT_2, "Next 2", Material.ARROW),
+        new Nav(Nav.Page.NEXT_3, "Next 3", Material.ARROW),
+
+        new Search(),
+        new Stats(),
+        new Air(),
+        new HeadSection(),
+        new ChallengeSection.Easy(),
+        new ChallengeSection.EasyMedium(),
+        new ChallengeSection.Medium(),
+        new ChallengeSection.MediumHard(),
+        new ChallengeSection.Hard(),
+        new ChallengeSection.Tedious(),
+        new ChallengeSection.TediousPainful(),
+        new ChallengeSection.Painful(),
+        new ChallengeSection.PainfulDeadly(),
+        new ChallengeSection.Deadly()
+    );
 
     static Icon getIconFromSingleLetter(String s) {
-        for (Icon i : getIcons()) {
+        for (Icon i : icons) {
             if (i.getSingleLetter().equalsIgnoreCase(s) && !(i instanceof Air)) {
                 return i;
             }

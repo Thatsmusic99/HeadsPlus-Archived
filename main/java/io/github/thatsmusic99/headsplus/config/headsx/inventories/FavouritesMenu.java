@@ -16,7 +16,7 @@ public class FavouritesMenu extends HeadInventory {
                 "GHHHHHHHG" +
                 "GHHHHHHHG" +
                 "GHHHHHHHG" +
-                "MGGBXNGGG";
+                "<{[BMN]}>";
     }
 
     @Override

@@ -53,8 +53,8 @@ public class RecipeEnumUser {
                                 try {
                                     recipe.addIngredient(Material.getMaterial(key2));
                                     ingrs.add(key2);
-                                } catch (IllegalArgumentException e) {
-                                    e.printStackTrace();
+                                } catch (IllegalArgumentException | NullPointerException e) {
+                                    HeadsPlus.getInstance().getLogger().warning("Unknown material " + key2 + " when crafting " + id + " head.");
                                 }
                             }
                             recipe.addIngredient(new ItemStack(Material.getMaterial(crafting.getString("base-item.material")), 1, (short) crafting.getInt("base-item.data")).getType());
@@ -62,7 +62,6 @@ public class RecipeEnumUser {
                                 try {
                                     Bukkit.addRecipe(recipe);
                                 } catch (IllegalStateException e) {
-                                    e.printStackTrace();
                                 }
                             }
                         }

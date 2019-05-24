@@ -1,7 +1,7 @@
 package io.github.thatsmusic99.headsplus.listeners;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.api.*;
+import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.api.events.EntityHeadDropEvent;
 import io.github.thatsmusic99.headsplus.api.events.HeadCraftEvent;
 import io.github.thatsmusic99.headsplus.api.events.PlayerHeadDropEvent;
@@ -21,7 +21,7 @@ public class LBEvents implements Listener {
                 if (e.getPlayer() != null) {
                     if (hp.isUsingLeaderboards()) {
                         if (hp.getConfiguration().getPerks().getBoolean("smite-player-if-they-get-a-head")) {
-                            for (int i = 0; i < 5; i++) {
+                            for (int i = 0; i < 5; ++i) {
                                 e.getLocation().getWorld().strikeLightning(e.getPlayer().getLocation());
                             }
                         }
@@ -42,7 +42,7 @@ public class LBEvents implements Listener {
                 if (e.getKiller() != null) {
                     if (hp.isUsingLeaderboards()) {
                         if (hp.getConfiguration().getPerks().getBoolean("smite-player-if-they-get-a-head")) {
-                            for (int i = 0; i < 5; i++) {
+                            for (int i = 0; i < 5; ++i) {
                                 e.getLocation().getWorld().strikeLightning(e.getKiller().getLocation());
                             }
                         }

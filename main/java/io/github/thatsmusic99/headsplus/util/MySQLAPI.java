@@ -4,16 +4,23 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.challenges.HeadsPlusChallenges;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusLeaderboards;
-import io.github.thatsmusic99.headsplus.listeners.DeathEvents;
 import io.github.thatsmusic99.headsplus.storage.PlayerScores;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
 
-import java.sql.*;
-import java.util.*;
 
 public class MySQLAPI {
 
@@ -32,13 +39,12 @@ public class MySQLAPI {
     }
 
     private void addNewPlayerValue(OfflinePlayer p, String section, String database, int shAmount) throws SQLException {
-        String uuid = p.getUniqueId().toString();
+        final String uuid = p.getUniqueId().toString();
         if (hp.isConnectedToMySQLDatabase()) {
             Connection c = hp.getConnection();
             Statement s;
             ResultSet rs;
             s = c.createStatement();
-
             try {
                 PreparedStatement st = c.prepareStatement("SELECT " + section + " FROM `" + database + "` WHERE `uuid`=?");
                 st.setString(1, uuid);
@@ -55,10 +61,10 @@ public class MySQLAPI {
                 //        " SELECT '" + p.getUniqueId().toString() + "' FROM DUAL"
                 //        " WHERE NOT EXISTS (SELECT uuid FROM `" + database + "` WHERE uuid=`" + p.getUniqueId().toString() + "`);";
                 // But we don't need to do this, really - this creates duplicate rows (id is the pk, not uuid);
-                ResultSet rs_uuid = s.executeQuery("SELECT uuid FROM `" + database + "` WHERE uuid=`" + p.getUniqueId().toString() + "`;");
+                ResultSet rs_uuid = s.executeQuery("SELECT uuid FROM `" + database + "` WHERE uuid='" + uuid + "';");
                 if(!rs_uuid.next()) {
                     // no row - add one!
-                    s.executeUpdate("INSERT INTO `" + database + "` (uuid) VALUE (`" + p.getUniqueId().toString() + "`);");
+                    s.executeUpdate("INSERT INTO `" + database + "` (uuid) VALUE ('" + uuid + "');");
                 }
                 rs_uuid.close();
 

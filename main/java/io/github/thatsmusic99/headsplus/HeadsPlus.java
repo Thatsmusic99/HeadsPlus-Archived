@@ -28,6 +28,7 @@ import io.github.thatsmusic99.headsplus.nms.v1_8_R2_NMS.v1_8_R2_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_8_R3_NMS.v1_8_R3NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_9_NMS.v1_9_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_9_R2_NMS.V1_9_NMS2;
+import io.github.thatsmusic99.headsplus.reflection.NBTManager;
 import io.github.thatsmusic99.headsplus.storage.Favourites;
 import io.github.thatsmusic99.headsplus.storage.PlayerScores;
 import io.github.thatsmusic99.headsplus.util.DebugFileCreator;
@@ -91,6 +92,7 @@ public class HeadsPlus extends JavaPlugin {
     private List<ConfigSettings> cs = new ArrayList<>();
     private Favourites favourites;
     private PlayerScores scores;
+    private NBTManager nbt;
 
     @Override
     public void onEnable() {
@@ -409,9 +411,12 @@ public class HeadsPlus extends JavaPlugin {
     }
 
     private void createInstances() {
+
         config = new HeadsPlusMainConfig();
         cs.add(config);
         debug("- Instance for HeadsPlusMainConfig created!", 3);
+        nbt = new NBTManager();
+        debug("- Instance for NBTManager created!", 3);
         hpc = new HeadsPlusMessagesConfig(false);
         cs.add(hpc);
         debug("- Instance for HeadsPlusMessagesConfig created!", 3);
@@ -435,7 +440,7 @@ public class HeadsPlus extends JavaPlugin {
         try {
             setupJSON();
             debug("- Set up favourites.json and playerinfo.json!", 1);
-        } catch (IOException | ParseException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         hapi = new HeadsPlusAPI();
@@ -463,6 +468,7 @@ public class HeadsPlus extends JavaPlugin {
         menus = new HeadsPlusConfigTextMenu();
         cs.add(menus);
         debug("- Instance for HeadsPlusConfigTextMenu created!", 3);
+
         debug("Instances created.", 1);
     }
 
@@ -472,7 +478,7 @@ public class HeadsPlus extends JavaPlugin {
         return perms != null;
     }
 
-    private void setupJSON() throws IOException, ParseException {
+    private void setupJSON() throws IOException {
         favourites = new Favourites();
         favourites.create();
         favourites.read();
@@ -503,7 +509,7 @@ public class HeadsPlus extends JavaPlugin {
             }
         }
         if (nms instanceof v1_14_R1_NMS) {
-            String supportedHash = "8b7fe9012a93b36df04844a6c990de27";
+            String supportedHash = "48be70f51ffe914d865f175ed3bf992d";
             getLogger().info("1.14 detected! NMS mapping version: " + ((org.bukkit.craftbukkit.v1_14_R1.util.CraftMagicNumbers) getServer().getUnsafe()).getMappingsVersion());
             if (supportedHash.equalsIgnoreCase(((org.bukkit.craftbukkit.v1_14_R1.util.CraftMagicNumbers) getServer().getUnsafe()).getMappingsVersion())) {
                 getLogger().info("Current hash is supported.");
@@ -667,6 +673,10 @@ public class HeadsPlus extends JavaPlugin {
 
     protected HeadsPlusLevels getLevelsConfig() {
         return hpl;
+    }
+
+    public NBTManager getNBTManager() {
+        return nbt;
     }
 
     public HeadsPlusCrafting getCraftingConfig() {

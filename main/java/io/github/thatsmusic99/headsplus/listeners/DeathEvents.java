@@ -13,6 +13,7 @@ import io.github.thatsmusic99.headsplus.nms.v1_12_NMS.v1_12_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_13_NMS.v1_13_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_13_R2_NMS.v1_13_R2_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_14_R1_NMS.v1_14_R1_NMS;
+import io.github.thatsmusic99.headsplus.reflection.NBTManager;
 import io.lumine.xikage.mythicmobs.MythicMobs;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
@@ -139,9 +140,10 @@ public class DeathEvents implements Listener {
                     }
                     headM.setLore(strs);
                     head.setItemMeta(headM);
-                    head = nms.addNBTTag(head);
-                    head = nms.setType("player", head);
-                    head = nms.setPrice(head, price);
+                    NBTManager nbt = HeadsPlus.getInstance().getNBTManager();
+                    head = nbt.makeSellable(head);
+                    head = nbt.setType(head, "player");
+                    head = nbt.setPrice(head, price);
                     PlayerHeadDropEvent event = new PlayerHeadDropEvent(ep.getEntity(), ep.getEntity().getKiller(), head, world, entityLoc);
                     Bukkit.getServer().getPluginManager().callEvent(event);
                     if (!event.isCancelled()) {
@@ -251,9 +253,10 @@ public class DeathEvents implements Listener {
                         }
                         sm.setLore(strs);
                         is.setItemMeta(sm);
-                        is = nms.addNBTTag(is);
-                        is = nms.setType(fancyName, is);
-                        is = nms.setPrice(is, price);
+                        NBTManager nbt = HeadsPlus.getInstance().getNBTManager();
+                        is = nbt.makeSellable(is);
+                        is = nbt.setType(is, fancyName);
+                        is = nbt.setPrice(is, price);
                     }
                     heads.add(is);
 
@@ -274,14 +277,14 @@ public class DeathEvents implements Listener {
             List<ItemStack> heads = new ArrayList<>();
             for (String name : hpch.getConfig().getStringList(en + ".name." + str)) {
                 ItemStack is = null;
+                NMSManager nms = HeadsPlus.getInstance().getNMS();
                 if (HeadsPlus.getInstance().getHeadsXConfig().isHPXSkull(name)) {
                     try {
                         is = HeadsPlus.getInstance().getHeadsXConfig().getSkull(name);
                     } catch (NullPointerException ex) {
                         HeadsPlus.getInstance().getLogger().warning("WARNING: NPE thrown at " + str + ", " + name + ". If this is light_gray, please change HP#light_gray_sheep to HP#silver_sheep. If not, make sure your HP# head is valid.");
                     }
-                } else {
-                    NMSManager nms = HeadsPlus.getInstance().getNMS();
+                }  else {
                     is = nms.getSkullMaterial(1);
                     double price = hpch.getPrice(en);
                     SkullMeta sm = (SkullMeta) is.getItemMeta();

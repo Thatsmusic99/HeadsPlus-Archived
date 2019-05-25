@@ -6,6 +6,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.nms.v1_13_NMS.v1_13_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_13_R2_NMS.v1_13_R2_NMS;
+import io.github.thatsmusic99.headsplus.reflection.NBTManager;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,13 +27,14 @@ public class MaskEvent implements Listener {
         HeadsPlus hp = HeadsPlus.getInstance();
         if (hp.getConfiguration().getPerks().getBoolean("mask-powerups")) {
             NMSManager nms = hp.getNMS();
+            NBTManager nbt = hp.getNBTManager();
             if (e.getRawSlot() == getSlot()) {
 
                 ItemStack ist = e.getCursor();
                 if (ist != null) {
                     if (ist.getType().equals(nms.getSkull(3).getType())) {
                         HeadsPlusConfigHeads hpch = hp.getHeadsConfig();
-                        String s = nms.getType(ist).toLowerCase();
+                        String s = nbt.getType(ist).toLowerCase();
                         if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {
                             HPPlayer pl = HPPlayer.getHPPlayer((OfflinePlayer) e.getWhoClicked());
                             pl.addMask(s);

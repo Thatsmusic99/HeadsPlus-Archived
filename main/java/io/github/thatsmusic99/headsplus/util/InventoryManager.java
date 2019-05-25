@@ -9,6 +9,7 @@ import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.config.headsx.icons.Nav;
 import io.github.thatsmusic99.headsplus.config.headsx.inventories.*;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
+import io.github.thatsmusic99.headsplus.reflection.NBTManager;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -229,7 +230,7 @@ public class InventoryManager {
                 im.setDisplayName(ChatColor.translateAlternateColorCodes('&', disp != null ? disp : sections[i]));
                 im.setLore(Arrays.asList(ChatColor.GRAY.toString() + count + " heads"));
                 is.setItemMeta(im);
-                is = plugin.getNMS().addSection(is, sections[i]);
+                is = plugin.getNBTManager().addSection(is, sections[i]);
                 heads.add(is);
             } catch (Exception ex) {
                 plugin.getLogger().log(Level.WARNING, "Unexpected Error processing section " + sections[i], ex);
@@ -248,7 +249,7 @@ public class InventoryManager {
                 } else {
                     is = hpchx.getSkullFromTexture(text, false, hpchx.getConfig().getString("options.advent-display-name"));
                 }
-                is = plugin.getNMS().addSection(is, "advent-calendar");
+                is = plugin.getNBTManager().addSection(is, "advent-calendar");
                 heads.add(is);
             } catch (Exception ex) {
                 plugin.getLogger().log(Level.WARNING, "Unexpected Error processing section options.advent-texture", ex);
@@ -303,6 +304,7 @@ public class InventoryManager {
 
         List<ItemStack> items = new ArrayList<>();
         NMSManager nms = plugin.getNMS();
+        NBTManager nbt = plugin.getNBTManager();
         for (String o : s.keySet()) {
 
             ItemStack it = nms.getSkullMaterial(1);
@@ -315,7 +317,7 @@ public class InventoryManager {
             }
             sm.setLore(d);
             it.setItemMeta(sm);
-            it = nms.setType(o, it);
+            it = nbt.setType(it, o);
             items.add(it);
         }
         headsInSection = items.size();
@@ -473,7 +475,7 @@ public class InventoryManager {
             } else {
                 is = new ItemStack(new io.github.thatsmusic99.headsplus.config.headsx.icons.Challenge().getMaterial(), 1, (byte) plugin.getItems().getConfig().getInt("icons.challenge.data-value"));
             }
-            is = plugin.getNMS().setChallenge(is, ch);
+            is = plugin.getNBTManager().setChallenge(is, ch);
             heads.add(is);
         }
 
@@ -521,7 +523,7 @@ public class InventoryManager {
         ItemMeta sm = s.getItemMeta();
         sm.setLore(price);
         s.setItemMeta(sm);
-        s = plugin.getNMS().addDatabaseHead(s, str, pr);
+        s = plugin.getNBTManager().addDatabaseHead(s, str, pr);
         return s;
     }
 

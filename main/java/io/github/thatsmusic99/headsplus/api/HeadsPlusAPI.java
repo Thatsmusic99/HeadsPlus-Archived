@@ -25,13 +25,13 @@ public class HeadsPlusAPI {
     private final HeadsPlusConfigHeadsX hpcHeadsX = hp.getHeadsXConfig();
     private final HeadsPlusConfigHeads hpcHeads = hp.getHeadsConfig();
 
-    public ItemStack getHead(String option) throws NoSuchFieldException, IllegalAccessException {
+    public ItemStack getHead(String option) {
         return hpcHeadsX.getSkull(option);
     }
 
     public boolean isSellable(ItemStack is) {
         if (is.getType() == hp.getNMS().getSkullMaterial(1).getType()) {
-            return hp.getNMS().isSellable(is);
+            return hp.getNBTManager().isSellable(is);
         }
         return false;
     }
@@ -94,7 +94,7 @@ public class HeadsPlusAPI {
     }
 
     public String getSkullType(ItemStack is) {
-        return hp.getNMS().getType(is);
+        return hp.getNBTManager().getType(is);
     }
 
     @Deprecated

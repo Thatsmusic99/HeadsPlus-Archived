@@ -17,7 +17,7 @@ public class PlaceEvent implements Listener {
                 if (hp.getNMS() instanceof NewNMSManager) {
                     if (e.getItemInHand().getType() == ((NewNMSManager) hp.getNMS()).getWallSkull()) {
                         if (!e.getPlayer().hasPermission("headsplus.bypass.preventplacement")) {
-                            if (hp.getNMS().isSellable(e.getItemInHand())) {
+                            if (hp.getNBTManager().isSellable(e.getItemInHand())) {
                                 e.setCancelled(true);
                                 e.getPlayer().sendMessage(hp.getMessagesConfig().getString("block-place-denied"));
                             }
@@ -26,7 +26,7 @@ public class PlaceEvent implements Listener {
                 }
                 if (e.getItemInHand().getType() == hp.getNMS().getSkullMaterial(1).getType() ) {
                     if (!e.getPlayer().hasPermission("headsplus.bypass.preventplacement")) {
-                        if (hp.getNMS().isSellable(e.getItemInHand())) {
+                        if (hp.getNBTManager().isSellable(e.getItemInHand())) {
                             e.setCancelled(true);
                             e.getPlayer().sendMessage(hp.getMessagesConfig().getString("block-place-denied"));
                         }

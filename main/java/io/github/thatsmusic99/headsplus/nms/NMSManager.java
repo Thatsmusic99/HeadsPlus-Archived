@@ -17,10 +17,6 @@ import java.util.HashMap;
 
 public interface NMSManager {
 
-    ItemStack addNBTTag(Object item);
-
-    boolean isSellable(Object item);
-
     SearchGUI getSearchGUI(Player p, SearchGUI.AnvilClickEventHandler a);
 
     default SkullMeta setSkullOwner(String s, SkullMeta m) {
@@ -40,10 +36,6 @@ public interface NMSManager {
 
     ItemStack getItemInHand(Player p);
 
-    ItemStack setType(String s, ItemStack i);
-
-    String getType(ItemStack i);
-
     default ItemStack getSkullMaterial(int amount) {
         return new ItemStack(Material.getMaterial("SKULL_ITEM"), amount, (byte) 3);
     }
@@ -59,19 +51,9 @@ public interface NMSManager {
         return null;
     }
 
-    ItemStack addDatabaseHead(ItemStack is, String id, double price);
-
-    double getPrice(ItemStack is);
-
-    String getId(ItemStack id);
-
     default ItemStack getOffHand(Player p) {
         return p.getInventory().getItemInOffHand();
     }
-
-    ItemStack addSection(ItemStack is, String sec);
-
-    String getSection(ItemStack is);
 
     default Material getNewItems(MaterialTranslator.ChangedMaterials b) {
         if (b == MaterialTranslator.ChangedMaterials.FIREWORK_CHARGE) {
@@ -87,19 +69,9 @@ public interface NMSManager {
         }
     }
 
-    ItemStack setIcon(ItemStack i, Icon o);
-
-    Icon getIcon(ItemStack i);
-
     ItemStack setCalendarValue(ItemStack i, String value);
 
     AdventCManager getCalendarValue(ItemStack i);
-
-    ItemStack setChallenge(ItemStack i, Challenge a);
-
-    Challenge getChallenge(ItemStack is);
-
-    ItemStack removeIcon(ItemStack i);
 
     String getNMSVersion();
 
@@ -116,7 +88,5 @@ public interface NMSManager {
     default Sound getEXPSound() {
         return Sound.valueOf("ENTITY_EXPERIENCE_ORB_PICKUP");
     }
-
-    ItemStack setPrice(ItemStack i, double price);
 
 }

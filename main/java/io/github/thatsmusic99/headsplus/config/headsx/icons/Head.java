@@ -7,6 +7,7 @@ import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.api.events.HeadPurchaseEvent;
 import io.github.thatsmusic99.headsplus.config.headsx.inventories.SellheadMenu;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
+import io.github.thatsmusic99.headsplus.reflection.NBTManager;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
@@ -33,7 +34,6 @@ public class Head extends ItemStack implements Icon {
 
     @Override
     public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
-        NMSManager nms = HeadsPlus.getInstance().getNMS();
        // if (im.getSection().equalsIgnoreCase("advent-calendar")) {
         //    if (nms.isOpen(e.getCurrentItem())) {
             //    giveHead(p, e);
@@ -77,35 +77,36 @@ public class Head extends ItemStack implements Icon {
 
             } */
      //   }
+        NBTManager nbt = HeadsPlus.getInstance().getNBTManager();
         if (im.getType() == InventoryManager.Type.SELL) {
-            if (!nms.getType(e.getCurrentItem()).isEmpty()) {
+            if (!nbt.getType(e.getCurrentItem()).isEmpty()) {
                 if (e.isRightClick()) {
                     e.setCancelled(true);
-                    p.performCommand("sellhead " + nms.getType(e.getCurrentItem()) + " 1");
+                    p.performCommand("sellhead " + nbt.getType(e.getCurrentItem()) + " 1");
                 } else {
                     e.setCancelled(true);
-                    p.performCommand("sellhead " + nms.getType(e.getCurrentItem()));
+                    p.performCommand("sellhead " + nbt.getType(e.getCurrentItem()));
                 }
 
             }
         } else {
             if (e.getClick().isRightClick()) {
                 HPPlayer hpp = HPPlayer.getHPPlayer(p);
-                String id = HeadsPlus.getInstance().getNMS().getId(e.getCurrentItem());
+                String id = nbt.getID(e.getCurrentItem());
                 ItemMeta im2 = e.getCurrentItem().getItemMeta();
                 List<String> s = new ArrayList<>();
                 if (hpp.hasHeadFavourited(id)) {
                     hpp.removeFavourite(id);
                     for (String r : getLore()) {
-                        s.add(ChatColor.translateAlternateColorCodes('&', r.replaceAll("\\{price}", String.valueOf(nms.getPrice(e.getCurrentItem())))
-                                .replaceAll("\\{favourite}", HPPlayer.getHPPlayer(p).hasHeadFavourited(nms.getId(e.getCurrentItem())) ? ChatColor.GOLD + "Favourite!" : "")));
+                        s.add(ChatColor.translateAlternateColorCodes('&', r.replaceAll("\\{price}", String.valueOf(nbt.getPrice(e.getCurrentItem())))
+                                .replaceAll("\\{favourite}", HPPlayer.getHPPlayer(p).hasHeadFavourited(nbt.getID(e.getCurrentItem())) ? ChatColor.GOLD + "Favourite!" : "")));
 
                     }
                 } else {
                     hpp.addFavourite(id);
                     for (String r : getLore()) {
-                        s.add(ChatColor.translateAlternateColorCodes('&', r.replaceAll("\\{price}", String.valueOf(nms.getPrice(e.getCurrentItem())))
-                                .replaceAll("\\{favourite}", HPPlayer.getHPPlayer(p).hasHeadFavourited(nms.getId(e.getCurrentItem())) ? ChatColor.GOLD + "Favourite!" : "")));
+                        s.add(ChatColor.translateAlternateColorCodes('&', r.replaceAll("\\{price}", String.valueOf(nbt.getPrice(e.getCurrentItem())))
+                                .replaceAll("\\{favourite}", HPPlayer.getHPPlayer(p).hasHeadFavourited(nbt.getID(e.getCurrentItem())) ? ChatColor.GOLD + "Favourite!" : "")));
 
                     }
                 }
@@ -121,17 +122,17 @@ public class Head extends ItemStack implements Icon {
     }
 
     private void giveHead(Player p, InventoryClickEvent e) {
-        NMSManager nms = HeadsPlus.getInstance().getNMS();
+        NBTManager nbt = HeadsPlus.getInstance().getNBTManager();
         if (p.getInventory().firstEmpty() == -1) {
             p.sendMessage(hpc.getString("full-inv"));
             e.setCancelled(true);
             return;
         }
         HeadPurchaseEvent event = new HeadPurchaseEvent(p, e.getCurrentItem());
-        if (nms.getPrice(e.getCurrentItem())  != 0.0 && HeadsPlus.getInstance().econ()) {
+        if (nbt.getPrice(e.getCurrentItem())  != 0.0 && HeadsPlus.getInstance().econ()) {
 
             Economy ef = HeadsPlus.getInstance().getEconomy();
-            Double price = nms.getPrice(e.getCurrentItem());
+            Double price = nbt.getPrice(e.getCurrentItem());
             if (price > ef.getBalance(p)) {
                 p.sendMessage(hpc.getString("not-enough-money"));
                 event.setCancelled(true);
@@ -151,7 +152,7 @@ public class Head extends ItemStack implements Icon {
         }
         Bukkit.getServer().getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
-            p.getInventory().addItem(HeadsPlus.getInstance().getNMS().removeIcon(e.getCurrentItem()));
+            p.getInventory().addItem(HeadsPlus.getInstance().getNBTManager().removeIcon(e.getCurrentItem()));
             e.setCancelled(true);
         }
     }

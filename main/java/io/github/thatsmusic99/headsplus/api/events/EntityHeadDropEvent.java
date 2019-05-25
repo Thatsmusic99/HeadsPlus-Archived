@@ -53,7 +53,7 @@ public class EntityHeadDropEvent extends Event implements Cancellable {
     }
 
     public String getSkullKey() {
-        return HeadsPlus.getInstance().getNMS().getType(skull);
+        return HeadsPlus.getInstance().getNBTManager().getType(skull);
     }
 
     public Location getLocation() {

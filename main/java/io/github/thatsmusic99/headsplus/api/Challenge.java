@@ -174,7 +174,7 @@ public class Challenge {
         lore.add(ChatColor.GREEN + "Completed!");
         im.setLore(lore);
         is.setItemMeta(im);
-        is = hp.getNMS().setIcon(is, new io.github.thatsmusic99.headsplus.config.headsx.icons.Challenge());
+        is = hp.getNBTManager().setIcon(is, new io.github.thatsmusic99.headsplus.config.headsx.icons.Challenge());
         i.setItem(slot, is);
         player.addXp(getGainedXP());
         reward(p);

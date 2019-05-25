@@ -2,9 +2,6 @@ package io.github.thatsmusic99.headsplus.nms.v1_11_NMS;
 
 
 import com.mojang.authlib.GameProfile;
-import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.api.Challenge;
-import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.nms.SearchGUI;
 import io.github.thatsmusic99.headsplus.util.AdventCManager;
@@ -24,24 +21,6 @@ import java.util.Objects;
 
 @SuppressWarnings("deprecation")
 public class v1_11_NMS implements NMSManager {
-
-    @Override
-    public org.bukkit.inventory.ItemStack addNBTTag(Object i) {
-        ItemStack is = CraftItemStack.asNMSCopy((org.bukkit.inventory.ItemStack) i);
-        if (is.getTag() == null) {
-            is.setTag(new NBTTagCompound());
-        }
-        is.getTag().setBoolean("headsplus-sell", true);
-        return CraftItemStack.asBukkitCopy(is);
-    }
-
-    @Override
-    public boolean isSellable(Object i) {
-        if (CraftItemStack.asNMSCopy((org.bukkit.inventory.ItemStack) i).getTag() != null) {
-            return Objects.requireNonNull(CraftItemStack.asNMSCopy((org.bukkit.inventory.ItemStack) i).getTag()).getBoolean("headsplus-sell");
-        }
-        return false;
-    }
 
     @Override
     public SearchGUI getSearchGUI(Player p, SearchGUI.AnvilClickEventHandler a) {
@@ -80,93 +59,6 @@ public class v1_11_NMS implements NMSManager {
     }
 
     @Override
-    public org.bukkit.inventory.ItemStack setType(String s, org.bukkit.inventory.ItemStack i) {
-        ItemStack is = CraftItemStack.asNMSCopy(i);
-        if (is.getTag() == null) {
-            is.setTag(new NBTTagCompound());
-        }
-        is.getTag().setString("headsplus-type", s);
-        return CraftItemStack.asBukkitCopy(is);
-    }
-
-    @Override
-    public String getType(org.bukkit.inventory.ItemStack i) {
-        if (CraftItemStack.asNMSCopy(i).getTag() != null) {
-            return Objects.requireNonNull(CraftItemStack.asNMSCopy(i).getTag()).getString("headsplus-type");
-        }
-        return "";
-    }
-
-    @Override
-    public org.bukkit.inventory.ItemStack addDatabaseHead(org.bukkit.inventory.ItemStack is, String id, double price) {
-        ItemStack i = CraftItemStack.asNMSCopy(is);
-        if (i.getTag() == null) {
-            i.setTag(new NBTTagCompound());
-        }
-        i.getTag().setString("head-id", id);
-        i.getTag().setDouble("head-price", price);
-        return CraftItemStack.asBukkitCopy(i);
-    }
-
-    @Override
-    public double getPrice(org.bukkit.inventory.ItemStack is) {
-        ItemStack i = CraftItemStack.asNMSCopy(is);
-        if (i.getTag() != null) {
-            return Objects.requireNonNull(CraftItemStack.asNMSCopy(is).getTag()).getDouble("head-price");
-        }
-        return -1;
-    }
-
-    @Override
-    public String getId(org.bukkit.inventory.ItemStack id) {
-        ItemStack i = CraftItemStack.asNMSCopy(id);
-        if (i.getTag() != null) {
-            return Objects.requireNonNull(CraftItemStack.asNMSCopy(id).getTag()).getString("head-id");
-        }
-        return "";
-    }
-
-    @Override
-    public org.bukkit.inventory.ItemStack addSection(org.bukkit.inventory.ItemStack i, String sec) {
-        ItemStack is = CraftItemStack.asNMSCopy(i);
-        if (is.getTag() == null) {
-            is.setTag(new NBTTagCompound());
-        }
-        is.getTag().setString("head-section", sec);
-        return CraftItemStack.asBukkitCopy(is);
-    }
-
-    @Override
-    public String getSection(org.bukkit.inventory.ItemStack is) {
-        ItemStack i = CraftItemStack.asNMSCopy(is);
-        if (i.getTag() != null) {
-            return Objects.requireNonNull(i.getTag()).getString("head-section");
-        }
-        return "";
-    }
-
-    @Override
-    public org.bukkit.inventory.ItemStack setIcon(org.bukkit.inventory.ItemStack i, Icon o) {
-        ItemStack is = CraftItemStack.asNMSCopy(i);
-        if (is == null) return i;
-        if (is.getTag() == null) {
-            is.setTag(new NBTTagCompound());
-        }
-        is.getTag().setString("icon", o.getIconName());
-        return CraftItemStack.asBukkitCopy(is);
-    }
-
-    @Override
-    public Icon getIcon(org.bukkit.inventory.ItemStack is) {
-        ItemStack i = CraftItemStack.asNMSCopy(is);
-        if (is == null) return null;
-        if (i.getTag() != null) {
-            return Icon.getIconFromName(Objects.requireNonNull(i.getTag()).getString("icon"));
-        }
-        return null;
-    }
-
-    @Override
     public org.bukkit.inventory.ItemStack setCalendarValue(org.bukkit.inventory.ItemStack i, String value) {
         ItemStack is = CraftItemStack.asNMSCopy(i);
         if (is == null) return i;
@@ -185,35 +77,6 @@ public class v1_11_NMS implements NMSManager {
             return AdventCManager.valueOf(Objects.requireNonNull(i.getTag()).getString("advent-value"));
         }
         return null;
-    }
-
-    @Override
-    public org.bukkit.inventory.ItemStack setChallenge(org.bukkit.inventory.ItemStack i, Challenge a) {
-        ItemStack is = CraftItemStack.asNMSCopy(i);
-        if (is.getTag() == null) {
-            is.setTag(new NBTTagCompound());
-        }
-        is.getTag().setString("challenge", a.getConfigName());
-        return CraftItemStack.asBukkitCopy(is);
-    }
-
-    @Override
-    public Challenge getChallenge(org.bukkit.inventory.ItemStack is) {
-        ItemStack i = CraftItemStack.asNMSCopy(is);
-        if (i.getTag() != null) {
-            return HeadsPlus.getInstance().getChallengeByName(Objects.requireNonNull(i.getTag()).getString("challenge"));
-        }
-        return null;
-    }
-
-    @Override
-    public org.bukkit.inventory.ItemStack removeIcon(org.bukkit.inventory.ItemStack i) {
-        ItemStack is = CraftItemStack.asNMSCopy(i);
-        if (is.getTag() == null) {
-            is.setTag(new NBTTagCompound());
-        }
-        is.getTag().remove("icon");
-        return CraftItemStack.asBukkitCopy(is);
     }
 
     @Override
@@ -245,16 +108,6 @@ public class v1_11_NMS implements NMSManager {
             }
         }
         return keys;
-    }
-
-    @Override
-    public org.bukkit.inventory.ItemStack setPrice(org.bukkit.inventory.ItemStack i, double price) {
-        net.minecraft.server.v1_11_R1.ItemStack is = org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack.asNMSCopy(i);
-        if (is.getTag() == null) {
-            is.setTag(new net.minecraft.server.v1_11_R1.NBTTagCompound());
-        }
-        is.getTag().setDouble("head-price", price);
-        return org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack.asBukkitCopy(is);
     }
 
     @Override

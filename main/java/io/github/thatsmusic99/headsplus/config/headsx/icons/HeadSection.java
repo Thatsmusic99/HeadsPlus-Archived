@@ -22,7 +22,7 @@ public class HeadSection extends ItemStack implements Icon {
     @Override
     public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
         e.setCancelled(true);
-        String section = HeadsPlus.getInstance().getNMS().getSection(e.getCurrentItem());
+        String section = HeadsPlus.getInstance().getNBTManager().getSection(e.getCurrentItem());
         SectionChangeEvent event = new SectionChangeEvent(p, im.getSection(), section);
         Bukkit.getPluginManager().callEvent(event);
         if (!event.isCancelled()) {

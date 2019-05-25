@@ -26,7 +26,7 @@ public class Challenge implements Icon {
 
     @Override
     public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
-io.github.thatsmusic99.headsplus.api.Challenge challenge = HeadsPlus.getInstance().getNMS().getChallenge(e.getCurrentItem());
+io.github.thatsmusic99.headsplus.api.Challenge challenge = HeadsPlus.getInstance().getNBTManager().getChallenge(e.getCurrentItem());
         try {
             if (challenge != null) {
                 if (!challenge.isComplete(p)) {

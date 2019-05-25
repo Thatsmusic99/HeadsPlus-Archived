@@ -8,6 +8,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.listeners.DeathEvents;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
+import io.github.thatsmusic99.headsplus.reflection.NBTManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -93,10 +94,10 @@ public class Conjure implements IHeadsPlusCommand {
                         }
                         sm.setLore(strs);
                         i.setItemMeta(sm);
-                        NMSManager nms = HeadsPlus.getInstance().getNMS();
-                        i = nms.addNBTTag(i);
-                        i = nms.setType(args[1], i);
-                        i = nms.setPrice(i, price);
+                        NBTManager nbt = HeadsPlus.getInstance().getNBTManager();
+                        i = nbt.makeSellable(i);
+                        i = nbt.setType(i, args[1]);
+                        i = nbt.setPrice(i, price);
                         i.setAmount(amount);
                         this.head = i;
 

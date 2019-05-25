@@ -7,6 +7,7 @@ import io.github.thatsmusic99.headsplus.api.HeadsPlusAPI;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
+import io.github.thatsmusic99.headsplus.reflection.NBTManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -109,14 +110,14 @@ public class RecipePerms implements Listener {
     private void fireEvent(InventoryClickEvent e) {
         HeadsPlus hp = HeadsPlus.getInstance();
         HeadCraftEvent event;
-        NMSManager nms = hp.getNMS();
+        NBTManager nbt = hp.getNBTManager();
         HeadsPlusAPI hapi = hp.getAPI();
         int amount = shift(e);
         event = new HeadCraftEvent((Player) e.getWhoClicked(), e.getCurrentItem(), e.getWhoClicked().getWorld(), e.getWhoClicked().getLocation(), amount, hapi.getSkullType(e.getCurrentItem()));
         Bukkit.getServer().getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
-            e.setCurrentItem(nms.addNBTTag(e.getCurrentItem()));
-            e.setCurrentItem(nms.setType(hapi.getSkullType(e.getCurrentItem()), e.getCurrentItem()));
+            e.setCurrentItem(nbt.makeSellable(e.getCurrentItem()));
+            e.setCurrentItem(nbt.setType(e.getCurrentItem(), hapi.getSkullType(e.getCurrentItem())));
         } else {
             e.setCancelled(true);
         }
@@ -124,7 +125,7 @@ public class RecipePerms implements Listener {
 
     private void denyPermission(InventoryClickEvent e) {
         if(e.getRawSlot() == 0){
-            if(!HeadsPlus.getInstance().getNMS().getType(e.getCurrentItem()).isEmpty()){
+            if(!HeadsPlus.getInstance().getNBTManager().getType(e.getCurrentItem()).isEmpty()){
                 e.getWhoClicked().sendMessage(ChatColor.RED + "You can not craft heads!");
                 e.setCancelled(true);
             }

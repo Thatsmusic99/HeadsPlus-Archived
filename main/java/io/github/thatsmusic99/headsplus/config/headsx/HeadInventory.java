@@ -15,6 +15,7 @@ import io.github.thatsmusic99.headsplus.config.headsx.inventories.HeadSection;
 import io.github.thatsmusic99.headsplus.config.headsx.inventories.SellheadMenu;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.nms.NewNMSManager;
+import io.github.thatsmusic99.headsplus.reflection.NBTManager;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -126,6 +127,7 @@ public abstract class HeadInventory {
                 .replace("{section}", section.isEmpty() ? "" : Character.toUpperCase(section.charAt(0)) + section.substring(1)));
         HeadsPlus hp = HeadsPlus.getInstance();
         NMSManager nms = hp.getNMS();
+        NBTManager nbt = hp.getNBTManager();
         Icon[] icons = getIconArray(page, wideMenu, true);
 
         int itemIndex = 0;
@@ -155,7 +157,7 @@ public abstract class HeadInventory {
                 }
                 im.setLore(ls);
                 is.setItemMeta(im);
-                is = nms.setIcon(is, icons[o]);
+                is = nbt.setIcon(is, icons[o]);
             } else if (icons[o] instanceof Nav) {
                 Icon oof;
 
@@ -223,7 +225,7 @@ public abstract class HeadInventory {
                 }
                 im.setLore(ls);
                 is.setItemMeta(im);
-                is = nms.setIcon(is, oof);
+                is = nbt.setIcon(is, oof);
             } else if(icons[o] != null) {
                 is = new ItemStack(icons[o].getMaterial(), 1, (byte) hp.getItems().getConfig().getInt("icons." + icons[o].getIconName() + ".data-value"));
                 ItemMeta im = is.getItemMeta();
@@ -235,7 +237,7 @@ public abstract class HeadInventory {
                     }
                     im.setLore(ls);
                     is.setItemMeta(im);
-                    is = nms.setIcon(is, icons[o]);
+                    is = nbt.setIcon(is, icons[o]);
                 }
             }
             inventory.setItem(o, is);
@@ -245,7 +247,7 @@ public abstract class HeadInventory {
     }
 
     ItemStack getHeadItem(Icon icon, List<ItemStack> list, int itemIndex) {
-        final NMSManager nms = HeadsPlus.getInstance().getNMS();
+        final NBTManager nbt = HeadsPlus.getInstance().getNBTManager();
         ItemStack is;
         if (itemIndex < list.size()) {
             is = list.get(itemIndex);
@@ -253,15 +255,15 @@ public abstract class HeadInventory {
             im.setDisplayName(icon.getDisplayName().replace("{head-name}", is.getItemMeta().getDisplayName()));
             if (this instanceof SellheadMenu) {
                 im.setDisplayName(im.getDisplayName().replace("{default}",
-                        HeadsPlus.getInstance().getHeadsConfig().getDisplayName(nms.getType(is))));
+                        HeadsPlus.getInstance().getHeadsConfig().getDisplayName(nbt.getType(is))));
             }
             String s = "";
             if (this instanceof SellheadMenu) {
-                s = nms.getType(is);
+                s = nbt.getType(is);
             }
             is.setItemMeta(im);
-            is = nms.setIcon(is, icon);
-            is = nms.setType(s, is);
+            is = nbt.setIcon(is, icon);
+            is = nbt.setType(is, s);
         } else {
             Icon ic = icon.getReplacementIcon();
             is = new ItemStack(ic.getMaterial(), 1, (byte) HeadsPlus.getInstance().getItems().getConfig().getInt("icons." + ic.getIconName() + ".data-value"));
@@ -271,20 +273,20 @@ public abstract class HeadInventory {
                 im.setLore(ic.getLore());
                 is.setItemMeta(im);
             }
-            is = nms.setIcon(is, ic);
+            is = nbt.setIcon(is, ic);
         }
         return is;
     }
 
     ItemStack getChallengeItem(Icon icon, Player p, List<ItemStack> list, int itemIndex) {
-        final NMSManager nms = HeadsPlus.getInstance().getNMS();
+        final NBTManager nbt = HeadsPlus.getInstance().getNBTManager();
         ItemStack is;
         if (itemIndex < list.size()) {
             is = list.get(itemIndex);
             ItemMeta im = is.getItemMeta();
 
             List<String> lore = new ArrayList<>();
-            io.github.thatsmusic99.headsplus.api.Challenge c = nms.getChallenge(is);
+            io.github.thatsmusic99.headsplus.api.Challenge c = nbt.getChallenge(is);
             im.setDisplayName(ChatColor.translateAlternateColorCodes('&', icon.getDisplayName().replaceAll("(\\{challenge-name})", c.getChallengeHeader())));
             for (int z = 0; z < icon.getLore().size(); ++z) {
                 if (icon.getLore().get(z).contains("{challenge-lore}")) {
@@ -323,7 +325,7 @@ public abstract class HeadInventory {
             }
             im.setLore(lore);
             is.setItemMeta(im);
-            is = nms.setIcon(is, icon);
+            is = nbt.setIcon(is, icon);
         } else {
             Icon ic = icon.getReplacementIcon();
             is = new ItemStack(ic.getMaterial(), 1, (byte) HeadsPlus.getInstance().getItems().getConfig().getInt("icons." + ic.getIconName() + ".data-value"));
@@ -337,7 +339,7 @@ public abstract class HeadInventory {
                 im.setLore(ls);
                 is.setItemMeta(im);
             }
-            is = nms.setIcon(is, ic);
+            is = nbt.setIcon(is, ic);
         }
         return is;
     }

@@ -4,6 +4,7 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
+import io.github.thatsmusic99.headsplus.reflection.NBTManager;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 
 import org.bukkit.entity.Player;
@@ -22,17 +23,17 @@ public class InventoryEvent implements Listener {
             if (e.getRawSlot() > 53) return;
             if (InventoryManager.get(p) == null) return;
             final InventoryManager im = InventoryManager.get(p);
-            NMSManager nms = HeadsPlus.getInstance().getNMS();
+            NBTManager nbt = HeadsPlus.getInstance().getNBTManager();
             // int month = Calendar.getInstance().get(Calendar.MONTH);
             if (im.getType().name().startsWith("LIST")) {
-                Icon i = nms.getIcon(e.getCurrentItem());
+                Icon i = nbt.getIcon(e.getCurrentItem());
                 if (i == null) return;
                 if (e.getRawSlot() < 54) {
                     e.setCancelled(true);
                 }
                 i.onClick(p, im, e);
             } else {
-                Icon i = nms.getIcon(e.getCurrentItem());
+                Icon i = nbt.getIcon(e.getCurrentItem());
                 if (i == null) return;
                 i.onClick(p, im, e);
             }

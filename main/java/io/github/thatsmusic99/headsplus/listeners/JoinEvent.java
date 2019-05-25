@@ -8,6 +8,7 @@ import io.github.thatsmusic99.headsplus.crafting.RecipeEnumUser;
 import io.github.thatsmusic99.headsplus.locale.Locale;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
+import io.github.thatsmusic99.headsplus.reflection.NBTManager;
 import mkremins.fanciful.FancyMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
@@ -38,10 +39,11 @@ public class JoinEvent implements Listener {
             public void run() {
                 if (e.getPlayer().getInventory().getArmorContents()[3] != null) {
                     NMSManager nms = HeadsPlus.getInstance().getNMS();
+                    NBTManager nbt = HeadsPlus.getInstance().getNBTManager();
                     if (e.getPlayer().getInventory().getArmorContents()[3].getType().equals(nms.getSkullMaterial(1).getType())) {
 
                         HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
-                        String s = nms.getType(e.getPlayer().getInventory().getArmorContents()[3]).toLowerCase();
+                        String s = nbt.getType(e.getPlayer().getInventory().getArmorContents()[3]).toLowerCase();
                         if (hpch.mHeads.contains(s) || hpch.uHeads.contains(s) || s.equalsIgnoreCase("player")) {
                             HPPlayer pl = HPPlayer.getHPPlayer(e.getPlayer());
                             pl.addMask(s);

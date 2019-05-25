@@ -4,6 +4,7 @@ import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
+import io.github.thatsmusic99.headsplus.reflection.NBTManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -127,6 +128,7 @@ public class SellheadInventory {
         pages = ps.getTotalPages();
         int io = 0;
         NMSManager nms = hp.getNMS();
+        NBTManager nbt = hp.getNBTManager();
         for (String o : ps.getContentsInPage(page)) {
 
             ItemStack it;
@@ -159,7 +161,7 @@ public class SellheadInventory {
             }
             sm.setLore(d);
             it.setItemMeta(sm);
-            it = nms.setType(o, it);
+            it = nbt.setType(it, o);
             try {
                 if (hpch.getConfig().getStringList(o + ".name").get(0).equalsIgnoreCase("{mob-default}")) {
                     if (o.equalsIgnoreCase("skeleton")) {

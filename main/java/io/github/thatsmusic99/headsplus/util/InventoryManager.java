@@ -26,15 +26,6 @@ public class InventoryManager {
         SELL, LIST_MENU, LIST_CATEGORY, LIST_SEARCH, LIST_FAVORITES, CHALLENGES_MENU, CHALLENGES_LIST
     }
 
-    public enum Page {
-
-        MENU('M'), START('<'), BACK('B'), NEXT('N'), BACK_2('['), BACK_3('{'), NEXT_2(']'), NEXT_3('}'), LAST('>');
-        public final char shortHand;
-
-        Page(char shortHand) {
-            this.shortHand = shortHand;
-        }
-    }
     public static final HashMap<Player, InventoryManager> pls = new HashMap();
 
     private final Player player;

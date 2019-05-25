@@ -286,21 +286,24 @@ public class DeathEvents implements Listener {
                     }
                 }  else {
                     is = nms.getSkullMaterial(1);
-                    double price = hpch.getPrice(en);
-                    SkullMeta sm = (SkullMeta) is.getItemMeta();
-                    sm = nms.setSkullOwner(name, sm);
-                    sm.setDisplayName(hpch.getDisplayName(en));
-                    List<String> strs = new ArrayList<>();
-                    List<String> lore = hpch.getLore(en);
-                    for (String str2 : lore) {
-                        strs.add(ChatColor.translateAlternateColorCodes('&', str2.replaceAll("\\{type}", en).replaceAll("\\{price}", String.valueOf(HeadsPlus.getInstance().getConfiguration().fixBalanceStr(price)))));
-                    }
-                    sm.setLore(strs);
-                    is.setItemMeta(sm);
-                    is = nms.addNBTTag(is);
-                    is = nms.setType(en, is);
-                    is = nms.setPrice(is, price);
                 }
+
+
+                double price = hpch.getPrice(en);
+                SkullMeta sm = (SkullMeta) is.getItemMeta();
+                sm = nms.setSkullOwner(name, sm);
+                sm.setDisplayName(hpch.getDisplayName(en));
+                List<String> strs = new ArrayList<>();
+                List<String> lore = hpch.getLore(en);
+                for (String str2 : lore) {
+                    strs.add(ChatColor.translateAlternateColorCodes('&', str2.replaceAll("\\{type}", en).replaceAll("\\{price}", String.valueOf(HeadsPlus.getInstance().getConfiguration().fixBalanceStr(price)))));
+                }
+                sm.setLore(strs);
+                is.setItemMeta(sm);
+                NBTManager nbt = HeadsPlus.getInstance().getNBTManager();
+                is = nbt.makeSellable(is);
+                is = nbt.setType(is, en);
+                is = nbt.setPrice(is, price);
                 heads.add(is);
 
             }

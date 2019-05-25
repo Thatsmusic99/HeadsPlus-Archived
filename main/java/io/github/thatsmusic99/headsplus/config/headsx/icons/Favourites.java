@@ -1,7 +1,6 @@
 package io.github.thatsmusic99.headsplus.config.headsx.icons;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import org.bukkit.Material;

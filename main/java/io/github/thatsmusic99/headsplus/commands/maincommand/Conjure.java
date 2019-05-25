@@ -7,7 +7,6 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.listeners.DeathEvents;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
-import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.reflection.NBTManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -32,7 +31,7 @@ public class Conjure implements IHeadsPlusCommand {
     // F
     private ItemStack head = null;
     private Player p = null;
-    HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
+    private HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @Override
     public String getCmdDescription() {
@@ -82,7 +81,7 @@ public class Conjure implements IHeadsPlusCommand {
                     }
                     DeathEvents de = HeadsPlus.getInstance().getDeathEvents();
                     try {
-                        ItemStack i = de.heads.get(de.prettyStringToEntity(args[1])).get(type).get(index);
+                        ItemStack i = DeathEvents.heads.get(de.prettyStringToEntity(args[1])).get(type).get(index);
                         double price = heads.getPrice(args[1]);
                         SkullMeta sm = (SkullMeta) i.getItemMeta();
                         String displayname = heads.getDisplayName(args[1]);

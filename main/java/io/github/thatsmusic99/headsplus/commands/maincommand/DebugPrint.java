@@ -21,7 +21,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.*;
 import java.util.logging.Logger;
 

@@ -3,7 +3,6 @@ package io.github.thatsmusic99.headsplus.reflection;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.Challenge;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
-import io.github.thatsmusic99.headsplus.nms.v1_12_NMS.v1_12_NMS;
 import org.bukkit.inventory.ItemStack;
 
 import java.lang.reflect.Constructor;

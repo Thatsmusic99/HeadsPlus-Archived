@@ -6,7 +6,6 @@ import io.github.thatsmusic99.headsplus.api.events.HeadCraftEvent;
 import io.github.thatsmusic99.headsplus.api.HeadsPlusAPI;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
-import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.reflection.NBTManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

@@ -228,6 +228,7 @@ public class InventoryManager {
                 SkullMeta im = (SkullMeta) is.getItemMeta();
                 final String disp = hpchx.getConfig().getString("sections." + sections[i] + ".display-name");
                 im.setDisplayName(ChatColor.translateAlternateColorCodes('&', disp != null ? disp : sections[i]));
+                // TODO make customisable again
                 im.setLore(Arrays.asList(ChatColor.GRAY.toString() + count + " heads"));
                 is.setItemMeta(im);
                 is = plugin.getNBTManager().addSection(is, sections[i]);
@@ -432,7 +433,7 @@ public class InventoryManager {
                         heads.add(is);
                     }
                 }
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
             headsInSection = heads.size();
             if (largerMenu && headsInSection > max) {

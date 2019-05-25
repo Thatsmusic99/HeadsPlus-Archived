@@ -47,7 +47,6 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.sql.*;

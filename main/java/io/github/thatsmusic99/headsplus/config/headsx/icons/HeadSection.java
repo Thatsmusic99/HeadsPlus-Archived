@@ -11,6 +11,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class HeadSection extends ItemStack implements Icon {
@@ -37,7 +38,7 @@ public class HeadSection extends ItemStack implements Icon {
 
     @Override
     public List<String> getDefaultLore() {
-        return new ArrayList<>();
+        return new ArrayList<>(Collections.singleton("&7{head-count} heads"));
     }
 
     @Override

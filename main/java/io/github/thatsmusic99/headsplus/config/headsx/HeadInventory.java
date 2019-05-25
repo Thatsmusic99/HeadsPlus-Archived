@@ -1,7 +1,6 @@
 package io.github.thatsmusic99.headsplus.config.headsx;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.config.challenges.HPChallengeRewardTypes;
 import io.github.thatsmusic99.headsplus.config.headsx.icons.Challenge;
 import io.github.thatsmusic99.headsplus.config.headsx.icons.Head;

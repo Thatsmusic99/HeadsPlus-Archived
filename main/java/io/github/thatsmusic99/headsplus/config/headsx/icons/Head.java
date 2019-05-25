@@ -5,8 +5,6 @@ import io.github.thatsmusic99.headsplus.api.HPPlayer;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
 import io.github.thatsmusic99.headsplus.api.events.HeadPurchaseEvent;
-import io.github.thatsmusic99.headsplus.config.headsx.inventories.SellheadMenu;
-import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.reflection.NBTManager;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import net.milkbowl.vault.economy.Economy;

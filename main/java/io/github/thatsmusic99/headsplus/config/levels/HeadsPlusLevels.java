@@ -3,10 +3,8 @@ package io.github.thatsmusic99.headsplus.config.levels;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.CLevel;
 import io.github.thatsmusic99.headsplus.api.Level;
-import io.github.thatsmusic99.headsplus.api.RLevel;
 import io.github.thatsmusic99.headsplus.config.ConfigSettings;
 import io.github.thatsmusic99.headsplus.config.challenges.HPChallengeRewardTypes;
-import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;

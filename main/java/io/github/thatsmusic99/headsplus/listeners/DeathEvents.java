@@ -189,7 +189,7 @@ public class DeathEvents implements Listener {
                 List<ItemStack> heads = new ArrayList<>();
                 if (e == EntityType.SHEEP) {
                     keys = a("sheep", keys);
-                    this.heads.put(e, keys);
+                    DeathEvents.heads.put(e, keys);
                     continue;
                 }
                 if (nms instanceof v1_12_NMS
@@ -198,18 +198,18 @@ public class DeathEvents implements Listener {
                         || nms instanceof v1_14_R1_NMS) {
                     if (e == EntityType.LLAMA) {
                         keys = a("llama", keys);
-                        this.heads.put(e, keys);
+                        DeathEvents.heads.put(e, keys);
                         continue;
                     }
                     if (e == EntityType.PARROT) {
                         keys = a("parrot", keys);
-                        this.heads.put(e, keys);
+                        DeathEvents.heads.put(e, keys);
                         continue;
                     }
                 }
                 if (e == EntityType.HORSE) {
                     keys = a("horse", keys);
-                    this.heads.put(e, keys);
+                    DeathEvents.heads.put(e, keys);
                     continue;
                 }
                 String fancyName = e.name().toLowerCase().replaceAll("_", "");
@@ -262,7 +262,7 @@ public class DeathEvents implements Listener {
 
                 }
                 keys.put("default", heads);
-                this.heads.put(e, keys);
+                DeathEvents.heads.put(e, keys);
             } catch (Exception ex) {
 	            HeadsPlus.getInstance().getLogger().severe("Error thrown when creating the head for " + e.name() + ". If it's a custom head, please double check the name.");
 	            ex.printStackTrace();
@@ -402,22 +402,7 @@ public class DeathEvents implements Listener {
         } catch (IndexOutOfBoundsException ex) {
 	        return;
         }
-      //  double price = hpch.getPrice(mobName);
         i.setAmount(a);
-     /*   SkullMeta sm = (SkullMeta) i.getItemMeta();
-        String displayname = hpch.getDisplayName(mobName);
-        sm.setDisplayName(displayname);
-        List<String> strs = new ArrayList<>();
-        List<String> lore = hpch.getLore(mobName);
-        for (String str : lore) {
-            strs.add(ChatColor.translateAlternateColorCodes('&', str.replaceAll("\\{type}", mobName).replaceAll("\\{price}", String.valueOf(HeadsPlus.getInstance().getConfiguration().fixBalanceStr(price)))));
-        }
-        sm.setLore(strs);
-        i.setItemMeta(sm);
-
-        i = nms.addNBTTag(i);
-        i = nms.setType(mobName, i);
-        i = nms.setPrice(i, price); */
         Location entityLoc = e.getLocation();
         double entityLocY = entityLoc.getY() + 1;
         entityLoc.setY(entityLocY);

@@ -2,19 +2,14 @@ package io.github.thatsmusic99.headsplus.crafting;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.listeners.DeathEvents;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,7 +56,7 @@ public class RecipeEnumUser {
                             if (ingrs.size() > 0) {
                                 try {
                                     Bukkit.addRecipe(recipe);
-                                } catch (IllegalStateException e) {
+                                } catch (IllegalStateException ignored) {
                                 }
                             }
                         }

@@ -127,7 +127,8 @@ public class Head extends ItemStack implements Icon {
             return;
         }
         HeadPurchaseEvent event = new HeadPurchaseEvent(p, e.getCurrentItem());
-        if (nbt.getPrice(e.getCurrentItem())  != 0.0 && HeadsPlus.getInstance().econ()) {
+		if(p.hasPermission("headsplus.bypass.cost")) {
+		} else if (nbt.getPrice(e.getCurrentItem()) != 0.0 && HeadsPlus.getInstance().econ()) {
 
             Economy ef = HeadsPlus.getInstance().getEconomy();
             Double price = nbt.getPrice(e.getCurrentItem());
@@ -138,7 +139,9 @@ public class Head extends ItemStack implements Icon {
                 return;
             }
             EconomyResponse er = ef.withdrawPlayer(p, price);
-            String success = hpc.getString("buy-success").replaceAll("\\{price}", HeadsPlus.getInstance().getConfiguration().fixBalanceStr(er.amount)).replaceAll("\\{balance}", Double.toString(er.balance));
+            String success = hpc.getString("buy-success")
+					.replace("{price}", HeadsPlus.getInstance().getConfiguration().fixBalanceStr(er.amount))
+					.replace("{balance}", Double.toString(ef.getBalance(p)));
             String fail = hpc.getString("cmd-fail");
             if (er.transactionSuccess()) {
                 p.sendMessage(success);

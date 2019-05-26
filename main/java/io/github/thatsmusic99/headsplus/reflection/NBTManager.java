@@ -48,52 +48,15 @@ public class NBTManager {
     }
 
     public ItemStack makeSellable(ItemStack i) {
-        try {
-            Object nmsItem = getNMSCopy(i);
-            Object nbtTag = getNBTTag(nmsItem);
-            if (nbtTag == null) {
-                nbtTag = newNBTTag();
-            }
-            Method method = nbtTag.getClass().getMethod("setBoolean", String.class, boolean.class);
-            method.invoke(nbtTag, "headsplus-sell", true);
-            nmsItem = setNBTTag(nmsItem, nbtTag);
-            return asBukkitCopy(nmsItem);
-        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
-        }
-        return i;
+        return setObject(i, "setBoolean", "headsplus-sell", true, String.class, boolean.class);
     }
 
     public boolean isSellable(ItemStack i) {
-        try {
-            Object nmsItem = getNMSCopy(i);
-            Object nbtTag = getNBTTag(nmsItem);
-            if (nbtTag == null) {
-                nbtTag = newNBTTag();
-            }
-            Method method = nbtTag.getClass().getMethod("getBoolean", String.class);
-            return (boolean) method.invoke(nbtTag, "headsplus-sell");
-        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
-        }
-        return false;
+        return (boolean) getObject(i, "getBoolean", "headplus-sell");
     }
 
     public ItemStack setType(ItemStack i, String type) {
-        try {
-            Object nmsItem = getNMSCopy(i);
-            Object nbtTag = getNBTTag(nmsItem);
-            if (nbtTag == null) {
-                nbtTag = newNBTTag();
-            }
-            Method method = nbtTag.getClass().getMethod("setString", String.class, String.class);
-            method.invoke(nbtTag, "headsplus-type", type);
-            nmsItem = setNBTTag(nmsItem, nbtTag);
-            return asBukkitCopy(nmsItem);
-        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
-        }
-        return i;
+        return setObject(i, "setString", "headplus-type", type, String.class, String.class);
     }
 
     public ItemStack addDatabaseHead(ItemStack i, String id, double price) {
@@ -116,145 +79,39 @@ public class NBTManager {
     }
 
     public String getType(ItemStack i) {
-        try {
-            Object nmsItem = getNMSCopy(i);
-            Object nbtTag = getNBTTag(nmsItem);
-            if (nbtTag == null) {
-                nbtTag = newNBTTag();
-            }
-            Method method = nbtTag.getClass().getMethod("getString", String.class);
-            return String.valueOf(method.invoke(nbtTag, "headsplus-type"));
-        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
-        }
-        return "";
+        return String.valueOf(getObject(i, "getString", "headplus-type"));
     }
 
     public String getID(ItemStack i) {
-        try {
-            Object nmsItem = getNMSCopy(i);
-            Object nbtTag = getNBTTag(nmsItem);
-            if (nbtTag == null) {
-                nbtTag = newNBTTag();
-            }
-            Method method = nbtTag.getClass().getMethod("getString", String.class);
-            return String.valueOf(method.invoke(nbtTag, "head-id"));
-        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
-        }
-        return "";
+        return String.valueOf(getObject(i, "getString", "head-id"));
     }
 
     public double getPrice(ItemStack i) {
-        try {
-            Object nmsItem = getNMSCopy(i);
-            Object nbtTag = getNBTTag(nmsItem);
-            if (nbtTag == null) {
-                nbtTag = newNBTTag();
-            }
-            Method method = nbtTag.getClass().getMethod("getDouble", String.class);
-            return (double) method.invoke(nbtTag, "head-price");
-        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
-        }
-        return -1;
+        return (double) getObject(i, "getDouble", "head-price");
     }
 
     public ItemStack addSection(ItemStack i, String section) {
-        try {
-            Object nmsItem = getNMSCopy(i);
-            Object nbtTag = getNBTTag(nmsItem);
-            if (nbtTag == null) {
-                nbtTag = newNBTTag();
-            }
-            Method method = nbtTag.getClass().getMethod("setString", String.class, String.class);
-            method.invoke(nbtTag, "head-section", section);
-            nmsItem = setNBTTag(nmsItem, nbtTag);
-            return asBukkitCopy(nmsItem);
-        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
-        }
-        return i;
+        return setObject(i, "setString", "head-section", section, String.class, String.class);
     }
 
     public String getSection(ItemStack i) {
-        try {
-            Object nmsItem = getNMSCopy(i);
-            Object nbtTag = getNBTTag(nmsItem);
-            if (nbtTag == null) {
-                nbtTag = newNBTTag();
-            }
-            Method method = nbtTag.getClass().getMethod("getString", String.class);
-            return String.valueOf(method.invoke(nbtTag, "head-section"));
-        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
-        }
-        return "";
+        return String.valueOf(getObject(i, "getString", "head-section"));
     }
 
     public Icon getIcon(ItemStack i) {
-        try {
-            Object nmsItem = getNMSCopy(i);
-            Object nbtTag = getNBTTag(nmsItem);
-            if (nbtTag == null) {
-                nbtTag = newNBTTag();
-            }
-            Method method = nbtTag.getClass().getMethod("getString", String.class);
-            return Icon.getIconFromName(String.valueOf(method.invoke(nbtTag, "head-icon")));
-        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return Icon.getIconFromName(String.valueOf(getObject(i, "getString", "head-icon")));
     }
 
     public ItemStack setIcon(ItemStack i, Icon icon) {
-        try {
-            Object nmsItem = getNMSCopy(i);
-            if (nmsItem == null) return i;
-            Object nbtTag = getNBTTag(nmsItem);
-            if (nbtTag == null) {
-                nbtTag = newNBTTag();
-            }
-            Method method = nbtTag.getClass().getMethod("setString", String.class, String.class);
-            method.invoke(nbtTag, "head-icon", icon.getIconName());
-            nmsItem = setNBTTag(nmsItem, nbtTag);
-            return asBukkitCopy(nmsItem);
-        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
-        }
-        return i;
+        return setObject(i, "setString", "head-icon", icon.getIconName(), String.class, String.class);
     }
 
     public ItemStack setChallenge(ItemStack i, Challenge c) {
-        try {
-            Object nmsItem = getNMSCopy(i);
-            Object nbtTag = getNBTTag(nmsItem);
-            if (nbtTag == null) {
-                nbtTag = newNBTTag();
-            }
-            Method method = nbtTag.getClass().getMethod("setString", String.class, String.class);
-            method.invoke(nbtTag, "head-challenge", c.getConfigName());
-            nmsItem = setNBTTag(nmsItem, nbtTag);
-            return asBukkitCopy(nmsItem);
-        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
-        }
-        return i;
+        return setObject(i, "setString", "head-challenge", c.getConfigName(), String.class, String.class);
     }
 
     public Challenge getChallenge(ItemStack i) {
-        try {
-            Object nmsItem = getNMSCopy(i);
-            Object nbtTag = getNBTTag(nmsItem);
-            if (nbtTag == null) {
-                nbtTag = newNBTTag();
-            }
-            Method method = nbtTag.getClass().getMethod("getString", String.class);
-            return HeadsPlus.getInstance().getChallengeByName(String.valueOf(method.invoke(nbtTag, "head-challenge")));
-        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return  HeadsPlus.getInstance().getChallengeByName(String.valueOf(getObject(i, "getString", "head-challenge")));
     }
 
     public ItemStack removeIcon(ItemStack i) {
@@ -275,14 +132,33 @@ public class NBTManager {
     }
 
     public ItemStack setPrice(ItemStack i, double price) {
+        return setObject(i, "setDouble", "head-price", price, String.class, double.class);
+    }
+
+    private Object getObject(ItemStack i, String methodName, String nbtKey) {
         try {
             Object nmsItem = getNMSCopy(i);
             Object nbtTag = getNBTTag(nmsItem);
             if (nbtTag == null) {
                 nbtTag = newNBTTag();
             }
-            Method method1 = nbtTag.getClass().getMethod("setDouble", String.class, double.class);
-            method1.invoke(nbtTag, "head-price", price);
+            Method method = nbtTag.getClass().getMethod(methodName, String.class);
+            return method.invoke(nbtTag, nbtKey);
+        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private ItemStack setObject(ItemStack i, String methodName, String nbtKey, Object value, Class<?>... params) {
+        try {
+            Object nmsItem = getNMSCopy(i);
+            Object nbtTag = getNBTTag(nmsItem);
+            if (nbtTag == null) {
+                nbtTag = newNBTTag();
+            }
+            Method method1 = nbtTag.getClass().getMethod(methodName, params);
+            method1.invoke(nbtTag, nbtKey, value);
             nmsItem = setNBTTag(nmsItem, nbtTag);
             return asBukkitCopy(nmsItem);
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {

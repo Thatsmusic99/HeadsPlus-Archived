@@ -215,7 +215,7 @@ public class DeathEvents implements Listener {
                 String fancyName = e.name().toLowerCase().replaceAll("_", "");
                 for (String name : hpch.getConfig().getStringList(fancyName + ".name")) {
 
-                    ItemStack is = null;
+                    ItemStack is;
                     if (hpchx.isHPXSkull(name)) {
                         is = hpchx.getSkull(name);
                     } else if (name.equalsIgnoreCase("{mob-default}")) {
@@ -327,7 +327,8 @@ public class DeathEvents implements Listener {
         NMSManager nms = HeadsPlus.getInstance().getNMS();
         if (nms instanceof v1_12_NMS
                 || nms instanceof v1_13_NMS
-                || nms instanceof v1_13_R2_NMS) {
+                || nms instanceof v1_13_R2_NMS
+                || nms instanceof v1_14_R1_NMS) {
             if (e instanceof Llama) {
                 Llama llama = (Llama) e;
                 Llama.Color color = llama.getColor();
@@ -386,7 +387,8 @@ public class DeathEvents implements Listener {
                     thing = r.nextInt(hpch.getConfig().getStringList("horse.name.default").size());
                 } else if (nms instanceof v1_12_NMS
                         || nms instanceof v1_13_NMS
-                        || nms instanceof v1_13_R2_NMS) {
+                        || nms instanceof v1_13_R2_NMS
+                        || nms instanceof v1_14_R1_NMS) {
                     if (e instanceof Parrot) {
                         thing = r.nextInt(hpch.getConfig().getStringList("parrot.name.default").size());
                     } else if (e instanceof Llama) {

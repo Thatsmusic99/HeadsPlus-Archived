@@ -1,5 +1,5 @@
 # HeadsPlus
-The following is a Minecraft heads plugin, designed to work with Spigot 1.8.x-1.12.x. The plugin provides:
+The following is a Minecraft heads plugin, designed to work with Spigot 1.8.x-1.14.x. The plugin provides:
 
 - /head command to spawn in heads (of course).
 - Customisable messages

@@ -1,10 +1,6 @@
 package io.github.thatsmusic99.headsplus.config;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.nms.v1_12_NMS.v1_12_NMS;
-import io.github.thatsmusic99.headsplus.nms.v1_13_R2_NMS.v1_13_R2_NMS;
-import io.github.thatsmusic99.headsplus.nms.v1_13_NMS.v1_13_NMS;
-import io.github.thatsmusic99.headsplus.nms.v1_14_R1_NMS.v1_14_R1_NMS;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -55,10 +51,7 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
     private void addUndefinedHeads() {
     	for (String key : uHeads) {
     	    if (key.equals("llama")) {
-                if (HeadsPlus.getInstance().getNMS() instanceof v1_12_NMS
-                        || HeadsPlus.getInstance().getNMS() instanceof v1_13_NMS
-                        || HeadsPlus.getInstance().getNMS() instanceof v1_13_R2_NMS
-                        || HeadsPlus.getInstance().getNMS() instanceof v1_14_R1_NMS) {
+                if (HeadsPlus.getInstance().getNMSVersion().getOrder() > 7) {
                     if (getConfig().get("llama.name") instanceof List) {
                         List<String> h = getConfig().getStringList("llama.name");
                         getConfig().set("llama.name", null);
@@ -71,10 +64,7 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
                 }
 
     	    } else if (key.equals("parrot")) {
-                if (HeadsPlus.getInstance().getNMS() instanceof v1_12_NMS
-                        || HeadsPlus.getInstance().getNMS() instanceof v1_13_NMS
-                        || HeadsPlus.getInstance().getNMS() instanceof v1_13_R2_NMS
-                        || HeadsPlus.getInstance().getNMS() instanceof v1_14_R1_NMS) {
+                if (HeadsPlus.getInstance().getNMSVersion().getOrder() > 7) {
                     if (getConfig().get("parrot.name") instanceof List) {
                         List<String> h = getConfig().getStringList("parrot.name");
                         getConfig().set("parrot.name", null);

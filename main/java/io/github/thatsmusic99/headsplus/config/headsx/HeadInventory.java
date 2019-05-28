@@ -76,7 +76,6 @@ public abstract class HeadInventory {
                 .replaceAll("\\{pages}", list == null ? "" : String.valueOf(pages))
                 .replaceAll("\\{section}", section));
         HeadsPlus hp = HeadsPlus.getInstance();
-        NMSManager nms = hp.getNMS();
         
         
         return inventory;

@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 @SuppressWarnings("deprecation")
-public class V1_9_NMS2 implements NMSManager {
+public class v1_9_R2_NMS implements NMSManager {
 
     @Override
     public SearchGUI getSearchGUI(Player p, SearchGUI.AnvilClickEventHandler a) {

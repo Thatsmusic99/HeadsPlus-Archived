@@ -8,9 +8,6 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
-import io.github.thatsmusic99.headsplus.nms.v1_8_R1_NMS.v1_8_R1_NMS;
-import io.github.thatsmusic99.headsplus.nms.v1_8_R2_NMS.v1_8_R2_NMS;
-import io.github.thatsmusic99.headsplus.nms.v1_8_R3_NMS.v1_8_R3NMS;
 import io.github.thatsmusic99.headsplus.reflection.NBTManager;
 import io.github.thatsmusic99.headsplus.util.InventoryManager;
 import net.milkbowl.vault.economy.Economy;
@@ -137,9 +134,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
                                         }
                                     }
                                 }
-                                if (nms() instanceof v1_8_R1_NMS
-                                        || nms() instanceof v1_8_R2_NMS
-                                        || nms() instanceof v1_8_R3NMS) {
+                                if (HeadsPlus.getInstance().getNMSVersion().getOrder() < 4) {
                                     ItemStack i = p.getInventory().getHelmet();
                                     if (i != null) {
                                         if (nbt().isSellable(i)) {
@@ -314,9 +309,7 @@ public class SellHead implements CommandExecutor, IHeadsPlusCommand {
 	private void sellAll(Player p, String[] a) {
 		Double price = 0.0;
 
-        if (nms() instanceof v1_8_R1_NMS
-                || nms() instanceof v1_8_R2_NMS
-                || nms() instanceof v1_8_R3NMS) {
+        if (HeadsPlus.getInstance().getNMSVersion().getOrder() < 4) {
             ItemStack i = p.getInventory().getHelmet();
             if (i != null) {
                 if (nbt().isSellable(i)) {

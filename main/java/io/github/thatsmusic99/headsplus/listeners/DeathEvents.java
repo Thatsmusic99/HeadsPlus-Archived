@@ -1,18 +1,14 @@
 package io.github.thatsmusic99.headsplus.listeners;
 
-import java.util.*;
-
-import io.github.thatsmusic99.headsplus.api.events.EntityHeadDropEvent;
+import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.HPPlayer;
+import io.github.thatsmusic99.headsplus.api.events.EntityHeadDropEvent;
 import io.github.thatsmusic99.headsplus.api.events.PlayerHeadDropEvent;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
 import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
-import io.github.thatsmusic99.headsplus.nms.v1_12_NMS.v1_12_NMS;
-import io.github.thatsmusic99.headsplus.nms.v1_13_NMS.v1_13_NMS;
-import io.github.thatsmusic99.headsplus.nms.v1_13_R2_NMS.v1_13_R2_NMS;
-import io.github.thatsmusic99.headsplus.nms.v1_14_R1_NMS.v1_14_R1_NMS;
 import io.github.thatsmusic99.headsplus.reflection.NBTManager;
 import io.lumine.xikage.mythicmobs.MythicMobs;
 import org.bukkit.*;
@@ -25,8 +21,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import io.github.thatsmusic99.headsplus.HeadsPlus;
-import io.github.thatsmusic99.headsplus.config.HeadsPlusConfigHeads;
+import java.util.*;
 
 public class DeathEvents implements Listener {
 
@@ -192,10 +187,7 @@ public class DeathEvents implements Listener {
                     DeathEvents.heads.put(e, keys);
                     continue;
                 }
-                if (nms instanceof v1_12_NMS
-                        || nms instanceof v1_13_NMS
-                        || nms instanceof v1_13_R2_NMS
-                        || nms instanceof v1_14_R1_NMS) {
+                if (HeadsPlus.getInstance().getNMSVersion().getOrder() > 7) {
                     if (e == EntityType.LLAMA) {
                         keys = a("llama", keys);
                         DeathEvents.heads.put(e, keys);
@@ -324,11 +316,7 @@ public class DeathEvents implements Listener {
                 }
             }
         }
-        NMSManager nms = HeadsPlus.getInstance().getNMS();
-        if (nms instanceof v1_12_NMS
-                || nms instanceof v1_13_NMS
-                || nms instanceof v1_13_R2_NMS
-                || nms instanceof v1_14_R1_NMS) {
+        if (HeadsPlus.getInstance().getNMSVersion().getOrder() > 7) {
             if (e instanceof Llama) {
                 Llama llama = (Llama) e;
                 Llama.Color color = llama.getColor();
@@ -372,7 +360,6 @@ public class DeathEvents implements Listener {
 	    List<ItemStack> af = hasColor(e);
 
 	    String mobName = e.getType().name().replaceAll("_", "").toLowerCase();
-	    NMSManager nms = HeadsPlus.getInstance().getNMS();
 	    try {
             if (af != null && !af.isEmpty()) {
                 thing = r.nextInt(af.size());
@@ -385,10 +372,7 @@ public class DeathEvents implements Listener {
                     thing = r.nextInt(hpch.getConfig().getStringList("sheep.name.default").size());
                 } else if (e instanceof Horse) {
                     thing = r.nextInt(hpch.getConfig().getStringList("horse.name.default").size());
-                } else if (nms instanceof v1_12_NMS
-                        || nms instanceof v1_13_NMS
-                        || nms instanceof v1_13_R2_NMS
-                        || nms instanceof v1_14_R1_NMS) {
+                } else if (HeadsPlus.getInstance().getNMSVersion().getOrder() > 7) {
                     if (e instanceof Parrot) {
                         thing = r.nextInt(hpch.getConfig().getStringList("parrot.name.default").size());
                     } else if (e instanceof Llama) {

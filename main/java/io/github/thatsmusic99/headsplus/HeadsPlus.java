@@ -25,9 +25,9 @@ import io.github.thatsmusic99.headsplus.nms.v1_13_R2_NMS.v1_13_R2_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_14_R1_NMS.v1_14_R1_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_8_R1_NMS.v1_8_R1_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_8_R2_NMS.v1_8_R2_NMS;
-import io.github.thatsmusic99.headsplus.nms.v1_8_R3_NMS.v1_8_R3NMS;
+import io.github.thatsmusic99.headsplus.nms.v1_8_R3_NMS.v1_8_R3_NMS;
 import io.github.thatsmusic99.headsplus.nms.v1_9_NMS.v1_9_NMS;
-import io.github.thatsmusic99.headsplus.nms.v1_9_R2_NMS.V1_9_NMS2;
+import io.github.thatsmusic99.headsplus.nms.v1_9_R2_NMS.v1_9_R2_NMS;
 import io.github.thatsmusic99.headsplus.reflection.NBTManager;
 import io.github.thatsmusic99.headsplus.storage.Favourites;
 import io.github.thatsmusic99.headsplus.storage.PlayerScores;
@@ -86,6 +86,7 @@ public class HeadsPlus extends JavaPlugin {
     // Other management stuff
     private final List<Challenge> challenges = new ArrayList<>();
     private NMSManager nms;
+    private NMSIndex nmsversion;
     private final List<IHeadsPlusCommand> commands = new ArrayList<>();
     private HashMap<Integer, RLevel> levels = new HashMap<>();
     private List<ConfigSettings> cs = new ArrayList<>();
@@ -488,25 +489,52 @@ public class HeadsPlus extends JavaPlugin {
 
 
     private void setupNMS() {
-        List<NMSManager> managers = new ArrayList<>();
-        managers.add(new v1_8_R1_NMS());
-        managers.add(new v1_8_R2_NMS());
-        managers.add(new v1_8_R3NMS());
-        managers.add(new v1_9_NMS());
-        managers.add(new V1_9_NMS2());
-        managers.add(new v1_10_NMS());
-        managers.add(new v1_11_NMS());
-        managers.add(new v1_12_NMS());
-        managers.add(new v1_13_NMS());
-        managers.add(new v1_13_R2_NMS());
-        managers.add(new v1_14_R1_NMS());
-        String a = getServer().getClass().getPackage().getName();
-        String version = a.substring(a.lastIndexOf('.') + 1);
-        for (NMSManager nms : managers) {
-            if (nms.getNMSVersion().equalsIgnoreCase(version)) {
-                this.nms = nms;
-            }
+        String bukkitVersion = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
+        switch (bukkitVersion) {
+            case "v1_14_R1":
+                nmsversion = NMSIndex.v1_14_R1;
+                break;
+            case "v1_13_R2":
+                nmsversion = NMSIndex.v1_13_R2;
+                break;
+            case "v1_13_R1":
+                nmsversion = NMSIndex.v1_13_R1;
+                break;
+            case "v1_12_R1":
+                nmsversion = NMSIndex.v1_12_R1;
+                break;
+            case "v1_11_R1":
+                nmsversion = NMSIndex.v1_11_R1;
+                break;
+            case "v1_10_R1":
+                nmsversion = NMSIndex.v1_10_R1;
+                break;
+            case "v1_9_R1":
+                nmsversion = NMSIndex.v1_9_R1;
+                break;
+            case "v1_9_R2":
+                nmsversion = NMSIndex.v1_9_R2;
+                break;
+            case "v1_8_R3":
+                nmsversion = NMSIndex.v1_8_R3;
+                break;
+            case "v1_8_R2":
+                nmsversion = NMSIndex.v1_8_R2;
+                break;
+            case "v1_8_R1":
+                nmsversion = NMSIndex.v1_8_R1;
+                break;
+            default:
+                getLogger().severe("ERROR: HeadsPlus does not support this version (" + version + ")!");
+                getLogger().severe("If this is not known of, let the developer know in one of these places:");
+                getLogger().severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
+                getLogger().severe("https://discord.gg/nbT7wC2");
+                getLogger().severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-13-x.237088/");
+                getLogger().severe("To prevent any further damage, the plugin is being disabled...");
+                setEnabled(false);
+                return;
         }
+        nms = nmsversion.getNms();
         if (nms instanceof v1_14_R1_NMS) {
             String supportedHash = "48be70f51ffe914d865f175ed3bf992d";
             getLogger().info("1.14 detected! NMS mapping version: " + ((org.bukkit.craftbukkit.v1_14_R1.util.CraftMagicNumbers) getServer().getUnsafe()).getMappingsVersion());
@@ -515,15 +543,6 @@ public class HeadsPlus extends JavaPlugin {
             } else {
                 getLogger().info("Current hash is not supported. If any issues arise, let the developer know!");
             }
-        }
-        if (this.nms == null) {
-            getLogger().severe("ERROR: HeadsPlus does not support this version (" + version + ")!");
-            getLogger().severe("If this is not known of, let the developer know in one of these places:");
-            getLogger().severe("https://github.com/Thatsmusic99/HeadsPlus/issues");
-            getLogger().severe("https://discord.gg/nbT7wC2");
-            getLogger().severe("https://www.spigotmc.org/threads/headsplus-1-8-x-1-13-x.237088/");
-            getLogger().severe("To prevent any further damage, the plugin is being disabled...");
-            setEnabled(false);
         }
     }
 
@@ -708,6 +727,10 @@ public class HeadsPlus extends JavaPlugin {
 
     public HeadsPlusConfigSounds getSounds() {
         return sounds;
+    }
+
+    public NMSIndex getNMSVersion() {
+        return nmsversion;
     }
 
     public ChatColor getThemeColour(int i) {

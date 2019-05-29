@@ -52,11 +52,11 @@ public class NBTManager {
     }
 
     public boolean isSellable(ItemStack i) {
-        return (boolean) getObject(i, "getBoolean", "headplus-sell");
+        return (boolean) getObject(i, "getBoolean", "headsplus-sell");
     }
 
     public ItemStack setType(ItemStack i, String type) {
-        return setObject(i, "setString", "headplus-type", type, String.class, String.class);
+        return setObject(i, "setString", "headsplus-type", type, String.class, String.class);
     }
 
     public ItemStack addDatabaseHead(ItemStack i, String id, double price) {
@@ -79,7 +79,7 @@ public class NBTManager {
     }
 
     public String getType(ItemStack i) {
-        return String.valueOf(getObject(i, "getString", "headplus-type"));
+        return String.valueOf(getObject(i, "getString", "headsplus-type"));
     }
 
     public String getID(ItemStack i) {

@@ -164,14 +164,15 @@ public class HPPlayer {
         if (hp.usingLevels()) {
             if (nextLevel != null) {
                 if (nextLevel.getRequiredXP() <= getXp()) {
-                    LevelUpEvent event = new LevelUpEvent(getPlayer().getPlayer(), level, nextLevel);
+                    LevelUpEvent event = new LevelUpEvent(player.getPlayer(), level, nextLevel);
                     Bukkit.getPluginManager().callEvent(event);
                     if (!event.isCancelled()) {
                         level = nextLevel;
                         if (hp.getConfiguration().getMechanics().getBoolean("broadcasts.level-up")) {
+							final String name = player.isOnline() ? player.getPlayer().getDisplayName() : player.getName();
                             for (Player p : Bukkit.getOnlinePlayers()) {
                                 p.sendMessage(HeadsPlus.getInstance().getMessagesConfig().getString("level-up")
-                                        .replaceAll("\\{name}", this.getPlayer().getName())
+                                        .replaceAll("\\{name}", name)
                                         .replaceAll("\\{level}", ChatColor.translateAlternateColorCodes('&', level.getDisplayName())));
                             }
                         }

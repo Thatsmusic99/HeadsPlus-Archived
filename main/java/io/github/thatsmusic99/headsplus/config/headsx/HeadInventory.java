@@ -120,9 +120,9 @@ public abstract class HeadInventory {
 
     public Inventory build(Player sender, List<ItemStack> list, String section, int page, int pages, int items, boolean wideMenu) {
         Inventory inventory = Bukkit.createInventory(null, getSize(), getTitle()
-                .replace("{page}", String.valueOf(page + 1))
-                .replace("{pages}", list == null ? "" : String.valueOf(pages))
-                .replace("{section}", section.isEmpty() ? "" : Character.toUpperCase(section.charAt(0)) + section.substring(1)));
+                .replaceAll("\\{page}", String.valueOf(page + 1))
+                .replaceAll("\\{pages}", list == null ? "" : String.valueOf(pages))
+                .replaceAll("\\{section}", section.isEmpty() ? "" : Character.toUpperCase(section.charAt(0)) + section.substring(1)));
         HeadsPlus hp = HeadsPlus.getInstance();
         NMSManager nms = hp.getNMS();
         NBTManager nbt = hp.getNBTManager();
@@ -147,11 +147,11 @@ public abstract class HeadInventory {
                 List<String> ls = new ArrayList<>();
                 for (String s : icons[o].getLore()) {
                     ls.add(ChatColor.translateAlternateColorCodes('&', s
-                            .replace("{heads}", String.valueOf(items))
-                            .replace("{pages}", String.valueOf(pages))
-                            .replace("{sections}", String.valueOf(hp.getHeadsXConfig().sections.size()))
-                            .replace("{balance}", (hp.econ() ? HeadsPlus.getInstance().getConfiguration().fixBalanceStr(hp.getEconomy().getBalance(sender)) : ""))
-                            .replace("{section}", section)));
+                            .replaceAll("\\{heads}", String.valueOf(items))
+                            .replaceAll("\\{pages}", String.valueOf(pages))
+                            .replaceAll("\\{sections}", String.valueOf(hp.getHeadsXConfig().sections.size()))
+                            .replaceAll("\\{balance}", (hp.econ() ? HeadsPlus.getInstance().getConfiguration().fixBalanceStr(hp.getEconomy().getBalance(sender)) : ""))
+                            .replaceAll("\\{section}", section)));
                 }
                 im.setLore(ls);
                 is.setItemMeta(im);
@@ -215,11 +215,11 @@ public abstract class HeadInventory {
                 List<String> ls = new ArrayList<>();
                 for (String s : oof.getLore()) {
                     ls.add(ChatColor.translateAlternateColorCodes('&', s
-                            .replace("{heads}", String.valueOf(items))
-                            .replace("{pages}", String.valueOf(pages))
-                            .replace("{sections}", String.valueOf(hp.getHeadsXConfig().sections.size()))
-                            .replace("{balance}", String.valueOf(hp.getEconomy().getBalance(sender)))
-                            .replace("{section}", section)));
+                            .replaceAll("\\{heads}", String.valueOf(items))
+                            .replaceAll("\\{pages}", String.valueOf(pages))
+                            .replaceAll("\\{sections}", String.valueOf(hp.getHeadsXConfig().sections.size()))
+                            .replaceAll("\\{balance}", String.valueOf(hp.getEconomy().getBalance(sender)))
+                            .replaceAll("\\{section}", section)));
                 }
                 im.setLore(ls);
                 is.setItemMeta(im);
@@ -250,9 +250,9 @@ public abstract class HeadInventory {
         if (itemIndex < list.size()) {
             is = list.get(itemIndex);
             ItemMeta im = is.getItemMeta();
-            im.setDisplayName(icon.getDisplayName().replace("{head-name}", is.getItemMeta().getDisplayName()));
+            im.setDisplayName(icon.getDisplayName().replaceAll("\\{head-name}", is.getItemMeta().getDisplayName()));
             if (this instanceof SellheadMenu) {
-                im.setDisplayName(im.getDisplayName().replace("{default}",
+                im.setDisplayName(im.getDisplayName().replaceAll("\\{default}",
                         HeadsPlus.getInstance().getHeadsConfig().getDisplayName(nbt.getType(is))));
             }
             String s = "";
@@ -310,7 +310,7 @@ public abstract class HeadInventory {
                     } else if (re == HPChallengeRewardTypes.REMOVE_GROUP) {
                         sb.append("Group ").append(c.getRewardValue().toString()).append(" removal");
                     }
-                    lore.add(ChatColor.translateAlternateColorCodes('&', icon.getLore().get(z).replace("{challenge-reward}", sb.toString())));
+                    lore.add(ChatColor.translateAlternateColorCodes('&', icon.getLore().get(z).replaceAll("\\{challenge-reward}", sb.toString())));
                 }
                 if (icon.getLore().get(z).contains("{completed}")) {
                     if (c.isComplete(p)) {
@@ -318,7 +318,7 @@ public abstract class HeadInventory {
                     }
                 }
                 if (icon.getLore().get(z).contains("{challenge-xp}")) {
-                    lore.add(ChatColor.translateAlternateColorCodes('&', icon.getLore().get(z).replace("{challenge-xp}", String.valueOf(c.getGainedXP()))));
+                    lore.add(ChatColor.translateAlternateColorCodes('&', icon.getLore().get(z).replaceAll("\\{challenge-xp}", String.valueOf(c.getGainedXP()))));
                 }
             }
             im.setLore(lore);

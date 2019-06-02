@@ -5,10 +5,8 @@ import io.github.thatsmusic99.headsplus.commands.IHeadsPlusCommand;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
-import io.github.thatsmusic99.headsplus.util.HPUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.ConfigurationSection;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 
@@ -25,7 +23,6 @@ public class BlacklistToggle implements IHeadsPlusCommand {
 
 	// F
 	private final HeadsPlusMainConfig config = HeadsPlus.getInstance().getConfiguration();
-	private final ConfigurationSection blacklist = config.getBlacklist("default");
 	private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
 	@Override
@@ -44,13 +41,13 @@ public class BlacklistToggle implements IHeadsPlusCommand {
 	public boolean fire(String[] args, CommandSender sender) {
 		try {
 			if (args.length == 1) {
-				blacklist.set("enabled", HPUtils.switchBoolean(blacklist.getBoolean("enabled")));
+                config.getConfig().set("blacklist.default.enabled", config.getHeadsBlacklist().enabled = !config.getHeadsBlacklist().enabled);
 				config.save();
-				sender.sendMessage(blacklist.getBoolean("enabled") ? "bl-on" : "bl-off");
+				sender.sendMessage(config.getHeadsBlacklist().enabled ? "bl-on" : "bl-off");
 			} else {
 				if (args[1].equalsIgnoreCase("on")) {
-					if (!blacklist.getBoolean("enabled")) {
-						blacklist.set("enabled", true);
+					if (!config.getHeadsBlacklist().enabled) {
+                        config.getConfig().set("blacklist.default.enabled", config.getHeadsBlacklist().enabled = true);
 						config.save();
 						sender.sendMessage(hpc.getString("bl-on"));
 					} else {
@@ -58,8 +55,8 @@ public class BlacklistToggle implements IHeadsPlusCommand {
 					}
 
 				} else if (args[1].equalsIgnoreCase("off")) {
-					if (blacklist.getBoolean("enabled")) {
-						blacklist.set("enabled", false);
+					if (config.getHeadsBlacklist().enabled) {
+                        config.getConfig().set("blacklist.default.enabled", config.getHeadsBlacklist().enabled = false);
 						config.save();
 						sender.sendMessage(hpc.getString("bl-off"));
 					} else {

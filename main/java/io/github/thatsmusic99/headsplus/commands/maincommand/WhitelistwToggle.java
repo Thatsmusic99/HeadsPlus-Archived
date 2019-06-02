@@ -39,14 +39,16 @@ public class WhitelistwToggle implements IHeadsPlusCommand{
     @Override
     public boolean fire(String[] args, CommandSender sender) {
         try {
-            ConfigurationSection whitelist = config.getWhitelist("world");
+            ConfigurationSection whitelist = config.getConfig().getConfigurationSection("whitelist.world");
             if (args.length == 1) {
                 if (whitelist.getBoolean("enabled")) {
                     whitelist.set("enabled", false);
+                    config.getWhitelist().enabled = false;
                     config.save();
                     sender.sendMessage(hpc.getString("wlw-off"));
                 } else if (!whitelist.getBoolean("enabled")) {
                     whitelist.set("enabled", true);
+                    config.getWhitelist().enabled = true;
                     config.save();
                     sender.sendMessage(hpc.getString("wlw-on"));
                 }
@@ -55,6 +57,7 @@ public class WhitelistwToggle implements IHeadsPlusCommand{
                 if (str.equalsIgnoreCase("on")) {
                     if (!whitelist.getBoolean("enabled")) {
                         whitelist.set("enabled", true);
+                        config.getWhitelist().enabled = true;
                         config.save();
                         sender.sendMessage(hpc.getString("wlw-on"));
                     } else {
@@ -63,6 +66,7 @@ public class WhitelistwToggle implements IHeadsPlusCommand{
                 } else if (str.equalsIgnoreCase("off")) {
                     if (whitelist.getBoolean("enabled")) {
                         whitelist.set("enabled", false);
+                        config.getWhitelist().enabled = false;
                         config.save();
                         sender.sendMessage(hpc.getString("wlw-off"));
                     } else {

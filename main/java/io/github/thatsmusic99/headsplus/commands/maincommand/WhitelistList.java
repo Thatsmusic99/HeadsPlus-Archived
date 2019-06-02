@@ -46,14 +46,14 @@ public class WhitelistList implements IHeadsPlusCommand {
     public boolean fire(String[] args, CommandSender sender) {
         try {
             HeadsPlus hp = HeadsPlus.getInstance();
-            List<String> wl = hp.getConfiguration().getWhitelist("default").getStringList("list");
+            List<String> wl = hp.getConfiguration().getHeadsWhitelist().list;
             int page;
             if (args.length == 1) {
                 page = 1;
             } else {
                 page = Integer.parseInt(args[1]);
             }
-            if (wl.size() == 0) {
+            if (wl.isEmpty()) {
                 sender.sendMessage(hpc.getString("empty-wl"));
                 return true;
             }

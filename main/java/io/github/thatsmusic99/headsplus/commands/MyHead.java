@@ -2,6 +2,7 @@ package io.github.thatsmusic99.headsplus.commands;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig.SelectorList;
 import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import io.github.thatsmusic99.headsplus.nms.NMSManager;
@@ -57,20 +58,20 @@ public class MyHead implements CommandExecutor, IHeadsPlusCommand {
                     sender.sendMessage(ChatColor.RED + "You must be a player to run this command!");
                     return false;
                 }
-                ConfigurationSection blacklist = HeadsPlus.getInstance().getConfiguration().getBlacklist("default");
-                ConfigurationSection whitelist = HeadsPlus.getInstance().getConfiguration().getWhitelist("default");
+                SelectorList blacklist = HeadsPlus.getInstance().getConfiguration().getHeadsBlacklist();
+                SelectorList whitelist = HeadsPlus.getInstance().getConfiguration().getHeadsWhitelist();
                 HeadsPlus.getInstance().saveConfig();
                 List<String> bl = new ArrayList<>();
-                for (String str : blacklist.getStringList("list")) {
+                for (String str : blacklist.list) {
                     bl.add(str.toLowerCase());
                 }
                 List<String> wl = new ArrayList<>();
-                for (String str : whitelist.getStringList("list")) {
+                for (String str : whitelist.list) {
                     wl.add(str.toLowerCase());
                 }
 
-                boolean blacklistOn = blacklist.getBoolean("enabled");
-                boolean wlOn = whitelist.getBoolean("enabled");
+                boolean blacklistOn = blacklist.enabled;
+                boolean wlOn = whitelist.enabled;
                 String head = sender.getName().toLowerCase();
                 if (((Player) sender).getInventory().firstEmpty() == -1) {
                     sender.sendMessage(hpc.getString("full-inv"));

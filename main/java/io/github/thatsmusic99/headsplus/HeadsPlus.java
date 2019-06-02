@@ -16,18 +16,9 @@ import io.github.thatsmusic99.headsplus.crafting.RecipePerms;
 import io.github.thatsmusic99.headsplus.listeners.*;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 
-import io.github.thatsmusic99.headsplus.nms.*;
-import io.github.thatsmusic99.headsplus.nms.v1_10_NMS.v1_10_NMS;
-import io.github.thatsmusic99.headsplus.nms.v1_11_NMS.v1_11_NMS;
-import io.github.thatsmusic99.headsplus.nms.v1_12_NMS.v1_12_NMS;
-import io.github.thatsmusic99.headsplus.nms.v1_13_NMS.v1_13_NMS;
-import io.github.thatsmusic99.headsplus.nms.v1_13_R2_NMS.v1_13_R2_NMS;
+import io.github.thatsmusic99.headsplus.nms.NMSIndex;
+import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import io.github.thatsmusic99.headsplus.nms.v1_14_R1_NMS.v1_14_R1_NMS;
-import io.github.thatsmusic99.headsplus.nms.v1_8_R1_NMS.v1_8_R1_NMS;
-import io.github.thatsmusic99.headsplus.nms.v1_8_R2_NMS.v1_8_R2_NMS;
-import io.github.thatsmusic99.headsplus.nms.v1_8_R3_NMS.v1_8_R3_NMS;
-import io.github.thatsmusic99.headsplus.nms.v1_9_NMS.v1_9_NMS;
-import io.github.thatsmusic99.headsplus.nms.v1_9_R2_NMS.v1_9_R2_NMS;
 import io.github.thatsmusic99.headsplus.reflection.NBTManager;
 import io.github.thatsmusic99.headsplus.storage.Favourites;
 import io.github.thatsmusic99.headsplus.storage.PlayerScores;
@@ -124,12 +115,12 @@ public class HeadsPlus extends JavaPlugin {
             checkTheme();
 
             // Handles recipes
-            if (!getConfiguration().getPerks().getBoolean("disable-crafting")) {
+            if (!getConfiguration().getPerks().disable_crafting) {
                 debug("- Recipes may be added. Creating...", 1);
                 getServer().getPluginManager().registerEvents(new RecipePerms(), this);
             }
             // If sellable heads are enabled and yet there isn't Vault
-            if (!(econ()) && (getConfiguration().getPerks().getBoolean("sellHeads"))) {
+            if (!(econ()) && (getConfiguration().getPerks().sell_heads)) {
                 getLogger().warning(hpc.getString("no-vault"));
             }
 
@@ -594,11 +585,11 @@ public class HeadsPlus extends JavaPlugin {
     }
 
     public boolean isUsingHeadDatabase() {
-        return getConfiguration().getPerks().getBoolean("heads-selector");
+        return getConfiguration().getPerks().heads_selector;
     }
 
     public boolean hasChallengesEnabled() {
-        return getConfiguration().getPerks().getBoolean("challenges");
+        return getConfiguration().getPerks().challenges;
     }
 
     public boolean isConnectedToMySQLDatabase() {
@@ -606,15 +597,15 @@ public class HeadsPlus extends JavaPlugin {
     }
 
     public boolean isDeathMessagesEnabled() {
-        return getConfiguration().getPerks().getBoolean("player-death-messages");
+        return getConfiguration().getPerks().player_death_messages;
     }
 
     public boolean isDropsEnabled() {
-        return getConfiguration().getPerks().getBoolean("drop-heads");
+        return getConfiguration().getPerks().drop_heads;
     }
 
     public boolean canSellHeads() {
-        return (econ()) && (getConfiguration().getPerks().getBoolean("sell-heads"));
+        return (econ()) && (getConfiguration().getPerks().sell_heads);
     }
 
     public Connection getConnection() {
@@ -630,7 +621,7 @@ public class HeadsPlus extends JavaPlugin {
     }
 
     public boolean isUsingLeaderboards() {
-        return getConfiguration().getPerks().getBoolean("leaderboards");
+        return getConfiguration().getPerks().leaderboards;
     }
 
     public HeadsPlusConfigTextMenu getMenus() {
@@ -706,7 +697,7 @@ public class HeadsPlus extends JavaPlugin {
     }
 
     public boolean usingLevels() {
-        return getConfiguration().getPerks().getBoolean("levels");
+        return getConfiguration().getPerks().levels;
     }
 
     public static Object[] getUpdate() {

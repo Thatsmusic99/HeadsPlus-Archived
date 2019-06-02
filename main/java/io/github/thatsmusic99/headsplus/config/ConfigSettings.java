@@ -19,8 +19,8 @@ public class ConfigSettings {
     }
 
     protected void load(boolean nullp) {
-          getConfig().options().copyDefaults(true);
-          save();
+        getConfig().options().copyDefaults(true);
+        save();
     }
 
     public void reloadC(boolean nullp) {

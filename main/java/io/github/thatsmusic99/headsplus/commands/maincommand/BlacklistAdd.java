@@ -10,6 +10,7 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import org.bukkit.command.CommandSender;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import org.bukkit.configuration.ConfigurationSection;
 
 @CommandInfo(
         commandname = "blacklistadd",
@@ -48,7 +49,7 @@ public class BlacklistAdd implements IHeadsPlusCommand {
 	@Override
 	public boolean fire(String[] args, CommandSender sender) {
 		try {
-			List<String> blacklist = config.getBlacklist("default").getStringList("list");
+            List<String> blacklist = config.getHeadsBlacklist().list;
 			String aHead = args[1].toLowerCase();
 			if (blacklist.contains(aHead)) {
 				sender.sendMessage(hpc.getString("head-a-add"));

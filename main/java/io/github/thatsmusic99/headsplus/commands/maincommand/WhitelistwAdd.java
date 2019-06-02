@@ -51,13 +51,13 @@ public class WhitelistwAdd implements IHeadsPlusCommand {
             if (args.length > 1) {
                 if (args[1].matches("^[A-Za-z0-9_]+$")) {
                         HeadsPlusMainConfig config = HeadsPlus.getInstance().getConfiguration();
-                        List<String> blacklist = config.getWhitelist("world").getStringList("list");
+                        List<String> blacklist = config.getWhitelist().list;
                         String aWorld = args[1].toLowerCase();
                         if (blacklist.contains(aWorld)) {
                             sender.sendMessage(hpc.getString("world-a-add"));
                         } else {
                             blacklist.add(aWorld);
-                            config.getWhitelist("world").set("list", blacklist);
+                            config.getConfig().set("whitelist.world.list", blacklist);
                             config.save();
                             sender.sendMessage(hpc.getString("world-added-wl").replaceAll("\\{name}", args[1]));
                         }

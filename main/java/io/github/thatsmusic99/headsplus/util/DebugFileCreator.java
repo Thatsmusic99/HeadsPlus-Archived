@@ -51,7 +51,7 @@ public class DebugFileCreator {
             o3.put("Player death messages", hp.isDeathMessagesEnabled());
             o3.put("Total challenges", hp.getChallenges().size());
             o3.put("Total levels", hp.getLevels().size());
-            o3.put("Masks enabled", hp.getConfiguration().getPerks().getBoolean("mask-powerups"));
+            o3.put("Masks enabled", hp.getConfiguration().getPerks().mask_powerups);
             o3.put("Allows looting enchantment", hp.getConfiguration().getMechanics().getBoolean("allow-looting-enchantment"));
             o3.put("Levels enabled", hp.usingLevels());
         } catch (NullPointerException ignored) {

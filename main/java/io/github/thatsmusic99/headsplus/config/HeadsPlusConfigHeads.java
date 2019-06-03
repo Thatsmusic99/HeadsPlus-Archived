@@ -327,7 +327,7 @@ public class HeadsPlusConfigHeads extends ConfigSettings {
         if (getConfig().get(type + ".interact-name").equals("{default}")) {
             return getConfig().getString("defaults.interact-name");
         } else {
-            return getConfig().getString(type + ".interact-name");
+            return getConfig().getString(type + ".interact-name").replaceAll("\\{type}", type);
         }
     }
 

@@ -124,7 +124,7 @@ public class fr_fr implements Locale {
 
     @Override
     public String getHeadAddedBlacklist() {
-        return "{header} &3{player} a bien été ajouté à la blacklist!";
+        return "{header} &3{name} a bien été ajouté à la blacklist!";
     }
 
     @Override
@@ -134,12 +134,12 @@ public class fr_fr implements Locale {
 
     @Override
     public String getHeadRemovedBlacklist() {
-        return "{header} &3{player} a bien été retiré de la blacklist!";
+        return "{header} &3{name} a bien été retiré de la blacklist!";
     }
 
     @Override
     public String getHeadAddedWhitelist() {
-        return "{header} &3{player} a bien été ajouté à la whitelist!";
+        return "{header} &3{name} a bien été ajouté à la whitelist!";
     }
 
     @Override
@@ -149,7 +149,7 @@ public class fr_fr implements Locale {
 
     @Override
     public String getHeadRemovedWhitelist() {
-        return "{header} &3{player} a bien été retiré de la whitelist!";
+        return "{header} &3{name} a bien été retiré de la whitelist!";
     }
 
     @Override
@@ -159,7 +159,7 @@ public class fr_fr implements Locale {
 
     @Override
     public String getWorldAddedBlacklist() {
-        return "{header} &3{world} a bien été ajouté à la blacklist!";
+        return "{header} &3{name} a bien été ajouté à la blacklist!";
     }
 
     @Override
@@ -169,12 +169,12 @@ public class fr_fr implements Locale {
 
     @Override
     public String getWorldRemovedBlacklist() {
-        return "{header} &3{world} a bien été retiré de la blacklist!";
+        return "{header} &3{name} a bien été retiré de la blacklist!";
     }
 
     @Override
     public String getWorldAddedWhitelist() {
-        return "{header} &3{world} a bien été ajouté à la whitelist!";
+        return "{header} &3{name} a bien été ajouté à la whitelist!";
     }
 
     @Override
@@ -184,7 +184,7 @@ public class fr_fr implements Locale {
 
     @Override
     public String getWorldRemovedWhitelist() {
-        return "{header} &3{world} a bien été retiré de whitelist!";
+        return "{header} &3{name} a bien été retiré de whitelist!";
     }
 
     @Override
@@ -399,7 +399,7 @@ public class fr_fr implements Locale {
 
     @Override
     public String descHeads() {
-        return null;
+        return "Affiche une sélection de têtes.";
     }
 
     @Override

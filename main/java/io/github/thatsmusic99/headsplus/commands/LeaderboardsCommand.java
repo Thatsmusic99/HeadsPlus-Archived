@@ -33,37 +33,38 @@ public class LeaderboardsCommand implements CommandExecutor, IHeadsPlusCommand {
                     try {
                         boolean b = HeadsPlus.getInstance().getDeathEvents().ableEntities.contains(EntityType.valueOf(args[0].toUpperCase()));
                         tests.put("Valid Entity", b);
-                        if (b || args[0].equalsIgnoreCase("player")) {
+                        String sec = b ? args[0].toUpperCase() : args[0];
+                        if (b || sec.equalsIgnoreCase("player")) {
                             if (args.length > 1) {
                                 if (args[1].matches("^[0-9]+$")) {
                                     if (args.length > 2) {
                                         if (args[2].equalsIgnoreCase("crafting")
                                                 || args[2].equalsIgnoreCase("selling")
                                                 || args[2].equalsIgnoreCase("hunting")) {
-                                            cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1]), args[2]));
+                                            cs.sendMessage(getLeaderboard(sec, Integer.parseInt(args[1]), args[2]));
                                         } else {
-                                            cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1]), "hunting"));
+                                            cs.sendMessage(getLeaderboard(sec, Integer.parseInt(args[1]), "hunting"));
                                         }
                                     } else {
-                                        cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[1]), "hunting"));
+                                        cs.sendMessage(getLeaderboard(sec, Integer.parseInt(args[1]), "hunting"));
                                     }
                                 } else if (args[1].equalsIgnoreCase("crafting")
                                         || args[1].equalsIgnoreCase("selling")
                                         || args[1].equalsIgnoreCase("hunting")) {
                                     if (args.length > 2) {
                                         if (args[2].matches("^[0-9]+$")) {
-                                            cs.sendMessage(getLeaderboard(args[0], Integer.parseInt(args[2]), args[1]));
+                                            cs.sendMessage(getLeaderboard(sec, Integer.parseInt(args[2]), args[1]));
                                         } else {
-                                            cs.sendMessage(getLeaderboard(args[0], 1, args[1]));
+                                            cs.sendMessage(getLeaderboard(sec, 1, args[1]));
                                         }
                                     } else {
-                                        cs.sendMessage(getLeaderboard(args[0], 1, args[1]));
+                                        cs.sendMessage(getLeaderboard(sec, 1, args[1]));
                                     }
                                 } else {
-                                    cs.sendMessage(getLeaderboard(args[0], 1, "hunting"));
+                                    cs.sendMessage(getLeaderboard(sec, 1, "hunting"));
                                 }
                             } else {
-                                cs.sendMessage(getLeaderboard(args[0], 1, "hunting"));
+                                cs.sendMessage(getLeaderboard(sec, 1, "hunting"));
                             }
                             printDebugResults(tests, true);
                             return true;

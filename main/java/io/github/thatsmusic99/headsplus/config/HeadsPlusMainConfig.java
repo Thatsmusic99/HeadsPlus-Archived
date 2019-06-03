@@ -188,11 +188,11 @@ public class HeadsPlusMainConfig extends ConfigSettings {
 
     public static class Perks {
 
-        public final List<String> drops_entities_requiring_killer = new ArrayList();
-        public final List<String> drops_ignore_players = new ArrayList();
+        public final List<String> drops_entities_requiring_killer = new ArrayList<>();
+        public final List<String> drops_ignore_players = new ArrayList<>();
         public boolean drops_needs_killer;
         public boolean sell_heads, drop_heads, craft_heads, disable_crafting, heads_selector, challenges, leaderboards, levels, player_death_messages, smite_on_head, mask_powerups;
-        public final List<String> death_messages = new ArrayList();
+        public final List<String> death_messages = new ArrayList<>();
         public boolean pvp_player_balance_competition;
         public double pvp_percentabe_lost, pvp_balance_for_head;
     }
@@ -200,6 +200,6 @@ public class HeadsPlusMainConfig extends ConfigSettings {
     public static class SelectorList {
 
         public boolean enabled;
-        public final List<String> list = new ArrayList();
+        public final List<String> list = new ArrayList<>();
     }
 }

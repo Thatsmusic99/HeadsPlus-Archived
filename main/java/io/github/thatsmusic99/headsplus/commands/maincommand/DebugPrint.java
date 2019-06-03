@@ -137,6 +137,8 @@ public class DebugPrint implements IHeadsPlusCommand {
                     } else {
                         h.put(false, HeadsPlus.getInstance().getMessagesConfig().getString("invalid-args"));
                     }
+                } else {
+                    h.put(false, HeadsPlus.getInstance().getMessagesConfig().getString("invalid-args"));
                 }
             } else {
                 h.put(false, HeadsPlus.getInstance().getMessagesConfig().getString("invalid-args"));

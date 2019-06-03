@@ -9,6 +9,7 @@ import io.github.thatsmusic99.headsplus.nms.NMSManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -139,6 +140,60 @@ public class HeadsPlusAPI {
             }
         }
         return null;
+    }
+
+    public EntityType strToEntityType(String str) {
+        switch (str) {
+            case "cavespider":
+                str = "CAVE_SPIDER";
+                break;
+            case "irongolem":
+                str = "IRON_GOLEM";
+                break;
+            case "mushroomcow":
+                str = "MUSHROOM_COW";
+                break;
+            case "enderdragon":
+                str = "ENDER_DRAGON";
+                break;
+            case "elderguardian":
+                str = "ELDER_GUARDIAN";
+                break;
+            case "magmacube":
+                str = "MAGMA_CUBE";
+                break;
+            case "pigzombie":
+                str = "PIG_ZOMBIE";
+                break;
+            case "polarbear":
+                str = "POLAR_BEAR";
+                break;
+            case "skeletonhorse":
+                str = "SKELETON_HORSE";
+                break;
+            case "traderllama":
+                str = "TRADER_LLAMA";
+                break;
+            case "tropicalfish":
+                str = "TROPICAL_FISH";
+                break;
+            case "wanderingtrader":
+                str = "WANDERING_TRADER";
+                break;
+            case "witherskeleton":
+                str = "WITHER_SKELETON";
+                break;
+            case "zombiehorse":
+                str = "ZOMBIE_HORSE";
+                break;
+            case "zombievillager":
+                str = "ZOMBIE_VILLAGER";
+                break;
+            default:
+                str = str.toUpperCase();
+                break;
+        }
+        return EntityType.valueOf(str);
     }
 
 }

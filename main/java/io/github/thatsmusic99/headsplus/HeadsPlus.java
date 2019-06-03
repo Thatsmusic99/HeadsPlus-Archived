@@ -14,6 +14,7 @@ import io.github.thatsmusic99.headsplus.config.headsx.HeadsPlusConfigHeadsX;
 import io.github.thatsmusic99.headsplus.config.levels.*;
 import io.github.thatsmusic99.headsplus.crafting.RecipePerms;
 import io.github.thatsmusic99.headsplus.listeners.*;
+import io.github.thatsmusic99.headsplus.listeners.tabcompleting.TabComplete;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 
 import io.github.thatsmusic99.headsplus.nms.NMSIndex;
@@ -365,8 +366,8 @@ public class HeadsPlus extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new JoinEvent(), this);
         debug("- Registering PlaceEvent...", 3);
         getServer().getPluginManager().registerEvents(new PlaceEvent(), this);
-        debug("- Registering LBEvents...", 3);
-        getServer().getPluginManager().registerEvents(new LBEvents(), this);
+        debug("- Registering LeaderboardEvents...", 3);
+        getServer().getPluginManager().registerEvents(new LeaderboardEvents(), this);
         debug("- Registering PlayerDeathEvent...", 3);
         getServer().getPluginManager().registerEvents(new PlayerDeathEvent(), this);
         debug("- Registering MaskEvent...", 3);
@@ -406,6 +407,8 @@ public class HeadsPlus extends JavaPlugin {
         config = new HeadsPlusMainConfig();
         cs.add(config);
         debug("- Instance for HeadsPlusMainConfig created!", 3);
+        hapi = new HeadsPlusAPI();
+        debug("- Instance for HeadsPlus's API created!", 3);
         nbt = new NBTManager();
         debug("- Instance for NBTManager created!", 3);
         hpc = new HeadsPlusMessagesConfig(false);
@@ -434,8 +437,7 @@ public class HeadsPlus extends JavaPlugin {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        hapi = new HeadsPlusAPI();
-        debug("- Instance for HeadsPlus's API created!", 3);
+
         if (getConfiguration().getMySQL().getBoolean("enabled")) {
             debug("- MySQL is to be enabled. Opening connection...", 1);
             try {

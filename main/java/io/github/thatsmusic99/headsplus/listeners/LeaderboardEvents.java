@@ -10,7 +10,7 @@ import io.github.thatsmusic99.headsplus.commands.maincommand.DebugPrint;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-public class LBEvents implements Listener {
+public class LeaderboardEvents implements Listener {
 
     private final HeadsPlus hp = HeadsPlus.getInstance();
 
@@ -30,7 +30,7 @@ public class LBEvents implements Listener {
                 }
             }
         } catch (Exception ex) {
-            new DebugPrint(ex, "Event (LBEvents)", false, null);
+            new DebugPrint(ex, "Event (LeaderboardEvents)", false, null);
         }
 
     }
@@ -51,7 +51,7 @@ public class LBEvents implements Listener {
                 }
             }
         } catch (Exception ex) {
-            new DebugPrint(ex, "Event (LBEvents)", false, null);
+            new DebugPrint(ex, "Event (LeaderboardEvents)", false, null);
         }
 
     }
@@ -74,7 +74,7 @@ public class LBEvents implements Listener {
                 }
             }
         } catch (Exception ex) {
-            new DebugPrint(ex, "Event (LBEvents)", false, null);
+            new DebugPrint(ex, "Event (LeaderboardEvents)", false, null);
         }
     }
 
@@ -92,7 +92,7 @@ public class LBEvents implements Listener {
                 }
             }
         } catch (Exception ex) {
-            new DebugPrint(ex, "Event (LBEvents)", false, null);
+            new DebugPrint(ex, "Event (LeaderboardEvents)", false, null);
         }
     }
 }

@@ -8,7 +8,6 @@ import io.github.thatsmusic99.headsplus.config.HeadsPlusMessagesConfig;
 import io.github.thatsmusic99.headsplus.locale.LocaleManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.HashMap;
 
@@ -22,7 +21,6 @@ import java.util.HashMap;
 public class WhitelistToggle implements IHeadsPlusCommand {
 
     private final HeadsPlusMainConfig config = HeadsPlus.getInstance().getConfiguration();
-    private final ConfigurationSection c = config.getWhitelist("default");
     private final HeadsPlusMessagesConfig hpc = HeadsPlus.getInstance().getMessagesConfig();
 
     @Override
@@ -41,28 +39,28 @@ public class WhitelistToggle implements IHeadsPlusCommand {
     public boolean fire(String[] args, CommandSender sender) {
         try {
             if (args.length == 1) {
-                if (c.getBoolean("enabled")) {
-                    c.set("enabled", false);
+                if (config.getHeadsWhitelist().enabled) {
+                    config.getConfig().set("whitelist.default.enabled", config.getHeadsWhitelist().enabled = false);
                     config.save();
                     sender.sendMessage(hpc.getString("wl-off"));
-                } else if (!c.getBoolean("enabled")) {
-                    c.set("enabled", true);
+                } else {
+                    config.getConfig().set("whitelist.default.enabled", config.getHeadsWhitelist().enabled = true);
                     config.save();
                     sender.sendMessage(hpc.getString("wl-on"));
                 }
             } else {
                 String str = args[1];
                 if (str.equalsIgnoreCase("on")) {
-                    if (!c.getBoolean("enabled")) {
-                        c.set("enabled", true);
+                    if (!config.getHeadsWhitelist().enabled) {
+                        config.getConfig().set("whitelist.default.enabled", config.getHeadsWhitelist().enabled = true);
                         config.save();
                         sender.sendMessage(hpc.getString("wl-on"));
                     } else {
                         sender.sendMessage(hpc.getString("wl-a-on"));
                     }
                 } else if (str.equalsIgnoreCase("off")) {
-                    if (c.getBoolean("enabled")) {
-                        c.set("enabled", false);
+                    if (config.getHeadsWhitelist().enabled) {
+                        config.getConfig().set("whitelist.default.enabled", config.getHeadsWhitelist().enabled = false);
                         config.save();
                         sender.sendMessage(hpc.getString("wl-off"));
                     } else {

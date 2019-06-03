@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import io.github.thatsmusic99.headsplus.HeadsPlus;
+import io.github.thatsmusic99.headsplus.config.HeadsPlusMainConfig.SelectorList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -62,19 +63,19 @@ public class Head implements CommandExecutor, IHeadsPlusCommand {
 	}
 
 	private void giveH(String[] args, CommandSender sender, Player p) {
-	    ConfigurationSection blacklist = hp.getConfiguration().getBlacklist("default");
-        ConfigurationSection whitelist = hp.getConfiguration().getWhitelist("default");
+	    SelectorList blacklist = hp.getConfiguration().getHeadsBlacklist();
+        SelectorList whitelist = hp.getConfiguration().getHeadsWhitelist();
         List<String> bl = new ArrayList<>();
-        for (String str : blacklist.getStringList("list")) {
+        for (String str : blacklist.list) {
             bl.add(str.toLowerCase());
         }
         List<String> wl = new ArrayList<>();
-        for (String str : whitelist.getStringList("list")) {
+        for (String str : whitelist.list) {
             wl.add(str.toLowerCase());
         }
 
-        boolean blacklistOn = blacklist.getBoolean("enabled");
-        boolean wlOn = whitelist.getBoolean("enabled");
+        boolean blacklistOn = blacklist.enabled;
+        boolean wlOn = whitelist.enabled;
         String head = args[0].toLowerCase();
         if (p.getInventory().firstEmpty() == -1) {
             sender.sendMessage(hpc.getString("full-inv"));

@@ -47,11 +47,11 @@ public class WhitelistDel implements IHeadsPlusCommand {
     public boolean fire(String[] args, CommandSender sender) {
         try {
             HeadsPlusMainConfig config = HeadsPlus.getInstance().getConfiguration();
-            List<String> wl = config.getWhitelist("default").getStringList("list");
+            List<String> whitelist = config.getHeadsWhitelist().list;
             String rHead = args[1].toLowerCase();
-            if (wl.contains(rHead)) {
-                wl.remove(rHead);
-                config.getWhitelist("default").set("list", wl);
+            if (whitelist.contains(rHead)) {
+                whitelist.remove(rHead);
+				config.getConfig().set("whitelist.default.list", whitelist);
                 config.save();
                 sender.sendMessage(hpc.getString("head-removed-wl").replaceAll("\\{name}", args[1]));
             } else {

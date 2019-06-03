@@ -48,7 +48,7 @@ public class BlacklistwList implements IHeadsPlusCommand {
 	@Override
 	public boolean fire(String[] args, CommandSender sender) {
 		try {
-		    List<String> bl = hp.getConfiguration().getBlacklist("world").getStringList("list");
+		    List<String> bl = hp.getConfiguration().getBlacklist().list;
 		    int page;
 		    if (args.length == 1) {
 		        page = 1;

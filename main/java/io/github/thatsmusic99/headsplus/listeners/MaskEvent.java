@@ -25,7 +25,7 @@ public class MaskEvent implements Listener {
     @EventHandler
     public void onMaskPutOn(InventoryClickEvent e) {
         HeadsPlus hp = HeadsPlus.getInstance();
-        if (hp.getConfiguration().getPerks().getBoolean("mask-powerups")) {
+        if (hp.getConfiguration().getPerks().mask_powerups) {
             NMSManager nms = hp.getNMS();
             NBTManager nbt = hp.getNBTManager();
             if (e.getRawSlot() == getSlot()) {
@@ -61,7 +61,7 @@ public class MaskEvent implements Listener {
     public void onPlayerFall(EntityDamageEvent e) {
         if (e.getEntity() instanceof Player) {
             HeadsPlus hp = HeadsPlus.getInstance();
-            if (hp.getConfiguration().getPerks().getBoolean("mask-powerups")) {
+            if (hp.getConfiguration().getPerks().mask_powerups) {
                 HPPlayer pl = HPPlayer.getHPPlayer((Player) e.getEntity());
                 if (pl.isIgnoringFallDamage()) {
                     e.setCancelled(true);

@@ -21,7 +21,7 @@ public class PlayerDeathEvent implements Listener {
             if (hp.isDeathMessagesEnabled()) {
                 if (e.getKiller() != null) {
                     Random r = new Random();
-                    List<String> s = hp.getConfiguration().getPerks().getStringList("death-messages");
+                    List<String> s = hp.getConfiguration().getPerks().death_messages;
                     int thing = r.nextInt(s.size());
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         if (!p.hasPermission("headsplus.death.ignore")) {

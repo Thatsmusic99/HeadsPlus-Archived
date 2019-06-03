@@ -48,7 +48,7 @@ public class BlacklistDelete implements IHeadsPlusCommand {
 	@Override
 	public boolean fire(String[] args, CommandSender sender) {
 	    try {
-			List<String> blacklist = config.getBlacklist("default").getStringList("list");
+			List<String> blacklist = config.getHeadsBlacklist().list;
 			String rHead = args[1].toLowerCase();
 	        if (blacklist.contains(rHead)) {
 	            blacklist.remove(rHead);

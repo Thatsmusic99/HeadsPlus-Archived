@@ -229,13 +229,15 @@ public class HeadsPlusMessagesConfig extends ConfigSettings {
 	        getConfig().set(s, getConfig().getString(s).replaceAll("%c", "{challenge}"));
 	        getConfig().set(s, getConfig().getString(s).replaceAll("%m", "{player}"));
         }
-        List<String> a = new ArrayList<>();
-	    HeadsPlus hp = HeadsPlus.getInstance();
 	    if (!npe) {
-            for (String s : hp.getConfiguration().getPerks().getStringList("death-messages")) {
+            HeadsPlus hp = HeadsPlus.getInstance();
+            List<String> a = new ArrayList<>();
+            for (String s : hp.getConfiguration().getPerks().death_messages) {
                 a.add(s.replaceAll("%p", "{player}").replaceAll("%k", "{killer}"));
             }
-            hp.getConfiguration().getPerks().set("death-messages", a);
+            hp.getConfiguration().getConfig().set("plugin.perks.death-messages", a);
+            hp.getConfiguration().getPerks().death_messages.clear();
+            hp.getConfiguration().getPerks().death_messages.addAll(a);
             hp.getConfiguration().save();
         }
 	}

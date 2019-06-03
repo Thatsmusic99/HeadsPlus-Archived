@@ -42,23 +42,24 @@ public class BlacklistwToggle implements IHeadsPlusCommand {
 	public boolean fire(String[] args, CommandSender sender) {
 		try {
             HeadsPlusMainConfig config = hp.getConfiguration();
-            boolean enabled = config.getBlacklist("world").getBoolean("enabled");
             if (args.length == 1) {
-                config.getBlacklist("world").set("enabled", HPUtils.switchBoolean(enabled));
+                config.getConfig().set("blacklist.world.enabled", config.getBlacklist().enabled = !config.getBlacklist().enabled);
                 config.save();
-                sender.sendMessage(enabled ? "blw-off" : "blw-on");
+                sender.sendMessage(config.getBlacklist().enabled ? "blw-on" : "blw-off");
             } else {
                 if (args[1].equalsIgnoreCase("on")) {
-                    if (!config.getBlacklist("world").getBoolean("enabled")) {
-                        config.getBlacklist("world").set("enabled", true);
+                    if (!config.getBlacklist().enabled) {
+                        config.getConfig().set("blacklist.world.enabled", true);
+                        config.getBlacklist().enabled = true;
                         config.save();
                         sender.sendMessage(hpc.getString("blw-on"));
                     } else {
                         sender.sendMessage(hpc.getString("blw-a-on"));
                     }
                 } else if (args[1].equalsIgnoreCase("off")) {
-                    if (config.getBlacklist("world").getBoolean("enabled")) {
-                        config.getBlacklist("world").set("enabled", false);
+                    if (config.getBlacklist().enabled) {
+                        config.getConfig().set("blacklist.world.enabled", false);
+                        config.getBlacklist().enabled = false;
                         config.save();
                         sender.sendMessage(hpc.getString("blw-off"));
                     } else {

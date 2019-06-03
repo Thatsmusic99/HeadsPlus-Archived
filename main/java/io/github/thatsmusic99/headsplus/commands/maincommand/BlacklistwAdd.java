@@ -52,13 +52,13 @@ public class BlacklistwAdd implements IHeadsPlusCommand {
                 try {
 
                     HeadsPlusMainConfig config = HeadsPlus.getInstance().getConfiguration();
-                    List<String> blacklist = config.getBlacklist("world").getStringList("list");
+                    List<String> blacklist = config.getBlacklist().list;
                     String aWorld = args[1].toLowerCase();
                     if (blacklist.contains(aWorld)) {
                         sender.sendMessage(hpc.getString("world-a-add"));
                     } else {
                         blacklist.add(aWorld);
-                        config.getBlacklist("world").set("list", blacklist);
+                        config.getConfig().set("blacklist.world.list", blacklist);
                         config.save();
                         sender.sendMessage(hpc.getString("world-added-bl").replaceAll("\\{name}", args[1]));
                     }

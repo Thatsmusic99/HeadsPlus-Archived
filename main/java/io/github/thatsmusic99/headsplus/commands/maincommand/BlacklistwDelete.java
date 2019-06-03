@@ -52,11 +52,11 @@ public class BlacklistwDelete implements IHeadsPlusCommand {
 		if (args.length > 1) {
 			if (args[1].matches("^[A-Za-z0-9_]+$")) {
                 try {
-                    List<String> blacklist = config.getBlacklist("world").getStringList("list");
+                    List<String> blacklist = config.getBlacklist().list;
                     String rHead = args[1].toLowerCase();
                     if (blacklist.contains(rHead)) {
                         blacklist.remove(rHead);
-                        config.getBlacklist("world").set("blacklistw", blacklist);
+                        config.getConfig().set("blacklist.world.list", blacklist);
                         config.save();
                         sender.sendMessage(hpc.getString("world-removed-bl").replaceAll("\\{name}", args[1]));
                     } else {

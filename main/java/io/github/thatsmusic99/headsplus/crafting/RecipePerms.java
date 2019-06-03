@@ -28,14 +28,13 @@ public class RecipePerms implements Listener {
                 HeadsPlus hp = HeadsPlus.getInstance();
                 HeadsPlusAPI hapi = hp.getAPI();
                 HeadsPlusMainConfig c = hp.getConfiguration();
-                if (c.getPerks().getBoolean("craft-heads")) {
+                if (c.getPerks().craft_heads) {
                     if (player.hasPermission("headsplus.craft")) {
-                        List<String> worlds = c.getBlacklist("world").getStringList("list");
-                        if ((!worlds.contains(player.getWorld().getName())) || !c.getBlacklist("world").getBoolean("enabled") || player.hasPermission("headsplus.bypass.blacklistw")) {
+                        if ((!c.getBlacklist().enabled || !c.getBlacklist().list.contains(player.getWorld().getName())) || player.hasPermission("headsplus.bypass.blacklistw")) {
                             if (e.getCurrentItem() != null) {
                                 if (e.getCurrentItem().getItemMeta() instanceof SkullMeta) {
                                     if (!hapi.getSkullType(e.getCurrentItem()).isEmpty()) {
-                                        if (c.getWhitelist("world").getStringList("list").contains(player.getWorld().getName())) {
+                                        if (c.getWhitelist().list.contains(player.getWorld().getName())) {
                                             fireEvent(e);
                                             return;
 
@@ -44,7 +43,7 @@ public class RecipePerms implements Listener {
                                                 fireEvent(e);
                                             } catch (NullPointerException | ClassCastException ignored) {
                                             }
-                                        } else if (!c.getWhitelist("world").getBoolean("enabled")) {
+                                        } else if (!c.getWhitelist().enabled) {
                                             fireEvent(e);
                                             return;
                                         }

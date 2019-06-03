@@ -47,13 +47,13 @@ public class WhitelistAdd implements IHeadsPlusCommand {
     @Override
     public boolean fire(String[] args, CommandSender sender) {
         try {
-            List<String> whitelist = config.getWhitelist("default").getStringList("list");
+            List<String> whitelist = config.getHeadsWhitelist().list;
             String aHead = args[1].toLowerCase();
             if (whitelist.contains(aHead)) {
                 sender.sendMessage(hpc.getString("head-a-add"));
             } else {
                 whitelist.add(aHead);
-                config.getWhitelist("default").set("list", whitelist);
+				config.getConfig().set("whitelist.default.list", whitelist);
                 config.save();
                 sender.sendMessage(hpc.getString("head-added-wl").replaceAll("\\{name}", args[1]));
             }

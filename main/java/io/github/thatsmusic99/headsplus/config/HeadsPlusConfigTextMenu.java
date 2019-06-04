@@ -188,8 +188,8 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
             HeadsPlusConfigHeads hpch = HeadsPlus.getInstance().getHeadsConfig();
             for (String str : h.getConfig().getStringList("head-info.normal-layout")) {
                 sb.append(translateColors(str.replaceAll("\\{header}", h.getConfig().getString("head-info.header"))
-                .replaceAll("\\{type}", type)
-                .replaceAll("\\{display-name}", hpch.getDisplayName(type))
+                .replace("{type}", type)
+                .replace("{display-name}", hpch.getDisplayName(type))
                 .replaceAll("\\{price}", String.valueOf(hpch.getPrice(type)))
                 .replaceAll("\\{interact-name}", hpch.getInteractName(type))
                 .replaceAll("\\{chance}", String.valueOf(hpch.getConfig().getDouble(type + ".chance"))))).append("\n");
@@ -213,10 +213,10 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
             }
             sb.append(translateColors(ht.getConfig().getString("head-info.name-info.colored.header"))).append("\n");
             sb.append(translateColors(ht.getConfig().getString("head-info.name-info.colored.first-line"))
-            .replaceAll("\\{type}", type));
+            .replace("{type}", type));
             for (Head head : hs.getContentsInPage(page)) {
                 sb.append("\n").append(translateColors(ht.getConfig().getString("head-info.name-info.colored.for-each-line"))
-                .replaceAll("\\{name}", head.type)
+                .replace("{name}", head.type)
                 .replaceAll("\\{color}", head.colour));
             }
             return sb.toString();
@@ -265,7 +265,7 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
                     .replaceAll("\\{type}", type));
             for (String s : lore.getContentsInPage(page)) {
                 sb.append("\n").append(translateColors(ht.getConfig().getString("head-info.lore-info.for-each-line")
-                .replaceAll("\\{lore}", s)));
+                .replace("{lore}", s)));
             }
             return sb.toString();
         }
@@ -294,8 +294,8 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
                     CommandInfo c = key.getClass().getAnnotation(CommandInfo.class);
                     new FancyMessage()
                             .text(translateColors(ht.getConfig().getString("help.for-each-line")
-                                    .replaceAll("\\{usage}", c.usage())
-                                    .replaceAll("\\{description}", key.getCmdDescription())))
+                                    .replace("{usage}", c.usage())
+                                    .replace("{description}", key.getCmdDescription())))
                             .command("/hp help " + c.subcommand())
                             .send(sender);
                 }
@@ -315,7 +315,7 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
                     } else if (!s.contains("{further-usage}")){
                         CommandInfo c = key.getClass().getAnnotation(CommandInfo.class);
                         sb.append("\n").append(translateColors(s.replaceAll("\\{header}", ht.getConfig().getString("help.command-help.header"))
-                                .replaceAll("\\{description}", key.getCmdDescription()).replaceAll("\\{usage}", c.usage()))
+                                .replace("{description}", key.getCmdDescription()).replaceAll("\\{usage}", c.usage()))
                                 .replaceAll("\\{permission}", c.permission()));
                     }
                 }
@@ -335,7 +335,7 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
                 HeadsPlusConfigTextMenu ht = hp.getMenus();
                 ph = new PagedHashmaps<>(hp.getMySQLAPI().getScores(section, database), ht.getConfig().getInt("leaderboard.lines-per-page"));
                 sb.append(translateColors(ht.getConfig().getString("leaderboard.header")
-                        .replaceAll("\\{section}", WordUtils.capitalize(section))
+                        .replace("{section}", WordUtils.capitalize(section))
                         .replaceAll("\\{page}", String.valueOf(page))
                         .replaceAll("\\{pages}", String.valueOf(ph.getTotalPages()))));
                 Set<OfflinePlayer> it = ph.getContentsInPage(page).keySet();
@@ -345,7 +345,7 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
                         int in = i + (ph.getContentsPerPage() * (ph.getCurrentPage() - 1));
                         sb.append("\n").append(translateColors(ht.getConfig().getString("leaderboard.for-each-line")
                                 .replaceAll("\\{pos}", String.valueOf(in + 1))
-                                .replaceAll("\\{name}", ((OfflinePlayer)it.toArray()[i]).getName())
+                                .replace("{name}", ((OfflinePlayer)it.toArray()[i]).getName())
                                 .replaceAll("\\{score}", String.valueOf(it2.toArray()[i]))));
                     } catch (NullPointerException ignored) {
                     }
@@ -375,9 +375,9 @@ public class HeadsPlusConfigTextMenu extends ConfigSettings {
             for (String s : h.getConfig().getStringList("info.layout")) {
                 sb.append("\n").append(translateColors(s
                         .replaceAll("\\{version}", String.valueOf(hp.getVersion()))
-                        .replaceAll("\\{header}", h.getConfig().getString("info.header"))
-                        .replaceAll("\\{author}", String.valueOf(hp.getAuthor()))
-                        .replaceAll("\\{locale}", LocaleManager.getLocale().getLanguage())
+                        .replace("{header}", h.getConfig().getString("info.header"))
+                        .replace("{author}", String.valueOf(hp.getAuthor()))
+                        .replace("{locale}", LocaleManager.getLocale().getLanguage())
                         .replaceAll("\\{contributors}", "Toldi, DariusTK, AlansS53, Gneiwny, steve4744, Niestrat99, Alexisparis007, jascotty2")));
             }
             return sb.toString();

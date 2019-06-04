@@ -74,7 +74,7 @@ public abstract class HeadInventory {
         Inventory inventory = Bukkit.createInventory(null, getSize(), getTitle()
                 .replaceAll("\\{page}", String.valueOf(page + 1))
                 .replaceAll("\\{pages}", list == null ? "" : String.valueOf(pages))
-                .replaceAll("\\{section}", section));
+                .replace("{section}", section));
         HeadsPlus hp = HeadsPlus.getInstance();
         
         
@@ -122,7 +122,7 @@ public abstract class HeadInventory {
         Inventory inventory = Bukkit.createInventory(null, getSize(), getTitle()
                 .replaceAll("\\{page}", String.valueOf(page + 1))
                 .replaceAll("\\{pages}", list == null ? "" : String.valueOf(pages))
-                .replaceAll("\\{section}", section.isEmpty() ? "" : Character.toUpperCase(section.charAt(0)) + section.substring(1)));
+                .replace("{section}", section.isEmpty() ? "" : Character.toUpperCase(section.charAt(0)) + section.substring(1)));
         HeadsPlus hp = HeadsPlus.getInstance();
         NMSManager nms = hp.getNMS();
         NBTManager nbt = hp.getNBTManager();
@@ -151,7 +151,7 @@ public abstract class HeadInventory {
                             .replaceAll("\\{pages}", String.valueOf(pages))
                             .replaceAll("\\{sections}", String.valueOf(hp.getHeadsXConfig().sections.size()))
                             .replaceAll("\\{balance}", (hp.econ() ? HeadsPlus.getInstance().getConfiguration().fixBalanceStr(hp.getEconomy().getBalance(sender)) : ""))
-                            .replaceAll("\\{section}", section)));
+                            .replace("{section}", section)));
                 }
                 im.setLore(ls);
                 is.setItemMeta(im);
@@ -219,7 +219,7 @@ public abstract class HeadInventory {
                             .replaceAll("\\{pages}", String.valueOf(pages))
                             .replaceAll("\\{sections}", String.valueOf(hp.getHeadsXConfig().sections.size()))
                             .replaceAll("\\{balance}", String.valueOf(hp.getEconomy().getBalance(sender)))
-                            .replaceAll("\\{section}", section)));
+                            .replace("{section}", section)));
                 }
                 im.setLore(ls);
                 is.setItemMeta(im);
@@ -250,9 +250,9 @@ public abstract class HeadInventory {
         if (itemIndex < list.size()) {
             is = list.get(itemIndex);
             ItemMeta im = is.getItemMeta();
-            im.setDisplayName(icon.getDisplayName().replaceAll("\\{head-name}", is.getItemMeta().getDisplayName()));
+            im.setDisplayName(icon.getDisplayName().replace("\\{head-name}", is.getItemMeta().getDisplayName()));
             if (this instanceof SellheadMenu) {
-                im.setDisplayName(im.getDisplayName().replaceAll("\\{default}",
+                im.setDisplayName(im.getDisplayName().replace("{default}",
                         HeadsPlus.getInstance().getHeadsConfig().getDisplayName(nbt.getType(is))));
             }
             String s = "";
@@ -285,7 +285,7 @@ public abstract class HeadInventory {
 
             List<String> lore = new ArrayList<>();
             io.github.thatsmusic99.headsplus.api.Challenge c = nbt.getChallenge(is);
-            im.setDisplayName(ChatColor.translateAlternateColorCodes('&', icon.getDisplayName().replaceAll("(\\{challenge-name})", c.getChallengeHeader())));
+            im.setDisplayName(ChatColor.translateAlternateColorCodes('&', icon.getDisplayName().replace("({challenge-name})", c.getChallengeHeader())));
             for (int z = 0; z < icon.getLore().size(); ++z) {
                 if (icon.getLore().get(z).contains("{challenge-lore}")) {
                     for (String s : c.getDescription()) {
@@ -310,7 +310,7 @@ public abstract class HeadInventory {
                     } else if (re == HPChallengeRewardTypes.REMOVE_GROUP) {
                         sb.append("Group ").append(c.getRewardValue().toString()).append(" removal");
                     }
-                    lore.add(ChatColor.translateAlternateColorCodes('&', icon.getLore().get(z).replaceAll("\\{challenge-reward}", sb.toString())));
+                    lore.add(ChatColor.translateAlternateColorCodes('&', icon.getLore().get(z).replace("{challenge-reward}", sb.toString())));
                 }
                 if (icon.getLore().get(z).contains("{completed}")) {
                     if (c.isComplete(p)) {

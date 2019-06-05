@@ -3,6 +3,7 @@ package io.github.thatsmusic99.headsplus.reflection;
 import io.github.thatsmusic99.headsplus.HeadsPlus;
 import io.github.thatsmusic99.headsplus.api.Challenge;
 import io.github.thatsmusic99.headsplus.config.headsx.Icon;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import java.lang.reflect.Constructor;
@@ -153,6 +154,7 @@ public class NBTManager {
     private ItemStack setObject(ItemStack i, String methodName, String nbtKey, Object value, Class<?>... params) {
         try {
             Object nmsItem = getNMSCopy(i);
+            if (nmsItem == null) return new ItemStack(Material.AIR);
             Object nbtTag = getNBTTag(nmsItem);
             if (nbtTag == null) {
                 nbtTag = newNBTTag();

@@ -285,7 +285,7 @@ public abstract class HeadInventory {
 
             List<String> lore = new ArrayList<>();
             io.github.thatsmusic99.headsplus.api.Challenge c = nbt.getChallenge(is);
-            im.setDisplayName(ChatColor.translateAlternateColorCodes('&', icon.getDisplayName().replace("({challenge-name})", c.getChallengeHeader())));
+            im.setDisplayName(ChatColor.translateAlternateColorCodes('&', icon.getDisplayName().replace("{challenge-name}", c.getChallengeHeader())));
             for (int z = 0; z < icon.getLore().size(); ++z) {
                 if (icon.getLore().get(z).contains("{challenge-lore}")) {
                     for (String s : c.getDescription()) {

@@ -26,7 +26,7 @@ public class InventoryManager {
         SELL, LIST_MENU, LIST_CATEGORY, LIST_SEARCH, LIST_FAVORITES, CHALLENGES_MENU, CHALLENGES_LIST
     }
 
-    public static final HashMap<Player, InventoryManager> pls = new HashMap();
+    public static final HashMap<Player, InventoryManager> pls = new HashMap<>();
 
     private final Player player;
     private int pages;
@@ -220,10 +220,12 @@ public class InventoryManager {
                 final String disp = hpchx.getConfig().getString("sections." + sections[i] + ".display-name");
                 im.setDisplayName(ChatColor.translateAlternateColorCodes('&', disp != null ? disp : sections[i]));
                 // TODO make customisable again
-                im.setLore(Arrays.asList(ChatColor.GRAY.toString() + count + " heads"));
+                im.setLore(Collections.singletonList(ChatColor.GRAY.toString() + count + " heads"));
                 is.setItemMeta(im);
                 is = plugin.getNBTManager().addSection(is, sections[i]);
                 heads.add(is);
+            } catch (NullPointerException ex) {
+                plugin.getLogger().log(Level.WARNING, "Head texture for section " + sections[i] + " not found.");
             } catch (Exception ex) {
                 plugin.getLogger().log(Level.WARNING, "Unexpected Error processing section " + sections[i], ex);
             }

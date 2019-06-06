@@ -67,7 +67,7 @@ public class LeaderboardEvents implements Listener {
                     for (String s : e.getEntityAmounts().keySet()) {
                         for (int i : e.getEntityAmounts().values()) {
                             if (e.getEntityAmounts().get(s) == i) {
-                                hp.getMySQLAPI().addOntoValue(e.getPlayer(), s, "headsplussh", i);
+                                hp.getMySQLAPI().addOntoValue(e.getPlayer(), HeadsPlus.getInstance().getAPI().strToEntityType(s).name(), "headsplussh", i);
                             }
                         }
                     }
@@ -86,7 +86,7 @@ public class LeaderboardEvents implements Listener {
                     if (e.getEntityType() != null) {
                         if (!(e.getEntityType().equalsIgnoreCase("invalid") || e.getEntityType().isEmpty())) {
                             HPPlayer.getHPPlayer(e.getPlayer()).addXp(30 * e.getHeadsCrafted());
-                            hp.getMySQLAPI().addOntoValue(e.getPlayer(), e.getEntityType(), "headspluscraft", e.getHeadsCrafted());
+                            hp.getMySQLAPI().addOntoValue(e.getPlayer(), HeadsPlus.getInstance().getAPI().strToEntityType(e.getEntityType()).name(), "headspluscraft", e.getHeadsCrafted());
                         }
                     }
                 }

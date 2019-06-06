@@ -27,8 +27,8 @@ public class HeadsPlusConfigHeadsX extends ConfigSettings {
 
     public boolean s = false;
     private final double cVersion = 2.4;
-    public final Map<String, List<String>> sections = new HashMap();
-    public final Map<String, ItemStack> headsCache = new HashMap();
+    public final Map<String, List<String>> sections = new HashMap<>();
+    public final Map<String, ItemStack> headsCache = new HashMap<>();
 
     public HeadsPlusConfigHeadsX() {
         this.conName = "headsx";
@@ -129,7 +129,7 @@ public class HeadsPlusConfigHeadsX extends ConfigSettings {
     private void initCategories() {
         sections.clear();
         for (String cat : getConfig().getConfigurationSection("sections").getKeys(false)) {
-            sections.put(cat, new ArrayList());
+            sections.put(cat, new ArrayList<>());
         }
         ConfigurationSection heads = getConfig().getConfigurationSection("heads");
         try {
@@ -149,7 +149,7 @@ public class HeadsPlusConfigHeadsX extends ConfigSettings {
             return;
         }
         if (getConfig().getBoolean("options.advent-calendar")) {
-            sections.put("advent-calendar", new ArrayList());
+            sections.put("advent-calendar", new ArrayList<>());
         }
     }
 

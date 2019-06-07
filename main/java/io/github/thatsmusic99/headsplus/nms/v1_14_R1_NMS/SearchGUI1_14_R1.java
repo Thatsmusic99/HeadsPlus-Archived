@@ -32,6 +32,11 @@ public class SearchGUI1_14_R1 extends SearchGUI {
             return true;
         }
 
+        @Override
+        public void e() {
+            super.e();
+            this.levelCost.a(0);
+        }
     }
 
 

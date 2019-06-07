@@ -29,11 +29,9 @@ public class Search extends ItemStack implements Icon {
     public void onClick(Player p, InventoryManager im, InventoryClickEvent e) {
         e.setCancelled(true);
         p.closeInventory();
-        final InventoryClickEvent ev = e;
         try {
             if (HeadsPlus.getInstance().getConfiguration().getMechanics().getBoolean("anvil-menu-search", false)) {
                 SearchGUI s = HeadsPlus.getInstance().getNMS().getSearchGUI(p, event -> {
-                    ev.setCancelled(true);
                     if (event.getSlot().equals(AnvilSlot.OUTPUT)) {
                         event.setWillClose(false);
                         event.setWillDestroy(false);

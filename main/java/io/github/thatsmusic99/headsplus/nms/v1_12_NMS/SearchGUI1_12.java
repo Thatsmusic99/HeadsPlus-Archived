@@ -26,6 +26,12 @@ public class SearchGUI1_12 extends SearchGUI {
         public boolean canUse(EntityHuman entityhuman) {
             return true;
         }
+
+        @Override
+        public void e() {
+            super.e();
+            this.levelCost = 0;
+        }
     }
 
 

@@ -21,6 +21,12 @@ public class SearchGUI1_9_R2 extends SearchGUI {
         public boolean a(EntityHuman entityhuman) {
             return true;
         }
+
+        @Override
+        public void e() {
+            super.e();
+            this.a = 0;
+        }
     }
 
     @Override

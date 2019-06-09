@@ -1,4 +1,6 @@
-# HeadsPlus
+# THIS REPO WILL BE MIGRATED TO ANOTHER SOON, SO PLEASE AVOID FORKING THIS ONE FOR NOW. THANK YOU.
+
+## HeadsPlus
 The following is a Minecraft heads plugin, designed to work with Spigot 1.8.x-1.14.x. The plugin provides:
 
 - /head command to spawn in heads (of course).
